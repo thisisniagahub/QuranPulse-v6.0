@@ -1,0 +1,8 @@
+{
+  "name": "Quran Pulse v6.0",
+  "description": "Genesis Master Edition: The Ultimate Islamic AI SuperApp Ecosystem.",
+  "requestFramePermissions": [
+    "microphone",
+    "geolocation"
+  ]
+}
