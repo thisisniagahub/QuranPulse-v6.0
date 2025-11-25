@@ -3,7 +3,7 @@ import { AI_PERSONAS, SYARIAH_BLACKLIST } from "../constants";
 import { SyariahCheckResult } from "../types";
 
 // Initialize Gemini Client
-// NOTE: process.env.API_KEY is automatically injected in the environment.
+// NOTE: process.env.API_KEY is handled by Vite define in vite.config.ts
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
 // --- Syariah Guard (Local Filter) ---
@@ -34,10 +34,9 @@ export const askUstazAI = async (userPrompt: string, enableThinking: boolean = f
       systemInstruction += `
       
       **DEEP REASONING MODE ACTIVATED:**
-      1. **Detailed Fiqh Analysis**: Provide a comprehensive explanation citing specific classical texts of the Syafi'i Mazhab (e.g., *Minhaj at-Talibin*, *I'anah at-Talibin*, *Al-Fiqh al-Manhaji*).
-      2. **Malaysian Context**: Explicitly reference relevant Malaysian Fatwa Council decisions, JAKIM guidelines, or local cultural context (*'Urf*) where applicable.
-      3. **Historical Depth**: Include relevant *Asbab al-Nuzul* (Reasons for Revelation) or historical context of the Hadith to provide depth.
-      4. **Structure**: Break down complex rulings into clear points (Hukum, Dalil, Huraian). Format with Markdown for clear reading.
+      1. **Detailed Fiqh Analysis**: Provide a comprehensive explanation citing specific classical texts of the Syafi'i Mazhab.
+      2. **Malaysian Context**: Explicitly reference relevant Malaysian Fatwa Council decisions.
+      3. **Structure**: Break down complex rulings into clear points (Hukum, Dalil, Huraian).
       `;
     }
 
@@ -71,27 +70,18 @@ export const chatWithVerseContext = async (verseKey: string, verseText: string, 
         const prompt = `
             CONTEXT: The user is asking about Quran Verse ${verseKey}.
             VERSE TEXT: "${verseText}"
-            
             USER QUESTION: "${userQuestion}"
-            
-            INSTRUCTIONS:
-            1. Answer specifically about this verse.
-            2. Use the Persona of 'Ustaz AI' (Knowledgeable, Syafi'i Mazhab, Gentle).
-            3. Provide Tafsir references (e.g., Ibn Kathir/Jalalayn) if relevant to the question.
-            4. Keep it concise but spiritually enriching.
+            INSTRUCTIONS: Use the Persona of 'Ustaz AI'. Provide Tafsir references if relevant.
         `;
 
         const response = await ai.models.generateContent({
             model: "gemini-2.5-flash",
             contents: [{ parts: [{ text: prompt }] }],
-            config: {
-                systemInstruction: AI_PERSONAS.USTAZ_SYARIAH,
-            }
+            config: { systemInstruction: AI_PERSONAS.USTAZ_SYARIAH }
         });
 
         return response.text || "I apologize, I could not process your question about this verse.";
     } catch (error) {
-        console.error("Verse Chat Error", error);
         return "Connection error. Please try again.";
     }
 };
@@ -101,11 +91,7 @@ export const getVerseConnections = async (verseKey: string, verseText: string): 
     try {
         const prompt = `
             Analyze this Quran verse: [${verseKey}] "${verseText}".
-            
-            Identify:
-            1. 3-4 Key Topics/Themes (e.g., "Patience", "Legal Ruling", "Prophet Musa").
-            2. 2-3 Related Verses from elsewhere in the Quran that support, explain, or provide context to this verse.
-            
+            Identify 3-4 Key Topics and 2-3 Related Verses.
             Output JSON only.
         `;
 
@@ -117,18 +103,15 @@ export const getVerseConnections = async (verseKey: string, verseText: string): 
                 responseSchema: {
                     type: Type.OBJECT,
                     properties: {
-                        topics: {
-                            type: Type.ARRAY,
-                            items: { type: Type.STRING }
-                        },
+                        topics: { type: Type.ARRAY, items: { type: Type.STRING } },
                         related_verses: {
                             type: Type.ARRAY,
                             items: {
                                 type: Type.OBJECT,
                                 properties: {
-                                    ref: { type: Type.STRING, description: "Surah Name and Verse Number" },
-                                    text: { type: Type.STRING, description: "Translation of the related verse" },
-                                    reason: { type: Type.STRING, description: "Why is this related?" }
+                                    ref: { type: Type.STRING },
+                                    text: { type: Type.STRING },
+                                    reason: { type: Type.STRING }
                                 }
                             }
                         }
@@ -139,22 +122,14 @@ export const getVerseConnections = async (verseKey: string, verseText: string): 
 
         return JSON.parse(response.text || "{}");
     } catch (e) {
-        console.error("Connection Gen Error", e);
         return null;
     }
 };
 
-// --- Verse Tafsir & Reflection (Quran Module) ---
+// --- Verse Tafsir & Reflection ---
 export const getVerseTafsir = async (surahName: string, verseKey: string, verseText: string): Promise<any> => {
   try {
-    const prompt = `
-      Analyze ${surahName} ${verseKey}: "${verseText}"
-      Provide:
-      1. A detailed Tafsir summary (citing Ibn Kathir or Jalalayn where applicable).
-      2. A personal reflection or actionable advice for a modern Muslim.
-      3. 3 key Arabic words from the verse with their meanings.
-    `;
-
+    const prompt = `Analyze ${surahName} ${verseKey}: "${verseText}". Provide Tafsir summary, Reflection, and 3 Keywords. Output JSON.`;
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: [{ parts: [{ text: prompt }] }],
@@ -169,38 +144,21 @@ export const getVerseTafsir = async (surahName: string, verseKey: string, verseT
               type: Type.ARRAY,
               items: {
                 type: Type.OBJECT,
-                properties: {
-                  term: { type: Type.STRING },
-                  meaning: { type: Type.STRING }
-                }
+                properties: { term: { type: Type.STRING }, meaning: { type: Type.STRING } }
               }
             }
           }
         }
       }
     });
-
     return JSON.parse(response.text || "{}");
-  } catch (error) {
-    console.error("Tafsir Error", error);
-    return null;
-  }
+  } catch (error) { return null; }
 };
 
-// --- Morphology Analysis (Word by Word) ---
+// --- Morphology Analysis ---
 export const analyzeMorphology = async (word: string, verseContext: string): Promise<any> => {
   try {
-    const prompt = `
-      Analyze the Arabic word: "${word}" found in the verse context: "${verseContext}".
-      
-      Output JSON strictly:
-      1. root: The 3 letter root (e.g., ك ت ب)
-      2. type: Noun (Ism), Verb (Fi'l), or Particle (Harf)
-      3. grammar: Brief grammatical role (e.g., "Active Participle", "Past Tense Verb", "Object")
-      4. translation: Literal meaning
-      5. usage_context: A 1-sentence explanation of its nuance in this verse.
-    `;
-
+    const prompt = `Analyze Arabic word "${word}" in context "${verseContext}". Output JSON with root, type, grammar, translation, usage_context.`;
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: [{ parts: [{ text: prompt }] }],
@@ -219,12 +177,10 @@ export const analyzeMorphology = async (word: string, verseContext: string): Pro
       }
     });
     return JSON.parse(response.text || "{}");
-  } catch (error) {
-    return null;
-  }
+  } catch (error) { return null; }
 };
 
-// --- Semantic Search (Quran Module) ---
+// --- Semantic Search (Enhanced for Dual Language) ---
 export const getSemanticQuranSearch = async (query: string): Promise<any> => {
   try {
     const response = await ai.models.generateContent({
@@ -233,19 +189,8 @@ export const getSemanticQuranSearch = async (query: string): Promise<any> => {
       config: {
         systemInstruction: `
           You are a Quranic Search Engine. 
-          Task: Find 3 most relevant verses for the user's query (emotion, topic, or question).
-          Output JSON: {
-            "results": [
-              { 
-                  "surah": "Surah Name", 
-                  "ayah": number, 
-                  "arabic": "Arabic Text",
-                  "translation_en": "English Translation",
-                  "translation_ms": "Bahasa Melayu Translation",
-                  "explanation": "Why this verse fits the query (Context)" 
-              }
-            ]
-          }
+          Task: Find 3 most relevant verses for the user's query.
+          Output JSON. Ensure 'translation_ms' provides a Bahasa Melayu translation.
         `,
         responseMimeType: "application/json",
         responseSchema: {
@@ -270,28 +215,22 @@ export const getSemanticQuranSearch = async (query: string): Promise<any> => {
       }
     });
     return JSON.parse(response.text || "{}");
-  } catch (error) {
-    return null;
-  }
+  } catch (error) { return null; }
 };
 
-// --- Jawi Converter (Smart Deen) ---
+// --- Jawi Converter ---
 export const convertToJawi = async (rumiText: string): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: [{ parts: [{ text: rumiText }] }],
-      config: {
-        systemInstruction: AI_PERSONAS.JAWI_CONVERTER
-      }
+      config: { systemInstruction: AI_PERSONAS.JAWI_CONVERTER }
     });
     return response.text?.trim() || "";
-  } catch (e) {
-    return "";
-  }
+  } catch (e) { return ""; }
 };
 
-// --- Hadith Retrieval (Smart Deen) ---
+// --- Hadith Retrieval ---
 export const getHadithByTopic = async (topic: string): Promise<any> => {
   try {
     const response = await ai.models.generateContent({
@@ -313,12 +252,10 @@ export const getHadithByTopic = async (topic: string): Promise<any> => {
       }
     });
     return JSON.parse(response.text || "{}");
-  } catch (e) {
-    return null;
-  }
+  } catch (e) { return null; }
 };
 
-// --- Learning Planner (Smart Deen) ---
+// --- Learning Planner ---
 export const generateLearningPlan = async (goal: string): Promise<any> => {
   try {
     const response = await ai.models.generateContent({
@@ -336,10 +273,7 @@ export const generateLearningPlan = async (goal: string): Promise<any> => {
                     type: Type.ARRAY,
                     items: {
                         type: Type.OBJECT,
-                        properties: {
-                            day: { type: Type.STRING },
-                            task: { type: Type.STRING }
-                        }
+                        properties: { day: { type: Type.STRING }, task: { type: Type.STRING } }
                     }
                 }
             }
@@ -347,47 +281,100 @@ export const generateLearningPlan = async (goal: string): Promise<any> => {
       }
     });
     return JSON.parse(response.text || "{}");
-  } catch (e) {
-    return null;
-  }
+  } catch (e) { return null; }
 };
 
-// --- Doa Generator (Profile/Souq) ---
+// --- Doa Generator ---
 export const generateDoaCard = async (name: string): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
       contents: [{ parts: [{ text: `Name: ${name}` }] }],
-      config: {
-        systemInstruction: AI_PERSONAS.DOA_GENERATOR
-      }
+      config: { systemInstruction: AI_PERSONAS.DOA_GENERATOR }
     });
     return response.text || "";
-  } catch (e) {
-    return "May Allah bless you and your family.";
-  }
+  } catch (e) { return "May Allah bless you and your family."; }
 };
 
-// --- Quran Recitation Analysis (Iqra) ---
-export const analyzeQuranRecitation = async (base64Audio: string, mimeType: string, contextText: string): Promise<any> => {
+// --- ADMIN ASSISTANT ---
+export const askAdminAssistant = async (summaryData: any, userPrompt: string): Promise<string> => {
   try {
-    const prompt = `
-      Analyze this audio recitation. The user is trying to read: "${contextText}".
-      Check for Tajweed accuracy, makhraj (pronunciation), and fluency.
-      Give a score out of 100.
-      Identify specific errors.
+    const systemPrompt = `
+      You are 'Jarvis', the AI Administrator for the Quran Pulse SuperApp.
+      You have access to the following real-time system data:
+      ${JSON.stringify(summaryData)}
+
+      Your job is to help the admin manage the app.
+      - If asked about sales, analyze the 'revenue' and 'recent_orders'.
+      - If asked about stock, check 'low_stock_items'.
+      - If asked to write an announcement, draft a professional one based on the context.
+      - If asked about users, analyze 'total_users' and 'active_users'.
+      - Keep answers professional, concise, and helpful.
     `;
 
     const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash", // Using flash for speed
-      contents: [
-        {
-          parts: [
-            { inlineData: { mimeType: mimeType, data: base64Audio } },
-            { text: prompt }
-          ]
+      model: "gemini-2.5-flash",
+      contents: [{ parts: [{ text: userPrompt }] }],
+      config: {
+        systemInstruction: systemPrompt
+      }
+    });
+
+    return response.text || "I am unable to analyze the data right now.";
+  } catch (e) {
+    return "Error connecting to AI Admin Brain.";
+  }
+};
+
+export const generateAnnouncementDraft = async (topic: string): Promise<string> => {
+    try {
+        const prompt = `Write a short, professional, and Islamic-themed in-app announcement about: "${topic}". keep it under 20 words.`;
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: [{ parts: [{ text: prompt }] }]
+        });
+        return response.text?.trim() || topic;
+    } catch (e) {
+        return topic;
+    }
+};
+
+// --- NEW ADVANCED ADMIN TOOLS (V6.8) ---
+
+export const generateContentFromIdea = async (type: 'KHUTBAH' | 'QUIZ' | 'MARKETING', topic: string): Promise<string> => {
+    try {
+        let prompt = "";
+        let sysInstruct = "";
+
+        if (type === 'KHUTBAH') {
+            sysInstruct = "You are an Imam preparing a Friday Khutbah. Write a structured summary (Intro, 2 main points, Conclusion, Doa) in Malay/English mix.";
+            prompt = `Topic: ${topic}`;
+        } else if (type === 'QUIZ') {
+            sysInstruct = "Generate 3 multiple choice questions about the topic. Output JSON format: [{question, options[], answer}]";
+            prompt = `Topic: ${topic}`;
+        } else {
+            sysInstruct = "You are a Copywriter. Write a catchy, short, and persuasive push notification message.";
+            prompt = `Promotion/Update: ${topic}`;
         }
-      ],
+
+        const response = await ai.models.generateContent({
+            model: "gemini-2.5-flash",
+            contents: [{ parts: [{ text: prompt }] }],
+            config: { systemInstruction: sysInstruct }
+        });
+        return response.text || "Failed to generate.";
+    } catch (e) {
+        return "AI Error.";
+    }
+};
+
+// --- Quran Recitation Analysis ---
+export const analyzeQuranRecitation = async (base64Audio: string, mimeType: string, contextText: string): Promise<any> => {
+  try {
+    const prompt = `Analyze recitation of: "${contextText}". Check Tajweed. Score out of 100. JSON Output.`;
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: [{ parts: [{ inlineData: { mimeType: mimeType, data: base64Audio } }, { text: prompt }] }],
       config: {
         systemInstruction: AI_PERSONAS.IQRA_EXAMINER,
         responseMimeType: "application/json",
@@ -401,10 +388,7 @@ export const analyzeQuranRecitation = async (base64Audio: string, mimeType: stri
                     type: Type.ARRAY,
                     items: {
                         type: Type.OBJECT,
-                        properties: {
-                            error: { type: Type.STRING },
-                            tip: { type: Type.STRING }
-                        }
+                        properties: { error: { type: Type.STRING }, tip: { type: Type.STRING } }
                     }
                 }
             }
@@ -412,10 +396,7 @@ export const analyzeQuranRecitation = async (base64Audio: string, mimeType: stri
       }
     });
     return JSON.parse(response.text || "{}");
-  } catch (e) {
-    console.error(e);
-    return null;
-  }
+  } catch (e) { return null; }
 };
 
 // --- Video Generation (Media Studio) ---
@@ -423,17 +404,14 @@ export const enhanceVideoPrompt = async (prompt: string): Promise<string> => {
   try {
     const response = await ai.models.generateContent({
         model: "gemini-2.5-flash",
-        contents: [{ parts: [{ text: `Enhance this video prompt for Veo to be cinematic, high-resolution, and visually stunning: "${prompt}"` }] }]
+        contents: [{ parts: [{ text: `Enhance this video prompt for Veo: "${prompt}"` }] }]
     });
     return response.text || prompt;
-  } catch (e) {
-    return prompt;
-  }
+  } catch (e) { return prompt; }
 };
 
 export const generateIslamicVideo = async (prompt: string): Promise<string | null> => {
   try {
-    // 1. Initial Request - Create a new AI instance to ensure fresh API Key if set via `window.aistudio`
     const veoAi = new GoogleGenAI({ apiKey: process.env.API_KEY || '' });
 
     let operation = await veoAi.models.generateVideos({
@@ -446,24 +424,22 @@ export const generateIslamicVideo = async (prompt: string): Promise<string | nul
         }
     });
 
-    // 2. Poll for completion with Timeout
-    const MAX_POLL_TIME = 120000; // 2 minutes max wait
+    // POLLING WITH TIMEOUT (Robust Logic)
+    const MAX_POLL_TIME = 120000; // 2 minutes timeout
     const startTime = Date.now();
 
     while (!operation.done) {
         if (Date.now() - startTime > MAX_POLL_TIME) {
             console.error("Video generation timed out.");
-            return null;
+            return null; // Exit cleanly
         }
-        await new Promise(resolve => setTimeout(resolve, 5000)); // Poll every 5s
+        await new Promise(resolve => setTimeout(resolve, 5000));
         operation = await veoAi.operations.getVideosOperation({ operation });
     }
 
-    // 3. Get URI
     const videoUri = operation.response?.generatedVideos?.[0]?.video?.uri;
     if (!videoUri) return null;
 
-    // 4. Return URI with API Key appended (required for Veo downloads)
     return `${videoUri}&key=${process.env.API_KEY}`;
   } catch (e) {
     console.error("Video Gen Error", e);
@@ -471,7 +447,7 @@ export const generateIslamicVideo = async (prompt: string): Promise<string | nul
   }
 };
 
-// --- TTS Speech Generation (Iqra) ---
+// --- TTS Speech Generation ---
 export const generateSpeech = async (text: string, voiceName: 'Zephyr' | 'Kore' = 'Zephyr'): Promise<string | null> => {
   try {
       const response = await ai.models.generateContent({
@@ -479,18 +455,9 @@ export const generateSpeech = async (text: string, voiceName: 'Zephyr' | 'Kore' 
           contents: [{ parts: [{ text }] }],
           config: {
               responseModalities: [Modality.AUDIO],
-              speechConfig: {
-                  voiceConfig: {
-                      prebuiltVoiceConfig: { voiceName }
-                  }
-              }
+              speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName } } }
           }
       });
-      
-      const base64 = response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
-      return base64 || null;
-  } catch (e) {
-      console.error("TTS Error", e);
-      return null;
-  }
+      return response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data || null;
+  } catch (e) { return null; }
 };

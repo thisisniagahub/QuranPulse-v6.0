@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-    <title>Quran Pulse v5.0</title>
+    <title>Quran Pulse v6.0</title>
     <meta name="description" content="The Ultimate Islamic AI SuperApp" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,18 +16,16 @@
         theme: {
           extend: {
             colors: {
-              // v5.0 Visual Identity
               primary: {
-                DEFAULT: '#00BFA5', // Teal/Cyan from Kufi
+                DEFAULT: '#00BFA5',
                 hover: '#009688',
                 light: '#64FFDA',
               },
               secondary: {
-                DEFAULT: '#FFD700', // Gold from Logo
+                DEFAULT: '#FFD700',
                 hover: '#FFC107',
                 light: '#FFE57F',
               },
-              // Mapping legacy names to new identity for compatibility
               gold: {
                 400: '#FFE57F',
                 500: '#FFD700',
@@ -40,8 +38,8 @@
                 500: '#00BFA5',
               },
               islamic: {
-                dark: '#050505', // Deep Onyx
-                panel: '#0A0A0A', // Surface
+                dark: '#050505',
+                panel: '#0A0A0A',
                 accent: '#00BFA5', 
               },
             },
@@ -79,77 +77,65 @@
       }
     </script>
     <style>
-      /* Custom scrollbar for webkit */
-      ::-webkit-scrollbar {
-        width: 4px;
-        height: 4px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #050505;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #1e293b;
-        border-radius: 2px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #334155;
-      }
+      ::-webkit-scrollbar { width: 4px; height: 4px; }
+      ::-webkit-scrollbar-track { background: #050505; }
+      ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 2px; }
+      ::-webkit-scrollbar-thumb:hover { background: #334155; }
+      .no-scrollbar::-webkit-scrollbar { display: none; }
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      .font-arabic { font-family: 'Amiri', serif; }
+      .font-uthmani { font-family: 'Amiri', serif; line-height: 2.5; }
       
-      .no-scrollbar::-webkit-scrollbar {
-        display: none;
-      }
-      .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-      }
-
-      .font-arabic {
-        font-family: 'Amiri', serif;
-      }
-      .font-uthmani {
-        font-family: 'Amiri', serif;
-        line-height: 2.5;
-      }
-
-      /* 
-       * MAZE PATTERN IMPLEMENTATION (Fallback if image fails)
-       */
-      .bg-maze {
+      /* --- CUSTOM BACKGROUND IMPLEMENTATION --- */
+      .bg-pattern-main {
         background-color: #050505;
-        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300BFA5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3Cpath d='M6 24V0h54v24h-4V4H10v20H6zm0 36V36h54v24h-4V40H10v20H6z' stroke='%2300BFA5' stroke-opacity='0.05' stroke-width='2' fill='none'/%3E%3C/g%3E%3C/svg%3E");
-      }
-      
-      .bg-maze-strong {
-         background-color: #050505;
-         background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300BFA5' fill-opacity='0.08'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3Cpath d='M6 24V0h54v24h-4V4H10v20H6zm0 36V36h54v24h-4V40H10v20H6z' stroke='%2300BFA5' stroke-opacity='0.1' stroke-width='2' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+        /* Load from public folder */
+        background-image: url('/bg-pattern.png');
+        background-repeat: repeat;
+        background-size: 300px; /* Adjusted size for better tiling */
+        background-blend-mode: overlay;
       }
 
-      /* Glassmorphism utility */
+      /* --- LOGO EFFECTS --- */
+      .logo-glow {
+        filter: drop-shadow(0 0 8px rgba(0, 191, 165, 0.4));
+        transition: all 0.3s ease;
+      }
+      .logo-glow:hover {
+        filter: drop-shadow(0 0 15px rgba(0, 191, 165, 0.8));
+        transform: scale(1.05);
+      }
+
+      .bg-maze {
+        /* Fallback SVG pattern */
+        background-color: #050505;
+        background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300BFA5' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2v-4h4v-2h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3Cpath d='M6 24V0h54v24h-4V4H10v20H6zm0 36V36h54v24h-4V40H10v20H6z' stroke='%2300BFA5' stroke-opacity='0.05' stroke-width='2' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+      }
+      
       .glass {
         background: rgba(10, 10, 10, 0.6);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.05);
       }
-      
-      /* Helper for safe area on mobile */
-      .pb-safe {
-        padding-bottom: env(safe-area-inset-bottom);
-      }
+      .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
   <script type="importmap">
 {
   "imports": {
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "react": "https://aistudiocdn.com/react@^19.2.0",
-    "framer-motion": "https://aistudiocdn.com/framer-motion@^11.0.0"
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4"
   }
 }
 </script>
 </head>
   <body class="bg-islamic-dark text-slate-200 antialiased selection:bg-primary selection:text-black">
     <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
   </body>
 </html>

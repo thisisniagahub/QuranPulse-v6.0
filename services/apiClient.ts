@@ -120,6 +120,21 @@ class ApiClient {
         return local ? JSON.parse(local) : [];
     }
 
+    async updateOrderStatus(orderId: string, status: 'PENDING' | 'PAID' | 'SHIPPED'): Promise<boolean> {
+        if (this.mode === 'CLOUD' && this.sheetUrl) {
+            return await GoogleSheetService.postData(this.sheetUrl, 'updateOrderStatus', { id: orderId, status });
+        }
+        // Mock
+        const orders = await this.getOrders();
+        const index = orders.findIndex(o => o.id === orderId);
+        if (index !== -1) {
+            orders[index].status = status;
+            localStorage.setItem('cms_orders', JSON.stringify(orders));
+            return true;
+        }
+        return false;
+    }
+
     async getUsers(): Promise<UserProfile[]> {
         if (this.mode === 'CLOUD' && this.sheetUrl) {
             const res = await GoogleSheetService.getUsers(this.sheetUrl);

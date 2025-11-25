@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 interface LandingPageProps {
@@ -61,10 +62,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             <div className="w-28 h-28 mx-auto relative z-10 bg-gradient-to-br from-[#0f172a] to-black rounded-3xl border border-secondary/20 shadow-[0_0_50px_rgba(234,179,8,0.1)] flex items-center justify-center p-5 transform transition-transform group-hover:scale-105 duration-700">
                  {/* Inner Gold Border */}
                  <div className="absolute inset-2 border border-secondary/10 rounded-2xl"></div>
+                 {/* --- LOGO IMPLEMENTATION --- */}
                  <img 
-                   src="src/assets/branding/logo-full.png" 
+                   src="/logo.png" 
                    alt="QuranPulse Logo" 
-                   className="w-full h-full object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] animate-pulse-glow"
+                   className="w-full h-full object-contain drop-shadow-[0_4px_6px_rgba(0,0,0,0.5)] animate-pulse-glow logo-glow"
                    onError={(e) => {
                      e.currentTarget.style.display = 'none';
                      document.getElementById('lp-logo-fallback')!.style.display = 'flex';

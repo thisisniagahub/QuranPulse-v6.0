@@ -38,8 +38,11 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigate }) =>
       {/* --- MOBILE APP SHELL CONTAINER --- */}
       <div className="flex flex-col h-full w-full max-w-[480px] bg-islamic-dark relative shadow-2xl md:border-x md:border-white/10">
           
+          {/* --- BACKGROUND PATTERN IMPLEMENTATION --- */}
+          <div className="absolute inset-0 bg-pattern-main opacity-25 pointer-events-none z-0"></div>
+
           {/* --- VISUAL IDENTITY v5.0 GLOBAL BACKGROUNDS --- */}
-          {/* Top Header Pattern */}
+          {/* Top Header Pattern (Layered over main pattern) */}
           <div className="absolute top-0 left-0 w-full h-64 bg-[url('src/assets/bg/kufi-header.jpg')] bg-top bg-no-repeat bg-contain -z-10 opacity-30 pointer-events-none mix-blend-screen"></div>
           
           {/* Bottom Footer Pattern */}
@@ -49,7 +52,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigate }) =>
           <div className="absolute inset-0 bg-gradient-to-b from-islamic-dark/50 via-islamic-dark/90 to-islamic-dark/80 -z-10 pointer-events-none"></div>
 
 
-          {/* Header with Maze Pattern */}
+          {/* Header */}
           <header className="h-16 bg-islamic-panel/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden">
             
             <div 
@@ -58,15 +61,15 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigate }) =>
                 aria-label="Go to Dashboard"
                 role="button"
             >
-              {/* 3D Logo Concept */}
+              {/* --- HEADER LOGO IMPLEMENTATION --- */}
               <div className="w-10 h-10 relative flex items-center justify-center">
                  <div className="absolute inset-0 bg-primary blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
                  <div className="relative w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl border border-white/10 shadow-inner flex items-center justify-center overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50"></div>
                     <img 
-                       src="src/assets/branding/logo-full.png" 
+                       src="/logo.png" 
                        alt="App Logo" 
-                       className="w-7 h-7 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] z-10"
+                       className="w-8 h-8 object-contain logo-glow z-10"
                        onError={(e) => {
                          e.currentTarget.style.display = 'none';
                          document.getElementById('nav-logo-fallback')!.style.display = 'flex';
@@ -108,7 +111,7 @@ const Layout: React.FC<LayoutProps> = ({ children, currentView, onNavigate }) =>
           </header>
 
           {/* Main Content Area (Scrollable) */}
-          <main className="flex-1 overflow-y-auto pb-28 relative no-scrollbar bg-transparent w-full">
+          <main className="flex-1 overflow-y-auto pb-28 relative no-scrollbar bg-transparent w-full z-10">
             {children}
           </main>
 

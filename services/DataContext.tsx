@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product, UserProfile, Announcement, Order, SystemLog, CartItem, AppConfigItem } from '../types';
 import { api } from './apiClient'; 
@@ -21,6 +20,8 @@ interface DataContextType {
     updateUser: (user: Partial<UserProfile>) => Promise<void>;
     
     placeOrder: (cart: CartItem[], name: string) => Promise<boolean>;
+    updateOrderStatus: (id: string, status: 'PENDING' | 'PAID' | 'SHIPPED') => Promise<void>;
+    
     updateAppConfig: (key: string, value: string) => Promise<void>;
     refreshData: () => Promise<void>;
     backendMode: 'MOCK' | 'CLOUD';
@@ -49,6 +50,10 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 api.getOrders(), api.getLogs(), api.getUsers(), api.getAppConfig(), api.getAnnouncements()
             ]);
             setOrders(o); setLogs(l); setUsers(u); setAppConfig(c); setAnnouncements(a);
+        } else {
+             // Load Mock Orders/Users for Local Mode
+             const [o, u, a] = await Promise.all([api.getOrders(), api.getUsers(), api.getAnnouncements()]);
+             setOrders(o); setUsers(u); setAnnouncements(a);
         }
         setBackendMode(api.getMode());
     };
@@ -95,6 +100,11 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         return success;
     };
 
+    const updateOrderStatus = async (id: string, status: 'PENDING' | 'PAID' | 'SHIPPED') => {
+        await api.updateOrderStatus(id, status);
+        await refreshData();
+    };
+
     const connectCloud = (url: string) => {
         api.setSheetUrl(url);
         setBackendMode('CLOUD');
@@ -106,7 +116,8 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             addProduct, updateProduct, deleteProduct,
             addAnnouncement, deleteAnnouncement,
             updateUser,
-            placeOrder, updateAppConfig, refreshData, backendMode, connectCloud
+            placeOrder, updateOrderStatus,
+            updateAppConfig, refreshData, backendMode, connectCloud
         }}>
             {children}
         </DataContext.Provider>

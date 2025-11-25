@@ -54,9 +54,11 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-islamic-dark relative overflow-hidden">
       
-      {/* Background Elements & Animations */}
-      <div className="absolute inset-0 bg-maze-strong opacity-30 z-0"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-islamic-dark/80 via-islamic-dark/90 to-islamic-dark z-0 pointer-events-none"></div>
+      {/* --- BACKGROUND IMPLEMENTATION --- */}
+      {/* 1. Pattern Layer */}
+      <div className="absolute inset-0 bg-pattern-main opacity-40 z-0"></div>
+      {/* 2. Gradient Overlay for Readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-islamic-dark/70 via-islamic-dark/80 to-islamic-dark z-0 pointer-events-none"></div>
       
       {/* Rotating Decorative Stars */}
       <div className="absolute -top-32 -right-32 w-96 h-96 opacity-10 pointer-events-none animate-[spin_60s_linear_infinite]">
@@ -72,16 +74,16 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
 
       <div className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl p-8 rounded-3xl border border-teal-pulse/30 shadow-[0_0_40px_rgba(20,184,166,0.15)] animate-fade-in relative z-10 transition-all duration-500">
         <div className="text-center mb-8">
-          {/* Logo Container - Ensuring placement as per screenshot */}
+          {/* --- LOGO IMPLEMENTATION --- */}
           <div className="w-32 h-32 mx-auto mb-4 relative group flex items-center justify-center">
-             {/* Glow effect */}
-             <div className="absolute inset-0 bg-teal-pulse/20 blur-2xl rounded-full opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
+             {/* Glow effect behind logo */}
+             <div className="absolute inset-0 bg-teal-pulse/20 blur-3xl rounded-full opacity-50 group-hover:opacity-70 transition-opacity duration-500"></div>
              
-             {/* The Logo Image (logo.png) */}
+             {/* The PNG Logo with visual enhancements */}
              <img 
-               src="logo.png" 
+               src="/logo.png" 
                alt="QuranPulse" 
-               className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(20,184,166,0.3)] relative z-10 transform group-hover:scale-105 transition-transform duration-500 animate-pulse-glow"
+               className="w-full h-full object-contain relative z-10 logo-glow animate-pulse-glow"
                onError={(e) => {
                  e.currentTarget.style.display = 'none';
                  const fallback = document.getElementById('auth-fallback-logo');
@@ -89,12 +91,12 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                }}
              />
              {/* Fallback if image fails */}
-             <div id="auth-fallback-logo" className="hidden w-20 h-20 rounded-2xl bg-gradient-to-br from-teal-pulse to-teal-dark items-center justify-center shadow-[0_0_25px_rgba(20,184,166,0.5)] absolute z-0 animate-pulse-glow">
+             <div id="auth-fallback-logo" className="hidden w-24 h-24 rounded-2xl bg-gradient-to-br from-teal-pulse to-teal-dark items-center justify-center shadow-[0_0_25px_rgba(20,184,166,0.5)] absolute z-0">
                 <i className="fa-solid fa-cube text-4xl text-white"></i>
              </div>
           </div>
 
-          <h2 className="text-4xl font-bold text-white mb-1 tracking-tight font-serif">QuranPulse</h2>
+          <h2 className="text-4xl font-bold text-white mb-1 tracking-tight font-serif drop-shadow-lg">QuranPulse</h2>
           <p className="text-teal-pulse/80 text-xs font-bold tracking-[0.2em] uppercase">Genesis Master Edition</p>
         </div>
 
