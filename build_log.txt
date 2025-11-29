@@ -1,0 +1,33 @@
+
+> quran-pulse-v6.0@0.0.0 build
+> vite build
+
+[36mvite v6.4.1 [32mbuilding for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 43 modules transformed.
+Γ£ù Build failed in 2.48s
+error during build:
+[vite-plugin-pwa:build] [plugin vite-plugin-pwa:build] components/dashboard/StatsCards.tsx (43:10): There was an error during the build:
+  Transform failed with 1 error:
+H:/ANTIGRAVITY/QuranPulse-v6.0/components/dashboard/StatsCards.tsx:43:10: ERROR: Unterminated regular expression
+Additionally, handling the error in the 'buildEnd' hook caused the following error:
+  Transform failed with 1 error:
+H:/ANTIGRAVITY/QuranPulse-v6.0/components/dashboard/StatsCards.tsx:43:10: ERROR: Unterminated regular expression
+file: H:/ANTIGRAVITY/QuranPulse-v6.0/components/dashboard/StatsCards.tsx:43:10
+
+Unterminated regular expression
+41 |          </p>
+42 |        </div>
+43 |      </div>
+   |            ^
+44 |    );
+45 |  };
+
+    at getRollupError (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
+    at file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:23347:39
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async catchUnfinishedHookActions (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:22805:16)
+    at async rollupInternal (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:23330:5)
+    at async buildEnvironment (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/vite/dist/node/chunks/dep-D4NMHUTW.js:46235:14)
+    at async Object.defaultBuildApp [as buildApp] (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/vite/dist/node/chunks/dep-D4NMHUTW.js:46713:5)
+    at async CAC.<anonymous> (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/vite/dist/node/cli.js:863:7)

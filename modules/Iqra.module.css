@@ -1,0 +1,20 @@
+/* Progress bar styles */
+.progressBar {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary-color), var(--primary-light-color));
+  transition: all 700ms ease-out;
+  width: var(--book-progress);
+}
+
+/* Visualizer styles */
+.visualizerBar {
+  height: var(--visualizer-height);
+  min-height: 10%;
+  max-height: 100%;
+}
+
+/* Animation delay styles for error items */
+.errorItem {
+  animation-fill-mode: both;
+  animation-delay: var(--delay);
+}

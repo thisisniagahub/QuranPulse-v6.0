@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["node", "vite/client", "react", "react-dom", "jest", "@testing-library/jest-dom", "@testing-library/react"],
+    "skipLibCheck": true
+  },
+  "include": [
+    "**/*.test.ts",
+    "**/*.test.tsx",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "src/__tests__/**/*",
+    "src/setupTests.ts",
+    "src/jest.d.ts"
+  ]
+}

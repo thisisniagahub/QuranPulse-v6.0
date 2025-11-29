@@ -1,0 +1,39 @@
+.quranTextWordByWord {
+  --quran-font-size: 20px; /* Default font size */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 1rem 1rem;
+  text-align: right;
+  direction: rtl;
+}
+
+.quranTextVerse {
+  --quran-font-size: 20px; /* Default font size */
+  font-family: 'Uthmani', serif;
+  line-height: 3;
+  text-align: right;
+  direction: rtl;
+}
+
+/* Dynamic font size classes that can be applied based on fontSize prop */
+.fontSize12 { --quran-font-size: 12px; }
+.fontSize14 { --quran-font-size: 14px; }
+.fontSize16 { --quran-font-size: 16px; }
+.fontSize18 { --quran-font-size: 18px; }
+.fontSize20 { --quran-font-size: 20px; }
+.fontSize22 { --quran-font-size: 22px; }
+.fontSize24 { --quran-font-size: 24px; }
+.fontSize26 { --quran-font-size: 26px; }
+.fontSize28 { --quran-font-size: 28px; }
+.fontSize30 { --quran-font-size: 30px; }
+.fontSize32 { --quran-font-size: 32px; }
+.fontSize34 { --quran-font-size: 34px; }
+.fontSize36 { --quran-font-size: 36px; }
+.fontSize38 { --quran-font-size: 38px; }
+.fontSize40 { --quran-font-size: 40px; }
+.fontSize42 { --quran-font-size: 42px; }
+.fontSize44 { --quran-font-size: 44px; }
+.fontSize46 { --quran-font-size: 46px; }
+.fontSize48 { --quran-font-size: 48px; }
+.fontSize50 { --quran-font-size: 50px; }

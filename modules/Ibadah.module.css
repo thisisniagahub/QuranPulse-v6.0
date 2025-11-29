@@ -1,0 +1,9 @@
+/* Compass rotation styles */
+.compassContainer {
+  transform: rotate(var(--heading));
+}
+
+/* Qibla pointer rotation styles */
+.qiblaPointer {
+  transform: translate(-50%, -100%) rotate(var(--qibla-offset));
+}
