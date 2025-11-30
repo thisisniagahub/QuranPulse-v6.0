@@ -196,6 +196,10 @@ const AppContent: React.FC = () => {
   );
 };
 
+import PulseControlCenter from './components/PulseControlCenter';
+
+// ... (imports)
+
 const App: React.FC = () => {
     return (
         <ErrorBoundary>
@@ -208,6 +212,7 @@ const App: React.FC = () => {
                                     <AppContent />
                                 </Suspense>
                                 <MiniPlayer />
+                                <PulseControlCenter />
                             </BrowserRouter>
                         </GamificationProvider>
                     </AudioPlayerProvider>
