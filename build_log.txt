@@ -4,24 +4,24 @@
 
 [36mvite v6.4.1 [32mbuilding for production...[36m[39m
 transforming...
-[32mΓ£ô[39m 43 modules transformed.
-Γ£ù Build failed in 2.48s
+[32mΓ£ô[39m 28 modules transformed.
+Γ£ù Build failed in 6.62s
 error during build:
-[vite-plugin-pwa:build] [plugin vite-plugin-pwa:build] components/dashboard/StatsCards.tsx (43:10): There was an error during the build:
+[vite-plugin-pwa:build] [plugin vite-plugin-pwa:build] modules/LandingPage.tsx (730:68): There was an error during the build:
   Transform failed with 1 error:
-H:/ANTIGRAVITY/QuranPulse-v6.0/components/dashboard/StatsCards.tsx:43:10: ERROR: Unterminated regular expression
+H:/ANTIGRAVITY/QuranPulse-v6.0/modules/LandingPage.tsx:730:68: ERROR: The character ">" is not valid inside a JSX element
 Additionally, handling the error in the 'buildEnd' hook caused the following error:
   Transform failed with 1 error:
-H:/ANTIGRAVITY/QuranPulse-v6.0/components/dashboard/StatsCards.tsx:43:10: ERROR: Unterminated regular expression
-file: H:/ANTIGRAVITY/QuranPulse-v6.0/components/dashboard/StatsCards.tsx:43:10
+H:/ANTIGRAVITY/QuranPulse-v6.0/modules/LandingPage.tsx:730:68: ERROR: The character ">" is not valid inside a JSX element
+file: H:/ANTIGRAVITY/QuranPulse-v6.0/modules/LandingPage.tsx:730:68
 
-Unterminated regular expression
-41 |          </p>
-42 |        </div>
-43 |      </div>
-   |            ^
-44 |    );
-45 |  };
+The character ">" is not valid inside a JSX element
+728|                              <i className="fa-solid fa-user-astronaut text-6xl text-purple-500/50 mb-6 block"></i>
+729|                              <div className="bg-slate-900/80 p-4 rounded-xl border border-white/10 font-mono text-xs text-slate-300">
+730|                                  <p className="text-purple-400 mb-2">> Ustaz AI is thinking...</p>
+   |                                                                      ^
+731|                                  <p>"Based on the Shafi'i school, the conditions for..."</p>
+732|                              </div>
 
     at getRollupError (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
     at file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:23347:39

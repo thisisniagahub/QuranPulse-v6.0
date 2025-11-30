@@ -239,8 +239,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
           </div>
           
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+              <a href="#mission" className="hover:text-white transition-colors">Mission</a>
               <a href="#features" className="hover:text-white transition-colors">Features</a>
-              <a href="#community" className="hover:text-white transition-colors">Community</a>
               <a href="#premium" className="hover:text-white transition-colors">Premium</a>
           </div>
 
@@ -667,114 +667,124 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
           </div>
       </section>
 
-      {/* --- BENTO GRID FEATURES (Refined) --- */}
-      <section id="features" className="relative z-10 py-16 sm:py-24 bg-black/40 backdrop-blur-lg">
-         <div className="max-w-7xl mx-auto w-full px-4 sm:px-6">
-             <div className="text-center mb-12 sm:mb-16">
-                 <motion.h2 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-3xl md:text-5xl font-bold font-serif mb-4"
-                 >
-                    Engineered for <span className="text-cyan-400">Eternity</span>
-                 </motion.h2>
-                 <motion.p 
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.1 }}
-                    className="text-slate-400 max-w-xl mx-auto text-base sm:text-lg"
-                 >
-                    Advanced tools designed to elevate your spiritual journey.
-                 </motion.p>
+      {/* --- MISSION SECTION (NEW) --- */}
+      <section id="mission" className="relative z-10 py-24 bg-black/40 backdrop-blur-lg">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+              >
+                  <h2 className="text-3xl md:text-5xl font-bold font-serif mb-6">Bridging <span className="text-cyan-400">Faith</span> & <span className="text-purple-400">Future</span></h2>
+                  <p className="text-lg md:text-xl text-slate-400 leading-relaxed mb-8">
+                      In a world of noise, finding focus for your Deen can be challenging. 
+                      We built QuranPulse to be more than just an app—it's a sanctuary. 
+                      By fusing timeless Islamic scholarship with cutting-edge Artificial Intelligence, 
+                      we've created a companion that understands your journey, answers your questions, 
+                      and helps you build a lasting connection with the Quran.
+                  </p>
+                  <div className="w-24 h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto"></div>
+              </motion.div>
+          </div>
+      </section>
+
+      {/* --- MODULE DEEP DIVE (NEW) --- */}
+      <section id="features" className="relative z-10 py-24">
+         <div className="max-w-7xl mx-auto w-full px-6 space-y-32">
+             
+             {/* 1. SMART QURAN */}
+             <div className="flex flex-col md:flex-row items-center gap-12">
+                 <div className="flex-1">
+                     <TiltCard>
+                        <div className="bg-gradient-to-br from-cyan-900/20 to-black border border-cyan-500/20 rounded-3xl p-8 h-full relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-cyan-500/5 blur-3xl group-hover:bg-cyan-500/10 transition-colors"></div>
+                            <i className="fa-solid fa-book-quran text-6xl text-cyan-500/50 mb-6 block"></i>
+                            <img src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop" alt="Quran" className="rounded-xl opacity-60 mix-blend-luminosity hover:mix-blend-normal transition-all duration-500" />
+                        </div>
+                     </TiltCard>
+                 </div>
+                 <div className="flex-1 space-y-6">
+                     <h3 className="text-4xl font-bold text-white">The Intelligent Quran</h3>
+                     <p className="text-slate-400 text-lg leading-relaxed">
+                         Read, listen, and reflect like never before. Our advanced Quran engine features 
+                         <span className="text-cyan-400"> word-by-word analysis</span>, 
+                         <span className="text-cyan-400"> dynamic transliteration</span>, and 
+                         <span className="text-cyan-400"> AI-powered Tafsir</span> that explains verses in context.
+                     </p>
+                     <ul className="space-y-3 text-slate-300">
+                         <li className="flex items-center gap-3"><i className="fa-solid fa-check text-cyan-500"></i> Uthmani & IndoPak Scripts</li>
+                         <li className="flex items-center gap-3"><i className="fa-solid fa-check text-cyan-500"></i> 50+ World-Renowned Reciters</li>
+                         <li className="flex items-center gap-3"><i className="fa-solid fa-check text-cyan-500"></i> Smart Bookmarking & Notes</li>
+                     </ul>
+                 </div>
              </div>
 
-             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-                 
-                 {/* Feature 1: Large */}
-                 <TiltCard className="md:col-span-2 h-full">
-                    <motion.div 
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="glass-premium rounded-3xl p-6 sm:p-8 hover:border-cyan-500/30 transition-all group relative overflow-hidden cursor-default h-full"
-                    >
-                        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-[80px] group-hover:bg-cyan-500/10 transition-colors"></div>
-                        <div className="relative z-10">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-cyan-900/20 flex items-center justify-center mb-4 sm:mb-6 border border-cyan-500/20">
-                                <i className="fa-solid fa-fingerprint text-xl sm:text-2xl text-cyan-400"></i>
-                            </div>
-                            <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">Personalized AI Companion</h3>
-                            <p className="text-slate-400 leading-relaxed max-w-md text-sm sm:text-base">Adaptive learning algorithms that tailor the Quranic experience to your pace, understanding your unique spiritual needs.</p>
-                        </div>
-                    </motion.div>
-                 </TiltCard>
-
-                 {/* Feature 2 */}
-                 <TiltCard className="h-full">
-                    <motion.div 
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
-                        className="glass-premium rounded-3xl p-6 sm:p-8 hover:border-amber-500/30 transition-all group relative overflow-hidden cursor-default h-full"
-                    >
-                        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-amber-900/20 flex items-center justify-center mb-4 sm:mb-6 border border-amber-500/20">
-                            <i className="fa-solid fa-shield-halved text-xl sm:text-2xl text-amber-400"></i>
-                        </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Syariah Compliant</h3>
-                        <p className="text-slate-400 text-sm">Verified content backed by Ahli Sunnah Wal Jamaah sources.</p>
-                    </motion.div>
-                 </TiltCard>
-
-                 {/* Feature 3 */}
-                 <TiltCard className="h-full">
-                    <motion.div 
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.4 }}
-                        className="glass-premium rounded-3xl p-6 sm:p-8 hover:border-purple-500/30 transition-all group relative overflow-hidden cursor-default h-full"
-                    >
-                        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-purple-500 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-purple-900/20 flex items-center justify-center mb-4 sm:mb-6 border border-purple-500/20">
-                            <i className="fa-solid fa-infinity text-xl sm:text-2xl text-purple-400"></i>
-                        </div>
-                        <h3 className="text-lg sm:text-xl font-bold text-white mb-2 sm:mb-3">Lifetime Legacy</h3>
-                        <p className="text-slate-400 text-sm">Join now to secure founding member status and locked-in benefits.</p>
-                    </motion.div>
-                 </TiltCard>
-
-                 {/* Feature 4: Large */}
-                 <TiltCard className="md:col-span-2 h-full">
-                    <motion.div 
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.5 }}
-                        className="glass-premium rounded-3xl p-6 sm:p-8 hover:border-cyan-500/30 transition-all group relative overflow-hidden cursor-default h-full"
-                    >
-                        <div className="absolute top-0 left-0 w-64 h-64 bg-cyan-500/5 rounded-full blur-[80px] group-hover:bg-cyan-500/10 transition-colors"></div>
-                        <div className="relative z-10 flex flex-col md:flex-row items-center gap-8">
-                            <div className="flex-1">
-                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-cyan-900/20 flex items-center justify-center mb-4 sm:mb-6 border border-cyan-500/20">
-                                    <i className="fa-solid fa-cube text-xl sm:text-2xl text-cyan-400"></i>
-                                </div>
-                                <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-3">Immersive 3D Experience</h3>
-                                <p className="text-slate-400 leading-relaxed text-sm sm:text-base">Interact with the Quran in a completely new dimension. Visualizations that bring the divine words to life.</p>
-                            </div>
-                            <div className="w-full md:w-1/3 h-32 bg-black/50 rounded-xl border border-white/10 flex items-center justify-center group-hover:scale-105 transition-transform">
-                                <span className="text-xs font-mono text-slate-500">Interactive Preview</span>
+             {/* 2. USTAZ AI */}
+             <div className="flex flex-col md:flex-row-reverse items-center gap-12">
+                 <div className="flex-1">
+                     <TiltCard>
+                        <div className="bg-gradient-to-br from-purple-900/20 to-black border border-purple-500/20 rounded-3xl p-8 h-full relative overflow-hidden group">
+                            <div className="absolute inset-0 bg-purple-500/5 blur-3xl group-hover:bg-purple-500/10 transition-colors"></div>
+                            <i className="fa-solid fa-user-astronaut text-6xl text-purple-500/50 mb-6 block"></i>
+                            <div className="bg-slate-900/80 p-4 rounded-xl border border-white/10 font-mono text-xs text-slate-300">
+                                <p className="text-purple-400 mb-2">&gt; Ustaz AI is thinking...</p>
+                                <p>"Based on the Shafi'i school, the conditions for..."</p>
                             </div>
                         </div>
-                    </motion.div>
-                 </TiltCard>
-
+                     </TiltCard>
+                 </div>
+                 <div className="flex-1 space-y-6">
+                     <h3 className="text-4xl font-bold text-white">Meet Ustaz AI</h3>
+                     <p className="text-slate-400 text-lg leading-relaxed">
+                         Your personal spiritual guide, available 24/7. Trained on verified Islamic sources, 
+                         Ustaz AI answers your questions about Fiqh, history, and daily life with 
+                         <span className="text-purple-400"> precision and empathy</span>.
+                     </p>
+                     <ul className="space-y-3 text-slate-300">
+                         <li className="flex items-center gap-3"><i className="fa-solid fa-check text-purple-500"></i> Context-Aware Answers</li>
+                         <li className="flex items-center gap-3"><i className="fa-solid fa-check text-purple-500"></i> Source Citations (Quran & Hadith)</li>
+                         <li className="flex items-center gap-3"><i className="fa-solid fa-check text-purple-500"></i> Multi-Madhab Support</li>
+                     </ul>
+                 </div>
              </div>
+
+             {/* 3. IQRA & IBADAH */}
+             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                 <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-amber-500/30 transition-all">
+                     <i className="fa-solid fa-graduation-cap text-4xl text-amber-500 mb-4"></i>
+                     <h3 className="text-2xl font-bold text-white mb-3">Iqra Academy</h3>
+                     <p className="text-slate-400 mb-4">Gamified learning for all ages. Master Tajweed, memorize Surahs, and expand your Arabic vocabulary with interactive lessons.</p>
+                     <span className="text-amber-500 text-sm font-bold uppercase tracking-wider">Learn More &rarr;</span>
+                 </div>
+                 <div className="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-green-500/30 transition-all">
+                     <i className="fa-solid fa-kaaba text-4xl text-green-500 mb-4"></i>
+                     <h3 className="text-2xl font-bold text-white mb-3">Precision Ibadah</h3>
+                     <p className="text-slate-400 mb-4">Never miss a prayer. Astronomical accuracy for prayer times, Qibla direction, and Islamic calendar events.</p>
+                     <span className="text-green-500 text-sm font-bold uppercase tracking-wider">Explore Tools &rarr;</span>
+                 </div>
+             </div>
+
          </div>
+      </section>
+
+      {/* --- FAQ SECTION (NEW) --- */}
+      <section className="py-24 bg-black relative z-10 border-t border-white/5">
+          <div className="max-w-3xl mx-auto px-6">
+              <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+              <div className="space-y-6">
+                  {[
+                      { q: "Is the AI content verified?", a: "Yes. Ustaz AI is trained on a strictly curated dataset of verified Islamic texts, Tafsir, and Hadith collections. It prioritizes accuracy and provides sources." },
+                      { q: "Is QuranPulse free to use?", a: "We offer a generous Free Tier that includes full Quran access, ad-free reading, and basic AI features. The Pro plan unlocks unlimited AI chats and advanced learning tools." },
+                      { q: "Can I use it offline?", a: "Absolutely. You can download Surahs, audio recitations, and lesson packs for offline access anywhere." },
+                      { q: "Which platforms are supported?", a: "QuranPulse is available as a Progressive Web App (PWA) for iOS, Android, Windows, and Mac. Install it directly from your browser." }
+                  ].map((item, i) => (
+                      <div key={i} className="border-b border-white/10 pb-6">
+                          <h4 className="text-lg font-bold text-white mb-2">{item.q}</h4>
+                          <p className="text-slate-400">{item.a}</p>
+                      </div>
+                  ))}
+              </div>
+          </div>
       </section>
 
       {/* --- FOOTER --- */}
