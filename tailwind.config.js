@@ -64,6 +64,7 @@ export default {
         'tilt': 'tilt 10s infinite linear',
         'aurora-reverse': 'aurora-reverse 20s linear infinite',
         'bounce-slow': 'bounce-slow 3s infinite',
+        'ping-slow': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
       },
       keyframes: {
         fadeIn: {

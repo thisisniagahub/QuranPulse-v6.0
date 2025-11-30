@@ -129,6 +129,126 @@ const TiltCard = ({ children, className }: { children: React.ReactNode, classNam
     );
 };
 
+// --- WHATSAPP PULSE BUTTON ---
+const WhatsAppButton = () => (
+    <motion.a
+        href="https://wa.me/601155559999?text=Salam%20Team%20QuranPulse,%20I'm%20interested%20in%20the%20Genesis%20Batch."
+        target="_blank"
+        rel="noopener noreferrer"
+        initial={{ scale: 0 }}
+        animate={{ scale: 1 }}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-6 right-6 z-50 w-14 h-14 sm:w-16 sm:h-16 bg-[#25D366] rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(37,211,102,0.5)] cursor-pointer group"
+    >
+        {/* Lighting Pulse Animation */}
+        <div className="absolute inset-0 rounded-full border-2 border-[#25D366] opacity-0 animate-ping-slow"></div>
+        <div className="absolute inset-0 rounded-full border border-[#25D366] opacity-0 animate-ping delay-75"></div>
+        
+        <i className="fa-brands fa-whatsapp text-2xl sm:text-3xl text-white z-10"></i>
+        
+        {/* Tooltip */}
+        <div className="absolute right-full mr-4 bg-white text-black px-3 py-1 rounded-lg text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap shadow-lg">
+            Chat with Us
+        </div>
+    </motion.a>
+);
+
+// --- BUSINESS PROPOSAL SECTION ---
+const BusinessSection = () => (
+    <section id="business" className="py-20 bg-gradient-to-b from-black to-slate-900 border-t border-white/5 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+        <div className="max-w-5xl mx-auto px-6 relative z-10">
+            <div className="bg-gradient-to-r from-slate-900 to-black border border-white/10 rounded-3xl p-8 sm:p-12 flex flex-col md:flex-row items-center gap-10 shadow-2xl">
+                <div className="flex-1 text-center md:text-left">
+                    <h2 className="text-3xl font-bold font-serif text-white mb-4">Partner with <span className="text-cyan-400">QuranPulse</span></h2>
+                    <p className="text-slate-400 mb-8 leading-relaxed">
+                        We are building the future of Islamic Technology. Whether you are an investor, a mosque committee, or a developer, we want to collaborate.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <button className="px-6 py-3 bg-white text-black font-bold rounded-xl hover:bg-slate-200 transition-colors flex items-center gap-2">
+                            <i className="fa-solid fa-file-pdf"></i>
+                            Download Pitch Deck
+                        </button>
+                        <button className="px-6 py-3 border border-white/20 text-white font-bold rounded-xl hover:bg-white/5 transition-colors">
+                            Contact CEO
+                        </button>
+                    </div>
+                </div>
+                <div className="w-full md:w-1/3">
+                    <TiltCard>
+                        <div className="aspect-[4/5] bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-2xl border border-white/10 flex items-center justify-center relative overflow-hidden">
+                            <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(0deg,white,transparent)]"></div>
+                            <i className="fa-solid fa-handshake text-6xl text-white/50"></i>
+                            <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-lg border border-white/10">
+                                <p className="text-xs text-cyan-400 font-mono mb-1">GROWTH METRIC</p>
+                                <p className="text-xl font-bold text-white">+1000% <span className="text-xs font-normal text-slate-400">YoY</span></p>
+                            </div>
+                        </div>
+                    </TiltCard>
+                </div>
+            </div>
+        </div>
+    </section>
+);
+
+// --- ADVANCED TOOLS TEASER ---
+const AdvancedTools = () => (
+    <section className="py-24 bg-black relative z-10">
+        <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+                <span className="text-cyan-500 font-bold tracking-widest uppercase text-xs mb-2 block">Coming Soon</span>
+                <h2 className="text-3xl md:text-5xl font-bold font-serif text-white mb-4">Future <span className="text-purple-500">Intelligence</span></h2>
+                <p className="text-slate-400 max-w-2xl mx-auto">We are constantly pushing the boundaries of Islamic Tech. Here is what's next.</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Tool 1: Faraid */}
+                <TiltCard>
+                    <div className="bg-white/5 border border-white/10 rounded-3xl p-8 h-full relative overflow-hidden group hover:border-cyan-500/30 transition-colors">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-2xl group-hover:bg-cyan-500/20 transition-colors"></div>
+                        <i className="fa-solid fa-calculator text-4xl text-cyan-500 mb-6"></i>
+                        <h3 className="text-xl font-bold text-white mb-2">AI Faraid Calculator</h3>
+                        <p className="text-slate-400 text-sm mb-4">Complex inheritance calculations solved instantly with Shariah-compliant algorithms.</p>
+                        <div className="flex items-center gap-2 text-xs font-mono text-cyan-400">
+                            <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse"></span>
+                            In Development
+                        </div>
+                    </div>
+                </TiltCard>
+
+                {/* Tool 2: Zakat AI */}
+                <TiltCard>
+                    <div className="bg-white/5 border border-white/10 rounded-3xl p-8 h-full relative overflow-hidden group hover:border-green-500/30 transition-colors">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full blur-2xl group-hover:bg-green-500/20 transition-colors"></div>
+                        <i className="fa-solid fa-hand-holding-dollar text-4xl text-green-500 mb-6"></i>
+                        <h3 className="text-xl font-bold text-white mb-2">Smart Zakat AI</h3>
+                        <p className="text-slate-400 text-sm mb-4">Connect your bank accounts and investment portfolios for automated Zakat purification.</p>
+                        <div className="flex items-center gap-2 text-xs font-mono text-green-400">
+                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                            In Development
+                        </div>
+                    </div>
+                </TiltCard>
+
+                {/* Tool 3: Halal Scanner */}
+                <TiltCard>
+                    <div className="bg-white/5 border border-white/10 rounded-3xl p-8 h-full relative overflow-hidden group hover:border-amber-500/30 transition-colors">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl group-hover:bg-amber-500/20 transition-colors"></div>
+                        <i className="fa-solid fa-barcode text-4xl text-amber-500 mb-6"></i>
+                        <h3 className="text-xl font-bold text-white mb-2">AR Halal Scanner</h3>
+                        <p className="text-slate-400 text-sm mb-4">Point your camera at any product to instantly verify its Halal status and ingredients.</p>
+                        <div className="flex items-center gap-2 text-xs font-mono text-amber-400">
+                            <span className="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
+                            In Development
+                        </div>
+                    </div>
+                </TiltCard>
+            </div>
+        </div>
+    </section>
+);
+
 const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   const [spotsLeft, setSpotsLeft] = useState(47);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
@@ -767,6 +887,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
          </div>
       </section>
 
+      <AdvancedTools />
+
       {/* --- FAQ SECTION (NEW) --- */}
       <section className="py-24 bg-black relative z-10 border-t border-white/5">
           <div className="max-w-3xl mx-auto px-6">
@@ -787,6 +909,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
           </div>
       </section>
 
+      <BusinessSection />
       {/* --- FOOTER --- */}
       <footer className="bg-black py-12 sm:py-16 border-t border-white/10 relative z-10">
           <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12">
@@ -855,6 +978,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
         )}
       </AnimatePresence>
 
+      <WhatsAppButton />
     </div>
   );
 };
