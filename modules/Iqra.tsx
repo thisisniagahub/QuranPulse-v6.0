@@ -1,151 +1,73 @@
 
 import React, { useState, useRef, useEffect } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
 import { getTafsirForVerse, analyzeText, getVerseConnections, analyzeQuranRecitation, generateIslamicVideo, generateSpeech, analyzeTajweedPosture } from '../services/aiService';
 import { speak, stopTTS } from '../services/ttsService';
-import { UserProfile } from '../types';
+import { UserProfile, IqraPage, IqraCell } from '../types';
 import { PulseLoader } from '../components/PulseLoader';
 import styles from './Iqra.module.css';
 import VocabBuilder from './iqra/VocabBuilder';
+import { motion } from 'framer-motion';
 
-// --- DATA: DIGITAL IQRA CONTENT (TRANSCRIPT FROM SCREENSHOTS) ---
-// "WAJIB KEKAL 100%" - Data structure mimics the physical book layout (Grids)
+// Configure PDF Worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-const IQRA_BOOKS_DATA = [
-  {
-    id: 'iqra-1',
-    title: "Iqra' 1",
-    color: "border-b-4 border-pink-500",
-    bg: "bg-pink-500/10",
-    pages: [
-      {
-        pageNumber: 3,
-        title: "Pengenalan Alif & Ba",
-        instruction: "Baca terus A (Alif), B (Ba) dan seterusnya. Tidak perlu dieja.",
-        // Mimicking the grid layout from Screenshot Page 3
-        content: [
-          ["أ", "ب"],
-          ["ب", "أ", "ب", "أ", "ب", "أ"],
-          ["ب", "أ", "ب", "أ", "أ", "أ"],
-          ["ب", "أ", "ب", "أ", "ب", "ب"],
-          ["ب", "أ", "ب", "أ", "ب", "أ"],
-          ["أ", "أ", "أ", "ب", "ب", "ب"],
-          ["أ", "ب", "أ", "ب", "أ", "ب"]
-        ]
-      },
-      {
-        pageNumber: 7,
-        title: "Huruf Ta",
-        instruction: "Baca terus A, Ba, Ta dan seterusnya.",
-        // Mimicking Screenshot Page 7
-        content: [
-          ["ب", "ت"],
-          ["أ", "ت", "ب", "ت", "ب", "أ"],
-          ["ت", "أ", "ب", "أ", "ب", "ت"],
-          ["ب", "ت", "أ", "أ", "ت", "ب"],
-          ["ت", "أ", "ت", "ب", "أ", "ت"],
-          ["أ", "ت", "ت", "ب", "ت", "ب"],
-          ["أ", "ب", "ت", "أ", "ب", "ت"]
-        ]
-      },
-      {
-        pageNumber: 9,
-        title: "Huruf Tsa",
-        instruction: "Makhraj Tsa: Hujung lidah bertemu hujung gigi kaci atas.",
-        // Mimicking Screenshot Page 9
-        content: [
-          ["ب", "ت", "ث"],
-          ["ث", "أ", "ب", "ث", "ب", "ت"],
-          ["ب", "ت", "ث", "ب", "أ", "ث"],
-          ["أ", "ت", "ب", "ث", "ب", "ث"],
-          ["ت", "ب", "ث", "ث", "أ", "ث"],
-          ["أ", "ت", "ث", "ب", "ث", "ث"],
-          ["ث", "ب", "ت", "ث", "ت", "ث"],
-          ["أ", "ب", "ت", "ث", "أ", "ب", "ت", "ث"]
-        ]
-      },
-      {
-        pageNumber: 11,
-        title: "Huruf Jim",
-        instruction: "Jim (Je). Tengah lidah.",
-        // Mimicking Screenshot Page 11
-        content: [
-          ["ج"],
-          ["أ", "ج", "ج", "أ", "ج", "أ"],
-          ["أ", "ت", "ج", "أ", "ت", "ج"],
-          ["ب", "ج", "ت", "ث", "ج", "ث"],
-          ["ج", "أ", "ب", "ج", "أ", "ث"],
-          ["ت", "أ", "ج", "ج", "ج", "ج"],
-          ["ج", "أ", "ج", "ث", "ث", "ث"],
-          ["أ", "ب", "ت", "ث", "ج"]
-        ]
-      },
-      {
-        pageNumber: 13,
-        title: "Huruf Ha (Pedas)",
-        instruction: "Ha (Pedas). Bersih & Nyaring.",
-        // Mimicking Screenshot Page 13
-        content: [
-          ["ج", "ح"],
-          ["ج", "أ", "ح", "ح", "ح", "ث"],
-          ["ح", "ج", "ت", "ب", "ح", "ث"],
-          ["ج", "ح", "ت", "أ", "ح", "ب"],
-          ["ج", "أ", "ث", "ح", "أ", "ح"],
-          ["ث", "ب", "ح", "ت", "أ", "ح"],
-          ["أ", "ج", "ج", "أ", "ح", "ح"],
-          ["أ", "ب", "ت", "ث", "ج", "ح"]
-        ]
-      },
-      {
-        pageNumber: 15,
-        title: "Huruf Kho",
-        instruction: "Kho. Bunyi berdengkur sedikit.",
-        // Mimicking Screenshot Page 15
-        content: [
-          ["ج", "ح", "خ"],
-          ["ح", "أ", "خ", "ج", "أ", "خ"],
-          ["ث", "أ", "خ", "خ", "ت", "ج"],
-          ["ب", "أ", "خ", "ت", "ح", "ث"],
-          ["ج", "أ", "خ", "ث", "ح", "ت"],
-          ["ت", "أ", "خ", "ج", "ح", "ث"],
-          ["أ", "خ", "خ", "ج", "ح", "ح"],
-          ["أ", "ب", "ت", "ث", "ج", "ح", "خ"]
-        ]
-      }
+
+
+// --- MOCK DATA FOR SMART CELLS ---
+const MOCK_IQRA_PAGE_1: IqraPage = {
+    pageNumber: 1,
+    cells: [
+        { id: 'c1', x: 10, y: 10, width: 20, height: 10, content: { arabic: 'بَ', transliteration: 'Ba', audioUrl: '/audio/iqra/1/ba.mp3' } },
+        { id: 'c2', x: 40, y: 10, width: 20, height: 10, content: { arabic: 'تَ', transliteration: 'Ta', audioUrl: '/audio/iqra/1/ta.mp3' } },
+        { id: 'c3', x: 70, y: 10, width: 20, height: 10, content: { arabic: 'ثَ', transliteration: 'Tha', audioUrl: '/audio/iqra/1/tha.mp3' } },
+        { id: 'c4', x: 10, y: 30, width: 20, height: 10, content: { arabic: 'جَ', transliteration: 'Ja', audioUrl: '/audio/iqra/1/ja.mp3' } },
+        { id: 'c5', x: 40, y: 30, width: 20, height: 10, content: { arabic: 'حَ', transliteration: 'Ha', audioUrl: '/audio/iqra/1/ha.mp3' } },
+        { id: 'c6', x: 70, y: 30, width: 20, height: 10, content: { arabic: 'خَ', transliteration: 'Kha', audioUrl: '/audio/iqra/1/kha.mp3' } },
     ]
-  },
-  {
-    id: 'iqra-2',
-    title: "Iqra' 2",
-    color: "border-b-4 border-lime-500",
-    bg: "bg-lime-500/10",
-    pages: [] // Can be populated similarly
-  },
-  {
-    id: 'iqra-3',
-    title: "Iqra' 3",
-    color: "border-b-4 border-primary",
-    bg: "bg-primary/10",
-    pages: []
-  }
+};
+
+const MOCK_IQRA_PAGE_2: IqraPage = {
+    pageNumber: 2,
+    cells: [
+        { id: 'c7', x: 15, y: 20, width: 25, height: 15, content: { arabic: 'دَ', transliteration: 'Da', audioUrl: '/audio/iqra/1/da.mp3' } },
+        { id: 'c8', x: 50, y: 20, width: 25, height: 15, content: { arabic: 'ذَ', transliteration: 'Dha', audioUrl: '/audio/iqra/1/dha.mp3' } },
+        { id: 'c9', x: 15, y: 50, width: 25, height: 15, content: { arabic: 'رَ', transliteration: 'Ra', audioUrl: '/audio/iqra/1/ra.mp3' } },
+        { id: 'c10', x: 50, y: 50, width: 25, height: 15, content: { arabic: 'زَ', transliteration: 'Za', audioUrl: '/audio/iqra/1/za.mp3' } },
+    ]
+};
+
+const MOCK_IQRA_PAGE_3: IqraPage = {
+    pageNumber: 3,
+    cells: [
+        { id: 'c11', x: 20, y: 30, width: 30, height: 20, content: { arabic: 'سَ', transliteration: 'Sa', audioUrl: '/audio/iqra/1/sa.mp3' } },
+        { id: 'c12', x: 55, y: 30, width: 30, height: 20, content: { arabic: 'شَ', transliteration: 'Sha', audioUrl: '/audio/iqra/1/sha.mp3' } },
+    ]
+};
+
+const MOCK_PAGES: Record<number, IqraPage> = {
+    1: MOCK_IQRA_PAGE_1,
+    2: MOCK_IQRA_PAGE_2,
+    3: MOCK_IQRA_PAGE_3
+};
+
+// --- DATA: DIGITAL IQRA CONTENT ---
+const IQRA_BOOKS_DATA = [
+  { id: 'iqra-1', title: "Iqra' 1", file: '/books/buku-iqra-1 (1).pdf', color: "from-pink-500 to-rose-500", shadow: "shadow-pink-500/20", icon: "1" },
+  { id: 'iqra-2', title: "Iqra' 2", file: '/books/buku-iqra-2 (1).pdf', color: "from-orange-500 to-amber-500", shadow: "shadow-orange-500/20", icon: "2" },
+  { id: 'iqra-3', title: "Iqra' 3", file: '/books/buku-iqra-3-1 (1).pdf', color: "from-yellow-500 to-lime-500", shadow: "shadow-yellow-500/20", icon: "3" },
+  { id: 'iqra-4', title: "Iqra' 4", file: '/books/buku-iqra-4 (1).pdf', color: "from-green-500 to-emerald-500", shadow: "shadow-green-500/20", icon: "4" },
+  { id: 'iqra-5', title: "Iqra' 5", file: '/books/buku-iqra-5 (1).pdf', color: "from-blue-500 to-cyan-500", shadow: "shadow-blue-500/20", icon: "5" },
+  { id: 'iqra-6', title: "Iqra' 6", file: '/books/buku-iqra-6 (1).pdf', color: "from-purple-500 to-indigo-500", shadow: "shadow-purple-500/20", icon: "6" },
 ];
 
-// Expanded Data for Tajweed Tutorials
+// --- DATA: TAJWEED TUTORIALS ---
 const TAJWEED_TUTORIALS = [
     {
-        id: 'nun-sakinah',
-        title: 'Nun Sakinah Rules',
-        description: 'Master the 4 rules: Izhar, Idgham, Iqlab, and Ikhfa.',
-        icon: 'fa-moon',
-        color: 'text-blue-400',
-        bgColor: 'bg-blue-500/10',
-        borderColor: 'border-blue-500/30',
-        prompt: 'Educational animation explaining Nun Sakinah rules in Tajweed. Show the letter Nun with a sukoon followed by different letters. Visualizing Izhar, Idgham, Iqlab, and Ikhfa with Arabic text examples. Clear and instructional.'
-    },
-    {
         id: 'qalqalah',
-        title: 'The Echo (Qalqalah)',
-        description: 'Bouncing the sound of 5 letters (Qaf, Toa, Ba, Jim, Dal).',
-        icon: 'fa-wifi',
+        title: 'The Qalqalah (Echo)',
+        description: 'Learn how to bounce the sound of Qaf, Toa, Ba, Jim, Dal.',
+        icon: 'fa-wave-square',
         color: 'text-green-400',
         bgColor: 'bg-green-500/10',
         borderColor: 'border-green-500/30',
@@ -183,777 +105,338 @@ const TAJWEED_TUTORIALS = [
     }
 ];
 
-interface AnalysisResult {
-    identified_text: string;
-    accuracy_score: number;
-    tajweed_errors: { error: string; tip: string }[];
-    feedback_summary: string;
-}
-
 interface IqraProps {
     user?: UserProfile;
     onUpdateUser?: (user: UserProfile) => void;
 }
 
-// Haptic Helper
-const triggerHaptic = (type: 'SUCCESS' | 'ERROR' | 'TICK') => {
-    if (!navigator.vibrate) return;
-    if (type === 'SUCCESS') navigator.vibrate([50, 50, 50, 50, 100]); // Pulse
-    if (type === 'ERROR') navigator.vibrate([30, 50, 30]); // Bzz-bzz
-    if (type === 'TICK') navigator.vibrate(15);
-};
-
 const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
   // Mode State
-  const [mode, setMode] = useState<'READ' | 'COACH' | 'VISION_COACH' | 'TUTORIALS' | 'VOCAB'>('READ');
+  const [mode, setMode] = useState<'READ' | 'COACH' | 'VISION_COACH' | 'TUTORIALS' | 'VOCAB' | 'ANALYTICS'>('READ');
 
   // Book Reader State
   const [currentBookId, setCurrentBookId] = useState('iqra-1');
-  const [currentPageIndex, setCurrentPageIndex] = useState(0);
-  const [activePlayingCell, setActivePlayingCell] = useState<string | null>(null);
+  const [numPages, setNumPages] = useState<number | null>(null);
+  const [pageNumber, setPageNumber] = useState(1);
+  const [scale, setScale] = useState(1.0);
+  const [inputPage, setInputPage] = useState('1');
 
-  // Voice Coach State
-  const [isRecording, setIsRecording] = useState(false);
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
-  const [result, setResult] = useState<AnalysisResult | null>(null);
-  const [volume, setVolume] = useState(0); // For Visualizer
-  
   // Tutorial State
   const [selectedTutorial, setSelectedTutorial] = useState<typeof TAJWEED_TUTORIALS[0] | null>(null);
   const [tutorialVideoUrl, setTutorialVideoUrl] = useState<string | null>(null);
   const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
 
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
-  const mimeTypeRef = useRef<string>('audio/webm');
-  
-  // Audio Context for TTS Playback & Visualizer
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const analyserRef = useRef<AnalyserNode | null>(null);
-  const animationRef = useRef<number | null>(null);
-  
-  // Vision Coach Refs & State
-  const videoRef = useRef<HTMLVideoElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [isCameraActive, setIsCameraActive] = useState(false);
-  const [visionResult, setVisionResult] = useState<{ is_correct: boolean; feedback: string; confidence: number } | null>(null);
-
   // Derived Data
   const currentBook = IQRA_BOOKS_DATA.find(b => b.id === currentBookId) || IQRA_BOOKS_DATA[0];
-  // Fix: Handle books with no pages gracefully
-  const currentPage = currentBook.pages.length > 0 ? currentBook.pages[currentPageIndex] : null;
 
-  // Progress Logic
-  const getPageProgress = (bookId: string, pageNum: number) => {
-      return user?.iqra_progress?.[bookId]?.[pageNum] || null;
+  useEffect(() => {
+      // Keyboard Navigation
+      const handleKeyDown = (e: KeyboardEvent) => {
+          if (mode !== 'READ') return;
+          if (e.key === 'ArrowRight') changePage(1);
+          if (e.key === 'ArrowLeft') changePage(-1);
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [pageNumber, numPages, mode]);
+
+  function onDocumentLoadSuccess({ numPages }: { numPages: number }) {
+    setNumPages(numPages);
+    setPageNumber(1);
+    setInputPage('1');
+  }
+
+  const changePage = (offset: number) => {
+    const newPage = Math.min(Math.max(1, pageNumber + offset), numPages || 1);
+    setPageNumber(newPage);
+    setInputPage(newPage.toString());
   };
 
-  const calculateBookPercentage = (bookId: string) => {
-      if (!user?.iqra_progress?.[bookId]) return 0;
-      const completedPages = Object.keys(user.iqra_progress[bookId]).length;
-      const totalPages = IQRA_BOOKS_DATA.find(b => b.id === bookId)?.pages.length || 1;
-      // Prevent division by zero if pages is 0
-      if (totalPages === 0) return 0;
-      return Math.min(100, Math.round((completedPages / totalPages) * 100));
-  };
-
-  const pageProgress = currentPage ? getPageProgress(currentBookId, currentPage.pageNumber) : null;
-  const bookPercentage = calculateBookPercentage(currentBookId);
-
-  // --- TTS Playback Logic (Hybrid: Gemini -> Native) ---
-  const playTTS = async (text: string, cellId?: string) => {
-    if (cellId) setActivePlayingCell(cellId);
-    triggerHaptic('TICK');
-
-    try {
-        // STRATEGY: Try Native TTS first for speed/offline, fallback to Gemini if needed?
-        // Actually, Gemini TTS (Zephyr) is much higher quality. 
-        // Let's keep Gemini as primary, but catch errors and fallback to Native.
-        
-        // 1. Attempt Native TTS (Immediate Feedback)
-        // Note: For single letters/words, Native is often faster and sufficient.
-        // Let's use Native for single letters (length < 2) and Gemini for sentences?
-        // Or just use Native for everything in Iqra for "instant" feel.
-        
-        // DECISION: Use Native TTS for Iqra (Letters/Words) for zero-latency.
-        await speak(text, { lang: 'ar-SA', rate: 0.8 });
-        
-        if (cellId) setActivePlayingCell(null);
-
-    } catch (e) {
-        console.warn("Native TTS failed, trying Gemini...", e);
-        // Fallback to Gemini
-        await playGeminiTTS(text, 'Zephyr', cellId);
-    }
-  };
-
-  const playGeminiTTS = async (text: string, voice: 'Zephyr' | 'Kore' = 'Zephyr', cellId?: string) => {
-    try {
-        // Initialize Audio Context singleton
-        if (!audioContextRef.current) {
-            audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)({ sampleRate: 24000 });
-        }
-        const ctx = audioContextRef.current;
-        
-        // Generate speech via Gemini
-        const base64 = await generateSpeech(text, voice);
-        if (!base64) {
-             setActivePlayingCell(null);
-             return;
-        }
-
-        // Decode Base64 to ArrayBuffer (Raw PCM)
-        const binaryString = window.atob(base64);
-        const len = binaryString.length;
-        const bytes = new Uint8Array(len);
-        for (let i = 0; i < len; i++) {
-            bytes[i] = binaryString.charCodeAt(i);
-        }
-        
-        // Convert PCM Int16 to Float32 AudioBuffer
-        const dataInt16 = new Int16Array(bytes.buffer);
-        const buffer = ctx.createBuffer(1, dataInt16.length, 24000);
-        const channelData = buffer.getChannelData(0);
-        for (let i = 0; i < dataInt16.length; i++) {
-             channelData[i] = dataInt16[i] / 32768.0;
-        }
-
-        const source = ctx.createBufferSource();
-        source.buffer = buffer;
-        source.connect(ctx.destination);
-        source.onended = () => {
-            if (cellId) setActivePlayingCell(null);
-        };
-        source.start();
-
-    } catch (e) {
-        console.error("Audio Playback Error", e);
-        setActivePlayingCell(null);
-    }
-  };
-
-
-  // --- Audio Recording Logic ---
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-
-      // --- VISUALIZER SETUP ---
-      if (!audioContextRef.current) {
-          audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+  const handlePageSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+      const p = parseInt(inputPage);
+      if (!isNaN(p) && p >= 1 && p <= (numPages || 1)) {
+          setPageNumber(p);
+      } else {
+          setInputPage(pageNumber.toString());
       }
-      const ctx = audioContextRef.current;
-      const source = ctx.createMediaStreamSource(stream);
-      const analyser = ctx.createAnalyser();
-      analyser.fftSize = 64; // Low res for visualizer
-      source.connect(analyser);
-      analyserRef.current = analyser;
-
-      const bufferLength = analyser.frequencyBinCount;
-      const dataArray = new Uint8Array(bufferLength);
-      
-      const updateVisualizer = () => {
-          analyser.getByteFrequencyData(dataArray);
-          // Calculate average volume roughly
-          let sum = 0;
-          for(let i = 0; i < bufferLength; i++) sum += dataArray[i];
-          setVolume(sum / bufferLength);
-          animationRef.current = requestAnimationFrame(updateVisualizer);
-      };
-      updateVisualizer();
-
-      // --- RECORDING SETUP ---
-      // Feature detect supported mime type
-      const mimeTypes = [
-          'audio/webm;codecs=opus',
-          'audio/webm',
-          'audio/mp4',
-          'audio/ogg'
-      ];
-      const selectedType = mimeTypes.find(type => MediaRecorder.isTypeSupported(type)) || 'audio/webm';
-      mimeTypeRef.current = selectedType;
-
-      mediaRecorderRef.current = new MediaRecorder(stream, { mimeType: selectedType });
-      chunksRef.current = [];
-
-      mediaRecorderRef.current.ondataavailable = (e) => {
-        if (e.data.size > 0) chunksRef.current.push(e.data);
-      };
-
-      mediaRecorderRef.current.onstop = async () => {
-        // Stop Visualizer
-        if (animationRef.current) cancelAnimationFrame(animationRef.current);
-        if (analyserRef.current) {
-            // Do not disconnect source strictly to avoid killing stream before blob creation
-            // but usually safe to disconnect analyser
-            analyserRef.current.disconnect();
-            analyserRef.current = null;
-        }
-        setVolume(0);
-
-        const blob = new Blob(chunksRef.current, { type: mimeTypeRef.current });
-        const reader = new FileReader();
-        reader.readAsDataURL(blob);
-        reader.onloadend = async () => {
-          const base64Audio = (reader.result as string).split(',')[1];
-          setIsAnalyzing(true);
-          try {
-            // Send current page content as context
-            const contextText = currentPage?.content?.flat().join(' ') || "Quran recitation";
-            
-            // Pass the detected mime type to the API
-            const data = await analyzeQuranRecitation(base64Audio, mimeTypeRef.current, contextText);
-            
-            const finalResult = {
-                identified_text: data.identified_text || "Recitation",
-                accuracy_score: data.accuracy_score || 0,
-                tajweed_errors: data.tajweed_errors || [],
-                feedback_summary: data.feedback_summary || "Keep practicing!"
-            };
-            
-            setResult(finalResult);
-
-            // Trigger Haptics based on Result
-            if (finalResult.accuracy_score >= 70) {
-                triggerHaptic('SUCCESS');
-            } else {
-                triggerHaptic('ERROR');
-            }
-
-            // --- PROGRESS TRACKING ---
-            if (finalResult.accuracy_score >= 70 && user && onUpdateUser && currentPage) {
-                // Clone existing progress
-                const newIqraProgress = { ...(user.iqra_progress || {}) };
-                if (!newIqraProgress[currentBookId]) newIqraProgress[currentBookId] = {};
-                
-                // Check if this is a new high score
-                const currentBest = newIqraProgress[currentBookId][currentPage.pageNumber]?.score || 0;
-                
-                if (finalResult.accuracy_score > currentBest) {
-                    newIqraProgress[currentBookId][currentPage.pageNumber] = {
-                        score: finalResult.accuracy_score,
-                        completedAt: Date.now()
-                    };
-                }
-                
-                // Bonus XP logic
-                const bonusXp = finalResult.accuracy_score > currentBest ? 10 : 2; // small bonus for re-practice
-
-                // Parse book number (e.g. iqra-1 -> 1)
-                const bookNum = parseInt(currentBookId.replace('iqra-', '')) || 1;
-
-                onUpdateUser({
-                    ...user,
-                    iqra_progress: newIqraProgress,
-                    xp_total: user.xp_total + bonusXp,
-                    // ALWAYS update user position if they passed (even if not a new high score)
-                    // This satisfies "when a user completes a page ... update their last_read..."
-                    last_read_surah: bookNum,
-                    last_read_ayah: currentPage.pageNumber
-                });
-            }
-
-          } catch (e) {
-            console.error(e);
-            alert("Analysis failed. Please try again.");
-          } finally {
-            setIsAnalyzing(false);
-          }
-        };
-      };
-
-      mediaRecorderRef.current.start();
-      setIsRecording(true);
-      setResult(null);
-      triggerHaptic('TICK');
-    } catch (err) {
-      console.error('Error accessing microphone:', err);
-      alert('Microphone access is required.');
-    }
   };
 
-  const stopRecording = () => {
-    if (mediaRecorderRef.current && isRecording) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-      triggerHaptic('TICK');
-    }
-  };
-
-  // --- Vision Coach Logic ---
-  const startCamera = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' } });
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        setIsCameraActive(true);
-      }
-    } catch (err) {
-      console.error("Camera Error", err);
-      alert("Camera access required for Vision Coach.");
-    }
-  };
-
-  const stopCamera = () => {
-    if (videoRef.current && videoRef.current.srcObject) {
-      const stream = videoRef.current.srcObject as MediaStream;
-      stream.getTracks().forEach(track => track.stop());
-      videoRef.current.srcObject = null;
-      setIsCameraActive(false);
-    }
-  };
-
-  const captureAndAnalyze = async () => {
-    if (!videoRef.current || !canvasRef.current) return;
-
-    const context = canvasRef.current.getContext('2d');
-    if (!context) return;
-
-    // Capture frame
-    canvasRef.current.width = videoRef.current.videoWidth;
-    canvasRef.current.height = videoRef.current.videoHeight;
-    context.drawImage(videoRef.current, 0, 0);
-
-    const base64Image = canvasRef.current.toDataURL('image/jpeg').split(',')[1];
-    setIsAnalyzing(true);
-    setVisionResult(null);
-
-    // Analyze
-    // Assuming the first letter of the page is the target for now
-    const targetLetter = currentPage?.content[0][0] || "Alif"; 
-    const result = await analyzeTajweedPosture(base64Image, targetLetter);
-    
-    setVisionResult(result);
-    setIsAnalyzing(false);
-    
-    if (result.is_correct) triggerHaptic('SUCCESS');
-    else triggerHaptic('ERROR');
-  };
-
-  // --- Video Generation Logic ---
   const handleGenerateLesson = async () => {
-    if (!selectedTutorial) return;
-    
-    // Check for API Key selection (Required for Veo)
-    // Check for API Key selection (Required for Veo)
-    try {
-      if ((window as any).aistudio) {
-        const hasKey = await (window as any).aistudio.hasSelectedApiKey();
-        if (!hasKey) {
-          const success = await (window as any).aistudio.openSelectKey();
-          if (!success) return;
-        }
+      if (!selectedTutorial) return;
+      setIsGeneratingVideo(true);
+      try {
+          const videoUrl = await generateIslamicVideo(selectedTutorial.prompt);
+          setTutorialVideoUrl(videoUrl);
+      } catch (e) {
+          console.error("Video Gen Error:", e);
+          alert("Failed to generate video. Try again.");
+      } finally {
+          setIsGeneratingVideo(false);
       }
-    } catch (e) {
-        console.warn("API Check skipped", e);
-    }
-
-    setIsGeneratingVideo(true);
-    try {
-      const url = await generateIslamicVideo(selectedTutorial.prompt);
-      if (url) setTutorialVideoUrl(url);
-    } catch (e) {
-      alert("Failed to generate video lesson. Please try again.");
-    } finally {
-      setIsGeneratingVideo(false);
-    }
   };
 
-  const renderVisionCoach = () => (
-    <div className="h-full flex flex-col items-center justify-center space-y-6 relative animate-fade-in">
-       {/* Back Button */}
-       <div className="absolute top-0 left-0 w-full flex justify-start z-10">
-          <button onClick={() => { stopCamera(); setMode('READ'); }} className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
-              <i className="fa-solid fa-arrow-left"></i> Back to Book
-          </button>
-       </div>
+  // Smart Mode State
+  const [isSmartMode, setIsSmartMode] = useState(false);
 
-       <div className="text-center space-y-2">
-           <h3 className="text-2xl font-bold text-white">Vision Tajweed Coach</h3>
-           <p className="text-slate-400 text-sm">Align your mouth with the camera to check your Makhraj.</p>
-       </div>
+    const handleCellClick = (cell: IqraCell) => {
+        const audio = new Audio(cell.content.audioUrl);
+        audio.play().catch(e => console.log("Audio play failed (mock)", e));
+        alert(`Smart Cell: ${cell.content.transliteration} (${cell.content.arabic})`);
+    };
 
-       {/* Camera Viewfinder */}
-       <div className="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-slate-700 shadow-2xl bg-black">
-           <video ref={videoRef} autoPlay playsInline muted className="w-full h-full object-cover transform scale-x-[-1]"></video>
-           <canvas ref={canvasRef} className="hidden"></canvas>
-           
-           {!isCameraActive && (
-               <div className="absolute inset-0 flex items-center justify-center bg-slate-900/80">
-                   <button onClick={startCamera} className="px-6 py-3 bg-primary text-black font-bold rounded-xl hover:bg-primary-hover transition-colors">
-                       <i className="fa-solid fa-camera mr-2"></i> Start Camera
-                   </button>
-               </div>
-           )}
+    // --- RENDER HELPERS ---
+    const renderSmartCells = () => {
+        if (!isSmartMode) return null;
 
-           {/* Scanning Overlay */}
-           {isAnalyzing && (
-               <div className="absolute inset-0 bg-primary/20 animate-pulse flex items-center justify-center">
-                   <div className="w-full h-1 bg-primary absolute top-1/2 animate-[scan_2s_linear_infinite]"></div>
-               </div>
-           )}
-       </div>
+        const currentPageData = MOCK_PAGES[pageNumber];
+        if (!currentPageData) return null;
 
-       {/* Controls */}
-       {isCameraActive && (
-           <button 
-               onClick={captureAndAnalyze}
-               disabled={isAnalyzing}
-               aria-label="Capture and Analyze"
-               className="w-20 h-20 rounded-full bg-white border-4 border-slate-300 flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all"
-           >
-               <div className="w-16 h-16 rounded-full bg-primary border-2 border-white"></div>
-           </button>
-       )}
-
-       {/* Feedback Card */}
-       {visionResult && (
-           <div className={`w-full max-w-sm p-4 rounded-2xl border ${visionResult.is_correct ? 'bg-green-500/10 border-green-500/30' : 'bg-red-500/10 border-red-500/30'} animate-slide-up`}>
-               <div className="flex items-start gap-3">
-                   <div className={`w-10 h-10 rounded-full flex items-center justify-center text-xl ${visionResult.is_correct ? 'bg-green-500 text-black' : 'bg-red-500 text-white'}`}>
-                       <i className={`fa-solid ${visionResult.is_correct ? 'fa-check' : 'fa-xmark'}`}></i>
-                   </div>
-                   <div>
-                       <h4 className={`font-bold ${visionResult.is_correct ? 'text-green-400' : 'text-red-400'}`}>
-                           {visionResult.is_correct ? 'Correct Posture!' : 'Adjust Posture'}
-                       </h4>
-                       <p className="text-sm text-slate-300 mt-1">{visionResult.feedback}</p>
-                       <p className="text-xs text-slate-500 mt-2">Confidence: {visionResult.confidence}%</p>
-                   </div>
-               </div>
-           </div>
-       )}
-    </div>
-  );
-
-  const renderVocabBuilder = () => (
-    <div className="h-full flex flex-col relative animate-fade-in">
-       {/* Back Button */}
-       <div className="absolute top-0 left-0 w-full flex justify-start z-10">
-          <button onClick={() => setMode('READ')} className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
-              <i className="fa-solid fa-arrow-left"></i> Back to Book
-          </button>
-       </div>
-       
-       <div className="flex-1 flex items-center justify-center">
-          <VocabBuilder isDark={true} />
-       </div>
-    </div>
-  );
-
-  // --- Render Helpers ---
-  
-  const renderBookReader = () => {
-    // Fix: Show "Coming Soon" state if no pages exist (prevent invisible book issue)
-    if (!currentPage) {
-        return (
-            <div className="h-full flex flex-col items-center justify-center text-slate-500 animate-fade-in bg-slate-900 rounded-2xl border border-slate-800 p-6">
-                <i className="fa-solid fa-book-open text-6xl mb-4 opacity-20"></i>
-                <h3 className="text-xl font-bold text-slate-300 mb-2">{currentBook.title}</h3>
-                <p className="text-sm mb-6 text-center">This book is currently being digitized. Please check back later.</p>
-                <button 
-                    onClick={() => setMode('TUTORIALS')} 
-                    className="px-6 py-3 bg-primary hover:bg-primary-hover text-black rounded-xl font-bold transition-colors"
-                >
-                    Watch Tutorials Instead
-                </button>
-            </div>
-        );
-    }
-
-    return (
-    <div className="h-full flex flex-col space-y-4 relative animate-fade-in">
-        {/* Book Header with Progress */}
-        <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800 space-y-3 shadow-lg z-10">
-            <div className="flex justify-between items-center">
-                <div className="flex gap-2">
-                    <button 
-                        disabled={currentPageIndex === 0}
-                        onClick={() => setCurrentPageIndex(p => Math.max(0, p - 1))}
-                        className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 disabled:opacity-30 hover:bg-slate-700 hover:text-white transition-colors"
-                        aria-label="Previous Page"
-                        title="Previous Page"
-                    >
-                        <i className="fa-solid fa-chevron-left"></i>
-                    </button>
-                    <div>
-                        <h3 className="font-bold text-white text-lg leading-tight">{currentBook.title}</h3>
-                        <div className="flex items-center gap-2">
-                            <p className="text-xs text-slate-400">Page {currentPage.pageNumber}</p>
-                            {pageProgress && (
-                                <span className="px-2 py-0.5 rounded bg-primary/20 text-primary text-[10px] font-bold border border-primary/20">
-                                    Mastered ({pageProgress.score}%)
-                                </span>
-                            )}
-                        </div>
-                    </div>
-                </div>
-                <button 
-                    disabled={currentPageIndex === currentBook.pages.length - 1}
-                    onClick={() => setCurrentPageIndex(p => Math.min(currentBook.pages.length - 1, p + 1))}
-                    className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 disabled:opacity-30 hover:bg-slate-700 hover:text-white transition-colors"
-                    aria-label="Next Page"
-                    title="Next Page"
-                >
-                    <i className="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-            
-            {/* Progress Bar */}
-            <div className="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
-                <div
-                    className="h-full bg-gradient-to-r from-secondary to-secondary-light transition-all duration-500 ease-out"
-                    // eslint-disable-next-line
-                    style={{ width: `${bookPercentage}%` }}
-                ></div>
-            </div>
-            
-            {/* Certificate Teaser */}
-            <div className="flex justify-between items-center text-[10px] uppercase font-bold tracking-wider text-slate-500">
-                <span>Completion: {bookPercentage}%</span>
-                {bookPercentage >= 100 && (
-                    <span className="text-secondary flex items-center gap-1 animate-pulse">
-                        <i className="fa-solid fa-certificate"></i> Certified
-                    </span>
-                )}
-            </div>
-            
-            {bookPercentage >= 100 && (
-                <div className="bg-secondary/10 border border-secondary/30 p-2 rounded-lg flex items-center justify-between">
-                     <div className="flex items-center gap-2">
-                         <i className="fa-solid fa-award text-secondary text-xl"></i>
-                         <div>
-                             <p className="text-white text-xs font-bold">Iqra 1 Certificate</p>
-                             <p className="text-[10px] text-slate-400">Ready to download</p>
-                         </div>
-                     </div>
-                     <button className="text-xs bg-secondary text-black px-3 py-1 rounded font-bold hover:bg-secondary-hover">View</button>
-                </div>
-            )}
-        </div>
-
-        {/* Page Content - The "Grid" */}
-        {/* Added Key for Page Transition Animation */}
-        {/* Fix: Added min-height to prevent collapse and bg-white for visibility */}
-        <div key={currentPageIndex} className="flex-1 bg-[#fffdf5] rounded-xl shadow-2xl overflow-hidden relative text-black p-2 sm:p-6 border-l-8 border-l-slate-800 border-r-2 border-r-slate-300 animate-slide-up origin-bottom min-h-[400px]">
-            {/* Paper Texture/Overlay */}
-            <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cream-paper.png')] opacity-50 pointer-events-none"></div>
-            
-            {/* Completed Stamp */}
-            {pageProgress && (
-                <div className="absolute top-4 right-4 z-20 rotate-12 border-4 border-primary text-primary rounded-lg px-4 py-2 font-bold text-xl opacity-0 animate-[fadeIn_0.5s_ease-out_0.5s_forwards] font-serif">
-                    LULUS
-                </div>
-            )}
-
-            {/* Header/Instruction inside page */}
-            <div className="bg-pink-100 border-2 border-pink-300 rounded-lg p-3 mb-4 text-center relative z-10 shadow-sm">
-                <p className="font-serif font-bold text-pink-800 text-sm sm:text-base leading-tight">{currentPage.instruction}</p>
-            </div>
-
-            {/* The Grid - Classic Iqra Layout */}
-            {/* Fix: Added dir="rtl" for correct Arabic Reading Order (Right to Left) */}
-            <div className="flex flex-col gap-0 border-2 border-black relative z-10 shadow-lg bg-white" dir="rtl">
-                {currentPage.content.map((row, rowIndex) => (
-                    <div key={rowIndex} className="flex border-b-2 border-black last:border-b-0 relative">
-                        {/* Page Number Indicator Badge in Center (Visual Polish) */}
-                        {rowIndex === 0 && currentPage.content.length > 0 && (
-                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 w-6 h-6 bg-white rounded-full border-2 border-black flex items-center justify-center text-xs font-bold shadow-sm pointer-events-none">
-                                 {currentPage.pageNumber}
-                             </div>
-                        )}
-
-                        {row.map((cell, colIndex) => {
-                            const cellId = `${rowIndex}-${colIndex}`;
-                            return (
-                                <div 
-                                    key={colIndex} 
-                                    className={`flex-1 h-24 sm:h-32 flex items-center justify-center border-l-2 border-black last:border-l-0 hover:bg-secondary/20 cursor-pointer transition-colors duration-200 relative group ${activePlayingCell === cellId ? 'bg-secondary/40' : ''}`}
-                                    onClick={() => playTTS(cell, cellId)}
-                                >
-                                    {activePlayingCell === cellId && (
-                                        <div className="absolute top-1 right-1">
-                                             <i className="fa-solid fa-volume-high text-black animate-pulse text-xs"></i>
-                                        </div>
-                                    )}
-                                    <span className="font-arabic text-5xl sm:text-6xl font-bold transform group-hover:scale-110 transition-transform duration-300">{cell}</span>
-                                    <span className="absolute bottom-1 text-[8px] text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity">Tap to listen</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-                ))}
-            </div>
-
-            {/* Page Number Footer */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full border-2 border-black flex items-center justify-center text-sm font-bold z-10 bg-white shadow-sm">
-                {currentPage.pageNumber}
-            </div>
-        </div>
-
-        {/* Action Bar */}
-        <div className="flex gap-3 pb-safe">
-            <button 
-                onClick={() => setMode('COACH')}
-                className="flex-1 bg-primary hover:bg-primary-hover text-black font-bold py-4 rounded-2xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-all transform active:scale-95 hover:-translate-y-1"
+        return currentPageData.cells.map(cell => (
+            <motion.div
+                key={cell.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.05, backgroundColor: 'rgba(56, 189, 248, 0.3)' }}
+                className="absolute border-2 border-sky-400/50 rounded-lg cursor-pointer flex items-center justify-center group z-10"
+                style={{
+                    left: `${cell.x}%`,
+                    top: `${cell.y}%`,
+                    width: `${cell.width}%`,
+                    height: `${cell.height}%`,
+                }}
+                onClick={() => handleCellClick(cell)}
             >
-                <i className="fa-solid fa-microphone"></i>
-                {pageProgress ? 'Practice Again' : 'Test This Page'}
-            </button>
-            
-            <button 
-                onClick={() => setMode('VISION_COACH')}
-                className="w-16 bg-slate-800 hover:bg-slate-700 text-white rounded-2xl shadow-lg flex items-center justify-center transition-all transform active:scale-95 hover:-translate-y-1"
-                title="Vision Coach (Beta)"
-            >
-                <i className="fa-solid fa-eye"></i>
-            </button>
-        </div>
-    </div>
-  );
+                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                    {cell.content.transliteration}
+                </div>
+                <i className="fa-solid fa-volume-high text-sky-400 opacity-50 group-hover:opacity-100"></i>
+            </motion.div>
+        ));
+    };
+
+  // Coach Mode State
+  const [isRecording, setIsRecording] = useState(false);
+  const [analysisResult, setAnalysisResult] = useState<any>(null);
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
+  const handleStartRecording = () => {
+      setIsRecording(true);
+      setAnalysisResult(null);
+      // Simulate recording duration
+      setTimeout(() => {
+          handleStopRecording();
+      }, 3000);
   };
 
-  const renderVoiceCoach = () => {
-    if (!currentPage) return null;
-    return (
-    <div className="h-full flex flex-col items-center justify-center space-y-8 relative animate-fade-in">
-      {/* Navigation Back */}
-      <div className="absolute top-0 left-0 w-full flex justify-start">
-          <button onClick={() => setMode('READ')} className="flex items-center gap-2 text-slate-400 hover:text-white transition-colors">
-              <i className="fa-solid fa-arrow-left"></i> Back to Book
-          </button>
-      </div>
+  const handleStopRecording = async () => {
+      setIsRecording(false);
+      setIsAnalyzing(true);
+      try {
+          // Mock audio data
+          const result = await analyzeQuranRecitation("base64audio", "audio/wav", "Bismillah");
+            // Save result to LocalStorage for Analytics
+            const saved = localStorage.getItem('iqra_progress');
+            const currentStats = saved ? JSON.parse(saved) : { totalRead: 0, avgScore: 0, streak: 0 };
+            const newTotal = currentStats.totalRead + 1;
+            const newAvg = Math.round(((currentStats.avgScore * currentStats.totalRead) + result.score) / newTotal);
+            
+            localStorage.setItem('iqra_progress', JSON.stringify({
+                ...currentStats,
+                totalRead: newTotal,
+                avgScore: newAvg
+            }));
 
-      {/* Context Card */}
-      <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700 text-center max-w-sm w-full backdrop-blur-sm shadow-xl">
-        <h3 className="text-xl font-bold text-white mb-1">Recite Page {currentPage.pageNumber}</h3>
-        <div className="font-arabic text-3xl text-primary my-4 leading-relaxed drop-shadow-md" dir="rtl">
-           {currentPage.content[0].join(' ')} ...
-        </div>
-        <p className="text-xs text-slate-400">Read the lines clearly. I'm listening.</p>
-      </div>
+            setAnalysisResult(result);
+            setIsAnalyzing(false);
+        } catch (error) {
+            console.error("Analysis failed:", error);
+            setIsAnalyzing(false);
+        }
+    };
 
-      {/* DYNAMIC AUDIO VISUALIZER */}
-      {isRecording && (
-          <div className="flex justify-center items-center gap-1.5 h-16 w-full max-w-[200px]">
-              {[...Array(5)].map((_, i) => (
-                  // eslint-disable-next-line
-                  <div
-                    key={i}
-                    className={`w-2 bg-primary rounded-full transition-all duration-75 shadow-[0_0_10px_#00BFA5] opacity-80 ${styles.visualizerBar}`}
-                    // eslint-disable-next-line
-                    style={{
-                        height: `${Math.max(10, Math.min(100, volume * (1 + i/2)))}%`
-                    }}
-                  ></div>
-              ))}
+  const renderCoach = () => (
+      <div className="h-full flex flex-col items-center justify-center animate-fade-in p-6">
+          <div className="text-center mb-8">
+              <div className="w-24 h-24 rounded-full bg-slate-800 flex items-center justify-center mx-auto mb-6 relative">
+                  <i className={`fa-solid fa-microphone text-4xl ${isRecording ? 'text-red-500 animate-pulse' : 'text-slate-400'}`}></i>
+                  {isRecording && (
+                      <div className="absolute inset-0 rounded-full border-4 border-red-500/30 animate-ping"></div>
+                  )}
+              </div>
+              <h2 className="text-2xl font-bold text-white mb-2">
+                  {isRecording ? "Listening..." : isAnalyzing ? "Analyzing Recitation..." : "Voice Coach"}
+              </h2>
+              <p className="text-slate-400 max-w-md mx-auto">
+                  {isRecording ? "Recite the verse clearly." : isAnalyzing ? "AI is checking your Tajweed..." : "Tap the microphone and recite the first line of the page."}
+              </p>
           </div>
-      )}
 
-      {/* Visualizer / Recording Button - UPDATED WITH PULSE LOADER */}
-      <div className="relative group flex items-center justify-center">
-        <button
-          onClick={isRecording ? stopRecording : startRecording}
-          disabled={isAnalyzing}
-          className="focus:outline-none"
-        >
-          {isRecording ? (
-             <PulseLoader icon="fa-stop" size="lg" active={true} />
-          ) : isAnalyzing ? (
-             <div className="w-24 h-24 rounded-full bg-slate-700 flex items-center justify-center">
-                 <i className="fa-solid fa-circle-notch fa-spin text-3xl text-slate-500"></i>
-             </div>
-          ) : (
-             <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center text-white shadow-lg shadow-primary/40 hover:scale-105 transition-transform">
-                 <i className="fa-solid fa-microphone text-3xl"></i>
-             </div>
+          {!isRecording && !isAnalyzing && !analysisResult && (
+              <button 
+                  onClick={handleStartRecording}
+                  className="w-20 h-20 rounded-full bg-primary hover:bg-primary-dark text-black text-3xl shadow-lg shadow-primary/30 transition-transform hover:scale-110 flex items-center justify-center"
+                  aria-label="Start Recording"
+                  title="Start Recording"
+              >
+                  <i className="fa-solid fa-microphone"></i>
+              </button>
           )}
-        </button>
+
+          {analysisResult && (
+              <div className="w-full max-w-md bg-slate-900 rounded-2xl border border-slate-800 p-6 animate-slide-up">
+                  <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-white font-bold">Analysis Result</h3>
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${analysisResult.score > 80 ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
+                          Score: {analysisResult.score}%
+                      </span>
+                  </div>
+                  <p className="text-slate-300 text-sm mb-4">{analysisResult.feedback}</p>
+                  
+                  {analysisResult.tajweed_errors && analysisResult.tajweed_errors.length > 0 && (
+                      <div className="space-y-2 mb-4">
+                          <p className="text-xs text-slate-500 uppercase font-bold">Improvements Needed:</p>
+                          {analysisResult.tajweed_errors.map((err: any, idx: number) => (
+                              <div key={idx} className="flex items-start gap-2 bg-red-500/10 p-2 rounded-lg border border-red-500/20">
+                                  <i className="fa-solid fa-circle-exclamation text-red-400 mt-0.5 text-xs"></i>
+                                  <div>
+                                      <p className="text-red-300 text-xs font-bold">{err.rule}</p>
+                                      <p className="text-slate-400 text-[10px]">{err.description}</p>
+                                  </div>
+                              </div>
+                          ))}
+                      </div>
+                  )}
+
+                  <button 
+                      onClick={() => setAnalysisResult(null)}
+                      className="w-full py-3 rounded-xl bg-slate-800 text-white font-bold hover:bg-slate-700 transition-colors"
+                  >
+                      Try Again
+                  </button>
+              </div>
+          )}
       </div>
+  );
 
-      {/* Status Text */}
-      <p className="text-slate-400 text-sm font-medium animate-pulse">
-        {isAnalyzing ? "Analyzing Pronunciation..." : isRecording ? "Listening to your voice..." : "Tap to Start"}
-      </p>
-
-      {/* Results Card */}
-      {result && (
-        <div className="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-3xl p-6 animate-slide-up shadow-xl transition-all duration-500">
-            <div className="flex justify-between items-center mb-4">
-                <h4 className="font-bold text-white">Analysis</h4>
-                <div className={`px-3 py-1 rounded-full text-xs font-bold ${result.accuracy_score > 70 ? 'bg-green-500/20 text-green-400' : 'bg-yellow-500/20 text-yellow-400'}`}>
-                    Score: {result.accuracy_score}%
-                </div>
-            </div>
-            
-            <div className="space-y-3">
-                {result.accuracy_score > 70 && (
-                    <div className="bg-secondary/10 p-3 rounded-xl border border-secondary/30 mb-2 flex items-center gap-3 animate-fade-in">
-                        <div className="w-8 h-8 rounded-full bg-secondary text-black flex items-center justify-center font-bold">
-                            <i className="fa-solid fa-trophy"></i>
-                        </div>
-                        <div>
-                            <p className="text-secondary font-bold text-sm">Page Completed!</p>
-                            <p className="text-xs text-secondary-light/70">Progress Saved & XP Earned</p>
-                        </div>
-                    </div>
-                )}
-
-                {result.tajweed_errors.length > 0 ? (
-                    <div className="bg-red-900/20 p-3 rounded-xl border border-red-500/20 animate-fade-in">
-                        <p className="text-xs text-red-300 font-bold mb-2"><i className="fa-solid fa-triangle-exclamation mr-1"></i> Analysis:</p>
-                        <ul className="space-y-2">
-                            {result.tajweed_errors.map((item, i) => (
-                                // eslint-disable-next-line
-                                <li
-                                    key={i}
-                                    className={`bg-black/20 p-2 rounded-lg border border-white/5 animate-slide-up ${styles.errorItem}`}
-                                    // eslint-disable-next-line
-                                    style={{ animationDelay: `${i * 150}ms` }}
-                                >
-                                    <div className="flex justify-between items-start">
-                                        <p className="text-xs text-red-200 font-semibold mb-1">{item.error}</p>
-                                        <button 
-                                          onClick={() => playGeminiTTS(item.tip, 'Kore')}
-                                          className="text-[10px] text-primary bg-primary/10 px-2 py-0.5 rounded hover:bg-primary/20 transition-colors"
-                                          aria-label="Play Tip"
-                                          title="Play Tip"
-                                        >
-                                          <i className="fa-solid fa-volume-high"></i>
-                                        </button>
-                                    </div>
-                                    <p className="text-[10px] text-primary flex items-start gap-1">
-                                        <i className="fa-solid fa-lightbulb mt-0.5"></i> {item.tip}
-                                    </p>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                ) : (
-                    <div className="bg-primary/10 p-3 rounded-xl border border-primary/20 flex items-center gap-2 animate-fade-in">
-                        <i className="fa-solid fa-check-circle text-primary"></i>
-                        <p className="text-xs text-primary-light">Excellent recitation! No major errors detected.</p>
-                    </div>
-                )}
-                
-                <div className="pt-2 border-t border-slate-800">
-                    <p className="text-xs text-slate-400 italic">"{result.feedback_summary}"</p>
-                </div>
-            </div>
-            
-            <button 
-                onClick={() => { setResult(null); setMode('READ'); }}
-                className="w-full mt-4 bg-slate-800 hover:bg-slate-700 text-white font-bold py-3 rounded-xl transition-colors"
-            >
-                Continue Reading
-            </button>
+  const renderReader = () => (
+    <div className="h-full flex flex-col animate-fade-in gap-4">
+        {/* Enhanced Book Selector */}
+        <div className="flex overflow-x-auto gap-3 pb-2 no-scrollbar shrink-0 px-1">
+            {IQRA_BOOKS_DATA.map(book => (
+                <button 
+                    key={book.id}
+                    onClick={() => setCurrentBookId(book.id)}
+                    className={`flex-shrink-0 w-16 h-20 rounded-xl font-bold transition-all relative overflow-hidden group ${
+                        currentBookId === book.id 
+                        ? `bg-gradient-to-br ${book.color} text-white shadow-lg ${book.shadow} scale-105 ring-2 ring-white/20` 
+                        : 'bg-slate-800 text-slate-500 hover:bg-slate-700 hover:text-slate-300'
+                    }`}
+                >
+                    <span className="absolute top-1 left-2 text-[10px] uppercase opacity-70">Vol</span>
+                    <span className="text-2xl">{book.icon}</span>
+                    {currentBookId === book.id && (
+                        <div className="absolute inset-0 bg-white/20 mix-blend-overlay"></div>
+                    )}
+                </button>
+            ))}
         </div>
-      )}
+
+        {/* Modern PDF Viewer Container */}
+        <div className="flex-1 bg-slate-950/50 rounded-3xl border border-slate-800 overflow-hidden relative flex flex-col items-center justify-center shadow-inner">
+            {/* Background Texture */}
+            <div className="absolute inset-0 opacity-20 bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+            <div className="w-full h-full overflow-auto flex justify-center items-start custom-scrollbar p-4 md:p-8 z-10">
+                <Document
+                    file={currentBook.file}
+                    onLoadSuccess={onDocumentLoadSuccess}
+                    loading={
+                        <div className="flex flex-col items-center justify-center h-64">
+                            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+                            <p className="text-slate-400 animate-pulse">Opening Book...</p>
+                        </div>
+                    }
+                    error={
+                        <div className="text-red-400 text-center p-8 bg-red-900/10 rounded-2xl border border-red-900/30">
+                            <i className="fa-solid fa-triangle-exclamation text-4xl mb-4"></i>
+                            <p className="font-bold">Failed to load PDF</p>
+                            <p className="text-xs mt-2 text-slate-500">Please check your internet connection.</p>
+                        </div>
+                    }
+                >
+                    <div className="shadow-2xl shadow-black/50 rounded-lg overflow-hidden transition-transform duration-200 ease-out relative" style={{ transform: `scale(${scale})` }}>
+                        <Page 
+                            pageNumber={pageNumber} 
+                            scale={1.0} // Internal scale fixed, we scale container
+                            renderTextLayer={false} 
+                            renderAnnotationLayer={false}
+                            className="bg-white"
+                        />
+                        {renderSmartCells()}
+                    </div>
+                </Document>
+            </div>
+
+            {/* Floating Controls Bar */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-xl pl-4 pr-2 py-2 rounded-full shadow-2xl border border-slate-700 flex items-center gap-4 z-20 transition-all hover:scale-105">
+                {/* Navigation */}
+                <div className="flex items-center gap-2">
+                    <button 
+                        onClick={() => changePage(-1)} 
+                        disabled={pageNumber <= 1}
+                        className="w-8 h-8 rounded-full bg-slate-800 hover:bg-primary hover:text-black text-white disabled:opacity-30 disabled:hover:bg-slate-800 disabled:hover:text-white transition-all flex items-center justify-center"
+                        title="Previous Page (Left Arrow)"
+                    >
+                        <i className="fa-solid fa-chevron-left text-xs"></i>
+                    </button>
+                    
+                    <form onSubmit={handlePageSubmit} className="flex items-center gap-1 bg-slate-950 rounded-lg px-2 py-1 border border-slate-800 focus-within:border-primary transition-colors">
+                        <input 
+                            type="text" 
+                            value={inputPage}
+                            onChange={(e) => setInputPage(e.target.value)}
+                            className="w-8 bg-transparent text-center text-sm font-bold text-white outline-none"
+                            aria-label="Page Number"
+                            title="Page Number"
+                        />
+                        <span className="text-xs text-slate-500">/ {numPages || '--'}</span>
+                    </form>
+
+                    <button 
+                        onClick={() => changePage(1)} 
+                        disabled={pageNumber >= (numPages || 1)}
+                        className="w-8 h-8 rounded-full bg-slate-800 hover:bg-primary hover:text-black text-white disabled:opacity-30 disabled:hover:bg-slate-800 disabled:hover:text-white transition-all flex items-center justify-center"
+                        title="Next Page (Right Arrow)"
+                    >
+                        <i className="fa-solid fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+
+                <div className="w-px h-6 bg-slate-700"></div>
+
+                {/* Zoom Controls */}
+                <div className="flex items-center gap-1">
+                    <button onClick={() => setScale(s => Math.max(0.5, s - 0.1))} className="w-8 h-8 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors" title="Zoom Out" aria-label="Zoom Out"><i className="fa-solid fa-minus text-xs"></i></button>
+                    <button onClick={() => setScale(1.0)} className="text-xs font-mono text-slate-300 w-10 text-center hover:text-primary cursor-pointer" title="Reset Zoom">{Math.round(scale * 100)}%</button>
+                    <button onClick={() => setScale(s => Math.min(2.0, s + 0.1))} className="w-8 h-8 rounded-full hover:bg-slate-800 text-slate-400 hover:text-white transition-colors" title="Zoom In" aria-label="Zoom In"><i className="fa-solid fa-plus text-xs"></i></button>
+                </div>
+
+                <div className="w-px h-6 bg-slate-700"></div>
+
+                {/* Smart Mode Toggle */}
+                <button 
+                    onClick={() => setIsSmartMode(!isSmartMode)}
+                    className={`h-8 px-3 rounded-full text-xs font-bold transition-all flex items-center gap-2 ${isSmartMode ? 'bg-teal-500 text-black shadow-lg shadow-teal-500/20' : 'bg-slate-800 text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-wand-magic-sparkles"></i>
+                    {isSmartMode ? 'Smart ON' : 'Smart OFF'}
+                </button>
+            </div>
+        </div>
     </div>
   );
-  };
-  
-  // --- Tutorials Render ---
+
   const renderTutorials = () => (
       <div className="space-y-4 animate-slide-up h-full overflow-y-auto">
           {/* Header */}
@@ -1031,28 +514,196 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
       </div>
   );
 
+
+
+    const renderAnalytics = () => {
+        // Mock data + LocalStorage logic
+        const [stats, setStats] = useState({
+            totalRead: 0,
+            avgScore: 0,
+            streak: 0,
+            history: [65, 70, 75, 72, 80, 85, 82] // Mock weekly history
+        });
+
+        useEffect(() => {
+            const saved = localStorage.getItem('iqra_progress');
+            if (saved) {
+                const parsed = JSON.parse(saved);
+                setStats(prev => ({ ...prev, ...parsed }));
+            }
+        }, []);
+
+        return (
+            <div className="h-full overflow-y-auto p-6 space-y-8 animate-in fade-in zoom-in duration-500 pb-24">
+                <div className="flex items-center gap-3 mb-2">
+                    <button onClick={() => setMode('READ')} className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white" aria-label="Back" title="Back">
+                        <i className="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <h2 className="text-2xl font-bold text-white">Your Progress</h2>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:border-primary/50 transition-colors">
+                        <div className="text-slate-400 text-sm mb-2 uppercase font-bold tracking-wider">Total Pages Read</div>
+                        <div className="text-4xl font-bold text-primary">{stats.totalRead}</div>
+                        <div className="text-xs text-slate-500 mt-2">Keep going!</div>
+                    </div>
+                    <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:border-emerald-500/50 transition-colors">
+                        <div className="text-slate-400 text-sm mb-2 uppercase font-bold tracking-wider">Avg. Tajweed Score</div>
+                        <div className="text-4xl font-bold text-emerald-400">{stats.avgScore}%</div>
+                        <div className="text-xs text-slate-500 mt-2">Based on AI analysis</div>
+                    </div>
+                    <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700 hover:border-amber-500/50 transition-colors">
+                        <div className="text-slate-400 text-sm mb-2 uppercase font-bold tracking-wider">Current Streak</div>
+                        <div className="text-4xl font-bold text-amber-400">{stats.streak} Days</div>
+                        <div className="text-xs text-slate-500 mt-2">Consistency is key</div>
+                    </div>
+                </div>
+
+                {/* Simple CSS Bar Chart */}
+                <div className="bg-slate-800/50 p-6 rounded-2xl border border-slate-700">
+                    <h3 className="text-lg font-bold mb-6 flex items-center gap-2">
+                        <i className="fa-solid fa-chart-simple text-primary"></i> Weekly Activity
+                    </h3>
+                    <div className="flex items-end justify-between h-48 gap-2">
+                        {stats.history.map((val, i) => (
+                            <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
+                                <div className="w-full bg-slate-700 rounded-t-lg relative overflow-hidden transition-all hover:bg-primary/20" style={{ height: `${val}%` }}>
+                                    <div className="absolute bottom-0 left-0 right-0 bg-primary/50 h-full transition-all group-hover:bg-primary"></div>
+                                </div>
+                                <span className="text-xs text-slate-500">Day {i + 1}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        );
+    };
+    const renderVisionCoach = () => (
+        <div className="h-full flex flex-col relative bg-black">
+            <div className="absolute inset-0 overflow-hidden">
+                <img 
+                    src="/images/iqra-book-open.jpg" 
+                    alt="Camera Feed" 
+                    className="w-full h-full object-cover opacity-60"
+                    onError={(e) => {
+                        e.currentTarget.src = 'https://placehold.co/600x800/1e293b/white?text=Camera+Feed+Simulation';
+                    }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40"></div>
+                
+                {/* AR Overlay */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[60%] border-2 border-teal-500/50 rounded-3xl shadow-[0_0_50px_rgba(20,184,166,0.3)] animate-pulse">
+                    <div className="absolute top-4 left-4 bg-teal-500 text-black text-xs font-bold px-2 py-1 rounded animate-bounce">
+                        <i className="fa-solid fa-expand mr-1"></i> Tracking Page 1
+                    </div>
+                    
+                    {/* AR Smart Cells */}
+                    {MOCK_IQRA_PAGE_1.cells.map((cell) => (
+                        <div
+                            key={cell.id}
+                            className="absolute border-2 border-dashed border-teal-400/70 bg-teal-500/10 hover:bg-teal-500/30 cursor-pointer transition-all rounded-lg flex items-center justify-center group"
+                            style={{
+                                left: `${cell.x}%`,
+                                top: `${cell.y}%`,
+                                width: `${cell.width}%`,
+                                height: `${cell.height}%`,
+                            }}
+                            onClick={() => {
+                                const audio = new Audio(cell.content.audioUrl);
+                                audio.play().catch(e => console.log("Audio play failed (mock)", e));
+                            }}
+                        >
+                            <div className="opacity-0 group-hover:opacity-100 absolute -top-10 left-1/2 -translate-x-1/2 bg-black/80 text-teal-400 text-sm font-bold px-3 py-1 rounded-full border border-teal-500/30 whitespace-nowrap pointer-events-none backdrop-blur-md">
+                                <i className="fa-solid fa-volume-high mr-2"></i>
+                                {cell.content.transliteration}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            {/* AR Controls */}
+            <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col items-center z-10">
+                <p className="text-white text-center mb-6 font-medium text-shadow-lg">
+                    Point your camera at <span className="text-teal-400 font-bold">Iqra' Volume 1, Page 1</span>
+                </p>
+                <div className="flex gap-4">
+                    <button className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center text-xl shadow-xl hover:scale-110 transition-transform" title="Capture Image" aria-label="Capture Image">
+                        <i className="fa-solid fa-camera"></i>
+                    </button>
+                    <button 
+                        onClick={() => setMode('READ')}
+                        className="w-14 h-14 rounded-full bg-slate-800/80 backdrop-blur text-white flex items-center justify-center text-xl border border-slate-600 hover:bg-slate-700 transition-colors"
+                        title="Close AR Mode"
+                        aria-label="Close AR Mode"
+                    >
+                        <i className="fa-solid fa-times"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    );
+
   return (
-    <div className="p-4 h-full flex flex-col pb-24">
-       {mode === 'READ' && renderBookReader()}
-       {mode === 'COACH' && renderVoiceCoach()}
-       {mode === 'VISION_COACH' && renderVisionCoach()}
-       {mode === 'TUTORIALS' && renderTutorials()}
-      {mode === 'VOCAB' && renderVocabBuilder()}
-       
-       {/* Bottom Nav for Iqra Modes */}
-       {mode === 'READ' && (
-           <div className="mt-4 grid grid-cols-2 gap-3">
-               <button 
-                onClick={() => setMode('TUTORIALS')}
-                className="bg-slate-800 hover:bg-slate-700 text-white py-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 border border-slate-700"
-               >
-                   <i className="fa-solid fa-graduation-cap"></i> Tajweed Lessons
-               </button>
-               <button className="bg-slate-800 hover:bg-slate-700 text-slate-400 py-3 rounded-xl font-bold text-xs border border-slate-700 cursor-not-allowed opacity-50">
-                   <i className="fa-solid fa-chart-line"></i> Analytics (Coming Soon)
-               </button>
-           </div>
-       )}
+    <div className="h-full flex flex-col p-4 pb-24">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+            <div>
+                <h1 className="text-2xl font-bold text-white flex items-center gap-2">
+                    <i className="fa-solid fa-book-quran text-primary"></i> Digital Iqra
+                </h1>
+                <p className="text-slate-400 text-xs">Master the Quran, one page at a time.</p>
+            </div>
+            <div className="flex bg-slate-900 p-1 rounded-xl border border-slate-800 overflow-x-auto max-w-[200px] md:max-w-none no-scrollbar">
+                <button 
+                    onClick={() => setMode('READ')}
+                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${mode === 'READ' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-book-open"></i> Read
+                </button>
+                <button 
+                    onClick={() => setMode('VOCAB')}
+                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${mode === 'VOCAB' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-shapes"></i> Vocab
+                </button>
+                <button 
+                    onClick={() => setMode('TUTORIALS')}
+                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${mode === 'TUTORIALS' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-graduation-cap"></i> Lessons
+                </button>
+                <button 
+                    onClick={() => setMode('COACH')}
+                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${mode === 'COACH' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-microphone"></i> Voice Coach
+                </button>
+                <button 
+                    onClick={() => setMode('VISION_COACH')}
+                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${mode === 'VISION_COACH' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-glasses"></i> AR Mode
+                </button>
+                <button 
+                    onClick={() => setMode('ANALYTICS')}
+                    className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${mode === 'ANALYTICS' ? 'bg-primary text-black shadow-lg shadow-primary/20' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-chart-pie"></i> Stats
+                </button>
+            </div>
+        </div>
+
+        {/* Content Area */}
+        <div className="flex-1 overflow-hidden">
+            {mode === 'READ' && renderReader()}
+            {mode === 'VOCAB' && <VocabBuilder isDark={true} />}
+            {mode === 'TUTORIALS' && renderTutorials()}
+            {mode === 'ANALYTICS' && renderAnalytics()}
+            {mode === 'VISION_COACH' && renderVisionCoach()}
+            {mode === 'COACH' && renderCoach()}
+        </div>
     </div>
   );
 };

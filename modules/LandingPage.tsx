@@ -122,7 +122,7 @@ const TiltCard = ({ children, className }: { children: React.ReactNode, classNam
             onMouseLeave={handleMouseLeave}
             className={`perspective-1000 ${className}`}
         >
-            <div style={{ transform: "translateZ(20px)" }} className="h-full">
+            <div className="h-full [transform:translateZ(20px)]">
                 {children}
             </div>
         </motion.div>
@@ -923,7 +923,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                   </p>
                   <div className="flex gap-4">
                       {['twitter', 'instagram', 'facebook', 'youtube'].map(social => (
-                          <a key={social} href="#" className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-black transition-all">
+                          <a key={social} href="#" aria-label={social} className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-slate-400 hover:bg-cyan-500 hover:text-black transition-all">
                               <i className={`fa-brands fa-${social}`}></i>
                           </a>
                       ))}

@@ -130,6 +130,25 @@ export interface UserProfile {
   current_level?: string;
 }
 
+// --- Iqra Types ---
+export interface IqraCell {
+  id: string;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  content: {
+    arabic: string;
+    transliteration: string;
+    audioUrl: string;
+  };
+}
+
+export interface IqraPage {
+  pageNumber: number;
+  cells: IqraCell[];
+}
+
 // --- New Schema Interfaces ---
 
 export interface Achievement {
