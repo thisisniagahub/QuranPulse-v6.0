@@ -32,37 +32,37 @@ const Layout: React.FC = () => {
       path: "/",
       icon: "fa-house",
       label: "Home",
-      color: "from-primary-light to-primary",
+      color: "from-cyan-400 to-blue-500",
     },
     {
       id: NavView.QURAN,
       path: "/quran",
       icon: "fa-book-quran",
-      label: "Quran",
-      color: "from-primary-light to-primary",
+      label: "Al-Quran",
+      color: "from-emerald-400 to-teal-500",
     },
     // Center Highlighted Item (Ustaz AI)
     {
       id: NavView.SMART_DEEN,
       path: "/smart-deen",
       icon: "fa-user-astronaut",
-      label: "Ustaz",
-      color: "from-secondary-light to-secondary",
+      label: "Ustaz AI",
+      color: "from-cyan-400 to-purple-500",
       highlight: true,
     },
     {
       id: NavView.IBADAH,
       path: "/ibadah",
-      icon: "fa-kaaba",
-      label: "Ibadah",
-      color: "from-primary-light to-primary",
+      icon: "fa-compass", // Changed to Compass for Qiblat
+      label: "Qiblat",
+      color: "from-amber-400 to-orange-500",
     },
     {
       id: NavView.IQRA,
       path: "/iqra",
-      icon: "fa-microphone-lines",
-      label: "Iqra",
-      color: "from-primary-light to-primary",
+      icon: "fa-tablet-screen-button",
+      label: "Iqra Digital",
+      color: "from-cyan-400 to-blue-500",
     },
   ];
 
@@ -177,7 +177,7 @@ const Layout: React.FC = () => {
                     to={item.path}
                     aria-label={item.label}
                     className={`relative group flex flex-col items-center justify-center transition-all duration-300 ${
-                      isCenter ? "-mt-8" : ""
+                      isCenter ? "-mt-10" : ""
                     }`}
                   >
                     {/* Active Background Glow */}
@@ -187,17 +187,17 @@ const Layout: React.FC = () => {
                       ></div>
                     )}
 
-                    {/* 3D Icon Container */}
+                    {/* Custom Icon Rendering based on ID */}
                     <div
                       className={`
                             relative rounded-full flex items-center justify-center transition-all duration-300 border
-                            ${isCenter ? "w-14 h-14" : "w-10 h-10"}
+                            ${isCenter ? "w-16 h-16" : "w-10 h-10"}
                             ${
                               isActive
                                 ? `bg-gradient-to-br ${
                                     item.color
                                   } border-white/20 shadow-lg shadow-black/30 scale-110 ${
-                                    isCenter ? "rotate-0" : "rotate-3"
+                                    isCenter ? "rotate-0" : "rotate-0"
                                   }`
                                 : "bg-transparent border-transparent text-slate-500 group-hover:bg-white/5 group-hover:text-slate-300"
                             }
@@ -208,23 +208,61 @@ const Layout: React.FC = () => {
                         <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 to-transparent pointer-events-none"></div>
                       )}
 
-                      <i
-                        className={`fa-solid ${item.icon} ${
-                          isCenter ? "text-2xl" : "text-lg"
-                        } transition-all duration-300 ${
-                          isActive
-                            ? "text-white drop-shadow-[0_2px_2px_rgba(0,0,0,0.3)]"
-                            : ""
-                        }`}
-                      ></i>
+                      {/* HOME ICON */}
+                      {item.id === NavView.DASHBOARD && (
+                          <div className="relative flex items-center justify-center">
+                              <i className={`fa-solid fa-house-signal ${isActive ? "text-white drop-shadow-[0_0_5px_rgba(255,255,255,0.5)]" : ""} text-lg`}></i>
+                          </div>
+                      )}
+
+                      {/* QURAN ICON */}
+                      {item.id === NavView.QURAN && (
+                          <div className="relative flex items-center justify-center">
+                              <i className={`fa-solid fa-book-quran ${isActive ? "text-white drop-shadow-[0_0_8px_rgba(52,211,153,0.8)]" : ""} text-lg`}></i>
+                          </div>
+                      )}
+
+                      {/* USTAZ AI ICON (CENTER) */}
+                      {item.id === NavView.SMART_DEEN && (
+                          <div className="relative flex items-center justify-center w-full h-full">
+                              {/* Brain Symbol */}
+                              <i className="fa-solid fa-brain absolute -top-1 text-[10px] text-cyan-200 animate-pulse"></i>
+                              {/* User Figure */}
+                              <i className="fa-solid fa-user-astronaut text-2xl text-white mt-1"></i>
+                              {/* AI Text */}
+                              <span className="absolute -left-2 top-1/2 -translate-y-1/2 text-[8px] font-bold text-cyan-300">AI</span>
+                              {/* Pulse Wave */}
+                              <i className="fa-solid fa-wave-square absolute -right-2 top-1/2 -translate-y-1/2 text-[8px] text-cyan-300"></i>
+                              
+                              {/* Outer Ring Animation */}
+                              <div className="absolute inset-0 rounded-full border border-cyan-400/30 animate-ping-slow"></div>
+                          </div>
+                      )}
+
+                      {/* QIBLAT ICON */}
+                      {item.id === NavView.IBADAH && (
+                          <div className="relative flex items-center justify-center">
+                              {/* Compass Ring */}
+                              <i className={`fa-regular fa-compass ${isActive ? "text-amber-200" : ""} text-xl`}></i>
+                              {/* Kaaba Center */}
+                              <i className={`fa-solid fa-kaaba absolute text-[8px] ${isActive ? "text-amber-500" : ""}`}></i>
+                          </div>
+                      )}
+
+                      {/* IQRA DIGITAL ICON */}
+                      {item.id === NavView.IQRA && (
+                         <div className="relative flex items-center justify-center">
+                            <i className={`fa-solid fa-tablet-screen-button ${isActive ? "text-cyan-100" : ""} text-xl`}></i>
+                            <span className={`absolute inset-0 flex items-center justify-center text-[8px] font-bold pt-0.5 ${isActive ? "text-cyan-500" : "text-slate-500"}`}>اقرأ</span>
+                         </div>
+                      )}
+                      
                     </div>
 
-                    {/* Active Indicator Dot (Bottom) */}
-                    {isActive && !isCenter && (
-                      <div
-                        className={`absolute -bottom-2 w-1 h-1 rounded-full bg-gradient-to-r ${item.color}`}
-                      ></div>
-                    )}
+                    {/* Label (Visible on Active or Hover) */}
+                    <span className={`text-[10px] font-bold mt-1 transition-colors duration-300 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-400'}`}>
+                        {item.label}
+                    </span>
                   </Link>
                 );
               })}
