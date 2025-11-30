@@ -3,15 +3,32 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 const PulseControlCenter: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [isCyberMode, setIsCyberMode] = useState(false);
+    // Initialize from localStorage if available
+    const [isCyberMode, setIsCyberMode] = useState(() => {
+        const saved = localStorage.getItem('pulse_theme');
+        return saved === 'cyber';
+    });
 
     useEffect(() => {
         if (isCyberMode) {
             document.body.classList.add('cyber-mode');
+            localStorage.setItem('pulse_theme', 'cyber');
         } else {
             document.body.classList.remove('cyber-mode');
+            localStorage.setItem('pulse_theme', 'deep-space');
         }
     }, [isCyberMode]);
+
+    const playSound = () => {
+        const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); // Futuristic click
+        audio.volume = 0.5;
+        audio.play().catch(e => console.log('Audio play failed', e));
+    };
+
+    const handleThemeToggle = () => {
+        playSound();
+        setIsCyberMode(!isCyberMode);
+    };
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
@@ -21,7 +38,7 @@ const PulseControlCenter: React.FC = () => {
     };
 
     return (
-        <div className="fixed bottom-6 left-6 z-[100] font-sans">
+        <div className="fixed bottom-6 left-6 z-[9999] font-sans">
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
@@ -35,7 +52,7 @@ const PulseControlCenter: React.FC = () => {
                             
                             {/* Theme Switcher */}
                             <button
-                                onClick={() => setIsCyberMode(!isCyberMode)}
+                                onClick={handleThemeToggle}
                                 className={`flex items-center gap-3 p-3 rounded-xl transition-all border ${isCyberMode ? 'bg-cyan-500/20 border-cyan-500 text-cyan-400' : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'}`}
                             >
                                 <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${isCyberMode ? 'bg-cyan-500 text-black' : 'bg-slate-900'}`}>

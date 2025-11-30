@@ -342,11 +342,11 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       <audio ref={audioRef} src="https://server8.mp3quran.net/afs/067.mp3" onEnded={() => setIsPlaying(false)} />
 
       {/* --- PREMIUM ATMOSPHERE --- */}
-      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0f172a] via-[#050505] to-[#000000] z-0"></div>
+      <div className="landing-bg fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0f172a] via-[#050505] to-[#000000] z-0"></div>
       <PulseWave />
       <Starfield />
-      <div className="fixed top-[-20%] left-[-20%] w-[140%] h-[140%] bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-transparent blur-[120px] animate-aurora z-0 pointer-events-none mix-blend-screen"></div>
-      <div className="fixed inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] z-0 mix-blend-overlay pointer-events-none"></div>
+      <div className="landing-bg fixed top-[-20%] left-[-20%] w-[140%] h-[140%] bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-transparent blur-[120px] animate-aurora z-0 pointer-events-none mix-blend-screen"></div>
+      <div className="landing-bg fixed inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] z-0 mix-blend-overlay pointer-events-none"></div>
       
       {/* --- NAVBAR --- */}
       <nav className="relative z-50 px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center w-full max-w-7xl mx-auto">

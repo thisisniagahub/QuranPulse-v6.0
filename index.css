@@ -15,6 +15,7 @@ html {
 body {
   background-color: #050505;
   color: white;
+  transition: background-color 0.5s ease, color 0.5s ease, background-image 0.5s ease;
 }
 
 /* Custom scrollbar for webkit */
@@ -361,9 +362,11 @@ body.cyber-mode .bg-gold-400 {
 body.cyber-mode .bg-downbg,
 body.cyber-mode .bg-fullbg,
 body.cyber-mode .bg-upbg,
-body.cyber-mode .app-bg-layer {
+body.cyber-mode .app-bg-layer,
+body.cyber-mode .landing-bg {
   opacity: 0 !important;
   background-image: none !important;
+  display: none !important;
 }
 
 /* Add HUD-like corners to cards */
