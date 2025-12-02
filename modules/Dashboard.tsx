@@ -43,10 +43,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
         
         {/* Search/Menu Icons */}
         <div className="flex gap-3">
-            <button className="w-10 h-10 rounded-xl bg-slate-800/50 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
+            <button aria-label="Search" className="w-10 h-10 rounded-xl bg-slate-800/50 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
                 <i className="fa-solid fa-magnifying-glass"></i>
             </button>
-             <button className="w-10 h-10 rounded-xl bg-slate-800/50 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
+             <button aria-label="Notifications" className="w-10 h-10 rounded-xl bg-slate-800/50 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors">
                 <i className="fa-solid fa-bell"></i>
             </button>
         </div>

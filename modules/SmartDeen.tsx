@@ -130,9 +130,9 @@ const SmartDeen: React.FC = () => {
 
 
   return (
-    <div className="flex flex-col h-full relative bg-space-dark">
+    <div className="flex flex-col h-full relative bg-[#020617]">
       {/* Header Context with Maze Pattern */}
-      <div className="bg-space-dark/90 backdrop-blur border-b border-white/10 p-3 flex flex-col gap-2 px-4 z-10 relative overflow-hidden shadow-lg">
+      <div className="bg-[#020617]/90 backdrop-blur border-b border-cyan-500/20 p-3 flex flex-col gap-2 px-4 z-10 relative overflow-hidden shadow-lg shadow-cyan-500/5">
          <div className="absolute inset-0 bg-maze opacity-10 pointer-events-none"></div>
          
          <div className="flex items-center justify-between relative z-10">

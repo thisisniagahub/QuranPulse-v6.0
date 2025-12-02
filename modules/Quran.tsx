@@ -287,11 +287,11 @@ const Quran: React.FC = () => {
   };
 
   return (
-    <div className="min-h-full relative bg-islamic-dark pb-24 font-sans text-slate-200">
+    <div className="min-h-full relative bg-[#020617] pb-24 font-sans text-slate-200">
       
-      {/* Background Layer */}
-      <div className="app-bg-layer bg-downbg app-bg-subtle"></div>
-      <div className="gradient-overlay-dark"></div>
+      {/* Background Layer - Cyber Default */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none z-0"></div>
+      <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-cyan-900/10 to-transparent pointer-events-none z-0"></div>
       
       {/* --- CONNECTIONS MODAL --- */}
       {showConnections && connectionVerse && (

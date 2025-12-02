@@ -15,30 +15,20 @@ interface Lesson {
   words: Word[];
 }
 
-// Mock Data (Replace with Supabase fetch)
-const MOCK_LESSONS: Lesson[] = [
-  {
-    id: '1',
-    title: 'Basic Quranic Words 1',
-    description: 'Learn the most common words in the Quran.',
-    difficulty: 'beginner',
-    words: [
-      { arabic: 'الله', transliteration: 'Allah', translation: 'God' },
-      { arabic: 'رَبّ', transliteration: 'Rabb', translation: 'Lord' },
-      { arabic: 'كِتَاب', transliteration: 'Kitab', translation: 'Book' },
-    ]
-  },
-  {
-    id: '2',
-    title: 'Surah Al-Fatihah Vocab',
-    description: 'Understand the opening chapter.',
-    difficulty: 'beginner',
-    words: [
-      { arabic: 'الْحَمْدُ', transliteration: 'Al-Hamd', translation: 'The Praise' },
-      { arabic: 'عَالَمِين', transliteration: 'Alamin', translation: 'Worlds' },
-    ]
-  }
-];
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/src/lib/supabase';
+
+// ... interfaces ...
+
+const fetchLessons = async () => {
+  const { data, error } = await supabase
+    .from('vocab_lessons')
+    .select('*')
+    .order('created_at', { ascending: true });
+  
+  if (error) throw error;
+  return data as Lesson[];
+};
 
 const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
@@ -94,9 +84,9 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                 <>
                     {/* Progress Bar */}
                     <div className="w-full h-1.5 bg-slate-700/30 rounded-full mb-8 overflow-hidden">
-                        <div className="h-full bg-cyan-500 transition-all duration-300" 
+                        <div className="h-full bg-cyan-500 transition-all duration-300 w-[var(--progress-width)]" 
                         // eslint-disable-next-line
-                        style={{ width: `${progress}%` }}></div>
+                        style={{ '--progress-width': `${progress}%` } as React.CSSProperties}></div>
                     </div>
 
                     {/* Flashcard */}
@@ -137,6 +127,14 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
     );
   }
 
+  const { data: lessons, isLoading, error } = useQuery({
+    queryKey: ['vocab_lessons'],
+    queryFn: fetchLessons
+  });
+
+  if (isLoading) return <div className="text-center p-8 text-slate-500">Loading lessons...</div>;
+  if (error) return <div className="text-center p-8 text-red-500">Failed to load lessons</div>;
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -145,7 +143,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
       </div>
 
       <div className="grid gap-4">
-        {MOCK_LESSONS.map(lesson => (
+        {lessons?.map(lesson => (
             <div 
                 key={lesson.id}
                 onClick={() => startLesson(lesson)}

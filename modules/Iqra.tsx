@@ -198,13 +198,13 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 whileHover={{ scale: 1.05, backgroundColor: 'rgba(56, 189, 248, 0.3)' }}
-                className="absolute border-2 border-sky-400/50 rounded-lg cursor-pointer flex items-center justify-center group z-10"
+                className="absolute border-2 border-sky-400/50 rounded-lg cursor-pointer flex items-center justify-center group z-10 left-[var(--cell-left)] top-[var(--cell-top)] w-[var(--cell-width)] h-[var(--cell-height)]"
                 style={{
-                    left: `${cell.x}%`,
-                    top: `${cell.y}%`,
-                    width: `${cell.width}%`,
-                    height: `${cell.height}%`,
-                }}
+                    '--cell-left': `${cell.x}%`,
+                    '--cell-top': `${cell.y}%`,
+                    '--cell-width': `${cell.width}%`,
+                    '--cell-height': `${cell.height}%`,
+                } as React.CSSProperties}
                 onClick={() => handleCellClick(cell)}
             >
                 <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
@@ -365,7 +365,7 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
                         </div>
                     }
                 >
-                    <div className="shadow-2xl shadow-black/50 rounded-lg overflow-hidden transition-transform duration-200 ease-out relative" style={{ transform: `scale(${scale})` }}>
+                    <div className="shadow-2xl shadow-black/50 rounded-lg overflow-hidden transition-transform duration-200 ease-out relative scale-[var(--zoom-scale)]" style={{ '--zoom-scale': scale } as React.CSSProperties}>
                         <Page 
                             pageNumber={pageNumber} 
                             scale={1.0} // Internal scale fixed, we scale container
@@ -568,7 +568,7 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
                     <div className="flex items-end justify-between h-48 gap-2">
                         {stats.history.map((val, i) => (
                             <div key={i} className="flex-1 flex flex-col items-center gap-2 group">
-                                <div className="w-full bg-slate-700 rounded-t-lg relative overflow-hidden transition-all hover:bg-primary/20" style={{ height: `${val}%` }}>
+                                <div className="w-full bg-slate-700 rounded-t-lg relative overflow-hidden transition-all hover:bg-primary/20 h-[var(--chart-height)]" style={{ '--chart-height': `${val}%` } as React.CSSProperties}>
                                     <div className="absolute bottom-0 left-0 right-0 bg-primary/50 h-full transition-all group-hover:bg-primary"></div>
                                 </div>
                                 <span className="text-xs text-slate-500">Day {i + 1}</span>
@@ -602,13 +602,13 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
                     {MOCK_IQRA_PAGE_1.cells.map((cell) => (
                         <div
                             key={cell.id}
-                            className="absolute border-2 border-dashed border-teal-400/70 bg-teal-500/10 hover:bg-teal-500/30 cursor-pointer transition-all rounded-lg flex items-center justify-center group"
+                            className="absolute border-2 border-dashed border-teal-400/70 bg-teal-500/10 hover:bg-teal-500/30 cursor-pointer transition-all rounded-lg flex items-center justify-center group left-[var(--cell-left)] top-[var(--cell-top)] w-[var(--cell-width)] h-[var(--cell-height)]"
                             style={{
-                                left: `${cell.x}%`,
-                                top: `${cell.y}%`,
-                                width: `${cell.width}%`,
-                                height: `${cell.height}%`,
-                            }}
+                                '--cell-left': `${cell.x}%`,
+                                '--cell-top': `${cell.y}%`,
+                                '--cell-width': `${cell.width}%`,
+                                '--cell-height': `${cell.height}%`,
+                            } as React.CSSProperties}
                             onClick={() => {
                                 const audio = new Audio(cell.content.audioUrl);
                                 audio.play().catch(e => console.log("Audio play failed (mock)", e));

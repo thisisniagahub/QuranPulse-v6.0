@@ -12,8 +12,8 @@ const RecommendedWidget: React.FC = () => {
       <div className="flex justify-between items-center">
         <h3 className="text-lg font-bold text-white font-sans tracking-tight">Recommended for You</h3>
         <div className="flex gap-2">
-          <button className="w-6 h-6 rounded bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"><i className="fa-solid fa-chevron-left text-xs"></i></button>
-          <button className="w-6 h-6 rounded bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"><i className="fa-solid fa-chevron-right text-xs"></i></button>
+          <button aria-label="Previous Recommendation" className="w-6 h-6 rounded bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"><i className="fa-solid fa-chevron-left text-xs"></i></button>
+          <button aria-label="Next Recommendation" className="w-6 h-6 rounded bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"><i className="fa-solid fa-chevron-right text-xs"></i></button>
         </div>
       </div>
       

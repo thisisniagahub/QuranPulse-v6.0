@@ -181,6 +181,8 @@ const Admin: React.FC = () => {
               <h3 className="text-white font-bold mb-4">Create Broadcast Alert</h3>
               <div className="flex gap-4 mb-4">
                   <input 
+                    id="announcement-message"
+                    name="announcementMessage"
                     type="text" 
                     value={newAlertMsg}
                     onChange={e => setNewAlertMsg(e.target.value)}
@@ -412,21 +414,21 @@ const Admin: React.FC = () => {
                     <form onSubmit={handleProductSubmit} className="space-y-3">
                         <div className="space-y-1">
                             <label className="text-xs text-slate-500 font-bold uppercase">Title</label>
-                            <input className="w-full bg-slate-950 p-3 rounded-lg text-white border border-slate-800 outline-none focus:border-teal-500" placeholder="Product Title" value={editingProduct.title} onChange={e => setEditingProduct({...editingProduct, title: e.target.value})} />
+                            <input id="product-title" name="productTitle" className="w-full bg-slate-950 p-3 rounded-lg text-white border border-slate-800 outline-none focus:border-teal-500" placeholder="Product Title" value={editingProduct.title} onChange={e => setEditingProduct({...editingProduct, title: e.target.value})} />
                         </div>
                         <div className="grid grid-cols-2 gap-3">
                             <div className="space-y-1">
                                 <label className="text-xs text-slate-500 font-bold uppercase">Price (RM)</label>
-                                <input className="w-full bg-slate-950 p-3 rounded-lg text-white border border-slate-800 outline-none focus:border-teal-500" type="number" placeholder="0.00" value={editingProduct.price} onChange={e => setEditingProduct({...editingProduct, price: Number(e.target.value)})} />
+                                <input id="product-price" name="productPrice" className="w-full bg-slate-950 p-3 rounded-lg text-white border border-slate-800 outline-none focus:border-teal-500" type="number" placeholder="0.00" value={editingProduct.price} onChange={e => setEditingProduct({...editingProduct, price: Number(e.target.value)})} />
                             </div>
                             <div className="space-y-1">
                                 <label className="text-xs text-slate-500 font-bold uppercase">Stock</label>
-                                <input className="w-full bg-slate-950 p-3 rounded-lg text-white border border-slate-800 outline-none focus:border-teal-500" type="number" placeholder="0" value={editingProduct.stock} onChange={e => setEditingProduct({...editingProduct, stock: Number(e.target.value)})} />
+                                <input id="product-stock" name="productStock" className="w-full bg-slate-950 p-3 rounded-lg text-white border border-slate-800 outline-none focus:border-teal-500" type="number" placeholder="0" value={editingProduct.stock} onChange={e => setEditingProduct({...editingProduct, stock: Number(e.target.value)})} />
                             </div>
                         </div>
                         <div className="space-y-1">
                             <label className="text-xs text-slate-500 font-bold uppercase">Icon Class</label>
-                            <input className="w-full bg-slate-950 p-3 rounded-lg text-white border border-slate-800 outline-none focus:border-teal-500" placeholder="fa-solid fa-box" value={editingProduct.image} onChange={e => setEditingProduct({...editingProduct, image: e.target.value})} />
+                            <input id="product-icon" name="productIcon" className="w-full bg-slate-950 p-3 rounded-lg text-white border border-slate-800 outline-none focus:border-teal-500" placeholder="fa-solid fa-box" value={editingProduct.image} onChange={e => setEditingProduct({...editingProduct, image: e.target.value})} />
                         </div>
                         <div className="flex justify-end gap-3 mt-6 border-t border-slate-800 pt-4">
                             <button type="button" onClick={() => setIsProductModalOpen(false)} className="px-4 py-2 text-slate-400 hover:text-white font-bold text-sm">Cancel</button>

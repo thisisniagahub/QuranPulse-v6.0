@@ -104,6 +104,15 @@ const QuranReader: React.FC<QuranReaderProps> = ({
                                         </div>
                                     </div>
 
+                                    {/* Bismillah Transliteration - Show for first ayah of surah (except Fatiha & Tawbah) */}
+                                    {verse.verse_key.endsWith(':1') && chapter.id !== 1 && chapter.id !== 9 && (
+                                        <div className="text-center mb-4">
+                                            <h5 className="text-amber-400/80 font-serif italic text-base tracking-wide">
+                                                bismillāhir-raḥmānir-raḥīm
+                                            </h5>
+                                        </div>
+                                    )}
+
                                     {/* Arabic Text */}
                                     <div className="text-center w-full mb-6 px-4">
                                         {showWordByWord && verse.words && verse.words.length > 0 ? (

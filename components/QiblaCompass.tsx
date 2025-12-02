@@ -19,9 +19,9 @@ const QiblaCompass: React.FC<QiblaCompassProps> = ({ qiblaDirection }) => {
 
       {/* Kaaba Icon / Qibla Indicator (Rotates) */}
       <div 
-        className="absolute w-full h-full transition-transform duration-1000 ease-out flex items-center justify-center"
+        className="absolute w-full h-full transition-transform duration-1000 ease-out flex items-center justify-center rotate-[var(--qibla-rotation)]"
         // eslint-disable-next-line
-        style={{ transform: `rotate(${qiblaDirection}deg)` }}
+        style={{ '--qibla-rotation': `${qiblaDirection}deg` } as React.CSSProperties}
       >
         {/* The Needle */}
         <div className="relative w-1 h-full">

@@ -63,7 +63,7 @@ const LoadingFallback = () => (
           <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-bounce"></span>
       </div>
       
-      <p className="text-[10px] text-slate-600 font-mono uppercase tracking-[0.3em] mt-6">Initializing Genesis Engine</p>
+      <p className="text-[10px] text-slate-400 font-mono uppercase tracking-[0.3em] mt-6">Initializing Genesis Engine</p>
     </div>
   </div>
 );
@@ -212,7 +212,8 @@ const App: React.FC = () => {
                                     <AppContent />
                                 </Suspense>
                                 <MiniPlayer />
-                                <PulseControlCenter />
+                                {/* PulseControlCenter removed - features moved to Admin Dashboard Settings */}
+                                {/* <PulseControlCenter /> */}
                             </BrowserRouter>
                         </GamificationProvider>
                     </AudioPlayerProvider>

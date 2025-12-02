@@ -121,6 +121,9 @@ export const AudioPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
       return;
     }
 
+    // ✨ FIX: Pause first to prevent AbortError
+    audioRef.current.pause();
+    
     setCurrentTrack(track);
     audioRef.current.src = track.url;
     audioRef.current.load();
@@ -128,8 +131,11 @@ export const AudioPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
     try {
       await audioRef.current.play();
       setIsPlaying(true);
-    } catch (error) {
-      console.error("Playback failed:", error);
+    } catch (error: any) {
+      // Suppress AbortError (harmless - happens when play is interrupted)
+      if (error.name !== 'AbortError') {
+        console.error("Playback failed:", error);
+      }
       setIsPlaying(false);
     }
   };
@@ -146,8 +152,11 @@ export const AudioPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
       try {
         await audioRef.current.play();
         setIsPlaying(true);
-      } catch (error) {
-        console.error("Resume failed:", error);
+      } catch (error: any) {
+        // Suppress AbortError
+        if (error.name !== 'AbortError') {
+          console.error("Resume failed:", error);
+        }
       }
     }
   };

@@ -1,23 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const PulseControlCenter: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
-    // Initialize from localStorage if available
-    const [isCyberMode, setIsCyberMode] = useState(() => {
-        const saved = localStorage.getItem('pulse_theme');
-        return saved === 'cyber';
-    });
-
-    useEffect(() => {
-        if (isCyberMode) {
-            document.body.classList.add('cyber-mode');
-            localStorage.setItem('pulse_theme', 'cyber');
-        } else {
-            document.body.classList.remove('cyber-mode');
-            localStorage.setItem('pulse_theme', 'deep-space');
-        }
-    }, [isCyberMode]);
+    const [lowPowerMode, setLowPowerMode] = useState(false);
+    const [isCyberMode, setIsCyberMode] = useState(false);
 
     const playSound = () => {
         const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'); // Futuristic click
@@ -28,12 +15,27 @@ const PulseControlCenter: React.FC = () => {
     const handleThemeToggle = () => {
         playSound();
         setIsCyberMode(!isCyberMode);
+        if (!isCyberMode) {
+            document.body.classList.add('cyber-mode');
+        } else {
+            document.body.classList.remove('cyber-mode');
+        }
+    };
+
+    const handleLowPowerToggle = () => {
+        playSound();
+        setLowPowerMode(!lowPowerMode);
+        // In a real app, this would toggle animations/blur effects globally via Context
+        if (!lowPowerMode) {
+            document.body.classList.add('low-power');
+        } else {
+            document.body.classList.remove('low-power');
+        }
     };
 
     const toggleMenu = () => setIsOpen(!isOpen);
 
     const handleAdminClick = () => {
-        // Assuming standard navigation or window location for now
         window.location.href = '/admin'; 
     };
 
@@ -45,12 +47,12 @@ const PulseControlCenter: React.FC = () => {
                         initial={{ opacity: 0, y: 20, scale: 0.9 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 20, scale: 0.9 }}
-                        className="mb-4 bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl min-w-[200px]"
+                        className="mb-4 bg-slate-900/90 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-4 shadow-[0_0_30px_rgba(6,182,212,0.2)] min-w-[200px]"
                     >
                         <div className="flex flex-col gap-3">
-                            <div className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Pulse Control</div>
+                            <div className="text-xs font-bold text-cyan-500 uppercase tracking-wider mb-1">System Control</div>
                             
-                            {/* Theme Switcher */}
+                            {/* Theme Mode Switch */}
                             <button
                                 onClick={handleThemeToggle}
                                 className={`flex items-center gap-3 p-3 rounded-xl transition-all border ${isCyberMode ? 'bg-cyan-500/20 border-cyan-500 text-cyan-400' : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'}`}
@@ -59,8 +61,22 @@ const PulseControlCenter: React.FC = () => {
                                     <i className={`fa-solid ${isCyberMode ? 'fa-microchip' : 'fa-moon'}`}></i>
                                 </div>
                                 <div className="text-left">
-                                    <div className="text-xs font-bold">Theme</div>
+                                    <div className="text-xs font-bold">Theme System</div>
                                     <div className="text-[10px] opacity-70">{isCyberMode ? 'Cyber Pulse' : 'Deep Space'}</div>
+                                </div>
+                            </button>
+
+                            {/* Low Power Mode Switch */}
+                            <button
+                                onClick={handleLowPowerToggle}
+                                className={`flex items-center gap-3 p-3 rounded-xl transition-all border ${lowPowerMode ? 'bg-yellow-500/20 border-yellow-500 text-yellow-400' : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'}`}
+                            >
+                                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${lowPowerMode ? 'bg-yellow-500 text-black' : 'bg-slate-900'}`}>
+                                    <i className={`fa-solid ${lowPowerMode ? 'fa-battery-quarter' : 'fa-bolt'}`}></i>
+                                </div>
+                                <div className="text-left">
+                                    <div className="text-xs font-bold">Performance</div>
+                                    <div className="text-[10px] opacity-70">{lowPowerMode ? 'Power Saver' : 'High Performance'}</div>
                                 </div>
                             </button>
 
@@ -69,7 +85,7 @@ const PulseControlCenter: React.FC = () => {
                                 onClick={handleAdminClick}
                                 className="flex items-center gap-3 p-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 hover:text-white transition-all"
                             >
-                                <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-gold-500">
+                                <div className="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center text-cyan-500">
                                     <i className="fa-solid fa-shield-halved"></i>
                                 </div>
                                 <div className="text-left">

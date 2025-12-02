@@ -189,21 +189,21 @@ const Ibadah: React.FC = () => {
   };
 
   return (
-    <div className="p-4 pb-24 h-full animate-fade-in flex flex-col">
+    <div className="p-4 pb-24 h-full animate-fade-in flex flex-col bg-[#020617]">
        {/* 3D Segmented Control */}
-       <div className="flex bg-white/5 p-1.5 rounded-2xl mb-8 border border-white/10 shadow-inner overflow-x-auto no-scrollbar shrink-0">
+       <div className="flex bg-[#020617]/50 p-1.5 rounded-2xl mb-8 border border-cyan-500/20 shadow-inner overflow-x-auto no-scrollbar shrink-0">
            {['TASBIH', 'QIBLA', 'PRAYER', 'NOTIFY'].map(tab => (
                <button 
                 key={tab}
                 onClick={() => setActiveTab(tab as any)}
                 className={`flex-1 min-w-[80px] py-3 text-xs font-bold rounded-xl transition-all duration-300 relative overflow-hidden ${
                     activeTab === tab 
-                    ? 'text-white shadow-lg' 
+                    ? 'text-cyan-400 shadow-lg shadow-cyan-500/10 bg-cyan-950/30 border border-cyan-500/30' 
                     : 'text-slate-500 hover:text-slate-300'
                 }`}
                >
                    {activeTab === tab && (
-                       <div className="absolute inset-0 bg-gradient-to-r from-primary to-primary-dark rounded-xl"></div>
+                       <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-xl"></div>
                    )}
                    <span className="relative z-10">{tab === 'NOTIFY' ? 'WhatsApp Bot' : tab}</span>
                </button>
@@ -276,9 +276,9 @@ const Ibadah: React.FC = () => {
                         <div className="relative w-80 h-80">
                              <div className="absolute inset-0 bg-primary blur-[80px] opacity-10 rounded-full"></div>
                              {/* Dynamic CSS variable for real-time compass rotation based on device orientation */}
-                             <div className={`w-full h-full rounded-full bg-gradient-to-br from-space-light to-black border-8 border-space-dark shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] relative transition-transform duration-500 ease-out flex items-center justify-center overflow-hidden`} 
+                             <div className={`w-full h-full rounded-full bg-gradient-to-br from-space-light to-black border-8 border-space-dark shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] relative transition-transform duration-500 ease-out flex items-center justify-center overflow-hidden rotate-[var(--compass-heading)]`} 
                              // eslint-disable-next-line
-                             style={{ transform: `rotate(${-heading}deg)` }}
+                             style={{ '--compass-heading': `${-heading}deg` } as React.CSSProperties}
                              >
                                  <div className="absolute inset-0 rounded-full border border-white/5 m-4"></div>
                                  <div className="absolute inset-0 flex items-center justify-center opacity-10">
@@ -289,9 +289,9 @@ const Ibadah: React.FC = () => {
                                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-lg">W</div>
                                  <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-lg">E</div>
                                  {/* Dynamic CSS variable for Qibla direction pointer */}
-                                 <div className={`absolute top-1/2 left-1/2 w-1 h-32 origin-bottom z-10`} 
+                                 <div className={`absolute top-1/2 left-1/2 w-1 h-32 origin-bottom z-10 rotate-[var(--qibla-offset)]`} 
                                  // eslint-disable-next-line
-                                 style={{ transform: `rotate(${QIBLA_OFFSET}deg)` }}
+                                 style={{ '--qibla-offset': `${QIBLA_OFFSET}deg` } as React.CSSProperties}
                                  >
                                      <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex flex-col items-center">
                                          <span className="text-2xl drop-shadow-lg filter">🕋</span>

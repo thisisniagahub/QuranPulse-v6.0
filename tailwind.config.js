@@ -10,41 +10,41 @@ export default {
   theme: {
     extend: {
       colors: {
-        // v6.0 Visual Identity - Advanced & Impactful
+        // v6.0 Cyber Theme - Default
         primary: {
-          DEFAULT: '#00E5FF', // Neon Cyan (v6.0)
-          hover: '#00B8D4',   // Darker Cyan hover
-          light: '#84FFFF',
-          dark: '#00B0FF',
+          DEFAULT: 'var(--primary-color)',
+          hover: 'var(--primary-color)', // Simplified for now
+          light: 'var(--primary-light-color)',
+          dark: 'var(--primary-color)',
         },
         secondary: {
-          DEFAULT: '#FFD700', // Pure Gold
-          hover: '#FFA000',   // Amber Gold hover
-          light: '#FFE57F',
-          dark: '#FFB300',
+          DEFAULT: 'var(--secondary-color)',
+          hover: 'var(--secondary-color)',
+          light: 'var(--secondary-color)',
+          dark: 'var(--secondary-color)',
         },
         // Deep Space Backgrounds
         space: {
-          dark: '#050505', // v6.0 Black
-          light: '#0f172a', // Lighter Slate
-          accent: '#1e293b',
+          dark: '#020617', // Deepest Navy/Black
+          light: '#0f172a', // Slate 900
+          accent: '#1e293b', // Slate 800
         },
-        // Mapping legacy names
+        // Legacy Mapping for Compatibility
         gold: {
           400: '#FFE57F',
           500: '#FFD700',
           600: '#FFC107',
         },
         teal: {
-          pulse: '#00BFA5', 
+          pulse: '#00E5FF', // Remapped to Cyan
           dark: '#00695C',
-          400: '#1DE9B6',
-          500: '#00BFA5',
+          400: '#22d3ee',
+          500: '#06b6d4',
         },
         islamic: {
-          dark: '#020617', // Updated to Deep Space
-          panel: '#0B1120', // Slightly lighter panel
-          accent: '#00BFA5', 
+          dark: '#020617', 
+          panel: '#0f172a', 
+          accent: '#00E5FF', 
         },
       },
       fontFamily: {

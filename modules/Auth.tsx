@@ -15,6 +15,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
   const [name, setName] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // ✨ NEW: Password visibility toggle
   const [errors, setErrors] = useState<{
     email?: string;
     password?: string;
@@ -177,7 +178,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-islamic-dark relative overflow-hidden">
+    <div className="theme-genesis min-h-screen flex flex-col items-center justify-center p-6 bg-islamic-dark relative overflow-hidden">
       
       {/* Background Elements & Animations */}
       <div className="absolute inset-0 bg-maze-strong opacity-30 z-0"></div>
@@ -197,12 +198,12 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
 
       <div className="w-full max-w-md bg-slate-900/80 backdrop-blur-xl p-8 rounded-3xl border border-primary/30 shadow-[0_0_40px_rgba(0,191,165,0.15)] animate-fade-in relative z-10 transition-all duration-500">
         <div className="text-center mb-8">
-          {/* Logo Container - Ensuring placement as per screenshot */}
+          {/* Logo Container */}
           <div className="w-32 h-32 mx-auto mb-4 relative group flex items-center justify-center">
              {/* Glow effect */}
              <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
              
-             {/* The Logo Image (logo.png) */}
+             {/* The Logo Image */}
              <img 
                src="/logo-full.png" 
                alt="QuranPulse" 
@@ -298,19 +299,22 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
             <label htmlFor="auth-password" className="text-[10px] text-primary ml-1 uppercase font-extrabold tracking-wider">Password</label>
              <div className="relative group">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-primary to-primary-dark rounded-xl blur opacity-20 group-focus-within:opacity-70 transition duration-500"></div>
-                {/* eslint-disable-next-line */}
                 <input
                 id="auth-password"
                 name="password"
                 type="password"
                 required
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}  
-                className="relative w-full bg-black/60 border border-slate-700 rounded-xl px-4 py-3 text-white outline-none focus:border-primary/50 placeholder:text-slate-600 transition-colors"
+                onChange={(e) => handleInputChange('password', e.target.value)}
+                className={`relative w-full bg-black/60 border rounded-xl px-4 py-3 text-white outline-none placeholder:text-slate-600 transition-colors ${
+                    errors.password ? 'border-red-500' : 'border-slate-700 focus:border-primary/50'
+                }`}
                 placeholder="••••••••"
-                // eslint-disable-next-line
                 autoComplete="current-password"
                 />
+                {errors.password && (
+                    <p className="text-red-400 text-xs mt-1">{errors.password}</p>
+                )}
             </div>
           </div>
 

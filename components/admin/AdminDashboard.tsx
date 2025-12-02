@@ -8,6 +8,10 @@ const AdminDashboard: React.FC = () => {
   const [users, setUsers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [userSearch, setUserSearch] = useState('');
+  
+  // ✨ NEW: Theme & Performance Mode states (moved from PulseControlCenter)
+  const [isCyberMode, setIsCyberMode] = useState(false);
+  const [lowPowerMode, setLowPowerMode] = useState(false);
 
   // Load initial data
   useEffect(() => {
@@ -125,9 +129,9 @@ const AdminDashboard: React.FC = () => {
             {[30, 45, 55, 60, 75, 80, 95].map((h, i) => (
               <div key={i} className="flex flex-col items-center gap-2 w-full group">
                 <div 
-                  className="w-full bg-cyan-600/50 hover:bg-cyan-500 rounded-t-lg transition-all relative"
+                  className="w-full bg-cyan-600/50 hover:bg-cyan-500 rounded-t-lg transition-all relative h-[var(--bar-height)]"
                   // eslint-disable-next-line
-                  style={{ height: `${h}%` }}
+                  style={{ '--bar-height': `${h}%` } as React.CSSProperties}
                 >
                   <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
                     {h * 10}
@@ -148,9 +152,9 @@ const AdminDashboard: React.FC = () => {
             {[20, 35, 45, 30, 55, 65, 85].map((h, i) => (
               <div key={i} className="flex flex-col items-center gap-2 w-full group">
                 <div 
-                  className="w-full bg-green-600/50 hover:bg-green-500 rounded-t-lg transition-all relative"
+                  className="w-full bg-green-600/50 hover:bg-green-500 rounded-t-lg transition-all relative h-[var(--bar-height)]"
                   // eslint-disable-next-line
-                  style={{ height: `${h}%` }}
+                  style={{ '--bar-height': `${h}%` } as React.CSSProperties}
                 >
                   <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">
                     RM {h * 50}
@@ -328,6 +332,100 @@ const AdminDashboard: React.FC = () => {
               </div>
               <div className="w-12 h-6 bg-green-900/50 rounded-full relative cursor-pointer border border-green-500/30">
                 <div className="w-4 h-4 bg-green-500 rounded-full absolute top-1 right-1 transition-all"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ✨ NEW: Theme System & Performance Controls (from PulseControlCenter) */}
+        <div>
+          <h3 className="text-white font-bold mb-2 flex items-center gap-2">
+            <i className="fa-solid fa-palette text-cyan-400"></i> Appearance & Performance
+          </h3>
+          <p className="text-slate-500 text-sm mb-4">Customize the visual theme and performance settings.</p>
+          
+          <div className="space-y-4">
+            {/* Theme System Toggle */}
+            <div 
+              onClick={() => {
+                setIsCyberMode(!isCyberMode);
+                if (!isCyberMode) {
+                  document.body.classList.add('cyber-mode');
+                } else {
+                  document.body.classList.remove('cyber-mode');
+                }
+              }}
+              className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${
+                isCyberMode 
+                  ? 'bg-cyan-500/10 border-cyan-500/50' 
+                  : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
+                  isCyberMode ? 'bg-cyan-500 text-black' : 'bg-slate-900 text-slate-400'
+                }`}>
+                  <i className={`fa-solid ${isCyberMode ? 'fa-microchip' : 'fa-moon'}`}></i>
+                </div>
+                <div>
+                  <p className="text-white font-bold text-sm">Theme System</p>
+                  <p className="text-slate-500 text-xs">
+                    {isCyberMode ? 'Cyber Pulse (Active)' : 'Deep Space (Active)'}
+                  </p>
+                </div>
+              </div>
+              <div className={`w-12 h-6 rounded-full relative transition-all ${
+                isCyberMode 
+                  ? 'bg-cyan-900/50 border border-cyan-500/30' 
+                  : 'bg-slate-800'
+              }`}>
+                <div className={`w-4 h-4 rounded-full absolute top-1 transition-all ${
+                  isCyberMode 
+                    ? 'bg-cyan-500 right-1' 
+                    : 'bg-slate-500 left-1'
+                }`}></div>
+              </div>
+            </div>
+
+            {/* Performance Mode Toggle */}
+            <div 
+              onClick={() => {
+                setLowPowerMode(!lowPowerMode);
+                if (!lowPowerMode) {
+                  document.body.classList.add('low-power');
+                } else {
+                  document.body.classList.remove('low-power');
+                }
+              }}
+              className={`flex items-center justify-between p-4 rounded-xl border cursor-pointer transition-all ${
+                lowPowerMode 
+                  ? 'bg-yellow-500/10 border-yellow-500/50' 
+                  : 'bg-slate-950 border-slate-800 hover:border-slate-700'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-lg flex items-center justify-center transition-all ${
+                  lowPowerMode ? 'bg-yellow-500 text-black' : 'bg-slate-900 text-slate-400'
+                }`}>
+                  <i className={`fa-solid ${lowPowerMode ? 'fa-battery-quarter' : 'fa-bolt'}`}></i>
+                </div>
+                <div>
+                  <p className="text-white font-bold text-sm">Performance Mode</p>
+                  <p className="text-slate-500 text-xs">
+                    {lowPowerMode ? 'Power Saver (Enabled)' : 'High Performance (Enabled)'}
+                  </p>
+                </div>
+              </div>
+              <div className={`w-12 h-6 rounded-full relative transition-all ${
+                lowPowerMode 
+                  ? 'bg-yellow-900/50 border border-yellow-500/30' 
+                  : 'bg-slate-800'
+              }`}>
+                <div className={`w-4 h-4 rounded-full absolute top-1 transition-all ${
+                  lowPowerMode 
+                    ? 'bg-yellow-500 right-1' 
+                    : 'bg-slate-500 left-1'
+                }`}></div>
               </div>
             </div>
           </div>
