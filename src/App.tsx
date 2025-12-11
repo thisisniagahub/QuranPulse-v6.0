@@ -8,6 +8,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import MiniPlayer from './components/MiniPlayer';
 import ErrorBoundary from './components/ErrorBoundary';
+import ChatbaseWidget from './components/ChatbaseWidget';
 import { NavView, UserProfile } from './types';
 
 // Lazy load all modules for code splitting
@@ -211,6 +212,8 @@ const App: React.FC = () => {
                                     {/* MiniPlayer removed - using QuranAudioPlayer in Quran module instead */}
                                     {/* PulseControlCenter removed - features moved to Admin Dashboard Settings */}
                                     {/* <PulseControlCenter /> */}
+                                    {/* AI Chatbot Widget */}
+                                    <ChatbaseWidget />
                                 </BrowserRouter>
                             </AuthProvider>
                         </GamificationProvider>
