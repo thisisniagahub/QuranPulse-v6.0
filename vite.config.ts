@@ -61,10 +61,11 @@ export default defineConfig(({ mode }) => {
         rollupOptions: {
           output: {
             manualChunks: (id) => {
-              // Vendor libraries - core React ecosystem
+              // Vendor libraries - core React ecosystem (including React Query!)
               if (id.includes('node_modules/react') || 
                   id.includes('node_modules/react-dom') || 
-                  id.includes('node_modules/react-router')) {
+                  id.includes('node_modules/react-router') ||
+                  id.includes('node_modules/@tanstack/react-query')) {
                 return 'vendor-react';
               }
               
@@ -75,8 +76,7 @@ export default defineConfig(({ mode }) => {
               }
               
               // Supabase and API clients
-              if (id.includes('node_modules/@supabase') || 
-                  id.includes('node_modules/@tanstack/react-query')) {
+              if (id.includes('node_modules/@supabase')) {
                 return 'vendor-data';
               }
               
