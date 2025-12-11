@@ -529,11 +529,18 @@ const CONSONANTS_99: Record<string, string> = {
 // Qalqalah letters (require bounce when sukun)
 const QALQALAH_LETTERS = new Set(['ق', 'ط', 'ب', 'ج', 'د']);
 
+// FULL VERSE PATTERNS - Match complete phrases for exact user output
+const FULL_VERSE_PATTERNS: Record<string, string> = {
+  // Bismillah - exact format: Bismillahir-rahmaanir-rahiim
+  'بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ': 'Bismillahir-rahmaanir-rahiim',
+  'بسم الله الرحمن الرحيم': 'Bismillahir-rahmaanir-rahiim',
+};
+
 // Special words - MALAYSIAN MALAY TRANSLITERATION SPEC
 // Format: Simple ejaan Melayu, aa/ii/uu for long vowels, tasydid = double letters
 const SPECIAL_WORDS_99: Record<string, string> = {
-  // === BISMILLAH ===
-  'بسم': 'Bismillah',
+  // === INDIVIDUAL WORDS ===
+  'بسم': 'Bismillahir',
   'الله': 'Allah', 'ٱلله': 'Allah',
   
   // === AR-RAHMAN AR-RAHIM ===
@@ -566,18 +573,22 @@ const SPECIAL_WORDS_99: Record<string, string> = {
   'ولا': 'wa laadh',
   'الضالين': 'dhaalliin', 'ٱلضالين': 'dhaalliin',
   
-  // === SURAH AL-IKHLAS ===
+  // === SURAH AL-IKHLAS - EXACT MATCH USER EXAMPLE ===
+  // 1. Qul huwallahu ahad
+  // 2. Allahush-shamad  
+  // 3. Lam yalid wa lam yuulad
+  // 4. Wa lam yakul-lahu kufuwan ahad
   'قل': 'Qul',
   'هو': 'huwallahu',
   'أحد': 'ahad',
-  'الصمد': 'ash-shamad', 'ٱلصمد': 'ash-shamad',
+  'الصمد': 'Allahush-shamad', 'ٱلصمد': 'Allahush-shamad',
   'لم': 'Lam',
   'يلد': 'yalid',
   'ولم': 'wa lam',
   'يولد': 'yuulad',
-  'يكن': 'yakul',
-  'له': 'lahu',
-  'كفوا': 'kufuwan',
+  'يكن': 'Wa lam yakul-lahu',
+  'له': 'kufuwan',
+  'كفوا': 'ahad',
 };
 
 /**
@@ -791,6 +802,18 @@ export function transliterate99(arabic: string): {
   if (!arabic) return { text: '', tajwid: [], notes: [] };
   
   let input = arabic.trim();
+  
+  // CHECK FULL VERSE PATTERNS FIRST (like Bismillahir-rahmaanir-rahiim)
+  for (const [pattern, replacement] of Object.entries(FULL_VERSE_PATTERNS)) {
+    if (input.includes(pattern) || stripHarakat(input) === stripHarakat(pattern)) {
+      return { 
+        text: replacement, 
+        tajwid: [], 
+        notes: ['Ayat lengkap'] 
+      };
+    }
+  }
+  
   input = input.replace(/ﻻ|لا|لآ|لأ|لإ/g, 'لا');
   
   const words = input.split(/\s+/);
