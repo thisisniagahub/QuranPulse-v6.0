@@ -421,52 +421,33 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                 )}
             </div>
             
-            {/* 99% RUMI Header - Clean & Compact */}
-            <div className="flex items-center justify-center gap-3 mb-3">
-                <span className="text-xs text-amber-400/80 font-medium">🎯 99% Rumi</span>
-                {tajwidMarkers.length > 0 && (
-                    <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[9px]">
-                        {tajwidMarkers.length} Tajwid
-                    </span>
-                )}
-            </div>
-            
-            {/* Rumi Words - Clickable with Tajwid Colors - USING 99% ACCURACY */}
-            <div className="flex flex-wrap justify-center gap-2">
-                {verse.words?.filter(w => w.char_type_name !== 'end').map((word, i) => {
-                    // Use 99% ACCURACY mode - PRECISION ARABIC!
-                    const rumiText = words99[i] || '';
-                    const isActive = highlightedWordIndex === word.position || (isTTSPlaying && ttsWordIndex === i);
-                    const hint = tajwidHints[i] || { color: '#10b981', bgColor: 'transparent', rule: 'normal', label: '', labelMs: '' };
-                    
-                    return (
-                        <span 
-                            key={i}
-                            onClick={() => speakRumi(rumiText)}
-                            title={`${word.text_uthmani}${hint.rule !== 'normal' ? ` (${hint.label})` : ''}`}
-                            className={`relative cursor-pointer px-2 py-1 rounded-lg transition-all duration-200 group
-                                ${isActive ? 'scale-110 font-bold' : 'hover:scale-105'}
-                            `}
-                            style={{ 
-                                fontFamily: "'Lora', 'Amiri', serif", 
-                                fontSize: `${fontSize * 0.55}px`, 
-                                letterSpacing: '0.03em',
-                                color: isActive ? '#fff' : hint.color,
-                                backgroundColor: isActive ? hint.color + '40' : hint.bgColor,
-                                boxShadow: isActive ? `0 0 15px ${hint.color}40` : 'none'
-                            }}
-                        >
-                            {rumiText}
-                            {/* Tooltip with Arabic + Tajwid rule */}
-                            <span className="absolute -top-10 left-1/2 -translate-x-1/2 px-2 py-1 bg-slate-900 text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-slate-700 flex flex-col items-center gap-0.5">
-                                <span className="font-uthmani text-amber-400">{word.text_uthmani}</span>
-                                {hint.rule !== 'normal' && (
-                                    <span style={{ color: hint.color }} className="text-[9px] font-bold">{hint.labelMs}</span>
-                                )}
-                            </span>
+            {/* 99% RUMI - Full Verse Display with Tajwid Markers */}
+            <div className="mb-4 p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/20">
+                <div className="flex items-center justify-center gap-2 mb-3">
+                    <span className="text-xs text-amber-400/80 font-medium">🎯 99% Rumi</span>
+                    {tajwidMarkers.length > 0 && (
+                        <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[9px]">
+                            {tajwidMarkers.length} Tajwid
                         </span>
-                    );
-                })}
+                    )}
+                </div>
+                
+                {/* Full Verse Pronunciation - CORRECT 99% OUTPUT */}
+                <p className="text-center font-serif text-lg text-amber-200 leading-relaxed" style={{ letterSpacing: '0.05em' }}>
+                    {pronunciation99}
+                </p>
+                
+                {/* Pronunciation Notes */}
+                {pronunciationNotes.length > 0 && (
+                    <div className="border-t border-amber-500/20 pt-2 mt-3">
+                        <p className="text-[10px] text-amber-400/60 font-bold mb-1 text-center">NOTA SEBUTAN:</p>
+                        <div className="flex flex-wrap justify-center gap-2 text-[9px] text-amber-300/60">
+                            {pronunciationNotes.slice(0, 4).map((note, i) => (
+                                <span key={i}>• {note}</span>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
             
             {/* Practice Mode Completion */}
