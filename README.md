@@ -13,6 +13,8 @@
 
 This update introduces a massive leap in both aesthetics and intelligence.
 
+> **📚 New Team Member?** Check out the **[Project Documentation Index](./DOCS_INDEX.md)** to understand our Vision & Roadmap.
+
 ### 🎛️ Pulse Control Center (New!)
 A global floating command center (bottom-left) that gives you instant control:
 - **Theme Switcher**: Toggle between **"Deep Space"** (Classic) and **"Cyber Pulse"** (Futuristic).

@@ -1,178 +1,239 @@
-# 🏛️ QuranPulse v6.0 System Architecture
+# 🌌 QURAN PULSE v6.0 — ADVANCED SYSTEM ARCHITECTURE
 
-## 1. High-Level Overview
+> **Version:** 6.0.3 (Genesis)
+> **Status:** Production Blueprint
+> **Architecture Pattern:** Modular Monolith (PWA) + Serverless Edge
+> **Compliance:** JAKIM Act 326 Ready
 
-QuranPulse v6.0 is a **Progressive Web Application (PWA)** built on a modern serverless architecture. It leverages **React** for the frontend, **Supabase** for the backend (Database & Auth), and a custom **AI Service Layer** for intelligence features.
+---
+
+## 1. 🏗️ HIGH-LEVEL ARCHITECTURE (C4 Level 1)
+
+QuranPulse is strictly designed as a **"Privacy-First, Offline-Capable, Islamic Super App"**.
 
 ```mermaid
-graph TD
-    User[User Device] -->|HTTPS| CDN[Vercel Edge Network]
-    CDN -->|Serves| Client[React Client App]
-    
-    subgraph "Frontend Layer (Client)"
-        Client -->|Routing| Router[React Router]
-        Router -->|Render| Modules[Modules: Quran, Iqra, SmartDeen]
-        Modules -->|State| Query[TanStack Query]
-        Modules -->|UI| Components[UI Components]
-        Components -->|Theme| ThemeEngine[Pulse Control Center]
+graph TB
+    subgraph "The Ummah (Users)"
+        User[End User]
+        Scholar[Islamic Scholar]
+        Admin[Super Admin]
     end
-    
-    subgraph "Service Layer"
-        Query -->|Fetch| SupabaseClient[Supabase JS Client]
-        Query -->|Fetch| AIService[AI Service (GLM-4)]
-        Query -->|Fetch| TTSService[Text-to-Speech]
+
+    subgraph "QuranPulse Ecosystem"
+        WebApp[QuranPulse PWA<br/>(React/Vite)]
+        EdgeAPI[Edge Functions<br/>(Supabase/Vercel)]
+        VectorDB[AI Knowledge Base<br/>(pgvector)]
     end
-    
-    subgraph "Backend Layer (Serverless)"
-        SupabaseClient -->|Auth| Auth[Supabase Auth]
-        SupabaseClient -->|Data| DB[(PostgreSQL Database)]
-        SupabaseClient -->|Storage| Storage[Supabase Storage]
+
+    subgraph "External Systems"
+        JAKIM[JAKIM e-Solat & Halal API]
+        Zhipu[Zhipu AI (GLM-4)]
+        CDN[Media CDN (Evaluated Sounds)]
     end
+
+    User -->|Reads/Learns| WebApp
+    Scholar -->|Verifies| WebApp
+    Admin -->|Manages| WebApp
+
+    WebApp -->|Syncs Data| EdgeAPI
+    WebApp -->|Semantic Search| VectorDB
+    
+    EdgeAPI -->|Verifies Compliance| JAKIM
+    EdgeAPI -->|Generates Wisdom| Zhipu
+    WebApp -->|Streams Audio| CDN
 ```
 
 ---
 
-## 2. Frontend Architecture
+## 2. 🗺️ CODEBASE TOPOGRAPHY (Complete File Map)
 
-The frontend is built with **Vite + React + TypeScript**. It emphasizes performance, modularity, and a premium "Game-like" UI experience.
-
-### 2.1 Core Technologies
--   **Framework:** React 18
--   **Build Tool:** Vite (Fast HMR & Bundling)
--   **Styling:** Tailwind CSS v4 + Framer Motion (Animations)
--   **State Management:**
-    -   **Server State:** `@tanstack/react-query` (Caching, Synchronization)
-    -   **Global UI State:** React Context API (`AudioPlayerContext`, `GamificationContext`)
-    -   **Local State:** `useState`, `useReducer`
-
-### 2.2 Module Structure
-The application is divided into feature-based modules to ensure separation of concerns:
-
-| Module | Description | Key Components |
-| :--- | :--- | :--- |
-| **Quran** | Core reading experience | `QuranReader`, `VerseStudio`, `AudioPlayer` |
-| **Iqra** | Learning & Education | `VisionCoach` (AR), `SmartMode`, `Analytics` |
-| **Smart Deen** | Daily Islamic utilities | `PrayerTimes`, `QiblaCompass`, `UstazAI` |
-| **Social** | Community features | `Leaderboard`, `Badges`, `Feed` |
-| **Admin** | Management dashboard | `UserManagement`, `ContentCMS` |
-
-### 2.3 Theme System (Pulse Engine)
-The application features a dynamic theme switching engine controlled by `PulseControlCenter.tsx`.
--   **Deep Space (Default):** Dark mode, gold accents, starfield backgrounds.
--   **Cyber Pulse (v6.0):** Navy/Cyan palette, circuit board patterns, HUD interfaces.
--   **Implementation:** Uses CSS variables and body classes (`.cyber-mode`) to override Tailwind utility classes globally.
-
----
-
-## 3. Backend Architecture (Supabase)
-
-We use Supabase as a Backend-as-a-Service (BaaS) to handle data persistence, authentication, and realtime subscriptions.
-
-### 3.1 Database Schema (PostgreSQL)
+This diagram represents the **Target State** of the file system after reorganization.
 
 ```mermaid
-erDiagram
-    PROFILES ||--o{ USER_PROGRESS : tracks
-    PROFILES {
-        uuid id PK
-        string username
-        string avatar_url
-        int xp_total
-        int barakah_points
-        jsonb settings
-    }
+graph LR
+    SRC[src/]
     
-    SURAHS ||--o{ AYAHS : contains
-    SURAHS {
-        int id PK
-        string name_simple
-        string name_arabic
-        int verses_count
-    }
-    
-    AYAHS {
-        int id PK
-        int surah_id FK
-        int verse_number
-        text text_uthmani
-        text text_translation
-        jsonb audio_url
-    }
-    
-    USER_PROGRESS {
-        uuid id PK
-        uuid user_id FK
-        int surah_id
-        int last_verse
-        timestamp last_read_at
-    }
+    %% MODULES LAYER
+    subgraph "Modules (Smart Features)"
+        SRC --> MOD[modules/]
+        
+        MOD --> ADM[admin/]
+        ADM --> ADM_MAIN[AdminDashboard.tsx]
+        ADM --> ADM_COMP[components/]
+        
+        MOD --> DASH[dashboard/]
+        DASH --> DASH_MAIN[Dashboard.tsx]
+        DASH --> DASH_COMP[components/]
+        DASH_COMP --> DC1[DailyDeeds.tsx]
+        DASH_COMP --> DC2[PrayerCard.tsx]
+        
+        MOD --> QRN[quran/]
+        QRN --> QRN_MAIN[index.tsx]
+        QRN --> QRN_COMP[components/]
+        QRN_COMP --> QC1[Verse.tsx]
+        QRN_COMP --> QC2[SurahList.tsx]
+        
+        MOD --> IQRA[iqra/]
+        IQRA --> IQRA_MAIN[Iqra.tsx]
+        
+        MOD --> SD[smart-deen/]
+        SD --> SD_MAIN[SmartDeen.tsx]
+        SD --> SD_COMP[components/]
+        SD_COMP --> SD1[QiblaCompass.tsx]
+        SD_COMP --> SD2[PrayerTimes.tsx]
+        
+        MOD --> IBADAH[ibadah/]
+        IBADAH --> IB_MAIN[Ibadah.tsx]
+        
+        MOD --> SOUQ[souq/]
+        SOUQ --> SQ_MAIN[Souq.tsx]
+        
+        MOD --> PROF[profile/]
+        PROF --> PR_MAIN[Profile.tsx]
+        
+        MOD --> LND[landing/]
+        LND --> LND_MAIN[LandingPage.tsx]
+        LND --> LND_COMP[components/]
+    end
+
+    %% SHARED LAYER
+    subgraph "Shared (Dumb Components)"
+        SRC --> COMP[components/]
+        COMP --> UI[ui/]
+        UI --> BTN[Button.tsx]
+        UI --> MDL[Modal.tsx]
+        
+        COMP --> LAYOUT[layout/]
+        LAYOUT --> LAY_MAIN[Layout.tsx]
+        LAYOUT --> NAV[Navbar.tsx]
+        LAYOUT --> FOOT[Footer.tsx]
+        
+        COMP --> AUDIO[AudioPlayer.tsx]
+        COMP --> ERR[ErrorBoundary.tsx]
+    end
+
+    %% CORE LAYER
+    subgraph "Core (Services & Logic)"
+        SRC --> SVC[services/]
+        SVC --> S1[apiClient.ts]
+        SVC --> S2[quranService.ts]
+        SVC --> S3[aiService.ts]
+        SVC --> S4[adminService.ts]
+        SVC --> S5[prayerService.ts]
+        
+        SRC --> CTX[contexts/]
+        CTX --> C1[AudioPlayerContext.tsx]
+        CTX --> C2[GamificationContext.tsx]
+        
+        SRC --> TYPES[types/]
+        TYPES --> T1[index.ts]
+    end
+
+    %% ENTRY POINT
+    SRC --> APP[App.tsx]
+    SRC --> MAIN[main.tsx]
 ```
 
-### 3.2 Security
--   **Row Level Security (RLS):** Enabled on all tables.
-    -   `profiles`: Users can only read/update their own profile.
-    -   `surahs`/`ayahs`: Public read access.
--   **Authentication:** Supabase Auth (Email/Password, Social Providers).
+---
+
+## 3. 🧩 MODULAR MONOLITH STRUCTURE (Explanation)
+
+| Layer | Directory | Responsibility | Coupling |
+| :--- | :--- | :--- | :--- |
+| **App** | `src/` | Entry point, Providers, Routing. | High |
+| **Modules** | `src/modules/*` | **Self-contained features.** Each module (e.g., `quran`, `admin`) owns its components, hooks, and logic. | **Low** (Loose) |
+| **Shared** | `src/components/*` | "Dumb" UI components used across modules (Buttons, Modal, Layout). | High |
+| **Core** | `src/services/*` | Business logic, API clients, Singleton services. | High |
 
 ---
 
-## 4. AI Service Layer
+## 4. 🧠 ARTIFICIAL INTELLIGENCE PIPELINE (RAG)
 
-The intelligence of QuranPulse is powered by the `aiService.ts` module.
+The "Ustaz AI" feature uses a **Retrieval-Augmented Generation (RAG)** pipeline.
 
-### 4.1 Capabilities
--   **Semantic Search:** Vector-like search simulation for finding verses by meaning.
--   **Generative Tafsir:** On-demand explanation of verses using LLM prompts.
--   **Morphology Analysis:** Grammatical breakdown of Arabic words.
--   **Conversational AI:** "Ustaz AI" chatbot for religious queries.
+```mermaid
+sequenceDiagram
+    participant User
+    participant App as Client (PWA)
+    participant Vector as Vector DB (Fatwa/Quran)
+    participant LLM as Zhipu AI (GLM-4)
+    participant Guard as Shariah Guard (Regex/Filter)
 
-### 4.2 Integration Strategy
-Currently, the system uses a **Hybrid Mock/Real approach**:
-1.  **Development:** Realistic mocks with simulated latency (`setTimeout`) to mimic API calls without cost.
-2.  **Production:** Designed to swap mocks with actual API calls to **Zhipu AI (GLM-4)** or OpenAI via Edge Functions.
+    User->>App: "Hukum trade forex?"
+    
+    rect rgb(20, 20, 30)
+        Note right of App: PHASE 1: Retrieval
+        App->>Vector: Embedding Search (Cosine Similarity)
+        Vector-->>App: Returns: [Fatwa #123, Hadith #456]
+    end
+    
+    rect rgb(30, 20, 20)
+        Note right of App: PHASE 2: Augmentation
+        App->>LLM: Prompt + {Context: Fatwa #123}
+        LLM-->>App: Generated Draft Answer
+    end
 
----
+    rect rgb(20, 30, 20)
+        Note right of App: PHASE 3: Safety
+        App->>Guard: Check for Banned Keywords / Hallucinations
+        Guard-->>App: Status: SAFE
+    end
 
-## 5. Data Flow & State Management
-
-We utilize **TanStack Query** to manage server state, eliminating the need for complex Redux boilerplate for data fetching.
-
-1.  **Component Mounts:** e.g., `QuranReader` requests Surah data.
-2.  **Query Hook:** `useQuery(['surah', id])` checks cache.
-3.  **Cache Miss:** Fetches data from Supabase via `quranService`.
-4.  **Data Arrival:** UI updates automatically.
-5.  **Mutations:** User actions (e.g., "Mark as Read") trigger `useMutation`, which optimistically updates the UI and syncs with Supabase in the background.
-
----
-
-## 6. Deployment Pipeline
-
-The project follows a **GitOps** workflow with Vercel.
-
-1.  **Code Push:** Developer pushes to `master` branch on GitHub.
-2.  **CI/CD:** Vercel detects the commit.
-3.  **Build:** Runs `npm run build` (Vite build).
-4.  **Deploy:** Static assets are distributed to the Vercel Edge Network.
-5.  **Live:** Changes are instantly available globally.
-
----
-
-## 7. Directory Structure
-
+    App->>User: Display Answer + Source Citations
 ```
-/
-├── src/
-│   ├── assets/         # Static images, icons, audio
-│   ├── components/     # Reusable UI components (Buttons, Cards)
-│   ├── contexts/       # Global React Contexts (Audio, Game)
-│   ├── hooks/          # Custom React Hooks
-│   ├── modules/        # Feature-based Page Views (Quran, Iqra)
-│   ├── services/       # API Clients (Supabase, AI, TTS)
-│   ├── types/          # TypeScript Interfaces
-│   ├── utils/          # Helper functions
-│   ├── App.tsx         # Main Application Entry
-│   └── main.tsx        # DOM Renderer
-├── supabase/           # SQL Migrations & Schema
-├── public/             # Public assets (manifest.json)
-└── index.html          # Entry HTML
+
+---
+
+## 5. 🔒 SECURITY & COMPLIANCE ARCHITECTURE
+
+### A. Data Integrity (Act 326)
+*   **SHA-256 Checksums:** Every Quran page/Surah JSON is hashed. The client verifies this hash against the manifest on load to prevent tampering.
+*   **Immutable Storage:** Quran text is stored in Read-Only Edge Storage, accessible ONLY via signed URLs.
+
+### B. Row Level Security (RLS)
+Supabase RLS is the primary firewall. No server-side code needed for basic protection.
+
+```sql
+-- POLICY: User Data Isolation
+CREATE POLICY "Users access own data only"
+ON profiles
+FOR ALL
+USING (auth.uid() = id);
+
+-- POLICY: Official Data Read-Only
+CREATE POLICY "Public Read Official Data"
+ON official_mosques
+FOR SELECT
+USING (true); -- No INSERT/UPDATE allowed for public
 ```
+
+---
+
+## 6. 🌐 DATA INGESTION PIPELINE (Official Data)
+
+How we populate `official_mosques` and `halal_directory`.
+
+```mermaid
+graph LR
+    subgraph "Sources"
+        Gov[e-Solat Portal]
+        Halal[SmartHalal Portal]
+    end
+
+    subgraph "ETL Process (Python Scripts)"
+        Scraper[Scraper/API Fetcher] --> Cleaner[Data Normalizer]
+        Cleaner --> Geo[Geocoding (Lat/Long fixes)]
+    end
+
+    subgraph "Destination"
+        DB[(Supabase DB)]
+    end
+
+    Gov --> Scraper
+    Halal --> Scraper
+    Geo --> DB
+```
+
+---
+**Prepared by:** QuranPulse Architecture Team
+**Last Verified:** Dec 6, 2025

@@ -10,22 +10,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        // v6.0 Cyber Theme - Default
+        // v6.0 Cyber Theme - Genesis Default (Cyan/Teal)
         primary: {
-          DEFAULT: 'var(--primary-color)',
-          hover: 'var(--primary-color)', // Simplified for now
-          light: 'var(--primary-light-color)',
-          dark: 'var(--primary-color)',
+          DEFAULT: '#06b6d4', // Cyan 500
+          hover: '#22d3ee',   // Cyan 400
+          light: '#67e8f9',   // Cyan 300
+          dark: '#0891b2',    // Cyan 600
         },
         secondary: {
-          DEFAULT: 'var(--secondary-color)',
-          hover: 'var(--secondary-color)',
-          light: 'var(--secondary-color)',
-          dark: 'var(--secondary-color)',
+          DEFAULT: '#fbbf24', // Amber 400 (Gold accent)
+          hover: '#fcd34d',   // Amber 300
+          light: '#fef3c7',   // Amber 100
+          dark: '#f59e0b',    // Amber 500
         },
         // Deep Space Backgrounds
         space: {
-          dark: '#020617', // Deepest Navy/Black
+          dark: '#020617', // Deepest Navy/Black (Slate 950)
           light: '#0f172a', // Slate 900
           accent: '#1e293b', // Slate 800
         },

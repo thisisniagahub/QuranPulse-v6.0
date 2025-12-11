@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Tablet Body -->
+  <rect x="10" y="6" width="44" height="52" rx="4" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+  <!-- Screen -->
+  <rect x="14" y="10" width="36" height="40" rx="2" fill="#1e293b"/>
+  <!-- Arabic Letter Alif -->
+  <text x="24" y="36" fill="#fbbf24" font-size="20" font-family="serif">ا</text>
+  <!-- Arabic Letter Ba -->
+  <text x="36" y="36" fill="#22d3ee" font-size="20" font-family="serif">ب</text>
+  <!-- Home Button -->
+  <circle cx="32" cy="54" r="3" fill="none" stroke="#22d3ee" stroke-width="1"/>
+  <!-- Status Bar -->
+  <rect x="20" y="12" width="24" height="2" rx="1" fill="#22d3ee" opacity="0.5"/>
+</svg>

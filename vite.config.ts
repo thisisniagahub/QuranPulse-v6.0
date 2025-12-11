@@ -46,21 +46,78 @@ export default defineConfig(({ mode }) => {
       ],
       resolve: {
         alias: {
-          '@': path.resolve(__dirname, '.'),
+          '@': path.resolve(__dirname, './src'),
         }
       },
       build: {
+        target: 'es2015',
+        minify: 'terser',
+        terserOptions: {
+          compress: {
+            drop_console: mode === 'production',
+            drop_debugger: mode === 'production',
+          },
+        },
         rollupOptions: {
           output: {
-            manualChunks: {
-              // Vendor libraries
-              'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-              // UI libraries
-              'vendor-ui': ['framer-motion'],
+            manualChunks: (id) => {
+              // Vendor libraries - core React ecosystem
+              if (id.includes('node_modules/react') || 
+                  id.includes('node_modules/react-dom') || 
+                  id.includes('node_modules/react-router')) {
+                return 'vendor-react';
+              }
+              
+              // UI and animation libraries
+              if (id.includes('node_modules/framer-motion') || 
+                  id.includes('node_modules/lucide-react')) {
+                return 'vendor-ui';
+              }
+              
+              // Supabase and API clients
+              if (id.includes('node_modules/@supabase') || 
+                  id.includes('node_modules/@tanstack/react-query')) {
+                return 'vendor-data';
+              }
+              
+              // Service layer - separate chunk for better caching
+              if (id.includes('/src/services/')) {
+                return 'services';
+              }
+              
+              // Large modules - split into separate chunks
+              if (id.includes('/src/modules/Quran')) {
+                return 'module-quran';
+              }
+              if (id.includes('/src/modules/Iqra')) {
+                return 'module-iqra';
+              }
+              if (id.includes('/src/modules/Admin')) {
+                return 'module-admin';
+              }
+              if (id.includes('/src/modules/SmartDeen')) {
+                return 'module-smartdeen';
+              }
             },
+            chunkFileNames: 'assets/[name]-[hash].js',
+            entryFileNames: 'assets/[name]-[hash].js',
+            assetFileNames: 'assets/[name]-[hash].[ext]',
           },
         },
         chunkSizeWarningLimit: 800,
+        sourcemap: mode === 'development',
+        // Enable tree-shaking and minimal bundle size
+        cssCodeSplit: true,
+        assetsInlineLimit: 4096,
+      },
+      optimizeDeps: {
+        include: [
+          'react',
+          'react-dom',
+          'react-router-dom',
+          'framer-motion',
+          '@supabase/supabase-js',
+        ],
       },
     };
 });

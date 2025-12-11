@@ -4,30 +4,13 @@
 
 [36mvite v6.4.1 [32mbuilding for production...[36m[39m
 transforming...
-[32mΓ£ô[39m 28 modules transformed.
-Γ£ù Build failed in 6.62s
+[32mΓ£ô[39m 536 modules transformed.
+Γ£ù Build failed in 7.64s
 error during build:
-[vite-plugin-pwa:build] [plugin vite-plugin-pwa:build] modules/LandingPage.tsx (730:68): There was an error during the build:
-  Transform failed with 1 error:
-H:/ANTIGRAVITY/QuranPulse-v6.0/modules/LandingPage.tsx:730:68: ERROR: The character ">" is not valid inside a JSX element
-Additionally, handling the error in the 'buildEnd' hook caused the following error:
-  Transform failed with 1 error:
-H:/ANTIGRAVITY/QuranPulse-v6.0/modules/LandingPage.tsx:730:68: ERROR: The character ">" is not valid inside a JSX element
-file: H:/ANTIGRAVITY/QuranPulse-v6.0/modules/LandingPage.tsx:730:68
-
-The character ">" is not valid inside a JSX element
-728|                              <i className="fa-solid fa-user-astronaut text-6xl text-purple-500/50 mb-6 block"></i>
-729|                              <div className="bg-slate-900/80 p-4 rounded-xl border border-white/10 font-mono text-xs text-slate-300">
-730|                                  <p className="text-purple-400 mb-2">> Ustaz AI is thinking...</p>
-   |                                                                      ^
-731|                                  <p>"Based on the Shafi'i school, the conditions for..."</p>
-732|                              </div>
-
-    at getRollupError (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/parseAst.js:401:41)
-    at file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:23347:39
-    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
-    at async catchUnfinishedHookActions (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:22805:16)
-    at async rollupInternal (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:23330:5)
-    at async buildEnvironment (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/vite/dist/node/chunks/dep-D4NMHUTW.js:46235:14)
-    at async Object.defaultBuildApp [as buildApp] (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/vite/dist/node/chunks/dep-D4NMHUTW.js:46713:5)
-    at async CAC.<anonymous> (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/vite/dist/node/cli.js:863:7)
+[vite:load-fallback] Could not load H:\ANTIGRAVITY\QuranPulse-v6.0\src/src/lib/supabase (imported by src/modules/social/MomentsFeed.tsx): ENOENT: no such file or directory, open 'H:\ANTIGRAVITY\QuranPulse-v6.0\src\src\lib\supabase'
+    at async open (node:internal/fs/promises:641:25)
+    at async Object.readFile (node:internal/fs/promises:1245:14)
+    at async Object.handler (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/vite/dist/node/chunks/dep-D4NMHUTW.js:45872:27)
+    at async PluginDriver.hookFirstAndGetPlugin (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:22333:28)
+    at async file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:21333:33
+    at async Queue.work (file:///H:/ANTIGRAVITY/QuranPulse-v6.0/node_modules/rollup/dist/es/shared/node-entry.js:22561:32)

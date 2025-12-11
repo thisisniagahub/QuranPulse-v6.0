@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Mosque Body -->
+  <rect x="12" y="32" width="40" height="20" rx="2" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+  <!-- Dome -->
+  <ellipse cx="32" cy="28" rx="16" ry="10" fill="#22d3ee"/>
+  <ellipse cx="32" cy="28" rx="12" ry="7" fill="#0f172a"/>
+  <!-- Minaret Left -->
+  <rect x="8" y="20" width="6" height="32" rx="1" fill="#fbbf24"/>
+  <circle cx="11" cy="18" r="4" fill="#fbbf24"/>
+  <!-- Minaret Right -->
+  <rect x="50" y="20" width="6" height="32" rx="1" fill="#fbbf24"/>
+  <circle cx="53" cy="18" r="4" fill="#fbbf24"/>
+  <!-- Door -->
+  <rect x="26" y="40" width="12" height="12" rx="6" fill="#22d3ee" opacity="0.5"/>
+</svg>
