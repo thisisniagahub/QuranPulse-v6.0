@@ -278,13 +278,7 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                 
                 {/* Word Tooltip/Translation Container */}
                 <div className="flex flex-col items-center gap-0.5 opacity-60 group-hover:opacity-100 transition-opacity">
-                    {/* Transliteration - Controlled by Global Rumi Setting - USING JAKIM CONVERTER */}
-                    {showTransliteration && rumiWords[i] && (
-                    <p className="font-sans text-[10px] text-emerald-400/80 tracking-wide">
-                        {rumiWords[i]}
-                    </p>
-                    )}
-                    {/* Translation */}
+                    {/* Translation only - Rumi moved to 99% mode box below */}
                     {word.translation && (
                     <p className="font-translation text-[11px] text-slate-300 max-w-[80px] text-center leading-tight">
                         {typeof word.translation === 'string' 
@@ -427,33 +421,13 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                 )}
             </div>
             
-            {/* 99% Mode: Full verse with Tajwid markers - ALWAYS SHOW */}
-            <div className="mb-4 p-3 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/20">
-                <p className="text-center font-serif text-lg text-amber-200 mb-2" style={{ letterSpacing: '0.05em' }}>
-                    {pronunciation99}
-                </p>
-                
-                {/* Tajwid Markers */}
+            {/* 99% RUMI Header - Clean & Compact */}
+            <div className="flex items-center justify-center gap-3 mb-3">
+                <span className="text-xs text-amber-400/80 font-medium">🎯 99% Rumi</span>
                 {tajwidMarkers.length > 0 && (
-                    <div className="flex flex-wrap justify-center gap-1 mb-2">
-                        {tajwidMarkers.map((marker, i) => (
-                            <span key={i} className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[9px]">
-                                ✓ {marker}
-                            </span>
-                        ))}
-                    </div>
-                )}
-                
-                {/* Pronunciation Notes */}
-                {pronunciationNotes.length > 0 && (
-                    <div className="border-t border-amber-500/20 pt-2 mt-2">
-                        <p className="text-[10px] text-amber-400/80 font-bold mb-1 text-center">NOTA SEBUTAN:</p>
-                        <div className="grid grid-cols-2 gap-1 text-[9px] text-amber-300/70">
-                            {pronunciationNotes.slice(0, 6).map((note, i) => (
-                                <span key={i}>• {note}</span>
-                            ))}
-                        </div>
-                    </div>
+                    <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[9px]">
+                        {tajwidMarkers.length} Tajwid
+                    </span>
                 )}
             </div>
             
