@@ -529,40 +529,55 @@ const CONSONANTS_99: Record<string, string> = {
 // Qalqalah letters (require bounce when sukun)
 const QALQALAH_LETTERS = new Set(['ق', 'ط', 'ب', 'ج', 'د']);
 
-// Special words for 99% mode - COMPREHENSIVE DICTIONARY
+// Special words - MALAYSIAN MALAY TRANSLITERATION SPEC
+// Format: Simple ejaan Melayu, aa/ii/uu for long vowels, tasydid = double letters
 const SPECIAL_WORDS_99: Record<string, string> = {
   // === BISMILLAH ===
-  'بسم': 'bismi',
-  'الله': 'Allaahi', 'ٱلله': 'Allaahi',
+  'بسم': 'Bismillah',
+  'الله': 'Allah', 'ٱلله': 'Allah',
   
   // === AR-RAHMAN AR-RAHIM ===
-  'الرحمن': 'ar-Rahmaani', 'ٱلرحمن': 'ar-Rahmaani',
-  'الرحمان': 'ar-Rahmaani', 'ٱلرحمان': 'ar-Rahmaani',
-  'الرحمٰن': 'ar-Rahmaani', 'ٱلرحمٰن': 'ar-Rahmaani',
-  'الرحيم': 'ar-Rahiimi', 'ٱلرحيم': 'ar-Rahiimi',
+  'الرحمن': 'ar-Rahmaan', 'ٱلرحمن': 'ar-Rahmaan',
+  'الرحمان': 'ar-Rahmaan', 'ٱلرحمان': 'ar-Rahmaan',
+  'الرحمٰن': 'ar-Rahmaan', 'ٱلرحمٰن': 'ar-Rahmaan',
+  'الرحيم': 'ar-Rahiim', 'ٱلرحيم': 'ar-Rahiim',
   
-  // === AL-FATIHAH ===
-  'الحمد': 'alhamdu', 'ٱلحمد': 'alhamdu',
-  'لله': 'lillaahi',
-  'رب': 'rabbi',
-  'العالمين': "al-'aalamiin", 'ٱلعالمين': "al-'aalamiin", 'ٱلعٰلمين': "al-'aalamiin",
-  'مالك': 'maaliki', 'مٰلك': 'maaliki',
+  // === AL-FATIHAH - Ikut format: Alhamdulillahi rabbil 'aalamiin ===
+  'الحمد': 'Alhamdulillahi', 'ٱلحمد': 'Alhamdulillahi',
+  'لله': 'lillahi',
+  'رب': 'rabbil',
+  'العالمين': "'aalamiin", 'ٱلعالمين': "'aalamiin", 'ٱلعٰلمين': "'aalamiin",
+  'مالك': 'Maaliki', 'مٰلك': 'Maaliki',
   'يوم': 'yaumid',
-  'الدين': 'diini', 'ٱلدين': 'diini',
-  'إياك': 'iyyaaka',
+  'الدين': 'diin', 'ٱلدين': 'diin',
+  'إياك': 'Iyyaaka',
   'نعبد': "na'budu",
-  'نستعين': "nasta'iinu",
-  'اهدنا': 'ihdinash',
-  'الصراط': 'shiraathal', 'ٱلصراط': 'shiraathal',
-  'صراط': 'shiraatha',
-  'المستقيم': 'mustaqiima', 'ٱلمستقيم': 'mustaqiima',
-  'الذين': 'alladziina', 'ٱلذين': 'alladziina',
+  'وإياك': "wa iyyaaka",
+  'نستعين': "nasta'iin",
+  'اهدنا': 'Ihdinas',
+  'الصراط': 'shiraatal', 'ٱلصراط': 'shiraatal',
+  'صراط': 'shiraata',
+  'المستقيم': 'mustaqiim', 'ٱلمستقيم': 'mustaqiim',
+  'الذين': 'allaziina', 'ٱلذين': 'allaziina',
   'أنعمت': "an'amta",
   'عليهم': "'alaihim",
   'غير': 'ghairil',
-  'المغضوب': 'maghdhhuubi', 'ٱلمغضوب': 'maghdhhuubi',
-  'ولا': 'waladh',
+  'المغضوب': 'maghdhuubi', 'ٱلمغضوب': 'maghdhuubi',
+  'ولا': 'wa laadh',
   'الضالين': 'dhaalliin', 'ٱلضالين': 'dhaalliin',
+  
+  // === SURAH AL-IKHLAS ===
+  'قل': 'Qul',
+  'هو': 'huwallahu',
+  'أحد': 'ahad',
+  'الصمد': 'ash-shamad', 'ٱلصمد': 'ash-shamad',
+  'لم': 'Lam',
+  'يلد': 'yalid',
+  'ولم': 'wa lam',
+  'يولد': 'yuulad',
+  'يكن': 'yakul',
+  'له': 'lahu',
+  'كفوا': 'kufuwan',
 };
 
 /**
