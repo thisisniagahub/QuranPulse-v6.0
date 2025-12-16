@@ -123,20 +123,39 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const updateProfile = async (updates: Partial<UserProfile>) => {
       if (!user) return { error: "No user logged in" };
 
-      // 1. Update Supabase Auth Metadata
-      const data: any = {};
-      if (updates.name) data.name = updates.name;
-      if (updates.avatar_url) data.avatar_url = updates.avatar_url;
+      try {
+          // 1. Update Supabase Auth Metadata
+          const authData: any = {};
+          if (updates.name) authData.name = updates.name;
+          if (updates.avatar_url) authData.avatar_url = updates.avatar_url;
 
-      if (Object.keys(data).length > 0) {
-          const { error } = await supabase.auth.updateUser({ data });
-          if (error) return { error };
+          if (Object.keys(authData).length > 0) {
+              const { error } = await supabase.auth.updateUser({ data: authData });
+              if (error) return { error };
+          }
+
+          // 2. Update profiles table in database
+          const { error: dbError } = await supabase
+              .from('profiles')
+              .update({
+                  ...updates,
+                  updated_at: new Date().toISOString()
+              })
+              .eq('id', user.id);
+
+          if (dbError) {
+              console.warn('Profile DB update failed:', dbError);
+              // Don't fail completely if DB update fails - auth metadata was updated
+          }
+
+          // 3. Update Local State
+          setUser(prev => prev ? { ...prev, ...updates } : null);
+          
+          return { error: null };
+      } catch (err) {
+          console.error('Profile update error:', err);
+          return { error: err };
       }
-
-      // 2. Update Local State
-      setUser(prev => prev ? { ...prev, ...updates } : null);
-      
-      return { error: null };
   };
 
   const updatePassword = async (password: string) => {
