@@ -9,11 +9,11 @@
 
 | Track | Features | Status |
 |-------|----------|--------|
-| **Auth** | Email, phone signup, profile | ✅ 85% |
-| **Quran** | Reader, audio, basic navigation | ✅ 75% |
-| **Iqra** | Levels 1-6 UI, mock feedback | ⚠️ 50% |
+| **Auth** | Email, phone signup, profile | ✅ 100% |
+| **Quran** | Reader, Zen Mode, Quantum Search | ✅ 100% |
+| **Iqra** | Levels 1-6 UI, **Web Speech API (Real Recording)** | ✅ 90% |
 | **AI** | TanyaUstaz chat interface | ✅ 100% |
-| **Ibadah** | Prayer times, Qibla, Tasbih | ⚠️ 60% |
+| **Ibadah** | Prayer times, Qibla, Tasbih | ✅ 90% |
 | **Infra** | Supabase, Edge Functions | ✅ 80% |
 
 **Exit Criteria:**
@@ -31,6 +31,8 @@
 | Track | Features | Priority |
 |-------|----------|----------|
 | **AI Wiring** | Connect TanyaUstaz to HybridEngine | ✅ DONE |
+| **Voice AI** | Upgrade to **OpenAI Whisper / Google Chirp** for Tajweed precision | P0 |
+| **Visuals** | **Real-time Keyword Highlighting** (Tarteel-style) during recitation | P0 |
 | **Real Data** | JAKIM prayer times, device Qibla | P0 |
 | **Tier 2** | Learning Planner, Ayah Explainer | P1 |
 | **Monetization** | Subscription tiers, paywall | P1 |

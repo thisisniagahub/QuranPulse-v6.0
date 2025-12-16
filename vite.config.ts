@@ -20,51 +20,7 @@ export default defineConfig(({ mode }) => {
       },
       plugins: [
         react(),
-        // Custom Middleware to Proxy Gemini CLI
-      {
-        name: 'gemini-cli-proxy',
-        configureServer(server) {
-          server.middlewares.use('/api/gemini-cli', async (req, res, next) => {
-            if (req.method === 'POST') {
-              let body = '';
-              req.on('data', chunk => body += chunk);
-              req.on('end', async () => {
-                try {
-                  const { prompt } = JSON.parse(body);
-                  const { exec } = await import('child_process');
-                  // Execute the gemini command. Note: We use 'gemini prompt' or similar depending on the CLI syntax. 
-                  // Assuming 'gemini chat "message"' or piping input.
-                  // Based on typical CLIs, we'll try piping the prompt to it or using arguments.
-                  // Let's assume `gemini prompt "TEXT"` works based on version 0.20.x patterns.
-                  // Use a safe quoting mechanism
-                  const safePrompt = prompt.replace(/"/g, '\\"');
-                  
-                  // Executing command with -p flag using ABSOLUTE path to avoid module resolution issues
-                  // We use the .cmd shim for Windows
-                  const geminiPath = `C:\\Users\\megat\\AppData\\Roaming\\npm\\gemini.cmd`;
-                  exec(`"${geminiPath}" -p "${safePrompt}"`, (error, stdout, stderr) => {
-                    if (error) {
-                      console.error('Gemini CLI Error:', stderr);
-                      res.statusCode = 500;
-                      res.setHeader('Content-Type', 'application/json');
-                      res.end(JSON.stringify({ error: stderr || error.message }));
-                      return;
-                    }
-                    res.statusCode = 200;
-                    res.setHeader('Content-Type', 'application/json');
-                    res.end(JSON.stringify({ text: stdout.trim() }));
-                  });
-                } catch (e) {
-                  res.statusCode = 400;
-                  res.end(JSON.stringify({ error: 'Invalid Request' }));
-                }
-              });
-            } else {
-              next();
-            }
-          });
-        }
-      },
+        // Custom Middleware removed for security
       VitePWA({
           registerType: 'autoUpdate',
           includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
@@ -81,6 +37,7 @@ export default defineConfig(({ mode }) => {
                               maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
                           },
                       },
+                      method: 'GET' // FIX: Explicitly only cache GET
                   },
                   {
                       // Fix 206 Partial Content errors for Video/Audio

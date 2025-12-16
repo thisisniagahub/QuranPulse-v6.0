@@ -15,11 +15,16 @@ This update introduces a massive leap in both aesthetics and intelligence.
 
 > **📚 New Team Member?** Check out the **[Project Documentation Index](./DOCS_INDEX.md)** to understand our Vision & Roadmap.
 
-### 🎛️ Pulse Control Center (New!)
-A global floating command center (bottom-left) that gives you instant control:
-- **Theme Switcher**: Toggle between **"Deep Space"** (Classic) and **"Cyber Pulse"** (Futuristic).
-    - **Cyber Mode**: Activates a "Circuit Maze" background, neon cyan accents, and HUD-style glass panels.
-- **Quick Admin Access**: One-click jump to the Admin Dashboard.
+### 📖 Immersive Reader (Zen Mode)
+A revolutionary reading experience designed for focus:
+- **Zen Toggle**: One-click distraction-free mode (Pure Black).
+- **Floating Controls**: Auto-hiding dock for playback and settings.
+- **Quantum Search**: Instant, diacritic-insensitive search with holographic UI.
+
+### 🛡️ Mission Control (Admin)
+Now separated into a dedicated **Admin Dashboard**:
+- **Soft Glass UI**: A distinct light/glass aesthetic for management.
+- **Analytics**: Real-time monitoring of AI usage and user growth.
 
 ### 🧠 Advanced AI Intelligence (Ustaz AI 2.0)
 Now powered by a **Hybrid Cloud Engine**:
@@ -30,6 +35,7 @@ Now powered by a **Hybrid Cloud Engine**:
 - **Context-Aware**: Integrated directly into Quran Reader via "Verse Studio" - ask about specific verses instantly.
 
 ### 📖 Iqra Digital Transformation
+- **Real-time Voice Coach**: **Tarteel-style** recitation feedback powered by Google Web Speech API (Phase 1) and Whisper AI (Phase 2).
 - **AR Vision Coach**: Uses camera/AR concepts to correct reading posture.
 - **Smart Mode**: Interactive, cell-based reading with audio feedback.
 - **Analytics Dashboard**: Track your reading streaks, accuracy, and weekly progress.
@@ -61,7 +67,7 @@ Now powered by a **Hybrid Cloud Engine**:
 - **Styling**: Tailwind CSS v4, Framer Motion (Animations)
 - **Backend**: Supabase (PostgreSQL, Auth)
 - **State Management**: React Query, Context API
-- **AI/ML**: Custom `aiService` (Mocking GLM-4 capabilities)
+- **AI/ML**: Hybrid Engine (**Google Web Speech API** for Voice, **Gemini 2.5** for Chat, **ElevenLabs** for TTS)
 - **PWA**: Fully offline-capable Progressive Web App
 
 ---

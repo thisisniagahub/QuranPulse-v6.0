@@ -19,6 +19,7 @@ const Souq = lazy(() => import('./modules/souq/Souq'));
 const MediaStudio = lazy(() => import('./modules/media/MediaStudio'));
 const Profile = lazy(() => import('./modules/profile/Profile'));
 const LandingPage = lazy(() => import('./modules/landing/LandingPage'));
+const VerseStudio = lazy(() => import('./modules/quran/components/VerseStudio')); // Test Route
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -68,23 +69,14 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
     return children;
 };
 
-const AppContent: React.FC = () => {
-  const [showSplash, setShowSplash] = useState(true);
+  const AppContent: React.FC = () => {
+  // Removed artificial splash delay for performance
   const { user, isLoading, logout, updateProfile, updatePassword, uploadAvatar } = useAuth();
   const navigate = useNavigate();
 
-  // Enforce minimum splash screen time
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSplash(false);
-    }, 2500);
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (showSplash || isLoading) {
+  if (isLoading) {
     return <LoadingFallback />;
   }
-
   return (
     <ErrorBoundary>
       <Suspense fallback={<LoadingFallback />}>
@@ -119,6 +111,8 @@ const AppContent: React.FC = () => {
                     />
                 </ErrorBoundary>
             } />
+            {/* Direct Test Route for Verse Studio */}
+            <Route path="verse-studio" element={<VerseStudio isOpen={true} onClose={() => navigate('/')} />} />
           </Route>
 
           {/* Catch all */}

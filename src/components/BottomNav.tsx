@@ -72,7 +72,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
     ];
 
     return (
-        <nav className="h-[88px] bg-[#020617]/90 backdrop-blur-xl border-t border-white/10 relative z-50 shrink-0 pb-5">
+        <nav className="h-[88px] bg-sheet/90 backdrop-blur-xl border-t border-white relative z-50 shrink-0 pb-5">
             <div className="flex items-center justify-around h-full px-2">
                 {navItems.map((item) => {
                     const isActive = currentView === item.id;

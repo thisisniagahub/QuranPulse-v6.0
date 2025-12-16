@@ -21,6 +21,7 @@ interface QuranVerseCardProps {
   highlightedWordIndex: number | null; // Karaoke highlighting
   isBookmarked?: boolean;
   hasNote?: boolean;
+  isZenMode?: boolean; // New Prop
   onPlay: () => void;
   onWordClick: (word: QuranWord, event?: React.MouseEvent) => void;
   onOpenStudio: () => void;
@@ -51,6 +52,7 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
   highlightedWordIndex,
   isBookmarked = false,
   hasNote = false,
+  isZenMode = false,
   onPlay,
   onWordClick,
   onOpenStudio,
@@ -66,20 +68,20 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
   const [practiceMode, setPracticeMode] = useState(false);
   const [repeatCount, setRepeatCount] = useState(3);
   const [currentRepeat, setCurrentRepeat] = useState(0);
-  const [translitMode, setTranslitMode] = useState<'academic' | 'jakim'>('jakim'); // Default JAKIM/KDN standard for Malaysia
+  // Default to JAKIM standard for Malaysia context
+  const [translitMode, setTranslitMode] = useState<'academic' | 'jakim'>('jakim'); 
   const verseNumber = verse.verse_key.split(':')[1];
   const arabicVerseNumber = toArabicNumerals(verseNumber);
   
   // Rumi TTS Hook
   const { isPlaying: isTTSPlaying, currentWordIndex: ttsWordIndex, speak: speakRumi, stop: stopRumi, isSupported: isTTSSupported } = useRumiTTS();
   
-  // Get words for TTS and Tajwid - USE OUR CONVERTERS, not API data!
+  // Get words for TTS and Tajwid
   const arabicWords = verse.words?.filter(w => w.char_type_name !== 'end').map(w => w.text_uthmani) || [];
   
   // Generate BOTH transliteration formats for each word
   const academicWords = arabicWords.map((arabic, i) => {
     const result = formatTransliteration(arabic);
-    if (i < 5) console.log(`[DEBUG] Word ${i}: "${arabic}" => "${result}"`);
     return result;
   });
   const jakimWords = arabicWords.map(arabic => formatTransliterationJAKIM(arabic));
@@ -90,9 +92,7 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
   // Generate 99% ACCURACY mode with Tajwid markers (full verse)
   const fullVerseArabic = arabicWords.join(' ');
   const result99 = transliterate99(fullVerseArabic);
-  const pronunciation99 = result99.text;
-  const tajwidMarkers = result99.tajwid;
-  const pronunciationNotes = result99.notes;
+  // ... other unused derived vars ...
   
   // Generate DUAL transliteration for full verse
   const dualTranslit = getDualTransliteration(fullVerseArabic);
@@ -109,24 +109,24 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
     }
   };
   
-  // Practice Mode: Play with Qari audio and repeat
+  // Practice Mode
   const startPractice = () => {
     setPracticeMode(true);
     setCurrentRepeat(1);
-    onPlay(); // Play Qari audio
+    onPlay(); 
   };
   
   const handlePracticeComplete = () => {
     if (currentRepeat < repeatCount) {
       setCurrentRepeat(prev => prev + 1);
-      onPlay(); // Repeat
+      onPlay(); 
     } else {
       setPracticeMode(false);
       setCurrentRepeat(0);
     }
   };
   
-  // Detect tajwid rules in the verse
+  // Detect tajwid rules
   const detectedRules = showTajwid ? detectTajwidRules(verse.text_uthmani) : [];
 
   const handleCopy = async (v: QuranVerse) => {
@@ -134,16 +134,31 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
     await navigator.clipboard.writeText(text);
   };
 
+  // Dynamic Styling Logic
+  const getContainerClasses = () => {
+      // Base classes
+      let classes = "py-10 px-6 border-b transition-all duration-700 relative overflow-hidden group/card ";
+      
+      if (isPlaying) {
+          // Playing State (Override Zen)
+          classes += "bg-gradient-to-r from-cyan-900/40 via-cyan-900/10 to-transparent border-l-4 border-l-cyan-400 border-y border-r border-y-cyan-500/30 border-r-cyan-500/30 shadow-[0_0_50px_rgba(6,182,212,0.2)] scale-[1.02] z-10 rounded-xl backdrop-blur-xl ";
+      } else if (isZenMode) {
+          // Zen Mode (Minimalist)
+          classes += "border-transparent hover:bg-white/5 rounded-3xl ";
+      } else {
+          // Standard Mode
+          classes += "hover:bg-white/5 bg-slate-900/40 backdrop-blur-md rounded-xl my-3 border border-white/10 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.05)] ";
+      }
+      return classes;
+  };
+
   return (
     <motion.div
       ref={verseRef}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`py-10 px-6 border-b transition-all duration-500 relative overflow-hidden group/card ${
-        isPlaying 
-          ? 'bg-gradient-to-r from-cyan-900/40 via-cyan-900/10 to-transparent border-l-4 border-l-cyan-400 border-y border-r border-y-cyan-500/30 border-r-cyan-500/30 shadow-[0_0_50px_rgba(6,182,212,0.2)] scale-[1.02] z-10 rounded-xl backdrop-blur-xl' 
-          : 'hover:bg-white/5 bg-slate-900/40 backdrop-blur-md rounded-xl my-3 border border-white/10 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.05)]'
-      }`}
+      layout
+      className={getContainerClasses()}
     >
       {/* Cinematic Glow Background (Subtle) */}
       {!isPlaying && (

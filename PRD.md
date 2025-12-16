@@ -35,15 +35,15 @@
 | 💰 **Zero-Cost Architecture** | Built on free-tier cloud services for sustainable scaling |
 
 ### 1.3 Unique Value Proposition (UVP)
-> **"Satu-satunya app dengan AI Ustaz yang mengajar Iqra 1-6 lengkap, memberikan feedback tajwid real-time, dan menjadi companion untuk seluruh amalan Islam anda - dibuat khas untuk Muslim Malaysia."**
+> **"Satu-satunya app dengan AI Ustaz yang mengajar Iqra 1-6 lengkap, memberikan feedback tajwid real-time (Tarteel-style), dan menjadi companion untuk seluruh amalan Islam anda - dibuat khas untuk Muslim Malaysia."**
 ### 1.4 Current Implementation Status
 
 | Metric | Status |
 
 |--------|--------|
-| **Overall Readiness** | 🟡 70% |
+| **Overall Readiness** | 🟡 75% |
 | **UI/UX Completion** | ✅ 90% |
-| **Backend Integration** | ⚠️ 50% |
+| **Backend Integration** | ⚠️ 55% |
 | **AI Wiring** | ✅ 100% |
 | **Monetization** | 🔴 10% |
 
@@ -75,7 +75,7 @@ A core strategic principle ensuring 100% free operation at scale:
 | **AI Chatbot** | Paid LLM API (GPT-4) ~RM500+/mo | Google Gemini 2.5 Flash Free Tier |
 | **Database & Auth** | AWS RDS ~RM200+/mo | Supabase Free Tier |
 | **Hosting** | Vercel Pro ~RM80/mo | Static Free Tier |
-| **AI Voice** | Cloud Speech API ~RM300/mo | Client-side + Edge Functions |
+| **AI Voice** | Cloud Speech API ~RM300/mo | **Hybrid (Web Speech API + Whisper)** |
 
 ### 2.4 Core Identity Matrix
 
@@ -183,13 +183,13 @@ Features are organized into three strategic tiers:
 | `IqraHub` | Main dashboard with progress overview | ✅ Built |
 | `IqraLessonViewer` | Display lessons with audio & transliteration | ✅ Built |
 | `IqraPageViewer` | Traditional book-style navigation | ✅ Built |
-| `IqraRecorder` | Record user's reading for AI analysis | ⚠️ UI Only |
-| `AIFeedbackPanel` | Instant feedback on pronunciation & tajwid | ⚠️ Mock |
+| `IqraRecorder` | Record user's reading for AI analysis | ✅ Built (Web Speech API) |
+| `AIFeedbackPanel` | Instant feedback on pronunciation & tajwid | ⚠️ Basic (Fluency Score) |
 | `IqraProgressDashboard` | Charts, stats, streaks, badges | ✅ Built |
 | `IqraAssessment` | End-of-level certification tests | ⏳ Planned |
 | `IqraExercises` | Interactive quizzes | ⏳ Planned |
 | `MakhrijMap` | Visual letter articulation diagram | ⏳ Planned |
-| `StarRating` | 1-5 star accuracy scoring | ⚠️ Mock |
+| `StarRating` | 1-5 star accuracy scoring | ✅ Built |
 | `TeacherDashboard` | Parent/teacher monitoring | ✅ Built |
 | `LiveVoiceTeacher` | Real-time voice AI conversation | ⏳ Planned |
 **Acceptance Criteria:**
@@ -197,6 +197,7 @@ Features are organized into three strategic tiers:
 - [ ] Audio recording with SNR > 20dB
 - [ ] AI feedback accuracy > 85%
 - [ ] Analysis response time < 5 seconds
+- [ ] Real-time keyword highlighting (Tarteel-style)
 - [ ] Cross-device progress sync
 - [ ] Parent monitoring dashboard functional
 #### 4.2.2 AI Tutor Tajwid

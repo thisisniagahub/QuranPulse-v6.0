@@ -6,6 +6,7 @@ import QuranVerseCard from './QuranVerseCard';
 import QuranPageView from './QuranPageView';
 import QuranAudioPlayer from './QuranAudioPlayer';
 import ReadingProgressBar from './ReadingProgressBar';
+import ImmersiveControls from './components/ImmersiveControls';
 
 
 const QuranReader: React.FC = () => {
@@ -73,6 +74,9 @@ const QuranReader: React.FC = () => {
         }
     }, [currentTrack]);
     
+    // State for Zen Mode (Immersive Reading)
+    const [isZenMode, setIsZenMode] = React.useState(false);
+
     // Also scroll nicely when entering reading view?
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -86,34 +90,44 @@ const QuranReader: React.FC = () => {
     
     // We need to access the setters from context for the Header
     const context = useQuran(); 
+    
+    // Handlers for Immersive Controls
+    const handleToggleZen = () => setIsZenMode(!isZenMode);
+    const handlePlayPause = () => {
+        if (isPlaying) stopTrack();
+        else if (currentTrack?.verseKey) playVerse(currentTrack.verseKey);
+        else if (verses.length > 0) playVerse(verses[0].verse_key);
+    };
 
     return (
         <div className="flex-1 flex flex-col overflow-hidden relative z-10 w-full h-full">
-            {/* Header */}
-            <QuranHeader
-                chapter={selectedChapter}
-                onBack={() => {
-                    setView('LIST');
-                }}
-                onOpenAudioSettings={() => setShowSettings(true)}
-                onOpenSettings={() => setShowSettings(true)}
-                onOpenSurahInfo={() => setShowSurahInfo(true)}
-                onGoToVerse={() => setShowGoToVerse(true)}
-                readingMode={readingMode}
-                onToggleReadingMode={toggleReadingMode}
-                showTranslation={showTranslation}
-                onToggleTranslation={() => setShowTranslation(!showTranslation)}
-                showTransliteration={showTransliteration}
-                onToggleTransliteration={() => setShowTransliteration(!showTransliteration)}
-                selectedTranslationId={context.selectedTranslationId}
-                onTranslationChange={context.setSelectedTranslationId}
-                isAudioLoading={isAudioLoading}
-                layoutMode={layoutMode}
-                onToggleLayoutMode={() => setLayoutMode(layoutMode === 'SCROLL' ? 'PAGE' : 'SCROLL')}
-            />
+            {/* Header (Hidden in Zen Mode) */}
+            <div className={`transition-all duration-500 ${isZenMode ? '-mt-32 opacity-0' : 'mt-0 opacity-100'}`}>
+                <QuranHeader
+                    chapter={selectedChapter}
+                    onBack={() => {
+                        setView('LIST');
+                    }}
+                    onOpenAudioSettings={() => setShowSettings(true)}
+                    onOpenSettings={() => setShowSettings(true)}
+                    onOpenSurahInfo={() => setShowSurahInfo(true)}
+                    onGoToVerse={() => setShowGoToVerse(true)}
+                    readingMode={readingMode}
+                    onToggleReadingMode={toggleReadingMode}
+                    showTranslation={showTranslation}
+                    onToggleTranslation={() => setShowTranslation(!showTranslation)}
+                    showTransliteration={showTransliteration}
+                    onToggleTransliteration={() => setShowTransliteration(!showTransliteration)}
+                    selectedTranslationId={context.selectedTranslationId}
+                    onTranslationChange={context.setSelectedTranslationId}
+                    isAudioLoading={isAudioLoading}
+                    layoutMode={layoutMode}
+                    onToggleLayoutMode={() => setLayoutMode(layoutMode === 'SCROLL' ? 'PAGE' : 'SCROLL')}
+                />
+            </div>
 
-            {/* Reading Progress */}
-            <ReadingProgressBar />
+            {/* Reading Progress (Minimal in Zen Mode needed? Maybe hide for now) */}
+            {!isZenMode && <ReadingProgressBar />}
 
             {/* === PAGE VIEW (MUSHAF MODE) === */}
             {layoutMode === 'PAGE' && (
@@ -124,9 +138,14 @@ const QuranReader: React.FC = () => {
 
             {/* === SCROLL VIEW (LIST MODE) === */}
             {layoutMode === 'SCROLL' && (
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-hide pb-32 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1c2e] via-[#020617] to-black">
+            <div className={`flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-hide pb-32 transition-colors duration-1000 ${
+                isZenMode 
+                    ? 'bg-black' 
+                    : 'bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1c2e] via-[#020617] to-black'
+            }`}>
                  {/* SURAH HEADER - Premium & Nature Integration */}
-                 <div className="relative rounded-3xl overflow-hidden min-h-[180px] flex flex-col items-center justify-center text-center p-8 mb-6 shadow-2xl ring-1 ring-white/10 group">
+                 {/* Hide huge header in Zen Mode to focus on reading immediately? Or keep it? keeping it for now but maybe fade */}
+                 <div className={`relative rounded-3xl overflow-hidden min-h-[180px] flex flex-col items-center justify-center text-center p-8 mb-6 shadow-2xl ring-1 ring-white/10 group transition-all duration-700 ${isZenMode ? 'opacity-40 grayscale grayscale hover:grayscale-0 hover:opacity-100' : ''}`}>
                     {/* Nature Background */}
                     <div className="absolute inset-0 z-0">
                          <img 
@@ -207,6 +226,7 @@ const QuranReader: React.FC = () => {
                                 highlightedWordIndex={currentTrack?.verseKey === verse.verse_key ? highlightedWordIndex : null}
                                 isBookmarked={bookmarkedVerses.has(verse.verse_key)}
                                 hasNote={!!context.notesVerse && context.notesVerse.verse_key === verse.verse_key} // Only checking if active note, ideally check a map
+                                isZenMode={isZenMode} // Pass Zen Mode
                                 onPlay={() => playVerse(verse.verse_key)}
                                 onWordClick={(word, event) => {
                                     if (event) {
@@ -231,12 +251,27 @@ const QuranReader: React.FC = () => {
             </div>
             )}
 
-             {/* Floating Audio Player */}
-             <QuranAudioPlayer
-                chapterName={selectedChapter.name_simple}
+            {/* New Immersive Controls Overlay */}
+            <ImmersiveControls
+                isZenMode={isZenMode}
+                toggleZenMode={handleToggleZen}
+                isPlaying={isPlaying}
+                onPlayPause={handlePlayPause}
+                currentVerseKey={currentTrack?.verseKey || null}
                 onNext={playNextVerse}
-                onPrevious={playPreviousVerse}
+                onPrev={playPreviousVerse}
+                showSettings={false} // Connect this if needed or keep using top header for detailed settings
+                toggleSettings={() => setShowSettings(true)}
             />
+
+             {/* Standard Floating Audio Player - Hide in Zen Mode to prevent clutter, as ImmersiveControls handles it */}
+             {!isZenMode && (
+                 <QuranAudioPlayer
+                    chapterName={selectedChapter.name_simple}
+                    onNext={playNextVerse}
+                    onPrevious={playPreviousVerse}
+                />
+             )}
         </div>
     );
 };

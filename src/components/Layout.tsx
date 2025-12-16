@@ -72,7 +72,7 @@ const Layout: React.FC = () => {
   ];
 
   return (
-    <div className="flex h-screen w-full bg-black overflow-hidden font-sans relative justify-center">
+    <div className="flex h-screen w-full bg-background-dark overflow-hidden font-sans relative justify-center">
       {/* --- DESKTOP BACKDROP (Visible only on large screens) --- */}
       <div 
         className="absolute inset-0 bg-cover bg-center opacity-20 blur-xl hidden md:block pointer-events-none bg-[image:var(--bg-splash)]"
@@ -81,7 +81,7 @@ const Layout: React.FC = () => {
       ></div>
 
       {/* --- MOBILE APP SHELL CONTAINER --- */}
-      <div className="flex flex-col h-full w-full max-w-[480px] bg-[#020617] relative shadow-2xl md:border-x md:border-white/10">
+      <div className="flex flex-col h-full w-full max-w-[480px] bg-background-dark relative shadow-2xl md:border-x md:border-white">
         {/* --- VISUAL IDENTITY v5.0 GLOBAL BACKGROUNDS --- */}
         {/* Top Header Pattern */}
         <div 
@@ -101,7 +101,7 @@ const Layout: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/50 via-[#020617]/90 to-[#020617]/80 -z-10 pointer-events-none"></div>
 
         {/* Header with Maze Pattern */}
-        <header className="h-16 bg-[#020617]/80 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden">
+        <header className="h-16 bg-sheet/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden">
           <Link
             to="/"
             className="flex items-center gap-3 relative z-10 cursor-pointer group"
@@ -131,9 +131,9 @@ const Layout: React.FC = () => {
             </div>
             <div>
                 <h1 className="text-lg font-black tracking-tighter text-white leading-none">
-                    QURAN<span className="text-cyan-500">PULSE</span>
+                    QURAN<span className="text-primary">PULSE</span>
                 </h1>
-                <p className="text-[10px] text-slate-400 font-medium tracking-widest uppercase">Cyber Edition</p>
+                <p className="text-[10px] text-white/50 font-medium tracking-widest uppercase">Verse Studio Edition</p>
             </div>
           </Link>
           
@@ -146,12 +146,12 @@ const Layout: React.FC = () => {
         </header>
 
         {/* --- MAIN CONTENT AREA --- */}
-        <main className="flex-1 overflow-hidden relative z-0">
+        <main className="flex-1 overflow-y-auto scrollbar-hide relative z-0 pb-32">
             <Outlet />
         </main>
 
         {/* --- BOTTOM NAVIGATION BAR --- */}
-        <nav className="h-[88px] bg-[#020617]/80 backdrop-blur-xl border-t border-white/5 relative z-50 shrink-0 pb-5">
+        <nav className="h-[88px] bg-sheet/80 backdrop-blur-xl border-t border-white relative z-50 shrink-0 pb-5">
             <div className="flex items-center justify-around h-full px-2">
                 {navItems.map((item) => {
                     const isActive = currentView === item.id;

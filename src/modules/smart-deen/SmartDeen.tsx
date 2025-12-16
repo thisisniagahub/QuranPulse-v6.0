@@ -1,9 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChatMessage, UserProfile } from '../../types';
 import { useAuth } from '../../contexts/AuthContext';
-import { convertToJawi, getHadithByTopic } from '../../services/aiService';
-import { geminiCliService } from '../../services/geminiCliService';
-import { ollamaAiService } from '../../services/ollamaAiService';
+import { askUstazAI, convertToJawi, getHadithByTopic } from '../../services/aiService';
 import { motion, AnimatePresence } from "framer-motion";
 import UstazAvatar from './UstazAvatar';
 import NeuralTyping from './NeuralTyping';
@@ -44,10 +42,10 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
     const scrollRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    // Audio
-    const { isListening, startListening, stopListening } = useSpeechRecognition((text) => {
-        setInput(text);
-        // Optional: Auto-send after voice
+    // Audio - Fixed: Pass object with onResult callback
+    const { isListening, startListening, stopListening, error: speechError, isSupported } = useSpeechRecognition({
+        onResult: (text) => setInput(text),
+        lang: 'ms-MY'  // Bahasa Melayu
     });
 
     // Auto-scroll
@@ -72,21 +70,21 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
         setIsThinking(true);
 
         try {
-            // Priority: Gemini CLI -> Ollama -> Fallback
-            // Construct prompt with persona context
-            const personaPrompt = `Anda adalah ${PERSONAS[selectedPersona].name}, seorang ${PERSONAS[selectedPersona].role}. Gaya bahasa anda ${PERSONAS[selectedPersona].style}. Jawab soalan ini dengan tepat dan berhikmah: "${userMsg.content}"`;
-
-            let responseText = await geminiCliService.generateContent(personaPrompt);
+            // Build system prompt with persona context
+            const personaSystemPrompt = `Anda adalah ${PERSONAS[selectedPersona].name}, seorang ${PERSONAS[selectedPersona].role}. Gaya bahasa anda ${PERSONAS[selectedPersona].style}. Jawab dalam Bahasa Melayu yang baik.`;
             
-            // If Gemini fails or returns empty, try Ollama
-            if (!responseText) {
-                 const ollamaRes = await ollamaAiService.chat([
-                    { role: 'system', content: `You are ${PERSONAS[selectedPersona].name}.` },
-                    ...messages.map(m => ({ role: m.role, content: m.content })),
-                    { role: 'user', content: userMsg.content }
-                 ]);
-                 responseText = ollamaRes.message.content;
-            }
+            // Prepare messages for AI (with system prompt)
+            const aiMessages = [
+                { role: 'system' as const, content: personaSystemPrompt },
+                ...messages.slice(-10).map(m => ({ 
+                    role: m.role as 'user' | 'assistant', 
+                    content: m.content 
+                })),
+                { role: 'user' as const, content: userMsg.content }
+            ];
+
+            // Use the robust askUstazAI function (Gemini API with rotation + fallback)
+            const responseText = await askUstazAI(aiMessages);
 
             const aiMsg: ChatMessage = {
                 id: (Date.now() + 1).toString(),
@@ -190,10 +188,25 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                     </div>
 
                     <div className={`absolute inset-x-0 p-4 bg-gradient-to-t from-[#020617] via-[#020617]/95 to-transparent z-20 ${hasBottomNav ? 'bottom-[80px]' : 'bottom-0'}`}>
+                        {/* Speech Error Message */}
+                        {speechError && (
+                            <div className="mb-2 p-2 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-xs text-center">
+                                <i className="fa-solid fa-triangle-exclamation mr-1"></i>
+                                {speechError}
+                            </div>
+                        )}
                         <div className={`flex gap-2 items-end bg-slate-900/80 p-2 rounded-2xl border transition-all backdrop-blur-xl shadow-2xl ${isThinking ? 'border-amber-500/30 shadow-amber-900/20' : 'border-cyan-500/30'}`}>
                             <button
                                 onClick={isListening ? stopListening : startListening}
-                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-colors ${isListening ? 'bg-red-500 animate-pulse text-white' : 'hover:bg-slate-700 text-slate-400'}`}
+                                disabled={!isSupported}
+                                title={!isSupported ? 'Browser tidak menyokong pengecaman suara' : isListening ? 'Henti' : 'Tekan untuk bercakap'}
+                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-colors ${
+                                    !isSupported 
+                                        ? 'bg-slate-800 text-slate-600 cursor-not-allowed' 
+                                        : isListening 
+                                            ? 'bg-red-500 animate-pulse text-white' 
+                                            : 'hover:bg-slate-700 text-slate-400'
+                                }`}
                             >
                                 <i className={`fa-solid ${isListening ? 'fa-microphone-slash' : 'fa-microphone'}`}></i>
                             </button>

@@ -29,24 +29,31 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   // Initialize Supabase Auth Listener
   useEffect(() => {
     // 1. Check active session
-    supabase.auth.getSession().then(({ data: { session } }) => {
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       if (session?.user) {
-          // Map basic info needed
-          setUser({
-              id: session.user.id,
-              name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-              email: session.user.email || '',
-              // Default values for new/unfetched profiles
-              level: 1,
-              xp_total: 0,
-              streak: 0,
-              badges: [],
-              barakah_points: 0,
-              last_read_surah: 1,
-              last_read_ayah: 1,
-              avatar_url: session.user.user_metadata?.avatar_url
-          });
+          // Fetch full profile from DB
+          const { data: profile } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', session.user.id)
+              .single();
+
+          if (profile) {
+             setUser(profile);
+          } else {
+             // Fallback to metadata if profile doesn't exist yet (should be created on trigger)
+             setUser({
+                id: session.user.id,
+                name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+                email: session.user.email || '',
+                level: 1, xp_total: 0, streak: 0, badges: [],
+                barakah_points: 0,
+                last_read_surah: 1,
+                last_read_ayah: 1,
+                avatar_url: session.user.user_metadata?.avatar_url
+             });
+          }
       }
       setIsLoading(false);
     });
@@ -54,20 +61,29 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // 2. Listen for changes
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
       setSession(session);
       if (session?.user) {
-          // Map basic info needed
-          setUser({
-              id: session.user.id,
-              name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-              email: session.user.email || '',
-              level: 1, xp_total: 0, streak: 0, badges: [],
-              barakah_points: 0,
-              last_read_surah: 1,
-              last_read_ayah: 1,
-              avatar_url: session.user.user_metadata?.avatar_url
-          });
+          const { data: profile } = await supabase
+              .from('profiles')
+              .select('*')
+              .eq('id', session.user.id)
+              .single();
+              
+          if (profile) {
+              setUser(profile);
+          } else {
+              setUser({
+                  id: session.user.id,
+                  name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
+                  email: session.user.email || '',
+                  level: 1, xp_total: 0, streak: 0, badges: [],
+                  barakah_points: 0,
+                  last_read_surah: 1,
+                  last_read_ayah: 1,
+                  avatar_url: session.user.user_metadata?.avatar_url
+              });
+          }
       } else {
           setUser(null);
       }
