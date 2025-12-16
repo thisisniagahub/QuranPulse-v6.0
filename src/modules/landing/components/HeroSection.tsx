@@ -21,13 +21,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  // Smooth spring physics
-  const mouseX = useSpring(x, { stiffness: 150, damping: 15 });
-  const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
+  // Smooth spring physics (Softer & Slower)
+  const mouseX = useSpring(x, { stiffness: 50, damping: 20 });
+  const mouseY = useSpring(y, { stiffness: 50, damping: 20 });
 
-  // Map mouse position to rotation degrees
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-15, 15]); // Tilt Left/Right
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [15, -15]); // Tilt Up/Down
+  // Map mouse position to rotation degrees (Subtle Tilt)
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-5, 5]); // Reduced from 15 to 5
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5]); // Reduced from 15 to 5
 
   const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
       const rect = e.currentTarget.getBoundingClientRect();

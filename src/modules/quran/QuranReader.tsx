@@ -6,7 +6,7 @@ import QuranVerseCard from './QuranVerseCard';
 import QuranPageView from './QuranPageView';
 import QuranAudioPlayer from './QuranAudioPlayer';
 import ReadingProgressBar from './ReadingProgressBar';
-import AnimatedBismillah from './AnimatedBismillah';
+
 
 const QuranReader: React.FC = () => {
     const {
@@ -173,8 +173,8 @@ const QuranReader: React.FC = () => {
 
                  {/* Bismillah (except Surah 1 & 9) */}
                  {selectedChapter.id !== 1 && selectedChapter.id !== 9 && (
-                    <div className="py-4">
-                        <AnimatedBismillah />
+                    <div className="py-8 text-center">
+                        <p className="font-arabic text-3xl text-slate-400 opacity-80">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</p>
                     </div>
                  )}
 

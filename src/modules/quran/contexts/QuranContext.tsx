@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect, useRef } from 'react';
 import { QuranChapter, QuranVerse, QuranWord, SemanticResult, ChatMessage, TafsirResult, MorphologyResult } from '../../../types';
 import { analyzeMorphology } from '../../../services/aiService';
 import { useAudioPlayer } from '../../../contexts/AudioPlayerContext';
@@ -64,6 +64,10 @@ interface QuranState {
     isAudioLoading: boolean;
 
     // Morphology
+    morphologyData: MorphologyResult | null;
+    loadingMorphology: boolean;
+    handleWordClick: (word: QuranWord) => void;
+    
     setSelectedChapter: (chapter: QuranChapter | null) => void;
     
     // Settings Actions
@@ -112,6 +116,10 @@ interface QuranState {
     playVerse: (verseKey: string) => void;
     playNextVerse: () => void;
     playPreviousVerse: () => void;
+    
+    // Audio Settings
+    enableTranslationAudio: boolean;
+    setEnableTranslationAudio: (enable: boolean) => void;
 }
 
 const QuranContext = createContext<QuranState | undefined>(undefined);
@@ -241,6 +249,8 @@ export const QuranProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         setIsSearchingSemantic(false);
     };
 
+    const [enableTranslationAudio, setEnableTranslationAudio] = useState(true); // Default: ON (TheNoor Style)
+
     // Audio Logic
     const playVerse = async (verseKey: string) => {
         if (!audioMap[verseKey]) return;
@@ -277,17 +287,134 @@ export const QuranProvider: React.FC<{ children: ReactNode }> = ({ children }) =
         }
     };
 
-    // Auto-play effect
+    // Audio Cache for TTS to save credits/bandwidth
+    const ttsCache = useRef<Record<string, string>>({});
+
+    // Helper to speak translation using ElevenLabs (Neural) or Web Speech API (Fallback)
+    const speakTranslation = async (text: string, lang: string = 'ms-MY') => {
+        return new Promise<void>(async (resolve) => {
+            // 1. Try ElevenLabs first (If Key Exists) - "Menjiwai"
+            const elevelLabsKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
+            
+            // Generate cache key
+            const cacheKey = `${lang}-${text.substring(0, 20)}`;
+
+            if (elevelLabsKey) {
+                try {
+                    // Check cache first
+                    if (ttsCache.current[cacheKey]) {
+                        console.log("🔊 Playing from TTS Cache");
+                        const audio = new Audio(ttsCache.current[cacheKey]);
+                        audio.onended = () => resolve();
+                        audio.onerror = () => { delete ttsCache.current[cacheKey]; resolve(); }; // Fallback if blob invalid
+                        await audio.play();
+                        return;
+                    }
+
+                    // Fetch from API
+                    // Voice ID: pMsXgVXv3BLzUgSXRplE (Adam - Deep & Calm, good for translations)
+                    // Voice ID: 21m00Tcm4TlvDq8ikWAM (Rachel - Clear & Soft)
+                    const VOICE_ID = 'pMsXgVXv3BLzUgSXRplE'; 
+                    
+                    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'xi-api-key': elevelLabsKey,
+                        },
+                        body: JSON.stringify({
+                            text: text,
+                            model_id: "eleven_multilingual_v2", // Best for mixed languages/Malay
+                            voice_settings: {
+                                stability: 0.5,
+                                similarity_boost: 0.75,
+                            }
+                        })
+                    });
+
+                    if (!response.ok) throw new Error("ElevenLabs API Limit/Error");
+
+                    const blob = await response.blob();
+                    const url = URL.createObjectURL(blob);
+                    
+                    // Save to cache
+                    ttsCache.current[cacheKey] = url;
+
+                    const audio = new Audio(url);
+                    audio.onended = () => resolve();
+                    audio.onerror = () => resolve();
+                    await audio.play();
+                    return; // Success, exit function
+
+                } catch (err) {
+                    console.warn("⚠️ Neural TTS Failed, switching to standard voice:", err);
+                    // Fallthrough to Web Speech
+                }
+            }
+
+            // 2. Fallback: Web Speech API (Browser Native)
+            if (!('speechSynthesis' in window)) {
+                resolve();
+                return;
+            }
+
+            // Cancel any current speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = lang; // ms-MY or en-US based on translation
+            utterance.rate = 1.0; // Normal speed
+            utterance.pitch = 1.0;
+
+            // Try to find a better voice than default (e.g. Google)
+            const voices = window.speechSynthesis.getVoices();
+            const improvedVoice = voices.find(v => 
+                v.lang === lang && (v.name.includes("Google") || v.name.includes("Natural"))
+            );
+            if (improvedVoice) utterance.voice = improvedVoice;
+
+            utterance.onend = () => {
+                resolve();
+            };
+
+            utterance.onerror = () => {
+                resolve(); // Proceed anyway on error
+            };
+
+            window.speechSynthesis.speak(utterance);
+        });
+    };
+
+    // Auto-play effect (TheNoor Style: Verse -> Translation -> Next)
     useEffect(() => {
-        setOnEnded(() => {
+        setOnEnded(async () => {
             if (currentTrack?.verseKey) {
                 const currentIndex = verses.findIndex(v => v.verse_key === currentTrack.verseKey);
+                
+                // 1. Play Translation if enabled and not already playing
+                if (enableTranslationAudio && verses[currentIndex]) {
+                    const verse = verses[currentIndex];
+                    // Clean text (remove HTML tags if any)
+                    const translationText = verse.translations?.[0]?.text?.replace(/<[^>]*>/g, "") || "";
+                    
+                    if (translationText) {
+                        try {
+                            // Determine language based on selected ID (39 = Malay, else English)
+                            const lang = selectedTranslationId === 39 ? 'ms-MY' : 'en-US';
+                            await speakTranslation(translationText, lang);
+                        } catch (e) {
+                            console.warn("TTS Failed, skipping to next verse");
+                        }
+                    }
+                }
+
+                // 2. Play Next Verse
                 if (currentIndex !== -1 && currentIndex < verses.length - 1) {
                     playVerse(verses[currentIndex + 1].verse_key);
                 }
             }
         });
-    }, [verses, currentTrack, audioMap]);
+    }, [verses, currentTrack, audioMap, enableTranslationAudio, selectedTranslationId]);
 
     return (
         <QuranContext.Provider value={{
@@ -337,7 +464,8 @@ export const QuranProvider: React.FC<{ children: ReactNode }> = ({ children }) =
             verses, loadingVerses,
             isAudioLoading: loadingAudio,
             
-            playVerse, playNextVerse, playPreviousVerse
+            playVerse, playNextVerse, playPreviousVerse,
+            enableTranslationAudio, setEnableTranslationAudio
         }}>
             {children}
         </QuranContext.Provider>
