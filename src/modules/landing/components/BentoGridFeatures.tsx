@@ -67,8 +67,8 @@ export const BentoGridFeatures: React.FC = () => {
 
                     {/* Smart Deen */}
                     <BentoCard 
-                        title="Ustaz AI"
-                        description="24/7 Personal Islamic Assistant trained on authentic sources."
+                        title="Ustaz AI 2.0"
+                        description="Powered by Gemini 2.5 Flash. Hybrid Cloud Intelligence with Neural Voice & Shafi'i Fiqh compliance."
                         icon="fa-user-astronaut"
                         className="lg:col-span-1 bg-gradient-to-br from-purple-900/40 to-slate-900"
                         delay={1}

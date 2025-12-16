@@ -7,8 +7,12 @@ import { useQuery } from '@tanstack/react-query';
 
 // --- Types ---
 interface QuranState {
+    // Actions
+    setView: (view: 'LIST' | 'READING') => void;
+    setLayoutMode: (mode: 'PAGE' | 'SCROLL') => void;
     // View
     view: 'LIST' | 'READING';
+    layoutMode: 'PAGE' | 'SCROLL';
     selectedChapter: QuranChapter | null;
     
     // Settings
@@ -60,12 +64,6 @@ interface QuranState {
     isAudioLoading: boolean;
 
     // Morphology
-    morphologyData: MorphologyResult | null;
-    loadingMorphology: boolean;
-
-    // Actions
-    setView: (view: 'LIST' | 'READING') => void;
-    setLayoutMode: (mode: 'SCROLL' | 'PAGE') => void;
     setSelectedChapter: (chapter: QuranChapter | null) => void;
     
     // Settings Actions

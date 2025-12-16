@@ -87,51 +87,51 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 25 }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-900 z-[71] flex flex-col shadow-2xl"
+            transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-950/90 backdrop-blur-xl z-[71] flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.5)] border-l border-cyan-500/20"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-purple-500/20 to-cyan-500/20 p-4 border-b border-slate-700">
+            <div className="bg-gradient-to-r from-purple-900/40 to-cyan-900/40 p-5 border-b border-cyan-500/20 backdrop-blur-md sticky top-0 z-10">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
                     <span>📖</span>
-                    Tafsir
+                    Tafsir & Huraian
                   </h3>
-                  <p className="text-slate-400 text-sm mt-1">
-                    Surah {verse.verse_key.split(':')[0]}, Ayat {verse.verse_key.split(':')[1]}
+                  <p className="text-cyan-200/70 text-sm mt-1 font-mono tracking-wide">
+                    Surah {verse.verse_key.split(':')[0]} : Ayat {verse.verse_key.split(':')[1]}
                   </p>
                 </div>
                 <button 
                   onClick={onClose}
-                  className="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center hover:bg-slate-700 hover:text-white transition-all"
+                  className="w-8 h-8 rounded-full bg-slate-800/50 text-slate-400 flex items-center justify-center hover:bg-red-500/20 hover:text-red-400 transition-all border border-transparent hover:border-red-500/50"
                 >
                   ✕
                 </button>
               </div>
 
-              {/* Verse Preview */}
-              <div className="mt-3 p-3 bg-slate-800/50 rounded-xl">
-                <p className="font-uthmani text-xl text-white text-right leading-loose">
+              {/* Verse Preview (Compact) */}
+              <div className="mt-4 p-3 bg-black/40 rounded-xl border border-white/5">
+                <p className="font-uthmani text-lg text-white text-right leading-loose opacity-90">
                   {verse.text_uthmani}
                 </p>
               </div>
             </div>
 
             {/* Tafsir Source Selector */}
-            <div className="p-4 border-b border-slate-800">
-              <p className="text-[10px] text-slate-500 uppercase tracking-wider mb-2">
-                Sumber Tafsir
+            <div className="p-4 border-b border-white/5 bg-black/20">
+              <p className="text-[10px] text-cyan-500 uppercase tracking-widest mb-3 font-bold">
+                PILIH SUMBER
               </p>
               <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
                 {TAFSIR_SOURCES.map(source => (
                   <button
                     key={source.id}
                     onClick={() => setSelectedTafsir(source)}
-                    className={`px-3 py-2 rounded-lg text-sm font-bold whitespace-nowrap transition-all ${
+                    className={`px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all border ${
                       selectedTafsir.id === source.id
-                        ? 'bg-purple-500 text-white'
-                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                        ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                        : 'bg-slate-800/50 text-slate-400 border-transparent hover:bg-slate-700/50'
                     }`}
                   >
                     {source.name}
@@ -174,12 +174,12 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-slate-800 bg-slate-950">
+            <div className="p-4 border-t border-cyan-500/20 bg-black/40 backdrop-blur-xl">
               <button
                 onClick={onClose}
-                className="w-full py-3 bg-slate-800 text-slate-300 font-bold rounded-xl hover:bg-slate-700 transition-all"
+                className="w-full py-3 bg-slate-800/50 text-slate-300 font-bold rounded-xl hover:bg-cyan-900/50 hover:text-cyan-400 hover:border hover:border-cyan-500/50 transition-all"
               >
-                Tutup
+                Tutup Panel
               </button>
             </div>
           </motion.div>

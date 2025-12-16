@@ -117,24 +117,27 @@ const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
           initial={{ opacity: 0, scale: 0.95, y: -10 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -10 }}
-          transition={{ duration: 0.1 }}
-          className="absolute right-0 top-10 z-50 w-56 bg-slate-900/95 backdrop-blur-xl border border-slate-700/50 rounded-xl shadow-2xl overflow-hidden ring-1 ring-black/5"
+          transition={{ duration: 0.2 }}
+          className="absolute right-0 top-12 z-50 w-64 bg-slate-950/80 backdrop-blur-xl border border-cyan-500/30 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden ring-1 ring-cyan-500/20"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="py-1">
-             <div className="px-4 py-2 border-b border-white/5 bg-white/5">
-                <span className="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Pilihan Ayat {verse.verse_key}</span>
+             <div className="px-4 py-3 border-b border-cyan-500/20 bg-cyan-950/30">
+                <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-widest flex items-center justify-between">
+                    <span>SYSTEM MENU</span>
+                    <span>{verse.verse_key}</span>
+                </span>
              </div>
             {menuItems.map((item) => (
               <button
                 key={item.id}
                 onClick={item.onClick}
-                className="w-full text-left px-4 py-3 text-sm text-slate-200 hover:bg-white/5 flex items-center gap-3 transition-colors group"
+                className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-100 flex items-center gap-3 transition-all group border-l-2 border-transparent hover:border-cyan-400"
               >
-                <div className={`w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover:bg-white/10 transition-colors ${item.color}`}>
-                   <i className={`${item.solid ? 'fa-solid' : 'fa-regular'} ${item.icon}`}></i>
+                <div className={`w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center group-hover:bg-cyan-500/20 group-hover:shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all ${item.color}`}>
+                   <i className={`${item.solid ? 'fa-solid' : 'fa-regular'} ${item.icon} group-hover:text-cyan-300 transition-colors`}></i>
                 </div>
-                <span>{item.label}</span>
+                <span className="font-medium">{item.label}</span>
               </button>
             ))}
           </div>

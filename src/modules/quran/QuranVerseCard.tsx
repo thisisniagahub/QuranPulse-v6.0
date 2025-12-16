@@ -139,12 +139,16 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
       ref={verseRef}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`py-10 px-6 border-b border-slate-800/50 transition-all duration-500 ${
+      className={`py-10 px-6 border-b transition-all duration-500 relative overflow-hidden group/card ${
         isPlaying 
-          ? 'bg-gradient-to-r from-cyan-900/10 via-cyan-900/5 to-transparent border-l-4 border-l-cyan-500 shadow-[0_0_30px_rgba(6,182,212,0.1)] scale-[1.01] z-10 rounded-r-xl' 
-          : 'hover:bg-slate-900/30'
+          ? 'bg-gradient-to-r from-cyan-900/40 via-cyan-900/10 to-transparent border-l-4 border-l-cyan-400 border-y border-r border-y-cyan-500/30 border-r-cyan-500/30 shadow-[0_0_50px_rgba(6,182,212,0.2)] scale-[1.02] z-10 rounded-xl backdrop-blur-xl' 
+          : 'hover:bg-white/5 bg-slate-900/40 backdrop-blur-md rounded-xl my-3 border border-white/10 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.05)]'
       }`}
     >
+      {/* Cinematic Glow Background (Subtle) */}
+      {!isPlaying && (
+        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-purple-500/0 to-blue-500/0 opacity-0 group-hover/card:opacity-10 transition-opacity duration-700 pointer-events-none" />
+      )}
       {/* Verse Header */}
       <div className="flex justify-between items-start mb-6 relative">
         <div className="flex items-center gap-3">
@@ -175,10 +179,10 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
           <button
             onClick={onPlay}
             disabled={isAudioLoading}
-            className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${
+            className={`w-9 h-9 rounded-full flex items-center justify-center transition-all border ${
               isPlaying
-                ? 'bg-cyan-500 text-black shadow-lg shadow-cyan-500/20'
-                : 'text-slate-400 hover:bg-slate-800 hover:text-cyan-400'
+                ? 'bg-cyan-500 text-black border-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.6)]'
+                : 'text-slate-400 border-slate-700/50 bg-slate-800/50 hover:bg-cyan-500/20 hover:text-cyan-400 hover:border-cyan-400/50'
             }`}
           >
              {isAudioLoading && isPlaying ? (
@@ -274,12 +278,12 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
               >
                 {/* 1. Arabic Glyph - TOP */}
                 <span 
-                  className={`font-uthmani text-center leading-[1.8] ${
+                  className={`font-uthmani text-center leading-[1.9] transition-all duration-300 ${
                     highlightedWordIndex === word.position
-                      ? 'text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.8)]'
+                      ? 'text-cyan-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.9)] scale-110 z-10'
                       : activeWord?.id === word.id 
-                        ? 'text-amber-400' 
-                        : 'text-white'
+                        ? 'text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]' 
+                        : 'text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]'
                   }`}
                   style={{ fontSize: `${fontSize}px` }}
                 >
@@ -343,12 +347,12 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
             {verse.words?.filter(w => w.char_type_name !== 'end').map((word, i) => (
                <span 
                  key={i}
-                 className={`font-uthmani transition-all duration-200 cursor-pointer rounded px-0.5
+                 className={`font-uthmani transition-all duration-300 cursor-pointer rounded px-1
                    ${highlightedWordIndex === word.position 
-                     ? 'text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] scale-110' 
-                     : 'text-white hover:bg-white/10'
+                     ? 'text-cyan-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.8)] scale-110' 
+                     : 'text-white hover:text-cyan-100 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
                    }
-                   ${activeWord?.id === word.id ? 'text-amber-400' : ''}
+                   ${activeWord?.id === word.id ? 'text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]' : ''}
                  `}
                  style={{ fontSize: `${fontSize}px` }}
                  onClick={(e) => { e.stopPropagation(); onWordClick(word, e); }}
@@ -359,25 +363,31 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
             <span className="inline-flex relative items-center justify-center mx-1.5 select-none align-middle" style={{ width: `${fontSize * 1.5}px`, height: `${fontSize * 1.5}px` }}>
                 <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full" style={{filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))'}}>
                     <defs>
-                        <linearGradient id="grad-pantone-verse" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#E0BFB8" />
-                            <stop offset="30%" stopColor="#D4AF37" />
-                            <stop offset="60%" stopColor="#B76E79" />
-                            <stop offset="100%" stopColor="#8B5A2B" />
+                        <linearGradient id="grad-cyber-perkata" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#22d3ee" />  {/* Cyan */}
+                            <stop offset="50%" stopColor="#3b82f6" />  {/* Blue */}
+                            <stop offset="100%" stopColor="#8b5cf6" /> {/* Violet */}
                         </linearGradient>
-                        <linearGradient id="grad-inner-verse" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#1e3a5f" />
-                            <stop offset="100%" stopColor="#0f172a" />
-                        </linearGradient>
+                        <filter id="glow-cyber">
+                            <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                            <feMerge>
+                                <feMergeNode in="coloredBlur"/>
+                                <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                        </filter>
                     </defs>
                     <g transform="translate(50,50)">
-                        <rect x="-30" y="-30" width="60" height="60" rx="3" fill="url(#grad-pantone-verse)" />
-                        <rect x="-30" y="-30" width="60" height="60" rx="3" fill="url(#grad-pantone-verse)" transform="rotate(45)" />
-                        <circle cx="0" cy="0" r="18" fill="url(#grad-inner-verse)" />
-                        <circle cx="0" cy="0" r="16" fill="none" stroke="#D4AF37" strokeWidth="0.5" opacity="0.6" />
+                        {/* Outer Glow Ring */}
+                        <circle cx="0" cy="0" r="28" fill="none" stroke="url(#grad-cyber-perkata)" strokeWidth="1.5" opacity="0.8" filter="url(#glow-cyber)" />
+                        
+                        {/* Rotating Hexagon (Static suggestion of motion) */}
+                        <path d="M-22,-12 L0,-25 L22,-12 L22,12 L0,25 L-22,12 Z" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+                        
+                        {/* Inner Circle background */}
+                        <circle cx="0" cy="0" r="18" fill="rgba(15, 23, 42, 0.9)" />
                     </g>
                 </svg>
-                <span className="absolute inset-0 flex items-center justify-center font-bold text-amber-300" style={{ fontFamily: 'var(--font-uthmani)', fontSize: '0.38em', textShadow: '0 0 8px rgba(251,191,36,0.5)' }}>
+                <span className="absolute inset-0 flex items-center justify-center font-bold text-cyan-200" style={{ fontFamily: 'var(--font-uthmani)', fontSize: '0.4em', textShadow: '0 0 10px rgba(34, 211, 238, 0.8)' }}>
                     {arabicVerseNumber}
                 </span>
             </span>

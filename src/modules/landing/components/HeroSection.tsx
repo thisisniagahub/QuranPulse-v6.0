@@ -352,7 +352,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                         </div>
                                         <div>
                                             <h3 className="text-sm font-bold text-white leading-none">Smart Deen AI</h3>
-                                            <span className="text-[9px] font-medium text-cyan-400 uppercase tracking-wider">Standard Mode</span>
+                                            <span className="text-[9px] font-medium text-cyan-400 uppercase tracking-wider">Hybrid Cloud Mode</span>
                                         </div>
                                     </div>
                                     {/* Toggle */}
