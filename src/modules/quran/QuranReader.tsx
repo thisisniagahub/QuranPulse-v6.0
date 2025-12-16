@@ -124,10 +124,58 @@ const QuranReader: React.FC = () => {
 
             {/* === SCROLL VIEW (LIST MODE) === */}
             {layoutMode === 'SCROLL' && (
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-hide pb-32 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1c2e] via-[#020617] to-black">
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-hide pb-32 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1c2e] via-[#020617] to-black">
+                 {/* SURAH HEADER - Premium & Nature Integration */}
+                 <div className="relative rounded-3xl overflow-hidden min-h-[180px] flex flex-col items-center justify-center text-center p-8 mb-6 shadow-2xl ring-1 ring-white/10 group">
+                    {/* Nature Background */}
+                    <div className="absolute inset-0 z-0">
+                         <img 
+                            src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2670&auto=format&fit=crop" 
+                            alt="Nature Background"
+                            className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-1000 ease-out"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-slate-900/80" />
+                        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')] opacity-20 mix-blend-overlay"></div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10 space-y-3">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                            <i className="fa-solid fa-kaaba text-amber-400 text-xs shadow-glow"></i>
+                            <span className="text-[10px] font-bold tracking-widest text-slate-300 uppercase">
+                                {selectedChapter.revelation_place === 'makkah' ? 'Meccan' : 'Medinan'} Revelation
+                            </span>
+                        </div>
+
+                        <div>
+                            <h1 className="font-arabic text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-sm mb-2">
+                                {selectedChapter.name_arabic}
+                            </h1>
+                            <h2 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+                                {selectedChapter.name_simple}
+                            </h2>
+                            <p className="text-cyan-400/80 text-sm font-medium tracking-wide">
+                                {selectedChapter.translated_name.name}
+                            </p>
+                        </div>
+
+                        <div className="flex items-center justify-center gap-4 text-xs text-slate-400 font-mono pt-2">
+                            <span className="flex items-center gap-1.5">
+                                <i className="fa-solid fa-list-ol"></i> {selectedChapter.verses_count} Verses
+                            </span>
+                            <span className="w-1 h-1 rounded-full bg-slate-600"></span>
+                            <span className="flex items-center gap-1.5">
+                                <i className="fa-solid fa-arrow-down-9-1"></i> Order #{selectedChapter.revelation_order}
+                            </span>
+                        </div>
+                    </div>
+                 </div>
+
                  {/* Bismillah (except Surah 1 & 9) */}
                  {selectedChapter.id !== 1 && selectedChapter.id !== 9 && (
-                    <AnimatedBismillah />
+                    <div className="py-4">
+                        <AnimatedBismillah />
+                    </div>
                  )}
 
                  {loadingVerses ? (

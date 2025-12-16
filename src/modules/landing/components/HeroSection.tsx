@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 import { AppStoreBadge, PlayStoreBadge } from './StoreBadges';
+import SmartDeen from '../../smart-deen/SmartDeen';
+import BottomNav from '../../../components/BottomNav';
+import { NavView } from '../../../types';
 
 interface HeroSectionProps {
   onGetStarted: () => void;
@@ -14,17 +17,60 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
   const [activeAyah, setActiveAyah] = useState<number | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Smart Deen State
-  const [chatMessages, setChatMessages] = useState([
-      { role: 'assistant', content: "Assalamu Alaikum. I am Ustaz AI. Ask me anything about your Deen." }
-  ]);
-  const [isTyping, setIsTyping] = useState(false);
+  // --- 3D TILT LOGIC ---
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // Smooth spring physics
+  const mouseX = useSpring(x, { stiffness: 150, damping: 15 });
+  const mouseY = useSpring(y, { stiffness: 150, damping: 15 });
+
+  // Map mouse position to rotation degrees
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-15, 15]); // Tilt Left/Right
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [15, -15]); // Tilt Up/Down
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      const mouseXVal = (e.clientX - rect.left) / width - 0.5;
+      const mouseYVal = (e.clientY - rect.top) / height - 0.5;
+      x.set(mouseXVal);
+      y.set(mouseYVal);
+  };
+
+  const handleMouseLeave = () => {
+      x.set(0);
+      y.set(0);
+  };
+
+  // Helper to map screen string to NavView enum
+  const getNavViewForScreen = (screen: string): NavView => {
+      switch(screen) {
+          case 'home': return NavView.DASHBOARD;
+          case 'quran': return NavView.QURAN;
+          case 'smart-deen': return NavView.SMART_DEEN;
+          default: return NavView.DASHBOARD;
+      }
+  };
+
+  // Mock Navigate Handler
+  const handleMockNavigate = (view: NavView) => {
+      switch(view) {
+          case NavView.DASHBOARD: setActiveScreen('home'); break;
+          case NavView.QURAN: setActiveScreen('quran'); break;
+          case NavView.SMART_DEEN: setActiveScreen('smart-deen'); break;
+          case NavView.IBADAH: setActiveScreen('home'); break; // Fallback
+          case NavView.IQRA: setActiveScreen('home'); break; // Fallback
+          default: setActiveScreen('home');
+      }
+  };
 
   // Audio Control
   useEffect(() => {
     if (audioRef.current) {
         if (isPlaying) {
-            audioRef.current.play().catch(e => console.log("Audio play failed (user interaction needed first):", e));
+            audioRef.current.play().catch(e => console.log("Audio play failed:", e));
         } else {
             audioRef.current.pause();
         }
@@ -39,18 +85,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
   const handleAyahClick = (ayah: number) => {
       setActiveAyah(ayah);
       setIsPlaying(true);
-  };
-
-  const handleSmartDeenPrompt = (prompt: string) => {
-      setChatMessages(prev => [...prev, { role: 'user', content: prompt }]);
-      setIsTyping(true);
-      setTimeout(() => {
-          setIsTyping(false);
-          let response = "That is a great question. According to the Shafi'i school, this is permissible under specific conditions...";
-          if (prompt.includes("Prayer")) response = "The next prayer is Asr at 4:23 PM. Would you like me to notify you?";
-          if (prompt.includes("Meaning")) response = "Surah Al-Mulk (The Sovereignty) emphasizes that Allah controls life and death to test who is best in deeds.";
-          setChatMessages(prev => [...prev, { role: 'assistant', content: response }]);
-      }, 1500);
   };
 
   // Animation Variants
@@ -70,34 +104,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
   };
 
   return (
-    <section className="relative z-10 min-h-[90vh] flex flex-col lg:flex-row items-center justify-center px-4 sm:px-6 pt-24 sm:pt-32 pb-16 sm:pb-20 max-w-7xl mx-auto w-full gap-12 lg:gap-24 overflow-visible">
+    <section 
+        className="relative z-10 min-h-[90vh] flex flex-col lg:flex-row items-center justify-center px-4 sm:px-6 pt-24 sm:pt-32 pb-16 sm:pb-20 max-w-7xl mx-auto w-full gap-12 lg:gap-24 overflow-visible perspective-2000"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+    >
         
-        {/* VIDEO BACKGROUND - CYBER PULSE ENHANCED */}
-        <div className="absolute inset-0 w-screen h-full left-[50%] -translate-x-[50%] -z-20 overflow-hidden bg-slate-950">
-            {/* 1. Base Video Layer */}
-            <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                poster="/images/hero-poster.jpg"
-                className="w-full h-full object-cover opacity-40 scale-105 saturate-50 contrast-125"
-            >
+        {/* VIDEO BACKGROUND */}
+        <div className="absolute inset-0 w-screen h-full left-[50%] -translate-x-[50%] -z-20 overflow-hidden bg-slate-950 pointer-events-none">
+            <video autoPlay loop muted playsInline poster="/images/hero-poster.jpg" className="w-full h-full object-cover opacity-40 scale-105 saturate-50 contrast-125">
                 <source src="/videos/hero-bg.mp4" type="video/mp4" />
             </video>
-
-            {/* 2. Cyber Grid Overlay (CSS Pattern) */}
-            <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(6,182,212,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
-
-            {/* 3. Gradient Stack for Readability & Depth */}
+            <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(6,182,212,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
             <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/40"></div>
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60"></div>
-            
-            {/* 4. Ambient Glow (Cyan tint for Cyber Theme) */}
             <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-cyan-500/10 blur-[120px] rounded-full mix-blend-screen opacity-50 animate-pulse-slow"></div>
         </div>
 
-        {/* Hidden Audio Element for Mockup */}
         <audio ref={audioRef} src="https://verses.quran.com/Alafasy/mp3/067001.mp3" onEnded={() => setIsPlaying(false)} />
 
         {/* LEFT: COPY */}
@@ -107,7 +130,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
             variants={staggerContainer}
             className="flex-1 text-center lg:text-left z-20 w-full"
         >
-            {/* EXCLUSIVE BADGE */}
             <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 rounded-full border border-cyan-500/20 bg-cyan-950/30 backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.1)] mb-6 sm:mb-8 mx-auto lg:mx-0">
                 <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
@@ -131,17 +153,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
             </motion.p>
 
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-10 sm:mb-12 w-full sm:w-auto">
-                <button 
-                    onClick={onGetStarted}
-                    className="group relative w-full sm:w-auto px-8 py-4 bg-transparent overflow-hidden rounded-xl transition-all hover:scale-105 active:scale-95"
-                >
+                <button onClick={onGetStarted} className="group relative w-full sm:w-auto px-8 py-4 bg-transparent overflow-hidden rounded-xl transition-all hover:scale-105 active:scale-95">
                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 group-hover:from-cyan-500 group-hover:to-blue-500 transition-colors"></div>
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
                     <div className="relative flex items-center justify-center gap-3 text-white font-bold text-lg">
                         <span>Get Started Free</span>
                         <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
                     </div>
-                    {/* Glow effect */}
                     <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
                 </button>
                 <div className="flex gap-3 justify-center sm:justify-start w-full sm:w-auto text-slate-400 hover:text-white transition-colors cursor-pointer text-sm font-medium items-center">
@@ -150,7 +168,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                 </div>
             </motion.div>
 
-            {/* SOCIAL PROOF */}
             <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs text-slate-500 font-mono">
                 <div className="flex items-center gap-4">
                     <div className="flex -space-x-2">
@@ -168,25 +185,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
             </motion.div>
         </motion.div>
 
-        {/* RIGHT: INTERACTIVE PHONE MOCKUP */}
+        {/* RIGHT: INTERACTIVE PHONE MOCKUP (3D TILT ENABLED) */}
         <motion.div 
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.2 }}
             className="flex-1 relative z-10 w-full max-w-[300px] sm:max-w-[350px] lg:max-w-[400px] perspective-1000 group mx-auto"
+            style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         >
-             {/* Glow Behind Phone */}
-             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-cyan-500/30 to-purple-500/30 blur-[60px] sm:blur-[80px] rounded-full animate-pulse-slow"></div>
+             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-cyan-500/30 to-purple-500/30 blur-[60px] sm:blur-[80px] rounded-full animate-pulse-slow -z-10"></div>
 
             <motion.div 
-                animate={{ y: [0, -15, 0], rotateY: [-12, -8, -12] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-full aspect-[9/19] bg-black rounded-[2.5rem] sm:rounded-[3.5rem] border-[8px] sm:border-[12px] border-slate-800 shadow-2xl transform transition-transform duration-700 ease-out preserve-3d ring-1 ring-white/20"
+                className="relative w-full aspect-[9/19] bg-black rounded-[2.5rem] sm:rounded-[3.5rem] border-[8px] sm:border-[12px] border-slate-800 shadow-2xl overflow-hidden ring-1 ring-white/20"
+                style={{ y: useSpring(useTransform(y, [-0.5, 0.5], [-10, 10]), { stiffness: 100, damping: 20 }) }}
             >
-                {/* Screen Content */}
                 <div className="absolute inset-0 bg-slate-950 rounded-[2rem] sm:rounded-[2.8rem] overflow-hidden flex flex-col relative">
                     
-                    {/* Dynamic Island / Notch */}
+                    {/* Dynamic Island */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 sm:h-7 w-28 sm:w-32 bg-black rounded-b-2xl z-50 flex items-center justify-center">
                         <div className="w-14 sm:w-16 h-3 sm:h-4 bg-black rounded-full flex items-center justify-end px-2 gap-1">
                              <div className="w-1 h-1 rounded-full bg-green-500"></div>
@@ -214,7 +229,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 border border-white/20"></div>
                             </div>
                             
-                            {/* Prayer Time Card */}
                             <div className="bg-gradient-to-br from-cyan-900/50 to-slate-900 rounded-2xl p-4 border border-white/5 mb-4 relative overflow-hidden">
                                 <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl"></div>
                                 <div className="flex justify-between items-start mb-2 relative z-10">
@@ -225,7 +239,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                 <p className="text-sm text-slate-300">4:23 PM <span className="text-[10px] text-slate-500 ml-2">(-0:45)</span></p>
                             </div>
 
-                            {/* Quick Actions */}
                             <div className="grid grid-cols-4 gap-2 mb-6">
                                 {['Quran', 'Prayer', 'Qibla', 'AI Chat'].map((item, i) => (
                                     <div key={i} onClick={() => {
@@ -245,7 +258,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                     {/* --- SCREEN: QURAN --- */}
                     {activeScreen === 'quran' && (
                         <>
-                            {/* App Header */}
                             <div className="px-5 sm:px-6 pt-2 pb-3 sm:pb-4 flex justify-between items-center z-10 border-b border-white/5 bg-slate-900/50 backdrop-blur-md">
                                 <div className="flex items-center gap-3 cursor-pointer" onClick={() => setActiveScreen('home')}>
                                     <i className="fa-solid fa-chevron-left text-slate-400 text-xs"></i>
@@ -259,18 +271,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                 </div>
                             </div>
                             
-                            {/* Content: Quran View */}
                             <div className="flex-1 p-3 sm:p-4 overflow-y-auto relative z-10 scrollbar-hide animate-fade-in">
-                                {/* Bismillah */}
                                 <div className="text-center mb-4 sm:mb-6 mt-2">
                                     <p className="font-amiri text-lg sm:text-xl text-white">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</p>
                                 </div>
 
                                 {/* Ayah 1 */}
-                                <div 
-                                    onClick={() => handleAyahClick(1)}
-                                    className={`mb-4 sm:mb-6 relative group/ayah cursor-pointer transition-all duration-300 ${activeAyah === 1 ? 'scale-[1.02]' : ''}`}
-                                >
+                                <div onClick={() => handleAyahClick(1)} className={`mb-4 sm:mb-6 relative group/ayah cursor-pointer transition-all duration-300 ${activeAyah === 1 ? 'scale-[1.02]' : ''}`}>
                                     {activeAyah === 1 && <div className="absolute inset-0 bg-cyan-500/10 -mx-4 py-2 rounded-lg opacity-100 blur-sm transition-all"></div>}
                                     <div className="relative z-10">
                                         <div className="flex justify-between items-start mb-2">
@@ -287,10 +294,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                 </div>
 
                                 {/* Ayah 2 */}
-                                <div 
-                                    onClick={() => handleAyahClick(2)}
-                                    className={`mb-4 sm:mb-6 relative group/ayah cursor-pointer transition-all duration-300 opacity-80 hover:opacity-100 ${activeAyah === 2 ? 'scale-[1.02] opacity-100' : ''}`}
-                                >
+                                <div onClick={() => handleAyahClick(2)} className={`mb-4 sm:mb-6 relative group/ayah cursor-pointer transition-all duration-300 opacity-80 hover:opacity-100 ${activeAyah === 2 ? 'scale-[1.02] opacity-100' : ''}`}>
                                     {activeAyah === 2 && <div className="absolute inset-0 bg-cyan-500/10 -mx-4 py-2 rounded-lg opacity-100 blur-sm transition-all"></div>}
                                     <div className="relative z-10">
                                         <div className="flex justify-between items-start mb-2">
@@ -302,7 +306,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                 </div>
                             </div>
 
-                            {/* Player Control Bar */}
                             <div className="h-16 sm:h-20 bg-slate-900/90 backdrop-blur-xl border-t border-white/10 px-4 flex flex-col justify-center z-20">
                                 <div className="flex justify-between items-center mb-2">
                                     <span className="text-[9px] sm:text-[10px] text-cyan-400">Mishary Rashid Alafasy</span>
@@ -315,10 +318,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                 </div>
                                 <div className="flex justify-between items-center px-4 text-white">
                                     <i className="fa-solid fa-backward-step text-xs text-slate-400 cursor-pointer hover:text-white"></i>
-                                    <div 
-                                        onClick={togglePlay}
-                                        className="w-7 h-7 sm:w-8 sm:h-8 bg-white text-black rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform"
-                                    >
+                                    <div onClick={togglePlay} className="w-7 h-7 sm:w-8 sm:h-8 bg-white text-black rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform">
                                         <i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'} text-xs`}></i>
                                     </div>
                                     <i className="fa-solid fa-forward-step text-xs text-slate-400 cursor-pointer hover:text-white"></i>
@@ -327,62 +327,18 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                         </>
                     )}
 
-import SmartDeen from '../../smart-deen/SmartDeen'; // Import Actual Component
-
-// ... existing imports
-
-// ... inside component
-
                     {/* --- SCREEN: SMART DEEN AI (ACTUAL APP) --- */}
                     {activeScreen === 'smart-deen' && (
                         <div className="flex-1 h-full w-full overflow-hidden bg-[#020617] relative flex flex-col">
-                            {/* We scale it down slightly if needed or let it fit responsive */}
+                            {/* Actual SmartDeen Component Integration */}
                             <SmartDeen />
                         </div>
                     )}
 
-                    {/* --- 3D Floating Bottom Navigation (Exact Replica) --- */}
+                    {/* --- 3D Floating Bottom Navigation (Actual Component Mock) --- */}
                     <div className="absolute bottom-7 left-1/2 -translate-x-1/2 w-[88%] z-50 pointer-events-none">
-                        <div className="bg-slate-900/95 backdrop-blur-xl border border-white/10 rounded-full shadow-[0_10px_40px_rgba(0,0,0,0.5)] pointer-events-auto py-1.5 px-1">
-                            <div className="flex justify-around items-center w-full">
-                                {[
-                                    { id: 'home', icon: 'fa-house', label: 'Home' },
-                                    { id: 'quran', icon: 'fa-book-quran', label: 'Quran' },
-                                    { id: 'smart-deen', icon: 'fa-user-astronaut', label: 'Ustaz', isCenter: true },
-                                    { id: 'ibadah', icon: 'fa-kaaba', label: 'Ibadah' },
-                                    { id: 'iqra', icon: 'fa-microphone-lines', label: 'Iqra' }
-                                ].map((item) => {
-                                    const isActive = activeScreen === item.id;
-                                    return (
-                                        <div 
-                                            key={item.id}
-                                            onClick={() => setActiveScreen(item.id as any)}
-                                            className={`relative group flex flex-col items-center justify-center transition-all duration-300 cursor-pointer ${item.isCenter ? '-mt-6' : ''}`}
-                                        >
-                                            {/* Active Glow */}
-                                            {isActive && (
-                                                <div className={`absolute inset-0 bg-gradient-to-tr ${item.isCenter ? 'from-amber-200 to-amber-500' : 'from-cyan-200 to-cyan-500'} blur-xl opacity-40 rounded-full`}></div>
-                                            )}
-
-                                            {/* Icon Container */}
-                                            <div className={`
-                                                relative rounded-full flex items-center justify-center transition-all duration-300 border
-                                                ${item.isCenter ? 'w-12 h-12' : 'w-9 h-9'}
-                                                ${isActive 
-                                                    ? `bg-gradient-to-br ${item.isCenter ? 'from-amber-300 to-amber-500' : 'from-cyan-300 to-cyan-500'} border-white/20 shadow-lg shadow-black/30 scale-110` 
-                                                    : 'bg-transparent border-transparent text-slate-500 group-hover:bg-white/5 group-hover:text-slate-300'}
-                                            `}>
-                                                <i className={`fa-solid ${item.icon} ${item.isCenter ? 'text-xl' : 'text-base'} transition-all duration-300 ${isActive ? 'text-white drop-shadow-md' : ''}`}></i>
-                                            </div>
-
-                                            {/* Active Dot */}
-                                            {isActive && !item.isCenter && (
-                                                <div className="absolute -bottom-1.5 w-1 h-1 rounded-full bg-cyan-500"></div>
-                                            )}
-                                        </div>
-                                    );
-                                })}
-                            </div>
+                        <div className="pointer-events-auto scale-90 origin-bottom">
+                            <BottomNav activeViewOverride={getNavViewForScreen(activeScreen)} onNavigate={handleMockNavigate} />
                         </div>
                     </div>
 
@@ -395,11 +351,7 @@ import SmartDeen from '../../smart-deen/SmartDeen'; // Import Actual Component
             </motion.div>
 
             {/* Floating Badges */}
-            <motion.div 
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -right-4 sm:-right-12 top-24 sm:top-32 bg-black/60 backdrop-blur-xl p-2 sm:p-3 rounded-xl border border-white/10 shadow-xl transform rotate-6 z-20"
-            >
+            <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute -right-4 sm:-right-12 top-24 sm:top-32 bg-black/60 backdrop-blur-xl p-2 sm:p-3 rounded-xl border border-white/10 shadow-xl transform rotate-6 z-20">
                 <div className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-green-500"></div>
                     <span className="text-[9px] sm:text-[10px] font-bold">Tajweed Verified</span>

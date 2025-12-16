@@ -127,14 +127,14 @@ export const QuranProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     const [showSettings, setShowSettings] = useState(false);
     const [fontSize, setFontSize] = useState(36); // Standard: 36px
     const [showTranslation, setShowTranslation] = useState(true); // Standard: ON
-    const [showTransliteration, setShowTransliteration] = useState(false); // Standard: OFF
+    const [showTransliteration, setShowTransliteration] = useState(true); // Standard: ON (Requested)
     const [showWordByWord, setShowWordByWord] = useState(false); // Standard: OFF (Cleaner)
     const [autoScroll, setAutoScroll] = useState(true);
     const [showTajwid, setShowTajwid] = useState(true); // Standard: ON (Helpful)
     const [nightMode, setNightMode] = useState(false);
     const [repeatMode, setRepeatMode] = useState<'none' | 'ayah' | 'surah'>('none');
     const [selectedReciterId, setSelectedReciterId] = useState(7);
-    const [selectedTranslationId, setSelectedTranslationId] = useState(131);
+    const [selectedTranslationId, setSelectedTranslationId] = useState(39); // ID 39 is standard Malay (Bahasa Melayu)
 
     // 3. Feature Visibility
     const [showSurahInfo, setShowSurahInfo] = useState(false);

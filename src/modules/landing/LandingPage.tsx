@@ -11,6 +11,8 @@ import { GlowFooter } from './components/GlowFooter';
 
 // New Components
 import { HeroSection } from './components/HeroSection';
+import { ProblemSection } from './components/ProblemSection';
+import { FAQSection } from './components/FAQSection';
 import { BentoGridFeatures } from './components/BentoGridFeatures';
 import { TrustSection } from './components/TrustSection';
 
@@ -85,8 +87,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
       {/* --- NEW HERO SECTION --- */}
       <HeroSection onGetStarted={onGetStarted} spotsLeft={spotsLeft} />
+
+      {/* --- THE STRUGGLE (PAIN POINTS) --- */}
+      <ProblemSection />
+
         {/* IQRA Digital Books Button */}
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-0 pb-16 bg-[#020617]">
           <button
             onClick={() => navigate('/iqra')}
             className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full hover:shadow-lg transition-shadow"
@@ -113,6 +119,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
       {/* --- ADVANCED TOOLS --- */}
       <AdvancedTools />
+
+      {/* --- FAQ SECTION --- */}
+      <FAQSection />
 
       {/* --- GLOW FOOTER --- */}
       <GlowFooter />

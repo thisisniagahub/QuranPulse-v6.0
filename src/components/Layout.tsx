@@ -1,75 +1,12 @@
 import React from "react";
-import { Link, useLocation, Outlet } from "react-router-dom";
-import { NavView } from "../types";
+import { Link, Outlet } from "react-router-dom";
 import kufiSplash from "@/assets/bg/kufi-splash.jpg";
 import kufiHeader from "@/assets/bg/kufi-header.jpg";
 import kufiFooter from "@/assets/bg/kufi-footer.jpg";
-import navHomeIcon from "@/assets/icons/nav-home-neon.png";
-import navQuranIcon from "@/assets/icons/nav-quran-neon.png";
-import navUstazAiIcon from "@/assets/icons/nav-ustaz-ai.png";
-import navQiblatIcon from "@/assets/icons/nav-qiblat-neon.png";
-import navIqraIcon from "@/assets/icons/nav-iqra-neon.png";
+import BottomNav from "./BottomNav";
 
 const Layout: React.FC = () => {
-  const location = useLocation();
   const [imgError, setImgError] = React.useState(false);
-
-  // Map paths to NavView for highlighting
-  const getActiveView = (pathname: string): NavView => {
-    if (pathname === "/") return NavView.DASHBOARD;
-    if (pathname.startsWith("/quran")) return NavView.QURAN;
-    if (pathname.startsWith("/smart-deen")) return NavView.SMART_DEEN;
-    if (pathname.startsWith("/ibadah")) return NavView.IBADAH;
-    if (pathname.startsWith("/iqra")) return NavView.IQRA;
-    if (pathname.startsWith("/souq")) return NavView.SOUQ;
-    if (pathname.startsWith("/media")) return NavView.MEDIA_STUDIO;
-    if (pathname.startsWith("/profile")) return NavView.PROFILE;
-    if (pathname.startsWith("/admin")) return NavView.ADMIN;
-    return NavView.DASHBOARD;
-  };
-
-  const currentView = getActiveView(location.pathname);
-
-  // Optimized to 5 Core Items for cleaner UI
-  const navItems = [
-    {
-      id: NavView.DASHBOARD,
-      path: "/",
-      icon: "fa-house",
-      label: "Home",
-      color: "from-cyan-400 to-blue-500",
-    },
-    {
-      id: NavView.QURAN,
-      path: "/quran",
-      icon: "fa-book-quran",
-      label: "Al-Quran",
-      color: "from-cyan-400 to-blue-500", // Changed to Blue/Cyan
-    },
-    // Center Highlighted Item (Ustaz AI)
-    {
-      id: NavView.SMART_DEEN,
-      path: "/smart-deen",
-      icon: "fa-user-astronaut",
-      label: "Ustaz AI",
-      color: "from-cyan-400 to-amber-400", // Changed to Cyan/Gold
-      highlight: true,
-    },
-    {
-      id: NavView.IBADAH,
-      path: "/ibadah",
-      icon: "fa-compass", // Changed to Compass for Qiblat
-      label: "Qiblat",
-      color: "from-amber-400 to-cyan-500", // Changed to Gold/Blue
-    },
-    {
-      id: NavView.IQRA,
-      path: "/iqra",
-      icon: "fa-tablet-screen-button",
-      label: "Iqra Digital",
-      color: "from-cyan-400 to-blue-500",
-    },
-  ];
 
   return (
     <div className="flex h-screen w-full bg-black overflow-hidden font-sans relative justify-center">
@@ -151,105 +88,7 @@ const Layout: React.FC = () => {
         </main>
 
         {/* --- BOTTOM NAVIGATION BAR --- */}
-        <nav className="h-[88px] bg-[#020617]/80 backdrop-blur-xl border-t border-white/5 relative z-50 shrink-0 pb-5">
-            <div className="flex items-center justify-around h-full px-2">
-                {navItems.map((item) => {
-                    const isActive = currentView === item.id;
-                    const isCenter = item.id === NavView.SMART_DEEN;
-
-                    return (
-                        <Link
-                            key={item.id}
-                            to={item.path}
-                            className="flex flex-col items-center justify-center relative group w-16"
-                        >
-                            <div
-                                className={`
-                                    relative rounded-full flex items-center justify-center transition-all duration-300 border
-                                    ${isCenter ? "w-16 h-16 -mt-8" : "w-10 h-10"}
-                                    ${
-                                      isActive && !isCenter
-                                        ? `bg-gradient-to-br ${item.color} border-white/20 shadow-lg shadow-cyan-500/20 scale-110`
-                                        : isActive && isCenter
-                                        ? "bg-transparent border-transparent scale-110"
-                                        : "bg-transparent border-transparent text-slate-500 group-hover:bg-white/5 group-hover:text-slate-300"
-                                    }
-                                `}
-                            >
-                                {/* Inner Glass Reflection for Active State */}
-                                {isActive && !isCenter && (
-                                    <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 to-transparent pointer-events-none"></div>
-                                )}
-
-                                {/* HOME ICON - Image Replacement */}
-                                {item.id === NavView.DASHBOARD && (
-                                    <div className="relative flex items-center justify-center w-8 h-8">
-                                        <img 
-                                            src={navHomeIcon} 
-                                            alt="Home" 
-                                            className={`w-full h-full object-contain ${isActive ? "drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]" : "opacity-60 grayscale"}`}
-                                        />
-                                    </div>
-                                )}
-
-                                {/* QURAN ICON - Image Replacement */}
-                                {item.id === NavView.QURAN && (
-                                    <div className="relative flex items-center justify-center w-9 h-9">
-                                        <img 
-                                            src={navQuranIcon} 
-                                            alt="Quran" 
-                                            className={`w-full h-full object-contain ${isActive ? "drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]" : "opacity-60 grayscale"}`}
-                                        />
-                                    </div>
-                                )}
-
-                                {/* USTAZ AI ICON (CENTER) - Image Replacement */}
-                                {item.id === NavView.SMART_DEEN && (
-                                    <div className="relative flex items-center justify-center w-full h-full -mt-8">
-                                        <div className="relative w-20 h-20 flex items-center justify-center bg-[#020617] rounded-full">
-                                            <img 
-                                                src={navUstazAiIcon} 
-                                                alt="Ustaz AI" 
-                                                className="w-full h-full object-contain scale-125 drop-shadow-[0_0_15px_rgba(34,211,238,0.6)]"
-                                            />
-                                        </div>
-                                    </div>
-                                )}
-
-                                {/* QIBLAT ICON - Image Replacement */}
-                                {item.id === NavView.IBADAH && (
-                                    <div className="relative flex items-center justify-center w-8 h-8">
-                                        <img 
-                                            src={navQiblatIcon} 
-                                            alt="Qiblat" 
-                                            className={`w-full h-full object-contain ${isActive ? "drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]" : "opacity-60 grayscale"}`}
-                                        />
-                                    </div>
-                                )}
-
-                                {/* IQRA DIGITAL ICON - Image Replacement */}
-                                {item.id === NavView.IQRA && (
-                                    <div className="relative flex items-center justify-center w-8 h-8">
-                                        <img 
-                                            src={navIqraIcon} 
-                                            alt="Iqra" 
-                                            className={`w-full h-full object-contain ${isActive ? "drop-shadow-[0_0_12px_rgba(34,211,238,0.8)]" : "opacity-60 grayscale"}`}
-                                        />
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Label (Visible on Active or Hover) - Hidden for Ustaz AI */}
-                            {item.id !== NavView.SMART_DEEN && (
-                                <span className={`text-[10px] font-bold mt-1 transition-colors duration-300 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-400'}`}>
-                                    {item.label}
-                                </span>
-                            )}
-                        </Link>
-                    );
-                })}
-            </div>
-        </nav>
+        <BottomNav />
       </div>
     </div>
   );

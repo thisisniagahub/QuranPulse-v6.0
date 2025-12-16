@@ -214,44 +214,50 @@ const QuranList: React.FC<QuranListProps> = ({
                                             key={surah.id}
                                             initial={{ opacity: 0, scale: 0.98 }}
                                             animate={{ opacity: 1, scale: 1 }}
-                                            transition={{ delay: index * 0.03 }}
+                                            transition={{ delay: index * 0.02 }}
                                             onClick={() => onChapterSelect(surah)}
-                                            className="group relative bg-slate-900/40 backdrop-blur-sm p-4 rounded-2xl border border-white/5 hover:bg-slate-800/60 hover:border-cyan-500/20 transition-all duration-300 cursor-pointer flex items-center gap-4 min-h-[90px]"
+                                            className="group relative bg-slate-900/40 backdrop-blur-sm p-5 rounded-2xl border border-white/5 hover:bg-slate-800/80 hover:border-cyan-500/20 transition-all duration-300 cursor-pointer flex items-center gap-5 min-h-[85px]"
                                         >
-                                            {/* Consistent Cyber Ring Marker */}
-                                            <div className="relative w-12 h-12 flex items-center justify-center shrink-0">
-                                                <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-80 group-hover:opacity-100 transition-opacity">
-                                                    <defs>
-                                                        <linearGradient id={`grad-cyber-list-${surah.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                                                            <stop offset="0%" stopColor="#22d3ee" />
-                                                            <stop offset="100%" stopColor="#3b82f6" />
-                                                        </linearGradient>
-                                                    </defs>
-                                                    <circle cx="50" cy="50" r="45" fill="none" stroke={`url(#grad-cyber-list-${surah.id})`} strokeWidth="3" strokeDasharray="200" strokeDashoffset="100" className="group-hover:stroke-dashoffset-0 transition-all duration-700 ease-out" />
-                                                    <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
+                                            {/* Clean Cyber Ring Marker */}
+                                            <div className="relative w-10 h-10 flex items-center justify-center shrink-0">
+                                                <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-60 group-hover:opacity-100 transition-opacity">
+                                                    <circle cx="50" cy="50" r="48" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-slate-600 group-hover:text-cyan-500 transition-colors" />
+                                                    <circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" strokeWidth="1" className="text-slate-700/50" />
                                                 </svg>
-                                                <span className="font-bold text-cyan-400 text-sm">{surah.id}</span>
+                                                <span className="font-mono font-medium text-slate-300 text-sm group-hover:text-cyan-400 transition-colors">{surah.id}</span>
                                             </div>
                                             
-                                            {/* Text Info */}
-                                            <div className="flex-1 min-w-0">
-                                                <h4 className="font-bold text-slate-200 text-lg group-hover:text-cyan-400 transition-colors truncate">
-                                                    {surah.name_simple}
-                                                </h4>
-                                                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">
-                                                    {surah.verses_count} Verses • {surah.revelation_place}
-                                                </p>
-                                                {/* Show Order if in Revelation Mode */}
-                                                {activeTab === 'revelation' && (
-                                                     <span className="inline-block mt-1 text-[10px] bg-slate-800 text-cyan-400 px-2 py-0.5 rounded border border-slate-700">
-                                                        Order: #{surah.revelation_order}
-                                                     </span>
-                                                )}
-                                            </div>
-
-                                            {/* Arabic Name - Subtle */}
-                                            <div className="opacity-30 group-hover:opacity-100 transition-opacity">
-                                                <span className="font-arabic text-xl text-slate-400">{surah.name_arabic}</span>
+                                            {/* Text Info - Clean Typography */}
+                                            <div className="flex-1 min-w-0 flex flex-col justify-center">
+                                                <div className="flex justify-between items-baseline w-full">
+                                                    <h4 className="font-semibold text-slate-200 text-lg group-hover:text-cyan-400 transition-colors truncate tracking-tight">
+                                                        {surah.name_simple}
+                                                    </h4>
+                                                    
+                                                    {/* Arabic Name - Fixed Visibility */}
+                                                    <span className="font-arabic text-xl text-slate-500 group-hover:text-slate-300 transition-colors ml-2">
+                                                        {surah.name_arabic}
+                                                    </span>
+                                                </div>
+                                                
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">
+                                                        {surah.verses_count} Verses
+                                                    </p>
+                                                    <span className="w-1 h-1 rounded-full bg-slate-700"></span>
+                                                    <p className="text-[11px] text-slate-500 font-medium uppercase tracking-wider">
+                                                        {surah.revelation_place}
+                                                    </p>
+                                                    {/* Revelation Order Badge */}
+                                                    {activeTab === 'revelation' && (
+                                                        <>
+                                                            <span className="w-1 h-1 rounded-full bg-slate-700"></span>
+                                                            <span className="text-[10px] text-cyan-500/80 font-mono">
+                                                                #{surah.revelation_order}
+                                                            </span>
+                                                        </>
+                                                    )}
+                                                </div>
                                             </div>
                                         </motion.div>
                                     ))}
