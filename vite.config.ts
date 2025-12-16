@@ -23,21 +23,47 @@ export default defineConfig(({ mode }) => {
         // Custom Middleware removed for security
       VitePWA({
           registerType: 'autoUpdate',
-          includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+          includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'logo-full.png'],
           workbox: {
               navigateFallbackDenylist: [/^\/api/], // Ignore API routes for Service Worker
+              globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
               runtimeCaching: [
+                  {
+                      urlPattern: /^https:\/\/api\.quran\.com\/.*/i,
+                      handler: 'CacheFirst',
+                      options: {
+                          cacheName: 'quran-api-cache',
+                          expiration: {
+                              maxEntries: 500,
+                              maxAgeSeconds: 60 * 60 * 24 * 7, // 7 Days
+                          },
+                          cacheableResponse: {
+                              statuses: [0, 200],
+                          },
+                      },
+                  },
+                  {
+                      urlPattern: /^https:\/\/verses\.quran\.com\/.*/i,
+                      handler: 'CacheFirst',
+                      options: {
+                          cacheName: 'quran-audio-cache',
+                          expiration: {
+                              maxEntries: 100,
+                              maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+                          },
+                      },
+                  },
                   {
                       urlPattern: ({ request }) => request.destination === 'image',
                       handler: 'CacheFirst',
                       options: {
                           cacheName: 'images',
                           expiration: {
-                              maxEntries: 10,
+                              maxEntries: 50,
                               maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
                           },
                       },
-                      method: 'GET' // FIX: Explicitly only cache GET
+                      method: 'GET'
                   },
                   {
                       // Fix 206 Partial Content errors for Video/Audio
@@ -47,28 +73,48 @@ export default defineConfig(({ mode }) => {
               ]
           },
           manifest: {
-            name: 'QuranPulse',
+            name: 'Quran Pulse',
             short_name: 'QuranPulse',
-            description: 'Your Complete Islamic Lifestyle Companion',
-            theme_color: '#0f172a',
-            background_color: '#0f172a',
+            description: 'Your Digital Islamic Companion - AI-powered Quran learning',
+            theme_color: '#051324',
+            background_color: '#051324',
             display: 'standalone',
+            orientation: 'portrait',
+            scope: '/',
+            start_url: '/',
+            categories: ['education', 'lifestyle', 'books'],
             icons: [
               {
-                src: 'pwa-192x192.png',
+                src: 'logo-full.png',
+                sizes: '512x512',
+                type: 'image/png'
+              },
+              {
+                src: 'logo-full.png',
                 sizes: '192x192',
                 type: 'image/png'
               },
               {
-                src: 'pwa-512x512.png',
-                sizes: '512x512',
-                type: 'image/png'
-              },
-              {
-                src: 'pwa-512x512.png',
+                src: 'logo-full.png',
                 sizes: '512x512',
                 type: 'image/png',
-                purpose: 'any maskable'
+                purpose: 'maskable'
+              }
+            ],
+            shortcuts: [
+              {
+                name: 'Baca Al-Quran',
+                short_name: 'Quran',
+                description: 'Terus membaca Al-Quran',
+                url: '/quran',
+                icons: [{ src: 'Al-QURAN-ICON.png', sizes: '192x192' }]
+              },
+              {
+                name: 'Tanya Ustaz AI',
+                short_name: 'Ustaz AI',
+                description: 'Chat dengan Ustaz AI',
+                url: '/smart-deen',
+                icons: [{ src: 'USTAZ-AI_ICON.png', sizes: '192x192' }]
               }
             ]
           },
