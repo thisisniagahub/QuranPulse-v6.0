@@ -107,33 +107,30 @@ const Layout: React.FC = () => {
             className="flex items-center gap-3 relative z-10 cursor-pointer group"
             aria-label="Go to Dashboard"
           >
-            {/* 3D Logo Concept */}
-            <div className="w-10 h-10 relative flex items-center justify-center">
-              <div className="absolute inset-0 bg-cyan-500 blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
-              <div className="relative w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl border border-white/10 shadow-inner flex items-center justify-center overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-50"></div>
-                {!imgError ? (
-                  <img
-                    src="/logo-full.png"
-                    alt="App Logo"
-                    className="w-7 h-7 object-contain drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)] z-10"
-                    onError={() => setImgError(true)}
-                  />
-                ) : (
-                  <div
-                    id="nav-logo-fallback"
-                    className="absolute inset-0 flex items-center justify-center text-cyan-500 font-black text-sm tracking-tighter"
-                  >
-                    QP
-                  </div>
-                )}
-              </div>
+            {/* Kufic Logo */}
+            <div className="w-12 h-12 relative flex items-center justify-center">
+              <div className="absolute inset-0 bg-primary blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+              {!imgError ? (
+                <img
+                  src="/logo-full.png"
+                  alt="Quran Pulse Logo"
+                  className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(90,185,255,0.5)] z-10 group-hover:scale-105 transition-transform"
+                  onError={() => setImgError(true)}
+                />
+              ) : (
+                <div
+                  id="nav-logo-fallback"
+                  className="w-full h-full rounded-xl bg-primary/20 border border-primary/50 flex items-center justify-center text-primary font-black text-lg"
+                >
+                  QP
+                </div>
+              )}
             </div>
             <div>
-                <h1 className="text-lg font-black tracking-tighter text-white leading-none">
-                    QURAN<span className="text-primary">PULSE</span>
+                <h1 className="text-xl font-black tracking-tight text-white leading-none">
+                    Quran <span className="text-primary">Pulse</span>
                 </h1>
-                <p className="text-[10px] text-white/50 font-medium tracking-widest uppercase">Verse Studio Edition</p>
+                <p className="text-[10px] text-primary/70 font-bold tracking-[0.2em] uppercase">Your Digital Companion</p>
             </div>
           </Link>
           

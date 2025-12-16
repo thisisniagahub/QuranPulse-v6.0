@@ -48,10 +48,13 @@ export const GlowFooter = () => {
           {/* Brand Column & Newsletter */}
           <div className="col-span-2">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-br from-slate-800 to-black rounded-xl border border-white/10 flex items-center justify-center overflow-hidden">
-                <img src="/logo-full.png" alt="QuranPulse" className="w-full h-full object-contain p-1" />
+              <div className="w-12 h-12 relative flex items-center justify-center group">
+                <div className="absolute inset-0 bg-primary blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                <img src="/logo-full.png" alt="Quran Pulse" className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_10px_rgba(90,185,255,0.5)]" />
               </div>
-              <span className="font-bold text-xl text-white">QuranPulse</span>
+              <span className="font-black text-xl">
+                <span className="text-white">Quran</span> <span className="text-primary">Pulse</span>
+              </span>
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-xs">
               The future of Islamic intelligence. Experience the Quran like never before with AI-powered insights.

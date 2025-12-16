@@ -121,12 +121,14 @@ export const Login = () => {
             className="w-full max-w-md bg-sheet/50 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-2xl relative z-10"
         >
             <div className="text-center mb-8">
-                <div className="w-20 h-20 bg-gradient-to-br from-surface-dark to-background-dark rounded-3xl border border-white/30 mx-auto flex items-center justify-center shadow-lg shadow-primary/20 mb-6 group relative overflow-hidden">
-                    <img src="/logo-full.png" alt="QP" className="w-12 h-12 object-contain relative z-10" />
-                    <div className="absolute inset-0 bg-primary/20 blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
+                <div className="w-24 h-24 mx-auto flex items-center justify-center mb-6 group relative">
+                    <div className="absolute inset-0 bg-primary blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                    <img src="/logo-full.png" alt="Quran Pulse" className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_15px_rgba(90,185,255,0.5)]" />
                 </div>
-                <h2 className="text-3xl font-bold text-white mb-2">Selamat Kembali</h2>
-                <p className="text-white/60 text-sm">Teruskan perjalanan rohani anda bersama QuranPulse.</p>
+                <h2 className="text-3xl font-black text-white mb-1">
+                    Quran <span className="text-primary">Pulse</span>
+                </h2>
+                <p className="text-white/60 text-sm">Teruskan perjalanan rohani anda.</p>
             </div>
 
             <form onSubmit={handleLogin} className="space-y-5">

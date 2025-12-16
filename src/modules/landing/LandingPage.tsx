@@ -61,11 +61,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       {/* --- NAVBAR --- */}
       <nav className="relative z-50 px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center w-full max-w-7xl mx-auto">
           <div className="flex items-center gap-3">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-slate-800 to-black rounded-xl border border-white/10 flex items-center justify-center shadow-lg shadow-cyan-900/20 group cursor-pointer overflow-hidden relative">
-                <img src="/logo-full.png" alt="QP" className="w-full h-full object-contain p-1 relative z-10" />
-                <div className="absolute inset-0 bg-cyan-500/20 blur-md opacity-0 group-hover:opacity-50 transition-opacity"></div>
+            <div className="w-10 h-10 sm:w-12 sm:h-12 relative flex items-center justify-center group cursor-pointer">
+                <div className="absolute inset-0 bg-primary blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+                <img src="/logo-full.png" alt="Quran Pulse" className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_10px_rgba(90,185,255,0.5)] group-hover:scale-105 transition-transform" />
             </div>
-            <span className="font-bold text-lg sm:text-xl tracking-tight text-slate-200">QuranPulse</span>
+            <span className="font-black text-lg sm:text-xl tracking-tight">
+                <span className="text-white">Quran</span> <span className="text-primary">Pulse</span>
+            </span>
           </div>
           
           <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">

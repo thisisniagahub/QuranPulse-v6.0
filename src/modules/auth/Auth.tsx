@@ -206,8 +206,8 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
              {/* The Logo Image */}
              <img 
                src="/logo-full.png" 
-               alt="QuranPulse" 
-               className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(0,191,165,0.3)] relative z-10 transform group-hover:scale-105 transition-transform duration-500 animate-pulse-glow"
+               alt="Quran Pulse" 
+               className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(90,185,255,0.4)] relative z-10 transform group-hover:scale-105 transition-transform duration-500"
                onError={(e) => {
                  e.currentTarget.style.display = 'none';
                  const fallback = document.getElementById('auth-fallback-logo');
@@ -215,13 +215,15 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
                }}
              />
              {/* Fallback if image fails */}
-             <div id="auth-fallback-logo" className="hidden w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary-dark items-center justify-center shadow-[0_0_25px_rgba(0,191,165,0.5)] absolute z-0 animate-pulse-glow">
+             <div id="auth-fallback-logo" className="hidden w-20 h-20 rounded-2xl bg-gradient-to-br from-primary to-primary-dark items-center justify-center shadow-[0_0_25px_rgba(90,185,255,0.5)] absolute z-0">
                 <i className="fa-solid fa-cube text-4xl text-white"></i>
              </div>
           </div>
 
-          <h2 className="text-4xl font-bold text-white mb-1 tracking-tight font-serif">QuranPulse</h2>
-          <p className="text-primary/80 text-xs font-bold tracking-[0.2em] uppercase">Genesis Master Edition</p>
+          <h2 className="text-4xl font-black text-white mb-1 tracking-tight">
+              Quran <span className="text-primary">Pulse</span>
+          </h2>
+          <p className="text-primary/80 text-xs font-bold tracking-[0.2em] uppercase">Your Digital Companion</p>
         </div>
 
         {/* Animated Tab Switcher */}
