@@ -232,19 +232,19 @@ interface AudioStandards {
 
 ---
 
-## 🤖 PART 4: AI & DATA INTELLIGENCE COMPLIANCE (MCP STANDARDS)
+## 🤖 PART 4: AI & DATA INTELLIGENCE COMPLIANCE (HYBRID VALIDATION)
 
-> **CRITICAL:** To prevent "AI Hallucinations" on religious matters, all AI Agents (Ustaz AI) MUST use **Model Context Protocol (MCP)** to fetch data from these specific OFFICIAL sources.
+> **CRITICAL:** To prevent "AI Hallucinations" on religious matters, all AI Agents (Ustaz AI) MUST use a **Hybrid Validation System** that combines a Strict System Prompt, Local Knowledge Base (Regex), and Trusted APIs.
 
 ### 4.1 Cluster A: Regulatory Compliance (The "Mufti" Layer)
 
-| Data Point | Official Source (Mandatory) | Allowable Sandbox/Fallback | Prohibited Sources |
+| Data Point | Official Source (Mandatory) | Implementation Method | Prohibited Sources |
 |:---|:---|:---|:---|
-| **Halal Status** | **JAKIM Halal Portal** (`halal.gov.my`) | Certified barcode databases (e.g., JomHalal) | Generic Google Search, Reddit, Blogs |
-| **Fatwa Rulings** | **E-Fatwa Portal** (`e-smaf.islam.gov.my`) | State Mufti Office Websites | Unverified religious forums, Twitter/X threads |
-| **Mosque Locations** | **Masjid Malaysia DB** (`masjid.islam.gov.my`) | Google Maps (Verified Listings Only) | - |
+| **Halal Status** | **JAKIM Halal Portal** | Local Regex / API Lookup | Generic Google Search |
+| **Fatwa Rulings** | **E-Fatwa Portal** | System Prompt Instruction | Unverified religious forums |
+| **Mosque Locations** | **Masjid Malaysia DB** | GeoJSON Static Data | - |
 
-**Compliance Rule:** *"If the AI cannot verify the status from the Official Source, it MUST state 'Status Unknown' rather than guessing."*
+**Compliance Rule:** *"If the AI cannot verify the status from the Official Source/Prompt, it MUST state 'Status Unknown' rather than guessing."*
 
 ### 4.2 Cluster B: Ibadah Precision (The "Muwakkit" Layer)
 

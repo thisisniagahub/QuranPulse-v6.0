@@ -189,7 +189,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                     {/* Dynamic Island / Notch */}
                     <div className="absolute top-0 left-1/2 -translate-x-1/2 h-6 sm:h-7 w-28 sm:w-32 bg-black rounded-b-2xl z-50 flex items-center justify-center">
                         <div className="w-14 sm:w-16 h-3 sm:h-4 bg-black rounded-full flex items-center justify-end px-2 gap-1">
-                             <div className={`w-1 h-1 rounded-full bg-green-500 ${isPlaying ? 'animate-ping' : ''}`}></div>
+                             <div className="w-1 h-1 rounded-full bg-green-500"></div>
                         </div>
                     </div>
 
@@ -330,7 +330,6 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                     {/* --- SCREEN: SMART DEEN AI --- */}
                     {activeScreen === 'smart-deen' && (
                         <div className="flex-1 flex flex-col animate-fade-in bg-[#050505] relative overflow-hidden">
-                            
                             {/* Maze Pattern Background */}
                             <div className="absolute top-0 left-0 w-full h-32 opacity-10 pointer-events-none z-0">
                                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">

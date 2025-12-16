@@ -147,39 +147,43 @@ graph LR
 
 ---
 
-## 4. 🧠 ARTIFICIAL INTELLIGENCE PIPELINE (RAG)
+## 4. 🧠 ARTIFICIAL INTELLIGENCE PIPELINE (Hybrid Ustaz AI 2.0)
 
-The "Ustaz AI" feature uses a **Retrieval-Augmented Generation (RAG)** pipeline.
+The "Ustaz AI" feature uses a **Hybrid Cloud Engine** for speed and reliability.
 
 ```mermaid
 sequenceDiagram
     participant User
     participant App as Client (PWA)
-    participant Vector as Vector DB (Fatwa/Quran)
-    participant LLM as Zhipu AI (GLM-4)
-    participant Guard as Shariah Guard (Regex/Filter)
+    participant Local as Local KB (Regex/JSON)
+    participant Cloud as Google Gemini (2.5 Flash)
+    participant TTS as ElevenLabs (Voice)
 
-    User->>App: "Hukum trade forex?"
+    User->>App: "Niat puasa?"
     
-    rect rgb(20, 20, 30)
-        Note right of App: PHASE 1: Retrieval
-        App->>Vector: Embedding Search (Cosine Similarity)
-        Vector-->>App: Returns: [Fatwa #123, Hadith #456]
-    end
-    
-    rect rgb(30, 20, 20)
-        Note right of App: PHASE 2: Augmentation
-        App->>LLM: Prompt + {Context: Fatwa #123}
-        LLM-->>App: Generated Draft Answer
-    end
-
-    rect rgb(20, 30, 20)
-        Note right of App: PHASE 3: Safety
-        App->>Guard: Check for Banned Keywords / Hallucinations
-        Guard-->>App: Status: SAFE
+    rect rgb(20, 40, 20)
+        Note right of App: PHASE 1: Local Check (Zero Latency)
+        App->>Local: Scan Keywords
+        alt Match Found
+            Local-->>App: Returns Hardcoded Answer
+            App->>User: Display Instant Answer
+        else No Match
+            rect rgb(40, 20, 20)
+                Note right of App: PHASE 2: Cloud Intelligence
+                App->>Cloud: Prompt + Context
+                Cloud-->>App: Generated Answer (Shafi'i/JAKIM)
+                App->>User: Display AI Answer
+            end
+        end
     end
 
-    App->>User: Display Answer + Source Citations
+    rect rgb(20, 20, 40)
+        Note right of App: PHASE 3: Vocalization
+        User->>App: Click Speaker
+        App->>TTS: Text-to-Speech Request
+        TTS-->>App: Neural Audio Stream
+        App->>User: Plays Voice
+    end
 ```
 
 ---
