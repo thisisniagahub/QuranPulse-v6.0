@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <rect x="40" y="40" width="688" height="944" fill="none" stroke="#000000" stroke-width="2"/>
+  
+  <text x="384" y="100" text-anchor="middle" font-size="48" font-family="Noto Naskh Arabic, serif" fill="#000000">إقرأ ٣</text>
+  <text x="384" y="150" text-anchor="middle" font-size="24" font-family="Noto Naskh Arabic, serif" fill="#333333">تدريب</text>
+  
+  <!-- Mixed harakat practice -->
+  <g font-family="Noto Naskh Arabic, serif" font-size="70" fill="#000000" text-anchor="middle">
+    <text x="180" y="280">بَ بِ بُ</text>
+    <text x="520" y="280">تَ تِ تُ</text>
+    
+    <text x="180" y="420">جَ جِ جُ</text>
+    <text x="520" y="420">دَ دِ دُ</text>
+    
+    <text x="180" y="560">رَ رِ رُ</text>
+    <text x="520" y="560">سَ سِ سُ</text>
+    
+    <text x="180" y="700">مَ مِ مُ</text>
+    <text x="520" y="700">نَ نِ نُ</text>
+  </g>
+  
+  <text x="384" y="850" text-anchor="middle" font-size="24" font-family="Noto Naskh Arabic, serif" fill="#000000">٤</text>
+  <text x="384" y="950" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#666666">بهان ڤمبلاجرن حروف هجائية - بوكن مصحف القرآن</text>
+</svg>

@@ -44,7 +44,7 @@
 | **Overall Readiness** | 🟡 70% |
 | **UI/UX Completion** | ✅ 90% |
 | **Backend Integration** | ⚠️ 50% |
-| **AI Wiring** | ⚠️ 40% |
+| **AI Wiring** | ✅ 100% |
 | **Monetization** | 🔴 10% |
 
 ---
@@ -72,7 +72,7 @@ A core strategic principle ensuring 100% free operation at scale:
 | Component | Traditional Approach | QuranPulse Approach |
 
 |-----------|---------------------|---------------------|
-| **AI Chatbot** | Paid LLM API (GPT-4) ~RM500+/mo | Zhipu AI Free Tier |
+| **AI Chatbot** | Paid LLM API (GPT-4) ~RM500+/mo | Google Gemini 2.5 Flash Free Tier |
 | **Database & Auth** | AWS RDS ~RM200+/mo | Supabase Free Tier |
 | **Hosting** | Vercel Pro ~RM80/mo | Static Free Tier |
 | **AI Voice** | Cloud Speech API ~RM300/mo | Client-side + Edge Functions |
@@ -216,7 +216,7 @@ Features are organized into three strategic tiers:
 - Links to official JAKIM/E-Fatwa sources
 - Conversation history
 - Multi-language support (BM, EN, AR)
-**Status:** ⚠️ 50% (UI complete, HybridEngine wiring pending)
+**Status:** ✅ Ready (Powered by Gemini 2.5 Flash)
 ### 4.3 TIER 2: Core Features
 
 | Feature | Description | Status | Completion |
@@ -504,25 +504,25 @@ QuranPulse uses a **3-Layer Hybrid AI Architecture** for optimal performance, pr
 ├─────────────────────────────────────────────────────────────────┤
 │  Layer 1: LOCAL (Browser-based)                                 │
 │  ┌─────────────────────────────────────────────────────────────┐│
-│  │ • Transformers.js (Whisper, embeddings)                     ││
-│  │ • Web Speech API (browser native)                           ││
+│  │ • Local Knowledge Base (Regex Matcher)                      ││
+│  │ • Web Speech API (TTS)                                      ││
 │  │ • Offline capable, zero latency                             ││
 │  │ • Privacy: Audio never leaves device                        ││
 │  └─────────────────────────────────────────────────────────────┘│
 ├─────────────────────────────────────────────────────────────────┤
 │  Layer 2: EDGE (Supabase Edge Functions)                        │
 │  ┌─────────────────────────────────────────────────────────────┐│
-│  │ • Zhipu AI API proxy (protected keys)                       ││
+│  │ • Authentication & User Data                                ││
 │  │ • Request validation & rate limiting                        ││
 │  │ • Response caching                                          ││
 │  │ • Key rotation for multiple free tier accounts              ││
 │  └─────────────────────────────────────────────────────────────┘│
 ├─────────────────────────────────────────────────────────────────┤
-│  Layer 3: CLOUD (Zhipu AI)                                      │
+│  Layer 3: CLOUD (Google AI)                                     │
 │  ┌─────────────────────────────────────────────────────────────┐│
-│  │ • GLM-4-Flash: Chat, Q&A (TanyaUstaz)                       ││
-│  │ • GLM-4.5V: Vision/OCR (Iqra Scan)                          ││
-│  │ • CogView-4: Image generation (Admin)                       ││
+│  │ • Gemini 2.5 Flash: Chat, Q&A (TanyaUstaz)                  ││
+│  │ • Gemini 1.5 Pro: Fallback Logic                            ││
+│  │ • ElevenLabs: Neural TTS (Ustaz Voice)                      ││
 │  │ • CogVideoX-3: Video generation (Admin)                     ││
 │  └─────────────────────────────────────────────────────────────┘│
 └─────────────────────────────────────────────────────────────────┘

@@ -1,0 +1,573 @@
+
+                Carian Hadith
+        
+    				239 Rekod Ditemui
+	
+    
+               
+       
+           .right_font {
+         text-align: right;
+            }
+               
+               
+               
+   
+  
+       
+ /*
+@font-face {
+    font-family:"Traditional Arabic";
+	 
+	src: url(arabic/fonts/trado.ttf) format("truetype");
+}
+
+#ArbText01 {
+    font-family:"Traditional Arabic";
+    font-size: 22px !important;
+    color:green;  
+  	text-align:justify;
+  	letter-spacing: 1.5px; 
+    content: "\f073"; 
+     
+}
+*/
+@font-face {
+   /* font-family:"Traditional Arabic";	 
+	src: url(arabic/fonts/trado.ttf) format("truetype");
+   */
+	font-family:"Kitab";
+	src: url(arabic/fonts/Kitab-Regular.ttf) format("truetype");
+}
+
+#ArbText01 {
+	src: url(arabic/fonts/Kitab-Regular.ttf) format("truetype");
+    font-family:"Kitab";
+ /* font-size: 22px !important; 
+    font-family:'Kitab';
+ */
+    color:green;  
+  	text-align:justify;
+  	letter-spacing: 1.5px; 
+    content: "\f073"; 
+	font-size:3.5vw;	 
+}
+
+#ArbText01content {
+	src: url(arabic/fonts/Kitab-Regular.ttf) format("truetype");
+    font-family:"Kitab";
+ /* font-size: 22px !important; 
+    font-family:'Kitab';
+ */
+    color:black;  
+  	text-align:justify;
+  	letter-spacing: 1.5px; 
+    content: "\f073"; 
+	font-size: 15px;	 
+}
+
+ 
+#ArbText02 {
+font-size: 15px; color:black;   
+text-align:justify;
+letter-spacing: 1.5px; 
+content: "\f073"; 
+font-family: sans-serif;
+}
+
+
+    
+               
+               
+                  
+                     1) Islam dididirikan di atas lima (landasan), dan Islam adalah perkataan dan perbuatan yang bertambah dan berkurang.
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا عُبَيْدُ اللَّهِ بْنُ مُوسَى قَالَ أَخْبَرَنَا حَنْظَلَةُ بْنُ أَبِي سُفْيَانَ عَنْ عِكْرِمَةَ بْنِ خَالِدٍ عَنْ ابْنِ عُمَرَ رَضِيَ اللَّهُ عَنْهُمَا قَالَ قَالَ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ بُنِيَ الْإِسْلَامُ عَلَى خَمْسٍ شَهَادَةِ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ وَإِقَامِ الصَّلَاةِ وَإِيتَاءِ الزَّكَاةِ وَالْحَجِّ وَصَوْمِ رَمَضَانَ 
+					 
+                     
+                     
+                   
+                    Abdullah bin Musa telah menceritakan kepada kami Hanzhalah bin Abu Sufyan telah mengkhabarkan kepada kami daripada 'Ikrimah bin Khalid daripada Ibnu Umar berkata: Rasulullah SAW bersabda: "Islam dibangun di atas lima (landasan); penyaksian tidak ada tuhan selain Allah dan sesungguhnya Muhammad utusan Allah, mendirikan Solat, menunaikan zakat, haji dan puasa Ramadlan".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     2) Tentang perkara-perkara iman
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا عَبْدُ اللَّهِ بْنُ مُحَمَّدٍ الْجُعْفِيُّ قَالَ حَدَّثَنَا أَبُو عَامِرٍ الْعَقَدِيُّ قَالَ حَدَّثَنَا سُلَيْمَانُ بْنُ بِلَالٍ عَنْ عَبْدِ اللَّهِ بْنِ دِينَارٍ عَنْ أَبِي صَالِحٍ عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْه
+ 
+عَنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ قَالَ الْإِيمَانُ بِضْعٌ وَسِتُّونَ شُعْبَةً وَالْحَيَاءُ شُعْبَةٌ مِنْ الْإِيمَانِ 
+					 
+                     
+                     
+                   
+                    Abdullah bin Muhammad Al Ju'fi telah menceritakan kepada kami Abu 'Amir Al 'Aqadi telah menceritakan kepada kami Sulaiman bin Bilal telah menceritakan kepada kami daripada Abdullah bin Dinar daripada Abu Shalih daripada Abu Hurairah daripada Nabi SAW 'alaihi wasallam, beliau bersabda: "Iman mempunyai lebih daripada enam puluh cabang, dan malu adalah sebahagian daripada iman".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     3) Seorang muslim adalah orang yang kaum muslimin selamat daripada lisan dan tangannya
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا آدَمُ بْنُ أَبِي إِيَاسٍ قَالَ حَدَّثَنَا شُعْبَةُ عَنْ عَبْدِ اللَّهِ بْنِ أَبِي السَّفَرِ وَإِسْمَاعِيلَ بْنِ أَبِي خَالِدٍ عَنْ الشَّعْبِيِّ عَنْ عَبْدِ اللَّهِ بْنِ عَمْرٍو رَضِيَ اللَّهُ عَنْهُمَا
+عَنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ قَالَ الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ وَالْمُهَاجِرُ مَنْ هَجَرَ مَا نَهَى اللَّهُ عَنْهُ
+قَالَ أَبُو عَبْد اللَّهِ وَقَالَ أَبُو مُعَاوِيَةَ حَدَّثَنَا دَاوُدُ هُوَ ابْنُ أَبِي هِنْدٍ عَنْ عَامِرٍ قَالَ سَمِعْتُ عَبْدَ اللَّهِ يَعْنِي ابْنَ عَمْرٍو عَنْ النَّبِيِّ صَلَّى اللَّهُ
+ 
+عَلَيْهِ وَسَلَّمَ وَقَالَ عَبْدُ الْأَعْلَى عَنْ دَاوُدَ عَنْ عَامِرٍ عَنْ عَبْدِ اللَّهِ عَنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ 
+					 
+                     
+                     
+                   
+                    Adam bin Abu Iyas telah menceritakan kepada kami Syu'bah telah menceritakan kepada kami daripada Abdullah bin Abu As Safar dan Isma'il bin Abu Khalid daripada As Sya'bi daripada Abdullah bin 'Amru daripada Nabi SAW bersabda: "Seorang muslim ialah mereka yang selamatkan Muslimin yang lain daripada kecelakaan lidah dan tangannya, dan seorang Muhajir adalah orang yang meninggalkan apa yang dilarang oleh Allah " Abu Abdullah berkata; dan Abu Mu'awiyyah berkata; Daud, telah menceritakan kepada kami dia adalah anak Ibnu Hind, daripada 'Amir berkata; aku mendengar Abdullah bersabda, maksudnya ibnu 'Amru, daripada Nabi SAW Dan berkata Abdul A'laa daripada Daud daripada 'Amir daripada Abdullah daripada Nabi SAW 'alaihi wasallam                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     4) Amalan Islam apakah yang paling utama?
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا سَعِيدُ بْنُ يَحْيَى بْنِ سَعِيدٍ الْقُرَشِيُّ قَالَ حَدَّثَنَا أَبِي قَالَ حَدَّثَنَا أَبُو بُرْدَةَ بْنُ عَبْدِ اللَّهِ بْنِ أَبِي بُرْدَةَ عَنْ أَبِي بُرْدَةَ عَنْ أَبِي مُوسَى رَضِيَ اللَّهُ عَنْهُ قَالَ
+ 
+قَالُوا يَا رَسُولَ اللَّهِ أَيُّ الْإِسْلَامِ أَفْضَلُ قَالَ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ 
+					 
+                     
+                     
+                   
+                    Sa'id bin Yahya bin Sa'id Al Qurasyi telah menceritakan kepada kami bapakku telah menceritakan kepada kami Abu Burdah bin Abdullah bin Abu Burdah telah menceritakan kepada kami daripada Abu Burdah daripada Abu Musa berkata: 'Wahai Rasulullah, Islam manakah yang paling utama?" Rasulullah SAW menjawab: "Sesiapa yang orang Muslimin selamat daripada lisan dan tangannya".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     5) Memberi makan sebahagian daripada Islam
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا عَمْرُو بْنُ خَالِدٍ قَالَ حَدَّثَنَا اللَّيْثُ عَنْ يَزِيدَ عَنْ أَبِي الْخَيْرِ عَنْ عَبْدِ اللَّهِ بْنِ عَمْرٍو رَضِيَ اللَّهُ عَنْهُمَا أَنَّ رَجُلًا سَأَلَ النَّبِيَّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ أَيُّ الْإِسْلَامِ خَيْرٌ قَالَ تُطْعِمُ الطَّعَامَ وَتَقْرَأُ السَّلَامَ عَلَى مَنْ عَرَفْتَ وَمَنْ لَمْ تَعْرِفْ 
+					 
+                     
+                     
+                   
+                    Amru bin Khalid telah menceritakan kepada kami Al Laith telah menceritakan kepada kami daripada Yazid daripada Abu Al Khair daripada Abdullah bin 'Amru; Ada seseorang yang bertanya kepada Nabi SAW; "Islam manakah yang paling baik?" Nabi SAW menjawab: "Kamu memberi makan, mengucapkan salam kepada orang yang kamu kenal dan yang tidak kamu kenal".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     6) Sebahagian daripada iman hendaknya mencintai untuk saudaranya sebagaimana dia mencintai untuk dirinya sendiri
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا مُسَدَّدٌ قَالَ حَدَّثَنَا يَحْيَى عَنْ شُعْبَةَ عَنْ قَتَادَةَ عَنْ أَنَسٍ رَضِيَ اللَّهُ عَنْهُ عَنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ وَعَنْ حُسَيْنٍ الْمُعَلِّمِ قَالَ حَدَّثَنَا قَتَادَةُ عَنْ أَنَسٍ عَنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ قَالَ لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ 
+					 
+                     
+                     
+                   
+                    Musaddad telah menceritakan kepada kami Yahya telah menceritakan kepada kami daripada Syu'bah daripada Qatadah daripada Anas daripada Nabi SAW Dan daripada Husain Al Mu'alim Qatadah telah menceritakan kepada kami daripada Anas daripada Nabi SAW beliau bersabda: "Tidak beriman seseorang daripada kamu sehingga dia mencintai saudaranya sebagaimana dia mencintai dirinya sendiri".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     7) Mencintai Rasulullah  adalah sebahagian daripada iman
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا أَبُو الْيَمَانِ قَالَ أَخْبَرَنَا شُعَيْبٌ قَالَ حَدَّثَنَا أَبُو الزِّنَادِ عَنْ الْأَعْرَجِ عَنْ أَبِي هُرَيْرَةَ رَضِيَ اللَّهُ عَنْهُ أَنَّ رَسُولَ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ قَالَ فَوَالَّذِي نَفْسِي بِيَدِهِ لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى أَكُونَ أَحَبَّ إِلَيْهِ مِنْ وَالِدِهِ وَوَلَدِهِ 
+					 
+                     
+                     
+                   
+                    Abu Al Yaman telah menceritakan kepada kami Syu'aib telah mengkhabarkan kepada kami Abu Az Zanad telah menceritakan kepada kami daripada Al A'raj daripada Abu Hurairah, bahawa Rasulullah SAW bersabda: "Demi dzat yang jiwaku di tangan-Nya, tidaklah beriman seorang daripada kamu sehingga aku lebih dicintainya daripada orang tua dan anaknya".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     8) Mencintai Rasulullah sebahagian daripada iman
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا يَعْقُوبُ بْنُ إِبْرَاهِيمَ قَالَ حَدَّثَنَا ابْنُ عُلَيَّةَ عَنْ عَبْدِ الْعَزِيزِ بْنِ صُهَيْبٍ عَنْ أَنَسٍ عَنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ ح و َدَّثَنَا آدَمُ قَالَ حَدَّثَنَا شُعْبَةُ عَنْ قَتَادَةَ عَنْ أَنَسٍ قَالَ قَالَ النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى أَكُونَ أَحَبَّ إِلَيْهِ مِنْ وَالِدِهِ وَوَلَدِهِ وَالنَّاسِ أَجْمَعِينَ 
+					 
+                     
+                     
+                   
+                    Ya'qub bin Ibrahim telah menceritakan kepada kami Ibnu 'Ulayyah telah menceritakan kepada kami daripada Abdul 'Aziz bin Shuhaib daripada Anas daripada Nabi SAW Dan Adam telah menceritakan pula kepada kami Syu'bah telah menceritakan kepada kami daripada Qatadah daripada Anas Nabi SAW bersabda: "Tidak beriman seorang daripada kamu hingga aku lebih dicintainya daripada orang tuanya, anaknya dan semua manusia".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     9) Manisnya iman
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا مُحَمَّدُ بْنُ الْمُثَنَّى قَالَ حَدَّثَنَا عَبْدُ الْوَهَّابِ الثَّقَفِيُّ قَالَ حَدَّثَنَا أَيُّوبُ عَنْ أَبِي قِلَابَةَ عَنْ أَنَسِ بْنِ مَالِكٍ رَضِيَ اللَّهُ عَنْهُ عَنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ قَالَ ثَلَاثٌ مَنْ كُنَّ فِيهِ وَجَدَ حَلَاوَةَ الْإِيمَانِ أَنْ يَكُونَ اللَّهُ وَرَسُولُهُ أَحَبَّ إِلَيْهِ مِمَّا سِوَاهُمَا وَأَنْ يُحِبَّ الْمَرْءَ لَا يُحِبُّهُ إِلَّا لِلَّهِ وَأَنْ يَكْرَهَ أَنْ يَعُودَ فِي الْكُفْرِ كَمَا يَكْرَهُ أَنْ يُقْذَفَ فِي النَّارِ 
+					 
+                     
+                     
+                   
+                    Muhammad bin Al Mutsanna telah menceritakan kepada kami Abdul Wahhab At Thaqafi telah menceritakan kepada kami Ayyub telah menceritakan kepada kami daripada Abu Qilabah daripada Anas bin Malik daripada Nabi SAW beliau bersabda: "Tiga perkara apabila ada pada diri seseorang, ia akan mendapat  kemanisan iman: Allah dan Rasul-Nya lebih dicintainya daripada selain keduanya. Jika ia mencintai seseorang, dia tidak mencintainya kecuali kerana Allah. Dan dia benci kembali kepada kekufuran seperti dia benci bila dilempar ke dalam neraka"                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     10) Metod penyerahan surat ahli ilmu ke berbagai negeri
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا إِسْمَاعِيلُ بْنُ عَبْدِ اللَّهِ قَالَ حَدَّثَنِي إِبْرَاهِيمُ بْنُ سَعْدٍ عَنْ صَالِحٍ عَنْ ابْنِ شِهَابٍ عَنْ عُبَيْدِ اللَّهِ بْنِ عَبْدِ اللَّهِ بْنِ عُتْبَةَ بْنِ مَسْعُودٍ أَنَّ عَبْدَ اللَّهِ بْنَ عَبَّاسٍ أَخْبَرَهُ أَنَّ رَسُولَ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ بَعَثَ بِكِتَابِهِ رَجُلًا وَأَمَرَهُ أَنْ يَدْفَعَهُ إِلَى عَظِيمِ الْبَحْرَيْنِ فَدَفَعَهُ عَظِيمُ الْبَحْرَيْنِ إِلَى كِسْرَى فَلَمَّا قَرَأَهُ مَزَّقَهُ فَحَسِبْتُ أَنَّ ابْنَ الْمُسَيَّبِ قَالَ فَدَعَا عَلَيْهِمْ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ أَنْ يُمَزَّقُوا كُلَّ مُمَزَّقٍ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 62) : Isma'il bin Abdullah telah menceritakan kepada kami Ibrahim bin Sa'd telah menceritakan kepadaku daripada Salih daripada Ibnu Syihab daripada Ubaidullah bin Abdullah bin Utbah bin Mas'ud bahawa Abdullah bin 'Abbas telah mengkhabarkan, bahawa Nabi SAW telah mengutus seseorang dengan membawa surat dan memerintahkan kepadanya untuk memberikan surat tersebut kepada Pemimpin Bahrain. Lalu Pemimpin Bahrain itu memberikannya kepada Kisra. Tatkala dibaca, surat itu dikoyaknya. Aku beranggapan kemudian Ibnu Musayyab berkata; lalu Rasulullah SAW berdoa agar mereka (kekuasaannya) dirobek-robek sehancur-hancurnya.                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     11) Metod penyerahan surat ahli ilmu ke berbagai negeri
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا مُحَمَّدُ بْنُ مُقَاتِلٍ أَبُو الْحَسَنِ الْمَرْوَزِيُّ أَخْبَرَنَا عَبْدُ اللَّهِ قَالَ أَخْبَرَنَا شُعْبَةُ عَنْ قَتَادَةَ عَنْ أَنَسِ بْنِ مَالِكٍ قَالَ كَتَبَ النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ كِتَابًا أَوْ أَرَادَ أَنْ يَكْتُبَ فَقِيلَ لَهُ إِنَّهُمْ لَا يَقْرَءُونَ كِتَابًا إِلَّا مَخْتُومًا فَاتَّخَذَ خَاتَمًا مِنْ فِضَّةٍ نَقْشُهُ مُحَمَّدٌ رَسُولُ اللَّهِ كَأَنِّي أَنْظُرُ إِلَى بَيَاضِهِ فِي يَدِهِ فَقُلْتُ لِقَتَادَةَ مَنْ قَالَ نَقْشُهُ مُحَمَّدٌ رَسُولُ اللَّهِ قَالَ أَنَسٌ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 63) : Muhammad bin Muqotil Abu Al Hasan Al Marwazi telah menceritakan kepada kami Abdullah telah mengkhabarkan kepada kami , Syu'bah telah mengkhabarkan kepada kami daripada Qotadah daripada Anas bin Malik berkata: Nabi SAW menulis surat atau bermaksud menulis surat, lalu dikatakan kepada Beliau, bahawa mereka tidak akan membaca tulisan kecuali surat yang dicop. Maka Nabi SAW membuat cop yang dibuat daripada perak yang bertanda; Muhammad Rasulullah. Seakan-akan aku melihat warna putih pada tangan Beliau SAW ". Lalu aku bertanya kepada Qatadah: "Siapa yang membuat tanda Muhammad Rasulullah?" Jawabnya: "Anas".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     12) Siapa yang duduk di belakang dalam suatu majelis
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا إِسْمَاعِيلُ قَالَ حَدَّثَنِي مَالِكٌ عَنْ إِسْحَاقَ بْنِ عَبْدِ اللَّهِ بْنِ أَبِي طَلْحَةَ أَنَّ أَبَا مُرَّةَ مَوْلَى عَقِيلِ بْنِ أَبِي طَالِبٍ أَخْبَرَهُ عَنْ أَبِي وَاقِدٍ اللَّيْثِيِّ أَنَّ رَسُولَ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ بَيْنَمَا هُوَ جَالِسٌ فِي الْمَسْجِدِ وَالنَّاسُ مَعَهُ إِذْ أَقْبَلَ ثَلَاثَةُ نَفَرٍ فَأَقْبَلَ اثْنَانِ إِلَى رَسُولِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ وَذَهَبَ وَاحِدٌ قَالَ فَوَقَفَا عَلَى رَسُولِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ فَأَمَّا أَحَدُهُمَا فَرَأَى فُرْجَةً فِي الْحَلْقَةِ فَجَلَسَ فِيهَا وَأَمَّا الْآخَرُ فَجَلَسَ خَلْفَهُمْ وَأَمَّا الثَّالِثُ فَأَدْبَرَ ذَاهِبًا فَلَمَّا فَرَغَ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ قَالَ أَلَا أُخْبِرُكُمْ عَنْ النَّفَرِ الثَّلَاثَةِ أَمَّا أَحَدُهُمْ فَأَوَى إِلَى اللَّهِ فَآوَاهُ اللَّهُ وَأَمَّا الْآخَرُ فَاسْتَحْيَا فَاسْتَحْيَا اللَّهُ مِنْهُ وَأَمَّا الْآخَرُ فَأَعْرَضَ فَأَعْرَضَ اللَّهُ عَنْهُ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 64) : Isma'il telah menceritakan kepada kami Malik telah menceritakan kepadaku daripada Ishaq bin Abdullah bin Abu Thalhah bahawa Abu Murrah -hamba Uqail bin Abu Thalib sebelum ini-, mengkhabarkan kepadanya daripada Abu Waqid Al Laithi, bahawa Rasulullah SAW ketika sedang duduk di dalam Masjid bersama para sahabat datanglah tiga orang. Dua orang menghadap Nabi SAW dan yang seorang lagi pergi, yang dua orang terus duduk bersama Nabi SAW di mana satu di antaranya nampak bahagia bersama Nabi SAW sedang yang kedua duduk di belakang mereka, sedang yang ketiga beredar pergi, Setelah Rasulullah SAW selesai dalam majlis, Beliau bersabda: "Mahukah aku beritahu kamu semua tentang tiga orang tadi?" Adapun seorang di antara mereka, dia meminta perlindungan kepada Allah, maka Allah lindungi dia. Yang kedua, dia malu kepada Allah, maka Allah pun malu kepadanya. Sedangkan yang ketiga berpaling daripada Allah maka Allah pun berpaling daripadanya".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     13) Sabda Nabi SAW: "Berapa banyak orang yang hanya mendapat penyampaian lebih faham dibanding orang yang mendengarnya langsung
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا مُسَدَّدٌ قَالَ حَدَّثَنَا بِشْرٌ قَالَ حَدَّثَنَا ابْنُ عَوْنٍ عَنْ ابْنِ سِيرِينَ عَنْ عَبْدِ الرَّحْمَنِ بْنِ أَبِي بَكْرَةَ عَنْ أَبِيهِ ذَكَرَ النَّبِيَّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ قَعَدَ عَلَى بَعِيرِهِ وَأَمْسَكَ إِنْسَانٌ بِخِطَامِهِ أَوْ بِزِمَامِهِ قَالَ أَيُّ يَوْمٍ هَذَا فَسَكَتْنَا حَتَّى ظَنَنَّا أَنَّهُ سَيُسَمِّيهِ سِوَى اسْمِهِ قَالَ أَلَيْسَ يَوْمَ النَّحْرِ قُلْنَا بَلَى قَالَ فَأَيُّ شَهْرٍ هَذَا فَسَكَتْنَا حَتَّى ظَنَنَّا أَنَّهُ سَيُسَمِّيهِ بِغَيْرِ اسْمِهِ فَقَالَ أَلَيْسَ بِذِي الْحِجَّةِ قُلْنَا بَلَى قَالَ فَإِنَّ دِمَاءَكُمْ وَأَمْوَالَكُمْ وَأَعْرَاضَكُمْ بَيْنَكُمْ حَرَامٌ كَحُرْمَةِ يَوْمِكُمْ هَذَا فِي شَهْرِكُمْ هَذَا فِي بَلَدِكُمْ هَذَا لِيُبَلِّغ الشَّاهِدُ الْغَائِبَ فَإِنَّ الشَّاهِدَ عَسَى أَنْ يُبَلِّغَ مَنْ هُوَ أَوْعَى لَهُ مِنْهُ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 65) : Musaddad telah menceritakan kepada kami berkata, Bisyir telah menceritakan kepada kami, Ibnu 'Aun telah menceritakan kepada kami daripada Ibnu Sirin daripada Abdul Rahman bin Abu Bakrah daripada bapanya, dia menyebut, bahawa Nabi SAW duduk di atas untanya sementara seorang memegang tali unta tersebut. Baginda berkata: "Hari apakah ini? '. Kami semua terdiam dan menyangka bahawa Beliau akan menamakan nama lain selain nama hari yang sudah dikenal. Baginda SAW berkata: "Bukankah hari ini hari Nahar?" Kami menjawab: "Benar". Nabi SAW bertanya: "Bulan apakah ini? '. Kami semua terdiam dan menyangka bahawa Baginda akan menamakan nama lain selain nama bulan yang sudah dikenali. Baginda SAW berkata: "Bukankah ini bulan Dzul Hijjah?" Kami menjawab: "Benar". Nabi SAW bersabda: "Sesungguhnya darah kamu semua, harta kamu semua dan kehormatan kamu semua sesama kamu semua haram (suci) sebagaimana sucinya hari kamu semua ini, bulan kamu semua ini dan tanah kamu semua ini. (Maka) hendaklah yang hadir menyampaikan kepada yang tidak hadir, kerana orang yang hadir semoga dapat menyampaikan kepada orang yang lebih faham daripadanya".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     14) Nabi SAW  memilih waktu yang tepat ketika memberi nasihat
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا مُحَمَّدُ بْنُ يُوسُفَ قَالَ أَخْبَرَنَا سُفْيَانُ عَنْ الْأَعْمَشِ عَنْ أَبِي وَائِلٍ عَنْ ابْنِ مَسْعُودٍ قَالَ كَانَ النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يَتَخَوَّلُنَا بِالْمَوْعِظَةِ فِي الْأَيَّامِ كَرَاهَةَ السَّآمَةِ عَلَيْنَا 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 66) : telah menceritakan kepada kami Muhammad bin Yusuf berkata, telah mengkhabarkan kepada kami Sufyan daripada Al A'masy daripada Abu Wa'il daripada Ibnu Mas'ud berkata; bahawa Nabi SAW suka memilih hari-hari yang tepat dalam memberikan pelajaran, supaya kami tidak merasa bosan.                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     15) Nabi SAW  memilih waktu yang tepat ketika memberi nasihat
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا مُحَمَّدُ بْنُ بَشَّارٍ قَالَ حَدَّثَنَا يَحْيَى بْنُ سَعِيدٍ قَالَ حَدَّثَنَا شُعْبَةُ قَالَ حَدَّثَنِي أَبُو التَّيَّاحِ عَنْ أَنَسِ بْنِ مَالِكٍ عَنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ قَالَ يَسِّرُوا وَلَا تُعَسِّرُوا وَبَشِّرُوا وَلَا تُنَفِّرُوا 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 67) : Muhammad bin Basysyar telah menceritakan kepada kami Yahya bin Sa'id telah menceritakan kepada kami Syu'bah telah menceritakan kepada kami  Abu At Tayyah Telah menceritakan kepadaku daripada Anas bin Malik daripada Nabi SAW, baginda bersabda: " Permudahkanlah dan jangan menyusahkan, berilah khabar gembira dan jangan buat orang lari menjauh."                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     16) Orang yang menyediakan hari-hari khusus untuk bermulazamah dengan para ulama
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا عُثْمَانُ بْنُ أَبِي شَيْبَةَ قَالَ حَدَّثَنَا جَرِيرٌ عَنْ مَنْصُورٍ عَنْ أَبِي وَائِلٍ قَالَ كَانَ عَبْدُ اللَّهِ يُذَكِّرُ النَّاسَ فِي كُلِّ خَمِيسٍ فَقَالَ لَهُ رَجُلٌ يَا أَبَا عَبْدِ الرَّحْمَنِ لَوَدِدْتُ أَنَّكَ ذَكَّرْتَنَا كُلَّ يَوْمٍ قَالَ أَمَا إِنَّهُ يَمْنَعُنِي مِنْ ذَلِكَ أَنِّي أَكْرَهُ أَنْ أُمِلَّكُمْ وَإِنِّي أَتَخَوَّلُكُمْ بِالْمَوْعِظَةِ كَمَا كَانَ النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يَتَخَوَّلُنَا بِهَا مَخَافَةَ السَّآمَةِ عَلَيْنَا 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 68) : Uthman bin Abu Syaibah telah menceritakan kepada kami Jarir telah menceritakan kepada kami daripada Mansur daripada Abu Wa'il bahawa Abdullah memberi pelajaran kepada orang ramai pada setiap hari Khamis, kemudian seorang lelaki berkata: "Wahai Abu Abdul Rahman, sesungguhnya aku ingin kalau tuan dapat memberikan peringatan kepada kami setiap hari" beliau berkata: "Sesungguhnya aku enggan melakukannya, kerana aku takut membuat kamu semua bosan, dan aku ingin memberi peringatan kepada kamu semua sebagaimana Nabi SAW memberi pelajaran kepada kami kerana khawatir kami akan bosan ".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     17) Siapa yang dikehendaki baik oleh Allah, maka Allah memberi kefahaman tentang agama
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا سَعِيدُ بْنُ عُفَيْرٍ قَالَ حَدَّثَنَا ابْنُ وَهْبٍ عَنْ يُونُسَ عَنْ ابْنِ شِهَابٍ قَالَ قَالَ حُمَيْدُ بْنُ عَبْدِ الرَّحْمَنِ سَمِعْتُ مُعَاوِيَةَ خَطِيبًا يَقُولُ سَمِعْتُ النَّبِيَّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يَقُولُ مَنْ يُرِدْ اللَّهُ بِهِ خَيْرًا يُفَقِّهْهُ فِي الدِّينِ وَإِنَّمَا أَنَا قَاسِمٌ وَاللَّهُ يُعْطِي وَلَنْ تَزَالَ هَذِهِ الْأُمَّةُ  قَائِمَةً عَلَى أَمْرِ اللَّهِ لَا يَضُرُّهُمْ مَنْ خَالَفَهُمْ حَتَّى يَأْتِيَ أَمْرُ اللَّهِ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 69) : Sa'id bin 'Ufair telah menceritakan kepada kami Ibnu Wahab telah menceritakan kepada kami daripada Yunus daripada Ibnu Syihab berkata, Humaid bin Abdul Rahman berkata; aku mendengar Mu'awiyyah memberi khutbah untuk kami, dia berkata; Aku mendengar Nabi SAW bersabda: "Barangsiapa yang Allah kehendaki menjadi baik maka Allah faqihkan dia dalam agama. Aku hanyalah orang yang mengagih sedang Allah yang memberi. Dan umat ini sentiasa akan tegak di atas perintah Allah, mereka tidak akan celaka kerana adanya orang-orang yang tidak sependapat dengan mereka sehingga datang keputusan Allah".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     18) Memahami ilmu
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا عَلِيُّ بْنُ عَبْدِ اللَّهِ حَدَّثَنَا سُفْيَانُ قَالَ قَالَ لِي ابْنُ أَبِي نَجِيحٍ عَنْ مُجَاهِدٍ قَالَ صَحِبْتُ ابْنَ عُمَرَ إِلَى الْمَدِينَةِ فَلَمْ أَسْمَعْهُ يُحَدِّثُ عَنْ رَسُولِ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ إِلَّا حَدِيثًا وَاحِدًا قَالَ كُنَّا عِنْدَ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ فَأُتِيَ بِجُمَّارٍ فَقَالَ إِنَّ مِنْ الشَّجَرِ شَجَرَةً مَثَلُهَا كَمَثَلِ الْمُسْلِمِ فَأَرَدْتُ أَنْ أَقُولَ هِيَ النَّخْلَةُ فَإِذَا أَنَا أَصْغَرُ الْقَوْمِ فَسَكَتُّ قَالَ النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ هِيَ النَّخْلَةُ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 70) : Ali bin Abdullah telah menceritakan kepada kami Sufyan telah menceritakan kepada kami berkata, Abu Najih telah berkata kepadaku Ibnu daripada Mujahid berkata; aku pernah menemani Ibnu Umar pergi ke Madinah, namun aku tidak mendengar dia bercakap tentang Rasulullah SAW kecuali satu kejadian di mana dia berkata: Kami pernah bersama Nabi SAW lalu Beliau berikan biji tamar. Kemudian Beliau bersabda: "Sesungguhnya di antara pohon ada satu pohon yang merupakan perumpamaan bagi seorang muslim". Aku ingin memberitahu bahawa itu adalah pohon kurma namun kerana aku yang termuda maka aku diam. Maka kemudian Nabi SAW bersabda: "Itu adalah pohon kurma".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     19) Tekun dalam mencari ilmu dan hikmah
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا الْحُمَيْدِيُّ قَالَ حَدَّثَنَا سُفْيَانُ قَالَ حَدَّثَنِي إِسْمَاعِيلُ بْنُ أَبِي خَالِدٍ عَلَى غَيْرِ مَا حَدَّثَنَاهُ الزُّهْرِيُّ قَالَ سَمِعْتُ قَيْسَ بْنَ أَبِي حَازِمٍ قَالَ سَمِعْتُ عَبْدَ اللَّهِ بْنَ مَسْعُودٍ قَالَ قَالَ النَّبِيُّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ لَا حَسَدَ إِلَّا فِي اثْنَتَيْنِ رَجُلٌ آتَاهُ اللَّهُ مَالًا فَسُلِّطَ عَلَى هَلَكَتِهِ فِي الْحَقِّ وَرَجُلٌ آتَاهُ اللَّهُ الْحِكْمَةَ فَهُوَ يَقْضِي بِهَا وَيُعَلِّمُهَا 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 71) : Al Humaidi telah menceritakan kepada kami berkata, Sufyan telah menceritakan kepada kami Isma'il bin Abu Khalid telah menceritakan kepadaku -dengan lafaz hadith yang lain daripada yang dia ceritakan kepada kami daripada Az Zuhri- berkata; aku mendengar Qais bin Abu Hazim berkata; aku mendengar Abdullah bin Mas'ud berkata; Nabi SAW bersabda: "Tidak boleh berdengki kecuali terhadap dua perkara; (terhadap) seorang yang Allah berikan harta lalu dia pergunakan harta tersebut di jalan kebenaran dan seseorang yang Allah berikan hikmah lalu dia mengamalkan dan mengajarkannya kepada orang lain".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     20) Sabda Nabi SAW: "Ya Allah! Ajarkanlah dia al-Kitab"
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا أَبُو مَعْمَرٍ قَالَ حَدَّثَنَا عَبْدُ الْوَارِثِ قَالَ حَدَّثَنَا خَالِدٌ عَنْ عِكْرِمَةَ عَنْ ابْنِ عَبَّاسٍ قَالَ ضَمَّنِي رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ وَقَالَ اللَّهُمَّ عَلِّمْهُ الْكِتَابَ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 73): Abu Ma'mar telah menceritakan kepada kami berkata, Abdul Warith telah menceritakan kepada kami berkata, Khalid telah menceritakan kepada kami daripada 'Ikrimah daripada Ibnu 'Abbas berkata: Pada suatu hari Rasulullah SAW berada di sampingku lalu bersabda: "Ya Allah, ajarkanlah dia Kitab".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     21) Bila dibolehkan mendengarkan pendapat anak kecil
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا إِسْمَاعِيلُ بْنُ أَبِي أُوَيْسٍ قَالَ حَدَّثَنِي مَالِكٌ عَنْ ابْنِ شِهَابٍ عَنْ عُبَيْدِ اللَّهِ بْنِ عَبْدِ اللَّهِ بْنِ عُتْبَةَ عَنْ عَبْدِ اللَّهِ بْنِ عَبَّاسٍ قَالَ أَقْبَلْتُ رَاكِبًا عَلَى حِمَارٍ أَتَانٍ وَأَنَا يَوْمَئِذٍ قَدْ نَاهَزْتُ الِاحْتِلَامَ وَرَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يُصَلِّي بِمِنًى إِلَى غَيْرِ جِدَارٍ فَمَرَرْتُ بَيْنَ يَدَيْ بَعْضِ الصَّفِّ وَأَرْسَلْتُ الْأَتَانَ تَرْتَعُ فَدَخَلْتُ فِي الصَّفِّ فَلَمْ يُنْكَرْ ذَلِكَ عَلَيَّ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 74) : Isma'il bin Abu Uwais telah menceritakan kepada kami berkata Malik telah menceritakan kepadaku daripada Ibnu Syihab daripada 'Ubaidullah bin Abdullah bin 'Utbah daripada Abdullah bin 'Abbas berkata; aku datang dengan menunggang keldai betina, ketika itu aku hampir menginjak masa baligh, dan Rasulullah sedang solat di Mina dengan tidak menghadap ke dinding. Maka aku melintasi depan sebahagian saf kemudian aku melepaskan keledai betina itu supaya mencari makan sesukanya. Lalu aku masuk kembali di tengah saf dan tidak ada orang yang menyalahkanku".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     22) Bila dibolehkan mendengarkan pendapat anak kecil
+                       
+                 
+                      
+                    
+						  حَدَّثَنِي مُحَمَّدُ بْنُ يُوسُفَ قَالَ حَدَّثَنَا أَبُو مُسْهِرٍ قَالَ حَدَّثَنِي مُحَمَّدُ بْنُ حَرْبٍ حَدَّثَنِي الزُّبَيْدِيُّ عَنْ الزُّهْرِيِّ عَنْ مَحْمُودِ بْنِ الرَّبِيعِ قَالَ عَقَلْتُ مِنْ النَّبِيِّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ مَجَّةً مَجَّهَا فِي وَجْهِي وَأَنَا ابْنُ خَمْسِ سِنِينَ مِنْ دَلْوٍ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 75) : Muhammad bin Yusuf telah menceritakan kepadaku telah menceritakan kepada kami Abu Mushir berkata Muhammad bin Harb telah menceritakan kepadaku Az Zubaidi telah menceritakan kepadaku daripada Az Zuhri daripada Mahmud bin Ar Rabbi' berkata: "Aku mengingat daripada Nabi, ketika beliau melumuri air ludah beliau di wajahku, ketika itu aku baru berumur lima tahun".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     23) Pergi menuntut ilmu
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا أَبُو الْقَاسِمِ خَالِدُ بْنُ خَلِيٍّ قَاضِي حِمْصَ قَالَ حَدَّثَنَا مُحَمَّدُ بْنُ حَرْبٍ قَالَ حَدَّثَنَا الْأَوْزَاعِيُّ أَخْبَرَنَا الزُّهْرِيُّ عَنْ عُبَيْدِ اللَّهِ بْنِ عَبْدِ اللَّهِ بْنِ عُتْبَةَ بْنِ مَسْعُودٍ عَنْ ابْنِ عَبَّاسٍ أَنَّهُ تَمَارَى هُوَ وَالْحُرُّ بْنُ قَيْسِ بْنِ حِصْنٍ الْفَزَارِيُّ فِي صَاحِبِ مُوسَى فَمَرَّ بِهِمَا أُبَيُّ بْنُ كَعْبٍ فَدَعَاهُ ابْنُ عَبَّاسٍ فَقَالَ إِنِّي تَمَارَيْتُ أَنَا وَصَاحِبِي هَذَا فِي صَاحِبِ مُوسَى الَّذِي سَأَلَ السَّبِيلَ إِلَى لُقِيِّهِ هَلْ سَمِعْتَ رَسُولَ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يَذْكُرُ شَأْنَهُ فَقَالَ أُبَيٌّ نَعَمْ سَمِعْتُ النَّبِيَّ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يَذْكُرُ شَأْنَهُ يَقُولُ بَيْنَمَا مُوسَى فِي مَلَإٍ مِنْ بَنِي إِسْرَائِيلَ إِذْ جَاءَهُ رَجُلٌ فَقَالَ أَتَعْلَمُ أَحَدًا أَعْلَمَ مِنْكَ قَالَ مُوسَى لَا فَأَوْحَى اللَّهُ عَزَّ وَجَلَّ إِلَى مُوسَى بَلَى عَبْدُنَا خَضِرٌ فَسَأَلَ السَّبِيلَ إِلَى لُقِيِّهِ فَجَعَلَ اللَّهُ لَهُ الْحُوتَ آيَةً وَقِيلَ لَهُ إِذَا فَقَدْتَ الْحُوتَ فَارْجِعْ فَإِنَّكَ سَتَلْقَاهُ فَكَانَ مُوسَى صَلَّى اللَّهُ عَلَيْهِ يَتَّبِعُ أَثَرَ الْحُوتِ فِي الْبَحْرِ فَقَالَ فَتَى مُوسَى لِمُوسَى { أَرَأَيْتَ إِذْ أَوَيْنَا إِلَى الصَّخْرَةِ فَإِنِّي نَسِيتُ الْحُوتَ وَمَا أَنْسَانِيهِ إِلَّا الشَّيْطَانُ أَنْ أَذْكُرَهُ } قَالَ مُوسَى  { ذَلِكَ مَا كُنَّا نَبْغِي فَارْتَدَّا عَلَى آثَارِهِمَا قَصَصًا } فَوَجَدَا خَضِرًا فَكَانَ مِنْ شَأْنِهِمَا مَا قَصَّ اللَّهُ فِي كِتَابِهِ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 76) : Daripada Abu Al Qasim Khalid bin Khali - seorang hakim di Himshi telah menceritakan kepada kami -, dia berkata; Muhammad bin Harb telah menceritakan kepada kami berkata, Al Auza'i telah menceritakan kepada kami telah mengkhabarkan kepada kami Az Zuhri daripada 'Ubaidullah bin Abdullah bin 'Utbah bin Mas'ud daripada Ibnu 'Abbas bahawasanya dia dan Al Hurru bin Qais bin Hishin Al Fazari berdialog tentang sahabat Musa 'Alaihis salam, Ibnu 'Abbas berkata; dia adalah Khidhir 'Alaihis salam. Tiba-tiba melalui Ubay bin Ka'b di hadapan keduanya, maka Ibnu 'Abbas memanggilnya dan berkata: "Aku dan sahabatku ini berdialog tentang sahabat Musa 'Alaihis salam, yang ditanya tentang jalan yang akhirnya mempertemukannya, adakah kamu pernah mendengar Nabi SAW menceritakan perkara ini?" Ubay bin Ka'ab menjawab: Ya, benar, aku pernah mendengar Rasulullah SAW bersabda: "Ketika Musa di tengah pembesar Bani Israil, datang seseorang yang bertanya: apakah kamu mengetahui ada orang yang lebih pandai daripadamu?" Berkata Musa 'Alaihis salam: "Tidak". Maka Allah Ta'ala mewahyukan kepada Musa 'Alaihis salam: "Ada, iaitu hamba Kami bernama Hidhir." Maka Musa 'Alaihis Salam meminta jalan untuk bertemu dengannya. Allah menjadikan ikan bagi Musa sebagai tanda dan dikatakan kepadanya; "jika kamu kehilangan ikan tersebut kembalilah, nanti kamu akan berjumpa dengannya". Maka Musa 'Alaihis Salam mengikuti jejak ikan di lautan. Berkatalah murid Musa 'Alaihis salam: "Tahukah kamu tatkala kita mencari tempat berlindung di batu tadi? Sesungguhnya aku lupa (menceritakan tentang) ikan itu dan tidaklah yang melupakan aku untuk menceritakannya kecuali setan". Maka Musa 'Alaihis Salam berkata:."Itulah (tempat) yang kita cari". Lalu keduanya kembali, mengikuti jejak mereka semula. Maka akhirnya keduanya bertemu dengan Hidhir 'Alaihis salam." Begitulah kisah keduanya sebagaimana Allah ceritakan dalam Kitab-Nya.                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     24) Diangkatnya ilmu dan munculnya kebodohan
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا عِمْرَانُ بْنُ مَيْسَرَةَ قَالَ حَدَّثَنَا عَبْدُ الْوَارِثِ عَنْ أَبِي التَّيَّاحِ عَنْ أَنَسِ بْنِ مَالِكٍ قَالَ قَالَ رَسُولُ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ إِنَّ مِنْ أَشْرَاطِ السَّاعَةِ أَنْ يُرْفَعَ الْعِلْمُ وَيَثْبُتَ الْجَهْلُ وَيُشْرَبَ الْخَمْرُ وَيَظْهَرَ الزِّنَا 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 78) : 'Imran bin Maisarah telah menceritakan kepada kami Abdul Warith telah menceritakan kepada kami daripada Abu At Tayyah daripada Anas bin Malik berkata, Rasul SAW telah bersabda: "Sesungguhnya di antara tanda-tanda kiamat adalah diangkatnya ilmu dan berlakunya kejahilan dan arak diminum serta berlakunya penzinaan secara terang-terangan".                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+                   
+                     25) Diangkatnya ilmu dan munculnya kebodohan
+                       
+                 
+                      
+                    
+						  حَدَّثَنَا مُسَدَّدٌ قَالَ حَدَّثَنَا يَحْيَى عَنْ شُعْبَةَ عَنْ قَتَادَةَ عَنْ أَنَسِ بْنِ مَالِكٍ قَالَ لَأُحَدِّثَنَّكُمْ حَدِيثًا لَا يُحَدِّثُكُمْ أَحَدٌ بَعْدِي سَمِعْتُ رَسُولَ اللَّهِ صَلَّى اللَّهُ عَلَيْهِ وَسَلَّمَ يَقُولُ مِنْ أَشْرَاطِ السَّاعَةِ أَنْ يَقِلَّ الْعِلْمُ وَيَظْهَرَ الْجَهْلُ وَيَظْهَرَ الزِّنَا وَتَكْثُرَ النِّسَاءُ وَيَقِلَّ الرِّجَالُ حَتَّى يَكُونَ لِخَمْسِينَ امْرَأَةً الْقَيِّمُ الْوَاحِدُ 
+					 
+                     
+                     
+                   
+                    (BUKHARI - 79): Musaddad telah menceritakan kepada kami telah menceritakan kepada kami Yahya daripada Syu'bah daripada Qatadah daripada Anas bin Malik berkata: Rasulullah SAW bersabda: "Sesungguhnya di antara tanda-tanda kiamat adalah sedikitnya ilmu dan merebaknya kebodohan, penzinaan secara terang-terangan, jumlah perempuan yang lebih banyak dan sedikitnya lelaki sehingga (perbandingannya) lima puluh perempuan menyamai seorang lelaki.                      
+                      
+                      Baca Selanjutnya 
+                      
+                  
+                    
+				
+                
+              
+            >   
+            
+  
+    
+       [ 1 ,2 ,3 ,4 ,5 ,6 ,7 ,8 ,9 ,10 ]     
+    
+  
+            

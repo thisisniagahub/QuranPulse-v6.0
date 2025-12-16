@@ -1,291 +1,190 @@
-
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { UserProfile } from '../../types';
-import { getPersonalizedGreeting, generateDoaCard } from '../../services/aiService';
 
 interface ProfileProps {
   user: UserProfile;
-  onUpdateUser: (updatedUser: UserProfile) => void;
+  onUpdateUser: (user: UserProfile) => void;
   onSignOut: () => void;
 }
 
 const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState(user.name);
-  const [showSupportModal, setShowSupportModal] = useState(false);
-  const [donationStep, setDonationStep] = useState<'INFO' | 'AMOUNT' | 'SUCCESS'>('INFO');
-  const [activeTab, setActiveTab] = useState<'PERSONAL' | 'FAMILY'>('PERSONAL');
-  const [generatedDoa, setGeneratedDoa] = useState("");
+  // Mock Data for "RPG" Elements
+  const currentLevel = Math.floor(user.xp_total / 1000) + 1;
+  const xpForNextLevel = currentLevel * 1000;
+  const currentLevelXp = user.xp_total % 1000;
+  const progressPercent = (currentLevelXp / 1000) * 100;
 
-  const handleSave = () => {
-    onUpdateUser({ ...user, name });
-    setIsEditing(false);
-  };
+  const LEVEL_TITLES = [
+    "Pencari Hidayah", // Lvl 1
+    "Pelajar Tekun",   // Lvl 2
+    "Qari Muda",       // Lvl 3
+    "Sahabat Quran",   // Lvl 4
+    "Duta Dakwah",     // Lvl 5
+    "Hafiz Junior",    // Lvl 6
+    "Imam Muda",       // Lvl 7
+    "Scholar",         // Lvl 8
+    "Murabbi",         // Lvl 9
+    "Legendary"        // Lvl 10+
+  ];
 
-  const handleDonate = async () => {
-    // Simulate API call
-    setTimeout(async () => {
-        setDonationStep('SUCCESS');
-        const doa = await generateDoaCard(user.name);
-        setGeneratedDoa(doa);
-        // Award Barakah Points for donation
-        onUpdateUser({ ...user, barakah_points: (user.barakah_points || 0) + 500 });
-    }, 1000);
-  };
+  const userTitle = LEVEL_TITLES[Math.min(currentLevel - 1, LEVEL_TITLES.length - 1)];
 
-  const resetDonation = () => {
-      setShowSupportModal(false);
-      setDonationStep('INFO');
-      setGeneratedDoa("");
-  };
+  // Mock Activity Data (Last 7 days)
+  const activityData = [45, 80, 20, 90, 60, 100, 30]; // 0-100% completion
+
+  const BADGES = [
+    { id: 1, name: "Subuh Warrior", icon: "fa-sun", color: "text-amber-400", bg: "bg-amber-500/20", unlocked: true },
+    { id: 2, name: "Khatam #1", icon: "fa-book-quran", color: "text-emerald-400", bg: "bg-emerald-500/20", unlocked: false },
+    { id: 3, name: "7 Day Streak", icon: "fa-fire", color: "text-orange-400", bg: "bg-orange-500/20", unlocked: true },
+    { id: 4, name: "Ustaz's Friend", icon: "fa-user-graduate", color: "text-cyan-400", bg: "bg-cyan-500/20", unlocked: false },
+  ];
+
+  const DAILY_QUESTS = [
+    { id: 1, task: "Baca Surah Al-Mulk", reward: 50, completed: false },
+    { id: 2, task: "Dengar 1 Juzuk Audio", reward: 30, completed: true },
+    { id: 3, task: "Zikir Pagi 33x", reward: 20, completed: false },
+  ];
 
   return (
-    <div className="p-4 space-y-6 pb-24 animate-fade-in relative">
-        
-        {/* Background Layer */}
-        <div className="app-bg-layer bg-downbg app-bg-subtle"></div>
-        <div className="gradient-overlay-light"></div>
-        
-        {/* Header */}
-        <div className="flex justify-between items-end">
-            <div>
-                <h2 className="text-2xl font-bold text-white">My Profile</h2>
-                <p className="text-slate-400 text-sm">Manage your account and family</p>
+    <div className="flex flex-col h-full bg-[#020617] overflow-y-auto pb-32">
+      {/* --- HERO SECTION --- */}
+      <div className="relative bg-slate-900/50 pb-8 pt-12 px-6 border-b border-slate-800">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 rounded-full blur-[80px]"></div>
+
+        <div className="relative z-10 flex flex-col items-center">
+          {/* Avatar Ring */}
+          <div className="relative mb-4 group">
+            <div className="w-28 h-28 rounded-full border-4 border-slate-800 bg-slate-950 flex items-center justify-center overflow-hidden relative z-10 shadow-2xl">
+               {user.avatar_url ? (
+                   <img src={user.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+               ) : (
+                   <span className="text-4xl">🧕</span>
+               )}
             </div>
-            {!isEditing ? (
-                 <button onClick={() => setIsEditing(true)} className="text-primary text-sm font-semibold hover:text-primary-hover">Edit</button>
-            ) : (
-                 <div className="flex gap-4">
-                     <button onClick={() => { setIsEditing(false); setName(user.name); }} className="text-slate-400 text-sm hover:text-white">Cancel</button>
-                     <button onClick={handleSave} className="text-primary text-sm font-bold hover:text-primary-hover">Save</button>
-                 </div>
-            )}
+            {/* Level Badge */}
+            <div className="absolute -bottom-3 left-1/2 -translate-x-1/2 bg-cyan-500 text-black px-3 py-1 rounded-full text-xs font-bold border-2 border-slate-900 z-20 shadow-lg">
+              LVL {currentLevel}
+            </div>
+            {/* Glow Effect */}
+            <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl group-hover:bg-cyan-500/40 transition-all duration-500"></div>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mb-1">{user.name}</h2>
+          <p className="text-cyan-400 text-sm font-medium tracking-wide uppercase mb-6">{userTitle}</p>
+
+          {/* XP Progress Bar */}
+          <div className="w-full max-w-xs bg-slate-800/50 rounded-full h-3 mb-2 overflow-hidden border border-slate-700/50 relative">
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: `${progressPercent}%` }}
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"
+            />
+          </div>
+          <div className="w-full max-w-xs flex justify-between text-[10px] text-slate-500 font-mono">
+            <span>{currentLevelXp} XP</span>
+            <span>{xpForNextLevel} XP (Next Level)</span>
+          </div>
+        </div>
+      </div>
+
+      {/* --- STATS GRID --- */}
+      <div className="grid grid-cols-3 gap-3 px-6 -mt-6 relative z-20 mb-8">
+        <div className="bg-slate-900/90 backdrop-blur-md p-3 rounded-2xl border border-slate-800 flex flex-col items-center shadow-lg">
+          <span className="text-2xl mb-1">🔥</span>
+          <span className="text-lg font-bold text-white">{user.streak}</span>
+          <span className="text-[10px] text-slate-500 uppercase">Day Streak</span>
+        </div>
+        <div className="bg-slate-900/90 backdrop-blur-md p-3 rounded-2xl border border-slate-800 flex flex-col items-center shadow-lg">
+          <span className="text-2xl mb-1">📖</span>
+          <span className="text-lg font-bold text-white">{user.last_read_surah}</span>
+          <span className="text-[10px] text-slate-500 uppercase">Surah Read</span>
+        </div>
+        <div className="bg-slate-900/90 backdrop-blur-md p-3 rounded-2xl border border-slate-800 flex flex-col items-center shadow-lg">
+          <span className="text-2xl mb-1">💎</span>
+          <span className="text-lg font-bold text-white">{user.barakah_points}</span>
+          <span className="text-[10px] text-slate-500 uppercase">Barakah Pts</span>
+        </div>
+      </div>
+
+      {/* --- CONTENT AREA --- */}
+      <div className="px-6 space-y-8">
+        
+        {/* 1. Daily Quests */}
+        <div>
+          <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+            <i className="fa-solid fa-scroll text-amber-400"></i> Misi Harian
+          </h3>
+          <div className="space-y-3">
+            {DAILY_QUESTS.map(quest => (
+              <div key={quest.id} className={`flex items-center justify-between p-4 rounded-xl border transition-all ${quest.completed ? 'bg-emerald-900/10 border-emerald-500/30 opacity-60' : 'bg-slate-900/50 border-slate-800 hover:border-slate-600'}`}>
+                <div className="flex items-center gap-3">
+                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${quest.completed ? 'bg-emerald-500 border-emerald-500 text-black' : 'border-slate-600'}`}>
+                    {quest.completed && <i className="fa-solid fa-check text-xs"></i>}
+                  </div>
+                  <span className={`text-sm ${quest.completed ? 'text-slate-400 line-through' : 'text-slate-200'}`}>{quest.task}</span>
+                </div>
+                <div className="flex items-center gap-1 bg-slate-800 px-2 py-1 rounded text-[10px] text-amber-400 font-bold">
+                  <span>+{quest.reward}</span>
+                  <span>XP</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="flex bg-slate-900 p-1 rounded-xl border border-slate-800">
-            <button onClick={() => setActiveTab('PERSONAL')} className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'PERSONAL' ? 'bg-slate-800 text-white shadow' : 'text-slate-500'}`}>Personal</button>
-            <button onClick={() => setActiveTab('FAMILY')} className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === 'FAMILY' ? 'bg-slate-800 text-white shadow' : 'text-slate-500'}`}>Family Plan</button>
+        {/* 2. Badges Showcase */}
+        <div>
+          <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+            <i className="fa-solid fa-medal text-purple-400"></i> Pencapaian
+          </h3>
+          <div className="grid grid-cols-4 gap-3">
+            {BADGES.map(badge => (
+              <div key={badge.id} className={`aspect-square rounded-2xl flex flex-col items-center justify-center gap-2 p-2 border transition-all ${badge.unlocked ? `bg-slate-900 ${badge.bg} border-white/5` : 'bg-slate-900/30 border-slate-800 opacity-40 grayscale'}`}>
+                <i className={`fa-solid ${badge.icon} text-xl ${badge.unlocked ? badge.color : 'text-slate-600'}`}></i>
+                <span className="text-[9px] text-center leading-tight text-slate-400">{badge.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-        {activeTab === 'PERSONAL' && (
-            <div className="space-y-6 animate-slide-up">
-                {/* Avatar & Info */}
-                <div className="flex flex-col items-center py-8 bg-slate-900 relative overflow-hidden rounded-3xl border border-slate-800 shadow-lg">
-                    <div className="absolute inset-0 bg-maze opacity-20"></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent"></div>
-
-                    <div className="relative z-10 w-24 h-24 rounded-full bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center mb-4 shadow-[0_0_20px_rgba(0,191,165,0.2)] ring-2 ring-primary/50">
-                        <i className="fa-solid fa-user text-4xl text-slate-400"></i>
-                    </div>
-                    
-                    <div className="relative z-10 text-center w-full flex flex-col items-center">
-                        {isEditing ? (
-                            <>
-                                <label htmlFor="profile-name" className="sr-only">Your Name</label>
-                                <input 
-                                    id="profile-name"
-                                    name="name"
-                                    type="text" 
-                                    value={name}
-                                    onChange={(e) => setName(e.target.value)}
-                                    className="bg-slate-800 border border-slate-700 rounded-lg px-4 py-2 text-center text-white font-bold outline-none focus:border-primary w-2/3"
-                                    placeholder="Your Name"
-                                    autoComplete="name"
-                                />
-                            </>
-                        ) : (
-                            <h3 className="text-xl font-bold text-white">{user.name}</h3>
-                        )}
-                        <p className="text-slate-500 text-sm mt-1 font-medium">{user.email}</p>
-                    </div>
+        {/* 3. Activity Heatmap (Simple Visual) */}
+        <div>
+          <h3 className="text-white font-bold mb-4 flex items-center gap-2">
+            <i className="fa-solid fa-chart-simple text-cyan-400"></i> Aktiviti Mingguan
+          </h3>
+          <div className="flex justify-between items-end h-24 bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
+            {activityData.map((val, i) => (
+              <div key={i} className="flex flex-col items-center gap-2 w-full">
+                <div className="w-2 rounded-full bg-slate-800 h-full relative overflow-hidden">
+                  <motion.div 
+                    initial={{ height: 0 }}
+                    whileInView={{ height: `${val}%` }}
+                    className="absolute bottom-0 w-full bg-cyan-500 rounded-full"
+                  />
                 </div>
+                <span className="text-[9px] text-slate-500">{['S','M','T','W','T','F','S'][i]}</span>
+              </div>
+            ))}
+          </div>
+        </div>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-slate-800/50 p-5 rounded-2xl border border-slate-700/50 backdrop-blur-sm">
-                        <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
-                            <i className="fa-solid fa-gem text-gold-500"></i> Barakah Points
-                        </div>
-                        <div className="text-2xl font-bold text-white">{user.barakah_points || 0}</div>
-                    </div>
-                    <div className="bg-slate-800/50 p-5 rounded-2xl border border-slate-700/50 backdrop-blur-sm">
-                        <div className="flex items-center gap-2 text-xs text-slate-400 mb-2">
-                            <i className="fa-solid fa-fire text-orange-500"></i> Streak
-                        </div>
-                        <div className="text-2xl font-bold text-white">{user.streak} <span className="text-base text-slate-500 font-normal">Days</span></div>
-                    </div>
-                </div>
+        {/* Settings Button */}
+        <button 
+            onClick={onSignOut}
+            className="w-full py-4 rounded-xl border border-red-500/20 text-red-400 text-sm font-bold hover:bg-red-500/10 transition-all flex items-center justify-center gap-2"
+        >
+            <i className="fa-solid fa-arrow-right-from-bracket"></i>
+            Log Keluar
+        </button>
 
-                 {/* Sadaqah Jariyah Section */}
-                <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-gold-500/30 shadow-lg group cursor-pointer" onClick={() => setShowSupportModal(true)}>
-                    <div className="absolute inset-0 bg-maze opacity-10"></div>
-                    <div className="absolute -right-10 -top-10 w-40 h-40 bg-gold-500/10 rounded-full blur-3xl group-hover:bg-gold-500/20 transition-colors"></div>
-                    
-                    <div className="relative z-10 p-5 flex items-center justify-between">
-                        <div className="space-y-1">
-                            <div className="flex items-center gap-2 mb-2">
-                                <span className="px-2 py-0.5 bg-gold-500/20 text-gold-400 text-[10px] font-bold uppercase tracking-wider rounded border border-gold-500/20">Sadaqah Jariyah</span>
-                            </div>
-                            <h3 className="text-lg font-bold text-white">Support Development</h3>
-                            <p className="text-xs text-slate-400 max-w-[200px]">
-                                Earn Barakah Points while supporting the mission.
-                            </p>
-                        </div>
-                        <div className="w-12 h-12 rounded-full bg-gold-500/20 flex items-center justify-center text-gold-400 border border-gold-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)] group-hover:scale-110 transition-transform">
-                            <i className="fa-solid fa-hand-holding-heart text-xl"></i>
-                        </div>
-                    </div>
-                </div>
+        <div className="text-center text-xs text-slate-600 pb-4">
+            QuranPulse v6.0 Genesis<br/>
+            Made with ❤️ for Ummah
+        </div>
 
-                {/* Settings & Sign Out */}
-                <div className="space-y-2">
-                    <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest ml-1">Preferences</h4>
-                    <div className="bg-slate-900/50 rounded-2xl overflow-hidden border border-slate-800 backdrop-blur-sm">
-                        <div className="p-4 flex justify-between items-center border-b border-slate-800/50 hover:bg-slate-800/50 transition-colors cursor-pointer">
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary">
-                                    <i className="fa-regular fa-bell"></i>
-                                </div>
-                                <span className="text-slate-200 text-sm font-medium">Notifications</span>
-                            </div>
-                            <div className="w-10 h-5 bg-primary/20 rounded-full relative">
-                                <div className="w-3 h-3 bg-primary rounded-full absolute right-1 top-1 shadow-sm"></div>
-                            </div>
-                        </div>
-                        <div 
-                            onClick={onSignOut}
-                            className="p-4 flex justify-between items-center hover:bg-red-900/20 transition-colors cursor-pointer"
-                        >
-                            <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-full bg-red-500/10 flex items-center justify-center text-red-400">
-                                    <i className="fa-solid fa-arrow-right-from-bracket"></i>
-                                </div>
-                                <span className="text-red-400 text-sm font-medium">Sign Out</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )}
-
-        {activeTab === 'FAMILY' && (
-            <div className="space-y-6 animate-slide-up">
-                 <div className="bg-gradient-to-r from-slate-900 to-primary-dark p-6 rounded-3xl text-center border border-white/5 relative overflow-hidden">
-                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-20"></div>
-                     <i className="fa-solid fa-users text-4xl text-white/50 mb-3 relative z-10"></i>
-                     <h3 className="text-xl font-bold text-white mb-2 relative z-10">Family Plan</h3>
-                     <p className="text-xs text-slate-300 mb-4 relative z-10">Manage up to 5 child accounts. Monitor their Quran progress and limit screen time.</p>
-                     <button className="px-6 py-2 bg-white text-primary-dark font-bold rounded-full text-sm hover:bg-slate-200 transition-colors relative z-10 shadow-lg">
-                         Upgrade (RM 19.90/mo)
-                     </button>
-                 </div>
-
-                 <div>
-                     <div className="flex justify-between items-center mb-4">
-                         <h4 className="text-white font-bold text-sm">Child Progress (Dashboard)</h4>
-                         <button className="text-primary text-xs font-bold flex items-center gap-1">
-                             <i className="fa-solid fa-plus"></i> Add Child
-                         </button>
-                     </div>
-                     
-                     <div className="space-y-3">
-                         {/* Mock Child 1 */}
-                         <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition-colors">
-                             <div className="flex items-center gap-4 mb-3">
-                                 <div className="w-10 h-10 rounded-full bg-primary/20 text-primary flex items-center justify-center font-bold border border-primary/30 shadow-inner">
-                                     A
-                                 </div>
-                                 <div className="flex-1">
-                                     <h5 className="text-white font-bold text-sm">Adam (Son)</h5>
-                                     <p className="text-xs text-slate-500">Iqra Level 2</p>
-                                 </div>
-                                 <div className="text-right">
-                                     <span className="text-xs font-bold text-green-400">3 Pages</span>
-                                     <span className="text-[10px] text-slate-500 block">Today</span>
-                                 </div>
-                             </div>
-                             {/* Progress Visuals */}
-                             <div className="bg-black/30 rounded-lg p-3 border border-white/5">
-                                 <div className="flex justify-between text-[10px] text-slate-400 mb-1">
-                                     <span>Pronunciation Accuracy</span>
-                                     <span className="text-white font-bold">78%</span>
-                                 </div>
-                                 <div className="w-full h-1.5 bg-slate-700 rounded-full overflow-hidden mb-2">
-                                     <div className="w-[78%] h-full bg-primary rounded-full"></div>
-                                 </div>
-                                 <div className="flex gap-2">
-                                     <span className="text-[9px] bg-red-500/10 text-red-400 px-2 py-0.5 rounded border border-red-500/20">Focus: Letter 'Ra'</span>
-                                     <span className="text-[9px] bg-green-500/10 text-green-400 px-2 py-0.5 rounded border border-green-500/20">Strong: 'Ba'</span>
-                                 </div>
-                             </div>
-                         </div>
-                         
-                         {/* Mock Child 2 */}
-                         <div className="bg-slate-900 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition-colors">
-                            <div className="flex items-center gap-4 mb-3">
-                                <div className="w-10 h-10 rounded-full bg-secondary/20 text-secondary flex items-center justify-center font-bold border border-secondary/30 shadow-inner">
-                                    S
-                                </div>
-                                <div className="flex-1">
-                                    <h5 className="text-white font-bold text-sm">Sarah (Daughter)</h5>
-                                    <p className="text-xs text-slate-500">Iqra Level 1</p>
-                                </div>
-                                <div className="text-right">
-                                    <span className="text-xs font-bold text-slate-500">No Activity</span>
-                                </div>
-                            </div>
-                             <div className="bg-black/30 rounded-lg p-3 border border-white/5">
-                                 <p className="text-[10px] text-slate-500 italic">Last active: 3 days ago. Send a reminder?</p>
-                             </div>
-                        </div>
-                     </div>
-                 </div>
-            </div>
-        )}
-        
-        {/* Support Modal */}
-        {showSupportModal && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in" onClick={() => setShowSupportModal(false)}>
-                <div className="bg-slate-900 w-full max-w-md rounded-3xl border border-slate-800 shadow-2xl overflow-hidden animate-slide-up" onClick={e => e.stopPropagation()}>
-                    <div className="p-6 text-center">
-                        <div className="w-16 h-16 bg-gold-500/20 rounded-full flex items-center justify-center mx-auto mb-4 text-gold-400">
-                             <i className="fa-solid fa-hand-holding-heart text-3xl"></i>
-                        </div>
-                        <h3 className="text-xl font-bold text-white mb-2">Support QuranPulse</h3>
-                        {donationStep === 'INFO' && (
-                            <>
-                                <p className="text-slate-400 text-sm mb-6">Your Infaq helps us develop AI features and keep the app ad-free for everyone.</p>
-                                <button onClick={() => setDonationStep('AMOUNT')} className="w-full py-3 bg-gold-500 text-black font-bold rounded-xl mb-3 hover:bg-gold-400">Donate Now</button>
-                                <button onClick={() => setShowSupportModal(false)} className="text-slate-500 text-sm">Maybe Later</button>
-                            </>
-                        )}
-                        {donationStep === 'AMOUNT' && (
-                            <>
-                                <p className="text-slate-400 text-sm mb-6">Select Amount</p>
-                                <div className="grid grid-cols-3 gap-3 mb-6">
-                                    {[10, 50, 100].map(amt => (
-                                        <button key={amt} onClick={handleDonate} className="py-3 rounded-xl border border-slate-700 hover:bg-slate-800 hover:border-gold-500 text-white font-bold transition-all">RM {amt}</button>
-                                    ))}
-                                </div>
-                                <button onClick={() => setDonationStep('INFO')} className="text-slate-500 text-sm">Back</button>
-                            </>
-                        )}
-                        {donationStep === 'SUCCESS' && (
-                            <div className="animate-fade-in">
-                                <p className="text-green-400 font-bold mb-4">Alhamdulillah! Payment Successful.</p>
-                                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 mb-6 relative overflow-hidden">
-                                     <div className="absolute top-0 left-0 w-1 h-full bg-gold-500"></div>
-                                     <p className="text-[10px] text-gold-500 uppercase font-bold tracking-widest mb-2 text-left">Your Doa Receipt</p>
-                                     <p className="text-white text-sm italic font-serif leading-relaxed">"{generatedDoa || 'Loading Doa...'}"</p>
-                                </div>
-                                <button onClick={resetDonation} className="w-full py-3 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700">Close</button>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            </div>
-        )}
+      </div>
     </div>
   );
 };

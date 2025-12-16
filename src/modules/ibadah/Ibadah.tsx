@@ -1,521 +1,268 @@
-
-import React, { useState, useEffect, useRef } from 'react';
-import { getPrayerTimes, getNextPrayer, getQiblaDirection, PrayerTimes } from '../../services/prayerService';
-import styles from './Ibadah.module.css';
-
-// --- TYPES ---
-interface BotLog {
-  id: string;
-  timestamp: string;
-  type: 'INFO' | 'MSG_IN' | 'MSG_OUT' | 'ERROR';
-  message: string;
-}
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useQibla } from '../../hooks/useQibla';
+import { usePrayerTimes } from '../../hooks/usePrayerTimes';
 
 const Ibadah: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'TASBIH' | 'QIBLA' | 'PRAYER' | 'NOTIFY'>('TASBIH');
+  const [viewMode, setViewMode] = useState<'QIBLA' | 'PRAYER'>('QIBLA');
   
-  // --- TASBIH STATE ---
-  const [count, setCount] = useState(0);
-  const [target, setTarget] = useState(33);
-  const [isPressed, setIsPressed] = useState(false);
-  const audioCtxRef = useRef<AudioContext | null>(null);
-  
-  // --- QIBLA STATE ---
-  const [heading, setHeading] = useState(0);
-  const [permissionGranted, setPermissionGranted] = useState(false);
-  const QIBLA_OFFSET = 292; // Approx for Malaysia/SE Asia.
+  // Qibla & Location Hook
+  const qibla = useQibla();
+  const {
+    qiblaAngle,
+    deviceHeading,
+    headingDifference,
+    isPointingQibla,
+    latitude,
+    longitude,
+    isLoading,
+    error,
+    isDeviceOrientationSupported,
+    isGeolocationSupported,
+  } = qibla;
 
-  // --- PRAYER STATE ---
-  const [prayerData, setPrayerData] = useState<PrayerTimes | null>(null);
+  // Prayer Times Hook
+  const { data: prayerData, loading: prayerLoading } = usePrayerTimes(latitude, longitude);
 
-  // --- WHATSAPP BOT STATE ---
-  const [waStatus, setWaStatus] = useState<'DISCONNECTED' | 'QR_READY' | 'CONNECTED'>('DISCONNECTED');
-  const [qrCodeData, setQrCodeData] = useState<string | null>(null);
-  const [logs, setLogs] = useState<BotLog[]>([]);
-  const [broadcastMsg, setBroadcastMsg] = useState('');
-  const [botConfig, setBotConfig] = useState({
-    prayerReminders: true,
-    aiChat: true,
-    dailyAyah: true
-  });
-  
-  const logsEndRef = useRef<HTMLDivElement>(null);
+  // State to handle permission request UI
+  const [showPermissionPrompt, setShowPermissionPrompt] = useState(false);
 
   useEffect(() => {
-    getPrayerTimes(3.1390, 101.6869).then(data => setPrayerData(data.timings));
-  }, []);
-
-  useEffect(() => {
-      // Auto-scroll logs
-      if (logsEndRef.current) {
-          logsEndRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
-  }, [logs]);
-
-  // Helper: Play Click Sound via Web Audio API
-  const playClick = () => {
-      try {
-          if (!audioCtxRef.current) {
-              audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
-          }
-          const ctx = audioCtxRef.current;
-          const osc = ctx.createOscillator();
-          const gain = ctx.createGain();
-
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(800, ctx.currentTime);
-          osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.05);
-          
-          gain.gain.setValueAtTime(0.1, ctx.currentTime);
-          gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
-
-          osc.connect(gain);
-          gain.connect(ctx.destination);
-          
-          osc.start();
-          osc.stop(ctx.currentTime + 0.05);
-      } catch (e) {
-          // Fallback or silence
-      }
-  };
-
-  // Handle Tasbih
-  const handleCount = () => {
-    setIsPressed(true);
-    setTimeout(() => setIsPressed(false), 150); // Animation duration
-
-    const newCount = count + 1;
-    setCount(newCount);
-    playClick();
-
-    if (navigator.vibrate) {
-        if (newCount === target) {
-            navigator.vibrate([50, 50, 50, 50, 100]); // Long Pulse for Target
-        } else {
-            navigator.vibrate(15);
-        }
-    }
-  };
-
-  const handleReset = () => {
-    if (confirm("Reset counter?")) setCount(0);
-  };
-
-  // Handle Qibla
-  const startCompass = async () => {
-    if (typeof (DeviceOrientationEvent as any).requestPermission === 'function') {
-      try {
-        const response = await (DeviceOrientationEvent as any).requestPermission();
-        if (response === 'granted') {
-          setPermissionGranted(true);
-          window.addEventListener('deviceorientation', handleOrientation);
-        } else {
-          alert('Permission required for compass');
-        }
-      } catch (e) {
-        console.error(e);
-      }
+    if (!isLoading && (error?.includes('permission') || (!isGeolocationSupported && !isDeviceOrientationSupported))) {
+      setShowPermissionPrompt(true);
     } else {
-      setPermissionGranted(true);
-      window.addEventListener('deviceorientation', handleOrientation);
+      setShowPermissionPrompt(false);
+    }
+  }, [isLoading, error, isGeolocationSupported, isDeviceOrientationSupported]);
+
+  // Requesting permission for iOS 13+ devices
+  const requestDeviceOrientationPermission = () => {
+    if ((typeof DeviceOrientationEvent as any).requestPermission === 'function') {
+      (DeviceOrientationEvent as any).requestPermission()
+        .then((permissionState: string) => {
+          if (permissionState === 'granted') {
+            setShowPermissionPrompt(false);
+          } else {
+            // Handle error state locally or trigger re-check
+          }
+        })
+        .catch(console.error);
     }
   };
 
-  const handleOrientation = (e: DeviceOrientationEvent) => {
-    let compass = (e as any).webkitCompassHeading || Math.abs(e.alpha! - 360);
-    setHeading(compass);
-  };
-
-  // --- WHATSAPP LIFECYCLE LOGIC (SIMULATION) ---
+  // Calculate rotation for the compass (Qibla pointer)
+  const compassRotation = deviceHeading !== null ? -deviceHeading : 0;
   
-  const addLog = (type: BotLog['type'], message: string) => {
-      setLogs(prev => [...prev, {
-          id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
-          timestamp: new Date().toLocaleTimeString(),
-          type,
-          message
-      }]);
-  };
+  // Calculate Qibla pointer rotation relative to the compass background
+  let qiblaPointerRotation = 0;
+  if (qiblaAngle !== null && deviceHeading !== null) {
+    qiblaPointerRotation = (qiblaAngle - deviceHeading + 360) % 360;
+  }
 
-  const handleStartServer = () => {
-      setWaStatus('DISCONNECTED'); // Reset briefly
-      setLogs([]);
-      addLog('INFO', 'Starting WhatsApp Server...');
-      addLog('INFO', 'Initializing Puppeteer (Headless)...');
+  // --- UI Elements ---
+  const renderCompass = () => (
+    <div className="relative w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-br from-slate-900 to-slate-950 rounded-full flex items-center justify-center border-4 border-cyan-800 shadow-[0_0_50px_rgba(6,182,212,0.3)] mt-8">
+      {/* Compass background with North/South/East/West markers */}
+      <motion.div
+        className="absolute inset-0 rounded-full"
+        style={{ rotate: compassRotation }}
+      >
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-white" /> {/* North */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-slate-500" /> {/* South */}
+        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-1 w-8 bg-slate-500" /> {/* West */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-1 w-8 bg-slate-500" /> {/* East */}
+        
+        {/* Cardinal points text */}
+        <span className="absolute top-8 left-1/2 -translate-x-1/2 text-white font-bold text-sm">N</span>
+        <span className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 text-sm">S</span>
+        <span className="absolute left-8 top-1/2 -translate-y-1/2 text-slate-500 text-sm">W</span>
+        <span className="absolute right-8 top-1/2 -translate-y-1/2 text-slate-500 text-sm">E</span>
+
+        {/* Dynamic Qibla Pointer */}
+        <motion.div
+          className="absolute inset-0 rounded-full flex items-center justify-center"
+          style={{ rotate: qiblaPointerRotation }}
+        >
+          <div className={`w-3 h-36 bg-emerald-500 rounded-t-full shadow-lg origin-bottom transition-all duration-300 ${isPointingQibla ? 'scale-y-110 shadow-emerald-400' : ''}`} />
+        </motion.div>
+        
+        {/* Center Dot */}
+        <div className="absolute w-6 h-6 bg-cyan-500 rounded-full shadow-inner shadow-white/50" />
+      </motion.div>
       
-      // Simulate boot delay
-      setTimeout(() => {
-          setWaStatus('QR_READY');
-          // Mock QR Code (Normally fetched from Backend via Socket.io)
-          setQrCodeData('https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=QuranPulseDemoSession'); 
-          addLog('INFO', 'QR Code generated. Waiting for scan...');
-      }, 1500);
+      {/* Qibla Angle Display */}
+      {qiblaAngle !== null && (
+        <div className="absolute bottom-10 text-cyan-400 font-mono text-xl font-bold tracking-widest">
+          {Math.round(qiblaAngle)}°
+        </div>
+      )}
+    </div>
+  );
+
+  const formatTime = (date: Date) => {
+      return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
   };
 
-  const handleSimulateScan = () => {
-      if (waStatus !== 'QR_READY') return;
-      
-      addLog('INFO', 'QR Code Scanned by device...');
-      addLog('INFO', 'Authenticating...');
-      
-      setTimeout(() => {
-          setWaStatus('CONNECTED');
-          addLog('INFO', 'Client Authenticated!');
-          addLog('INFO', 'Syncing contacts...');
-          addLog('INFO', 'Ready to receive messages.');
-          
-          // Simulate incoming traffic for demo
-          setTimeout(() => {
-              addLog('MSG_IN', '+60123456789: Assalamualaikum, waktu Asar bila?');
-              setTimeout(() => {
-                  addLog('MSG_OUT', 'Bot: Waalaikumussalam. Waktu Asar adalah 16:32.');
-              }, 1000);
-          }, 2000);
-      }, 1500);
-  };
+  const renderPrayerTimes = () => {
+      if (!prayerData) return <div className="text-center text-slate-400 mt-10">Mengira waktu solat...</div>;
 
-  const handleStopServer = () => {
-      addLog('INFO', 'Stopping server...');
-      setWaStatus('DISCONNECTED');
-      setQrCodeData(null);
-      addLog('ERROR', 'Server Stopped.');
-  };
+      const prayers = [
+          { name: 'Subuh', time: prayerData.fajr, icon: 'fa-cloud-sun' },
+          { name: 'Syuruk', time: prayerData.sunrise, icon: 'fa-sun', isSecondary: true },
+          { name: 'Zohor', time: prayerData.dhuhr, icon: 'fa-sun' },
+          { name: 'Asar', time: prayerData.asr, icon: 'fa-cloud-sun' },
+          { name: 'Maghrib', time: prayerData.maghrib, icon: 'fa-moon' },
+          { name: 'Isyak', time: prayerData.isha, icon: 'fa-star' },
+      ];
 
-  const handleBroadcast = () => {
-      if (!broadcastMsg) return;
-      addLog('INFO', `Broadcasting to ALL users: "${broadcastMsg}"`);
-      addLog('MSG_OUT', `Sent to 142 subscribers.`);
-      setBroadcastMsg('');
+      return (
+          <div className="w-full max-w-md space-y-6 mt-4">
+              {/* Hijri Date */}
+              <div className="text-center mb-4">
+                  <p className="text-amber-400 font-arabic text-lg">{prayerData.hijriDate}</p>
+                  <p className="text-slate-500 text-xs">{prayerData.locationName}</p>
+              </div>
+
+              {/* Next Prayer Card */}
+              <div className="bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 p-6 rounded-3xl text-center relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl"></div>
+                  <p className="text-xs text-cyan-300 font-bold uppercase tracking-widest mb-1">Seterusnya</p>
+                  <h2 className="text-4xl font-bold text-white mb-1">{prayerData.nextPrayer}</h2>
+                  <p className="text-xl text-slate-300 mb-2">{formatTime(prayerData.nextPrayerTime)}</p>
+                  <div className="inline-block px-3 py-1 bg-black/30 rounded-full text-xs text-emerald-400 font-mono border border-emerald-500/20">
+                      - {prayerData.timeRemaining}
+                  </div>
+              </div>
+
+              {/* List */}
+              <div className="space-y-3">
+                  {prayers.map((p, i) => {
+                      const isNext = prayerData.nextPrayer === p.name;
+                      return (
+                        <div key={i} className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
+                            isNext ? 'bg-emerald-900/20 border-emerald-500/50 scale-105' : 'bg-slate-900/50 border-slate-800'
+                        } ${p.isSecondary ? 'opacity-60 text-sm py-2' : ''}`}>
+                            <div className="flex items-center gap-4">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isNext ? 'bg-emerald-500 text-black' : 'bg-slate-800 text-slate-400'}`}>
+                                    <i className={`fa-solid ${p.icon}`}></i>
+                                </div>
+                                <span className={`font-bold ${isNext ? 'text-white' : 'text-slate-300'}`}>{p.name}</span>
+                            </div>
+                            <span className={`font-mono ${isNext ? 'text-emerald-400' : 'text-slate-400'}`}>{formatTime(p.time)}</span>
+                        </div>
+                      );
+                  })}
+              </div>
+          </div>
+      );
   };
 
   return (
-    <div className="p-4 pb-24 h-full animate-fade-in flex flex-col bg-[#020617]">
-       {/* 3D Segmented Control */}
-       <div className="flex bg-[#020617]/50 p-1.5 rounded-2xl mb-8 border border-cyan-500/20 shadow-inner overflow-x-auto no-scrollbar shrink-0">
-           {['TASBIH', 'QIBLA', 'PRAYER', 'NOTIFY'].map(tab => (
-               <button 
-                key={tab}
-                onClick={() => setActiveTab(tab as any)}
-                className={`flex-1 min-w-[80px] py-3 text-xs font-bold rounded-xl transition-all duration-300 relative overflow-hidden ${
-                    activeTab === tab 
-                    ? 'text-cyan-400 shadow-lg shadow-cyan-500/10 bg-cyan-950/30 border border-cyan-500/30' 
-                    : 'text-slate-500 hover:text-slate-300'
-                }`}
-               >
-                   {activeTab === tab && (
-                       <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-xl"></div>
-                   )}
-                   <span className="relative z-10">{tab === 'NOTIFY' ? 'WhatsApp Bot' : tab}</span>
-               </button>
-           ))}
-       </div>
+    <div className="flex flex-col h-full bg-[#020617] items-center justify-start p-4 pt-8 text-white overflow-y-auto pb-32">
+      {/* Header Toggle */}
+      <div className="bg-slate-900/80 p-1 rounded-full flex gap-1 mb-4 border border-slate-800 relative z-10">
+          <button 
+            onClick={() => setViewMode('QIBLA')}
+            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'QIBLA' ? 'bg-cyan-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+          >
+              <i className="fa-solid fa-compass mr-2"></i>Kiblat
+          </button>
+          <button 
+            onClick={() => setViewMode('PRAYER')}
+            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'PRAYER' ? 'bg-amber-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+          >
+              <i className="fa-solid fa-clock mr-2"></i>Waktu Solat
+          </button>
+      </div>
 
-       {/* --- TASBIH UI --- */}
-       {activeTab === 'TASBIH' && (
-           <div className="flex-1 flex flex-col items-center justify-center space-y-12 animate-slide-up">
-               <div className="text-center">
-                   <h2 className="text-white text-2xl font-bold mb-1 tracking-tight">Digital Tasbih</h2>
-                   <p className="text-slate-400 text-sm">Target: <span className="text-teal-400 font-bold">{target}</span></p>
-               </div>
+      <AnimatePresence mode='wait'>
+        {viewMode === 'QIBLA' ? (
+            <motion.div 
+                key="qibla"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="flex flex-col items-center w-full"
+            >
+                {/* Main Content */}
+                <div className="flex-1 flex flex-col items-center justify-center min-h-[50vh]">
+                    {isLoading && !error && (
+                    <div className="flex flex-col items-center">
+                        <motion.div
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                        className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full mb-4"
+                        />
+                        <p className="text-slate-400">Mencari lokasi anda...</p>
+                    </div>
+                    )}
 
-               {/* 3D Mechanical Button */}
-               <div className="relative group select-none">
-                   <div className="absolute inset-0 bg-primary blur-[60px] opacity-20 group-hover:opacity-30 transition-opacity rounded-full"></div>
-                   <div className="w-72 h-72 rounded-full bg-black shadow-[0_20px_50px_-10px_rgba(0,0,0,0.8)] border border-white/10 flex items-center justify-center p-4">
-                       <div 
-                         onClick={handleCount}
-                         className={`
-                            w-full h-full rounded-full bg-gradient-to-b from-space-light to-space-dark 
-                            border-t border-slate-700 shadow-[inset_0_2px_4px_rgba(255,255,255,0.1)]
-                            flex flex-col items-center justify-center cursor-pointer relative transition-all duration-100 ease-in-out
-                            ${isPressed ? 'translate-y-2 scale-[0.98] shadow-none' : 'shadow-[0_10px_20px_-5px_rgba(0,0,0,0.5),0_8px_0_#1e293b]'}
-                         `}
-                       >
-                           <div className="absolute inset-4 rounded-full border border-slate-700/50 opacity-50"></div>
-                           <div className="absolute inset-8 rounded-full border border-slate-800/80 opacity-50"></div>
-                           <span className="text-8xl font-mono text-transparent bg-clip-text bg-gradient-to-b from-primary-light to-primary font-bold drop-shadow-sm select-none">
-                               {count}
-                           </span>
-                           <span className="text-slate-500 text-xs mt-4 font-bold uppercase tracking-[0.2em]">Press</span>
-                       </div>
-                   </div>
-               </div>
+                    {showPermissionPrompt && (
+                    <div className="text-center p-6 rounded-xl bg-slate-900/50 border border-red-500/30 shadow-lg max-w-sm">
+                        <p className="text-red-400 text-lg mb-4">Akses Diblokir!</p>
+                        <p className="text-slate-300 mb-6">
+                        Untuk mengesan arah kiblat, sila benarkan akses lokasi dan sensor gerakan pada peranti anda.
+                        </p>
+                        {error && <p className="text-sm text-red-300 mb-4">{error}</p>}
+                        {isDeviceOrientationSupported && (
+                        <button
+                            onClick={requestDeviceOrientationPermission}
+                            className="px-6 py-3 bg-cyan-500 text-black font-bold rounded-lg shadow-md hover:bg-cyan-400 transition-colors"
+                        >
+                            Benarkan Sensor Gerakan
+                        </button>
+                        )}
+                    </div>
+                    )}
 
-               {/* Controls */}
-               <div className="flex gap-4">
-                   <button 
-                        onClick={handleReset} 
-                        className="w-14 h-14 rounded-2xl bg-slate-800 text-red-400 flex items-center justify-center hover:bg-slate-700 hover:text-red-300 border-b-4 border-slate-900 active:border-b-0 active:translate-y-1 transition-all"
-                        title="Reset Counter"
-                        aria-label="Reset Counter"
-                    >
-                       <i className="fa-solid fa-rotate-left"></i>
-                   </button>
-                   <button onClick={() => setTarget(target === 33 ? 99 : 33)} className="px-6 h-14 rounded-2xl bg-slate-800 text-white font-bold hover:bg-slate-700 text-sm border-b-4 border-slate-900 active:border-b-0 active:translate-y-1 transition-all flex items-center gap-2">
-                       <i className="fa-solid fa-bullseye text-primary"></i>
-                       Target: {target}
-                   </button>
-               </div>
-           </div>
-       )}
-
-       {/* --- QIBLA UI --- */}
-       {activeTab === 'QIBLA' && (
-           <div className="flex-1 flex flex-col items-center justify-center space-y-8 animate-slide-up">
-               {!permissionGranted ? (
-                   <div className="text-center p-8 bg-white/5 rounded-3xl border border-white/10">
-                       <div className="w-20 h-20 bg-primary/30 rounded-full flex items-center justify-center mx-auto mb-6 text-primary animate-pulse">
-                            <i className="fa-solid fa-compass text-4xl"></i>
-                       </div>
-                       <h3 className="text-white font-bold text-lg mb-2">Enable Sensors</h3>
-                       <p className="text-slate-400 text-sm mb-6 max-w-xs mx-auto">We need access to your device's gyroscope to show the Qibla direction accurately.</p>
-                       <button onClick={startCompass} className="px-8 py-3 bg-primary hover:bg-primary-hover text-black font-bold rounded-xl shadow-lg shadow-primary/20 transition-all">Allow Access</button>
-                   </div>
-               ) : (
-                   <>
-                        <div className="relative w-80 h-80">
-                             <div className="absolute inset-0 bg-primary blur-[80px] opacity-10 rounded-full"></div>
-                             {/* Dynamic CSS variable for real-time compass rotation based on device orientation */}
-                             <div className={`w-full h-full rounded-full bg-gradient-to-br from-space-light to-black border-8 border-space-dark shadow-[0_20px_50px_-10px_rgba(0,0,0,0.5)] relative transition-transform duration-500 ease-out flex items-center justify-center overflow-hidden rotate-[var(--compass-heading)]`} 
-                             // eslint-disable-next-line
-                             style={{ '--compass-heading': `${-heading}deg` } as React.CSSProperties}
-                             >
-                                 <div className="absolute inset-0 rounded-full border border-white/5 m-4"></div>
-                                 <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                                     <i className="fa-solid fa-crosshairs text-9xl text-white"></i>
-                                 </div>
-                                 <div className="absolute top-4 left-1/2 -translate-x-1/2 text-red-500 font-bold text-xl drop-shadow-md">N</div>
-                                 <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-slate-500 font-bold text-lg">S</div>
-                                 <div className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-lg">W</div>
-                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 font-bold text-lg">E</div>
-                                 {/* Dynamic CSS variable for Qibla direction pointer */}
-                                 <div className={`absolute top-1/2 left-1/2 w-1 h-32 origin-bottom z-10 rotate-[var(--qibla-offset)]`} 
-                                 // eslint-disable-next-line
-                                 style={{ '--qibla-offset': `${QIBLA_OFFSET}deg` } as React.CSSProperties}
-                                 >
-                                     <div className="absolute -top-6 left-1/2 -translate-x-1/2 flex flex-col items-center">
-                                         <span className="text-2xl drop-shadow-lg filter">🕋</span>
-                                         <div className="w-1 h-20 bg-gradient-to-t from-transparent to-secondary rounded-full"></div>
-                                     </div>
-                                 </div>
-                             </div>
-                             <div 
-                                className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent rounded-full pointer-events-none"
-                            ></div>
-                             <div className="absolute -top-6 left-1/2 -translate-x-1/2 text-secondary text-4xl z-20 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)]"><i className="fa-solid fa-caret-down"></i></div>
+                    {!isLoading && !error && (qiblaAngle !== null && deviceHeading !== null) ? (
+                    <>
+                        {renderCompass()}
+                        <div className="text-center mt-8">
+                        <p className="text-slate-300 text-lg">
+                            Arah Kiblat: <span className="text-cyan-400 font-bold">{qiblaAngle?.toFixed(1) || '--'}°</span>
+                        </p>
+                        <p className="text-slate-500 text-sm">
+                            Heading Anda: <span className="font-mono">{deviceHeading?.toFixed(1) || '--'}°</span>
+                        </p>
+                        {isPointingQibla && (
+                            <motion.p
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            transition={{ duration: 0.3, repeat: Infinity, repeatType: "reverse" }}
+                            className="text-emerald-400 text-xl font-bold mt-4 animate-pulse"
+                            >
+                            <i className="fa-solid fa-check-circle mr-2"></i> TEPAT KE ARAH KIBLAT!
+                            </motion.p>
+                        )}
                         </div>
-                        <div className="text-center p-6 bg-slate-900/50 rounded-3xl border border-slate-800">
-                            <h3 className="text-slate-400 text-xs font-bold uppercase tracking-widest mb-1">Qibla Direction</h3>
-                            <p className="text-white font-mono text-4xl font-bold tracking-tighter">{Math.round(heading)}°</p>
+                    </>
+                    ) : (!isLoading && error && (
+                        <div className="text-center p-6 rounded-xl bg-slate-900/50 border border-red-500/30 shadow-lg max-w-sm">
+                            <p className="text-red-400 text-lg mb-4">Ralat!</p>
+                            <p className="text-slate-300">{error}</p>
                         </div>
-                   </>
-               )}
-           </div>
-       )}
+                    ))}
+                </div>
+            </motion.div>
+        ) : (
+            <motion.div 
+                key="prayer"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                className="w-full flex flex-col items-center"
+            >
+                {renderPrayerTimes()}
+            </motion.div>
+        )}
+      </AnimatePresence>
 
-       {/* --- PRAYER TIMES UI --- */}
-       {activeTab === 'PRAYER' && prayerData && (
-           <div className="space-y-4 animate-slide-up overflow-y-auto">
-               <div className="relative overflow-hidden bg-gradient-to-r from-primary-dark to-slate-900 p-8 rounded-3xl text-center shadow-lg border border-white/5">
-                   <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-20 mix-blend-overlay"></div>
-                   <h2 className="text-white font-serif text-3xl font-bold relative z-10">Prayer Times</h2>
-                   <div className="flex items-center justify-center gap-2 text-primary-light mt-2 relative z-10">
-                       <i className="fa-solid fa-location-dot text-xs"></i>
-                       <p className="text-sm font-bold">Kuala Lumpur</p>
-                   </div>
-               </div>
-               
-               <div className="bg-slate-900 rounded-3xl p-2 border border-slate-800">
-                   {Object.entries(prayerData).filter(([k]) => ['Fajr', 'Sunrise', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'].includes(k)).map(([name, time], idx) => (
-                       <div key={name} className="flex justify-between items-center p-4 rounded-2xl hover:bg-slate-800 transition-colors border-b border-slate-800 last:border-0 group">
-                           <div className="flex items-center gap-4">
-                               <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold shadow-inner ${name === 'Maghrib' ? 'bg-orange-900/40 text-orange-400' : 'bg-slate-800 text-slate-400'}`}>
-                                   <i className={`fa-regular ${name === 'Sunrise' ? 'fa-sun' : 'fa-clock'}`}></i>
-                               </div>
-                               <span className="text-white font-bold text-lg">{name}</span>
-                           </div>
-                           <div className="px-4 py-1 rounded-lg bg-slate-800 group-hover:bg-primary/30 transition-colors">
-                                <span className="text-primary font-mono font-bold text-lg">{time}</span>
-                           </div>
-                       </div>
-                   ))}
-               </div>
-           </div>
-       )}
-
-       {/* --- WHATSAPP 360 DASHBOARD (Command Center) --- */}
-       {activeTab === 'NOTIFY' && (
-           <div className="flex-1 flex flex-col h-full overflow-hidden animate-slide-up">
-               {/* 1. Status Bar */}
-               <div className="flex items-center justify-between bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-4">
-                   <div className="flex items-center gap-3">
-                       <div className={`w-3 h-3 rounded-full animate-pulse ${
-                           waStatus === 'CONNECTED' ? 'bg-green-500 shadow-[0_0_10px_#22c55e]' : 
-                           waStatus === 'QR_READY' ? 'bg-yellow-500' : 'bg-red-500'
-                       }`}></div>
-                       <div>
-                           <p className="text-xs font-bold text-white uppercase tracking-wider">
-                               {waStatus === 'CONNECTED' ? 'Bot Online' : waStatus === 'QR_READY' ? 'Scan QR' : 'Offline'}
-                           </p>
-                           <p className="text-[10px] text-slate-500">Instance: #QP-V6-NODE</p>
-                       </div>
-                   </div>
-                   {/* Top Bar Toggle Button (Optional Redundancy) */}
-                   <button 
-                    onClick={waStatus === 'DISCONNECTED' ? handleStartServer : handleStopServer} 
-                    className={`text-xs font-bold px-3 py-1.5 rounded-lg transition-colors border ${
-                        waStatus === 'DISCONNECTED' 
-                        ? 'bg-primary/30 border-primary/30 text-primary hover:bg-primary/50' 
-                        : 'bg-red-900/30 border-red-500/30 text-red-400 hover:bg-red-900/50'
-                    }`}
-                    title={waStatus === 'DISCONNECTED' ? 'Start Server' : 'Stop Server'}
-                    aria-label={waStatus === 'DISCONNECTED' ? 'Start WhatsApp Bot Server' : 'Stop WhatsApp Bot Server'}
-                    >
-                       <i className={`fa-solid ${waStatus === 'DISCONNECTED' ? 'fa-power-off' : 'fa-stop'} mr-2`}></i>
-                       {waStatus === 'DISCONNECTED' ? 'Start' : 'Stop'}
-                   </button>
-               </div>
-
-               {/* 2. Main Content Area */}
-               <div className="flex-1 flex flex-col md:flex-row gap-4 overflow-hidden">
-                   
-                   {/* Left Col: Controls & Lifecycle */}
-                   <div className="flex-1 bg-slate-950 border border-slate-800 rounded-2xl p-6 flex flex-col items-center justify-center relative overflow-hidden">
-                       
-                       {/* STATE: DISCONNECTED */}
-                       {waStatus === 'DISCONNECTED' && (
-                           <div className="text-center animate-fade-in z-10">
-                               <div className="w-20 h-20 bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 shadow-inner">
-                                   <i className="fa-brands fa-whatsapp text-4xl text-slate-600"></i>
-                               </div>
-                               <h3 className="text-white font-bold text-lg mb-2">WhatsApp Bot Server</h3>
-                               <p className="text-sm text-slate-500 mb-6">Start the server to generate a QR code.</p>
-                               
-                               <button 
-                                onClick={handleStartServer}
-                                className="px-8 py-3 bg-primary hover:bg-primary-hover text-white font-bold rounded-xl shadow-lg shadow-primary/20 transition-all transform hover:-translate-y-1"
-                                title="Start Server"
-                                aria-label="Start WhatsApp Bot Server"
-                               >
-                                   <i className="fa-solid fa-power-off mr-2"></i> Start Server
-                               </button>
-                           </div>
-                       )}
-
-                       {/* STATE: QR READY */}
-                       {waStatus === 'QR_READY' && qrCodeData && (
-                           <div className="text-center animate-fade-in z-10">
-                               <div className="bg-white p-3 rounded-xl mb-4 shadow-[0_0_30px_rgba(255,255,255,0.1)] mx-auto w-fit">
-                                   <img src={qrCodeData} alt="QR Code" className="w-40 h-40" />
-                               </div>
-                               <p className="text-xs text-slate-400 mb-6">Open WhatsApp &gt; Linked Devices &gt; Scan</p>
-                               
-                               <button 
-                                onClick={handleSimulateScan}
-                                className="px-6 py-3 bg-gradient-to-r from-green-600 to-primary text-white font-bold rounded-xl shadow-lg transition-all hover:brightness-110 flex items-center gap-2 mx-auto"
-                                title="Simulate QR Code Scan"
-                                aria-label="Simulate QR Code Scan"
-                               >
-                                   <i className="fa-solid fa-qrcode"></i> Simulate Scan QR Code
-                               </button>
-                           </div>
-                       )}
-
-                       {/* STATE: CONNECTED */}
-                       {waStatus === 'CONNECTED' && (
-                           <div className="w-full space-y-4 animate-fade-in z-10">
-                               <div className="flex items-center gap-3 p-4 bg-green-900/20 border border-green-500/20 rounded-xl mb-4">
-                                   <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center border border-green-500/30 shadow-[0_0_15px_rgba(34,197,94,0.2)]">
-                                        <i className="fa-solid fa-check text-green-400 text-xl"></i>
-                                   </div>
-                                   <div>
-                                       <p className="text-white font-bold text-lg">Bot Connected</p>
-                                       <p className="text-xs text-green-400">Syncing messages...</p>
-                                   </div>
-                               </div>
-
-                               <div className="space-y-2 mb-6">
-                                   <div className="bg-slate-900/50 p-3 rounded-lg flex justify-between items-center border border-slate-800">
-                                       <span className="text-xs text-slate-400">Battery Level</span>
-                                       <span className="text-xs text-green-400 font-bold">98%</span>
-                                   </div>
-                                   <div className="bg-slate-900/50 p-3 rounded-lg flex justify-between items-center border border-slate-800">
-                                       <span className="text-xs text-slate-400">Uptime</span>
-                                       <span className="text-xs text-white font-bold">00:01:24</span>
-                                   </div>
-                               </div>
-
-                               <button 
-                                onClick={handleStopServer}
-                                className="w-full py-3 bg-red-900/20 hover:bg-red-900/40 text-red-400 font-bold rounded-xl border border-red-900/50 transition-colors flex items-center justify-center gap-2"
-                                title="Stop Server"
-                                aria-label="Stop WhatsApp Bot Server"
-                               >
-                                   <i className="fa-solid fa-power-off"></i> Stop Server
-                               </button>
-                           </div>
-                       )}
-
-                       {/* BG Decoration */}
-                       <div className="absolute inset-0 bg-maze opacity-5 pointer-events-none"></div>
-                   </div>
-
-                   {/* Right Col: Terminal Logs & Broadcast */}
-                   <div className="flex-1 flex flex-col gap-4">
-                       
-                       {/* Terminal */}
-                       <div className="flex-1 bg-black rounded-2xl border border-slate-800 p-4 font-mono text-xs overflow-y-auto relative shadow-inner min-h-[200px]">
-                           <div className="absolute top-2 right-2 text-[10px] text-slate-600 uppercase font-bold">System Log</div>
-                           <div className="space-y-1.5 pb-2">
-                               {logs.length === 0 && <span className="text-slate-700">Waiting for server start...</span>}
-                               {logs.map((log) => (
-                                   <div key={log.id} className="break-words">
-                                       <span className="text-slate-500">[{log.timestamp}]</span>{' '}
-                                       <span className={`font-bold ${
-                                           log.type === 'INFO' ? 'text-blue-400' :
-                                           log.type === 'MSG_IN' ? 'text-yellow-400' :
-                                           log.type === 'MSG_OUT' ? 'text-green-400' : 'text-red-500'
-                                       }`}>
-                                           {log.type}
-                                       </span>
-                                       {' '}<span className="text-slate-300">{log.message}</span>
-                                   </div>
-                               ))}
-                               <div ref={logsEndRef} />
-                           </div>
-                       </div>
-
-                       {/* Broadcast Input */}
-                       <div className="bg-slate-900 p-3 rounded-2xl border border-slate-800">
-                           <div className="flex gap-2">
-                               <input 
-                                    type="text" 
-                                    disabled={waStatus !== 'CONNECTED'}
-                                    value={broadcastMsg}
-                                    onChange={(e) => setBroadcastMsg(e.target.value)}
-                                    placeholder="Broadcast message to all..."
-                                    className="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-white outline-none focus:border-primary text-xs disabled:opacity-50"
-                                    onKeyDown={(e) => e.key === 'Enter' && handleBroadcast()}
-                                    aria-label="Broadcast message input"
-                               />
-                               <button 
-                                onClick={handleBroadcast}
-                                disabled={waStatus !== 'CONNECTED' || !broadcastMsg}
-                                className="bg-primary disabled:bg-slate-700 hover:bg-primary-hover text-white w-10 h-10 rounded-lg flex items-center justify-center transition-colors shadow-lg"
-                                title="Send Broadcast"
-                                aria-label="Send Broadcast Message"
-                               >
-                                   <i className="fa-solid fa-paper-plane"></i>
-                               </button>
-                           </div>
-                           <p className="text-[10px] text-slate-500 mt-2 pl-1">
-                               Target: <span className="text-slate-300">142 Subscribers</span> • Delay: <span className="text-slate-300">2s (Anti-Ban)</span>
-                           </p>
-                       </div>
-                   </div>
-               </div>
-           </div>
-       )}
+      {/* Footer Info */}
+      <div className="mt-8 text-center text-slate-600 text-[10px]">
+        <p>Lokasi: {latitude?.toFixed(4) || '--'}, {longitude?.toFixed(4) || '--'}</p>
+        <p>Waktu Solat: JAKIM Standard (Shafi'i)</p>
+      </div>
     </div>
   );
 };

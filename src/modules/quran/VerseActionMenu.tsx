@@ -13,6 +13,7 @@ interface VerseActionMenuProps {
   onTafsir?: (verse: QuranVerse) => void;
   onNotes?: (verse: QuranVerse) => void;
   onAddToCollection?: (verse: QuranVerse) => void;
+  onAskUstaz?: (verse: QuranVerse) => void;
   isBookmarked?: boolean;
   hasNote?: boolean;
 }
@@ -28,6 +29,7 @@ const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
   onTafsir,
   onNotes,
   onAddToCollection,
+  onAskUstaz,
   isBookmarked = false,
   hasNote = false,
 }) => {
@@ -48,6 +50,13 @@ const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
   }, [isOpen, onClose]);
 
   const menuItems = [
+    ...(onAskUstaz ? [{
+      id: 'ask-ustaz',
+      label: 'Tanya Ustaz AI',
+      icon: 'fa-robot',
+      onClick: () => { onAskUstaz(verse); onClose(); },
+      color: 'text-cyan-400'
+    }] : []),
     {
       id: 'copy',
       label: 'Salin Ayat',

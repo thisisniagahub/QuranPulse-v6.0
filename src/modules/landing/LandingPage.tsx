@@ -4,6 +4,7 @@ import { PulseWave, Starfield } from './components/BackgroundElements';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { AdvancedTools } from './components/AdvancedTools';
 import { FloatingOrbs } from './components/FloatingOrbs';
+import { useNavigate } from 'react-router-dom';
 import { AnimatedStats } from './components/AnimatedStats';
 import { ComparisonSection } from './components/ComparisonSection';
 import { GlowFooter } from './components/GlowFooter';
@@ -20,6 +21,7 @@ interface LandingPageProps {
 const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   const [spotsLeft, setSpotsLeft] = useState(47);
   const [showStickyCTA, setShowStickyCTA] = useState(false);
+  const navigate = useNavigate();
 
   // Fake live counter to create urgency
   useEffect(() => {
@@ -83,6 +85,15 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
       {/* --- NEW HERO SECTION --- */}
       <HeroSection onGetStarted={onGetStarted} spotsLeft={spotsLeft} />
+        {/* IQRA Digital Books Button */}
+        <div className="flex justify-center mt-8">
+          <button
+            onClick={() => navigate('/iqra')}
+            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full hover:shadow-lg transition-shadow"
+          >
+            Explore Digital Iqra Books
+          </button>
+        </div>
 
       {/* --- ANIMATED STATS SECTION --- */}
       <AnimatedStats />

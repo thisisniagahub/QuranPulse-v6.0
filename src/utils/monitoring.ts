@@ -26,7 +26,7 @@ export const initMonitoring = () => {
       integrations: [
         Sentry.browserTracingIntegration({
           // URLs for distributed tracing
-          tracePropagationTargets: [
+          tracingOrigins: [
             "localhost",
             /^https:\/\/api\.quranpulse\.com/,
             /^https:\/\/.*\.supabase\.co/,

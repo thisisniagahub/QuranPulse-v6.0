@@ -72,6 +72,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
   return (
     <section className="relative z-10 min-h-[90vh] flex flex-col lg:flex-row items-center justify-center px-4 sm:px-6 pt-24 sm:pt-32 pb-16 sm:pb-20 max-w-7xl mx-auto w-full gap-12 lg:gap-24 overflow-visible">
         
+        {/* VIDEO BACKGROUND - CYBER PULSE ENHANCED */}
+        <div className="absolute inset-0 w-screen h-full left-[50%] -translate-x-[50%] -z-20 overflow-hidden bg-slate-950">
+            {/* 1. Base Video Layer */}
+            <video
+                autoPlay
+                loop
+                muted
+                playsInline
+                poster="/images/hero-poster.jpg"
+                className="w-full h-full object-cover opacity-40 scale-105 saturate-50 contrast-125"
+            >
+                <source src="/videos/hero-bg.mp4" type="video/mp4" />
+            </video>
+
+            {/* 2. Cyber Grid Overlay (CSS Pattern) */}
+            <div className="absolute inset-0 opacity-20 pointer-events-none" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(6,182,212,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+
+            {/* 3. Gradient Stack for Readability & Depth */}
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-slate-950/90 to-slate-950/40"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/60"></div>
+            
+            {/* 4. Ambient Glow (Cyan tint for Cyber Theme) */}
+            <div className="absolute top-0 right-0 w-[50%] h-[50%] bg-cyan-500/10 blur-[120px] rounded-full mix-blend-screen opacity-50 animate-pulse-slow"></div>
+        </div>
+
         {/* Hidden Audio Element for Mockup */}
         <audio ref={audioRef} src="https://verses.quran.com/Alafasy/mp3/067001.mp3" onEnded={() => setIsPlaying(false)} />
 

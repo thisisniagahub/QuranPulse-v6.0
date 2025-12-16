@@ -39,19 +39,44 @@ export const getAllChapters = async (): Promise<QuranChapter[]> => {
       .select('*')
       .order('number');
     
-    // FALLBACK MOCK DATA (If DB is empty)
+    // FALLBACK: Fetch from Quran.com API if DB is empty
     if (error || !data || data.length === 0) {
-        console.warn("⚠️ Using Fallback Mock Data for Chapters");
-        return [
-            { id: 1, revelation_place: "makkah", revelation_order: 5, bismillah_pre: false, name_simple: "Al-Fatiha", name_complex: "Al-Fātiḥah", name_arabic: "الفاتحة", verses_count: 7, translated_name: { language_name: 'english', name: "The Opener" } },
-            { id: 2, revelation_place: "madinah", revelation_order: 87, bismillah_pre: true, name_simple: "Al-Baqarah", name_complex: "Al-Baqarah", name_arabic: "البقرة", verses_count: 286, translated_name: { language_name: 'english', name: "The Cow" } },
-            { id: 18, revelation_place: "makkah", revelation_order: 69, bismillah_pre: true, name_simple: "Al-Kahf", name_complex: "Al-Kahf", name_arabic: "الكهف", verses_count: 110, translated_name: { language_name: 'english', name: "The Cave" } },
-            { id: 36, revelation_place: "makkah", revelation_order: 41, bismillah_pre: true, name_simple: "Ya-Sin", name_complex: "Yā-Sīn", name_arabic: "يس", verses_count: 83, translated_name: { language_name: 'english', name: "Ya Sin" } },
-            { id: 67, revelation_place: "makkah", revelation_order: 77, bismillah_pre: true, name_simple: "Al-Mulk", name_complex: "Al-Mulk", name_arabic: "الملك", verses_count: 30, translated_name: { language_name: 'english', name: "The Sovereignty" } },
-            { id: 112, revelation_place: "makkah", revelation_order: 112, bismillah_pre: true, name_simple: "Al-Ikhlas", name_complex: "Al-Ikhlāṣ", name_arabic: "الإخلاص", verses_count: 4, translated_name: { language_name: 'english', name: "The Sincerity" } },
-            { id: 113, revelation_place: "makkah", revelation_order: 113, bismillah_pre: true, name_simple: "Al-Falaq", name_complex: "Al-Falaq", name_arabic: "الفلق", verses_count: 5, translated_name: { language_name: 'english', name: "The Daybreak" } },
-            { id: 114, revelation_place: "makkah", revelation_order: 114, bismillah_pre: true, name_simple: "An-Nas", name_complex: "An-Nās", name_arabic: "الناس", verses_count: 6, translated_name: { language_name: 'english', name: "Mankind" } },
-        ];
+        console.warn("⚠️ Database empty or error. Fetching chapters from Quran.com API...");
+        try {
+            const response = await fetch(`${BASE_URL}/chapters`);
+            if (!response.ok) throw new Error('API Error');
+            const apiData = await response.json();
+            
+            const apiChapters = apiData.chapters.map((s: any) => ({
+                id: s.id,
+                revelation_place: s.revelation_place,
+                revelation_order: s.revelation_order,
+                bismillah_pre: s.bismillah_pre,
+                name_simple: s.name_simple,
+                name_complex: s.name_complex,
+                name_arabic: s.name_arabic,
+                verses_count: s.verses_count,
+                translated_name: s.translated_name
+            }));
+            
+            // Cache them so we don't hit API again
+            cache.chapters = apiChapters;
+            return apiChapters;
+
+        } catch (apiErr) {
+            console.error("❌ Fallback API failed:", apiErr);
+            // LAST RESORT: Hardcoded Mock Data
+            return [
+                { id: 1, revelation_place: "makkah", revelation_order: 5, bismillah_pre: false, name_simple: "Al-Fatiha", name_complex: "Al-Fātiḥah", name_arabic: "الفاتحة", verses_count: 7, translated_name: { language_name: 'english', name: "The Opener" } },
+                { id: 2, revelation_place: "madinah", revelation_order: 87, bismillah_pre: true, name_simple: "Al-Baqarah", name_complex: "Al-Baqarah", name_arabic: "البقرة", verses_count: 286, translated_name: { language_name: 'english', name: "The Cow" } },
+                { id: 18, revelation_place: "makkah", revelation_order: 69, bismillah_pre: true, name_simple: "Al-Kahf", name_complex: "Al-Kahf", name_arabic: "الكهف", verses_count: 110, translated_name: { language_name: 'english', name: "The Cave" } },
+                { id: 36, revelation_place: "makkah", revelation_order: 41, bismillah_pre: true, name_simple: "Ya-Sin", name_complex: "Yā-Sīn", name_arabic: "يس", verses_count: 83, translated_name: { language_name: 'english', name: "Ya Sin" } },
+                { id: 67, revelation_place: "makkah", revelation_order: 77, bismillah_pre: true, name_simple: "Al-Mulk", name_complex: "Al-Mulk", name_arabic: "الملك", verses_count: 30, translated_name: { language_name: 'english', name: "The Sovereignty" } },
+                { id: 112, revelation_place: "makkah", revelation_order: 112, bismillah_pre: true, name_simple: "Al-Ikhlas", name_complex: "Al-Ikhlāṣ", name_arabic: "الإخلاص", verses_count: 4, translated_name: { language_name: 'english', name: "The Sincerity" } },
+                { id: 113, revelation_place: "makkah", revelation_order: 113, bismillah_pre: true, name_simple: "Al-Falaq", name_complex: "Al-Falaq", name_arabic: "الفلق", verses_count: 5, translated_name: { language_name: 'english', name: "The Daybreak" } },
+                { id: 114, revelation_place: "makkah", revelation_order: 114, bismillah_pre: true, name_simple: "An-Nas", name_complex: "An-Nās", name_arabic: "الناس", verses_count: 6, translated_name: { language_name: 'english', name: "Mankind" } },
+            ];
+        }
     }
     
     const chapters = data.map((s: any) => ({
@@ -155,6 +180,7 @@ const getVersesFromAPI = async (chapterId: number, translationId: number = 131):
         id: v.id,
         verse_key: v.verse_key,
         text_uthmani: v.text_uthmani,
+        page_number: v.page_number,
         
         // ✅ Translations (Meaning)
         translations: meaningResource ? [{
@@ -278,12 +304,15 @@ export const getChapterAudio = async (chapterId: number, reciterId: number = 7):
 
 export const getFeaturedReciters = (): Reciter[] => [
   { id: 7, name: "Mishary Rashid Alafasy", style: "Murattal", recitation_style: "Beautiful and Clear" },
+  { id: 13, name: "Ali Al-Hudaifi", style: "Murattal", recitation_style: "Madinah Standard (Classic)" },
+  { id: 14, name: "Ibrahim Al-Akhdar", style: "Murattal", recitation_style: "Madinah Standard (Classic)" },
+  { id: 1, name: "Muhammad Ayyub", style: "Murattal", recitation_style: "Heartfelt Madinah Style" },
+  { id: 2, name: "Abdullah Basfar", style: "Murattal", recitation_style: "Popular Saudi Reciter" },
   { id: 3, name: "Abdul Rahman Al-Sudais", style: "Murattal", recitation_style: "Imam of Masjid al-Haram" },
   { id: 4, name: "Abu Bakr Al-Shatri", style: "Murattal", recitation_style: "Heartfelt Recitation" },
   { id: 6, name: "Mahmoud Khalil Al-Hussary", style: "Murattal (Mujawwad)", recitation_style: "Classical Egyptian Style" },
   { id: 10, name: "Saud Al-Shuraim", style: "Murattal", recitation_style: "Imam of Masjid al-Haram" },
   { id: 5, name: "Hani Ar-Rifai", style: "Murattal", recitation_style: "Modern Clear Recitation" },
-  { id: 2, name: "Abdullah Basfar", style: "Murattal", recitation_style: "Popular Saudi Reciter" },
   { id: 11, name: "Maher Al Muaiqly", style: "Murattal", recitation_style: "Imam of Masjid al-Haram" },
 ];
 

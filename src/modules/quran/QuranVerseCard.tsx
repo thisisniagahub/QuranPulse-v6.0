@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { QuranVerse, QuranWord } from '../../types';
 import VerseActionMenu from './VerseActionMenu';
 import TajwidDisplay, { detectTajwidRules } from './TajwidDisplay';
-import { formatTransliteration, transliteratePronunciation, syllabifyPronunciation, transliterate99 } from '../../utils/transliterationConverter';
+import { formatTransliteration, transliteratePronunciation, syllabifyPronunciation, transliterate99, formatTransliterationJAKIM, getDualTransliteration } from '../../utils/transliterationConverter';
 import { useRumiTTS } from '../../utils/rumiTTS';
 import { getTajwidHints, TajwidHint } from '../../utils/tajwidRumiHints';
 
@@ -66,21 +66,26 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
   const [practiceMode, setPracticeMode] = useState(false);
   const [repeatCount, setRepeatCount] = useState(3);
   const [currentRepeat, setCurrentRepeat] = useState(0);
-  const [rumiMode, setRumiMode] = useState<'malaysian' | '99'>('malaysian'); // Toggle between modes
+  const [translitMode, setTranslitMode] = useState<'academic' | 'jakim'>('jakim'); // Default JAKIM/KDN standard for Malaysia
   const verseNumber = verse.verse_key.split(':')[1];
   const arabicVerseNumber = toArabicNumerals(verseNumber);
   
   // Rumi TTS Hook
   const { isPlaying: isTTSPlaying, currentWordIndex: ttsWordIndex, speak: speakRumi, stop: stopRumi, isSupported: isTTSSupported } = useRumiTTS();
   
-  // Get words for TTS and Tajwid - USE OUR JAKIM CONVERTER, not API data!
+  // Get words for TTS and Tajwid - USE OUR CONVERTERS, not API data!
   const arabicWords = verse.words?.filter(w => w.char_type_name !== 'end').map(w => w.text_uthmani) || [];
   
-  // Generate JAKIM-standard Rumi from Arabic (not from API transliteration!)
-  const rumiWords = arabicWords.map(arabic => formatTransliteration(arabic));
+  // Generate BOTH transliteration formats for each word
+  const academicWords = arabicWords.map((arabic, i) => {
+    const result = formatTransliteration(arabic);
+    if (i < 5) console.log(`[DEBUG] Word ${i}: "${arabic}" => "${result}"`);
+    return result;
+  });
+  const jakimWords = arabicWords.map(arabic => formatTransliterationJAKIM(arabic));
   
-  // Generate 99% ACCURACY mode for each word - PRECISION ARABIC!
-  const words99 = arabicWords.map(arabic => transliterate99(arabic).text);
+  // Current mode words for display
+  const displayWords = translitMode === 'academic' ? academicWords : jakimWords;
   
   // Generate 99% ACCURACY mode with Tajwid markers (full verse)
   const fullVerseArabic = arabicWords.join(' ');
@@ -89,6 +94,9 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
   const tajwidMarkers = result99.tajwid;
   const pronunciationNotes = result99.notes;
   
+  // Generate DUAL transliteration for full verse
+  const dualTranslit = getDualTransliteration(fullVerseArabic);
+  
   // Get Tajwid hints for each word
   const tajwidHints = getTajwidHints(arabicWords);
   
@@ -96,7 +104,8 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
     if (isTTSPlaying) {
       stopRumi();
     } else {
-      speakRumi(rumiWords.join(' '));
+      // Use current display mode for TTS
+      speakRumi(displayWords.join(' '));
     }
   };
   
@@ -130,7 +139,7 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
       ref={verseRef}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`py-6 px-4 border-b border-slate-800/30 transition-all duration-500 ${
+      className={`py-10 px-6 border-b border-slate-800/50 transition-all duration-500 ${
         isPlaying 
           ? 'bg-gradient-to-r from-cyan-900/10 via-cyan-900/5 to-transparent border-l-4 border-l-cyan-500 shadow-[0_0_30px_rgba(6,182,212,0.1)] scale-[1.01] z-10 rounded-r-xl' 
           : 'hover:bg-slate-900/30'
@@ -224,6 +233,7 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
               onTafsir={onTafsir}
               onNotes={onNotes}
               onAddToCollection={onAddToCollection}
+              onAskUstaz={onOpenStudio} // Link to Ustaz AI Chat
               isBookmarked={isBookmarked}
               hasNote={hasNote}
             />
@@ -256,13 +266,13 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                 /* @ts-ignore: location is valid */
                 data-word-location={word.location}
                 onClick={(e) => { e.stopPropagation(); onWordClick(word, e); }}
-                className={`flex flex-col items-center gap-2 rounded-lg cursor-pointer transition-all duration-200 group relative ${
+                className={`flex flex-col items-center gap-1 rounded-xl p-2 cursor-pointer transition-all duration-200 group relative min-w-[70px] ${
                   highlightedWordIndex === word.position
-                    ? 'scale-105'
-                    : ''
+                    ? 'scale-105 bg-cyan-500/10 ring-1 ring-cyan-500/30'
+                    : 'hover:bg-slate-800/50'
                 }`}
               >
-                {/* Arabic Glyph */}
+                {/* 1. Arabic Glyph - TOP */}
                 <span 
                   className={`font-uthmani text-center leading-[1.8] ${
                     highlightedWordIndex === word.position
@@ -276,17 +286,24 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                   {word.text_uthmani}
                 </span>
                 
-                {/* Word Tooltip/Translation Container */}
-                <div className="flex flex-col items-center gap-0.5 opacity-60 group-hover:opacity-100 transition-opacity">
-                    {/* Translation only - Rumi moved to 99% mode box below */}
-                    {word.translation && (
-                    <p className="font-translation text-[11px] text-slate-300 max-w-[80px] text-center leading-tight">
-                        {typeof word.translation === 'string' 
-                        ? word.translation 
-                        : word.translation.text}
-                    </p>
-                    )}
-                </div>
+                {/* 2. Rumi Transliteration - MIDDLE (JAKIM Standard) */}
+                {showTransliteration && (
+                  <p className={`font-serif text-[10px] text-center leading-tight ${
+                    highlightedWordIndex === word.position ? 'text-emerald-300' : 'text-emerald-400/70'
+                  }`}>
+                    {/* Use API transliteration if available, else our JAKIM converter */}
+                    {word.transliteration?.text || formatTransliterationJAKIM(word.text_uthmani)}
+                  </p>
+                )}
+                
+                {/* 3. Translation - BOTTOM */}
+                {showTranslation && (
+                  <p className={`font-sans text-[9px] text-center leading-tight max-w-[80px] ${
+                    highlightedWordIndex === word.position ? 'text-slate-200' : 'text-slate-400'
+                  }`}>
+                    {word.translation?.text || '—'}
+                  </p>
+                )}
               </div>
             ))}
             {/* End of Ayah Marker - Modern Pantone Design (Perkata View) */}
@@ -329,7 +346,7 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                  className={`font-uthmani transition-all duration-200 cursor-pointer rounded px-0.5
                    ${highlightedWordIndex === word.position 
                      ? 'text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)] scale-110' 
-                     : 'text-white/90 hover:text-white hover:bg-white/5'
+                     : 'text-white hover:bg-white/10'
                    }
                    ${activeWord?.id === word.id ? 'text-amber-400' : ''}
                  `}
@@ -368,117 +385,34 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
         )}
       </div>
 
-      {/* Transliteration (Rumi) - Interactive Premium Display with Tajwid */}
-      {showTransliteration && (
-        <div className="mb-4 px-4 bg-gradient-to-br from-slate-900/40 to-emerald-900/10 py-4 rounded-2xl border border-emerald-500/10 mx-2" dir="ltr">
-            {/* Control Bar */}
-            <div className="flex items-center justify-center gap-2 mb-3 flex-wrap">
-                {/* TTS Button */}
-                {isTTSSupported && (
-                    <button
-                        onClick={handleRumiTTS}
-                        className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
-                            isTTSPlaying
-                                ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/30'
-                                : 'bg-slate-800 text-emerald-400 hover:bg-emerald-500/20'
-                        }`}
-                    >
-                        <i className={`fa-solid ${isTTSPlaying ? 'fa-stop' : 'fa-volume-high'}`}></i>
-                        {isTTSPlaying ? 'Stop' : 'Baca Rumi'}
-                    </button>
-                )}
-                
-                {/* Practice Mode Button */}
-                <button
-                    onClick={practiceMode ? () => { setPracticeMode(false); setCurrentRepeat(0); } : startPractice}
-                    className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
-                        practiceMode
-                            ? 'bg-amber-500 text-black shadow-lg shadow-amber-500/30'
-                            : 'bg-slate-800 text-amber-400 hover:bg-amber-500/20'
-                    }`}
-                >
-                    <i className={`fa-solid ${practiceMode ? 'fa-times' : 'fa-repeat'}`}></i>
-                    {practiceMode ? `${currentRepeat}/${repeatCount}` : 'Latihan'}
-                </button>
-                
-                {/* Repeat selector (show when in practice mode) */}
-                {practiceMode && (
-                    <div className="flex items-center gap-1">
-                        {[3, 5, 10].map(n => (
-                            <button
-                                key={n}
-                                onClick={() => setRepeatCount(n)}
-                                className={`w-6 h-6 rounded-full text-[10px] font-bold transition-all ${
-                                    repeatCount === n
-                                        ? 'bg-amber-500 text-black'
-                                        : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                                }`}
-                            >
-                                {n}x
-                            </button>
-                        ))}
-                    </div>
-                )}
-            </div>
-            
-            {/* 99% RUMI - Full Verse Display with Tajwid Markers */}
-            <div className="mb-4 p-4 bg-gradient-to-r from-amber-500/10 to-orange-500/10 rounded-xl border border-amber-500/20">
-                <div className="flex items-center justify-center gap-2 mb-3">
-                    <span className="text-xs text-amber-400/80 font-medium">🎯 99% Rumi</span>
-                    {tajwidMarkers.length > 0 && (
-                        <span className="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 text-[9px]">
-                            {tajwidMarkers.length} Tajwid
-                        </span>
-                    )}
-                </div>
-                
-                {/* Full Verse Pronunciation - CORRECT 99% OUTPUT */}
-                <p className="text-center font-serif text-lg text-amber-200 leading-relaxed" style={{ letterSpacing: '0.05em' }}>
-                    {pronunciation99}
-                </p>
-                
-                {/* Pronunciation Notes */}
-                {pronunciationNotes.length > 0 && (
-                    <div className="border-t border-amber-500/20 pt-2 mt-3">
-                        <p className="text-[10px] text-amber-400/60 font-bold mb-1 text-center">NOTA SEBUTAN:</p>
-                        <div className="flex flex-wrap justify-center gap-2 text-[9px] text-amber-300/60">
-                            {pronunciationNotes.slice(0, 4).map((note, i) => (
-                                <span key={i}>• {note}</span>
-                            ))}
-                        </div>
-                    </div>
-                )}
-            </div>
-            
-            {/* Practice Mode Completion */}
-            {practiceMode && currentRepeat >= repeatCount && (
-                <div className="mt-4 p-3 bg-gradient-to-r from-amber-500/20 to-emerald-500/20 rounded-xl text-center border border-amber-500/30">
-                    <span className="text-2xl">🎉</span>
-                    <p className="text-amber-400 font-bold text-sm mt-1">Tahniah! Anda telah selesai {repeatCount}x ulangan</p>
-                    <button 
-                        onClick={() => { setPracticeMode(false); setCurrentRepeat(0); }}
-                        className="mt-2 px-4 py-1 bg-emerald-500 text-black text-xs font-bold rounded-full"
-                    >
-                        Selesai
-                    </button>
-                </div>
-            )}
+      {/* Minimalist Rumi Subtitle - Clean & Simple */}
+      {showTransliteration && !showWordByWord && (
+        <div className="mb-4 px-2 text-right dir-ltr" dir="ltr">
+            <p className={`font-serif text-base sm:text-lg italic tracking-wide leading-relaxed transition-all duration-500 ${
+                isPlaying 
+                    ? 'text-emerald-200 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)] scale-[1.01]' 
+                    : 'text-emerald-400/70'
+            }`}>
+                {translitMode === 'jakim' ? dualTranslit.jakim : dualTranslit.academic}
+            </p>
         </div>
       )}
 
-      {/* Translation */}
+      {/* Translation - Contextual Meaning (Always visible if enabled) */}
       {showTranslation && verse.translations?.[0] && (
-        <div className="text-center px-4 mx-2">
-          <p className="font-translation text-slate-300 text-base leading-relaxed">
+        <div className="text-center px-4 mx-2 mt-4 pt-4 border-t border-slate-800/50">
+          <p className={`font-translation text-base leading-relaxed transition-colors duration-500 ${
+              isPlaying ? 'text-white drop-shadow-sm font-medium' : 'text-slate-300'
+          }`}>
             {verse.translations[0].text.replace(/<sup.*?<\/sup>/g, "").replace(/<[^>]*>/g, "")}
           </p>
         </div>
       )}
 
-      {/* Tajwid Display */}
-      {showTajwid && detectedRules.length > 0 && (
+      {/* Tajwid Display - Disabled per user request (Cleaner View) */}
+      {/* {showTajwid && detectedRules.length > 0 && (
         <TajwidDisplay detectedRules={detectedRules} />
-      )}
+      )} */}
 
     </motion.div>
   );

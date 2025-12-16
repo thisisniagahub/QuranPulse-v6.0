@@ -3,7 +3,15 @@
  * Uses Web Speech API to read Rumi transliteration for Quran learning
  */
 
-import { transliterate } from './transliterationConverter';
+import { formatTransliteration, transliterate } from './transliterationConverter';
+
+/**
+ * Process Arabic text to clean Rumi for TTS.
+ * Ensures no Arabic characters are passed to the speech engine.
+ */
+export const processArabicForTTS = (arabic: string): string => {
+  return formatTransliteration(arabic);
+};
 
 export interface RumiTTSOptions {
   rate?: number;      // 0.1 to 10 (default: 0.8 for clear pronunciation)
@@ -80,9 +88,8 @@ class RumiTTSEngine {
     this.isPlaying = true;
     this.isPaused = false;
 
-    // Create utterance with JAKIM TTS-optimized Rumi
-    const ttsText = transliterate(text, { mode: 'tts' });
-    this.utterance = new SpeechSynthesisUtterance(ttsText);
+    // Create utterance with the Rumi text
+    this.utterance = new SpeechSynthesisUtterance(text);
     this.utterance.rate = options.rate ?? 0.8;
     this.utterance.pitch = options.pitch ?? 1;
     this.utterance.volume = options.volume ?? 1;

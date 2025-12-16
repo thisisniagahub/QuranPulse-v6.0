@@ -1,210 +1,103 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Coordinates, CalculationMethod, PrayerTimes, Qibla } from 'adhan';
+import { useState, useEffect } from 'react';
+import { Coordinates, CalculationMethod, PrayerTimes, Madhab } from 'adhan';
 
-// Types
 export interface PrayerTimeData {
-  fajr: string;
-  sunrise: string;
-  dhuhr: string;
-  asr: string;
-  maghrib: string;
-  isha: string;
-  [key: string]: string;
+  fajr: Date;
+  sunrise: Date;
+  dhuhr: Date;
+  asr: Date;
+  maghrib: Date;
+  isha: Date;
+  nextPrayer: string;
+  nextPrayerTime: Date;
+  timeRemaining: string; // "02:15:00"
+  hijriDate: string;
+  locationName: string;
 }
 
-export interface PrayerTimesState {
-  times: PrayerTimeData | null;
-  qibla: number;
-  nextPrayer: {
-    name: string;
-    time: string;
-    remaining: string;
-  } | null;
-  loading: boolean;
-  error: string | null;
-  source: 'API' | 'LOCAL' | null;
-  hijriDate: string | null;
-}
+export const usePrayerTimes = (latitude: number | null, longitude: number | null) => {
+  const [data, setData] = useState<PrayerTimeData | null>(null);
+  const [loading, setLoading] = useState(true);
 
-// Constants
-const JAKIM_METHOD_ID = 3; // Aladhan API ID for JAKIM
-const DEFAULT_COORDS = { lat: 3.1390, lng: 101.6869 }; // Kuala Lumpur
-
-// Helper: Calculate Next Prayer (Pure Function)
-const calculateNextPrayer = (times: PrayerTimeData) => {
-  const now = new Date();
-  const timeToDate = (timeStr: string) => {
-    if (!timeStr) return new Date(); // Safety fallback
-    const [hours, minutes] = timeStr.split(':').map(Number);
-    const date = new Date();
-    date.setHours(hours, minutes, 0, 0);
-    return date;
-  };
-
-  const prayerOrder = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
-  let next = null;
-
-  for (const prayer of prayerOrder) {
-    const prayerDate = timeToDate(times[prayer as keyof PrayerTimeData]);
-    if (prayerDate > now) {
-      next = { name: prayer, time: times[prayer as keyof PrayerTimeData], date: prayerDate };
-      break;
-    }
-  }
-
-  // If no next prayer today, it's Fajr tomorrow
-  if (!next) {
-    next = { name: 'fajr', time: times.fajr, date: timeToDate(times.fajr) };
-    next.date.setDate(next.date.getDate() + 1);
-  }
-
-  // Calculate remaining time
-  const diffMs = next.date.getTime() - now.getTime();
-  const diffHrs = Math.floor(diffMs / (1000 * 60 * 60));
-  const diffMins = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-
-  return {
-    name: next.name,
-    time: next.time,
-    remaining: `${diffHrs}h ${diffMins}m`
-  };
-};
-
-export const usePrayerTimes = () => {
-  const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
-  const [state, setState] = useState<PrayerTimesState>({
-    times: null,
-    qibla: 0,
-    nextPrayer: null,
-    loading: true,
-    error: null,
-    source: null,
-    hijriDate: null
-  });
-
-  // 1. Get User Location
   useEffect(() => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCoords({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          });
-        },
-        (err) => {
-          console.warn('Geolocation denied/failed, using default (KL):', err);
-          setCoords(DEFAULT_COORDS);
-        }
-      );
-    } else {
-      setCoords(DEFAULT_COORDS);
-    }
-  }, []);
+    if (!latitude || !longitude) return;
 
-  // 3. Local Calculation Fallback (Adhan.js)
-  const calculateLocalPrayerTimes = useCallback(() => {
-    if (!coords) return;
+    const calculate = () => {
+      const coordinates = new Coordinates(latitude, longitude);
+      
+      // Use Singapore/Malaysia method (Muslim World League is closest standard, or creating custom parameters for JAKIM)
+      // JAKIM Standard: Fajr 20deg, Isha 18deg. 
+      // 'Singapore' method in Adhan JS is close to Malaysia.
+      const params = CalculationMethod.Singapore(); 
+      params.madhab = Madhab.Shafi;
 
-    try {
-      const coordinates = new Coordinates(coords.lat, coords.lng);
-      const params = CalculationMethod.Singapore(); // Closest to JAKIM in standard library
       const date = new Date();
       const prayerTimes = new PrayerTimes(coordinates, date, params);
 
-      // Formatter
-      const formatTime = (date: Date) => {
-        return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
-      };
+      // Determine Next Prayer
+      const now = new Date();
+      let next = 'Fajr';
+      let nextTime = prayerTimes.fajr;
+      let timeDiff = 0;
 
-      const times = {
-        fajr: formatTime(prayerTimes.fajr),
-        sunrise: formatTime(prayerTimes.sunrise),
-        dhuhr: formatTime(prayerTimes.dhuhr),
-        asr: formatTime(prayerTimes.asr),
-        maghrib: formatTime(prayerTimes.maghrib),
-        isha: formatTime(prayerTimes.isha)
-      };
-
-      setState({
-        times,
-        qibla: Qibla(coordinates),
-        nextPrayer: calculateNextPrayer(times),
-        loading: false,
-        error: null,
-        source: 'LOCAL',
-        hijriDate: new Intl.DateTimeFormat('en-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date())
-      });
-
-    } catch (localErr) {
-      console.error('Local calculation failed:', localErr);
-      setState(prev => ({ ...prev, loading: false, error: 'Failed to load prayer times' }));
-    }
-  }, [coords]);
-
-  // 2. Fetch Prayer Times (API + Fallback)
-  const fetchPrayerTimes = useCallback(async () => {
-    if (!coords) return;
-
-    setState(prev => ({ ...prev, loading: true, error: null }));
-
-    try {
-      // Try API First (Aladhan - JAKIM)
-      const date = new Date();
-      const timestamp = Math.floor(date.getTime() / 1000);
-      const apiRes = await fetch(
-        `https://api.aladhan.com/v1/timings/${timestamp}?latitude=${coords.lat}&longitude=${coords.lng}&method=${JAKIM_METHOD_ID}`
-      );
-
-      if (!apiRes.ok) throw new Error('API request failed');
-
-      const data = await apiRes.json();
-      const timings = data.data.timings;
-      const hijri = data.data.date.hijri;
-
-      // Calculate Qibla
-      const qiblaDir = Qibla(new Coordinates(coords.lat, coords.lng));
-
-      setState({
-        times: {
-          fajr: timings.Fajr,
-          sunrise: timings.Sunrise,
-          dhuhr: timings.Dhuhr,
-          asr: timings.Asr,
-          maghrib: timings.Maghrib,
-          isha: timings.Isha
-        },
-        qibla: qiblaDir,
-        nextPrayer: calculateNextPrayer(timings),
-        loading: false,
-        error: null,
-        source: 'API',
-        hijriDate: `${hijri.day} ${hijri.month.en} ${hijri.year}`
-      });
-
-    } catch (err) {
-      console.warn('Prayer Times API failed, switching to local calculation:', err);
-      calculateLocalPrayerTimes();
-    }
-  }, [coords, calculateLocalPrayerTimes]);
-
-  // Effect to fetch when coords change
-  useEffect(() => {
-    fetchPrayerTimes();
-  }, [fetchPrayerTimes]);
-
-  // Refresh every minute for countdown
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (state.times) {
-        setState(prev => ({
-          ...prev,
-          nextPrayer: calculateNextPrayer(prev.times!)
-        }));
+      if (now < prayerTimes.fajr) {
+        next = 'Subuh';
+        nextTime = prayerTimes.fajr;
+      } else if (now < prayerTimes.dhuhr) {
+        next = 'Zohor';
+        nextTime = prayerTimes.dhuhr;
+      } else if (now < prayerTimes.asr) {
+        next = 'Asar';
+        nextTime = prayerTimes.asr;
+      } else if (now < prayerTimes.maghrib) {
+        next = 'Maghrib';
+        nextTime = prayerTimes.maghrib;
+      } else if (now < prayerTimes.isha) {
+        next = 'Isyak';
+        nextTime = prayerTimes.isha;
+      } else {
+        // Next day Fajr
+        next = 'Subuh';
+        const tomorrow = new Date(date);
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        const tomorrowPrayers = new PrayerTimes(coordinates, tomorrow, params);
+        nextTime = tomorrowPrayers.fajr;
       }
-    }, 60000);
-    return () => clearInterval(interval);
-  }, [state.times]);
 
-  return { ...state, refresh: fetchPrayerTimes, coords };
+      // Calculate time remaining
+      const diffMs = nextTime.getTime() - now.getTime();
+      const diffHrs = Math.floor((diffMs % 86400000) / 3600000);
+      const diffMins = Math.floor(((diffMs % 86400000) % 3600000) / 60000);
+      const timeRemaining = `${diffHrs}j ${diffMins}m`;
+
+      // Hijri Date (Simple formatter)
+      const hijri = new Intl.DateTimeFormat('en-TN-u-ca-islamic', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric',
+      }).format(Date.now());
+
+      setData({
+        fajr: prayerTimes.fajr,
+        sunrise: prayerTimes.sunrise,
+        dhuhr: prayerTimes.dhuhr,
+        asr: prayerTimes.asr,
+        maghrib: prayerTimes.maghrib,
+        isha: prayerTimes.isha,
+        nextPrayer: next,
+        nextPrayerTime: nextTime,
+        timeRemaining,
+        hijriDate: hijri,
+        locationName: 'Lokasi Semasa' // Reverse geocoding optional
+      });
+      setLoading(false);
+    };
+
+    calculate();
+    const timer = setInterval(calculate, 60000); // Update every minute
+
+    return () => clearInterval(timer);
+  }, [latitude, longitude]);
+
+  return { data, loading };
 };

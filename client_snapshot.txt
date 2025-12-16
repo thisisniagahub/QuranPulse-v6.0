@@ -1,0 +1,157 @@
+uid=1_0 RootWebArea "Create Next App" url="http://localhost:3002/"
+  uid=1_1 ignored
+    uid=1_2 ignored
+      uid=1_3 ignored
+        uid=1_4 navigation
+          uid=1_5 ignored
+            uid=1_6 ignored
+              uid=1_7 ignored
+                uid=1_8 ignored
+                uid=1_9 ignored
+                  uid=1_10 StaticText "AURA"
+                    uid=1_11 InlineTextBox "AURA"
+              uid=1_12 ignored
+                uid=1_13 link "Masuk App" url="http://localhost:3002/app"
+                  uid=1_14 StaticText "Masuk App"
+                    uid=1_15 InlineTextBox "Masuk App"
+                uid=1_16 link "Cuba Sekarang" url="http://localhost:3002/app"
+                  uid=1_17 StaticText "Cuba Sekarang"
+                    uid=1_18 InlineTextBox "Cuba Sekarang"
+        uid=1_19 generic
+          uid=1_20 ignored
+            uid=1_21 generic
+              uid=1_22 StaticText "Powered by AI - 100% Percuma"
+                uid=1_23 InlineTextBox "Powered by AI - 100% Percuma"
+            uid=1_24 heading "AI untuk Urusan Rohani & Al-Quran" level="1"
+              uid=1_25 StaticText "AI untuk Urusan"
+                uid=1_26 InlineTextBox "AI untuk Urusan"
+              uid=1_27 LineBreak "
+"
+                uid=1_28 InlineTextBox "
+"
+              uid=1_29 StaticText "Rohani & Al-Quran"
+                uid=1_30 InlineTextBox "Rohani & Al-Quran"
+            uid=1_31 paragraph
+              uid=1_32 StaticText "Tanya apa sahaja tentang Al-Quran dalam Bahasa Melayu. AURA membantu anda memahami ayat-ayat suci dengan lebih mendalam."
+                uid=1_33 InlineTextBox "Tanya apa sahaja tentang Al-Quran dalam Bahasa Melayu. AURA membantu anda "
+                uid=1_34 InlineTextBox "memahami ayat-ayat suci dengan lebih mendalam."
+            uid=1_35 ignored
+              uid=1_36 link "Mulakan Perbualan →" url="http://localhost:3002/app"
+                uid=1_37 StaticText "Mulakan Perbualan"
+                  uid=1_38 InlineTextBox "Mulakan Perbualan"
+                uid=1_39 ignored
+                  uid=1_40 StaticText "→"
+                    uid=1_41 InlineTextBox "→"
+              uid=1_42 link "Ketahui Lebih Lanjut" url="http://localhost:3002/#features"
+                uid=1_43 StaticText "Ketahui Lebih Lanjut"
+                  uid=1_44 InlineTextBox "Ketahui Lebih Lanjut"
+          uid=1_45 generic
+            uid=1_46 generic
+            uid=1_47 generic
+              uid=1_48 ignored
+                uid=1_49 ignored
+                  uid=1_50 ignored
+                  uid=1_51 ignored
+                  uid=1_52 ignored
+                uid=1_53 ignored
+                  uid=1_54 StaticText "AURA Chat"
+                    uid=1_55 InlineTextBox "AURA Chat"
+              uid=1_56 ignored
+                uid=1_57 ignored
+                  uid=1_58 ignored
+                    uid=1_59 paragraph
+                      uid=1_60 StaticText "Apa maksud sabar dalam Al-Quran?"
+                        uid=1_61 InlineTextBox "Apa maksud sabar dalam Al-Quran?"
+                uid=1_62 ignored
+                  uid=1_63 ignored
+                    uid=1_64 paragraph
+                      uid=1_65 StaticText "Berdasarkan Al-Quran, "
+                        uid=1_66 InlineTextBox "Berdasarkan Al-Quran, "
+                      uid=1_67 strong
+                        uid=1_68 StaticText "sabar"
+                          uid=1_69 InlineTextBox "sabar"
+                      uid=1_70 StaticText " bermaksud ketabahan dan kekuatan hati dalam menghadapi ujian..."
+                        uid=1_71 InlineTextBox " bermaksud ketabahan dan kekuatan hati dalam "
+                        uid=1_72 InlineTextBox "menghadapi ujian..."
+                    uid=1_73 ignored
+                      uid=1_74 paragraph
+                        uid=1_75 StaticText "📖 Surah Al-Baqarah 2:153"
+                          uid=1_76 InlineTextBox "📖 Surah Al-Baqarah 2:153"
+        uid=1_77 generic
+          uid=1_78 ignored
+            uid=1_79 ignored
+              uid=1_80 heading "Kenapa Pilih AURA?" level="2"
+                uid=1_81 StaticText "Kenapa Pilih AURA?"
+                  uid=1_82 InlineTextBox "Kenapa Pilih AURA?"
+              uid=1_83 paragraph
+                uid=1_84 StaticText "AI canggih yang direka khas untuk memudahkan pembelajaran Al-Quran"
+                  uid=1_85 InlineTextBox "AI canggih yang direka khas untuk memudahkan pembelajaran Al-Quran"
+            uid=1_86 ignored
+              uid=1_87 ignored
+                uid=1_88 ignored
+                uid=1_89 heading "AI Pintar" level="3"
+                  uid=1_90 StaticText "AI Pintar"
+                    uid=1_91 InlineTextBox "AI Pintar"
+                uid=1_92 paragraph
+                  uid=1_93 StaticText "Menggunakan teknologi RAG untuk memberikan jawapan yang tepat berdasarkan Al-Quran dan Tafsir JAKIM"
+                    uid=1_94 InlineTextBox "Menggunakan teknologi RAG untuk memberikan jawapan yang tepat berdasarkan Al-"
+                    uid=1_95 InlineTextBox "Quran dan Tafsir JAKIM"
+              uid=1_96 ignored
+                uid=1_97 ignored
+                uid=1_98 heading "Bahasa Melayu" level="3"
+                  uid=1_99 StaticText "Bahasa Melayu"
+                    uid=1_100 InlineTextBox "Bahasa Melayu"
+                uid=1_101 paragraph
+                  uid=1_102 StaticText "Bertanya dalam Bahasa Melayu dan terima jawapan yang mudah difahami sesuai konteks Malaysia"
+                    uid=1_103 InlineTextBox "Bertanya dalam Bahasa Melayu dan terima jawapan yang mudah difahami sesuai "
+                    uid=1_104 InlineTextBox "konteks Malaysia"
+              uid=1_105 ignored
+                uid=1_106 ignored
+                uid=1_107 heading "Rujukan Tepat" level="3"
+                  uid=1_108 StaticText "Rujukan Tepat"
+                    uid=1_109 InlineTextBox "Rujukan Tepat"
+                uid=1_110 paragraph
+                  uid=1_111 StaticText "Setiap jawapan disertakan dengan rujukan surah dan ayat, serta transliterasi Rumi JAKIM"
+                    uid=1_112 InlineTextBox "Setiap jawapan disertakan dengan rujukan surah dan ayat, serta transliterasi Rumi "
+                    uid=1_113 InlineTextBox "JAKIM"
+        uid=1_114 generic
+          uid=1_115 ignored
+            uid=1_116 heading "Mulakan Perjalanan Rohani Anda" level="2"
+              uid=1_117 StaticText "Mulakan Perjalanan Rohani Anda"
+                uid=1_118 InlineTextBox "Mulakan Perjalanan Rohani Anda"
+            uid=1_119 paragraph
+              uid=1_120 StaticText "Cuba AURA sekarang - 100% percuma, tanpa pendaftaran"
+                uid=1_121 InlineTextBox "Cuba AURA sekarang - 100% percuma, tanpa pendaftaran"
+            uid=1_122 link "Cuba AURA Sekarang" url="http://localhost:3002/app"
+              uid=1_123 StaticText "Cuba AURA Sekarang"
+                uid=1_124 InlineTextBox "Cuba AURA Sekarang"
+        uid=1_125 contentinfo
+          uid=1_126 ignored
+            uid=1_127 ignored
+              uid=1_128 ignored
+                uid=1_129 ignored
+                uid=1_130 ignored
+                  uid=1_131 StaticText "AURA"
+                    uid=1_132 InlineTextBox "AURA"
+              uid=1_133 paragraph
+                uid=1_134 StaticText "AI untuk Urusan Rohani & Al-Quran"
+                  uid=1_135 InlineTextBox "AI untuk Urusan Rohani & Al-Quran"
+              uid=1_136 paragraph
+                uid=1_137 StaticText "© 2025 AURA. Dibina dengan ❤️ untuk umat Islam Malaysia"
+                  uid=1_138 InlineTextBox "© 2025 AURA. Dibina dengan ❤️ untuk umat Islam Malaysia"
+      uid=1_139 generic
+        uid=1_140 generic
+          uid=1_141 generic
+            uid=1_142 ignored
+              uid=1_143 ignored
+                uid=1_144 generic
+                  uid=1_145 ignored
+                    uid=1_146 button "Open Next.js Dev Tools" expandable haspopup="menu"
+                      uid=1_147 image
+                        uid=1_148 ignored
+                        uid=1_149 ignored
+                        uid=1_150 ignored
+                        uid=1_151 ignored
+                        uid=1_152 ignored
+      uid=1_153 generic
+        uid=1_154 alert

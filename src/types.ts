@@ -283,6 +283,7 @@ export interface QuranVerse {
   id: number;
   verse_key: string;
   text_uthmani: string;
+  page_number?: number;
   translations: Array<{
     id: number;
     resource_id: number;

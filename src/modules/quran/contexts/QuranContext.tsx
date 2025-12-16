@@ -65,6 +65,7 @@ interface QuranState {
 
     // Actions
     setView: (view: 'LIST' | 'READING') => void;
+    setLayoutMode: (mode: 'SCROLL' | 'PAGE') => void;
     setSelectedChapter: (chapter: QuranChapter | null) => void;
     
     // Settings Actions
@@ -121,16 +122,17 @@ const QuranContext = createContext<QuranState | undefined>(undefined);
 export const QuranProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     // 1. View State
     const [view, setView] = useState<'LIST' | 'READING'>('LIST');
+    const [layoutMode, setLayoutMode] = useState<'SCROLL' | 'PAGE'>('SCROLL');
     const [selectedChapter, setSelectedChapter] = useState<QuranChapter | null>(null);
 
     // 2. Settings State
     const [showSettings, setShowSettings] = useState(false);
-    const [fontSize, setFontSize] = useState(32);
-    const [showTranslation, setShowTranslation] = useState(true);
-    const [showTransliteration, setShowTransliteration] = useState(true);
-    const [showWordByWord, setShowWordByWord] = useState(true);
+    const [fontSize, setFontSize] = useState(36); // Standard: 36px
+    const [showTranslation, setShowTranslation] = useState(true); // Standard: ON
+    const [showTransliteration, setShowTransliteration] = useState(false); // Standard: OFF
+    const [showWordByWord, setShowWordByWord] = useState(false); // Standard: OFF (Cleaner)
     const [autoScroll, setAutoScroll] = useState(true);
-    const [showTajwid, setShowTajwid] = useState(false);
+    const [showTajwid, setShowTajwid] = useState(true); // Standard: ON (Helpful)
     const [nightMode, setNightMode] = useState(false);
     const [repeatMode, setRepeatMode] = useState<'none' | 'ayah' | 'surah'>('none');
     const [selectedReciterId, setSelectedReciterId] = useState(7);
@@ -292,6 +294,7 @@ export const QuranProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     return (
         <QuranContext.Provider value={{
             view, setView,
+            layoutMode, setLayoutMode,
             selectedChapter, setSelectedChapter: (c) => { setSelectedChapter(c); if(c) stopTrack(); },
             
             fontSize, setFontSize,

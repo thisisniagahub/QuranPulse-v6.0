@@ -17,7 +17,6 @@
 | **Qara'a** | Tajweed / Learning | AI Voice Correction (Indonesia). | [qaraa.id](https://qaraa.id) |
 | **NakNgaji.my**| Quran Tuition | Tutor Matching Platform. | [nakngaji.my](https://nakngaji.my) |
 
-
 ---
 
 ## 📖 IQRA & DIGITAL LITERACY (Learn to Read)
@@ -47,24 +46,24 @@
 ## 🧩 FEATURE ANALYSIS
 
 ### 1. Muslim Pro
-*   **Strengths:** All-in-one utility, massive user base, polished UI.
-*   **Weaknesses:** Ads-heavy (free version), data privacy concerns (past issues).
-*   **QuranPulse Angle:** "Privacy-First" & "No Ads" (Waqf model/Premium) + Official Gov Data.
+* **Strengths:** All-in-one utility, massive user base, polished UI.
+* **Weaknesses:** Ads-heavy (free version), data privacy concerns (past issues).
+* **QuranPulse Angle:** "Privacy-First" & "No Ads" (Waqf model/Premium) + Official Gov Data.
 
 ### 2. Qara'a (Indonesia)
-*   **Strengths:** AI voice recognition for Tajweed correction. Very innovative.
-*   **QuranPulse Angle:** Integrate `Ustaz AI` for simillar interactive learning, but endorsed by local authorities (JAKIM compliance).
+* **Strengths:** AI voice recognition for Tajweed correction. Very innovative.
+* **QuranPulse Angle:** Integrate `Ustaz AI` for simillar interactive learning, but endorsed by local authorities (JAKIM compliance).
 
 ### 3. Think Quran
-*   **Strengths:** Specialized gamification for language learning (Duolingo style).
-*   **QuranPulse Angle:** Potential partnership or separate module. Focus on *reading/recitation* over *language translation* initially.
+* **Strengths:** Specialized gamification for language learning (Duolingo style).
+* **QuranPulse Angle:** Potential partnership or separate module. Focus on *reading/recitation* over *language translation* initially.
 
 ### 4. Tarteel AI
-*   **Strengths:** AI-powered pronunciation scoring, mistake detection history, adaptive display mode, spaced repetition for memorization.
-*   **Weaknesses:** Subscription-based, cloud-dependent for AI features.
-*   **QuranPulse Angle:** Implement offline Web Speech API for basic pronunciation feedback. "Record & Compare" feature. Leverage JAKIM-standard Rumi for pronunciation guides.
+* **Strengths:** AI-powered pronunciation scoring, mistake detection history, adaptive display mode, spaced repetition for memorization.
+* **Weaknesses:** Subscription-based, cloud-dependent for AI features.
+* **QuranPulse Angle:** Implement offline Web Speech API for basic pronunciation feedback. "Record & Compare" feature. Leverage JAKIM-standard Rumi for pronunciation guides.
 
 ### 5. TheNoor
-*   **Strengths:** Influencer marketing (Neelofa), integrated e-commerce (NoorCommerce), 197K DAU, multi-language voice over, premium lifetime free model.
-*   **Weaknesses:** Lifestyle focus dilutes Quran learning depth. Less focus on pronunciation/Tajweed.
-*   **QuranPulse Angle:** Focus on **learning depth** (Iqra, Tajweed, AI feedback) vs lifestyle breadth. Partner with influencers for marketing but prioritize educational quality.
+* **Strengths:** Influencer marketing (Neelofa), integrated e-commerce (NoorCommerce), 197K DAU, multi-language voice over, premium lifetime free model.
+* **Weaknesses:** Lifestyle focus dilutes Quran learning depth. Less focus on pronunciation/Tajweed.
+* **QuranPulse Angle:** Focus on **learning depth** (Iqra, Tajweed, AI feedback) vs lifestyle breadth. Partner with influencers for marketing but prioritize educational quality.

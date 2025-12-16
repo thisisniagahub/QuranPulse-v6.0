@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="768" height="1024" viewBox="0 0 768 1024">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <rect x="40" y="40" width="688" height="944" fill="none" stroke="#000000" stroke-width="2"/>
+  
+  <text x="384" y="100" text-anchor="middle" font-size="48" font-family="Noto Naskh Arabic, serif" fill="#000000">إقرأ ١</text>
+  <text x="384" y="150" text-anchor="middle" font-size="24" font-family="Noto Naskh Arabic, serif" fill="#333333">تدريب</text>
+  
+  <!-- Practice Grid - Large letters for recognition -->
+  <g font-family="Noto Naskh Arabic, serif" font-size="90" fill="#000000" text-anchor="middle">
+    <!-- Row 1 -->
+    <text x="130" y="280">س</text>
+    <text x="270" y="280">ش</text>
+    <text x="410" y="280">ص</text>
+    <text x="550" y="280">ض</text>
+    
+    <!-- Row 2 -->
+    <text x="130" y="420">ط</text>
+    <text x="270" y="420">ظ</text>
+    <text x="410" y="420">ع</text>
+    <text x="550" y="420">غ</text>
+    
+    <!-- Row 3 -->
+    <text x="130" y="560">ف</text>
+    <text x="270" y="560">ق</text>
+    <text x="410" y="560">ك</text>
+    <text x="550" y="560">ل</text>
+    
+    <!-- Row 4 -->
+    <text x="130" y="700">م</text>
+    <text x="270" y="700">ن</text>
+    <text x="410" y="700">و</text>
+    <text x="550" y="700">ي</text>
+  </g>
+  
+  <text x="384" y="850" text-anchor="middle" font-size="24" font-family="Noto Naskh Arabic, serif" fill="#000000">٤</text>
+  <text x="384" y="950" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#666666">بهان ڤمبلاجرن حروف هجائية - بوكن مصحف القرآن</text>
+</svg>

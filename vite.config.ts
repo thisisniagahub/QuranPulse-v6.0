@@ -8,14 +8,87 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
       server: {
-        port: 3000,
+        port: 5173,
         host: '0.0.0.0',
+        proxy: {
+          '/ollama': {
+            target: 'http://localhost:11434',
+            changeOrigin: true,
+            rewrite: (path) => path.replace(/^\/ollama/, ''),
+          },
+        },
       },
       plugins: [
         react(),
-        VitePWA({
+        // Custom Middleware to Proxy Gemini CLI
+      {
+        name: 'gemini-cli-proxy',
+        configureServer(server) {
+          server.middlewares.use('/api/gemini-cli', async (req, res, next) => {
+            if (req.method === 'POST') {
+              let body = '';
+              req.on('data', chunk => body += chunk);
+              req.on('end', async () => {
+                try {
+                  const { prompt } = JSON.parse(body);
+                  const { exec } = await import('child_process');
+                  // Execute the gemini command. Note: We use 'gemini prompt' or similar depending on the CLI syntax. 
+                  // Assuming 'gemini chat "message"' or piping input.
+                  // Based on typical CLIs, we'll try piping the prompt to it or using arguments.
+                  // Let's assume `gemini prompt "TEXT"` works based on version 0.20.x patterns.
+                  // Use a safe quoting mechanism
+                  const safePrompt = prompt.replace(/"/g, '\\"');
+                  
+                  // Executing command with -p flag using ABSOLUTE path to avoid module resolution issues
+                  // We use the .cmd shim for Windows
+                  const geminiPath = `C:\\Users\\megat\\AppData\\Roaming\\npm\\gemini.cmd`;
+                  exec(`"${geminiPath}" -p "${safePrompt}"`, (error, stdout, stderr) => {
+                    if (error) {
+                      console.error('Gemini CLI Error:', stderr);
+                      res.statusCode = 500;
+                      res.setHeader('Content-Type', 'application/json');
+                      res.end(JSON.stringify({ error: stderr || error.message }));
+                      return;
+                    }
+                    res.statusCode = 200;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.end(JSON.stringify({ text: stdout.trim() }));
+                  });
+                } catch (e) {
+                  res.statusCode = 400;
+                  res.end(JSON.stringify({ error: 'Invalid Request' }));
+                }
+              });
+            } else {
+              next();
+            }
+          });
+        }
+      },
+      VitePWA({
           registerType: 'autoUpdate',
           includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+          workbox: {
+              navigateFallbackDenylist: [/^\/api/], // Ignore API routes for Service Worker
+              runtimeCaching: [
+                  {
+                      urlPattern: ({ request }) => request.destination === 'image',
+                      handler: 'CacheFirst',
+                      options: {
+                          cacheName: 'images',
+                          expiration: {
+                              maxEntries: 10,
+                              maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+                          },
+                      },
+                  },
+                  {
+                      // Fix 206 Partial Content errors for Video/Audio
+                      urlPattern: ({ request }) => request.destination === 'video' || request.destination === 'audio',
+                      handler: 'NetworkOnly', 
+                  }
+              ]
+          },
           manifest: {
             name: 'QuranPulse',
             short_name: 'QuranPulse',
@@ -41,13 +114,15 @@ export default defineConfig(({ mode }) => {
                 purpose: 'any maskable'
               }
             ]
-          }
+          },
+
         })
       ],
       resolve: {
         alias: {
           '@': path.resolve(__dirname, './src'),
-        }
+        },
+        dedupe: ['react', 'react-dom'],
       },
       build: {
         target: 'es2015',
@@ -60,48 +135,8 @@ export default defineConfig(({ mode }) => {
         },
         rollupOptions: {
           output: {
-            manualChunks: (id) => {
-              // Vendor libraries - core React ecosystem (including React Query!)
-              if (id.includes('node_modules/react') || 
-                  id.includes('node_modules/react-dom') || 
-                  id.includes('node_modules/react-router') ||
-                  id.includes('node_modules/@tanstack/react-query')) {
-                return 'vendor-react';
-              }
-              
-              // UI and animation libraries
-              if (id.includes('node_modules/framer-motion') || 
-                  id.includes('node_modules/lucide-react')) {
-                return 'vendor-ui';
-              }
-              
-              // Supabase and API clients
-              if (id.includes('node_modules/@supabase')) {
-                return 'vendor-data';
-              }
-              
-              // Service layer - separate chunk for better caching
-              if (id.includes('/src/services/')) {
-                return 'services';
-              }
-              
-              // Large modules - split into separate chunks
-              if (id.includes('/src/modules/Quran')) {
-                return 'module-quran';
-              }
-              if (id.includes('/src/modules/Iqra')) {
-                return 'module-iqra';
-              }
-              if (id.includes('/src/modules/Admin')) {
-                return 'module-admin';
-              }
-              if (id.includes('/src/modules/SmartDeen')) {
-                return 'module-smartdeen';
-              }
-            },
-            chunkFileNames: 'assets/[name]-[hash].js',
-            entryFileNames: 'assets/[name]-[hash].js',
-            assetFileNames: 'assets/[name]-[hash].[ext]',
+            // manualChunks removed to prevent React instance duplication issues
+            // Vite 4+ handles chunking efficiently by default
           },
         },
         chunkSizeWarningLimit: 800,
@@ -117,6 +152,7 @@ export default defineConfig(({ mode }) => {
           'react-router-dom',
           'framer-motion',
           '@supabase/supabase-js',
+          '@tanstack/react-query',
         ],
       },
     };

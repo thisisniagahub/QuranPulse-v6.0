@@ -10,46 +10,68 @@ interface ShareCardProps {
 
 const ShareCard: React.FC<ShareCardProps> = ({ verse, surahName, onClose }) => {
   const cardRef = useRef<HTMLDivElement>(null);
-  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'light' | 'gold'>('dark');
+  const [selectedTheme, setSelectedTheme] = useState<'dark' | 'nature' | 'minimal'>('dark');
   const [copied, setCopied] = useState(false);
 
+  // Theme Definitions
   const themes = {
     dark: {
-      bg: 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900',
-      text: 'text-white',
-      accent: 'text-cyan-400',
-      border: 'border-cyan-500/30',
+      id: 'dark',
+      name: 'Deep Space',
+      containerClass: 'bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#020617] border border-cyan-500/20',
+      textClass: 'text-white',
+      accentClass: 'text-cyan-400',
+      decoration: (
+        <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-cyan-500/10 blur-[80px] rounded-full"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 blur-[60px] rounded-full"></div>
+          <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+        </div>
+      )
     },
-    light: {
-      bg: 'bg-gradient-to-br from-amber-50 via-white to-amber-50',
-      text: 'text-slate-800',
-      accent: 'text-amber-600',
-      border: 'border-amber-200',
+    nature: {
+      id: 'nature',
+      name: 'Nature',
+      containerClass: 'bg-gradient-to-br from-emerald-900 to-teal-900 border border-emerald-500/20',
+      textClass: 'text-emerald-50',
+      accentClass: 'text-emerald-300',
+      decoration: (
+        <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+          <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1518176258769-f227c798150e?q=80&w=1000&auto=format&fit=crop')] bg-cover bg-center opacity-30 mix-blend-overlay"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-emerald-950 to-transparent"></div>
+        </div>
+      )
     },
-    gold: {
-      bg: 'bg-gradient-to-br from-amber-900 via-yellow-800 to-amber-900',
-      text: 'text-amber-100',
-      accent: 'text-amber-300',
-      border: 'border-amber-500/50',
-    },
+    minimal: {
+      id: 'minimal',
+      name: 'Minimalist',
+      containerClass: 'bg-[#f8fafc] border border-slate-200',
+      textClass: 'text-slate-800',
+      accentClass: 'text-slate-500',
+      decoration: (
+        <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
+          <div className="absolute inset-4 border border-slate-300 rounded-2xl opacity-50"></div>
+        </div>
+      )
+    }
   };
 
-  const theme = themes[selectedTheme];
+  const currentTheme = themes[selectedTheme];
 
   const handleCopyText = async () => {
-    const text = `${verse.text_uthmani}\n\n"${verse.translations?.[0]?.text || ''}"\n\n— ${surahName} : ${verse.verse_key.split(':')[1]}`;
+    const text = `${verse.text_uthmani}\n\n\"${verse.translations?.[0]?.text || ''}\"\n\n— ${surahName} : ${verse.verse_key.split(':')[1]}\n\n(Shared via QuranPulse)`;
     await navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleShare = async () => {
-    const text = `${verse.text_uthmani}\n\n"${verse.translations?.[0]?.text || ''}"\n\n— ${surahName} : ${verse.verse_key.split(':')[1]}\n\n#QuranPulse`;
+    const text = `${verse.text_uthmani}\n\n\"${verse.translations?.[0]?.text || ''}\"\n\n— ${surahName} : ${verse.verse_key.split(':')[1]}\n\n#QuranPulse #Tadabbur`;
     
     if (navigator.share) {
       try {
         await navigator.share({
-          title: `${surahName} - Ayat ${verse.verse_key.split(':')[1]}`,
+          title: `Ayat Pilihan: ${surahName}`,
           text: text,
         });
       } catch (err) {
@@ -61,125 +83,104 @@ const ShareCard: React.FC<ShareCardProps> = ({ verse, surahName, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-[80] bg-black/90 backdrop-blur-xl flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
       {/* Close Button */}
       <button
         onClick={onClose}
-        className="absolute top-4 right-4 w-10 h-10 rounded-full bg-slate-800 text-white flex items-center justify-center hover:bg-slate-700 transition-all"
+        className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-all backdrop-blur-sm z-20"
       >
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-          <line x1="18" y1="6" x2="6" y2="18"/>
-          <line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
+        <i className="fa-solid fa-xmark"></i>
       </button>
 
-      <div className="max-w-md w-full space-y-6">
-        {/* Card Preview */}
-        <motion.div
-          ref={cardRef}
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className={`${theme.bg} ${theme.border} border-2 rounded-3xl p-8 shadow-2xl`}
-        >
-          {/* Decorative Top */}
-          <div className={`text-center mb-6 ${theme.accent}`}>
-            <span className="text-2xl">﷽</span>
-          </div>
+      <div className="w-full max-w-sm flex flex-col gap-6">
+        <h3 className="text-center text-white font-bold text-lg">Kongsi Ayat</h3>
 
-          {/* Arabic Text */}
-          <p 
-            className={`font-uthmani text-center text-2xl leading-[2.5] mb-6 ${theme.text}`}
-            dir="rtl"
-          >
-            {verse.text_uthmani}
-          </p>
+        {/* --- PREVIEW CARD (INSTAGRAM STORY SIZE) --- */}
+        <div className="relative aspect-[9/16] w-full shadow-2xl">
+            <motion.div
+                ref={cardRef}
+                key={selectedTheme}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className={`w-full h-full rounded-3xl p-8 flex flex-col justify-between relative overflow-hidden ${currentTheme.containerClass}`}
+            >
+                {/* Background Decoration */}
+                {currentTheme.decoration}
 
-          {/* Translation */}
-          {verse.translations?.[0] && (
-            <p className={`text-center text-sm italic mb-6 ${theme.accent} opacity-80`}>
-              "{verse.translations[0].text.replace(/<[^>]*>/g, '')}"
-            </p>
-          )}
+                {/* Top: Header */}
+                <div className="relative z-10 text-center pt-4">
+                    <span className={`text-3xl font-amiri ${currentTheme.accentClass}`}>﷽</span>
+                </div>
 
-          {/* Reference */}
-          <div className="flex items-center justify-center gap-2">
-            <div className={`w-8 h-px ${selectedTheme === 'light' ? 'bg-slate-300' : 'bg-white/20'}`} />
-            <p className={`text-xs font-bold tracking-wider uppercase ${theme.accent}`}>
-              {surahName} : {verse.verse_key.split(':')[1]}
-            </p>
-            <div className={`w-8 h-px ${selectedTheme === 'light' ? 'bg-slate-300' : 'bg-white/20'}`} />
-          </div>
+                {/* Middle: Content */}
+                <div className="relative z-10 flex-1 flex flex-col justify-center gap-6">
+                    {/* Arabic */}
+                    <p className={`font-uthmani text-center text-3xl leading-[2.2] drop-shadow-sm ${currentTheme.textClass}`} dir="rtl">
+                        {verse.text_uthmani}
+                    </p>
+                    
+                    {/* Translation */}
+                    {verse.translations?.[0] && (
+                        <div className="relative">
+                            <span className={`absolute -top-4 left-1/2 -translate-x-1/2 text-4xl opacity-20 font-serif ${currentTheme.textClass}`}>"</span>
+                            <p className={`text-center font-serif italic text-sm leading-relaxed px-4 ${selectedTheme === 'minimal' ? 'text-slate-600' : 'text-slate-300'}`}>
+                                {verse.translations[0].text.replace(/<[^>]*>/g, '')}
+                            </p>
+                        </div>
+                    )}
+                </div>
 
-          {/* Branding */}
-          <div className="mt-6 text-center">
-            <p className={`text-[10px] font-bold tracking-widest ${theme.accent} opacity-50`}>
-              QURANPULSE
-            </p>
-          </div>
-        </motion.div>
-
-        {/* Theme Selector */}
-        <div className="flex items-center justify-center gap-3">
-          <p className="text-slate-500 text-xs mr-2">Tema:</p>
-          {(['dark', 'light', 'gold'] as const).map((t) => (
-            <button
-              key={t}
-              onClick={() => setSelectedTheme(t)}
-              className={`w-8 h-8 rounded-full border-2 transition-all ${
-                selectedTheme === t ? 'scale-110 ring-2 ring-white/50' : 'opacity-60 hover:opacity-100'
-              } ${
-                t === 'dark' ? 'bg-slate-800 border-cyan-500' :
-                t === 'light' ? 'bg-amber-50 border-amber-300' :
-                'bg-amber-700 border-amber-400'
-              }`}
-            />
-          ))}
+                {/* Bottom: Footer */}
+                <div className="relative z-10">
+                    <div className={`w-full h-px mb-4 opacity-30 ${selectedTheme === 'minimal' ? 'bg-slate-400' : 'bg-white'}`}></div>
+                    <div className="flex justify-between items-end">
+                        <div>
+                            <p className={`text-xs font-bold uppercase tracking-widest ${currentTheme.accentClass}`}>{surahName}</p>
+                            <p className={`text-[10px] opacity-70 ${currentTheme.textClass}`}>Ayat {verse.verse_key.split(':')[1]}</p>
+                        </div>
+                        <div className="text-right">
+                            <p className={`text-[10px] font-bold ${currentTheme.textClass}`}>QURAN<span className={currentTheme.accentClass}>PULSE</span></p>
+                            <p className={`text-[8px] opacity-60 ${currentTheme.textClass}`}>v6.0</p>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
         </div>
 
-        {/* Action Buttons */}
-        <div className="flex gap-3">
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleCopyText}
-            className={`flex-1 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 transition-all ${
-              copied 
-                ? 'bg-emerald-500 text-white' 
-                : 'bg-slate-800 text-white hover:bg-slate-700'
-            }`}
-          >
-            {copied ? (
-              <>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
-                Disalin!
-              </>
-            ) : (
-              <>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-                  <rect x="9" y="9" width="13" height="13" rx="2"/>
-                  <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-                </svg>
-                Salin Teks
-              </>
-            )}
-          </motion.button>
-          
-          <motion.button
-            whileTap={{ scale: 0.95 }}
-            onClick={handleShare}
-            className="flex-1 py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold flex items-center justify-center gap-2 shadow-lg shadow-cyan-500/30"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-              <circle cx="18" cy="5" r="3"/>
-              <circle cx="6" cy="12" r="3"/>
-              <circle cx="18" cy="19" r="3"/>
-              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
-              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
-            </svg>
-            Kongsi
-          </motion.button>
+        {/* --- CONTROLS --- */}
+        <div className="flex flex-col gap-4">
+            {/* Theme Selector */}
+            <div className="flex justify-center gap-3 bg-slate-900/50 p-2 rounded-full backdrop-blur-sm border border-white/10 mx-auto">
+                {(['dark', 'nature', 'minimal'] as const).map((t) => (
+                    <button
+                        key={t}
+                        onClick={() => setSelectedTheme(t)}
+                        className={`px-4 py-2 rounded-full text-xs font-bold transition-all ${selectedTheme === t ? 'bg-white text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                    >
+                        {themes[t].name}
+                    </button>
+                ))}
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3">
+                <button
+                    onClick={handleCopyText}
+                    className={`flex-1 py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all ${copied ? 'bg-emerald-500 text-white' : 'bg-slate-800 text-slate-300 hover:bg-slate-700'}`}
+                >
+                    {copied ? <i className="fa-solid fa-check"></i> : <i className="fa-regular fa-copy"></i>}
+                    {copied ? 'Disalin!' : 'Salin Teks'}
+                </button>
+                <button
+                    onClick={handleShare}
+                    className="flex-1 py-3.5 rounded-xl bg-cyan-500 text-black font-bold text-sm flex items-center justify-center gap-2 hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/20"
+                >
+                    <i className="fa-solid fa-share-nodes"></i>
+                    Kongsi
+                </button>
+            </div>
         </div>
+
       </div>
     </div>
   );

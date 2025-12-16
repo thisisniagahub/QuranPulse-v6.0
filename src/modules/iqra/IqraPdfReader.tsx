@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { motion } from 'framer-motion';
-import { IQRA_BOOKS_DATA, MOCK_PAGES, IqraBook } from './data';
-import { IqraCell } from '../../types';
+import { motion, AnimatePresence } from 'framer-motion';
+import { IQRA_BOOKS_DATA, MOCK_PAGES } from './data';
 import IqraBookSelector from './IqraBookSelector';
+import { getIqraPageData, IqraPageData, IqraSegment } from './iqraDataLoader';
 
 // Configure PDF Worker
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
@@ -19,8 +19,34 @@ const IqraPdfReader: React.FC<IqraPdfReaderProps> = ({ initialBookId = 'iqra-1' 
     const [scale, setScale] = useState(1.0);
     const [inputPage, setInputPage] = useState('1');
     const [isSmartMode, setIsSmartMode] = useState(false);
+    const [smartPageData, setSmartPageData] = useState<IqraPageData | null>(null);
+    const [isLoadingData, setIsLoadingData] = useState(false);
+    const [activeSegment, setActiveSegment] = useState<string | null>(null);
 
     const currentBook = IQRA_BOOKS_DATA.find(b => b.id === currentBookId) || IQRA_BOOKS_DATA[0];
+
+    // Load Smart Mode data when page or book changes
+    const loadSmartData = useCallback(async () => {
+        if (!isSmartMode) {
+            setSmartPageData(null);
+            return;
+        }
+        
+        setIsLoadingData(true);
+        try {
+            const data = await getIqraPageData(currentBookId, pageNumber);
+            setSmartPageData(data);
+        } catch (error) {
+            console.error('Error loading smart data:', error);
+            setSmartPageData(null);
+        } finally {
+            setIsLoadingData(false);
+        }
+    }, [currentBookId, pageNumber, isSmartMode]);
+
+    useEffect(() => {
+        loadSmartData();
+    }, [loadSmartData]);
 
     // Keyboard Navigation
     useEffect(() => {
@@ -54,38 +80,149 @@ const IqraPdfReader: React.FC<IqraPdfReaderProps> = ({ initialBookId = 'iqra-1' 
         }
     };
 
-    const handleCellClick = (cell: IqraCell) => {
-        const audio = new Audio(cell.content.audioUrl);
+    // Handle segment click - play audio and show visual feedback
+    const handleSegmentClick = (segment: IqraSegment) => {
+        setActiveSegment(segment.id);
+        
+        // Play audio
+        const audio = new Audio(segment.audio_url);
         audio.play().catch(e => console.log("Audio play failed (mock)", e));
-        alert(`Smart Cell: ${cell.content.transliteration} (${cell.content.arabic})`);
+        
+        // Reset active state after animation
+        setTimeout(() => setActiveSegment(null), 500);
     };
 
+    // Render smart cells from loaded JSON data
     const renderSmartCells = () => {
         if (!isSmartMode) return null;
-        const currentPageData = MOCK_PAGES[pageNumber];
-        if (!currentPageData) return null;
 
-        return currentPageData.cells.map(cell => (
-            <motion.div
-                key={cell.id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                whileHover={{ scale: 1.05, backgroundColor: 'rgba(56, 189, 248, 0.3)' }}
-                className="absolute border-2 border-sky-400/50 rounded-lg cursor-pointer flex items-center justify-center group z-10"
-                style={{
-                    left: `${cell.x}%`,
-                    top: `${cell.y}%`,
-                    width: `${cell.width}%`,
-                    height: `${cell.height}%`,
-                }}
-                onClick={() => handleCellClick(cell)}
-            >
-                <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                    {cell.content.transliteration}
+        // Show loading indicator
+        if (isLoadingData) {
+            return (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-20">
+                    <div className="bg-slate-900/90 px-6 py-4 rounded-2xl border border-slate-700 flex items-center gap-3">
+                        <div className="w-5 h-5 border-2 border-teal-500 border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-white text-sm">Loading Smart Mode...</span>
+                    </div>
                 </div>
-                <i className="fa-solid fa-volume-high text-sky-400 opacity-50 group-hover:opacity-100"></i>
-            </motion.div>
-        ));
+            );
+        }
+
+        // Render segments from loaded JSON data
+        if (smartPageData && smartPageData.segments.length > 0) {
+            return (
+                <>
+                    {/* Page title indicator */}
+                    <div className="absolute top-2 left-2 z-20 bg-slate-900/80 backdrop-blur px-3 py-1.5 rounded-lg border border-teal-500/30">
+                        <span className="text-teal-400 text-xs font-bold">{smartPageData.title}</span>
+                    </div>
+                    
+                    {/* Smart segments */}
+                    <AnimatePresence>
+                        {smartPageData.segments.map((segment) => {
+                            const [left, top, right, bottom] = segment.bounding_box;
+                            const isActive = activeSegment === segment.id;
+                            
+                            return (
+                                <motion.div
+                                    key={segment.id}
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ 
+                                        opacity: 1, 
+                                        scale: isActive ? 1.1 : 1,
+                                        backgroundColor: isActive ? 'rgba(20, 184, 166, 0.4)' : 'transparent'
+                                    }}
+                                    exit={{ opacity: 0, scale: 0.8 }}
+                                    whileHover={{ 
+                                        scale: 1.05, 
+                                        backgroundColor: 'rgba(20, 184, 166, 0.2)', 
+                                        borderColor: 'rgba(20, 184, 166, 0.8)' 
+                                    }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className={`absolute border-2 rounded-lg cursor-pointer flex items-center justify-center group z-10 transition-colors ${
+                                        segment.type === 'phrase' 
+                                            ? 'border-amber-400/40 hover:border-amber-400' 
+                                            : segment.type === 'word'
+                                            ? 'border-teal-400/40 hover:border-teal-400'
+                                            : 'border-sky-400/40 hover:border-sky-400'
+                                    }`}
+                                    style={{
+                                        left: `${left}%`,
+                                        top: `${top}%`,
+                                        width: `${right - left}%`,
+                                        height: `${bottom - top}%`,
+                                    }}
+                                    onClick={() => handleSegmentClick(segment)}
+                                >
+                                    {/* Tooltip on Hover */}
+                                    <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white text-xs px-3 py-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none shadow-xl border border-slate-700 z-30 flex flex-col items-center gap-0.5">
+                                        <span className="font-arabic text-base">{segment.text_arabic}</span>
+                                        <span className="font-bold text-teal-400">{segment.transliteration}</span>
+                                    </div>
+                                    
+                                    {/* Active pulse effect */}
+                                    {isActive && (
+                                        <motion.div 
+                                            className="absolute inset-0 rounded-lg border-2 border-teal-400"
+                                            initial={{ opacity: 1, scale: 1 }}
+                                            animate={{ opacity: 0, scale: 1.3 }}
+                                            transition={{ duration: 0.5 }}
+                                        />
+                                    )}
+                                </motion.div>
+                            );
+                        })}
+                    </AnimatePresence>
+                    
+                    {/* Segment count badge */}
+                    <div className="absolute bottom-2 right-2 z-20 bg-teal-500/20 backdrop-blur px-2 py-1 rounded-full border border-teal-500/30">
+                        <span className="text-teal-400 text-[10px] font-bold">
+                            {smartPageData.segments.length} segments
+                        </span>
+                    </div>
+                </>
+            );
+        }
+
+        // Fallback to legacy mock data
+        const legacyData = MOCK_PAGES[pageNumber];
+        if (legacyData) {
+            return legacyData.cells.map(cell => (
+                <motion.div
+                    key={cell.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    whileHover={{ scale: 1.05, backgroundColor: 'rgba(56, 189, 248, 0.3)' }}
+                    className="absolute border-2 border-sky-400/50 rounded-lg cursor-pointer flex items-center justify-center group z-10"
+                    style={{
+                        left: `${cell.x}%`,
+                        top: `${cell.y}%`,
+                        width: `${cell.width}%`,
+                        height: `${cell.height}%`,
+                    }}
+                    onClick={() => {
+                        const audio = new Audio(cell.content.audioUrl);
+                        audio.play().catch(e => console.log("Audio play failed", e));
+                    }}
+                >
+                    <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-slate-900 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                        {cell.content.transliteration}
+                    </div>
+                    <i className="fa-solid fa-volume-high text-sky-400 opacity-50 group-hover:opacity-100"></i>
+                </motion.div>
+            ));
+        }
+
+        // No data available message
+        return (
+            <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+                <div className="bg-slate-900/80 backdrop-blur px-4 py-3 rounded-xl border border-slate-700 text-center">
+                    <i className="fa-solid fa-wand-magic-sparkles text-slate-500 text-2xl mb-2"></i>
+                    <p className="text-slate-400 text-sm">No Smart Data for this page</p>
+                    <p className="text-slate-500 text-xs mt-1">Try pages 1-12 for best results</p>
+                </div>
+            </div>
+        );
     };
 
     return (

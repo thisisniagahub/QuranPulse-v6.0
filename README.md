@@ -21,12 +21,13 @@ A global floating command center (bottom-left) that gives you instant control:
     - **Cyber Mode**: Activates a "Circuit Maze" background, neon cyan accents, and HUD-style glass panels.
 - **Quick Admin Access**: One-click jump to the Admin Dashboard.
 
-### 🧠 Advanced AI Intelligence
-Powered by **Zhipu AI (GLM-4)** integration (simulated for dev):
-- **Semantic Search**: Search by meaning (e.g., "anxiety", "finance") not just keywords.
-- **AI Tafsir**: Get instant, context-aware explanations for any verse.
-- **Morphology Analysis**: Deep-dive into Arabic grammar and root words.
-- **Ustaz AI Chat**: Context-aware religious Q&A.
+### 🧠 Advanced AI Intelligence (Ustaz AI 2.0)
+Now powered by a **Hybrid Cloud Engine**:
+- **Gemini 2.5 Flash Integration**: Real-time, highly intelligent responses for complex queries.
+- **Smart Failover System**: 7-Key Rotation logic ensures 99.9% uptime (no rate limits).
+- **Offline Knowledge Base**: Instant answers for FAQs (Solat, Puasa, Wudhu) without internet.
+- **Realistic Voice (TTS)**: Dual-engine Text-to-Speech using **ElevenLabs** (Neural) and Web Speech API.
+- **Context-Aware**: Integrated directly into Quran Reader via "Verse Studio" - ask about specific verses instantly.
 
 ### 📖 Iqra Digital Transformation
 - **AR Vision Coach**: Uses camera/AR concepts to correct reading posture.

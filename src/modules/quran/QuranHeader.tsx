@@ -18,6 +18,8 @@ interface QuranHeaderProps {
   selectedTranslationId: number;
   onTranslationChange: (id: number) => void;
   isAudioLoading?: boolean;
+  layoutMode?: 'SCROLL' | 'PAGE';
+  onToggleLayoutMode?: () => void;
 }
 
 const QuranHeader: React.FC<QuranHeaderProps> = ({
@@ -36,6 +38,8 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
   selectedTranslationId,
   onTranslationChange,
   isAudioLoading = false,
+  layoutMode = 'SCROLL',
+  onToggleLayoutMode
 }) => {
   return (
     <div className="sticky top-0 z-30 bg-slate-950/95 backdrop-blur-md border-b border-cyan-500/20 shadow-lg shadow-cyan-500/5">
@@ -63,67 +67,61 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
           )}
         </div>
 
-        {/* Right: Controls */}
-        <div className="flex gap-2">
-          {/* Audio Loading Indicator */}
-          {isAudioLoading && (
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 flex items-center justify-center border border-amber-500/30">
-              <IconSpinner className="w-5 h-5 text-amber-400" />
-            </div>
-          )}
-          
-          {/* Reading Mode Toggle */}
-          {onToggleReadingMode && (
-            <button 
-              onClick={onToggleReadingMode} 
-              aria-label={readingMode ? "Mod Terjemahan" : "Mod Bacaan"}
-              title={readingMode ? "Mod Terjemahan" : "Mod Bacaan"}
-              className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all border shadow-sm ${
-                readingMode 
-                  ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' 
-                  : 'bg-slate-800/80 text-slate-400 border-slate-700 hover:bg-slate-700'
-              }`}
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
-                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
-              </svg>
-            </button>
-          )}
-
-          {/* Go to Verse */}
+        {/* Right: Controls (Uniform Glass Style) */}
+        <div className="flex items-center gap-1">
+          {/* 1. Go to Verse */}
           {onGoToVerse && (
             <button 
               onClick={onGoToVerse} 
-              aria-label="Pergi ke Ayat"
-              title="Pergi ke Ayat"
-              className="w-10 h-10 rounded-xl bg-slate-800/80 text-emerald-400 flex items-center justify-center hover:bg-slate-700 hover:text-emerald-300 transition-all border border-slate-700 shadow-sm"
+              className="w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-all"
+              title="Cari Ayat"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-5 h-5">
-                <circle cx="11" cy="11" r="8"/>
-                <path d="M21 21l-4.35-4.35"/>
-              </svg>
+              <i className="fa-solid fa-magnifying-glass text-sm"></i>
+            </button>
+          )}
+
+          {/* 2. Reading Mode (Translation/Reading Toggle) */}
+          {onToggleReadingMode && (
+            <button 
+              onClick={onToggleReadingMode} 
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+                readingMode ? 'text-cyan-400 bg-cyan-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
+              title={readingMode ? "Mod Terjemahan" : "Mod Bacaan"}
+            >
+              <i className={`fa-solid ${readingMode ? 'fa-book-open' : 'fa-language'} text-sm`}></i>
+            </button>
+          )}
+
+          {/* 3. Layout Mode (Mushaf/Scroll) */}
+          {onToggleLayoutMode && (
+            <button 
+              onClick={onToggleLayoutMode} 
+              className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${
+                layoutMode === 'PAGE' ? 'text-emerald-400 bg-emerald-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'
+              }`}
+              title={layoutMode === 'SCROLL' ? "Tukar ke Mushaf" : "Tukar ke Skrol"}
+            >
+              <i className={`fa-solid ${layoutMode === 'PAGE' ? 'fa-scroll' : 'fa-book-quran'} text-sm`}></i>
             </button>
           )}
           
-          {/* Audio Settings (Pilih Qari) */}
+          {/* 4. Audio Settings */}
           <button 
             onClick={onOpenAudioSettings} 
-            aria-label="Pilih Qari" 
+            className="w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-amber-400 hover:bg-amber-500/10 transition-all"
             title="Pilih Qari"
-            className="w-10 h-10 rounded-xl bg-slate-800/80 text-amber-400 flex items-center justify-center hover:bg-slate-700 hover:text-amber-300 transition-all border border-slate-700 shadow-sm"
           >
-            <IconAudio className="w-5 h-5" />
+            <i className="fa-solid fa-microphone-lines text-sm"></i>
           </button>
           
-          {/* View Settings (Tetapan Paparan) */}
+          {/* 5. Main Settings (Aa) */}
           <button 
             onClick={onOpenSettings} 
-            aria-label="Tetapan Paparan" 
+            className="w-9 h-9 rounded-full flex items-center justify-center text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             title="Tetapan Paparan"
-            className="w-10 h-10 rounded-xl bg-slate-800/80 text-cyan-400 flex items-center justify-center hover:bg-slate-700 hover:text-cyan-300 transition-all border border-slate-700 shadow-sm"
           >
-            <IconSettings className="w-5 h-5" />
+            <span className="font-serif font-bold text-lg">Aa</span>
           </button>
         </div>
       </div>

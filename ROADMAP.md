@@ -12,7 +12,7 @@
 | **Auth** | Email, phone signup, profile | ✅ 85% |
 | **Quran** | Reader, audio, basic navigation | ✅ 75% |
 | **Iqra** | Levels 1-6 UI, mock feedback | ⚠️ 50% |
-| **AI** | TanyaUstaz chat interface | ⚠️ 50% |
+| **AI** | TanyaUstaz chat interface | ✅ 100% |
 | **Ibadah** | Prayer times, Qibla, Tasbih | ⚠️ 60% |
 | **Infra** | Supabase, Edge Functions | ✅ 80% |
 
@@ -30,7 +30,7 @@
 
 | Track | Features | Priority |
 |-------|----------|----------|
-| **AI Wiring** | Connect TanyaUstaz to HybridEngine | P0 |
+| **AI Wiring** | Connect TanyaUstaz to HybridEngine | ✅ DONE |
 | **Real Data** | JAKIM prayer times, device Qibla | P0 |
 | **Tier 2** | Learning Planner, Ayah Explainer | P1 |
 | **Monetization** | Subscription tiers, paywall | P1 |

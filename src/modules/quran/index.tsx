@@ -29,6 +29,7 @@ import VerseNotesModal from './VerseNotesModal';
 import ReadingGoalsModal from './ReadingGoalsModal';
 import BookmarkCollectionsModal from './BookmarkCollectionsModal';
 import ThemeSettingsModal from './ThemeSettingsModal';
+import { chatWithVerseContext } from '../../services/aiService';
 
 const QuranContent: React.FC = () => {
     const {
@@ -108,21 +109,56 @@ const QuranContent: React.FC = () => {
             setChatMessages([{
                 id: 'welcome',
                 role: 'assistant',
-                content: `Assalamu Alaikum. Ask me about Verse ${studioVerse.verse_key}. I can explain its Tafsir, ruling, or context.`,
+                content: `Assalamualaikum. Saya Ustaz AI. Tanyalah saya apa sahaja tentang Surah ${selectedChapter?.name_simple}, Ayat ${studioVerse.verse_key.split(':')[1]}. Saya boleh huraikan tafsir, hukum tajwid, atau pengajaran ayat ini.`,
                 timestamp: Date.now()
             }]);
         }
     }, [studioVerse]);
 
-    // Handle Chat Send
-    // We need to import chatWithVerseContext here if we want to handle it here.
-    // Assuming we can import it or move logic to VerseStudio itself?
-    // Ideally VerseStudio should handle its own chat logic to be self-contained.
-    // But for now, let's implement the handler here.
+    // Handle Chat Send (Studio)
     const handleStudioSend = async () => {
-         // Logic placeholder - would need imports. 
-         // For now, simplest is to let VerseStudio handle it or import service.
-         // Let's import service since we are rewriting the file.
+        if (!chatInput.trim() || !studioVerse) return;
+
+        const userMsg = {
+            id: Date.now().toString(),
+            role: 'user',
+            content: chatInput,
+            timestamp: Date.now()
+        };
+
+        setChatMessages(prev => [...prev, userMsg]);
+        const currentInput = chatInput;
+        setChatInput('');
+        setIsChatLoading(true);
+
+        try {
+            // Context: Verse text and translation should ideally be passed, 
+            // but fetching verse text might require API if not fully loaded.
+            // For now, passing verse key is enough as aiService handles lookup/context.
+            const response = await chatWithVerseContext(
+                studioVerse.verse_key,
+                studioVerse.text_uthmani || "", 
+                currentInput
+            );
+
+            setChatMessages(prev => [...prev, {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: response,
+                timestamp: Date.now()
+            }]);
+        } catch (error) {
+            console.error(error);
+            setChatMessages(prev => [...prev, {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: "Maaf, saya menghadapi masalah untuk menjawab soalan ini. Sila cuba lagi.",
+                timestamp: Date.now(),
+                isError: true
+            }]);
+        } finally {
+            setIsChatLoading(false);
+        }
     };
 
     return (
@@ -334,12 +370,31 @@ const QuranContent: React.FC = () => {
     );
 };
 
+// Import QueryClient and QueryClientProvider directly for fallback
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+// Create a fallback QueryClient for the module
+const moduleQueryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            staleTime: 1000 * 60 * 5,
+            gcTime: 1000 * 60 * 30,
+            retry: 1,
+            refetchOnWindowFocus: false,
+        },
+    },
+});
+
 const Quran: React.FC = () => {
     return (
-        <QuranProvider>
-            <QuranContent />
-        </QuranProvider>
+        <QueryClientProvider client={moduleQueryClient}>
+            <QuranProvider>
+                <QuranContent />
+            </QuranProvider>
+        </QueryClientProvider>
     );
 };
 
 export default Quran;
+
+

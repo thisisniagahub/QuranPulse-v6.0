@@ -11,8 +11,9 @@ import IqraAnalytics from './IqraAnalytics';
 import IqraTutorials from './IqraTutorials';
 import IqraVisionCoach from './IqraVisionCoach';
 import VocabBuilder from './VocabBuilder';
+import IqraDigitalReader from './IqraDigitalReader';
 
-type IqraMode = 'READ' | 'COACH' | 'VISION_COACH' | 'TUTORIALS' | 'VOCAB' | 'ANALYTICS';
+type IqraMode = 'DIGITAL' | 'READ' | 'COACH' | 'VISION_COACH' | 'TUTORIALS' | 'VOCAB' | 'ANALYTICS';
 
 interface IqraProps {
     user?: UserProfile;
@@ -20,10 +21,11 @@ interface IqraProps {
 }
 
 const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
-    const [mode, setMode] = useState<IqraMode>('READ');
+    const [mode, setMode] = useState<IqraMode>('DIGITAL');
 
     const modes = [
-        { id: 'READ' as IqraMode, icon: 'fa-book-open', label: 'Read' },
+        { id: 'DIGITAL' as IqraMode, icon: 'fa-book-quran', label: 'Iqra\' Asal' },
+        { id: 'READ' as IqraMode, icon: 'fa-book-open', label: 'PDF Mode' },
         { id: 'VOCAB' as IqraMode, icon: 'fa-shapes', label: 'Vocab' },
         { id: 'TUTORIALS' as IqraMode, icon: 'fa-graduation-cap', label: 'Lessons' },
         { id: 'COACH' as IqraMode, icon: 'fa-microphone', label: 'Voice Coach' },
@@ -33,20 +35,22 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
 
     const renderContent = () => {
         switch (mode) {
+            case 'DIGITAL':
+                return <IqraDigitalReader onClose={() => setMode('READ')} />;
             case 'READ':
                 return <IqraPdfReader />;
             case 'VOCAB':
                 return <VocabBuilder isDark={true} />;
             case 'TUTORIALS':
-                return <IqraTutorials onBack={() => setMode('READ')} />;
+                return <IqraTutorials onBack={() => setMode('DIGITAL')} />;
             case 'ANALYTICS':
-                return <IqraAnalytics onBack={() => setMode('READ')} />;
+                return <IqraAnalytics onBack={() => setMode('DIGITAL')} />;
             case 'VISION_COACH':
-                return <IqraVisionCoach onClose={() => setMode('READ')} />;
+                return <IqraVisionCoach onClose={() => setMode('DIGITAL')} />;
             case 'COACH':
                 return <IqraVoiceCoach />;
             default:
-                return <IqraPdfReader />;
+                return <IqraDigitalReader />;
         }
     };
 

@@ -3,6 +3,7 @@ import { useQuran } from './contexts/QuranContext';
 import { useAudioPlayer } from '../../contexts/AudioPlayerContext';
 import QuranHeader from './QuranHeader';
 import QuranVerseCard from './QuranVerseCard';
+import QuranPageView from './QuranPageView';
 import QuranAudioPlayer from './QuranAudioPlayer';
 import ReadingProgressBar from './ReadingProgressBar';
 import AnimatedBismillah from './AnimatedBismillah';
@@ -17,6 +18,7 @@ const QuranReader: React.FC = () => {
         // Settings
         fontSize,
         view, setView,
+        layoutMode, setLayoutMode,
         readingMode, toggleReadingMode,
         showTranslation, setShowTranslation,
         showTransliteration, setShowTransliteration,
@@ -106,13 +108,23 @@ const QuranReader: React.FC = () => {
                 selectedTranslationId={context.selectedTranslationId}
                 onTranslationChange={context.setSelectedTranslationId}
                 isAudioLoading={isAudioLoading}
+                layoutMode={layoutMode}
+                onToggleLayoutMode={() => setLayoutMode(layoutMode === 'SCROLL' ? 'PAGE' : 'SCROLL')}
             />
 
             {/* Reading Progress */}
             <ReadingProgressBar />
 
-            {/* Verses Container */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-hide pb-32">
+            {/* === PAGE VIEW (MUSHAF MODE) === */}
+            {layoutMode === 'PAGE' && (
+                <div className="flex-1 overflow-y-auto w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-[#0a0a0f] to-black">
+                    <QuranPageView />
+                </div>
+            )}
+
+            {/* === SCROLL VIEW (LIST MODE) === */}
+            {layoutMode === 'SCROLL' && (
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 scrollbar-hide pb-32 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1a1c2e] via-[#020617] to-black">
                  {/* Bismillah (except Surah 1 & 9) */}
                  {selectedChapter.id !== 1 && selectedChapter.id !== 9 && (
                     <AnimatedBismillah />
@@ -122,7 +134,7 @@ const QuranReader: React.FC = () => {
                     // Skeleton Loading
                     <div className="space-y-4 max-w-4xl mx-auto">
                         {[1, 2, 3, 4, 5].map(i => (
-                            <div key={i} className="bg-slate-800/30 rounded-2xl p-6 animate-pulse border border-slate-700/50">
+                            <div key={i} className="bg-slate-800/20 backdrop-blur-md border border-white/5 rounded-2xl p-6 animate-pulse">
                                 <div className="h-8 bg-slate-700/50 rounded mb-4 w-3/4 ml-auto" />
                                 <div className="h-4 bg-slate-700/30 rounded w-full mb-2" />
                                 <div className="h-4 bg-slate-700/30 rounded w-2/3" />
@@ -169,6 +181,7 @@ const QuranReader: React.FC = () => {
                     </div>
                 )}
             </div>
+            )}
 
              {/* Floating Audio Player */}
              <QuranAudioPlayer
