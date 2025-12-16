@@ -99,7 +99,7 @@ interface QuranState {
     setNotesVerse: (verse: QuranVerse | null) => void;
     setBookmarkVerse: (verse: QuranVerse | null) => void;
     setSelectedWord: (data: { word: QuranWord; position: { x: number; y: number } } | null) => void;
-    handleWordClick: (word: QuranWord) => void;
+
     toggleReadingMode: () => void;
     
     // Studio Actions

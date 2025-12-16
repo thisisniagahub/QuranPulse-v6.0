@@ -234,6 +234,43 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                 />
                             </div>
 
+                            {/* Toggles Grid */}
+                            <div className="grid grid-cols-1 gap-3">
+                                {/* Translation Toggle */}
+                                <div className="flex items-center justify-between bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400">📝</div>
+                                        <div>
+                                            <p className="text-sm font-bold text-white">Terjemahan</p>
+                                            <p className="text-[10px] text-slate-500">Tunjuk makna ayat</p>
+                                        </div>
+                                    </div>
+                                    <div 
+                                        onClick={() => setShowTranslation(!showTranslation)}
+                                        className={`w-10 h-6 rounded-full relative cursor-pointer transition-colors ${showTranslation ? 'bg-cyan-500' : 'bg-slate-700'}`}
+                                    >
+                                        <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${showTranslation ? 'translate-x-5' : 'translate-x-1'}`} />
+                                    </div>
+                                </div>
+
+                                {/* Transliteration Toggle */}
+                                <div className="flex items-center justify-between bg-slate-900 p-4 rounded-xl border border-slate-800">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400">🔤</div>
+                                        <div>
+                                            <p className="text-sm font-bold text-white">Transliterasi</p>
+                                            <p className="text-[10px] text-slate-500">Ejaan rumi</p>
+                                        </div>
+                                    </div>
+                                    <div 
+                                        onClick={() => setShowTransliteration(!showTransliteration)}
+                                        className={`w-10 h-6 rounded-full relative cursor-pointer transition-colors ${showTransliteration ? 'bg-amber-500' : 'bg-slate-700'}`}
+                                    >
+                                        <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${showTransliteration ? 'translate-x-5' : 'translate-x-1'}`} />
+                                    </div>
+                                </div>
+                            </div>
+
                             {/* Reading Modes (Presets) */}
                             <div className="space-y-3">
                                 <span className="text-xs font-bold text-slate-400 uppercase px-1">Mod Bacaan Pantas</span>

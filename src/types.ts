@@ -128,6 +128,8 @@ export interface UserProfile {
   fiqh_preference?: 'shafii' | 'hanafi' | 'maliki' | 'hambali';
   hijri_date_preference?: 'gregorian' | 'hijri';
   current_level?: string;
+  level?: number; // Added for gamification compatibility
+  badges?: any[]; // Added for gamification compatibility
 }
 
 // --- Iqra Types ---

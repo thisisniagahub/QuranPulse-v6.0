@@ -4,16 +4,85 @@ import { UserProfile } from '../../types';
 
 interface ProfileProps {
   user: UserProfile;
-  onUpdateUser: (user: UserProfile) => void;
+  onUpdateUser: (updates: Partial<UserProfile>) => Promise<{ error: any }>;
+  onUpdatePassword: (password: string) => Promise<{ error: any }>;
+  onUploadAvatar: (file: File) => Promise<{ error: any, url?: string }>;
   onSignOut: () => void;
 }
 
-const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
+const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onUpdatePassword, onUploadAvatar, onSignOut }) => {
   // Mock Data for "RPG" Elements
-  const currentLevel = Math.floor(user.xp_total / 1000) + 1;
+  const totalXp = user.xp_total || 0;
+  const currentLevel = Math.floor(totalXp / 1000) + 1;
   const xpForNextLevel = currentLevel * 1000;
-  const currentLevelXp = user.xp_total % 1000;
+  const currentLevelXp = totalXp % 1000;
   const progressPercent = (currentLevelXp / 1000) * 100;
+
+  const [isEditing, setIsEditing] = useState(false);
+  const [editName, setEditName] = useState(user.name);
+  // States below here will be managed by subsequent existing code (lines 20+)
+  // We need to match up with existing 'saving' state if it exists, or re-declare if needed.
+  // Viewing showed lines 1-40, so I will replace through the start of handleSave to be safe.
+  
+  const [newPassword, setNewPassword] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [statusMsg, setStatusMsg] = useState<{type: 'success'|'error', text: string} | null>(null);
+
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
+  const handleAvatarClick = () => {
+      if (isEditing) {
+          fileInputRef.current?.click();
+      }
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0]) {
+          const file = e.target.files[0];
+          setSaving(true);
+          setStatusMsg({ type: 'success', text: 'Uploading avatar...' });
+          
+          const result = await onUploadAvatar(file);
+          if (result.error) {
+              setStatusMsg({ type: 'error', text: 'Avatar upload failed.' });
+          } else if (result.url) {
+              await onUpdateUser({ avatar_url: result.url });
+              setStatusMsg({ type: 'success', text: 'Avatar updated!' });
+          }
+          setSaving(false);
+      }
+  };
+
+  const handleSave = async () => {
+      setSaving(true);
+      setStatusMsg(null);
+      
+      try {
+          if (editName !== user.name) {
+             const { error } = await onUpdateUser({ name: editName });
+             if (error) throw error;
+          }
+          // handleSave continues... but we stop replacement here to merge or we should replace whole handleSave
+          // To implement full new logic, I will replace entire handleSave in next chunk if needed, 
+          // or I will output the *entire* function now if it's cleaner.
+          // Let's replace up to line 27 and inject the NEW logic entirely.
+          
+          if (newPassword) {
+              if (newPassword.length < 6) throw new Error("Kata laluan pendek sangat (>6).");
+              const { error } = await onUpdatePassword(newPassword);
+              if (error) throw error;
+          }
+
+          setIsEditing(false);
+          setStatusMsg({type:'success', text: 'Profile updated!'});
+      } catch (e: any) {
+          console.error("Update failed", e);
+          setStatusMsg({type:'error', text: e.message || "Failed"});
+      } finally {
+          setSaving(false);
+      }
+  };
+
 
   const LEVEL_TITLES = [
     "Pencari Hidayah", // Lvl 1
@@ -71,7 +140,44 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
             <div className="absolute inset-0 bg-cyan-500/20 rounded-full blur-xl group-hover:bg-cyan-500/40 transition-all duration-500"></div>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mb-1">{user.name}</h2>
+          {/* EDITABLE NAME SECTION */}
+          {isEditing ? (
+              <div className="flex flex-col items-center gap-2 mb-4 w-full max-w-xs transition-all">
+                  <input 
+                    type="text" 
+                    value={editName} 
+                    onChange={(e) => setEditName(e.target.value)}
+                    className="w-full bg-slate-800 border border-slate-600 rounded-lg px-4 py-2 text-center text-white font-bold focus:ring-2 focus:ring-cyan-500 outline-none"
+                    autoFocus
+                  />
+                  <div className="flex gap-2">
+                       <button 
+                        onClick={() => setIsEditing(false)} 
+                        className="px-3 py-1 rounded bg-slate-700 text-slate-300 text-xs hover:bg-slate-600"
+                        disabled={saving}
+                       >
+                           Batal
+                       </button>
+                       <button 
+                        onClick={handleSave} 
+                        className="px-3 py-1 rounded bg-cyan-600 text-white text-xs hover:bg-cyan-500 flex items-center gap-1"
+                        disabled={saving}
+                       >
+                           {saving ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-check"></i>} Simpan
+                       </button>
+                  </div>
+              </div>
+          ) : (
+              <div className="group relative mb-1">
+                  <h2 className="text-2xl font-bold text-white flex items-center gap-2">
+                      {user.name} 
+                      <button onClick={() => setIsEditing(true)} className="opacity-0 group-hover:opacity-100 transition-opacity text-slate-500 hover:text-cyan-400">
+                          <i className="fa-solid fa-pen-to-square text-sm"></i>
+                      </button>
+                  </h2>
+              </div>
+          )}
+          
           <p className="text-cyan-400 text-sm font-medium tracking-wide uppercase mb-6">{userTitle}</p>
 
           {/* XP Progress Bar */}
@@ -82,7 +188,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
               className="absolute top-0 left-0 h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full"
             />
           </div>
-          <div className="w-full max-w-xs flex justify-between text-[10px] text-slate-500 font-mono">
+          <div className="w-full max-w-xs flex justify-between text-[10px] text-slate-400 font-mono">
             <span>{currentLevelXp} XP</span>
             <span>{xpForNextLevel} XP (Next Level)</span>
           </div>
@@ -94,17 +200,17 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
         <div className="bg-slate-900/90 backdrop-blur-md p-3 rounded-2xl border border-slate-800 flex flex-col items-center shadow-lg">
           <span className="text-2xl mb-1">🔥</span>
           <span className="text-lg font-bold text-white">{user.streak}</span>
-          <span className="text-[10px] text-slate-500 uppercase">Day Streak</span>
+          <span className="text-[10px] text-slate-400 uppercase">Day Streak</span>
         </div>
         <div className="bg-slate-900/90 backdrop-blur-md p-3 rounded-2xl border border-slate-800 flex flex-col items-center shadow-lg">
           <span className="text-2xl mb-1">📖</span>
           <span className="text-lg font-bold text-white">{user.last_read_surah}</span>
-          <span className="text-[10px] text-slate-500 uppercase">Surah Read</span>
+          <span className="text-[10px] text-slate-400 uppercase">Surah Read</span>
         </div>
         <div className="bg-slate-900/90 backdrop-blur-md p-3 rounded-2xl border border-slate-800 flex flex-col items-center shadow-lg">
           <span className="text-2xl mb-1">💎</span>
           <span className="text-lg font-bold text-white">{user.barakah_points}</span>
-          <span className="text-[10px] text-slate-500 uppercase">Barakah Pts</span>
+          <span className="text-[10px] text-slate-400 uppercase">Barakah Pts</span>
         </div>
       </div>
 
@@ -120,7 +226,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
             {DAILY_QUESTS.map(quest => (
               <div key={quest.id} className={`flex items-center justify-between p-4 rounded-xl border transition-all ${quest.completed ? 'bg-emerald-900/10 border-emerald-500/30 opacity-60' : 'bg-slate-900/50 border-slate-800 hover:border-slate-600'}`}>
                 <div className="flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${quest.completed ? 'bg-emerald-500 border-emerald-500 text-black' : 'border-slate-600'}`}>
+                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${quest.completed ? 'bg-emerald-500 border-emerald-500 text-black' : 'border-slate-500'}`}>
                     {quest.completed && <i className="fa-solid fa-check text-xs"></i>}
                   </div>
                   <span className={`text-sm ${quest.completed ? 'text-slate-400 line-through' : 'text-slate-200'}`}>{quest.task}</span>
@@ -142,8 +248,8 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
           <div className="grid grid-cols-4 gap-3">
             {BADGES.map(badge => (
               <div key={badge.id} className={`aspect-square rounded-2xl flex flex-col items-center justify-center gap-2 p-2 border transition-all ${badge.unlocked ? `bg-slate-900 ${badge.bg} border-white/5` : 'bg-slate-900/30 border-slate-800 opacity-40 grayscale'}`}>
-                <i className={`fa-solid ${badge.icon} text-xl ${badge.unlocked ? badge.color : 'text-slate-600'}`}></i>
-                <span className="text-[9px] text-center leading-tight text-slate-400">{badge.name}</span>
+                <i className={`fa-solid ${badge.icon} text-xl ${badge.unlocked ? badge.color : 'text-slate-500'}`}></i>
+                <span className="text-[9px] text-center leading-tight text-slate-300">{badge.name}</span>
               </div>
             ))}
           </div>
@@ -164,7 +270,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
                     className="absolute bottom-0 w-full bg-cyan-500 rounded-full"
                   />
                 </div>
-                <span className="text-[9px] text-slate-500">{['S','M','T','W','T','F','S'][i]}</span>
+                <span className="text-[9px] text-slate-400">{['S','M','T','W','T','F','S'][i]}</span>
               </div>
             ))}
           </div>
@@ -179,7 +285,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onSignOut }) => {
             Log Keluar
         </button>
 
-        <div className="text-center text-xs text-slate-600 pb-4">
+        <div className="text-center text-xs text-slate-500 pb-4">
             QuranPulse v6.0 Genesis<br/>
             Made with ❤️ for Ummah
         </div>

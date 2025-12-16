@@ -349,10 +349,10 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                  key={i}
                  className={`font-uthmani transition-all duration-300 cursor-pointer rounded px-1
                    ${highlightedWordIndex === word.position 
-                     ? 'text-cyan-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.8)] scale-110' 
-                     : 'text-white hover:text-cyan-100 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]'
+                     ? 'text-cyan-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.9)] scale-110 font-bold' 
+                     : 'text-white font-semibold drop-shadow-[0_2px_3px_rgba(0,0,0,0.8)] hover:text-cyan-100 hover:drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]'
                    }
-                   ${activeWord?.id === word.id ? 'text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]' : ''}
+                   ${activeWord?.id === word.id ? 'text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]' : ''}
                  `}
                  style={{ fontSize: `${fontSize}px` }}
                  onClick={(e) => { e.stopPropagation(); onWordClick(word, e); }}

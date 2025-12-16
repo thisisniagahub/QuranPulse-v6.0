@@ -1,19 +1,16 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, useNavigate, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { DataProvider } from './services/DataContext';
 import { QueryProvider } from './services/QueryProvider';
 import { AudioPlayerProvider } from './contexts/AudioPlayerContext';
 import { GamificationProvider } from './contexts/GamificationContext';
-import { AuthProvider } from './contexts/AuthContext';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
-import MiniPlayer from './components/MiniPlayer';
 import ErrorBoundary from './components/ErrorBoundary';
+import { Login } from './modules/auth/Login'; // Import Login
 
-import { NavView, UserProfile } from './types';
-
-// Lazy load all modules for code splitting
-// Lazy load all modules for code splitting
-const Dashboard = lazy(() => import('./modules/dashboard')); // Points to index.tsx
+// Lazy load modules
+const Dashboard = lazy(() => import('./modules/dashboard')); 
 const Quran = lazy(() => import('./modules/quran')); 
 const SmartDeen = lazy(() => import('./modules/smart-deen/SmartDeen'));
 const Ibadah = lazy(() => import('./modules/ibadah/Ibadah'));
@@ -21,9 +18,6 @@ const Iqra = lazy(() => import('./modules/iqra'));
 const Souq = lazy(() => import('./modules/souq/Souq'));
 const MediaStudio = lazy(() => import('./modules/media/MediaStudio'));
 const Profile = lazy(() => import('./modules/profile/Profile'));
-// const AdminDashboard = lazy(() => import('./modules/admin/AdminDashboard')); // Removed
-const Auth = lazy(() => import('./modules/auth/Auth'));
-const Community = lazy(() => import('./modules/social')); // Points to index.tsx
 const LandingPage = lazy(() => import('./modules/landing/LandingPage'));
 
 // Loading fallback component
@@ -34,19 +28,12 @@ const LoadingFallback = () => (
     
     {/* Animated Rings */}
     <div className="relative w-32 h-32 flex items-center justify-center mb-8">
-        {/* Outer Ring */}
         <div className="absolute inset-0 border-2 border-cyan-500/20 border-t-cyan-400 rounded-full animate-[spin_3s_linear_infinite]"></div>
-        {/* Middle Ring */}
         <div className="absolute inset-3 border-2 border-purple-500/20 border-r-purple-400 rounded-full animate-[spin_2s_linear_infinite_reverse]"></div>
-        {/* Inner Ring */}
         <div className="absolute inset-6 border-2 border-amber-500/20 border-b-amber-400 rounded-full animate-[spin_1.5s_linear_infinite]"></div>
-        
-        {/* Logo/Icon */}
         <div className="relative z-10 w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-cyan-500/20 animate-pulse">
             <i className="fa-solid fa-cube text-2xl text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"></i>
         </div>
-        
-        {/* Core Glow */}
         <div className="absolute inset-0 bg-cyan-400/10 blur-2xl rounded-full animate-pulse"></div>
     </div>
 
@@ -55,28 +42,38 @@ const LoadingFallback = () => (
       <h3 className="text-2xl font-bold text-white tracking-widest font-serif">
         QURAN<span className="text-cyan-400">PULSE</span>
       </h3>
-      
-      {/* Arabic Text with Shimmer */}
       <p className="text-lg text-amber-400/80 font-arabic animate-pulse">جاري التحميل...</p>
-
       <div className="flex items-center justify-center gap-2 mt-2">
           <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 animate-bounce [animation-delay:-0.3s]"></span>
           <span className="h-1.5 w-1.5 rounded-full bg-purple-500 animate-bounce [animation-delay:-0.15s]"></span>
           <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-bounce"></span>
       </div>
-      
       <p className="text-[10px] text-slate-400 font-mono uppercase tracking-[0.3em] mt-6">Initializing Genesis Engine</p>
     </div>
   </div>
 );
 
+// Protected Route Wrapper
+const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
+    const { user, isLoading } = useAuth();
+    const location = useLocation();
+
+    if (isLoading) return <LoadingFallback />;
+
+    if (!user) {
+        // Redirect to Login, saving the current location they were trying to go to
+        return <Navigate to="/login" state={{ from: location }} replace />;
+    }
+
+    return children;
+};
+
 const AppContent: React.FC = () => {
   const [showSplash, setShowSplash] = useState(true);
-  const [showLanding, setShowLanding] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(true); // TEMP: Auto-login for testing
+  const { user, isLoading, logout, updateProfile, updatePassword, uploadAvatar } = useAuth();
   const navigate = useNavigate();
 
-  // Enforce minimum splash screen time for "WOW" effect
+  // Enforce minimum splash screen time
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowSplash(false);
@@ -84,109 +81,48 @@ const AppContent: React.FC = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Mock User State (In a real app, this would come from AuthContext or DataContext)
-  const [user, setUser] = useState<UserProfile>({
-    name: "Guest",
-    email: "guest@example.com",
-    role: "USER",
-    xp_total: 0,
-    barakah_points: 0,
-    streak: 0,
-    last_read_surah: 1,
-    last_read_ayah: 1,
-    iqra_progress: {}
-  });
-
-  const handleLogin = (userData: any) => {
-    setIsAuthenticated(true);
-    setUser({ ...user, name: userData.username || "User", role: userData.role || "USER" });
-  };
-
-  const handleUpdateUser = (updatedUser: UserProfile) => {
-    setUser(updatedUser);
-  };
-
-  const handleSignOut = () => {
-    setIsAuthenticated(false);
-    setShowLanding(true);
-    navigate('/');
-  };
-
-  // Compatibility function for legacy components using onNavigate
-  const handleNavigate = (view: NavView) => {
-    switch (view) {
-      case NavView.DASHBOARD: navigate('/'); break;
-      case NavView.QURAN: navigate('/quran'); break;
-      case NavView.SMART_DEEN: navigate('/smart-deen'); break;
-      case NavView.IBADAH: navigate('/ibadah'); break;
-      case NavView.IQRA: navigate('/iqra'); break;
-      case NavView.SOUQ: navigate('/souq'); break;
-      case NavView.MEDIA_STUDIO: navigate('/media'); break;
-      case NavView.PROFILE: navigate('/profile'); break;
-      case NavView.ADMIN: window.location.href = 'http://localhost:3000'; break;
-      default: navigate('/');
-    }
-  };
-
-  if (showSplash) {
+  if (showSplash || isLoading) {
     return <LoadingFallback />;
-  }
-
-  if (showLanding) {
-    return <LandingPage onGetStarted={() => setShowLanding(false)} />;
-  }
-
-  if (!isAuthenticated) {
-    return <Auth onLogin={handleLogin} />;
   }
 
   return (
     <ErrorBoundary>
       <Suspense fallback={<LoadingFallback />}>
         <Routes>
-          <Route path="/" element={<Layout />}>
+          {/* Public Routes */}
+          <Route path="/login" element={<Login />} />
+          
+          {/* Root Route: Decides between Landing and Dashboard */}
+          <Route path="/" element={
+              user ? <Layout /> : <LandingPage onGetStarted={() => navigate('/login')} />
+          }>
+            {/* Nested Protected Routes (Only rendered if user exists via Layout) */}
             <Route index element={
               <ErrorBoundary>
-                <Dashboard user={user} onNavigate={handleNavigate} />
+                <Dashboard user={user} onNavigate={(path) => navigate(path)} />
               </ErrorBoundary>
             } />
-            <Route path="quran" element={
-              <ErrorBoundary>
-                <Quran />
-              </ErrorBoundary>
-            } />
-            <Route path="smart-deen" element={
-              <ErrorBoundary>
-                <SmartDeen />
-              </ErrorBoundary>
-            } />
-            <Route path="ibadah" element={
-              <ErrorBoundary>
-                <Ibadah />
-              </ErrorBoundary>
-            } />
-            <Route path="iqra" element={
-              <ErrorBoundary>
-                <Iqra />
-              </ErrorBoundary>
-            } />
-            <Route path="souq" element={
-              <ErrorBoundary>
-                <Souq />
-              </ErrorBoundary>
-            } />
-            <Route path="media" element={
-              <ErrorBoundary>
-                <MediaStudio />
-              </ErrorBoundary>
-            } />
+            <Route path="quran" element={<ErrorBoundary><Quran /></ErrorBoundary>} />
+            <Route path="smart-deen" element={<ErrorBoundary><SmartDeen /></ErrorBoundary>} />
+            <Route path="ibadah" element={<ErrorBoundary><Ibadah /></ErrorBoundary>} />
+            <Route path="iqra" element={<ErrorBoundary><Iqra /></ErrorBoundary>} />
+            <Route path="souq" element={<ErrorBoundary><Souq /></ErrorBoundary>} />
+            <Route path="media" element={<ErrorBoundary><MediaStudio /></ErrorBoundary>} />
             <Route path="profile" element={
-              <ErrorBoundary>
-                <Profile user={user} onUpdateUser={handleUpdateUser} onSignOut={handleSignOut} />
-              </ErrorBoundary>
+                <ErrorBoundary>
+                    <Profile 
+                        user={user!} 
+                        onUpdateUser={updateProfile} 
+                        onUpdatePassword={updatePassword}
+                        onUploadAvatar={uploadAvatar}
+                        onSignOut={logout} 
+                    />
+                </ErrorBoundary>
             } />
           </Route>
-// AdminDashboard removed as per user request to use separate Next.js app
+
+          {/* Catch all */}
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
     </ErrorBoundary>
