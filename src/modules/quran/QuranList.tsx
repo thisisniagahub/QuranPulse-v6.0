@@ -46,45 +46,99 @@ const QuranList: React.FC<QuranListProps> = ({
         (c.name_arabic || '').includes(searchQuery)
     );
 
+    const [activeTab, setActiveTab] = React.useState<'surah' | 'juz' | 'revelation'>('surah');
+
+    // JUZ Logic: Mapping Juz to approximately starting Surah ID
+    const juzStartSurahMap: Record<number, number> = {
+        1: 1, 2: 2, 3: 2, 4: 3, 5: 4, 6: 4, 7: 5, 8: 6, 9: 7, 10: 8,
+        11: 9, 12: 11, 13: 12, 14: 15, 15: 17, 16: 18, 17: 21, 18: 23, 19: 25, 20: 27,
+        21: 29, 22: 33, 23: 36, 24: 39, 25: 41, 26: 46, 27: 51, 28: 58, 29: 67, 30: 78
+    };
+
+    const getSortedChapters = () => {
+        let sorted = [...filteredChapters];
+        if (activeTab === 'revelation') {
+            sorted.sort((a, b) => a.revelation_order - b.revelation_order);
+        }
+        return sorted;
+    };
+
+    const sortedList = getSortedChapters();
+    const juzList = Array.from({ length: 30 }, (_, i) => i + 1);
+
     return (
         <div className="min-h-screen pb-24">
-            {/* Premium Hero Header - Cleaner & More Spacious */}
-            <div className="relative pt-12 pb-8 px-6 text-center z-10">
-                <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-cyan-900/10 to-transparent pointer-events-none" />
+            {/* Premium Hero Header - Nature Background */}
+            <div className="relative pt-20 pb-12 px-6 text-center z-10 overflow-hidden">
+                {/* Nature Image Background */}
+                <div className="absolute inset-0 z-0">
+                    <img 
+                        src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2670&auto=format&fit=crop" 
+                        alt="Nature Background" 
+                        className="w-full h-full object-cover opacity-60"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-slate-900/80 via-slate-900/60 to-slate-900" />
+                </div>
                 
-                <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 tracking-tight">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Al-</span>Quran
-                </h1>
-                <p className="text-slate-400 text-sm font-medium tracking-wide uppercase opacity-80">The Noble Recitation</p>
-                <div className="mt-2 w-16 h-1 bg-gradient-to-r from-cyan-500/50 to-blue-500/50 mx-auto rounded-full"></div>
+                <div className="relative z-10">
+                    <h1 className="text-4xl md:text-6xl font-bold text-white mb-2 tracking-tight drop-shadow-lg">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-500">Al-</span>Quran
+                    </h1>
+                    <p className="text-slate-200 text-sm font-medium tracking-widest uppercase opacity-90 drop-shadow-md">The Noble Recitation</p>
+                    <div className="mt-4 w-24 h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 mx-auto rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)]"></div>
+                </div>
             </div>
 
             <div className="px-4 pb-24 max-w-5xl mx-auto space-y-6">
-                {/* Search Bar - Floating & Glassy */}
-                <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-2 border border-white/5 shadow-2xl sticky top-4 z-40 transition-all focus-within:ring-1 focus-within:ring-cyan-500/30">
-                    <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-slate-800/50 flex items-center justify-center text-slate-400">
-                             <i className={`fa-solid ${isSemanticMode ? 'fa-wand-magic-sparkles text-amber-400 animate-pulse' : 'fa-magnifying-glass'}`}></i>
+                {/* Search Bar & Tabs Container */}
+                <div className="sticky top-4 z-40 space-y-3">
+                    {/* Search Bar */}
+                    <div className="bg-slate-900/90 backdrop-blur-xl rounded-2xl p-2 border border-white/5 shadow-2xl transition-all focus-within:ring-1 focus-within:ring-cyan-500/30">
+                        <div className="flex items-center gap-3">
+                            <div className="w-12 h-12 rounded-xl bg-slate-800/50 flex items-center justify-center text-slate-400">
+                                <i className={`fa-solid ${isSemanticMode ? 'fa-wand-magic-sparkles text-amber-400 animate-pulse' : 'fa-magnifying-glass'}`}></i>
+                            </div>
+                            <input
+                                type="text"
+                                value={searchQuery}
+                                onChange={(e) => setSearchQuery(e.target.value)}
+                                placeholder={isSemanticMode ? 'Ask AI about topics (e.g. "patience")' : 'Search Surah (e.g. "Kahf")'}
+                                className="flex-1 bg-transparent outline-none text-white text-base placeholder:text-slate-600 h-12"
+                                onKeyDown={(e) => e.key === 'Enter' && isSemanticMode && handleSemanticSearch()}
+                            />
+                            <button 
+                                onClick={() => setIsSemanticMode(!isSemanticMode)} 
+                                className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${
+                                    isSemanticMode 
+                                        ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' 
+                                        : 'bg-slate-800 text-slate-400 border-transparent hover:text-white'
+                                }`}
+                            >
+                                {isSemanticMode ? 'AI MODE' : 'LIST MODE'}
+                            </button>
                         </div>
-                        <input
-                            type="text"
-                            value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
-                            placeholder={isSemanticMode ? 'Ask AI about topics (e.g. "patience")' : 'Search Surah (e.g. "Kahf")'}
-                            className="flex-1 bg-transparent outline-none text-white text-base placeholder:text-slate-600 h-12"
-                            onKeyDown={(e) => e.key === 'Enter' && isSemanticMode && handleSemanticSearch()}
-                        />
-                        <button 
-                            onClick={() => setIsSemanticMode(!isSemanticMode)} 
-                            className={`px-4 py-2 rounded-lg text-xs font-bold transition-all border ${
-                                isSemanticMode 
-                                    ? 'bg-amber-500/10 text-amber-400 border-amber-500/30' 
-                                    : 'bg-slate-800 text-slate-400 border-transparent hover:text-white'
-                            }`}
-                        >
-                            {isSemanticMode ? 'AI MODE' : 'LIST MODE'}
-                        </button>
                     </div>
+
+                    {/* View Tabs (Surah / Juz / Revelation) */}
+                    {!isSemanticMode && (
+                        <div className="flex p-1 bg-slate-900/80 backdrop-blur-md rounded-xl border border-white/5">
+                            {(['surah', 'juz', 'revelation'] as const).map((tab) => (
+                                <button
+                                    key={tab}
+                                    onClick={() => setActiveTab(tab)}
+                                    className={`flex-1 py-2 rounded-lg text-xs font-bold tracking-wide transition-all ${
+                                        activeTab === tab 
+                                            ? 'bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-lg' 
+                                            : 'text-slate-500 hover:text-slate-300'
+                                    }`}
+                                >
+                                    {tab === 'surah' && 'SURAH'}
+                                    {tab === 'juz' && 'JUZ'}
+                                    {tab === 'revelation' && 'REVELATION ORDER'}
+                                </button>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {/* Loading State */}
@@ -127,50 +181,83 @@ const QuranList: React.FC<QuranListProps> = ({
                         </div>
                     )}
 
-                    {/* Surah List Grid */}
+                    {/* MAIN LIST VIEW */}
                     {!isSemanticMode && !loading && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {filteredChapters.map((surah, index) => (
-                                <motion.div
-                                    key={surah.id}
-                                    initial={{ opacity: 0, scale: 0.98 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: index * 0.03 }}
-                                    onClick={() => onChapterSelect(surah)}
-                                    className="group relative bg-slate-900/40 backdrop-blur-sm p-4 rounded-2xl border border-white/5 hover:bg-slate-800/60 hover:border-cyan-500/20 transition-all duration-300 cursor-pointer flex items-center gap-4 min-h-[90px]"
-                                >
-                                    {/* Consistent Cyber Ring Marker */}
-                                    <div className="relative w-12 h-12 flex items-center justify-center shrink-0">
-                                        <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-80 group-hover:opacity-100 transition-opacity">
-                                            <defs>
-                                                <linearGradient id={`grad-cyber-list-${surah.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
-                                                    <stop offset="0%" stopColor="#22d3ee" />
-                                                    <stop offset="100%" stopColor="#3b82f6" />
-                                                </linearGradient>
-                                            </defs>
-                                            <circle cx="50" cy="50" r="45" fill="none" stroke={`url(#grad-cyber-list-${surah.id})`} strokeWidth="3" strokeDasharray="200" strokeDashoffset="100" className="group-hover:stroke-dashoffset-0 transition-all duration-700 ease-out" />
-                                            <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
-                                        </svg>
-                                        <span className="font-bold text-cyan-400 text-sm">{surah.id}</span>
-                                    </div>
-                                    
-                                    {/* Text Info */}
-                                    <div className="flex-1 min-w-0">
-                                        <h4 className="font-bold text-slate-200 text-lg group-hover:text-cyan-400 transition-colors truncate">
-                                            {surah.name_simple}
-                                        </h4>
-                                        <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">
-                                            {surah.verses_count} Verses • {surah.revelation_place}
-                                        </p>
-                                    </div>
+                        <>
+                            {/* JUZ VIEW */}
+                            {activeTab === 'juz' ? (
+                                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                                    {juzList.map((juzNum) => (
+                                        <motion.div
+                                            key={juzNum}
+                                            initial={{ opacity: 0, scale: 0.95 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            onClick={() => {
+                                                const startSurahId = juzStartSurahMap[juzNum] || 1;
+                                                const surah = chapters.find(c => c.id === startSurahId);
+                                                if (surah) onChapterSelect(surah);
+                                            }}
+                                            className="bg-slate-900/40 backdrop-blur-sm p-6 rounded-2xl border border-white/5 hover:border-cyan-500/50 hover:bg-slate-800 transition-all cursor-pointer flex flex-col items-center justify-center group h-40"
+                                        >
+                                            <div className="w-16 h-16 rounded-full border-2 border-slate-700 group-hover:border-cyan-400 flex items-center justify-center mb-3 transition-colors bg-slate-900">
+                                                <span className="text-2xl font-bold text-slate-400 group-hover:text-cyan-400">{juzNum}</span>
+                                            </div>
+                                            <span className="text-xs font-bold text-slate-500 uppercase tracking-widest group-hover:text-white">JUZ {juzNum}</span>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            ) : (
+                                /* SURAH & REVELATION VIEW */
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                    {sortedList.map((surah, index) => (
+                                        <motion.div
+                                            key={surah.id}
+                                            initial={{ opacity: 0, scale: 0.98 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{ delay: index * 0.03 }}
+                                            onClick={() => onChapterSelect(surah)}
+                                            className="group relative bg-slate-900/40 backdrop-blur-sm p-4 rounded-2xl border border-white/5 hover:bg-slate-800/60 hover:border-cyan-500/20 transition-all duration-300 cursor-pointer flex items-center gap-4 min-h-[90px]"
+                                        >
+                                            {/* Consistent Cyber Ring Marker */}
+                                            <div className="relative w-12 h-12 flex items-center justify-center shrink-0">
+                                                <svg viewBox="0 0 100 100" className="absolute inset-0 w-full h-full opacity-80 group-hover:opacity-100 transition-opacity">
+                                                    <defs>
+                                                        <linearGradient id={`grad-cyber-list-${surah.id}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                                                            <stop offset="0%" stopColor="#22d3ee" />
+                                                            <stop offset="100%" stopColor="#3b82f6" />
+                                                        </linearGradient>
+                                                    </defs>
+                                                    <circle cx="50" cy="50" r="45" fill="none" stroke={`url(#grad-cyber-list-${surah.id})`} strokeWidth="3" strokeDasharray="200" strokeDashoffset="100" className="group-hover:stroke-dashoffset-0 transition-all duration-700 ease-out" />
+                                                    <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" />
+                                                </svg>
+                                                <span className="font-bold text-cyan-400 text-sm">{surah.id}</span>
+                                            </div>
+                                            
+                                            {/* Text Info */}
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="font-bold text-slate-200 text-lg group-hover:text-cyan-400 transition-colors truncate">
+                                                    {surah.name_simple}
+                                                </h4>
+                                                <p className="text-xs text-slate-500 font-medium uppercase tracking-wider">
+                                                    {surah.verses_count} Verses • {surah.revelation_place}
+                                                </p>
+                                                {/* Show Order if in Revelation Mode */}
+                                                {activeTab === 'revelation' && (
+                                                     <span className="inline-block mt-1 text-[10px] bg-slate-800 text-cyan-400 px-2 py-0.5 rounded border border-slate-700">
+                                                        Order: #{surah.revelation_order}
+                                                     </span>
+                                                )}
+                                            </div>
 
-                                    {/* Arabic Name - Subtle */}
-                                    <div className="opacity-30 group-hover:opacity-100 transition-opacity">
-                                        <span className="font-arabic text-xl text-slate-400">{surah.name_arabic}</span>
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </div>
+                                            {/* Arabic Name - Subtle */}
+                                            <div className="opacity-30 group-hover:opacity-100 transition-opacity">
+                                                <span className="font-arabic text-xl text-slate-400">{surah.name_arabic}</span>
+                                            </div>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            )}
+                        </>
                     )}
 
                     {/* No Results */}

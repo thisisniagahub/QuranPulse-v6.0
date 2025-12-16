@@ -327,112 +327,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                         </>
                     )}
 
-                    {/* --- SCREEN: SMART DEEN AI --- */}
+import SmartDeen from '../../smart-deen/SmartDeen'; // Import Actual Component
+
+// ... existing imports
+
+// ... inside component
+
+                    {/* --- SCREEN: SMART DEEN AI (ACTUAL APP) --- */}
                     {activeScreen === 'smart-deen' && (
-                        <div className="flex-1 flex flex-col animate-fade-in bg-[#050505] relative overflow-hidden">
-                            {/* Maze Pattern Background */}
-                            <div className="absolute top-0 left-0 w-full h-32 opacity-10 pointer-events-none z-0">
-                                <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-                                    <defs>
-                                        <pattern id="maze" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
-                                            <path d="M0 20 L20 0 M0 0 L20 20" stroke="white" strokeWidth="1" fill="none"/>
-                                        </pattern>
-                                    </defs>
-                                    <rect width="100%" height="100%" fill="url(#maze)"/>
-                                </svg>
-                            </div>
-
-                            {/* Header */}
-                            <div className="px-4 pt-3 pb-2 z-10 border-b border-white/10 bg-[#050505]/90 backdrop-blur-md shadow-lg">
-                                <div className="flex justify-between items-start mb-3">
-                                    <div className="flex items-center gap-2">
-                                        <div className="w-8 h-8 rounded-full bg-cyan-500 text-black flex items-center justify-center shadow-[0_0_10px_rgba(6,182,212,0.5)]">
-                                            <i className="fa-solid fa-robot text-sm"></i>
-                                        </div>
-                                        <div>
-                                            <h3 className="text-sm font-bold text-white leading-none">Smart Deen AI</h3>
-                                            <span className="text-[9px] font-medium text-cyan-400 uppercase tracking-wider">Hybrid Cloud Mode</span>
-                                        </div>
-                                    </div>
-                                    {/* Toggle */}
-                                    <div className="flex items-center gap-1.5 bg-slate-800/50 rounded-full px-2 py-1 border border-white/5">
-                                        <span className="text-[8px] text-slate-400 font-bold uppercase">Thinking</span>
-                                        <div className="w-6 h-3 bg-slate-700 rounded-full relative">
-                                            <div className="absolute left-0.5 top-0.5 w-2 h-2 bg-slate-400 rounded-full"></div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Tabs */}
-                                <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
-                                    {['Tanya Ustaz', 'Jawi', 'Hadith', 'Planner'].map((tab, i) => (
-                                        <button 
-                                            key={i}
-                                            className={`whitespace-nowrap px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all ${i === 0 ? 'bg-slate-800 text-white border border-white/10 shadow-inner' : 'text-slate-500 hover:text-slate-300'}`}
-                                        >
-                                            {tab}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Chat Area */}
-                            <div className="flex-1 p-3 overflow-y-auto space-y-3 relative z-10">
-                                {chatMessages.map((msg, idx) => (
-                                    <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'} animate-slide-up`}>
-                                        <div className={`max-w-[85%] rounded-2xl p-3 text-[10px] sm:text-xs leading-relaxed relative overflow-hidden ${
-                                            msg.role === 'user' 
-                                                ? 'bg-cyan-500/20 border border-cyan-500/30 text-white rounded-br-none' 
-                                                : 'bg-white/5 text-slate-200 border border-white/10 rounded-bl-none'
-                                        }`}>
-                                            {msg.role === 'assistant' && (
-                                                <div className="flex items-center gap-1.5 mb-1.5 opacity-70 border-b border-white/10 pb-1">
-                                                    <i className="fa-solid fa-user-graduate text-[9px] text-cyan-400"></i>
-                                                    <span className="text-[8px] uppercase tracking-wider font-bold text-cyan-400">Ustaz AI</span>
-                                                </div>
-                                            )}
-                                            {msg.content.replace("Assalamu Alaikum.", "Assalamu Alaikum, Megat Shazree Zainal.")}
-                                        </div>
-                                    </div>
-                                ))}
-                                {isTyping && (
-                                    <div className="flex justify-start animate-fade-in">
-                                        <div className="bg-slate-800/50 rounded-2xl rounded-bl-none p-3 border border-slate-700/50 backdrop-blur-sm">
-                                            <div className="flex gap-1">
-                                                <span className="w-1 h-1 bg-cyan-400 rounded-full animate-bounce"></span>
-                                                <span className="w-1 h-1 bg-cyan-400 rounded-full animate-bounce delay-100"></span>
-                                                <span className="w-1 h-1 bg-cyan-400 rounded-full animate-bounce delay-200"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-
-                            {/* Prompts */}
-                            <div className="p-3 border-t border-white/5 bg-[#050505] z-20">
-                                <div className="flex gap-2 items-center bg-white/5 p-1.5 rounded-xl border border-white/10 mb-2">
-                                    <input 
-                                        type="text" 
-                                        placeholder="Ask about Fiqh..." 
-                                        disabled
-                                        className="flex-1 bg-transparent text-[10px] text-white px-2 outline-none placeholder:text-slate-600"
-                                    />
-                                    <div className="w-7 h-7 rounded-lg bg-cyan-500 text-black flex items-center justify-center shadow-lg">
-                                        <i className="fa-solid fa-paper-plane text-[10px]"></i>
-                                    </div>
-                                </div>
-                                <div className="flex gap-2 overflow-x-auto no-scrollbar">
-                                    {['Explain Surah Al-Mulk', 'Next Prayer Time?'].map((prompt, i) => (
-                                        <button 
-                                            key={i}
-                                            onClick={() => handleSmartDeenPrompt(prompt)}
-                                            className="whitespace-nowrap px-2 py-1 rounded-md bg-white/5 border border-white/10 text-[9px] text-slate-400 hover:bg-cyan-500/20 hover:text-cyan-400 transition-all"
-                                        >
-                                            {prompt}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
+                        <div className="flex-1 h-full w-full overflow-hidden bg-[#020617] relative flex flex-col">
+                            {/* We scale it down slightly if needed or let it fit responsive */}
+                            <SmartDeen />
                         </div>
                     )}
 
