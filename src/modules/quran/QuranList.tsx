@@ -235,7 +235,7 @@ const QuranList: React.FC<QuranListProps> = ({
                                                     </h4>
                                                     
                                                     {/* Arabic Name - Fixed Visibility */}
-                                                    <span className="font-arabic text-xl text-slate-500 group-hover:text-slate-300 transition-colors ml-2">
+                                                    <span className="font-arabic text-xl text-cyan-200 group-hover:text-white transition-colors ml-2 drop-shadow-[0_0_5px_rgba(6,182,212,0.5)] font-bold">
                                                         {surah.name_arabic}
                                                     </span>
                                                 </div>

@@ -283,7 +283,7 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                       ? 'text-cyan-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.9)] scale-110 z-10'
                       : activeWord?.id === word.id 
                         ? 'text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]' 
-                        : 'text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.5)] group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]'
+                        : 'text-white font-bold drop-shadow-[0_3px_5px_rgba(0,0,0,0.8)] group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]'
                   }`}
                   style={{ fontSize: `${fontSize}px` }}
                 >
