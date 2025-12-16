@@ -391,7 +391,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                                     <span className="text-[8px] uppercase tracking-wider font-bold text-cyan-400">Ustaz AI</span>
                                                 </div>
                                             )}
-                                            {msg.content}
+                                            {msg.content.replace("Assalamu Alaikum.", "Assalamu Alaikum, Megat Shazree Zainal.")}
                                         </div>
                                     </div>
                                 ))}
