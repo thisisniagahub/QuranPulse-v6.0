@@ -136,7 +136,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
                 </span>
                 <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
-                    Genesis Edition • Batch 1
+                    Public Beta • Genesis Edition
                 </span>
             </motion.div>
 
@@ -331,15 +331,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                     {activeScreen === 'smart-deen' && (
                         <div className="flex-1 h-full w-full overflow-hidden bg-[#020617] relative flex flex-col">
                             {/* Actual SmartDeen Component Integration */}
-                            <SmartDeen />
+                            <SmartDeen userName="Megat Shazree Zainal" hasBottomNav={true} />
                         </div>
                     )}
 
-                    {/* --- 3D Floating Bottom Navigation (Actual Component Mock) --- */}
-                    <div className="absolute bottom-7 left-1/2 -translate-x-1/2 w-[88%] z-50 pointer-events-none">
-                        <div className="pointer-events-auto scale-90 origin-bottom">
-                            <BottomNav activeViewOverride={getNavViewForScreen(activeScreen)} onNavigate={handleMockNavigate} />
-                        </div>
+                    {/* --- Static Bottom Navigation (Mockup) --- */}
+                    <div className="absolute bottom-0 left-0 w-full z-50 pointer-events-auto">
+                        {/* We use the real BottomNav but pass props to override active state */}
+                        <BottomNav 
+                            activeViewOverride={getNavViewForScreen(activeScreen)} 
+                            onNavigate={handleMockNavigate}
+                        />
                     </div>
 
                     {/* Bottom Home Indicator */}
