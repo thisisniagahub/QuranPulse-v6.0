@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { askUstazAI, ChatMessage } from '../services/aiService';
+import { askUstazAI } from '../services/aiService';
+import { ChatMessage } from '../types';
 import { PERSONAS, PersonaKey } from '../constants/personas';
 
 export const useChat = (initialPersona: PersonaKey = 'AZHAR', userName: string) => {
     const [messages, setMessages] = useState<ChatMessage[]>([
         {
+            id: 'welcome',
             role: 'assistant',
-            content: `Assalamualaikum, ${userName}. Saya ${PERSONAS[initialPersona].name}. Ada apa-apa yang boleh saya bantu mengenai agama hari ini?`
+            content: `Assalamualaikum, ${userName}. Saya ${PERSONAS[initialPersona].name}. Ada apa-apa yang boleh saya bantu mengenai agama hari ini?`,
+            timestamp: Date.now()
         }
     ]);
     const [isThinking, setIsThinking] = useState(false);
@@ -22,8 +25,10 @@ export const useChat = (initialPersona: PersonaKey = 'AZHAR', userName: string) 
         if (!input.trim()) return;
 
         const userMsg: ChatMessage = {
+            id: Date.now().toString(),
             role: 'user',
-            content: input.trim()
+            content: input.trim(),
+            timestamp: Date.now()
         };
 
         // Optimistic update
@@ -43,7 +48,12 @@ export const useChat = (initialPersona: PersonaKey = 'AZHAR', userName: string) 
             
             // Let's create a temporary array for the AI call that includes the persona context.
             const contextMessages: ChatMessage[] = [
-                { role: 'system', content: personaSystemPrompt },
+                { 
+                    id: 'system-persona',
+                    role: 'system', 
+                    content: personaSystemPrompt,
+                    timestamp: Date.now()
+                },
                 ...messages.slice(-10), // Context window
                 userMsg
             ];
@@ -51,16 +61,20 @@ export const useChat = (initialPersona: PersonaKey = 'AZHAR', userName: string) 
             const responseText = await askUstazAI(contextMessages);
 
             const aiMsg: ChatMessage = {
+                id: (Date.now() + 1).toString(),
                 role: 'assistant',
-                content: responseText
+                content: responseText,
+                timestamp: Date.now()
             };
 
             setMessages(prev => [...prev, aiMsg]);
         } catch (error) {
             console.error("AI Error:", error);
             const errorMsg: ChatMessage = {
+                id: (Date.now() + 2).toString(),
                 role: 'assistant',
-                content: "Maaf, saya mengalami masalah teknikal sebentar. Sila cuba lagi."
+                content: "Maaf, saya mengalami masalah teknikal sebentar. Sila cuba lagi.",
+                timestamp: Date.now()
             };
             setMessages(prev => [...prev, errorMsg]);
         } finally {

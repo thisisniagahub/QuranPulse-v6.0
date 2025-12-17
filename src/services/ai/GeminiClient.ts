@@ -1,13 +1,14 @@
 import { supabase } from '@/lib/supabase';
-
-export interface ChatMessage {
-  role: 'user' | 'assistant' | 'system';
-  content: string;
-}
+import { usageTracker } from './KeyManager';
+import { THEOLOGICAL_SYSTEM_PROMPT } from './prompts';
+import { ChatMessage } from '../../types';
 
 // Flag to indicate we are using the proxy. 
 // This satisfies the check in aiService.ts: if (GEMINI_API_KEYS.length > 0)
 export const GEMINI_API_KEYS: string[] = ["SECURE_PROXY_ENABLED"]; 
+
+/**
+ * CLIENT-SIDE PROXY CLIENT
 
 /**
  * CLIENT-SIDE PROXY CLIENT

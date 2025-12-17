@@ -1,9 +1,7 @@
 import { supabase } from '@/lib/supabase';
 import { ISLAMIC_FAQ } from '../data/islamicFAQ';
-import { GEMINI_API_KEYS, callGeminiFlashWithFailover, ChatMessage } from './ai/GeminiClient';
-
-// Re-export ChatMessage for other consumers
-export type { ChatMessage };
+import { GEMINI_API_KEYS, callGeminiFlashWithFailover } from './ai/GeminiClient';
+import { ChatMessage } from '../types';
 
 // Helper: Smart Search in Local FAQ
 function findLocalAnswer(query: string): string | null {
@@ -163,7 +161,14 @@ export const generateIslamicImage = async () => "https://placehold.co/600x400?te
 export const getPersonalizedGreeting = async (name: string) => `Assalamu Alaikum, ${name}`;
 export const generateSpeech = async () => "";
 export const enhanceVideoPrompt = async (p: string) => p;
-export const chatWithVerseContext = async (key: string, text: string, msg: string) => askUstazAI([{role:'user',content:msg}]);
+export const chatWithVerseContext = async (key: string, text: string, msg: string) => askUstazAI([
+    {
+        id: 'ctx-' + Date.now(),
+        role: 'user',
+        content: msg,
+        timestamp: Date.now()
+    }
+]);
 export const analyzeQuranRecitation = async (b64: string, mime: string, ctx: string) => ({ score: 85, feedback: "Good recitation (Simulated).", accuracy_score: 85, tajweed_errors: [], feedback_summary: "Keep practicing." });
 export const analyzeTajweedPosture = async () => ({ feedback: "Good posture (Simulated).", is_correct: true, issues: [] });
 export const getVerseConnections = async () => ({ topics: ["Simulated Topic"], related_verses: [] });

@@ -84,17 +84,21 @@ export const useQibla = () => {
     if (window.DeviceOrientationEvent) {
       setQiblaData(prev => ({ ...prev, isDeviceOrientationSupported: true }));
 
-      const handleDeviceOrientation = (event: DeviceOrientationEvent) => {
-        if (event.webkitCompassHeading !== undefined) { // iOS specific
-          const heading = event.webkitCompassHeading;
-          setQiblaData(prev => ({ ...prev, deviceHeading: heading }));
-        } else if (event.alpha !== null) { // Standard browsers
-          const alpha = event.alpha; // 0-360 degrees (relative to true north if absolute)
-          // On Android, alpha is relative to phone's top. Need to adjust for screen rotation.
-          // This is a complex topic, often requiring `screen.orientation.angle`
-          // For simplicity, let's assume alpha is relative to true north for now.
-          const heading = (360 - alpha) % 360; // Convert to clockwise from North
-          setQiblaData(prev => ({ ...prev, deviceHeading: heading }));
+      // Handle device orientation
+      const handleOrientation = (event: DeviceOrientationEvent) => {
+        let heading: number | null = null;
+
+        // iOS devices
+        if ((event as any).webkitCompassHeading !== undefined) { // iOS specific
+          heading = (event as any).webkitCompassCompassHeading;
+        } 
+        // Android devices
+        else if (event.alpha !== null) {
+          heading = 360 - event.alpha;
+        }
+
+        if (heading !== null) {
+          setDeviceHeading(heading);
         }
       };
 
