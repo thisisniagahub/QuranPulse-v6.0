@@ -59,6 +59,27 @@ Now powered by a **Hybrid Cloud Engine**:
 - **Supabase Backend**: Robust database for user profiles, progress, and Quran data.
 - **Tailwind CSS v4**: The latest in utility-first styling.
 
+## Recent Updates (Dec 2025)
+
+### 🛡️ Security & AI
+- **Secure AI Proxy**: All Gemini AI requests now route through a Supabase Edge Function (`chat-proxy`). Client-side API keys have been removed for enhanced security.
+- **Compliance**: Added mandatory "Theological System Prompt" and JAKIM disclaimers to all AI interactions.
+
+### 🕌 Data Integration
+- **JAKIM Prayer Times**: Replaced mock data with real-time integration from `api.waktusolat.app` (JAKIM E-Solat).
+- **Zone Selector**: Users can now select their specific zone (e.g., WLY01, SGR01) for accurate timings.
+
+### 💰 Monetization (Barakah Hub)
+- **Infaq Module**: Launched "Sponsor a Student" feature allowing users to contribute to B40 education.
+- **Payment Gateway**: Integrated mock payment flow (ToyyibPay simulation) for testing.
+
+### 📊 Analytics
+- **Event Tracking**: Implemented `AnalyticsService` to track user engagement across Barakah, Ibadah, and AI modules.
+
+---
+
+## 🛠️ Development Workflow
+
 ---
 
 ## 🛠️ Tech Stack

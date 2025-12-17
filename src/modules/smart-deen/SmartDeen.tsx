@@ -1,51 +1,43 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChatMessage, UserProfile } from '../../types';
 import { useAuth } from '../../contexts/AuthContext';
-import { askUstazAI, convertToJawi, getHadithByTopic } from '../../services/aiService';
 import { motion, AnimatePresence } from "framer-motion";
 import UstazAvatar from './UstazAvatar';
 import NeuralTyping from './NeuralTyping';
 import SuggestionChips from './SuggestionChips';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 import KhatamPlanner from './components/KhatamPlanner';
+import { useChat } from '../../hooks/useChat';
+import { PERSONAS, PersonaKey } from '../../constants/personas';
 
 interface SmartDeenProps {
     userName?: string;
     hasBottomNav?: boolean;
 }
 
-const PERSONAS = {
-    AZHAR: { id: 'AZHAR', name: 'Ustaz Azhar', role: 'Pakar Fiqh & Hukum', style: 'Tegas & Tepat', color: 'cyan' },
-    AISHAH: { id: 'AISHAH', name: 'Ustazah Aishah', role: 'Kaunseling Keluarga', style: 'Lembut & Penyayang', color: 'pink' },
-    AIMAN: { id: 'AIMAN', name: 'Abang Aiman', role: 'Mentor Belia', style: 'Santai & Relatable', color: 'emerald' }
-};
-
 const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false }) => {
     const { user } = useAuth();
     const displayName = userName || user?.name || "Sahabat";
     const [activeTab, setActiveTab] = useState<'CHAT' | 'JAWI' | 'HADITH' | 'PLANNER'>('CHAT');
-    const [selectedPersona, setSelectedPersona] = useState<'AZHAR' | 'AISHAH' | 'AIMAN'>('AZHAR');        
     
-    // Core State
+    // Core Logic Extracted to Hook
+    const { 
+        messages, 
+        isThinking, 
+        selectedPersona, 
+        switchPersona, 
+        sendMessage 
+    } = useChat('AZHAR', displayName);
+
     const [input, setInput] = useState('');
-    const [isThinking, setIsThinking] = useState(false);
-    const [messages, setMessages] = useState<ChatMessage[]>([
-        {
-            id: 'welcome',
-            role: 'assistant',
-            content: `Assalamualaikum, ${displayName}. Saya ${PERSONAS[selectedPersona].name}. Ada apa-apa yang boleh saya bantu mengenai agama hari ini?`,
-            timestamp: Date.now()
-        }
-    ]);
 
     // Refs
     const scrollRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    // Audio - Fixed: Pass object with onResult callback
+    // Audio
     const { isListening, startListening, stopListening, error: speechError, isSupported } = useSpeechRecognition({
-        onResult: (text) => setInput(text),
-        lang: 'ms-MY'  // Bahasa Melayu
+        onResult: ({ transcript }) => setInput(transcript),
+        lang: 'ms-MY'
     });
 
     // Auto-scroll
@@ -55,57 +47,10 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
         }
     }, [messages, isThinking]);
 
-    const handleSend = async () => {
+    const handleSend = () => {
         if (!input.trim()) return;
-
-        const userMsg: ChatMessage = {
-            id: Date.now().toString(),
-            role: 'user',
-            content: input.trim(),
-            timestamp: Date.now()
-        };
-
-        setMessages(prev => [...prev, userMsg]);
+        sendMessage(input);
         setInput('');
-        setIsThinking(true);
-
-        try {
-            // Build system prompt with persona context
-            const personaSystemPrompt = `Anda adalah ${PERSONAS[selectedPersona].name}, seorang ${PERSONAS[selectedPersona].role}. Gaya bahasa anda ${PERSONAS[selectedPersona].style}. Jawab dalam Bahasa Melayu yang baik.`;
-            
-            // Prepare messages for AI (with system prompt)
-            const aiMessages = [
-                { role: 'system' as const, content: personaSystemPrompt },
-                ...messages.slice(-10).map(m => ({ 
-                    role: m.role as 'user' | 'assistant', 
-                    content: m.content 
-                })),
-                { role: 'user' as const, content: userMsg.content }
-            ];
-
-            // Use the robust askUstazAI function (Gemini API with rotation + fallback)
-            const responseText = await askUstazAI(aiMessages);
-
-            const aiMsg: ChatMessage = {
-                id: (Date.now() + 1).toString(),
-                role: 'assistant',
-                content: responseText,
-                timestamp: Date.now()
-            };
-
-            setMessages(prev => [...prev, aiMsg]);
-        } catch (error) {
-            console.error("AI Error:", error);
-            const errorMsg: ChatMessage = {
-                id: Date.now().toString(),
-                role: 'assistant',
-                content: "Maaf, saya mengalami masalah teknikal sebentar. Sila cuba lagi.",
-                timestamp: Date.now()
-            };
-            setMessages(prev => [...prev, errorMsg]);
-        } finally {
-            setIsThinking(false);
-        }
     };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -130,10 +75,10 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                     </div>
                 </div>
                 <div className="flex gap-1 bg-slate-800/50 p-1 rounded-lg">
-                    {(Object.keys(PERSONAS) as Array<keyof typeof PERSONAS>).map((p) => (
+                    {(Object.keys(PERSONAS) as PersonaKey[]).map((p) => (
                         <button
                             key={p}
-                            onClick={() => setSelectedPersona(p)}
+                            onClick={() => switchPersona(p)}
                             className={`w-8 h-8 rounded-md flex items-center justify-center text-xs transition-all ${selectedPersona === p ? 'bg-slate-700 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
                         >
                             {p === 'AZHAR' ? '👳🏻‍♂️' : p === 'AISHAH' ? '🧕🏻' : '🧢'}
@@ -151,9 +96,9 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                         </div>
 
                         <AnimatePresence>
-                            {messages.map((msg) => (
+                            {messages.map((msg, idx) => (
                                 <motion.div 
-                                    key={msg.id}
+                                    key={idx} // Using idx because ids were removed from simple ChatMessage type, ideal to add back if needed
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
@@ -167,6 +112,18 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                             : 'bg-slate-800/80 text-slate-200 border border-white/5 rounded-bl-none'
                                     }`}>
                                         {msg.content}
+                                        {/* Compliance: Report Button for Assistant Messages */}
+                                        {msg.role === 'assistant' && (
+                                            <div className="mt-2 pt-2 border-t border-white/10 flex justify-end">
+                                                <button 
+                                                    className="text-[10px] text-slate-500 hover:text-red-400 flex items-center gap-1 transition-colors"
+                                                    title="Lapor jawapan tidak tepat"
+                                                    onClick={() => alert("Laporan dihantar kepada panel asatizah untuk semakan. Terima kasih.")}
+                                                >
+                                                    <i className="fa-regular fa-flag"></i> Lapor
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 </motion.div>
                             ))}
@@ -188,6 +145,11 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                     </div>
 
                     <div className={`absolute inset-x-0 p-4 bg-gradient-to-t from-[#020617] via-[#020617]/95 to-transparent z-20 ${hasBottomNav ? 'bottom-[80px]' : 'bottom-0'}`}>
+                        {/* JAKIM Disclaimer */}
+                        <div className="text-[10px] text-slate-500 text-center mb-2 italic">
+                            "Ustaz AI adalah alat bantuan pembelajaran. Untuk hukum syarak muktamad, rujuk asatizah bertauliah."
+                        </div>
+
                         {/* Speech Error Message */}
                         {speechError && (
                             <div className="mb-2 p-2 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-xs text-center">

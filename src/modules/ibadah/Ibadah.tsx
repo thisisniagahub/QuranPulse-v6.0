@@ -2,16 +2,29 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQibla } from '../../hooks/useQibla';
 import { usePrayerTimes } from '../../hooks/usePrayerTimes';
+import { JAKIM_ZONES } from '../../data/jakimZones';
+import { JakimService } from '../../services/jakimService';
+import { AnalyticsService } from '../../services/analyticsService';
 
 const Ibadah: React.FC = () => {
   const [viewMode, setViewMode] = useState<'QIBLA' | 'PRAYER'>('QIBLA');
+  const [selectedZone, setSelectedZone] = useState(() => localStorage.getItem('pulse_zone') || 'WLY01');
+  const [showZoneModal, setShowZoneModal] = useState(false);
   
+  // Track View Changes
+  useEffect(() => {
+    if (viewMode === 'QIBLA') {
+        AnalyticsService.track('QIBLA_CHECK', {});
+    } else {
+        AnalyticsService.track('PRAYER_TIMES_CHECK', { zone: selectedZone });
+    }
+  }, [viewMode, selectedZone]);
+
   // Qibla & Location Hook
   const qibla = useQibla();
   const {
     qiblaAngle,
     deviceHeading,
-    headingDifference,
     isPointingQibla,
     latitude,
     longitude,
@@ -22,10 +35,14 @@ const Ibadah: React.FC = () => {
   } = qibla;
 
   // Prayer Times Hook
-  const { data: prayerData, loading: prayerLoading } = usePrayerTimes(latitude, longitude);
+  const { data: prayerData, loading: prayerLoading, usingJakim } = usePrayerTimes(latitude, longitude, selectedZone);
 
   // State to handle permission request UI
   const [showPermissionPrompt, setShowPermissionPrompt] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('pulse_zone', selectedZone);
+  }, [selectedZone]);
 
   useEffect(() => {
     if (!isLoading && (error?.includes('permission') || (!isGeolocationSupported && !isDeviceOrientationSupported))) {
@@ -116,20 +133,32 @@ const Ibadah: React.FC = () => {
       ];
 
       return (
-          <div className="w-full max-w-md space-y-6 mt-4">
-              {/* Hijri Date */}
+          <div className="w-full max-w-md space-y-6 mt-4 pb-24">
+              {/* Header Info */}
               <div className="text-center mb-4">
                   <p className="text-amber-400 font-arabic text-lg">{prayerData.hijriDate}</p>
-                  <p className="text-slate-500 text-xs">{prayerData.locationName}</p>
+                  
+                  <button 
+                    onClick={() => setShowZoneModal(true)}
+                    className="flex items-center justify-center gap-2 mx-auto mt-1 px-3 py-1 rounded-full bg-slate-800/50 hover:bg-slate-800 border border-white/10 text-xs text-slate-300 transition-colors"
+                  >
+                    <i className="fa-solid fa-location-dot text-cyan-500"></i>
+                    {prayerData.locationName.substring(0, 30)}...
+                    <i className="fa-solid fa-chevron-down text-[10px] ml-1"></i>
+                  </button>
+
+                  <div className="mt-2 text-[10px] text-slate-500 uppercase tracking-widest">
+                    Sumber: {usingJakim ? <span className="text-emerald-500 font-bold">JAKIM (E-Solat)</span> : <span className="text-amber-500">Kiraan GPS (Anggaran)</span>}
+                  </div>
               </div>
 
               {/* Next Prayer Card */}
-              <div className="bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 p-6 rounded-3xl text-center relative overflow-hidden">
+              <div className="bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 p-6 rounded-3xl text-center relative overflow-hidden shadow-lg shadow-cyan-900/20">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl"></div>
                   <p className="text-xs text-cyan-300 font-bold uppercase tracking-widest mb-1">Seterusnya</p>
                   <h2 className="text-4xl font-bold text-white mb-1">{prayerData.nextPrayer}</h2>
                   <p className="text-xl text-slate-300 mb-2">{formatTime(prayerData.nextPrayerTime)}</p>
-                  <div className="inline-block px-3 py-1 bg-black/30 rounded-full text-xs text-emerald-400 font-mono border border-emerald-500/20">
+                  <div className="inline-block px-3 py-1 bg-black/30 rounded-full text-xs text-emerald-400 font-mono border border-emerald-500/20 animate-pulse">
                       - {prayerData.timeRemaining}
                   </div>
               </div>
@@ -140,7 +169,7 @@ const Ibadah: React.FC = () => {
                       const isNext = prayerData.nextPrayer === p.name;
                       return (
                         <div key={i} className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
-                            isNext ? 'bg-emerald-900/20 border-emerald-500/50 scale-105' : 'bg-slate-900/50 border-slate-800'
+                            isNext ? 'bg-emerald-900/20 border-emerald-500/50 scale-105 shadow-md' : 'bg-slate-900/50 border-slate-800'
                         } ${p.isSecondary ? 'opacity-60 text-sm py-2' : ''}`}>
                             <div className="flex items-center gap-4">
                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isNext ? 'bg-emerald-500 text-black' : 'bg-slate-800 text-slate-400'}`}>
@@ -158,9 +187,9 @@ const Ibadah: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full bg-[#020617] items-center justify-start p-4 pt-8 text-white overflow-y-auto pb-32">
+    <div className="flex flex-col h-full bg-[#020617] items-center justify-start p-4 pt-8 text-white overflow-y-auto">
       {/* Header Toggle */}
-      <div className="bg-slate-900/80 p-1 rounded-full flex gap-1 mb-4 border border-slate-800 relative z-10">
+      <div className="bg-slate-900/80 p-1 rounded-full flex gap-1 mb-4 border border-slate-800 relative z-10 shrink-0">
           <button 
             onClick={() => setViewMode('QIBLA')}
             className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'QIBLA' ? 'bg-cyan-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
@@ -258,10 +287,52 @@ const Ibadah: React.FC = () => {
         )}
       </AnimatePresence>
 
+      {/* Zone Selector Modal */}
+      <AnimatePresence>
+          {showZoneModal && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                  <motion.div 
+                    initial={{ scale: 0.9, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    exit={{ scale: 0.9, opacity: 0 }}
+                    className="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl max-h-[80vh] flex flex-col"
+                  >
+                      <div className="p-4 border-b border-white/10 flex justify-between items-center sticky top-0 bg-slate-900 z-10 rounded-t-2xl">
+                          <h3 className="text-lg font-bold text-white">Pilih Zon (JAKIM)</h3>
+                          <button onClick={() => setShowZoneModal(false)} className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white">
+                              <i className="fa-solid fa-xmark"></i>
+                          </button>
+                      </div>
+                      <div className="p-2 overflow-y-auto">
+                          {JAKIM_ZONES.map((zone) => (
+                              <button
+                                key={zone.code}
+                                onClick={() => {
+                                    setSelectedZone(zone.code);
+                                    setShowZoneModal(false);
+                                }}
+                                className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${selectedZone === zone.code ? 'bg-cyan-500/20 border border-cyan-500/50' : 'hover:bg-slate-800 border border-transparent'}`}
+                              >
+                                  <div className="flex justify-between items-center">
+                                      <span className={`font-bold ${selectedZone === zone.code ? 'text-cyan-400' : 'text-slate-200'}`}>
+                                          {zone.code} - {zone.state}
+                                      </span>
+                                      {selectedZone === zone.code && <i className="fa-solid fa-check text-cyan-400"></i>}
+                                  </div>
+                                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">{zone.description}</p>
+                              </button>
+                          ))}
+                      </div>
+                  </motion.div>
+              </div>
+          )}
+      </AnimatePresence>
+
       {/* Footer Info */}
       <div className="mt-8 text-center text-slate-600 text-[10px]">
-        <p>Lokasi: {latitude?.toFixed(4) || '--'}, {longitude?.toFixed(4) || '--'}</p>
-        <p>Waktu Solat: JAKIM Standard (Shafi'i)</p>
+        {/* Only show Lat/Long if in Qibla mode */}
+        {viewMode === 'QIBLA' && <p>Lokasi: {latitude?.toFixed(4) || '--'}, {longitude?.toFixed(4) || '--'}</p>}
+        <p>Data: JAKIM E-Solat (v6.0)</p>
       </div>
     </div>
   );

@@ -2,7 +2,8 @@
 import { Product, Announcement, Order, SystemLog, CartItem, UserProfile, AppConfigItem } from '../types';
 
 const GOOGLE_SCRIPT_TEMPLATE = `(See GOOGLE_SHEET_SETUP.md for the full code)`;
-const DEFAULT_API_KEY = "master-key";
+// SECURITY: Use environment variable or prompt user to set it
+const DEFAULT_API_KEY = import.meta.env.VITE_GOOGLE_SHEET_API_KEY || "CHANGE_ME_IN_ENV";
 
 export const GoogleSheetService = {
   

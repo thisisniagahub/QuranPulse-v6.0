@@ -339,6 +339,13 @@ Features are organized into three strategic tiers:
 │  └─────────────────────────┘  │  │  └─────────────────────────┘  │
 └───────────────────────────────┘  └───────────────────────────────┘
 ```
+### 5.2.1 Secure AI Proxy Architecture (MANDATORY)
+To mitigate the risk of API Key theft and abuse inherent in client-side applications:
+
+1.  **No Client-Side Keys:** All AI API Keys (Gemini, ElevenLabs) MUST NOT be stored in the React client `env` variables.
+2.  **Edge Proxy:** All AI requests must route through Supabase Edge Functions (`/functions/v1/chat-proxy`).
+3.  **Rate Limiting:** The Edge Function must implement Token Bucket rate limiting per User ID to prevent single-user abuse.
+4.  **Key Rotation:** The backend must manage a pool of API keys and rotate them server-side upon encountering `429 Too Many Requests`.
 ### 5.3 Module Architecture
 ```text
 src/
@@ -541,29 +548,64 @@ QuranPulse uses a **3-Layer Hybrid AI Architecture** for optimal performance, pr
 | **Ayah Explainer** | Select verse | GLM-4-Flash | Edge → Cloud | ⚠️ Basic |
 | **Admin Image Gen** | Generate poster | CogView-4 | Edge → Cloud | ✅ Ready |
 
-### 7.3 AI Safety & Islamic Compliance
-**Mandatory Safeguards:**
-1. **Source Attribution**: All fatwa responses MUST cite official sources
-2. **Disclaimer**: Clear disclaimer that AI is not a replacement for qualified scholars
-3. **Content Filtering**: Block non-Islamic or inappropriate queries
-4. **Shafi'i Alignment**: Default to Shafi'i madhab for Malaysian users
-5. **Human Review**: Flagged responses require scholar verification
+### 7.3 AI Safety & Islamic Compliance (JAKIM Standards)
+
+
+
+**Mandatory Safeguards (The "Red Line"):**
+
+1.  **Strict System Prompt:** The AI MUST be instructed to answer *only* based on the Shafi'i Madhab unless asked otherwise, reflecting the Malaysian context.
+
+2.  **Dalil Priority:** Answers without Quranic/Hadith citation must be flagged with a visible warning: *"Jawapan ini dijana AI dan mungkin memerlukan semakan lanjut."*
+
+3.  **Fatwa Blocklist:** The AI must refuse to issue specific FATWA on sensitive contemporary issues (e.g., divorce, apostasy) and instead direct users to `efatwa.muftiwp.gov.my`.
+
+4.  **Tashih Process:**
+
+    *   **Pre-Launch:** A sample of 100 AI conversations must be audited by a qualified Ustaz.
+
+    *   **Post-Launch:** A "Report to Scholar" button must be available on every AI response.
+
+
+
+**Disclaimer Text (Required on UI):**
+
+> *"Ustaz AI adalah alat bantuan pembelajaran dan bukan pengganti ulama sebenar. Untuk hukum syarak yang muktamad, sila rujuk Pejabat Mufti atau asatizah bertauliah."*
+
+
+
 **System Prompt Template:**
+
 ```text
+
 You are Ustaz AI, an Islamic knowledge assistant for QuranPulse.
+
 RULES:
+
 1. Only answer questions related to Islam
+
 2. Cite Quran verses with Surah:Ayah format
+
 3. Reference authentic Hadith with collection and number
+
 4. For Malaysian-specific questions, reference JAKIM rulings
+
 5. Always clarify if there are multiple scholarly opinions
+
 6. Never give medical, legal, or financial advice
+
 7. Encourage users to consult qualified scholars for complex matters
+
 8. Default to Shafi'i madhab unless user specifies otherwise
+
 RESPONSE FORMAT:
+
 - Clear, respectful Bahasa Malaysia or English
+
 - Include relevant Quran/Hadith references
+
 - Provide source links when available
+
 ```
 ---
 ## 8. Security & Compliance
@@ -712,6 +754,17 @@ App Structure
 ---
 ## 10. Monetization & Business Model
 ### 10.1 Subscription Tiers
+
+#### 10.1.1 Monetization Ethics (Shariah-Compliant Business Model)
+QuranPulse adheres to the principle that **Divine Revelation (Verses of Quran) is Free**, but **Service & Convenience are Paid**.
+
+*   **Always Free:** Reading Quran, Audio Recitation, Basic Prayer Times (Fardhu 'Ain).
+*   **Paid Features:** AI Computing Costs (Ustaz AI), Server Storage (Cloud Sync), Advanced Analytics, Personalized Coaching (Jasa/Khidmat).
+
+#### 10.1.2 "Infaq" Model Option
+In addition to subscriptions, allow users to "Sponsor a Student" (Infaq).
+*   **Feature:** Wealthy users can pay RM 50 to unlock PRO features for 5 students from B40 families.
+
 #### "Asas" (PERCUMA / Free)
 
 | Attribute | Details |

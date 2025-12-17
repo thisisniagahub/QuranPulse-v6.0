@@ -145,46 +145,19 @@ graph LR
 | **Shared** | `src/components/*` | "Dumb" UI components used across modules (Buttons, Modal, Layout). | High |
 | **Core** | `src/services/*` | Business logic, API clients, Singleton services. | High |
 
----
+### AI Integration (Ustaz AI 2.0)
+- **Service**: `aiService.ts` running a Hybrid Engine.
+- **Security**: **Secure Edge Proxy**. All AI requests are routed via Supabase Edge Functions to protect API keys and enforce rate limiting.
+- **Core Intelligence**: 
+    - **Primary**: Google Gemini 2.5 Flash (Cloud API via Proxy).
+    - **Secondary**: Local Regex/Keyword Matcher for instant FAQs (Solat, Puasa).
+- **Resilience Strategy**: 
+    - **Key Rotation**: Server-side rotation of API keys to avoid rate limits.
+    - **Smart Failover**: If a key hits 429 error, it auto-switches to the next healthy key.
 
-## 4. 🧠 ARTIFICIAL INTELLIGENCE PIPELINE (Hybrid Ustaz AI 2.0)
-
-The "Ustaz AI" feature uses a **Hybrid Cloud Engine** for speed and reliability.
-
-```mermaid
-sequenceDiagram
-    participant User
-    participant App as Client (PWA)
-    participant Local as Local KB (Regex/JSON)
-    participant Cloud as Google Gemini (2.5 Flash)
-    participant TTS as ElevenLabs (Voice)
-
-    User->>App: "Niat puasa?"
-    
-    rect rgb(20, 40, 20)
-        Note right of App: PHASE 1: Local Check (Zero Latency)
-        App->>Local: Scan Keywords
-        alt Match Found
-            Local-->>App: Returns Hardcoded Answer
-            App->>User: Display Instant Answer
-        else No Match
-            rect rgb(40, 20, 20)
-                Note right of App: PHASE 2: Cloud Intelligence
-                App->>Cloud: Prompt + Context
-                Cloud-->>App: Generated Answer (Shafi'i/JAKIM)
-                App->>User: Display AI Answer
-            end
-        end
-    end
-
-    rect rgb(20, 20, 40)
-        Note right of App: PHASE 3: Vocalization
-        User->>App: Click Speaker
-        App->>TTS: Text-to-Speech Request
-        TTS-->>App: Neural Audio Stream
-        App->>User: Plays Voice
-    end
-```
+### Monetization & Analytics
+- **Barakah Hub**: "Infaq" (Donation) module with mock payment gateway integration.
+- **Analytics**: `AnalyticsService` tracks key user events (Prayer checks, AI queries, Donations) for insights.
 
 ---
 

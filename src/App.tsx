@@ -18,8 +18,10 @@ const Iqra = lazy(() => import('./modules/iqra'));
 const Souq = lazy(() => import('./modules/souq/Souq'));
 const MediaStudio = lazy(() => import('./modules/media/MediaStudio'));
 const Profile = lazy(() => import('./modules/profile/Profile'));
+const InfaqPage = lazy(() => import('./modules/barakah/InfaqPage'));
 const LandingPage = lazy(() => import('./modules/landing/LandingPage'));
 const VerseStudio = lazy(() => import('./modules/quran/components/VerseStudio')); // Test Route
+const AdminDashboard = lazy(() => import('./modules/admin/AdminDashboard'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -99,7 +101,9 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
             <Route path="ibadah" element={<ErrorBoundary><Ibadah /></ErrorBoundary>} />
             <Route path="iqra" element={<ErrorBoundary><Iqra /></ErrorBoundary>} />
             <Route path="souq" element={<ErrorBoundary><Souq /></ErrorBoundary>} />
+            <Route path="barakah" element={<ErrorBoundary><InfaqPage /></ErrorBoundary>} />
             <Route path="media" element={<ErrorBoundary><MediaStudio /></ErrorBoundary>} />
+            <Route path="admin" element={<ErrorBoundary><AdminDashboard /></ErrorBoundary>} />
             <Route path="profile" element={
                 <ErrorBoundary>
                     <Profile 
