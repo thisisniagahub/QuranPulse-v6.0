@@ -6,6 +6,7 @@ import TajwidDisplay, { detectTajwidRules } from './TajwidDisplay';
 import { formatTransliteration, transliteratePronunciation, syllabifyPronunciation, transliterate99, formatTransliterationJAKIM, getDualTransliteration } from '../../utils/transliterationConverter';
 import { useRumiTTS } from '../../utils/rumiTTS';
 import { getTajwidHints, TajwidHint } from '../../utils/tajwidRumiHints';
+import { BookmarkButton } from '../../components/BookmarkButton';
 
 interface QuranVerseCardProps {
   verse: QuranVerse;
@@ -206,6 +207,13 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                <i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'} text-xs`}></i>
              )}
           </button>
+
+          {/* Bookmark Button - Quick Access */}
+          <BookmarkButton
+            surahNumber={parseInt(verse.verse_key.split(':')[0])}
+            ayahNumber={parseInt(verse.verse_key.split(':')[1])}
+            size="sm"
+          />
 
           {/* AI Studio Button - Quick Access */}
           <button
