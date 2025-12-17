@@ -26,7 +26,11 @@ export default defineConfig(({ mode }) => {
           includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'logo-full.png'],
           workbox: {
               navigateFallbackDenylist: [/^\/api/], // Ignore API routes for Service Worker
-              globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+              globPatterns: ['**/*.{js,css,html,ico,svg,woff2}'],
+              // Exclude large icons from precaching - they'll load normally
+              globIgnores: ['**/IQRA-ICON.png', '**/QIBLAT-ICON.png', '**/HOME-ICON.png', '**/USTAZ-AI_ICON.png', '**/Al-QURAN-ICON.png'],
+              // Increase max file size for precaching
+              maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
               runtimeCaching: [
                   {
                       urlPattern: /^https:\/\/api\.quran\.com\/.*/i,
