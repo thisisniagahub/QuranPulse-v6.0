@@ -155,7 +155,7 @@ export const analyzeMorphology = async (word: string, trans?: string): Promise<a
 };
 
 export const generateDoaCard = async (name: string) => `May Allah bless ${name}.`;
-export const generateIslamicVideo = async () => "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
+export const generateIslamicVideo = async (prompt?: string) => "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4";
 export const analyzeText = async () => ({ analysis: "Analysis unavailable." });
 export const generateIslamicImage = async () => "https://placehold.co/600x400?text=AI+Gen+Coming+Soon";
 export const getPersonalizedGreeting = async (name: string) => `Assalamu Alaikum, ${name}`;

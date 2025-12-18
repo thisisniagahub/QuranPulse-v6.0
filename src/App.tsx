@@ -95,7 +95,7 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
             {/* Nested Protected Routes (Only rendered if user exists via Layout) */}
             <Route index element={
               <ErrorBoundary>
-                <Dashboard user={user} onNavigate={(path) => navigate(path)} />
+                {user ? <Dashboard user={user} onNavigate={(path) => navigate(path)} /> : <LoadingFallback />}
               </ErrorBoundary>
             } />
             <Route path="quran" element={<ErrorBoundary><Quran /></ErrorBoundary>} />
