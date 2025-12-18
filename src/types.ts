@@ -33,6 +33,7 @@ export interface ChatMessage {
   content: string;
   timestamp: number;
   isError?: boolean;
+  render?: React.ReactNode;
 }
 
 export interface SyariahCheckResult {

@@ -1,4 +1,5 @@
 {
+  "contextFileName": "AGENTS.md",
   "mcpServers": {
     "google-maps-platform-code-assist": {
       "command": "npx",

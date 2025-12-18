@@ -8,6 +8,7 @@ import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 import KhatamPlanner from './components/KhatamPlanner';
 import { useChat } from '../../hooks/useChat';
 import { PERSONAS, PersonaKey } from '../../constants/personas';
+import { PrayerTimesAction } from './components/PrayerTimesAction';
 
 interface SmartDeenProps {
     userName?: string;
@@ -62,6 +63,9 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
 
     return (
         <div className="flex flex-col h-full relative bg-[#020617]">
+            {/* Register Generative UI Actions */}
+            <PrayerTimesAction />
+
             {/* Header / Persona Selector */}
             <div className="flex items-center justify-between p-4 border-b border-white/5 bg-slate-900/50 backdrop-blur-md z-10">
                 <div className="flex items-center gap-3">
@@ -112,6 +116,12 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                             : 'bg-slate-800/80 text-slate-200 border border-white/5 rounded-bl-none'
                                     }`}>
                                         {msg.content}
+                                        {/* Generative UI Content */}
+                                        {msg.render && (
+                                            <div className="mt-3">
+                                                {msg.render}
+                                            </div>
+                                        )}
                                         {/* Compliance: Report Button for Assistant Messages */}
                                         {msg.role === 'assistant' && (
                                             <div className="mt-2 pt-2 border-t border-white/10 flex justify-end">
