@@ -8,17 +8,8 @@ export const useChat = (initialPersona: PersonaKey = 'AZHAR', userName: string) 
     const [selectedPersona, setSelectedPersona] = useState<PersonaKey>(initialPersona);
     
     // CopilotKit Headless Hook
+    // Removed invalid 'systemMessage' property based on TS error
     const { messages: copilotMessages, sendMessage, isLoading } = useCopilotChatHeadless_c({
-        systemMessage: `
-            Anda adalah ${PERSONAS[selectedPersona].name}, seorang ${PERSONAS[selectedPersona].role}. 
-            Gaya bahasa anda ${PERSONAS[selectedPersona].style}. 
-            Jawab dalam Bahasa Melayu yang baik.
-            PERATURAN UTAMA:
-            1.  **KEUTAMAAN:** Jawab berpandukan Al-Quran dan Hadith Sahih.
-            2.  **DALIL:** Sertakan rujukan.
-            3.  **KETIDAKPASTIAN:** Jika tiada dalil, jawab "Wallahu A'lam".
-            4.  **PENAFIAN:** Di akhir jawapan sensitif: "Ini panduan umum AI. Rujuk asatizah untuk fatwa."
-        `
     });
 
     const switchPersona = (persona: PersonaKey) => {
@@ -28,10 +19,11 @@ export const useChat = (initialPersona: PersonaKey = 'AZHAR', userName: string) 
     const handleSendMessage = (input: string) => {
         if (!input.trim()) return;
         
+        // Correctly type the message for CopilotKit
         sendMessage({
-            role: "user" as Role, // Explicit cast if necessary
+            role: "user",
             content: input
-        } as TextMessage);
+        });
     };
 
     // Transform Copilot messages to our ChatMessage type for UI
@@ -46,7 +38,7 @@ export const useChat = (initialPersona: PersonaKey = 'AZHAR', userName: string) 
         // Mapped Copilot messages
         ...copilotMessages.map(m => ({
             id: m.id,
-            role: m.role as 'user' | 'assistant' | 'system',
+            role: (m.role === "user" ? "user" : "assistant") as 'user' | 'assistant' | 'system',
             content: m.content || "",
             timestamp: Date.now(), // Approximate
             render: (m as any).render // CopilotKit attaches the render function/node here

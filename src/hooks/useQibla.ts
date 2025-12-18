@@ -89,8 +89,8 @@ export const useQibla = () => {
         let heading: number | null = null;
 
         // iOS devices
-        if ((event as any).webkitCompassHeading !== undefined) { // iOS specific
-          heading = (event as any).webkitCompassCompassHeading;
+        if ((event as any).webkitCompassHeading !== undefined) { 
+          heading = (event as any).webkitCompassHeading;
         } 
         // Android devices
         else if (event.alpha !== null) {
@@ -98,13 +98,13 @@ export const useQibla = () => {
         }
 
         if (heading !== null) {
-          setDeviceHeading(heading);
+          setQiblaData(prev => ({ ...prev, deviceHeading: heading }));
         }
       };
 
-      window.addEventListener('deviceorientation', handleDeviceOrientation, true);
+      window.addEventListener('deviceorientation', handleOrientation, true);
       return () => {
-        window.removeEventListener('deviceorientation', handleDeviceOrientation, true);
+        window.removeEventListener('deviceorientation', handleOrientation, true);
       };
     } else {
       setQiblaData(prev => ({ ...prev, error: 'Device orientation sensor not supported.', isDeviceOrientationSupported: false }));
