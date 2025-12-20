@@ -1,133 +1,99 @@
-import { supabase } from '@/lib/supabase';
+import pkg from 'whatsapp-web.js';
+const { Client, LocalAuth, MessageMedia } = pkg;
+import qrcode from 'qrcode-terminal';
+import { askUstazAI } from './aiService.ts';
+import { VoiceService } from './ai/VoiceService.ts';
+import { WhatsappCRM } from './whatsappCRM.ts';
+import { ChatMessage } from '../types.ts';
 
-const API_URL = import.meta.env.VITE_WHATSAPP_API_URL;
-const API_KEY = import.meta.env.VITE_WHATSAPP_API_KEY;
-const PHONE_ID = import.meta.env.VITE_WHATSAPP_PHONE_NUMBER_ID;
+export class WhatsappService {
+    private client: any; // Client type is hard to import if pkg is used
+    private isReady: boolean = false;
 
-export const whatsappService = {
-  // Check Connection
-  checkConnection: async () => {
-    if (!API_URL || !API_KEY || !PHONE_ID) return false;
-    try {
-      // Simple fetch to verify token validity (e.g., get phone number details)
-      const res = await fetch(`${API_URL}/${PHONE_ID}`, {
-        headers: { Authorization: `Bearer ${API_KEY}` }
-      });
-      return res.ok;
-    } catch (e) {
-      return false;
-    }
-  },
+    constructor() {
+        console.log("👳 Tok Imam: Initializing WhatsApp Client...");
+        
+        this.client = new Client({
+            authStrategy: new LocalAuth({ dataPath: './.wwebjs_auth' }),
+            puppeteer: {
+                headless: true,
+                args: ['--no-sandbox', '--disable-setuid-sandbox'] 
+            }
+        });
 
-  // Send Individual Message
-  sendMessage: async (to: string, message: string) => {
-    // Log to DB first
-    const { data: log, error } = await supabase
-      .from('whatsapp_messages')
-      .insert({
-        phone_number: to,
-        message_body: message,
-        status: 'sending',
-        direction: 'outbound'
-      })
-      .select()
-      .single();
-
-    if (error) throw error;
-
-    try {
-      // Call WhatsApp API
-      const res = await fetch(`${API_URL}/${PHONE_ID}/messages`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          messaging_product: 'whatsapp',
-          to: to,
-          type: 'text',
-          text: { body: message }
-        })
-      });
-
-      const data = await res.json();
-      
-      if (res.ok) {
-        // Update status
-        await supabase
-          .from('whatsapp_messages')
-          .update({ status: 'sent', metadata: data })
-          .eq('id', log.id);
-        return true;
-      } else {
-        throw new Error(data.error?.message || 'Failed to send');
-      }
-    } catch (e: any) {
-      // Update status to failed
-      await supabase
-        .from('whatsapp_messages')
-        .update({ status: 'failed', metadata: { error: e.message } })
-        .eq('id', log.id);
-      throw e;
-    }
-  },
-
-  // Broadcast Message
-  broadcastMessage: async (target: 'all' | 'pro' | 'free', message: string) => {
-    // 1. Get users with phone numbers
-    let query = supabase.from('profiles').select('id, phone_number').not('phone_number', 'is', null);
-    
-    if (target !== 'all') {
-      query = query.eq('tier', target.toUpperCase());
+        this.initialize();
     }
 
-    const { data: users } = await query;
-    if (!users || users.length === 0) return { sent: 0, failed: 0 };
+    private initialize() {
+        // 1. QR Code Generation
+        this.client.on('qr', (qr) => {
+            console.log('📌 Scan QR Code ini untuk login sebagai Tok Imam:');
+            qrcode.generate(qr, { small: true });
+        });
 
-    let sent = 0;
-    let failed = 0;
+        // 2. Ready State
+        this.client.on('ready', () => {
+            console.log('✅ Tok Imam is ONLINE and ready to serve!');
+            this.isReady = true;
+        });
 
-    // 2. Send in batches (simplified loop for now)
-    for (const user of users) {
-      try {
-        await whatsappService.sendMessage(user.phone_number, message);
-        sent++;
-      } catch (e) {
-        failed++;
-      }
+        // 3. Message Handling
+        this.client.on('message', async (msg) => {
+            if (msg.isStatus || msg.from.includes('@g.us')) return;
+            await this.handleMessage(msg);
+        });
+
+        this.client.initialize();
     }
 
-    return { sent, failed };
-  },
+    private async handleMessage(msg: any) {
+        const contact = await msg.getContact();
+        const name = contact.pushname || contact.name || "Hamba Allah";
+        
+        // 1. CRM SYNC (Auto-Save Contact)
+        await WhatsappCRM.syncContact(msg.from, contact.name, contact.pushname);
 
-  // Get Recent Messages
-  getRecentMessages: async (limit = 10) => {
-    const { data, error } = await supabase
-      .from('whatsapp_messages')
-      .select('*')
-      .order('created_at', { ascending: false })
-      .limit(limit);
-    
-    if (error) throw error;
-    return data;
-  },
+        const question = msg.body;
 
-  // Get Templates
-  getTemplates: async () => {
-    const { data, error } = await supabase
-      .from('whatsapp_templates')
-      .select('*')
-      .eq('status', 'active');
-      
-    if (error) throw error;
-    return data;
-  },
+        console.log(`📩 New Message from ${name}: ${question.substring(0, 50)}...`);
 
-  // Automated Reminder (Mock)
-  sendAutomatedReminder: async (userId: string, type: 'subscription' | 'prayer' | 'reading') => {
-    // Logic to fetch user phone and send template message
-    console.log(`Sending ${type} reminder to ${userId}`);
-    return true;
-  }
-};
+        try {
+            const chat = await msg.getChat();
+            await chat.sendStateTyping();
+            
+            const delay = Math.floor(Math.random() * 3000) + 2000;
+            await new Promise(r => setTimeout(r, delay));
+
+            const systemPrompt = `
+ROLE: Anda adalah "Tok Imam AI", pembantu digital yang ramah dan bijaksana.
+GOAL: Jawab soalan pengguna secara RINGKAS (teaser) dan ajak mereka ke Web App QuranPulse untuk info penuh.
+STRATEGI JAWAPAN: Jawab dalam 1-2 ayat sahaja. Tambah link quranpulse.com.
+`;
+
+            const history: ChatMessage[] = [
+                { id: '1', role: 'system', content: systemPrompt },
+                { id: '2', role: 'user', content: `Nama: ${name}\nSoalan: ${question}`, timestamp: Date.now() }
+            ];
+
+            const answer = await askUstazAI(history);
+
+            // C. OPTIONAL: Voice Note (Wow Factor)
+            // We only generate voice for the text part (not the link if possible, or just the whole thing)
+            const audioBuffer = await VoiceService.generateVoice(answer);
+            
+            if (audioBuffer) {
+                const media = new MessageMedia('audio/mp3', audioBuffer.toString('base64'), 'voice.mp3');
+                await this.client.sendMessage(msg.from, media, { sendAudioAsVoice: true });
+                console.log(`🎙️ Sent Voice Note to ${name}`);
+            }
+
+            // D. Text Reply (As backup/companion)
+            await msg.reply(answer);
+            console.log(`📤 Replied to ${name}`);
+
+        } catch (error) {
+            console.error("❌ Error processing message:", error);
+            await msg.reply("Maaf, Tok Imam sedang mengalami gangguan teknikal.");
+        }
+    }
+}

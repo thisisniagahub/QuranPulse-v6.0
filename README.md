@@ -28,6 +28,12 @@ Now separated into a dedicated **Admin Dashboard**:
 
 ### 🧠 Advanced AI Intelligence (Ustaz AI 2.0)
 Now powered by a **Hybrid Cloud Engine**:
+- **Smart Cache ("Fetch Once, Store Forever")**: Questions are answered once by AI, then stored in Supabase for 0-token, instant retrieval on subsequent queries.
+- **Hybrid Response System**: AI answers are structured (Summary + Steps + Resources) instead of just plain text.
+- **Multi-Channel Bots**:
+    - **Tok Imam (WhatsApp)**: Your personal imam for quick Q&A.
+    - **Ustazah AI (Telegram)**: A gentle assistant for women's fiqh & general queries.
+- **Generative UI Widgets**: AI can summon interactive UI (Zakat Calculator, Donation Cards) directly inside the chat flow.
 - **Gemini 2.5 Flash Integration**: Real-time, highly intelligent responses for complex queries.
 - **Smart Failover System**: 7-Key Rotation logic ensures 99.9% uptime (no rate limits).
 - **Offline Knowledge Base**: Instant answers for FAQs (Solat, Puasa, Wudhu) without internet.

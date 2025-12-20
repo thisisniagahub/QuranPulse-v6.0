@@ -5,9 +5,10 @@ import { usePrayerTimes } from '../../hooks/usePrayerTimes';
 import { JAKIM_ZONES } from '../../data/jakimZones';
 import { JakimService } from '../../services/jakimService';
 import { AnalyticsService } from '../../services/analyticsService';
+import ZakatCalculator from './components/ZakatCalculator';
 
 const Ibadah: React.FC = () => {
-  const [viewMode, setViewMode] = useState<'QIBLA' | 'PRAYER'>('QIBLA');
+  const [viewMode, setViewMode] = useState<'QIBLA' | 'PRAYER' | 'MASJID' | 'ZAKAT'>('QIBLA');
   const [selectedZone, setSelectedZone] = useState(() => localStorage.getItem('pulse_zone') || 'WLY01');
   const [showZoneModal, setShowZoneModal] = useState(false);
   
@@ -15,8 +16,12 @@ const Ibadah: React.FC = () => {
   useEffect(() => {
     if (viewMode === 'QIBLA') {
         AnalyticsService.track('QIBLA_CHECK', {});
-    } else {
+    } else if (viewMode === 'PRAYER') {
         AnalyticsService.track('PRAYER_TIMES_CHECK', { zone: selectedZone });
+    } else if (viewMode === 'ZAKAT') {
+        AnalyticsService.track('ZAKAT_CALC_VIEW', {});
+    } else {
+        AnalyticsService.track('MASJID_HUB_VIEW', {});
     }
   }, [viewMode, selectedZone]);
 
@@ -186,6 +191,83 @@ const Ibadah: React.FC = () => {
       );
   };
 
+  const renderMasjidHub = () => (
+    <div className="w-full max-w-md space-y-6 mt-4 pb-24 animate-in fade-in slide-in-from-bottom-4">
+        {/* Active Masjid Card */}
+        <div className="bg-slate-900 border border-emerald-500/30 rounded-3xl p-6 relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl -mr-8 -mt-8"></div>
+            <div className="flex items-start justify-between mb-4">
+                <div>
+                    <h3 className="text-xl font-bold text-white">Masjid Al-Hidayah</h3>
+                    <p className="text-xs text-slate-400 italic">Kariah Gombak, Selangor</p>
+                </div>
+                <div className="bg-emerald-500/20 text-emerald-400 p-2 rounded-xl">
+                    <i className="fa-solid fa-circle-check"></i>
+                </div>
+            </div>
+            
+            <div className="flex gap-4">
+                <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
+                    <i className="fa-solid fa-map-location-dot mr-2 text-cyan-400"></i>NAVIGASI
+                </button>
+                <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
+                    <i className="fa-brands fa-whatsapp mr-2 text-emerald-400"></i>AJK MASJID
+                </button>
+            </div>
+        </div>
+
+        {/* Live Jadual */}
+        <div>
+            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Jadual Kuliah</h4>
+            <div className="space-y-2">
+                <div className="bg-slate-900/50 border border-white/5 p-4 rounded-2xl flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex flex-col items-center justify-center text-amber-500">
+                        <span className="text-[10px] font-bold">MAGHRIB</span>
+                        <span className="text-xs">7:30</span>
+                    </div>
+                    <div>
+                        <p className="text-sm font-bold text-slate-200 line-clamp-1">Kitab Riyadhus Salihin</p>
+                        <p className="text-[10px] text-slate-500">Ustaz Dr. Haji Ali</p>
+                    </div>
+                    <span className="ml-auto bg-slate-800 text-slate-400 text-[10px] px-2 py-1 rounded">RSVP</span>
+                </div>
+            </div>
+        </div>
+
+        {/* Tabung Infaq */}
+        <div>
+            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Tabung Infaq</h4>
+            <div className="grid grid-cols-1 gap-3">
+                <div className="bg-gradient-to-br from-emerald-900/20 to-slate-900 border border-emerald-500/20 p-5 rounded-3xl relative overflow-hidden">
+                    <div className="flex justify-between items-start mb-4">
+                        <div>
+                            <p className="text-sm font-bold text-white">Baik Pulih Bumbung</p>
+                            <p className="text-[10px] text-slate-400">Sasaran: RM 10,000</p>
+                        </div>
+                        <span className="text-emerald-400 font-mono text-sm">45%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-slate-800 rounded-full mb-4">
+                        <div className="h-full bg-emerald-500 rounded-full" style={{ width: '45%' }}></div>
+                    </div>
+                    <button className="w-full py-2 bg-emerald-500 text-black text-xs font-black rounded-xl">CHIP-IN</button>
+                </div>
+            </div>
+        </div>
+
+        {/* Berita Kariah */}
+        <div>
+            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Berita Kariah</h4>
+            <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-2xl flex items-start gap-3">
+                <i className="fa-solid fa-bullhorn text-red-400 mt-1"></i>
+                <div>
+                    <p className="text-xs font-bold text-red-200">KEMATIAN KARIAH</p>
+                    <p className="text-[10px] text-slate-400 leading-relaxed">Innalillahiwainnailaihirojiun. Allahyarham Tuan Haji Ahmad bin Bakar telah kembali ke rahmatullah. Solat jenazah di Masjid Al-Hidayah selepas Zohor hari ini.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+  );
+
   return (
     <div className="flex flex-col h-full bg-[#020617] items-center justify-start p-4 pt-8 text-white overflow-y-auto">
       {/* Header Toggle */}
@@ -201,6 +283,18 @@ const Ibadah: React.FC = () => {
             className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'PRAYER' ? 'bg-amber-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
           >
               <i className="fa-solid fa-clock mr-2"></i>Waktu Solat
+          </button>
+          <button 
+            onClick={() => setViewMode('MASJID')}
+            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'MASJID' ? 'bg-emerald-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+          >
+              <i className="fa-solid fa-mosque mr-2"></i>Hub Masjid
+          </button>
+          <button 
+            onClick={() => setViewMode('ZAKAT')}
+            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'ZAKAT' ? 'bg-indigo-500 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+          >
+              <i className="fa-solid fa-calculator mr-2"></i>Zakat
           </button>
       </div>
 
@@ -274,7 +368,7 @@ const Ibadah: React.FC = () => {
                     ))}
                 </div>
             </motion.div>
-        ) : (
+        ) : viewMode === 'PRAYER' ? (
             <motion.div 
                 key="prayer"
                 initial={{ opacity: 0, x: 20 }}
@@ -283,6 +377,26 @@ const Ibadah: React.FC = () => {
                 className="w-full flex flex-col items-center"
             >
                 {renderPrayerTimes()}
+            </motion.div>
+        ) : viewMode === 'ZAKAT' ? (
+            <motion.div 
+                key="zakat"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="w-full flex flex-col items-center"
+            >
+                <ZakatCalculator />
+            </motion.div>
+        ) : (
+            <motion.div 
+                key="masjid"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="w-full flex flex-col items-center"
+            >
+                {renderMasjidHub()}
             </motion.div>
         )}
       </AnimatePresence>

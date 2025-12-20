@@ -1,7 +1,7 @@
-import { supabase } from '@/lib/supabase';
-import { usageTracker } from './KeyManager';
-import { THEOLOGICAL_SYSTEM_PROMPT } from './prompts';
-import { ChatMessage } from '../../types';
+import { supabase } from '../../lib/supabase.ts';
+import { usageTracker } from './KeyManager.ts';
+import { THEOLOGICAL_SYSTEM_PROMPT } from './prompts.ts';
+import { ChatMessage } from '../../types.ts';
 
 // Flag to indicate we are using the proxy. 
 // This satisfies the check in aiService.ts: if (GEMINI_API_KEYS.length > 0)

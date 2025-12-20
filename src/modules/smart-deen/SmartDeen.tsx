@@ -8,6 +8,7 @@ import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 import KhatamPlanner from './components/KhatamPlanner';
 import { PERSONAS, PersonaKey } from '../../constants/personas';
 import { PrayerTimesAction } from './components/PrayerTimesAction';
+import { AIWidgetRenderer, cleanAIResponse } from '../../components/ai/AIWidgetRenderer';
 
 interface SmartDeenProps {
     userName?: string;
@@ -24,13 +25,29 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
     const [isThinking, setIsThinking] = useState(false);
     const [selectedPersona, setSelectedPersona] = useState<PersonaKey>('AZHAR');
     const switchPersona = (p: PersonaKey) => setSelectedPersona(p);
-    const sendMessage = (text: string) => {
+    const sendMessage = async (text: string) => {
         setMessages(prev => [...prev, { role: 'user', content: text }]);
         setIsThinking(true);
+        
+        // Use the real AI Service here if available, otherwise mock
+        // For now, we simulate the "Widget" response to test the UI
         setTimeout(() => {
-            setMessages(prev => [...prev, { role: 'assistant', content: "Maaf, sistem Ustaz AI sedang diselenggara. Sila cuba sebentar lagi." }]);
+            let mockResponse = "Maaf, sistem sedang sibuk.";
+            
+            // Mocking logic to test Widgets (Remove this later when connecting real AI)
+            if (text.toLowerCase().includes('zakat')) {
+                mockResponse = "Boleh, mari kita kira zakat anda. <<<WIDGET:{\"id\":\"ZAKAT_CALC\"}>>>";
+            } else if (text.toLowerCase().includes('infaq') || text.toLowerCase().includes('sedekah')) {
+                mockResponse = "Alhamdulillah, moga murah rezeki tuan. <<<WIDGET:{\"id\":\"INFAQ_CARD\",\"props\":{\"amount\":30}}>>>";
+            } else if (text.toLowerCase().includes('solat') || text.toLowerCase().includes('waktu')) {
+                mockResponse = "Berikut adalah waktu solat bagi kawasan anda. <<<WIDGET:{\"id\":\"PRAYER_TIMES\"}>>>";
+            } else {
+                mockResponse = "Saya faham. Boleh tuan jelaskan lagi?";
+            }
+
+            setMessages(prev => [...prev, { role: 'assistant', content: mockResponse }]);
             setIsThinking(false);
-        }, 1000);
+        }, 1500);
     };    const [input, setInput] = useState('');
 
     // Refs
@@ -104,39 +121,44 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                         <AnimatePresence>
                             {messages.map((msg, idx) => (
                                 <motion.div 
-                                    key={idx} // Using idx because ids were removed from simple ChatMessage type, ideal to add back if needed
+                                    key={idx} 
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
-                                    className={`flex gap-3 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}
+                                    className={`flex flex-col gap-2 ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                                 >
-                                    <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 ${msg.role === 'user' ? 'bg-cyan-600' : 'bg-slate-800'}`}>
-                                        {msg.role === 'user' ? '😎' : (msg.role === 'assistant' && selectedPersona === 'AZHAR' ? '👳🏻‍♂️' : selectedPersona === 'AISHAH' ? '🧕🏻' : '🧢')}
+                                    <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 ${msg.role === 'user' ? 'bg-cyan-600' : 'bg-slate-800'}`}>
+                                            {msg.role === 'user' ? '😎' : (msg.role === 'assistant' && selectedPersona === 'AZHAR' ? '👳🏻‍♂️' : selectedPersona === 'AISHAH' ? '🧕🏻' : '🧢')}
+                                        </div>
+                                        <div className={`rounded-2xl p-3 text-sm leading-relaxed shadow-sm ${
+                                            msg.role === 'user' 
+                                                ? 'bg-cyan-600 text-white rounded-br-none' 
+                                                : 'bg-slate-800/80 text-slate-200 border border-white/5 rounded-bl-none'
+                                        }`}>
+                                            {/* Render Clean Text */}
+                                            {cleanAIResponse(msg.content)}
+                                            
+                                            {/* Compliance: Report Button */}
+                                            {msg.role === 'assistant' && (
+                                                <div className="mt-2 pt-2 border-t border-white/10 flex justify-end">
+                                                    <button 
+                                                        className="text-[10px] text-slate-500 hover:text-red-400 flex items-center gap-1 transition-colors"
+                                                        title="Lapor jawapan tidak tepat"
+                                                        onClick={() => alert("Laporan dihantar.")}
+                                                    >
+                                                        <i className="fa-regular fa-flag"></i> Lapor
+                                                    </button>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                    <div className={`max-w-[80%] rounded-2xl p-3 text-sm leading-relaxed shadow-sm ${
-                                        msg.role === 'user' 
-                                            ? 'bg-cyan-600 text-white rounded-br-none' 
-                                            : 'bg-slate-800/80 text-slate-200 border border-white/5 rounded-bl-none'
-                                    }`}>
-                                        {msg.content}
-                                        {/* Generative UI Content */}
-                                        {msg.render && (
-                                            <div className="mt-3">
-                                                {msg.render}
-                                            </div>
-                                        )}
-                                        {/* Compliance: Report Button for Assistant Messages */}
-                                        {msg.role === 'assistant' && (
-                                            <div className="mt-2 pt-2 border-t border-white/10 flex justify-end">
-                                                <button 
-                                                    className="text-[10px] text-slate-500 hover:text-red-400 flex items-center gap-1 transition-colors"
-                                                    title="Lapor jawapan tidak tepat"
-                                                    onClick={() => alert("Laporan dihantar kepada panel asatizah untuk semakan. Terima kasih.")}
-                                                >
-                                                    <i className="fa-regular fa-flag"></i> Lapor
-                                                </button>
-                                            </div>
-                                        )}
-                                    </div>
+
+                                    {/* Render Generative UI Widget (Only for assistant) */}
+                                    {msg.role === 'assistant' && (
+                                        <div className="w-full max-w-[85%] pl-11">
+                                            <AIWidgetRenderer content={msg.content} />
+                                        </div>
+                                    )}
                                 </motion.div>
                             ))}
                         </AnimatePresence>

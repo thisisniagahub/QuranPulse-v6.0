@@ -40,7 +40,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-title">
       <motion.div 
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
@@ -52,15 +52,15 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
             <div className="w-16 h-16 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
               <i className="fa-solid fa-check text-2xl text-white"></i>
             </div>
-            <h3 className="text-xl font-bold text-white mb-2">Alhamdulillah!</h3>
+            <h3 className="text-xl font-bold text-white mb-2" id="modal-title">Alhamdulillah!</h3>
             <p className="text-slate-300 text-sm">Sumbangan anda telah diterima.</p>
           </div>
         ) : (
           <>
             <div className="p-6 border-b border-white/10 bg-slate-800/50">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold text-white">Ringkasan Infaq</h3>
-                <button onClick={onClose} className="text-slate-400 hover:text-white">
+                <h3 className="text-lg font-bold text-white" id="modal-title">Ringkasan Infaq</h3>
+                <button onClick={onClose} className="text-slate-400 hover:text-white" aria-label="Close">
                   <i className="fa-solid fa-xmark"></i>
                 </button>
               </div>

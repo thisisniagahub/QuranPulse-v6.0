@@ -7,6 +7,7 @@ import { useGamification } from '../../contexts/GamificationContext';
 import ProfileHead from './components/ProfileHead';
 import CyberBadges from './components/CyberBadges';
 import CyberStatsRing from '../dashboard/components/CyberStatsRing'; // Reusing from Dashboard
+import SubscriptionCard from './components/SubscriptionCard';
 
 interface ProfileProps {
   user: UserProfile;
@@ -138,7 +139,20 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onUpdatePassword,
                 </motion.div>
             </div>
 
-            {/* 3. ACHIEVEMENTS VAULT */}
+            {/* 3. PREMIUM SUBSCRIPTION */}
+            <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.35 }}
+                className="mb-8"
+            >
+                <SubscriptionCard 
+                    userId={user.id!} 
+                    onSuccess={() => alert("Alhamdulillah! Keahlian anda telah dikemaskini.")} 
+                />
+            </motion.div>
+
+            {/* 4. ACHIEVEMENTS VAULT */}
             <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
