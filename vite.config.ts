@@ -70,6 +70,28 @@ export default defineConfig(({ mode }) => {
                       method: 'GET'
                   },
                   {
+                      urlPattern: /^https:\/\/images\.unsplash\.com\/.*/i,
+                      handler: 'StaleWhileRevalidate',
+                      options: {
+                          cacheName: 'unsplash-images',
+                          expiration: {
+                              maxEntries: 50,
+                              maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+                          },
+                      },
+                  },
+                  {
+                      urlPattern: /^https:\/\/grainy-gradients\.vercel\.app\/.*/i,
+                      handler: 'StaleWhileRevalidate',
+                      options: {
+                          cacheName: 'grainy-gradients',
+                          expiration: {
+                              maxEntries: 10,
+                              maxAgeSeconds: 60 * 60 * 24 * 30, // 30 Days
+                          },
+                      },
+                  },
+                  {
                       // Fix 206 Partial Content errors for Video/Audio
                       urlPattern: ({ request }) => request.destination === 'video' || request.destination === 'audio',
                       handler: 'NetworkOnly', 
@@ -142,8 +164,13 @@ export default defineConfig(({ mode }) => {
         },
         rollupOptions: {
           output: {
-            // manualChunks removed to prevent React instance duplication issues
-            // Vite 4+ handles chunking efficiently by default
+            manualChunks: {
+              'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+              'vendor-ui': ['framer-motion', 'lucide-react', 'lottie-react'],
+              'vendor-supabase': ['@supabase/supabase-js'],
+              'vendor-mermaid': ['mermaid'],
+              'vendor-pdf': ['react-pdf'],
+            },
           },
         },
         chunkSizeWarningLimit: 800,

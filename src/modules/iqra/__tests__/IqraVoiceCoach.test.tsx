@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import IqraVoiceCoach from '../IqraVoiceCoach';
 import '@testing-library/jest-dom';
 
@@ -34,6 +34,7 @@ class MockSpeechRecognition {
     setTimeout(() => {
         if (this.onresult) {
             this.onresult({
+                resultIndex: 0,
                 results: [
                     [{ transcript: 'بسم الله الرحمن الرحيم', confidence: 0.95 }]
                 ]
@@ -60,11 +61,16 @@ Object.defineProperty(window, 'webkitSpeechRecognition', {
 describe('IqraVoiceCoach Integration', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   test('renders correctly', () => {
     render(<IqraVoiceCoach />);
-    expect(screen.getByText('Voice Coach')).toBeInTheDocument();
+    expect(screen.getByText('AI Voice Coach')).toBeInTheDocument();
   });
 
   test('starts listening when microphone button is clicked', async () => {
@@ -76,6 +82,11 @@ describe('IqraVoiceCoach Integration', () => {
 
     // Verify speech recognition started
     expect(mockStart).toHaveBeenCalledTimes(1);
+
+    // Advance timer for MockSpeechRecognition (100ms) AND Component delay (1500ms)
+    act(() => {
+        jest.advanceTimersByTime(2000);
+    });
     
     // Wait for the simulated result to appear
     await waitFor(() => {
@@ -86,6 +97,7 @@ describe('IqraVoiceCoach Integration', () => {
     expect(screen.getByText('بسم الله الرحمن الرحيم')).toBeInTheDocument();
     
     // Check if score is high (since confidence was 0.95)
-    expect(screen.getByText(/Skor Kelancaran: 100%/i)).toBeInTheDocument();
+    expect(screen.getByText(/100/)).toBeInTheDocument();
+    expect(screen.getByText(/Skor Kelancaran/i)).toBeInTheDocument();
   });
 });

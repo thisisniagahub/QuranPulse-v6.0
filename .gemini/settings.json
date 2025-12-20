@@ -1,12 +1,23 @@
 {
-  "contextFileName": "AGENTS.md",
-  "mcpServers": {
-    "google-maps-platform-code-assist": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@googlemaps/code-assist-mcp@latest"
-      ]
-    }
-  }
+    "context":  {
+                    "fileName":  "AGENTS.md"
+                },
+    "mcpServers":  {
+                       "google-maps-platform-code-assist":  {
+                                                                "command":  "npx",
+                                                                "args":  [
+                                                                             "-y",
+                                                                             "@googlemaps/code-assist-mcp@latest"
+                                                                         ]
+                                                            },
+                       "supabase":  {
+                                        "url":  "https://mcp.supabase.com/mcp?project_ref=bomjkgyrkvuivqodzqzf",
+                                        "type":  "http",
+                                        "httpUrl":  "https://mcp.supabase.com/mcp?project_ref=bomjkgyrkvuivqodzqzf"
+                                    },
+                       "supabase_auth":  {
+                                             "url":  "https://mcp.supabase.com/mcp?project_ref=bomjkgyrkvuivqodzqzf\u0026access_token=sbp_f17ba692f0bfdb3fdfbbb4120b5f7c78fc3330d6",
+                                             "type":  "http"
+                                         }
+                   }
 }

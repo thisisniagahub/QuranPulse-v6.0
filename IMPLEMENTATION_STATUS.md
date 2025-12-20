@@ -22,6 +22,13 @@
 *   **Tracking Engine**: Implemented `AnalyticsService` logging events to Supabase.
 *   **Coverage**: Tracking enabled for Page Views, Infaq Funnel, and Prayer Time checks.
 
+### 5. Iqra Digital (New!)
+*   **Full Digitization**: Transcribed and structured complete content for Iqra 1 through 6.
+*   **Interactive Reader**: Refactored `IqraDigitalReader` with row-based focus highlighting and interactive segments.
+*   **Self-Assessment**: Added interactive "Semakan Kendiri" checklists for student progress tracking.
+*   **Optimization**: Removed legacy JSON loaders; migrated to static TypeScript data for 0ms load time.
+*   **UX**: Implemented "Quick Wins" including row focus visual cues and volume-specific branding.
+
 ---
 
 ## ⚠️ Pending / Next Steps

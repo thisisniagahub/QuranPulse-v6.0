@@ -6,7 +6,6 @@ import NeuralTyping from './NeuralTyping';
 import SuggestionChips from './SuggestionChips';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
 import KhatamPlanner from './components/KhatamPlanner';
-import { useChat } from '../../hooks/useChat';
 import { PERSONAS, PersonaKey } from '../../constants/personas';
 import { PrayerTimesAction } from './components/PrayerTimesAction';
 
@@ -20,16 +19,19 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
     const displayName = userName || user?.name || "Sahabat";
     const [activeTab, setActiveTab] = useState<'CHAT' | 'JAWI' | 'HADITH' | 'PLANNER'>('CHAT');
     
-    // Core Logic Extracted to Hook
-    const { 
-        messages, 
-        isThinking, 
-        selectedPersona, 
-        switchPersona, 
-        sendMessage 
-    } = useChat('AZHAR', displayName);
-
-    const [input, setInput] = useState('');
+    // Mock implementation for UI stability while CopilotKit is disabled
+    const [messages, setMessages] = useState<any[]>([]);
+    const [isThinking, setIsThinking] = useState(false);
+    const [selectedPersona, setSelectedPersona] = useState<PersonaKey>('AZHAR');
+    const switchPersona = (p: PersonaKey) => setSelectedPersona(p);
+    const sendMessage = (text: string) => {
+        setMessages(prev => [...prev, { role: 'user', content: text }]);
+        setIsThinking(true);
+        setTimeout(() => {
+            setMessages(prev => [...prev, { role: 'assistant', content: "Maaf, sistem Ustaz AI sedang diselenggara. Sila cuba sebentar lagi." }]);
+            setIsThinking(false);
+        }, 1000);
+    };    const [input, setInput] = useState('');
 
     // Refs
     const scrollRef = useRef<HTMLDivElement>(null);

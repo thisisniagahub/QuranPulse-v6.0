@@ -28,8 +28,20 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
   // Initialize Supabase Auth Listener
   useEffect(() => {
+    let mounted = true;
+
+    // Safety timeout to prevent infinite loading
+    const safetyTimeout = setTimeout(() => {
+        if (mounted && isLoading) {
+            console.warn("Auth check timed out - forcing app load");
+            setIsLoading(false);
+        }
+    }, 2000); // 2 seconds max wait
+
     // 1. Check active session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!mounted) return;
+      
       setSession(session);
       if (session?.user) {
           // Fetch full profile from DB
@@ -55,13 +67,19 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
              });
           }
       }
+      clearTimeout(safetyTimeout);
       setIsLoading(false);
+    }).catch(err => {
+        console.error("Auth session check failed:", err);
+        if (mounted) setIsLoading(false);
     });
 
     // 2. Listen for changes
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      if (!mounted) return;
+      
       setSession(session);
       if (session?.user) {
           const { data: profile } = await supabase
@@ -90,7 +108,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setIsLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    return () => {
+        mounted = false;
+        clearTimeout(safetyTimeout);
+        subscription.unsubscribe();
+    };
   }, []);
 
   const login = async ({ email, password }: LoginCredentials) => {

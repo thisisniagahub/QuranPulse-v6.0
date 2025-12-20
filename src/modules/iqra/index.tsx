@@ -3,6 +3,7 @@
 
 import React, { useState } from 'react';
 import { UserProfile } from '../../types';
+import { useNavigate } from 'react-router-dom';
 
 // Sub-components
 import IqraPdfReader from './IqraPdfReader';
@@ -22,10 +23,12 @@ interface IqraProps {
 
 const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
     const [mode, setMode] = useState<IqraMode>('DIGITAL');
+    const navigate = useNavigate();
 
     const modes = [
         { id: 'DIGITAL' as IqraMode, icon: 'fa-book-quran', label: 'Iqra\' Asal' },
         { id: 'READ' as IqraMode, icon: 'fa-book-open', label: 'PDF Mode' },
+        { id: 'GUIDES' as any, icon: 'fa-map', label: 'Guides', action: () => navigate('/iqra/guides') },
         { id: 'VOCAB' as IqraMode, icon: 'fa-shapes', label: 'Vocab' },
         { id: 'TUTORIALS' as IqraMode, icon: 'fa-graduation-cap', label: 'Lessons' },
         { id: 'COACH' as IqraMode, icon: 'fa-microphone', label: 'Voice Coach' },
@@ -67,17 +70,17 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
                 
                 {/* Mode Selector */}
                 <div className="flex bg-slate-900 p-1 rounded-xl border border-slate-800 overflow-x-auto max-w-[200px] md:max-w-none no-scrollbar">
-                    {modes.map(({ id, icon, label }) => (
+                    {modes.map((item) => (
                         <button 
-                            key={id}
-                            onClick={() => setMode(id)}
+                            key={item.id}
+                            onClick={() => item.action ? item.action() : setMode(item.id as IqraMode)}
                             className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
-                                mode === id 
+                                mode === item.id 
                                     ? 'bg-primary text-black shadow-lg shadow-primary/20' 
                                     : 'text-slate-400 hover:text-white'
                             }`}
                         >
-                            <i className={`fa-solid ${icon}`}></i> {label}
+                            <i className={`fa-solid ${item.icon}`}></i> {item.label}
                         </button>
                     ))}
                 </div>
