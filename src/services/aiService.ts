@@ -224,6 +224,7 @@ export const analyzeImage = async (base64Image: string, prompt: string): Promise
 
 export const analyzeText = async () => ({});
 export const generateIslamicImage = async () => "";
+export const generateIslamicVideo = async (prompt: string) => "";
 export const getPersonalizedGreeting = async (n: string) => "";
 export const generateSpeech = async () => "";
 export const enhanceVideoPrompt = async (p: string) => p;
