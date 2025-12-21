@@ -1,159 +1,98 @@
-# 🌌 QuranPulse v6.0 (Genesis Edition)
+# QuranPulse v6.0 — Project Status & Master Guide
 
-> **The Future of Islamic Intelligence.**  
-> Experience the world's first AI-powered Quran companion, bridging faith with futuristic technology.
+> **Current Architecture:** Monorepo (Web App + Admin Dashboard + Bot Server)
+> **Latest Audit:** December 21, 2025
 
-![Version](https://img.shields.io/badge/version-6.0.0-cyan)
-![Status](https://img.shields.io/badge/status-production-green)
-![Tech](https://img.shields.io/badge/stack-React%20%7C%20Vite%20%7C%20Supabase%20%7C%20AI-blue)
+## 📊 Status Tally (Live Verification)
 
----
+This table reflects the actual state of the codebase versus the requirements.
 
-## 💠 New in v6.0: Cyber Pulse & AI Integration
-
-This update introduces a massive leap in both aesthetics and intelligence.
-
-> **📚 New Team Member?** Check out the **[Project Documentation Index](./DOCS_INDEX.md)** to understand our Vision & Roadmap.
-
-### 📖 Immersive Reader (Zen Mode)
-A revolutionary reading experience designed for focus:
-- **Zen Toggle**: One-click distraction-free mode (Pure Black).
-- **Floating Controls**: Auto-hiding dock for playback and settings.
-- **Quantum Search**: Instant, diacritic-insensitive search with holographic UI.
-
-### 🛡️ Mission Control (Admin)
-Now separated into a dedicated **Admin Dashboard**:
-- **Soft Glass UI**: A distinct light/glass aesthetic for management.
-- **Analytics**: Real-time monitoring of AI usage and user growth.
-
-### 🧠 Advanced AI Intelligence (Ustaz AI 2.0)
-Now powered by a **Hybrid Cloud Engine**:
-- **Smart Cache ("Fetch Once, Store Forever")**: Questions are answered once by AI, then stored in Supabase for 0-token, instant retrieval on subsequent queries.
-- **Hybrid Response System**: AI answers are structured (Summary + Steps + Resources) instead of just plain text.
-- **Multi-Channel Bots**:
-    - **Tok Imam (WhatsApp)**: Your personal imam for quick Q&A.
-    - **Ustazah AI (Telegram)**: A gentle assistant for women's fiqh & general queries.
-- **Generative UI Widgets**: AI can summon interactive UI (Zakat Calculator, Donation Cards) directly inside the chat flow.
-- **Gemini 2.5 Flash Integration**: Real-time, highly intelligent responses for complex queries.
-- **Smart Failover System**: 7-Key Rotation logic ensures 99.9% uptime (no rate limits).
-- **Offline Knowledge Base**: Instant answers for FAQs (Solat, Puasa, Wudhu) without internet.
-- **Realistic Voice (TTS)**: Dual-engine Text-to-Speech using **ElevenLabs** (Neural) and Web Speech API.
-- **Context-Aware**: Integrated directly into Quran Reader via "Verse Studio" - ask about specific verses instantly.
-
-### 📖 Iqra Digital Transformation
-- **Real-time Voice Coach**: **Tarteel-style** recitation feedback powered by Google Web Speech API (Phase 1) and Whisper AI (Phase 2).
-- **AR Vision Coach**: Uses camera/AR concepts to correct reading posture.
-- **Smart Mode**: Interactive, cell-based reading with audio feedback.
-- **Analytics Dashboard**: Track your reading streaks, accuracy, and weekly progress.
+| Core Component | Status | Code Reality (Evidence) |
+| :--- | :--- | :--- |
+| **Backend (Supabase)** | ✅ **READY** | Full Schema in `supabase/migrations/`. Includes `profiles`, `iqra_progress`, `payments`, etc. |
+| **Main Web App** | ✅ **READY** | `src/modules` contains `Quran`, `Iqra`, `Ibadah`, `Media` logic. |
+| **AI Intelligence** | ✅ **READY** | `aiService.ts` implements Hybrid Engine (Groq/Gemini). `chat-proxy` Edge Function configured. |
+| **Bot Ecosystem** | ✅ **READY** | `scripts/start_tok_imam.ts` runs both WhatsApp (`whatsapp-web.js`) and Telegram (`telegraf`). |
+| **Admin Dashboard** | ⚠️ **PARTIAL** | Logic exists in `adminService.ts` (with some mocks), but `admin-dashboard/` folder is a basic skeleton. |
+| **Monetization** | ⚠️ **MOCK** | `PaymentService` and `CheckoutModal` exist but use "Mock/Simulator" mode. |
+| **Iqra Content** | ✅ **READY** | Digitized content for Iqra 1-6 found in `src/modules/iqra/data`. |
 
 ---
 
-## ✨ Key Features
+## 🏗️ Project Structure (Where is everything?)
 
-### 1. Immersive Quran Reader
-- **Verse Studio**: A dedicated modal for deep analysis of every Ayah.
-- **Kufi Animated Logo**: A stunning, snake-tracing neon logo animation.
-- **Premium UI**: Glassmorphism, 3D Tilt Cards, and Starfield backgrounds.
-
-### 2. Smart Deen & Ibadah
-- **Prayer Times**: Accurate calculations based on location.
-- **Qibla Compass**: 3D AR-style compass for direction finding.
-- **Gamification**: Earn **Barakah Points (BP)** and **XP** as you read and learn.
-
-### 3. Developer Experience
-- **Vite Powered**: Blazing fast dev server and builds.
-- **Supabase Backend**: Robust database for user profiles, progress, and Quran data.
-- **Tailwind CSS v4**: The latest in utility-first styling.
-
-## Recent Updates (Dec 2025)
-
-### 🛡️ Security & AI
-- **Secure AI Proxy**: All Gemini AI requests now route through a Supabase Edge Function (`chat-proxy`). Client-side API keys have been removed for enhanced security.
-- **Compliance**: Added mandatory "Theological System Prompt" and JAKIM disclaimers to all AI interactions.
-
-### 🕌 Data Integration
-- **JAKIM Prayer Times**: Replaced mock data with real-time integration from `api.waktusolat.app` (JAKIM E-Solat).
-- **Zone Selector**: Users can now select their specific zone (e.g., WLY01, SGR01) for accurate timings.
-
-### 💰 Monetization (Barakah Hub)
-- **Infaq Module**: Launched "Sponsor a Student" feature allowing users to contribute to B40 education.
-- **Payment Gateway**: Integrated mock payment flow (ToyyibPay simulation) for testing.
-
-### 📊 Analytics
-- **Event Tracking**: Implemented `AnalyticsService` to track user engagement across Barakah, Ibadah, and AI modules.
+```text
+H:\ANTIGRAVITY\QURANPULSE-V6.0\
+├── 📂 src/                      # MAIN APP (React + Vite)
+│   ├── 📂 modules/              # Features (The "Meat")
+│   │   ├── 📂 quran/            # Quran Reader & Verse Studio
+│   │   ├── 📂 iqra/             # Iqra Digital (Voice/Vision Coach)
+│   │   ├── 📂 ibadah/           # Prayer Times & Qibla
+│   │   └── 📂 admin/            # (Client-side Admin views)
+│   ├── 📂 services/             # Logic Layer
+│   │   ├── aiService.ts         # The "Brain" (Gemini/Groq)
+│   │   ├── whatsappService.ts   # Tok Imam Logic
+│   │   └── adminService.ts      # Admin Logic (Mock + Real)
+│
+├── 📂 supabase/                 # BACKEND
+│   ├── 📂 migrations/           # Database Schema (PLAM, Barakah, etc.)
+│   └── 📂 functions/            # Edge Functions (chat-proxy)
+│
+├── 📂 scripts/                  # BOTS & UTILS
+│   ├── start_tok_imam.ts        # 🟢 ENTRY POINT for Bots
+│   └── env-loader.ts            # Env var helper
+│
+├── 📂 admin-dashboard/          # ADMIN PANEL (Next.js)
+│   └── (Currently a basic scaffold/skeleton)
+│
+└── 📂 DOCS_VAULT/               # DOCUMENTATION
+    ├── 00_CORE_CONTEXT/         # PRD, Architecture, Status
+    └── ...
+```
 
 ---
 
-## 🛠️ Development Workflow
+## ❓ "Backend Ada Ke?" (Backend Status)
+
+**Yes, but it is "Serverless".** we don't have a traditional `server.js` (Express). Instead:
+1.  **Database**: Postgres hosted on Supabase (Schema defined in `supabase/migrations`).
+2.  **API**: We use `supabase-js` client to talk directly to DB (protected by RLS policies).
+3.  **Functions**: Sensitive logic (AI keys) runs in **Supabase Edge Functions**.
+4.  **Bots**: The "Server" for bots is `scripts/start_tok_imam.ts`.
 
 ---
 
-## 🛠️ Tech Stack
+## 📝 What is Missing? (The "To-Do" List)
 
-- **Frontend**: React 18, TypeScript, Vite
-- **Styling**: Tailwind CSS v4, Framer Motion (Animations)
-- **Backend**: Supabase (PostgreSQL, Auth)
-- **State Management**: React Query, Context API
-- **AI/ML**: Hybrid Engine (**Google Web Speech API** for Voice, **Gemini 2.5** for Chat, **ElevenLabs** for TTS)
-- **PWA**: Fully offline-capable Progressive Web App
+1.  **Admin Dashboard UI**:
+    *   The `admin-dashboard` folder needs to be built out. Currently only `adminService.ts` logic exists.
+    *   *Action*: Connect `adminService.ts` to visual charts in the Next.js app.
+
+2.  **Real Payment Integration**:
+    *   `PaymentService` is mocking successful payments.
+    *   *Action*: Replace mocks with real ToyyibPay/Stripe API calls.
+
+3.  **Data Seeding**:
+    *   Database tables exist but might be empty.
+    *   *Action*: Need to run seed scripts to populate initial Verse/Hadith data if not fetching from API.
 
 ---
 
-## 🚀 Getting Started
+## 🚀 How to Run (Sequence)
 
-### Prerequisites
-- Node.js (v18+)
-- npm
-
-### Installation
-
-1.  **Clone the repository**
-    ```bash
-    git clone https://github.com/thisisniagahub/QuranPulse-v6.0.git
-    cd QuranPulse-v6.0
+1.  **Start the Bots (Terminal 1)**:
+    ```powershell
+    npx tsx scripts/start_tok_imam.ts
     ```
+    *(Scan QR code when it appears)*
 
-2.  **Install dependencies**
-    ```bash
-    npm install
-    ```
-
-3.  **Run the development server**
-    ```bash
+2.  **Start the Main App (Terminal 2)**:
+    ```powershell
     npm run dev
     ```
-    Visit `http://localhost:5173` to view the app.
 
----
-
-## 📦 Deployment
-
-This project is configured for **auto-deployment to Vercel**.
-Any push to the `master` branch triggers a live build.
-
-- **Live URL**: [Your Vercel URL Here]
-- **Build Command**: `npm run build`
-- **Output Directory**: `dist`
-
----
-
-## 🤝 Contributing
-
-1.  Fork the Project
-2.  Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3.  Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4.  Push to the Branch (`git push origin feature/AmazingFeature`)
-5.  Open a Pull Request
-
----
-
-## 📄 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-<div align="center">
-  <p>Built with ❤️ for the Ummah</p>
-  <p class="text-xs text-slate-500">© 2025 QuranPulse Team</p>
-</div>
+3.  **Start the Admin Dashboard (Terminal 3)**:
+    ```powershell
+    cd admin-dashboard
+    npm run dev
+    ```

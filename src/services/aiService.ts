@@ -1,8 +1,8 @@
-import { supabase } from '../lib/supabase.ts';
-import { ISLAMIC_FAQ } from '../data/islamicFAQ.ts';
-import { GEMINI_API_KEYS, callGeminiFlashWithFailover, callGeminiDirect } from './ai/GeminiClient.ts';
-import { GroqClient } from './ai/GroqClient.ts';
-import { ChatMessage } from '../types.ts';
+import { supabase } from '../lib/supabase';
+import { ISLAMIC_FAQ } from '../data/islamicFAQ';
+import { GEMINI_API_KEYS, callGeminiFlashWithFailover, callGeminiDirect } from './ai/GeminiClient';
+import { GroqClient } from './ai/GroqClient';
+import { ChatMessage } from '../types';
 
 // --- TYPES ---
 export interface HybridResponse {
@@ -216,7 +216,7 @@ export const generateDoaCard = async (topic: string): Promise<string> => {
   ];
   return askUstazAI(prompt);
 };
-import { analyzeImageWithGemini } from './ai/GeminiVisionClient.ts';
+import { analyzeImageWithGemini } from './ai/GeminiVisionClient';
 
 export const analyzeImage = async (base64Image: string, prompt: string): Promise<string> => {
   return analyzeImageWithGemini(base64Image, prompt);
@@ -233,4 +233,5 @@ export const analyzeTajweedPosture = async () => ({});
 export const getVerseConnections = async () => ({});
 export const getSemanticQuranSearch = async () => ({});
 export const generateLearningPlan = async () => ({});
+export const analyzeMorphology = async (arabic: string, translation: string) => ({ morphology: [], root: '', pattern: '' });
 export const getVerseTafsirAI = getTafsirForVerse;
