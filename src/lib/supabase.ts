@@ -1,28 +1,21 @@
 import { createClient } from '@supabase/supabase-js';
-
-// Helper to get env vars safely (Universal: Vite vs Node)
-const getEnv = (key: string) => {
-  if (typeof import.meta !== 'undefined' && import.meta.env) {
-    return import.meta.env[key];
-  }
-  if (typeof process !== 'undefined' && process.env) {
-    return process.env[key];
-  }
-  return '';
-};
+import { getEnv } from '../utils/env.ts';
 
 // Environment variables for Supabase
-const supabaseUrl = getEnv('VITE_SUPABASE_URL');
-const supabaseAnonKey = getEnv('VITE_SUPABASE_ANON_KEY');
+const rawUrl = getEnv('VITE_SUPABASE_URL');
+const rawKey = getEnv('VITE_SUPABASE_ANON_KEY');
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('⚠️ Supabase credentials missing! Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env');
+const supabaseUrl = rawUrl || 'https://placeholder.supabase.co';
+const supabaseAnonKey = rawKey || 'placeholder-key';
+
+if (!rawUrl || !rawKey) {
+  console.error('🚨 CRITICAL: Supabase credentials missing. App running in Offline/Fallback mode.');
 }
 
 // Create Supabase client with enhanced options
 export const supabase = createClient(
-  supabaseUrl || '',
-  supabaseAnonKey || '',
+  supabaseUrl,
+  supabaseAnonKey,
   {
     auth: {
       // Persist session in localStorage for "Remember Me" functionality

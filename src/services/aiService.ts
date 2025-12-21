@@ -1,6 +1,6 @@
 import { supabase } from '../lib/supabase.ts';
 import { ISLAMIC_FAQ } from '../data/islamicFAQ.ts';
-import { GEMINI_API_KEYS, callGeminiFlashWithFailover } from './ai/GeminiClient.ts';
+import { GEMINI_API_KEYS, callGeminiFlashWithFailover, callGeminiDirect } from './ai/GeminiClient.ts';
 import { GroqClient } from './ai/GroqClient.ts';
 import { ChatMessage } from '../types.ts';
 
@@ -53,8 +53,8 @@ async function findCachedResponse(query: string): Promise<HybridResponse | null>
       .maybeSingle();
 
     if (error) {
-        console.warn("Cache Lookup Error:", error.message);
-        return null;
+      console.warn("Cache Lookup Error:", error.message);
+      return null;
     }
 
     if (data && data.structured_response) {
@@ -92,13 +92,13 @@ async function saveToCache(query: string, response: HybridResponse) {
 // --- MAIN SERVICE ---
 
 export const askUstazAI = async (
-  messages: ChatMessage[], 
+  messages: ChatMessage[],
   onChunk?: (chunk: string) => void
 ): Promise<string> => {
   const lastUserMessage = messages[messages.length - 1].content;
 
   // 1. CHECK LOCAL HARDCODED FAQ (Fastest)
-  const localMatch = ISLAMIC_FAQ.find(item => 
+  const localMatch = ISLAMIC_FAQ.find(item =>
     item.keywords.some(k => lastUserMessage.toLowerCase().includes(k.toLowerCase()))
   );
   if (localMatch) {
@@ -116,7 +116,7 @@ export const askUstazAI = async (
   }
 
   // 3. FETCH FROM CLOUD AI (Groq First for Speed, then Gemini)
-  
+
   // Inject System Prompt for JSON Structure
   const messagesWithSystem = [
     { role: 'system', content: SYSTEM_INSTRUCTION, id: 'sys', timestamp: Date.now() },
@@ -126,43 +126,44 @@ export const askUstazAI = async (
   let rawResponse: string = "";
 
   // Attempt Groq (Ultra Fast)
-  if (GroqClient.apiKey) {
-      try {
-          rawResponse = await GroqClient.callGroq(messagesWithSystem as any);
-      } catch (e) {
-          console.warn("Groq failed, falling back to Gemini...");
-      }
+  try {
+    rawResponse = await GroqClient.callGroq(messagesWithSystem as any);
+  } catch (e) {
+    console.warn("Groq failed, falling back to Gemini...");
   }
 
   // Fallback to Gemini if Groq didn't answer
-  if (!rawResponse && GEMINI_API_KEYS.length > 0) {
+  if (!rawResponse) {
     try {
-      rawResponse = await callGeminiFlashWithFailover(messagesWithSystem); 
+      const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
+      rawResponse = isNode
+        ? await callGeminiDirect(messagesWithSystem as any)
+        : await callGeminiFlashWithFailover(messagesWithSystem as any);
     } catch (error) {
       console.error("AI Generation Failed:", error);
     }
   }
 
   if (rawResponse) {
-      // Parse JSON
-      let hybridData: HybridResponse;
-      try {
-        // Clean markdown code blocks if present
-        const jsonStr = rawResponse.replace(/```json/g, '').replace(/```/g, '').trim();
-        hybridData = JSON.parse(jsonStr);
-      } catch (e) {
-        // Fallback if AI didn't return valid JSON
-        console.warn("AI returned non-JSON. Wrapping as simple summary.");
-        hybridData = { summary: rawResponse, steps: [], resources: [] };
-      }
+    // Parse JSON
+    let hybridData: HybridResponse;
+    try {
+      // Clean markdown code blocks if present
+      const jsonStr = rawResponse.replace(/```json/g, '').replace(/```/g, '').trim();
+      hybridData = JSON.parse(jsonStr);
+    } catch (e) {
+      // Fallback if AI didn't return valid JSON
+      console.warn("AI returned non-JSON. Wrapping as simple summary.");
+      hybridData = { summary: rawResponse, steps: [], resources: [] };
+    }
 
-      // Save to Cache
-      await saveToCache(lastUserMessage, hybridData);
+    // Save to Cache
+    await saveToCache(lastUserMessage, hybridData);
 
-      // Format for UI
-      const finalOutput = formatHybridResponse(hybridData);
-      if (onChunk) onChunk(finalOutput);
-      return finalOutput;
+    // Format for UI
+    const finalOutput = formatHybridResponse(hybridData);
+    if (onChunk) onChunk(finalOutput);
+    return finalOutput;
   }
 
   // 4. FALLBACK SIMULATION
@@ -186,7 +187,7 @@ function formatHybridResponse(data: HybridResponse): string {
 
   // Generative UI Magic Hook
   if (data.widget) {
-      output += `\n\n<<<WIDGET:${JSON.stringify(data.widget)}>>>`;
+    output += `\n\n<<<WIDGET:${JSON.stringify(data.widget)}>>>`;
   }
 
   return output;
@@ -200,12 +201,27 @@ function getSmartSimulationResponse(query: string): string {
 
 // --- UTILITIES (Kept for compatibility) ---
 // (Copying existing utility stubs to ensure no breaking changes)
-export const convertToJawi = async (text: string) => text; 
+export const convertToJawi = async (text: string) => text;
 export const getHadithByTopic = async (topic: string) => ({ arabic: '', translation: '' });
 export const getTafsirForVerse = async (key: string) => ({ tafsir: '', reflection: '' });
-export const analyzeMorphology = async (w: string) => ({});
-export const generateDoaCard = async (n: string) => "";
-export const generateIslamicVideo = async () => "";
+export const generateDoaCard = async (topic: string): Promise<string> => {
+  const prompt: ChatMessage[] = [
+    {
+      id: 'sys',
+      role: 'system',
+      content: "Anda adalah pakar penulisan Doa Islamik yang puitis. Tulis satu Doa yang sangat indah dan menyentuh hati dalam Bahasa Melayu berdasarkan topik pengguna. Sertakan teks Arab (jika ada) dan maksudnya. Formatkan dengan cantik menggunakan Markdown.",
+      timestamp: Date.now()
+    },
+    { id: 'usr', role: 'user', content: `Topik Doa: ${topic}`, timestamp: Date.now() }
+  ];
+  return askUstazAI(prompt);
+};
+import { analyzeImageWithGemini } from './ai/GeminiVisionClient.ts';
+
+export const analyzeImage = async (base64Image: string, prompt: string): Promise<string> => {
+  return analyzeImageWithGemini(base64Image, prompt);
+};
+
 export const analyzeText = async () => ({});
 export const generateIslamicImage = async () => "";
 export const getPersonalizedGreeting = async (n: string) => "";

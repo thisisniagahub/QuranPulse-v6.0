@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { getEnv } from '../../utils/env.ts';
 
 export class VoiceService {
-    private static readonly ELEVENLABS_API_KEY = process.env.VITE_ELEVENLABS_API_KEY;
+    private static readonly ELEVENLABS_API_KEY = getEnv('VITE_ELEVENLABS_API_KEY');
     private static readonly VOICE_ID = 'pNInz6obpg8ndOeDr7qn'; // Adam (Calm, mature) - Change as needed
 
     /**

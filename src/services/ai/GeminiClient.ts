@@ -1,19 +1,15 @@
+
 import { supabase } from '../../lib/supabase.ts';
-import { usageTracker } from './KeyManager.ts';
-import { THEOLOGICAL_SYSTEM_PROMPT } from './prompts.ts';
 import { ChatMessage } from '../../types.ts';
+import { geminiRotator } from './MultiKeyRotator.ts';
+import axios from 'axios';
 
-// Flag to indicate we are using the proxy. 
-// This satisfies the check in aiService.ts: if (GEMINI_API_KEYS.length > 0)
-export const GEMINI_API_KEYS: string[] = ["SECURE_PROXY_ENABLED"]; 
-
-/**
- * CLIENT-SIDE PROXY CLIENT
+// Flag to indicate we are using the proxy for client-side.
+export const GEMINI_API_KEYS: string[] = ["SECURE_PROXY_ENABLED"];
 
 /**
  * CLIENT-SIDE PROXY CLIENT
  * Routes requests to Supabase Edge Function 'chat-proxy'.
- * This hides the API Keys and Logic from the browser.
  */
 export async function callGeminiFlashWithFailover(messages: ChatMessage[], onChunk?: (chunk: string) => void): Promise<string> {
   console.log("📡 Connecting to Secure AI Proxy (Supabase Edge Function)...");
@@ -23,34 +19,43 @@ export async function callGeminiFlashWithFailover(messages: ChatMessage[], onChu
       body: { messages }
     });
 
-    if (error) {
-        console.error("Supabase Invocation Error:", error);
-        throw new Error("Gagal menyambung ke pelayan AI (Proxy Error).");
-    }
-
-    if (data?.error) {
-        console.error("Proxy Logic Error:", data.error);
-        throw new Error(`Ralat AI: ${data.error}`);
-    }
+    if (error) throw new Error("Gagal menyambung ke pelayan AI (Proxy Error).");
+    if (data?.error) throw new Error(`Ralat AI: ${data.error}`);
 
     const answer = data?.answer || "Maaf, tiada jawapan diterima.";
 
-    // Simulate chunking since Edge Functions (non-streaming) return full text
-    if (onChunk) {
-        // Simple "fast type" effect for UX
-        const words = answer.split(' ');
-        for (let i = 0; i < words.length; i++) {
-             // We can't actually await here easily without making this loop slow, 
-             // but strictly speaking, onChunk expects instant delivery.
-             // For now, just deliver the whole thing or chunks.
-             onChunk(words[i] + ' ');
-        }
-    }
-
+    if (onChunk) onChunk(answer);
     return answer;
 
   } catch (err: any) {
     console.error("Critical AI Service Failure:", err);
     throw err;
   }
+}
+
+/**
+ * DIRECT Gemini Client (For Bot Server)
+ * Bypasses proxy for faster node-to-node communication with rotation.
+ */
+export async function callGeminiDirect(messages: ChatMessage[]): Promise<string> {
+  return geminiRotator.executeWithRetry(async (apiKey) => {
+    console.log("📡 Calling Gemini 2.0 Flash (Advanced Free Tier)...");
+
+    const formattedContents = messages.map((m: any) => ({
+      role: m.role === "assistant" ? "model" : "user",
+      parts: [{ text: m.content }],
+    }));
+
+    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+
+    const response = await axios.post(GEMINI_URL, {
+      contents: formattedContents,
+      generationConfig: {
+        temperature: 0.3,
+        maxOutputTokens: 2048,
+      }
+    });
+
+    return response.data.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, tiada jawapan.";
+  });
 }

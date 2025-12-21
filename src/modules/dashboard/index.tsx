@@ -48,21 +48,16 @@ const SmartDeenCard = ({ onNavigate }: { onNavigate: (view: NavView) => void }) 
 const IqraCard = ({ onNavigate }: { onNavigate: (view: NavView) => void }) => (
     <BentoCard 
         className="p-5 flex flex-col justify-between h-40 relative group border-white overflow-hidden"
-        disabled={true}
+        onClick={() => onNavigate(NavView.IQRA)}
         delay={0.3}
         bgImage="/iqra-poster-v1.png"
     >
-        {/* Banner Ribbon */}
-        <div className="absolute top-4 -right-10 w-40 bg-gold-500 py-1 text-center rotate-45 z-20 shadow-lg border-y border-gold-400/50">
-            <span className="text-[10px] font-black text-black tracking-widest uppercase">Coming Soon</span>
-        </div>
-
-        <div className="flex flex-col justify-between h-full opacity-50 blur-[0.5px]">
+        <div className="flex flex-col justify-between h-full">
             <div className="w-10 h-10 rounded-xl bg-gold-500/20 backdrop-blur flex items-center justify-center text-gold-400 mb-3 border border-white/20">
                 <i className="fa-solid fa-graduation-cap"></i>
             </div>
              <div>
-                <h3 className="font-bold text-white text-lg leading-tight">Belajar Iqra</h3>
+                <h3 className="font-bold text-white text-lg leading-tight drop-shadow-md">Iqra Digital</h3>
                 <p className="text-gold-400/80 text-xs mt-1 font-medium">Mula dari Asas</p>
             </div>
         </div>

@@ -22,7 +22,7 @@ export const GlowFooter = () => {
       { name: 'Contact', href: '#' },
     ],
     legal: [
-      { name: 'Privacy Policy', href: '#' },
+      { name: 'Privacy Policy', href: '/privacy' },
       { name: 'Terms of Service', href: '#' },
       { name: 'Shariah Compliance', href: '#' },
     ],
@@ -62,19 +62,19 @@ export const GlowFooter = () => {
 
             {/* Newsletter Input */}
             <div className="mb-8 max-w-xs">
-                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-3">Join Genesis Batch</p>
-                <div className="flex gap-2">
-                    <input 
-                        type="email" 
-                        placeholder="Enter your email" 
-                        className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/50 transition-colors"
-                    />
-                    <button className="bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg px-3 py-2 transition-colors">
-                        <i className="fa-solid fa-arrow-right text-sm"></i>
-                    </button>
-                </div>
+              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-3">Join Genesis Batch</p>
+              <div className="flex gap-2">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                />
+                <button className="bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg px-3 py-2 transition-colors">
+                  <i className="fa-solid fa-arrow-right text-sm"></i>
+                </button>
+              </div>
             </div>
-            
+
             {/* Social Links */}
             <div className="flex gap-3">
               {socialLinks.map((social, index) => (
@@ -151,7 +151,7 @@ export const GlowFooter = () => {
           <p className="text-slate-500 text-sm">
             © {new Date().getFullYear()} QuranPulse. All rights reserved.
           </p>
-          
+
           <div className="flex items-center gap-2 text-xs text-slate-500">
             <span className="flex items-center gap-1">
               <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />

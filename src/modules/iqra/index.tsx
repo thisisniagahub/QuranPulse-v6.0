@@ -13,8 +13,9 @@ import IqraTutorials from './IqraTutorials';
 import IqraVisionCoach from './IqraVisionCoach';
 import VocabBuilder from './VocabBuilder';
 import IqraDigitalReader from './IqraDigitalReader';
+import IqraGameEngine from './game/IqraGameEngine';
 
-type IqraMode = 'DIGITAL' | 'READ' | 'COACH' | 'VISION_COACH' | 'TUTORIALS' | 'VOCAB' | 'ANALYTICS';
+type IqraMode = 'DIGITAL' | 'READ' | 'COACH' | 'VISION_COACH' | 'TUTORIALS' | 'VOCAB' | 'ANALYTICS' | 'GAMES';
 
 interface IqraProps {
     user?: UserProfile;
@@ -27,12 +28,12 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
 
     const modes = [
         { id: 'DIGITAL' as IqraMode, icon: 'fa-book-quran', label: 'Iqra\' Asal' },
+        { id: 'GAMES' as IqraMode, icon: 'fa-gamepad', label: 'Play' },
         { id: 'READ' as IqraMode, icon: 'fa-book-open', label: 'PDF Mode' },
         { id: 'GUIDES' as any, icon: 'fa-map', label: 'Guides', action: () => navigate('/iqra/guides') },
         { id: 'VOCAB' as IqraMode, icon: 'fa-shapes', label: 'Vocab' },
         { id: 'TUTORIALS' as IqraMode, icon: 'fa-graduation-cap', label: 'Lessons' },
         { id: 'COACH' as IqraMode, icon: 'fa-microphone', label: 'Voice Coach' },
-        { id: 'VISION_COACH' as IqraMode, icon: 'fa-glasses', label: 'AR Mode' },
         { id: 'ANALYTICS' as IqraMode, icon: 'fa-chart-pie', label: 'Stats' },
     ];
 
@@ -40,6 +41,8 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
         switch (mode) {
             case 'DIGITAL':
                 return <IqraDigitalReader onClose={() => setMode('READ')} />;
+            case 'GAMES':
+                return <IqraGameEngine />;
             case 'READ':
                 return <IqraPdfReader />;
             case 'VOCAB':
@@ -67,18 +70,17 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
                     </h1>
                     <p className="text-slate-400 text-xs">Master the Quran, one page at a time.</p>
                 </div>
-                
+
                 {/* Mode Selector */}
                 <div className="flex bg-slate-900 p-1 rounded-xl border border-slate-800 overflow-x-auto max-w-[200px] md:max-w-none no-scrollbar">
                     {modes.map((item) => (
-                        <button 
+                        <button
                             key={item.id}
                             onClick={() => item.action ? item.action() : setMode(item.id as IqraMode)}
-                            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${
-                                mode === item.id 
-                                    ? 'bg-primary text-black shadow-lg shadow-primary/20' 
+                            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-2 whitespace-nowrap ${mode === item.id
+                                    ? 'bg-primary text-black shadow-lg shadow-primary/20'
                                     : 'text-slate-400 hover:text-white'
-                            }`}
+                                }`}
                         >
                             <i className={`fa-solid ${item.icon}`}></i> {item.label}
                         </button>

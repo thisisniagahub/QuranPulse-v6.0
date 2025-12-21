@@ -1,25 +1,21 @@
+
 import axios from 'axios';
 import { ChatMessage } from '../../types.ts';
+import { groqRotator } from './MultiKeyRotator.ts';
 
 /**
  * GROQ HIGH-SPEED CLIENT
  * Cip LPU (Language Processing Unit) untuk respon sepantas kilat.
  */
 export const GroqClient = {
-    apiKey: process.env.GROQ_API_KEY || (global as any).import?.meta?.env?.GROQ_API_KEY,
-
     async callGroq(messages: ChatMessage[]): Promise<string> {
-        if (!this.apiKey) {
-            throw new Error("GROQ_API_KEY missing");
-        }
+        return groqRotator.executeWithRetry(async (apiKey) => {
+            console.log("⚡ Calling GROQ Engine (Llama 3.3 70B - Super Advanced)...");
 
-        try {
-            console.log("⚡ Calling GROQ Engine (Speed Mode)...");
-            
             const response = await axios.post(
                 'https://api.groq.com/openai/v1/chat/completions',
                 {
-                    model: "llama-3.1-70b-versatile", // Model terbaru & power
+                    model: "llama-3.3-70b-versatile",
                     messages: messages.map(m => ({
                         role: m.role,
                         content: m.content
@@ -29,17 +25,13 @@ export const GroqClient = {
                 },
                 {
                     headers: {
-                        'Authorization': `Bearer ${this.apiKey}`,
+                        'Authorization': `Bearer ${apiKey}`,
                         'Content-Type': 'application/json'
                     }
                 }
             );
 
             return response.data.choices[0].message.content;
-
-        } catch (error: any) {
-            console.error("❌ Groq Error:", error.response?.data || error.message);
-            throw error;
-        }
+        });
     }
 };

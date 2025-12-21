@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import PosterGenerator from './tools/PosterGenerator';
+import WorkflowEditor from './tools/WorkflowEditor';
+import KnowledgeBaseManager from './tools/KnowledgeBaseManager';
 import LiveAnalytics from './components/LiveAnalytics';
 import { useNavigate } from 'react-router-dom';
 
-type AdminView = 'OVERVIEW' | 'AI_STUDIO' | 'CRM' | 'FINANCE' | 'SETTINGS';
+type AdminView = 'OVERVIEW' | 'AI_STUDIO' | 'AUTOMATION' | 'KNOWLEDGE' | 'CRM' | 'FINANCE' | 'SETTINGS';
 
 const AdminDashboard: React.FC = () => {
   const [activeView, setActiveView] = useState<AdminView>('OVERVIEW');
@@ -13,6 +15,8 @@ const AdminDashboard: React.FC = () => {
   const NAV_ITEMS = [
     { id: 'OVERVIEW', label: 'Command Center', icon: 'fa-chart-radar', color: 'text-cyan-400' },
     { id: 'AI_STUDIO', label: 'AI Content Studio', icon: 'fa-wand-magic-sparkles', color: 'text-purple-400' },
+    { id: 'AUTOMATION', label: 'Pulse Automator', icon: 'fa-network-wired', color: 'text-blue-400' },
+    { id: 'KNOWLEDGE', label: 'Knowledge Base', icon: 'fa-database', color: 'text-orange-400' },
     { id: 'CRM', label: 'Ummah CRM', icon: 'fa-users-rays', color: 'text-emerald-400' },
     { id: 'FINANCE', label: 'Treasury', icon: 'fa-vault', color: 'text-amber-400' },
     { id: 'SETTINGS', label: 'System', icon: 'fa-gears', color: 'text-slate-400' },
@@ -37,7 +41,7 @@ const AdminDashboard: React.FC = () => {
             </div>
         </div>
 
-        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto custom-scrollbar">
             {NAV_ITEMS.map((item) => (
                 <button
                     key={item.id}
@@ -105,6 +109,30 @@ const AdminDashboard: React.FC = () => {
                         className="h-full"
                       >
                           <PosterGenerator />
+                      </motion.div>
+                  )}
+
+                  {activeView === 'AUTOMATION' && (
+                      <motion.div 
+                        key="automation"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        className="h-full"
+                      >
+                          <WorkflowEditor />
+                      </motion.div>
+                  )}
+
+                  {activeView === 'KNOWLEDGE' && (
+                      <motion.div 
+                        key="knowledge"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -20 }}
+                        className="h-full"
+                      >
+                          <KnowledgeBaseManager />
                       </motion.div>
                   )}
 
