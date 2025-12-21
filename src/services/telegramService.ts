@@ -1,12 +1,12 @@
 import { Telegraf, Markup } from 'telegraf';
-import { askUstazAI, analyzeImage } from './aiService.ts';
+import { askUstazAI, analyzeImage } from './aiService';
 import axios from 'axios';
-import { ChatMessage } from '../types.ts';
-import { VoiceService } from './ai/VoiceService.ts';
-import { supabase } from '../lib/supabase.ts';
+import { ChatMessage } from '../types';
+import { VoiceService } from './ai/VoiceService';
+import { supabase } from '../lib/supabase';
 
 export class TelegramService {
-    private bot: Telegraf;
+    private bot!: Telegraf;
 
     constructor() {
         const token = process.env.TELEGRAM_BOT_TOKEN;
