@@ -1,134 +1,153 @@
 
 import { Product, Announcement, Order, SystemLog, CartItem, UserProfile, AppConfigItem } from '../types';
-import { GoogleSheetService } from './googleSheetService';
-import { retryWithBackoff } from '../utils/retry';
-import { validateUrl, sanitizeString } from '../utils/validation';
+import { supabase } from '../lib/supabase';
 
-const LS_KEY_PRODUCTS = 'cms_products';
-const LS_KEY_SHEET_URL = 'cms_google_sheet_url';
-// UPDATED URL V6.1
-const DEFAULT_SHEET_URL = "https://script.google.com/macros/s/AKfycbwOs4n3G0m5QSqBX-BdAs1r-e8QL3h07xvgGPVE6rqgrNzkmwtpUwbQRvPBua0OknH5/exec";
+// Deprecated: GoogleSheetService references removed
+// Migrated to Supabase
 
 class ApiClient {
-    private sheetUrl: string | null = null;
-    private mode: 'MOCK' | 'CLOUD' = 'MOCK';
+    // Mode is now always CLOUD (Supabase)
+    private mode: 'CLOUD' = 'CLOUD';
 
     constructor() {
-        const savedUrl = localStorage.getItem(LS_KEY_SHEET_URL);
-        this.sheetUrl = savedUrl || DEFAULT_SHEET_URL;
-        // Auto-enable cloud if URL exists
-        if(savedUrl) this.mode = 'CLOUD';
-    }
-
-    public setSheetUrl(url: string) {
-        const urlValidation = validateUrl(url);
-        if (!urlValidation.isValid) {
-            throw new Error(urlValidation.error || 'Invalid URL provided');
-        }
-        this.sheetUrl = sanitizeString(url);
-        if (!this.sheetUrl) {
-            throw new Error('URL sanitization failed');
-        }
-        this.mode = 'CLOUD';
-        localStorage.setItem(LS_KEY_SHEET_URL, this.sheetUrl);
-        setTimeout(() => window.location.reload(), 500);
+        console.log("🌐 ApiClient initialized with Supabase backend.");
     }
 
     public getMode() { return this.mode; }
-    public getSheetUrl() { return this.sheetUrl; }
 
     // --- CONFIG (GOD MODE) ---
     async getAppConfig(): Promise<AppConfigItem[]> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) return await GoogleSheetService.fetchData(this.sheetUrl, 'getAppConfig') || [];
-        return [];
+        const { data, error } = await supabase
+            .from('app_config')
+            .select('*');
+
+        if (error) {
+            console.error("Failed to fetch app config:", error);
+            return [];
+        }
+        return data as AppConfigItem[];
     }
 
     async updateAppConfig(key: string, value: string): Promise<boolean> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) return await GoogleSheetService.postData(this.sheetUrl, 'updateAppConfig', { key, value });
-        return false;
+        const { error } = await supabase
+            .from('app_config')
+            .upsert({ key, value, updated_at: new Date().toISOString() });
+
+        return !error;
     }
 
     // --- PRODUCTS ---
     async getProducts(): Promise<Product[]> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) {
-            const res = await retryWithBackoff(() => GoogleSheetService.fetchData(this.sheetUrl!, 'getProducts'));
-            if (res) return res;
+        const { data, error } = await supabase
+            .from('products')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) {
+            console.error("Failed to fetch products:", error);
+            return [];
         }
-        const saved = localStorage.getItem(LS_KEY_PRODUCTS);
-        return saved ? JSON.parse(saved) : [];
+        return data as Product[];
     }
 
     async saveProduct(product: Product): Promise<Product> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) {
-            await retryWithBackoff(() => GoogleSheetService.postData(this.sheetUrl!, 'addProduct', product));
-        }
-        return product;
+        // Remove ID if empty string to allow auto-generation
+        const { id, ...productData } = product;
+        const payload = id ? product : productData;
+
+        const { data, error } = await supabase
+            .from('products')
+            .upsert(payload)
+            .select()
+            .single();
+
+        if (error) throw error;
+        return data as Product;
     }
 
     async updateProduct(product: Product): Promise<void> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) {
-            await retryWithBackoff(() => GoogleSheetService.postData(this.sheetUrl!, 'updateProduct', product));
-        }
+        await this.saveProduct(product);
     }
     
     async deleteProduct(id: string): Promise<void> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) {
-            await retryWithBackoff(() => GoogleSheetService.postData(this.sheetUrl!, 'deleteProduct', { id }));
-        }
+        const { error } = await supabase.from('products').delete().eq('id', id);
+        if (error) console.error("Delete product error:", error);
     }
 
     // --- ANNOUNCEMENTS ---
     async getAnnouncements(): Promise<Announcement[]> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) {
-            return await retryWithBackoff(() => GoogleSheetService.fetchData(this.sheetUrl!, 'getAnnouncements')) || [];
-        }
-        return [];
+        const { data, error } = await supabase
+            .from('announcements')
+            .select('*')
+            .eq('is_active', true)
+            .order('created_at', { ascending: false });
+
+        if (error) return [];
+        return data as Announcement[];
     }
     
     async addAnnouncement(ann: Announcement): Promise<void> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) {
-            await retryWithBackoff(() => GoogleSheetService.postData(this.sheetUrl!, 'addAnnouncement', ann));
-        }
+        const { id, ...annData } = ann;
+        await supabase.from('announcements').insert(annData);
     }
 
     async deleteAnnouncement(id: string): Promise<void> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) {
-            await retryWithBackoff(() => GoogleSheetService.postData(this.sheetUrl!, 'deleteAnnouncement', { id }));
-        }
+        await supabase.from('announcements').delete().eq('id', id);
     }
 
     // --- USERS & ORDERS ---
     async getUsers(): Promise<UserProfile[]> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) return await GoogleSheetService.fetchData(this.sheetUrl, 'getUsers') || [];
-        return [];
+        // Only admins should see this (RLS protected)
+        const { data, error } = await supabase.from('profiles').select('*');
+        if (error) return [];
+        return data as UserProfile[];
     }
 
     async adminUpdateUser(user: Partial<UserProfile>): Promise<void> {
-         if (this.mode === 'CLOUD' && this.sheetUrl) await GoogleSheetService.postData(this.sheetUrl, 'adminUpdateUser', user);
+         if (!user.id) return;
+         await supabase.from('profiles').update(user).eq('id', user.id);
     }
 
     async placeOrder(cart: CartItem[], customerName: string): Promise<boolean> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) {
-            return await retryWithBackoff(() => GoogleSheetService.postData(this.sheetUrl!, 'placeOrder', {
-                cart,
-                customerName: sanitizeString(customerName)
-            }));
-        }
-        return true;
+        const { data: { user } } = await supabase.auth.getUser();
+        if (!user) return false;
+
+        const totalAmount = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        const { error } = await supabase.from('orders').insert({
+            user_id: user.id,
+            customer_name: customerName,
+            items: cart, // Supabase handles JSONB
+            total_amount: totalAmount,
+            status: 'PENDING'
+        });
+
+        return !error;
     }
 
     async getOrders(): Promise<Order[]> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) return await GoogleSheetService.fetchData(this.sheetUrl, 'getOrders') || [];
-        return [];
+        const { data, error } = await supabase
+            .from('orders')
+            .select('*')
+            .order('created_at', { ascending: false });
+
+        if (error) return [];
+        return data as Order[];
     }
 
     async getLogs(): Promise<SystemLog[]> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) return await GoogleSheetService.fetchData(this.sheetUrl, 'getLogs') || [];
-        return [];
+        const { data, error } = await supabase
+            .from('system_logs')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(100);
+
+        if (error) return [];
+        return data as SystemLog[];
     }
 
     async syncUser(user: UserProfile): Promise<boolean> {
-        if (this.mode === 'CLOUD' && this.sheetUrl) return await GoogleSheetService.postData(this.sheetUrl, 'syncUser', user);
+        // Handled by AuthContext and Triggers
         return true;
     }
 }

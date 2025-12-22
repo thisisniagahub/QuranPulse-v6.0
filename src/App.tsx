@@ -8,7 +8,6 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 import { Login } from './modules/auth/Login'; // Import Login
-import AdminRoute from './modules/admin/components/AdminRoute';
 
 // Lazy load modules
 const Dashboard = lazy(() => import('./modules/dashboard'));
@@ -22,7 +21,6 @@ const Profile = lazy(() => import('./modules/profile/Profile'));
 const InfaqPage = lazy(() => import('./modules/barakah/InfaqPage'));
 const LandingPage = lazy(() => import('./modules/landing/LandingPage'));
 const VerseStudio = lazy(() => import('./modules/quran/components/VerseStudio')); // Test Route
-const AdminDashboard = lazy(() => import('./modules/admin/AdminDashboard'));
 const PrivacyPolicy = lazy(() => import('./modules/legal/PrivacyPolicy'));
 import GuideViewer from './modules/iqra/components/GuideViewer';
 
@@ -109,7 +107,6 @@ const AppContent: React.FC = () => {
             <Route path="souq" element={<ErrorBoundary><Souq /></ErrorBoundary>} />
             <Route path="barakah" element={<ErrorBoundary><InfaqPage /></ErrorBoundary>} />
             <Route path="media" element={<ErrorBoundary><MediaStudio /></ErrorBoundary>} />
-            <Route path="admin" element={<AdminRoute><ErrorBoundary><AdminDashboard /></ErrorBoundary></AdminRoute>} />
             <Route path="profile" element={
               <ErrorBoundary>
                 <Profile

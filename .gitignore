@@ -34,3 +34,5 @@ dist-ssr
 *.sw?
 
 .vercel
+.wwebjs_auth/
+bot_server_log.txt
