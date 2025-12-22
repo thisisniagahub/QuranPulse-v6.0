@@ -63,16 +63,50 @@ export const Login = () => {
         setError(null);
         setLoading(true);
         try {
-            const { error } = await supabase.auth.signInWithOAuth({
+            // Prefer explicit Supabase auth callback URL from env.
+            // This reduces redirect_uri mismatches with Google Cloud Console.
+            const rawSupabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
+            // Fallback to window.origin only if env not set (not recommended for production)
+            const fallback = window.location.origin;
+            const supabaseUrl = rawSupabaseUrl ? rawSupabaseUrl.replace(/\/$/, '') : fallback.replace(/\/$/, '');
+            const redirectTo = `${supabaseUrl}/auth/v1/callback`;
+
+            // Use signInWithOAuth and handle returned data.url fallback
+            const result = await supabase.auth.signInWithOAuth({
                 provider: 'google',
                 options: {
-                    redirectTo: window.location.origin + '/',
+                    redirectTo,
                 }
             });
-            if (error) throw error;
+
+            // result may contain { data, error } depending on SDK version
+            // If an intermediate url is returned, do explicit redirect
+            // (some Supabase setups expect client to follow data.url).
+            // We handle both shapes defensively.
+            // @ts-ignore
+            const maybeUrl = result?.data?.url || result?.url;
+            // @ts-ignore
+            const maybeError = result?.error || result?.data?.error;
+
+            if (maybeError) throw maybeError;
+
+            if (maybeUrl) {
+                window.location.href = maybeUrl;
+            }
+            // Otherwise Supabase will redirect automatically.
+
         } catch (err: any) {
             console.error("Google Login Error:", err);
-            setError(err.message || "Log masuk Google gagal.");
+            // Provide clearer messages for common OAuth failures
+            if (err?.message && err.message.includes("redirect_uri")) {
+                setError("Masalah redirect_uri: semak konfigurasi Google OAuth & Authorized Redirect URIs (lihat README).");
+            } else if (err?.message && err.message.includes("access_denied")) {
+                setError("Akses ditolak oleh Google. Sila cuba lagi dan beri kebenaran.");
+            } else if (err?.message && err.message.includes("network")) {
+                setError("Ralat rangkaian: semak sambungan dan tetapan environment.");
+            } else {
+                setError(err?.message || "Log masuk Google gagal. Semak konsol/Logs.");
+            }
             setLoading(false);
         }
     };
@@ -138,7 +172,7 @@ export const Login = () => {
                             type="button"
                             onClick={handleGoogleLogin}
                             disabled={loading}
-                            className="flex items-center justify-center gap-2 py-3 bg-surface-dark/50 hover:bg-surface-dark border border-white rounded-xl text-white text-sm font-medium transition-all group disabled:opacity-50"
+                            className="flex items-center justify-center gap-2 py-3 bg-surface-dark/50 hover:bg-surface-dark border border-white rounded-xl text-white text-sm font-medium transition-colors"
                         >
                             <i className="fa-brands fa-google text-red-400 group-hover:text-red-300 transition-colors"></i>
                             Google
@@ -146,7 +180,7 @@ export const Login = () => {
                         <button
                             type="button"
                             onClick={handleAppleLogin}
-                            className="flex items-center justify-center gap-2 py-3 bg-surface-dark/50 hover:bg-surface-dark border border-white rounded-xl text-white text-sm font-medium transition-all group"
+                            className="flex items-center justify-center gap-2 py-3 bg-surface-dark/50 hover:bg-surface-dark border border-white rounded-xl text-white text-sm font-medium transition-colors"
                         >
                             <i className="fa-brands fa-apple text-white group-hover:text-white transition-colors"></i>
                             Apple
@@ -170,7 +204,7 @@ export const Login = () => {
                                 type="email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-surface-dark/50 border border-white rounded-xl py-4 pl-11 pr-4 text-white placeholder:text-white/40 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-medium"
+                                className="w-full bg-surface-dark/50 border border-white rounded-xl py-4 pl-11 pr-4 text-white placeholder:text-white/40 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                                 placeholder="nama@email.com"
                             />
                         </div>
@@ -190,7 +224,7 @@ export const Login = () => {
                                 type="password"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-surface-dark/50 border border-white rounded-xl py-4 pl-11 pr-4 text-white placeholder:text-white/40 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-medium"
+                                className="w-full bg-surface-dark/50 border border-white rounded-xl py-4 pl-11 pr-4 text-white placeholder:text-white/40 outline-none focus:border-primary focus:ring-2 focus:ring-primary/20"
                                 placeholder="••••••••"
                             />
                         </div>
@@ -207,7 +241,7 @@ export const Login = () => {
                                     onChange={(e) => setRememberMe(e.target.checked)}
                                     className="peer sr-only"
                                 />
-                                <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all duration-200 ${rememberMe ? 'bg-primary border-primary' : 'bg-surface-dark border-white/50 group-hover:border-white'}`}>
+                                <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all duration-200 ${rememberMe ? 'bg-primary border-primary' : 'bg-surface-dark border-white/20'}`}>
                                     <i className={`fa-solid fa-check text-xs text-background-dark transition-transform duration-200 ${rememberMe ? 'scale-100' : 'scale-0'}`}></i>
                                 </div>
                             </div>
@@ -230,7 +264,7 @@ export const Login = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full py-4 bg-primary text-background-dark font-bold rounded-xl shadow-neon hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
+                        className="w-full py-4 bg-primary text-background-dark font-bold rounded-xl shadow-neon hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? (
                             <>
