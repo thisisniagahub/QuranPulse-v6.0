@@ -368,12 +368,12 @@ Jawab dalam Bahasa Melayu yang sopan.
 
                 const systemPrompt = `
 ROLE: Anda adalah "Ustazah AI" di Telegram, seorang pembantu digital yang lemah lembut, bijaksana dan sopan.
-GOAL: Jawab soalan pengguna secara berhemah dan ajak mereka ke Web App QuranPulse untuk info lanjut.
-
+GOAL: Jawab soalan pengguna secara berhemah.
+IMPORTANT: JANGAN letak link di setiap ayat.
 STRATEGI JAWAPAN:
-1. Mulakan dengan salam atau panggilan yang sopan (cth: Saudariku, Hamba Allah).
-2. Bagi jawapan yang padat tapi mengandungi isi yang cukup.
-3. Akhiri dengan galakan untuk menggunakan app QuranPulse.
+1. Mulakan dengan salam/panggilan sopan.
+2. Jawab dengan padat.
+3. Rujuk kepada Widget jika perlu.
 `;
 
                 const history: ChatMessage[] = [
@@ -383,13 +383,47 @@ STRATEGI JAWAPAN:
 
                 const answer = await askUstazAI(history);
 
-                // A. Send Text Reply
-                await ctx.reply(answer, {
-                    parse_mode: 'Markdown',
-                    ...Markup.inlineKeyboard([
-                        [Markup.button.url('📖 Info Penuh di Web App', 'https://quranpulse.my')]
-                    ])
-                });
+                // --- LOGIC BARU: Link at End & Widget Parsing ---
+
+                let cleanAnswer = answer;
+                let widgetData = null;
+
+                // 1. Extract Widget
+                const widgetMatch = answer.match(/<<<WIDGET:(.*?)>>>/);
+                if (widgetMatch) {
+                    try {
+                        widgetData = JSON.parse(widgetMatch[1]);
+                        cleanAnswer = answer.replace(widgetMatch[0], '').trim();
+                    } catch (e) {
+                        console.error("Widget Parse Error", e);
+                    }
+                }
+
+                // 2. Append Footer (Link at End Strategy)
+                // Only append if it's not already there (standardize)
+                if (!cleanAnswer.includes("quranpulse.my")) {
+                    cleanAnswer += `\n\n_Untuk pengalaman penuh, layari_ [QuranPulse.my](https://quranpulse.my)`;
+                }
+
+                // 3. Send Main Text
+                await ctx.reply(cleanAnswer, { parse_mode: 'Markdown' });
+
+                // 4. Handle Specific Advanced Tools (Widgets)
+                if (widgetData) {
+                    if (widgetData.id === 'ZAKAT_CALC') {
+                        await ctx.reply("💰 *Kalkulator Zakat Digital*\nKira zakat pendapatan anda dengan mudah:",
+                            Markup.inlineKeyboard([[Markup.button.webApp("🧮 Buka Kalkulator", "https://quranpulse.my/zakat")]])
+                        );
+                    } else if (widgetData.id === 'PRAYER_TIMES') {
+                        await ctx.reply("🕌 *Jadual Waktu Solat*\nSemak waktu solat yang tepat:",
+                            Markup.inlineKeyboard([[Markup.button.url("📅 Jadual Penuh", "https://quranpulse.my/ibadah")]])
+                        );
+                    } else if (widgetData.id === 'IQRA_LESSON') {
+                        await ctx.reply("🎓 *Sambung Belajar IQRA*\nJom kumpul XP hari ini!",
+                            Markup.inlineKeyboard([[Markup.button.url("🚀 Mula Belajar", "https://quranpulse.my/iqra")]])
+                        );
+                    }
+                }
 
                 // C. Log Interaction to Supabase (For Global Streaks)
                 await supabase.from('bot_interactions').insert({
@@ -399,11 +433,13 @@ STRATEGI JAWAPAN:
                 });
 
                 // B. Voice Reply (Ultra-Advanced Feature)
-                // Generate voice for the answer (excluding links/markdown if possible)
-                const audioBuffer = await VoiceService.generateVoice(answer.replace(/\[.*?\]\(.*?\)/g, ''));
-                if (audioBuffer) {
-                    await ctx.sendVoice({ source: audioBuffer });
-                    console.log(`🎙️ [TG] Sent Voice Reply to ${name}`);
+                // Only for short answers or if requested
+                if (cleanAnswer.length < 300) {
+                    const audioBuffer = await VoiceService.generateVoice(cleanAnswer.replace(/\[.*?\]\(.*?\)/g, ''));
+                    if (audioBuffer) {
+                        await ctx.sendVoice({ source: audioBuffer });
+                        console.log(`🎙️ [TG] Sent Voice Reply to ${name}`);
+                    }
                 }
 
                 console.log(`📤 [TG] Replied to ${name}`);
