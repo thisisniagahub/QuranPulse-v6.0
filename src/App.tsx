@@ -21,10 +21,16 @@ const MediaStudio = lazy(() => import('./modules/media/MediaStudio'));
 const Profile = lazy(() => import('./modules/profile/Profile'));
 const InfaqPage = lazy(() => import('./modules/barakah/InfaqPage'));
 const LandingPage = lazy(() => import('./modules/landing/LandingPage'));
-const VerseStudio = lazy(() => import('./modules/quran/components/VerseStudio')); // Test Route
+const VerseStudio = lazy(() => import('./modules/quran/features/studio/VerseStudio')); // Test Route
 const AdminDashboard = lazy(() => import('./modules/admin/AdminDashboard'));
 const PrivacyPolicy = lazy(() => import('./modules/legal/PrivacyPolicy'));
 import GuideViewer from './modules/iqra/components/GuideViewer';
+import IQRA1 from '../IQRA_HUB/IQRA-1';
+import IQRA2 from '../IQRA_HUB/IQRA-2';
+import IQRA3 from '../IQRA_HUB/IQRA-3';
+import IQRA4 from '../IQRA_HUB/IQRA-4';
+import IQRA5 from '../IQRA_HUB/IQRA-5';
+import IQRA6 from '../IQRA_HUB/IQRA-6';
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -123,6 +129,12 @@ const AppContent: React.FC = () => {
             } />
             {/* Guide Viewer Route */}
             <Route path="iqra/guides" element={<GuideViewer />} />
+            <Route path="iqra-1" element={<IQRA1 />} />
+            <Route path="iqra-2" element={<IQRA2 />} />
+            <Route path="iqra-3" element={<IQRA3 />} />
+            <Route path="iqra-4" element={<IQRA4 />} />
+            <Route path="iqra-5" element={<IQRA5 />} />
+            <Route path="iqra-6" element={<IQRA6 />} />
             {/* Direct Test Route for Verse Studio */}
             <Route path="verse-studio" element={<VerseStudio isOpen={true} onClose={() => navigate('/')} />} />
           </Route>

@@ -28,8 +28,13 @@ export async function callGeminiFlashWithFailover(messages: ChatMessage[], onChu
     return answer;
 
   } catch (err: any) {
-    console.error("Critical AI Service Failure:", err);
-    throw err;
+    console.warn("⚠️ AI Service Bypass: Proxy unreachable. Returning fallback message.");
+
+    // Fallback response so the app doesn't crash
+    const fallbackMessage = "Maaf, perkhidmatan AI sedang mengalami gangguan sambungan. Sila cuba sebentar lagi. (Ralat: Proxy Error)";
+
+    if (onChunk) onChunk(fallbackMessage);
+    return fallbackMessage;
   }
 }
 

@@ -39,4 +39,5 @@ export interface TajweedTutorial {
     bgColor: string;
     borderColor: string;
     prompt: string;
+    poster?: string;
 }

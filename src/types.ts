@@ -11,6 +11,8 @@ export enum NavView {
   ADMIN = 'ADMIN'
 }
 
+export type ThemeType = 'dark' | 'light' | 'noor' | 'sepia' | 'anmaat' | 'safar' | 'nabdh' | 'auto';
+
 export interface AppConfigItem {
   key: string;
   value: string;
@@ -315,23 +317,23 @@ export interface Reciter {
 }
 
 export interface TafsirResult {
-    tafsir: string;
-    reflection: string;
-    keywords: { term: string; meaning: string }[];
+  tafsir: string;
+  reflection: string;
+  keywords: { term: string; meaning: string }[];
 }
 
 export interface MorphologyResult {
-    root: string;
-    type: string;
-    grammar: string;
-    translation: string;
-    usage_context: string;
+  root: string;
+  type: string;
+  grammar: string;
+  translation: string;
+  usage_context: string;
 }
 
 export interface SemanticResult {
-    surah: string;
-    ayah: number;
-    text: string;
-    arabic: string;
-    explanation: string;
+  surah: string;
+  ayah: number;
+  text: string;
+  arabic: string;
+  explanation: string;
 }

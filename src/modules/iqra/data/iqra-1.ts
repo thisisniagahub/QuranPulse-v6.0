@@ -294,12 +294,15 @@ export const IQRA_1: IqraVolume = {
                 'Titik tidak tertukar?'
             ],
             rows: [
-                { label: '1', cells: ['أ - ب - ت - ث - ج - ح - خ - د - ذ - ر - ز'], focus: 'Asas A hingga Zai.' },
-                { label: '2', cells: ['س - ش - ص - ض - ط - ظ - ع - غ'], focus: 'Kelompok Gigi & Tebal.' },
-                { label: '3', cells: ['ف - ق - ك - ل - م - ن - و - هـ - ء - ى'], focus: 'Kelompok Ekor & Penutup.' },
-                { label: '4', cells: ['ى - ء - هـ - و - ن - م - ل - ك - ق - ف'], focus: 'BACAAN TERBALIK! (Ujian Mata).' },
-                { label: '5', cells: ['غ - ع - ظ - ط - ض - ص - ش - س'], focus: 'Bacaan Terbalik Kumpulan 2.' },
-                { label: '6', cells: ['ز - ر - ذ - د - خ - ح - ج - ث - ت - ب - أ'], focus: 'Bacaan Terbalik Kumpulan 1.' }
+                { label: '1', cells: ['أ', 'ب', 'ت', 'ث', 'ج', 'ح', 'خ', 'd', 'ذ', 'ر', 'ز'], focus: 'Asas A hingga Zai.' },
+                { label: '2', cells: ['س', 'ش', 'ص', 'ض', 'ط', 'ظ', 'ع', 'غ'], focus: 'Kelompok Gigi & Tebal.' },
+                { label: '3', cells: ['ف', 'ق', 'ك', 'ل', 'م', 'ن', 'و', 'هـ', 'ء', 'ى'], focus: 'Kelompok Ekor & Penutup.' },
+                // Note: For 'Bacaan Terbalik', we list them in the order they should appear from Right-to-Left.
+                // Since dir="rtl", index 0 is Rightmost.
+                // Master: 4 | ى ... f (Right to Left) -> So Array should be [ى, ..., f]
+                { label: '4', cells: ['ى', 'ء', 'هـ', 'و', 'ن', 'م', 'ل', 'ك', 'ق', 'ف'], focus: 'BACAAN TERBALIK! (Ujian Mata).' },
+                { label: '5', cells: ['غ', 'ع', 'ظ', 'ط', 'ض', 'ص', 'ش', 'س'], focus: 'Bacaan Terbalik Kumpulan 2.' },
+                { label: '6', cells: ['ز', 'ر', 'ذ', 'د', 'خ', 'ح', 'ج', 'ث', 'ت', 'ب', 'أ'], focus: 'Bacaan Terbalik Kumpulan 1.' }
             ]
         }
     ]

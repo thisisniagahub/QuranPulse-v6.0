@@ -13,30 +13,34 @@ export default {
         // ═══════════════════════════════════════════════════════════════
         // VERSE STUDIO DESIGN SYSTEM - Global Theme
         // ═══════════════════════════════════════════════════════════════
-        
+
         // Primary Accent
-        "primary": "#5ab9ff",
-        
+        "primary": "var(--primary)",
+        "primary-glow": "var(--primary-glow)",
+
         // Backgrounds
-        "background-light": "#f5f8f8",
-        "background-dark": "#051324",
-        
+        "background-main": "var(--bg-main)",
+
         // Surfaces (Cards, Inputs, Elevated Elements)
-        "surface-dark": "#154270",
-        "sheet": "#0e3359",      // Bottom sheets, modals (use with /90 opacity)
-        "card": "#152e4d",       // Neural insight cards (use with /50 opacity)
-        
-        // Legacy Aliases (for gradual migration)
+        "surface": "var(--surface)",
+        "sheet": "var(--sheet)",      // Bottom sheets, modals
+        "card": "var(--card)",       // Neural insight cards
+
+        // Legacy Aliases (mapped to new variables)
+        "background-light": "var(--bg-main)", // Was #f5f8f8
+        "background-dark": "var(--bg-main)",  // Was #051324
+        "surface-dark": "var(--surface)",     // Was #154270
+
         space: {
           dark: '#051324',
           light: '#0e3359',
           accent: '#154270',
         },
-        
+
         // Gold Accent (for badges, achievements)
         gold: {
           400: '#FFE57F',
-          500: '#FFD700',
+          500: 'var(--accent-gold)', // Dynamic gold
           600: '#FFC107',
         },
       },

@@ -7,7 +7,8 @@ interface GreetingData {
   greetingText: string;
 }
 
-export const useGreeting = (userName: string) => {
+export const useGreeting = (userName: string = "Hamba Allah") => {
+  const safeName = userName || "Hamba Allah";
   const [greetingData, setGreetingData] = useState<GreetingData>({
     timeOfDay: 'DAY',
     greetingText: ""
@@ -23,7 +24,7 @@ export const useGreeting = (userName: string) => {
       greetingText = "Assalamualaikum, Salam Subuh yang barakah.";
     } else if (hour >= 7 && hour < 11) {
       timeOfDay = 'MORNING';
-      greetingText = `Salam Dhuha, ${userName.split(' ')[0]}.`;
+      greetingText = `Salam Dhuha, ${safeName.split(' ')[0]}.`;
     } else if (hour >= 11 && hour < 19) {
       timeOfDay = 'DAY';
       greetingText = "Teruskan usaha, semoga hari ini produktif.";
@@ -35,7 +36,7 @@ export const useGreeting = (userName: string) => {
   }, [userName]);
 
   const getBackgroundClass = () => {
-    switch(greetingData.timeOfDay) {
+    switch (greetingData.timeOfDay) {
       case 'MORNING': return 'bg-gradient-to-br from-space-dark via-teal-950 to-space-light text-white';
       case 'DAY': return 'bg-gradient-to-br from-space-dark via-slate-900 to-space-light text-white';
       case 'NIGHT': return 'bg-gradient-to-br from-space-dark via-indigo-950 to-black text-white';

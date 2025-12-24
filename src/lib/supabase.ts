@@ -1,16 +1,20 @@
 import { createClient } from '@supabase/supabase-js';
-import { getEnv } from '../utils/env.ts';
+import { getEnv } from '../utils/env';
 
 // Environment variables for Supabase
 const rawUrl = getEnv('VITE_SUPABASE_URL');
 const rawKey = getEnv('VITE_SUPABASE_ANON_KEY');
 
+console.log('🔎 .env values:', { rawUrl, rawKey });
+if (!rawUrl || !rawKey) {
+  console.error('🚨 Supabase credentials missing in .env. Login will fail.');
+}
+
+
 const supabaseUrl = rawUrl || 'https://placeholder.supabase.co';
 const supabaseAnonKey = rawKey || 'placeholder-key';
 
-if (!rawUrl || !rawKey) {
-  console.error('🚨 CRITICAL: Supabase credentials missing. App running in Offline/Fallback mode.');
-}
+console.log("🔌 Initializing Supabase Client...");
 
 // Create Supabase client with enhanced options
 export const supabase = createClient(
@@ -35,6 +39,20 @@ export const supabase = createClient(
     },
   }
 );
+
+if (rawUrl && rawKey) {
+  // Immediate health check for debugging email login issues
+  supabase.from('surahs').select('count', { count: 'exact', head: true }).then(({ error }) => {
+    if (error) {
+      console.error("❌ Supabase Health Check Failed:", error.message, error);
+      if (error.message.includes("fetch")) {
+        console.error("💡 Tip: This usually means the browser rejected the request due to CSP or Network issues.");
+      }
+    } else {
+      console.log("✅ Supabase Health Check Passed. Database is reachable.");
+    }
+  });
+}
 
 // Helper: Check if Supabase is connected
 export const checkSupabaseConnection = async (): Promise<boolean> => {

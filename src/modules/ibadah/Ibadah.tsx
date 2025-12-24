@@ -6,450 +6,451 @@ import { JAKIM_ZONES } from '../../data/jakimZones';
 import { JakimService } from '../../services/jakimService';
 import { AnalyticsService } from '../../services/analyticsService';
 import ZakatCalculator from './components/ZakatCalculator';
+import PrayerCard from './components/PrayerCard';
+
+// Color themes based on "Weather Widget" reference
+const PRAYER_THEMES = {
+    Subuh: { gradient: 'from-[#ff8c42] to-[#ff3c5f]', glow: 'shadow-orange-500/50', icon: 'fa-cloud-meatball' }, // Dawn Pink/Orange
+    Syuruk: { gradient: 'from-[#fdbb2d] to-[#22c1c3]', glow: 'shadow-yellow-500/50', icon: 'fa-sun' }, // Rising Sun
+    Zohor: { gradient: 'from-[#4facfe] to-[#00f2fe]', glow: 'shadow-blue-400/50', icon: 'fa-sun' }, // Noon Blue
+    Asar: { gradient: 'from-[#6a11cb] to-[#2575fc]', glow: 'shadow-purple-500/50', icon: 'fa-cloud-sun' }, // Afternoon Purple/Blue
+    Maghrib: { gradient: 'from-[#fa709a] to-[#fee140]', glow: 'shadow-pink-400/50', icon: 'fa-moon' }, // Dusk Pink/Yellow
+    Isyak: { gradient: 'from-[#1e3c72] to-[#2a5298]', glow: 'shadow-indigo-500/50', icon: 'fa-star-and-crescent' } // Night Deep Blue
+};
 
 const Ibadah: React.FC = () => {
-  const [viewMode, setViewMode] = useState<'QIBLA' | 'PRAYER' | 'MASJID' | 'ZAKAT'>('QIBLA');
-  const [selectedZone, setSelectedZone] = useState(() => localStorage.getItem('pulse_zone') || 'WLY01');
-  const [showZoneModal, setShowZoneModal] = useState(false);
-  
-  // Track View Changes
-  useEffect(() => {
-    if (viewMode === 'QIBLA') {
-        AnalyticsService.track('QIBLA_CHECK', {});
-    } else if (viewMode === 'PRAYER') {
-        AnalyticsService.track('PRAYER_TIMES_CHECK', { zone: selectedZone });
-    } else if (viewMode === 'ZAKAT') {
-        AnalyticsService.track('ZAKAT_CALC_VIEW', {});
-    } else {
-        AnalyticsService.track('MASJID_HUB_VIEW', {});
-    }
-  }, [viewMode, selectedZone]);
+    const [viewMode, setViewMode] = useState<'QIBLA' | 'PRAYER' | 'MASJID' | 'ZAKAT'>('QIBLA');
+    const [selectedZone, setSelectedZone] = useState(() => localStorage.getItem('pulse_zone') || 'WLY01');
+    const [showZoneModal, setShowZoneModal] = useState(false);
 
-  // Qibla & Location Hook
-  const qibla = useQibla();
-  const {
-    qiblaAngle,
-    deviceHeading,
-    isPointingQibla,
-    latitude,
-    longitude,
-    isLoading,
-    error,
-    isDeviceOrientationSupported,
-    isGeolocationSupported,
-  } = qibla;
+    // Track View Changes
+    useEffect(() => {
+        if (viewMode === 'QIBLA') {
+            AnalyticsService.track('QIBLA_CHECK', {});
+        } else if (viewMode === 'PRAYER') {
+            AnalyticsService.track('PRAYER_TIMES_CHECK', { zone: selectedZone });
+        } else if (viewMode === 'ZAKAT') {
+            AnalyticsService.track('ZAKAT_CALC_VIEW', {});
+        } else {
+            AnalyticsService.track('MASJID_HUB_VIEW', {});
+        }
+    }, [viewMode, selectedZone]);
 
-  // Prayer Times Hook
-  const { data: prayerData, loading: prayerLoading, usingJakim } = usePrayerTimes(latitude, longitude, selectedZone);
+    // Qibla & Location Hook
+    const qibla = useQibla();
+    const {
+        qiblaAngle,
+        deviceHeading,
+        isPointingQibla,
+        latitude,
+        longitude,
+        isLoading,
+        error,
+        isDeviceOrientationSupported,
+        isGeolocationSupported,
+    } = qibla;
 
-  // State to handle permission request UI
-  const [showPermissionPrompt, setShowPermissionPrompt] = useState(false);
+    // Prayer Times Hook
+    const { data: prayerData, loading: prayerLoading, usingJakim } = usePrayerTimes(latitude, longitude, selectedZone);
 
-  useEffect(() => {
-    localStorage.setItem('pulse_zone', selectedZone);
-  }, [selectedZone]);
+    // State to handle permission request UI
+    const [showPermissionPrompt, setShowPermissionPrompt] = useState(false);
 
-  useEffect(() => {
-    if (!isLoading && (error?.includes('permission') || (!isGeolocationSupported && !isDeviceOrientationSupported))) {
-      setShowPermissionPrompt(true);
-    } else {
-      setShowPermissionPrompt(false);
-    }
-  }, [isLoading, error, isGeolocationSupported, isDeviceOrientationSupported]);
+    useEffect(() => {
+        localStorage.setItem('pulse_zone', selectedZone);
+    }, [selectedZone]);
 
-  // Requesting permission for iOS 13+ devices
-  const requestDeviceOrientationPermission = () => {
-    if ((typeof DeviceOrientationEvent as any).requestPermission === 'function') {
-      (DeviceOrientationEvent as any).requestPermission()
-        .then((permissionState: string) => {
-          if (permissionState === 'granted') {
+    useEffect(() => {
+        if (!isLoading && (error?.includes('permission') || (!isGeolocationSupported && !isDeviceOrientationSupported))) {
+            setShowPermissionPrompt(true);
+        } else {
             setShowPermissionPrompt(false);
-          } else {
-            // Handle error state locally or trigger re-check
-          }
-        })
-        .catch(console.error);
+        }
+    }, [isLoading, error, isGeolocationSupported, isDeviceOrientationSupported]);
+
+    // Requesting permission for iOS 13+ devices
+    const requestDeviceOrientationPermission = () => {
+        if ((typeof DeviceOrientationEvent as any).requestPermission === 'function') {
+            (DeviceOrientationEvent as any).requestPermission()
+                .then((permissionState: string) => {
+                    if (permissionState === 'granted') {
+                        setShowPermissionPrompt(false);
+                    } else {
+                        // Handle error state locally or trigger re-check
+                    }
+                })
+                .catch(console.error);
+        }
+    };
+
+    // Calculate rotation for the compass (Qibla pointer)
+    const compassRotation = deviceHeading !== null ? -deviceHeading : 0;
+
+    // Calculate Qibla pointer rotation relative to the compass background
+    let qiblaPointerRotation = 0;
+    if (qiblaAngle !== null && deviceHeading !== null) {
+        qiblaPointerRotation = (qiblaAngle - deviceHeading + 360) % 360;
     }
-  };
 
-  // Calculate rotation for the compass (Qibla pointer)
-  const compassRotation = deviceHeading !== null ? -deviceHeading : 0;
-  
-  // Calculate Qibla pointer rotation relative to the compass background
-  let qiblaPointerRotation = 0;
-  if (qiblaAngle !== null && deviceHeading !== null) {
-    qiblaPointerRotation = (qiblaAngle - deviceHeading + 360) % 360;
-  }
+    // --- UI Elements ---
+    const renderCompass = () => (
+        <div className="relative w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-br from-slate-900 to-slate-950 rounded-full flex items-center justify-center border-4 border-cyan-800 shadow-[0_0_50px_rgba(6,182,212,0.3)] mt-8">
+            {/* Compass background with North/South/East/West markers */}
+            <motion.div
+                className="absolute inset-0 rounded-full"
+                style={{ rotate: compassRotation }}
+            >
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-white" /> {/* North */}
+                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-slate-500" /> {/* South */}
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 h-1 w-8 bg-slate-500" /> {/* West */}
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 h-1 w-8 bg-slate-500" /> {/* East */}
 
-  // --- UI Elements ---
-  const renderCompass = () => (
-    <div className="relative w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-br from-slate-900 to-slate-950 rounded-full flex items-center justify-center border-4 border-cyan-800 shadow-[0_0_50px_rgba(6,182,212,0.3)] mt-8">
-      {/* Compass background with North/South/East/West markers */}
-      <motion.div
-        className="absolute inset-0 rounded-full"
-        style={{ rotate: compassRotation }}
-      >
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-white" /> {/* North */}
-        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1 h-8 bg-slate-500" /> {/* South */}
-        <div className="absolute left-0 top-1/2 -translate-y-1/2 h-1 w-8 bg-slate-500" /> {/* West */}
-        <div className="absolute right-0 top-1/2 -translate-y-1/2 h-1 w-8 bg-slate-500" /> {/* East */}
-        
-        {/* Cardinal points text */}
-        <span className="absolute top-8 left-1/2 -translate-x-1/2 text-white font-bold text-sm">N</span>
-        <span className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 text-sm">S</span>
-        <span className="absolute left-8 top-1/2 -translate-y-1/2 text-slate-500 text-sm">W</span>
-        <span className="absolute right-8 top-1/2 -translate-y-1/2 text-slate-500 text-sm">E</span>
+                {/* Cardinal points text */}
+                <span className="absolute top-8 left-1/2 -translate-x-1/2 text-white font-bold text-sm">N</span>
+                <span className="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 text-sm">S</span>
+                <span className="absolute left-8 top-1/2 -translate-y-1/2 text-slate-500 text-sm">W</span>
+                <span className="absolute right-8 top-1/2 -translate-y-1/2 text-slate-500 text-sm">E</span>
 
-        {/* Dynamic Qibla Pointer */}
-        <motion.div
-          className="absolute inset-0 rounded-full flex items-center justify-center"
-          style={{ rotate: qiblaPointerRotation }}
-        >
-          <div className={`w-3 h-36 bg-emerald-500 rounded-t-full shadow-lg origin-bottom transition-all duration-300 ${isPointingQibla ? 'scale-y-110 shadow-emerald-400' : ''}`} />
-        </motion.div>
-        
-        {/* Center Dot */}
-        <div className="absolute w-6 h-6 bg-cyan-500 rounded-full shadow-inner shadow-white/50" />
-      </motion.div>
-      
-      {/* Qibla Angle Display */}
-      {qiblaAngle !== null && (
-        <div className="absolute bottom-10 text-cyan-400 font-mono text-xl font-bold tracking-widest">
-          {Math.round(qiblaAngle)}°
-        </div>
-      )}
-    </div>
-  );
+                {/* Dynamic Qibla Pointer */}
+                <motion.div
+                    className="absolute inset-0 rounded-full flex items-center justify-center"
+                    style={{ rotate: qiblaPointerRotation }}
+                >
+                    <div className={`w-3 h-36 bg-emerald-500 rounded-t-full shadow-lg origin-bottom transition-all duration-300 ${isPointingQibla ? 'scale-y-110 shadow-emerald-400' : ''}`} />
+                </motion.div>
 
-  const formatTime = (date: Date) => {
-      return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
-  };
+                {/* Center Dot */}
+                <div className="absolute w-6 h-6 bg-cyan-500 rounded-full shadow-inner shadow-white/50" />
+            </motion.div>
 
-  const renderPrayerTimes = () => {
-      if (!prayerData) return <div className="text-center text-slate-400 mt-10">Mengira waktu solat...</div>;
-
-      const prayers = [
-          { name: 'Subuh', time: prayerData.fajr, icon: 'fa-cloud-sun' },
-          { name: 'Syuruk', time: prayerData.sunrise, icon: 'fa-sun', isSecondary: true },
-          { name: 'Zohor', time: prayerData.dhuhr, icon: 'fa-sun' },
-          { name: 'Asar', time: prayerData.asr, icon: 'fa-cloud-sun' },
-          { name: 'Maghrib', time: prayerData.maghrib, icon: 'fa-moon' },
-          { name: 'Isyak', time: prayerData.isha, icon: 'fa-star' },
-      ];
-
-      return (
-          <div className="w-full max-w-md space-y-6 mt-4 pb-24">
-              {/* Header Info */}
-              <div className="text-center mb-4">
-                  <p className="text-amber-400 font-arabic text-lg">{prayerData.hijriDate}</p>
-                  
-                  <button 
-                    onClick={() => setShowZoneModal(true)}
-                    className="flex items-center justify-center gap-2 mx-auto mt-1 px-3 py-1 rounded-full bg-slate-800/50 hover:bg-slate-800 border border-white/10 text-xs text-slate-300 transition-colors"
-                  >
-                    <i className="fa-solid fa-location-dot text-cyan-500"></i>
-                    {prayerData.locationName.substring(0, 30)}...
-                    <i className="fa-solid fa-chevron-down text-[10px] ml-1"></i>
-                  </button>
-
-                  <div className="mt-2 text-[10px] text-slate-500 uppercase tracking-widest">
-                    Sumber: {usingJakim ? <span className="text-emerald-500 font-bold">JAKIM (E-Solat)</span> : <span className="text-amber-500">Kiraan GPS (Anggaran)</span>}
-                  </div>
-              </div>
-
-              {/* Next Prayer Card */}
-              <div className="bg-gradient-to-r from-cyan-900/40 to-blue-900/40 border border-cyan-500/30 p-6 rounded-3xl text-center relative overflow-hidden shadow-lg shadow-cyan-900/20">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 rounded-full blur-3xl"></div>
-                  <p className="text-xs text-cyan-300 font-bold uppercase tracking-widest mb-1">Seterusnya</p>
-                  <h2 className="text-4xl font-bold text-white mb-1">{prayerData.nextPrayer}</h2>
-                  <p className="text-xl text-slate-300 mb-2">{formatTime(prayerData.nextPrayerTime)}</p>
-                  <div className="inline-block px-3 py-1 bg-black/30 rounded-full text-xs text-emerald-400 font-mono border border-emerald-500/20 animate-pulse">
-                      - {prayerData.timeRemaining}
-                  </div>
-              </div>
-
-              {/* List */}
-              <div className="space-y-3">
-                  {prayers.map((p, i) => {
-                      const isNext = prayerData.nextPrayer === p.name;
-                      return (
-                        <div key={i} className={`flex items-center justify-between p-4 rounded-2xl border transition-all ${
-                            isNext ? 'bg-emerald-900/20 border-emerald-500/50 scale-105 shadow-md' : 'bg-slate-900/50 border-slate-800'
-                        } ${p.isSecondary ? 'opacity-60 text-sm py-2' : ''}`}>
-                            <div className="flex items-center gap-4">
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${isNext ? 'bg-emerald-500 text-black' : 'bg-slate-800 text-slate-400'}`}>
-                                    <i className={`fa-solid ${p.icon}`}></i>
-                                </div>
-                                <span className={`font-bold ${isNext ? 'text-white' : 'text-slate-300'}`}>{p.name}</span>
-                            </div>
-                            <span className={`font-mono ${isNext ? 'text-emerald-400' : 'text-slate-400'}`}>{formatTime(p.time)}</span>
-                        </div>
-                      );
-                  })}
-              </div>
-          </div>
-      );
-  };
-
-  const renderMasjidHub = () => (
-    <div className="w-full max-w-md space-y-6 mt-4 pb-24 animate-in fade-in slide-in-from-bottom-4">
-        {/* Active Masjid Card */}
-        <div className="bg-slate-900 border border-emerald-500/30 rounded-3xl p-6 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl -mr-8 -mt-8"></div>
-            <div className="flex items-start justify-between mb-4">
-                <div>
-                    <h3 className="text-xl font-bold text-white">Masjid Al-Hidayah</h3>
-                    <p className="text-xs text-slate-400 italic">Kariah Gombak, Selangor</p>
+            {/* Qibla Angle Display */}
+            {qiblaAngle !== null && (
+                <div className="absolute bottom-10 text-cyan-400 font-mono text-xl font-bold tracking-widest">
+                    {Math.round(qiblaAngle)}°
                 </div>
-                <div className="bg-emerald-500/20 text-emerald-400 p-2 rounded-xl">
-                    <i className="fa-solid fa-circle-check"></i>
-                </div>
-            </div>
-            
-            <div className="flex gap-4">
-                <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
-                    <i className="fa-solid fa-map-location-dot mr-2 text-cyan-400"></i>NAVIGASI
-                </button>
-                <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
-                    <i className="fa-brands fa-whatsapp mr-2 text-emerald-400"></i>AJK MASJID
-                </button>
-            </div>
+            )}
         </div>
+    );
 
-        {/* Live Jadual */}
-        <div>
-            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Jadual Kuliah</h4>
-            <div className="space-y-2">
-                <div className="bg-slate-900/50 border border-white/5 p-4 rounded-2xl flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex flex-col items-center justify-center text-amber-500">
-                        <span className="text-[10px] font-bold">MAGHRIB</span>
-                        <span className="text-xs">7:30</span>
+    const formatTime = (date: Date) => {
+        return date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+    };
+
+    const renderPrayerTimes = () => {
+        if (!prayerData) return <div className="text-center text-slate-400 mt-10">Mengira waktu solat...</div>;
+
+        const prayers = [
+            { name: 'Subuh', time: prayerData.fajr, icon: 'fa-cloud-sun' },
+            { name: 'Syuruk', time: prayerData.sunrise, icon: 'fa-sun', isSecondary: true },
+            { name: 'Zohor', time: prayerData.dhuhr, icon: 'fa-sun' },
+            { name: 'Asar', time: prayerData.asr, icon: 'fa-cloud-sun' },
+            { name: 'Maghrib', time: prayerData.maghrib, icon: 'fa-moon' },
+            { name: 'Isyak', time: prayerData.isha, icon: 'fa-star' },
+        ];
+
+        return (
+            <div className="w-full max-w-md space-y-4 mt-4 pb-24">
+                {/* Header Info */}
+                <div className="text-center mb-6">
+                    <p className="text-slate-500 dark:text-amber-400 font-arabic text-xl">{prayerData.hijriDate}</p>
+
+                    <button
+                        onClick={() => setShowZoneModal(true)}
+                        className="flex items-center justify-center gap-2 mx-auto mt-2 px-4 py-2 rounded-full bg-surface/50 dark:bg-slate-800/50 hover:bg-surface dark:hover:bg-slate-800 border border-slate-200 dark:border-white/10 text-xs text-slate-600 dark:text-slate-300 transition-all shadow-sm"
+                    >
+                        <i className="fa-solid fa-location-dot text-primary"></i>
+                        {prayerData.locationName}
+                        <i className="fa-solid fa-chevron-down text-[10px] ml-1"></i>
+                    </button>
+
+                    <div className="mt-3 text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">
+                        Sumber: {usingJakim ? <span className="text-emerald-500">JAKIM</span> : <span className="text-amber-500">Kiraan GPS</span>}
                     </div>
+                </div>
+
+                {/* Multi-Prayer List (Weather Style) */}
+                <div className="flex flex-col gap-4">
+                    {prayers.map((p, i) => {
+                        const isNext = prayerData.nextPrayer === p.name;
+                        const theme = PRAYER_THEMES[p.name as keyof typeof PRAYER_THEMES] || PRAYER_THEMES.Subuh;
+
+                        return (
+                            <PrayerCard
+                                key={i}
+                                name={p.name}
+                                time={formatTime(p.time)}
+                                icon={theme.icon}
+                                isNext={isNext}
+                                gradient={theme.gradient}
+                                glow={theme.glow}
+                                bottomInfo={p.isSecondary ? "Dilarang Solat" : "Fardu"}
+                            />
+                        );
+                    })}
+                </div>
+            </div>
+        );
+    };
+
+    const renderMasjidHub = () => (
+        <div className="w-full max-w-md space-y-6 mt-4 pb-24 animate-in fade-in slide-in-from-bottom-4">
+            {/* Active Masjid Card */}
+            <div className="bg-slate-900 border border-emerald-500/30 rounded-3xl p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl -mr-8 -mt-8"></div>
+                <div className="flex items-start justify-between mb-4">
                     <div>
-                        <p className="text-sm font-bold text-slate-200 line-clamp-1">Kitab Riyadhus Salihin</p>
-                        <p className="text-[10px] text-slate-500">Ustaz Dr. Haji Ali</p>
+                        <h3 className="text-xl font-bold text-white">Masjid Al-Hidayah</h3>
+                        <p className="text-xs text-slate-400 italic">Kariah Gombak, Selangor</p>
                     </div>
-                    <span className="ml-auto bg-slate-800 text-slate-400 text-[10px] px-2 py-1 rounded">RSVP</span>
+                    <div className="bg-emerald-500/20 text-emerald-400 p-2 rounded-xl">
+                        <i className="fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+
+                <div className="flex gap-4">
+                    <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
+                        <i className="fa-solid fa-map-location-dot mr-2 text-cyan-400"></i>NAVIGASI
+                    </button>
+                    <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
+                        <i className="fa-brands fa-whatsapp mr-2 text-emerald-400"></i>AJK MASJID
+                    </button>
                 </div>
             </div>
-        </div>
 
-        {/* Tabung Infaq */}
-        <div>
-            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Tabung Infaq</h4>
-            <div className="grid grid-cols-1 gap-3">
-                <div className="bg-gradient-to-br from-emerald-900/20 to-slate-900 border border-emerald-500/20 p-5 rounded-3xl relative overflow-hidden">
-                    <div className="flex justify-between items-start mb-4">
+            {/* Live Jadual */}
+            <div>
+                <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Jadual Kuliah</h4>
+                <div className="space-y-2">
+                    <div className="bg-slate-900/50 border border-white/5 p-4 rounded-2xl flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex flex-col items-center justify-center text-amber-500">
+                            <span className="text-[10px] font-bold">MAGHRIB</span>
+                            <span className="text-xs">7:30</span>
+                        </div>
                         <div>
-                            <p className="text-sm font-bold text-white">Baik Pulih Bumbung</p>
-                            <p className="text-[10px] text-slate-400">Sasaran: RM 10,000</p>
+                            <p className="text-sm font-bold text-slate-200 line-clamp-1">Kitab Riyadhus Salihin</p>
+                            <p className="text-[10px] text-slate-500">Ustaz Dr. Haji Ali</p>
                         </div>
-                        <span className="text-emerald-400 font-mono text-sm">45%</span>
+                        <span className="ml-auto bg-slate-800 text-slate-400 text-[10px] px-2 py-1 rounded">RSVP</span>
                     </div>
-                    <div className="w-full h-1.5 bg-slate-800 rounded-full mb-4">
-                        <div className="h-full bg-emerald-500 rounded-full" style={{ width: '45%' }}></div>
+                </div>
+            </div>
+
+            {/* Tabung Infaq */}
+            <div>
+                <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Tabung Infaq</h4>
+                <div className="grid grid-cols-1 gap-3">
+                    <div className="bg-gradient-to-br from-emerald-900/20 to-slate-900 border border-emerald-500/20 p-5 rounded-3xl relative overflow-hidden">
+                        <div className="flex justify-between items-start mb-4">
+                            <div>
+                                <p className="text-sm font-bold text-white">Baik Pulih Bumbung</p>
+                                <p className="text-[10px] text-slate-400">Sasaran: RM 10,000</p>
+                            </div>
+                            <span className="text-emerald-400 font-mono text-sm">45%</span>
+                        </div>
+                        <div className="w-full h-1.5 bg-slate-800 rounded-full mb-4">
+                            <div className="h-full bg-emerald-500 rounded-full" style={{ width: '45%' }}></div>
+                        </div>
+                        <button className="w-full py-2 bg-emerald-500 text-black text-xs font-black rounded-xl">CHIP-IN</button>
                     </div>
-                    <button className="w-full py-2 bg-emerald-500 text-black text-xs font-black rounded-xl">CHIP-IN</button>
+                </div>
+            </div>
+
+            {/* Berita Kariah */}
+            <div>
+                <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Berita Kariah</h4>
+                <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-2xl flex items-start gap-3">
+                    <i className="fa-solid fa-bullhorn text-red-400 mt-1"></i>
+                    <div>
+                        <p className="text-xs font-bold text-red-200">KEMATIAN KARIAH</p>
+                        <p className="text-[10px] text-slate-400 leading-relaxed">Innalillahiwainnailaihirojiun. Allahyarham Tuan Haji Ahmad bin Bakar telah kembali ke rahmatullah. Solat jenazah di Masjid Al-Hidayah selepas Zohor hari ini.</p>
+                    </div>
                 </div>
             </div>
         </div>
+    );
 
-        {/* Berita Kariah */}
-        <div>
-            <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Berita Kariah</h4>
-            <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-2xl flex items-start gap-3">
-                <i className="fa-solid fa-bullhorn text-red-400 mt-1"></i>
-                <div>
-                    <p className="text-xs font-bold text-red-200">KEMATIAN KARIAH</p>
-                    <p className="text-[10px] text-slate-400 leading-relaxed">Innalillahiwainnailaihirojiun. Allahyarham Tuan Haji Ahmad bin Bakar telah kembali ke rahmatullah. Solat jenazah di Masjid Al-Hidayah selepas Zohor hari ini.</p>
-                </div>
+    return (
+        <div className="flex flex-col h-full bg-background-main items-center justify-start p-4 pt-8 text-text-primary overflow-y-auto">
+            {/* Header Toggle */}
+            <div className="bg-surface/80 p-1 rounded-full flex gap-1 mb-4 border border-slate-200 dark:border-slate-800 relative z-10 shrink-0 shadow-sm">
+                <button
+                    onClick={() => setViewMode('QIBLA')}
+                    className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'QIBLA' ? 'bg-cyan-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-compass mr-2"></i>Kiblat
+                </button>
+                <button
+                    onClick={() => setViewMode('PRAYER')}
+                    className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'PRAYER' ? 'bg-amber-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-clock mr-2"></i>Waktu Solat
+                </button>
+                <button
+                    onClick={() => setViewMode('MASJID')}
+                    className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'MASJID' ? 'bg-emerald-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-mosque mr-2"></i>Hub Masjid
+                </button>
+                <button
+                    onClick={() => setViewMode('ZAKAT')}
+                    className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'ZAKAT' ? 'bg-indigo-500 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                >
+                    <i className="fa-solid fa-calculator mr-2"></i>Zakat
+                </button>
             </div>
-        </div>
-    </div>
-  );
 
-  return (
-    <div className="flex flex-col h-full bg-[#020617] items-center justify-start p-4 pt-8 text-white overflow-y-auto">
-      {/* Header Toggle */}
-      <div className="bg-slate-900/80 p-1 rounded-full flex gap-1 mb-4 border border-slate-800 relative z-10 shrink-0">
-          <button 
-            onClick={() => setViewMode('QIBLA')}
-            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'QIBLA' ? 'bg-cyan-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
-          >
-              <i className="fa-solid fa-compass mr-2"></i>Kiblat
-          </button>
-          <button 
-            onClick={() => setViewMode('PRAYER')}
-            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'PRAYER' ? 'bg-amber-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
-          >
-              <i className="fa-solid fa-clock mr-2"></i>Waktu Solat
-          </button>
-          <button 
-            onClick={() => setViewMode('MASJID')}
-            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'MASJID' ? 'bg-emerald-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
-          >
-              <i className="fa-solid fa-mosque mr-2"></i>Hub Masjid
-          </button>
-          <button 
-            onClick={() => setViewMode('ZAKAT')}
-            className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'ZAKAT' ? 'bg-indigo-500 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
-          >
-              <i className="fa-solid fa-calculator mr-2"></i>Zakat
-          </button>
-      </div>
+            <AnimatePresence mode='wait'>
+                {viewMode === 'QIBLA' ? (
+                    <motion.div
+                        key="qibla"
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: -20 }}
+                        className="flex flex-col items-center w-full"
+                    >
+                        {/* Main Content */}
+                        <div className="flex-1 flex flex-col items-center justify-center min-h-[50vh]">
+                            {isLoading && !error && (
+                                <div className="flex flex-col items-center">
+                                    <motion.div
+                                        animate={{ rotate: 360 }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                                        className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full mb-4"
+                                    />
+                                    <p className="text-slate-400">Mencari lokasi anda...</p>
+                                </div>
+                            )}
 
-      <AnimatePresence mode='wait'>
-        {viewMode === 'QIBLA' ? (
-            <motion.div 
-                key="qibla"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="flex flex-col items-center w-full"
-            >
-                {/* Main Content */}
-                <div className="flex-1 flex flex-col items-center justify-center min-h-[50vh]">
-                    {isLoading && !error && (
-                    <div className="flex flex-col items-center">
+                            {showPermissionPrompt && (
+                                <div className="text-center p-6 rounded-xl bg-surface/50 border border-red-500/30 shadow-lg max-w-sm">
+                                    <p className="text-red-400 text-lg mb-4">Akses Diblokir!</p>
+                                    <p className="text-slate-300 mb-6">
+                                        Untuk mengesan arah kiblat, sila benarkan akses lokasi dan sensor gerakan pada peranti anda.
+                                    </p>
+                                    {error && <p className="text-sm text-red-300 mb-4">{error}</p>}
+                                    {isDeviceOrientationSupported && (
+                                        <button
+                                            onClick={requestDeviceOrientationPermission}
+                                            className="px-6 py-3 bg-cyan-500 text-black font-bold rounded-lg shadow-md hover:bg-cyan-400 transition-colors"
+                                        >
+                                            Benarkan Sensor Gerakan
+                                        </button>
+                                    )}
+                                </div>
+                            )}
+
+                            {!isLoading && !error && (qiblaAngle !== null && deviceHeading !== null) ? (
+                                <>
+                                    {renderCompass()}
+                                    <div className="text-center mt-8">
+                                        <p className="text-slate-300 text-lg">
+                                            Arah Kiblat: <span className="text-cyan-400 font-bold">{qiblaAngle?.toFixed(1) || '--'}°</span>
+                                        </p>
+                                        <p className="text-slate-500 text-sm">
+                                            Heading Anda: <span className="font-mono">{deviceHeading?.toFixed(1) || '--'}°</span>
+                                        </p>
+                                        {isPointingQibla && (
+                                            <motion.p
+                                                initial={{ scale: 0.8, opacity: 0 }}
+                                                animate={{ scale: 1, opacity: 1 }}
+                                                transition={{ duration: 0.3, repeat: Infinity, repeatType: "reverse" }}
+                                                className="text-emerald-400 text-xl font-bold mt-4 animate-pulse"
+                                            >
+                                                <i className="fa-solid fa-check-circle mr-2"></i> TEPAT KE ARAH KIBLAT!
+                                            </motion.p>
+                                        )}
+                                    </div>
+                                </>
+                            ) : (!isLoading && error && (
+                                <div className="text-center p-6 rounded-xl bg-surface/50 border border-red-500/30 shadow-lg max-w-sm">
+                                    <p className="text-red-400 text-lg mb-4">Ralat!</p>
+                                    <p className="text-slate-300">{error}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </motion.div>
+                ) : viewMode === 'PRAYER' ? (
+                    <motion.div
+                        key="prayer"
+                        initial={{ opacity: 0, x: 20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        exit={{ opacity: 0, x: 20 }}
+                        className="w-full flex flex-col items-center"
+                    >
+                        {renderPrayerTimes()}
+                    </motion.div>
+                ) : viewMode === 'ZAKAT' ? (
+                    <motion.div
+                        key="zakat"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="w-full flex flex-col items-center"
+                    >
+                        <ZakatCalculator />
+                    </motion.div>
+                ) : (
+                    <motion.div
+                        key="masjid"
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.95 }}
+                        className="w-full flex flex-col items-center"
+                    >
+                        {renderMasjidHub()}
+                    </motion.div>
+                )}
+            </AnimatePresence>
+
+            {/* Zone Selector Modal */}
+            <AnimatePresence>
+                {showZoneModal && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
                         <motion.div
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                        className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full mb-4"
-                        />
-                        <p className="text-slate-400">Mencari lokasi anda...</p>
-                    </div>
-                    )}
-
-                    {showPermissionPrompt && (
-                    <div className="text-center p-6 rounded-xl bg-slate-900/50 border border-red-500/30 shadow-lg max-w-sm">
-                        <p className="text-red-400 text-lg mb-4">Akses Diblokir!</p>
-                        <p className="text-slate-300 mb-6">
-                        Untuk mengesan arah kiblat, sila benarkan akses lokasi dan sensor gerakan pada peranti anda.
-                        </p>
-                        {error && <p className="text-sm text-red-300 mb-4">{error}</p>}
-                        {isDeviceOrientationSupported && (
-                        <button
-                            onClick={requestDeviceOrientationPermission}
-                            className="px-6 py-3 bg-cyan-500 text-black font-bold rounded-lg shadow-md hover:bg-cyan-400 transition-colors"
-                        >
-                            Benarkan Sensor Gerakan
-                        </button>
-                        )}
-                    </div>
-                    )}
-
-                    {!isLoading && !error && (qiblaAngle !== null && deviceHeading !== null) ? (
-                    <>
-                        {renderCompass()}
-                        <div className="text-center mt-8">
-                        <p className="text-slate-300 text-lg">
-                            Arah Kiblat: <span className="text-cyan-400 font-bold">{qiblaAngle?.toFixed(1) || '--'}°</span>
-                        </p>
-                        <p className="text-slate-500 text-sm">
-                            Heading Anda: <span className="font-mono">{deviceHeading?.toFixed(1) || '--'}°</span>
-                        </p>
-                        {isPointingQibla && (
-                            <motion.p
-                            initial={{ scale: 0.8, opacity: 0 }}
+                            initial={{ scale: 0.9, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
-                            transition={{ duration: 0.3, repeat: Infinity, repeatType: "reverse" }}
-                            className="text-emerald-400 text-xl font-bold mt-4 animate-pulse"
-                            >
-                            <i className="fa-solid fa-check-circle mr-2"></i> TEPAT KE ARAH KIBLAT!
-                            </motion.p>
-                        )}
-                        </div>
-                    </>
-                    ) : (!isLoading && error && (
-                        <div className="text-center p-6 rounded-xl bg-slate-900/50 border border-red-500/30 shadow-lg max-w-sm">
-                            <p className="text-red-400 text-lg mb-4">Ralat!</p>
-                            <p className="text-slate-300">{error}</p>
-                        </div>
-                    ))}
-                </div>
-            </motion.div>
-        ) : viewMode === 'PRAYER' ? (
-            <motion.div 
-                key="prayer"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 20 }}
-                className="w-full flex flex-col items-center"
-            >
-                {renderPrayerTimes()}
-            </motion.div>
-        ) : viewMode === 'ZAKAT' ? (
-            <motion.div 
-                key="zakat"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full flex flex-col items-center"
-            >
-                <ZakatCalculator />
-            </motion.div>
-        ) : (
-            <motion.div 
-                key="masjid"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="w-full flex flex-col items-center"
-            >
-                {renderMasjidHub()}
-            </motion.div>
-        )}
-      </AnimatePresence>
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="w-full max-w-md bg-surface border border-slate-200 dark:border-slate-700 rounded-2xl max-h-[80vh] flex flex-col shadow-2xl"
+                        >
+                            <div className="p-4 border-b border-slate-200 dark:border-white/10 flex justify-between items-center sticky top-0 bg-surface z-10 rounded-t-2xl">
+                                <h3 className="text-lg font-bold text-text-primary">Pilih Zon (JAKIM)</h3>
+                                <button onClick={() => setShowZoneModal(false)} className="w-8 h-8 rounded-full bg-card flex items-center justify-center text-slate-400 hover:text-white">
+                                    <i className="fa-solid fa-xmark"></i>
+                                </button>
+                            </div>
+                            <div className="p-2 overflow-y-auto">
+                                {JAKIM_ZONES.map((zone) => (
+                                    <button
+                                        key={zone.code}
+                                        onClick={() => {
+                                            setSelectedZone(zone.code);
+                                            setShowZoneModal(false);
+                                        }}
+                                        className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${selectedZone === zone.code ? 'bg-cyan-500/20 border border-cyan-500/50' : 'hover:bg-slate-800 border border-transparent'}`}
+                                    >
+                                        <div className="flex justify-between items-center">
+                                            <span className={`font-bold ${selectedZone === zone.code ? 'text-cyan-400' : 'text-slate-200'}`}>
+                                                {zone.code} - {zone.state}
+                                            </span>
+                                            {selectedZone === zone.code && <i className="fa-solid fa-check text-cyan-400"></i>}
+                                        </div>
+                                        <p className="text-xs text-slate-500 mt-1 line-clamp-1">{zone.description}</p>
+                                    </button>
+                                ))}
+                            </div>
+                        </motion.div>
+                    </div>
+                )}
+            </AnimatePresence>
 
-      {/* Zone Selector Modal */}
-      <AnimatePresence>
-          {showZoneModal && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                  <motion.div 
-                    initial={{ scale: 0.9, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.9, opacity: 0 }}
-                    className="w-full max-w-md bg-slate-900 border border-slate-700 rounded-2xl max-h-[80vh] flex flex-col"
-                  >
-                      <div className="p-4 border-b border-white/10 flex justify-between items-center sticky top-0 bg-slate-900 z-10 rounded-t-2xl">
-                          <h3 className="text-lg font-bold text-white">Pilih Zon (JAKIM)</h3>
-                          <button onClick={() => setShowZoneModal(false)} className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 hover:text-white">
-                              <i className="fa-solid fa-xmark"></i>
-                          </button>
-                      </div>
-                      <div className="p-2 overflow-y-auto">
-                          {JAKIM_ZONES.map((zone) => (
-                              <button
-                                key={zone.code}
-                                onClick={() => {
-                                    setSelectedZone(zone.code);
-                                    setShowZoneModal(false);
-                                }}
-                                className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${selectedZone === zone.code ? 'bg-cyan-500/20 border border-cyan-500/50' : 'hover:bg-slate-800 border border-transparent'}`}
-                              >
-                                  <div className="flex justify-between items-center">
-                                      <span className={`font-bold ${selectedZone === zone.code ? 'text-cyan-400' : 'text-slate-200'}`}>
-                                          {zone.code} - {zone.state}
-                                      </span>
-                                      {selectedZone === zone.code && <i className="fa-solid fa-check text-cyan-400"></i>}
-                                  </div>
-                                  <p className="text-xs text-slate-500 mt-1 line-clamp-1">{zone.description}</p>
-                              </button>
-                          ))}
-                      </div>
-                  </motion.div>
-              </div>
-          )}
-      </AnimatePresence>
-
-      {/* Footer Info */}
-      <div className="mt-8 text-center text-slate-600 text-[10px]">
-        {/* Only show Lat/Long if in Qibla mode */}
-        {viewMode === 'QIBLA' && <p>Lokasi: {latitude?.toFixed(4) || '--'}, {longitude?.toFixed(4) || '--'}</p>}
-        <p>Data: JAKIM E-Solat (v6.0)</p>
-      </div>
-    </div>
-  );
+            {/* Footer Info */}
+            <div className="mt-8 text-center text-slate-600 text-[10px]">
+                {/* Only show Lat/Long if in Qibla mode */}
+                {viewMode === 'QIBLA' && <p>Lokasi: {latitude?.toFixed(4) || '--'}, {longitude?.toFixed(4) || '--'}</p>}
+                <p>Data: JAKIM E-Solat (v6.0)</p>
+            </div>
+        </div>
+    );
 };
 
 export default Ibadah;

@@ -19,8 +19,8 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
     const { user } = useAuth();
     const displayName = userName || user?.name || "Sahabat";
     const [activeTab, setActiveTab] = useState<'CHAT' | 'JAWI' | 'HADITH' | 'PLANNER'>('CHAT');
-    
-    // Mock implementation for UI stability while CopilotKit is disabled
+
+    // Mock implementation
     const [messages, setMessages] = useState<any[]>([]);
     const [isThinking, setIsThinking] = useState(false);
     const [selectedPersona, setSelectedPersona] = useState<PersonaKey>('AZHAR');
@@ -28,13 +28,9 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
     const sendMessage = async (text: string) => {
         setMessages(prev => [...prev, { role: 'user', content: text }]);
         setIsThinking(true);
-        
-        // Use the real AI Service here if available, otherwise mock
-        // For now, we simulate the "Widget" response to test the UI
+
         setTimeout(() => {
             let mockResponse = "Maaf, sistem sedang sibuk.";
-            
-            // Mocking logic to test Widgets (Remove this later when connecting real AI)
             if (text.toLowerCase().includes('zakat')) {
                 mockResponse = "Boleh, mari kita kira zakat anda. <<<WIDGET:{\"id\":\"ZAKAT_CALC\"}>>>";
             } else if (text.toLowerCase().includes('infaq') || text.toLowerCase().includes('sedekah')) {
@@ -44,11 +40,10 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
             } else {
                 mockResponse = "Saya faham. Boleh tuan jelaskan lagi?";
             }
-
             setMessages(prev => [...prev, { role: 'assistant', content: mockResponse }]);
             setIsThinking(false);
         }, 1500);
-    };    const [input, setInput] = useState('');
+    }; const [input, setInput] = useState('');
 
     // Refs
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -81,28 +76,42 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
     };
 
     return (
-        <div className="flex flex-col h-full relative bg-[#020617]">
+        <div className="flex flex-col h-full relative bg-[#020617] overflow-hidden">
+            {/* Ambient Background (Deep Navy) */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className={`absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-[#0A1E42] to-transparent opacity-80`}></div>
+                <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[120px] opacity-40"></div>
+                <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#0A1E42] rounded-full blur-[100px] opacity-60"></div>
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
+            </div>
+
             {/* Register Generative UI Actions */}
             <PrayerTimesAction />
 
             {/* Header / Persona Selector */}
-            <div className="flex items-center justify-between p-4 border-b border-white/5 bg-slate-900/50 backdrop-blur-md z-10">
+            <div className="flex items-center justify-between p-4 border-b border-cyan-500/20 bg-[#0A1E42]/80 backdrop-blur-md z-10 relative shadow-lg shadow-cyan-900/10">
                 <div className="flex items-center gap-3">
-                    <UstazAvatar persona={selectedPersona} isThinking={isThinking} />
+                    <div className="relative">
+                        <UstazAvatar persona={selectedPersona} isThinking={isThinking} />
+                        {isThinking && <div className="absolute inset-0 rounded-full border-2 border-cyan-400 animate-pulse"></div>}
+                    </div>
                     <div>
-                        <h2 className="text-white font-bold text-sm">{PERSONAS[selectedPersona].name}</h2>
+                        <h2 className="text-white font-bold text-sm tracking-wide drop-shadow-md">{PERSONAS[selectedPersona].name}</h2>
                         <div className="flex items-center gap-2">
-                             <span className={`w-1.5 h-1.5 rounded-full ${isThinking ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'}`}></span>
-                             <p className="text-xs text-slate-400">{PERSONAS[selectedPersona].role}</p>
+                            <span className={`flex h-2 w-2 relative`}>
+                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isThinking ? 'bg-amber-400' : 'bg-cyan-400'}`}></span>
+                                <span className={`relative inline-flex rounded-full h-2 w-2 ${isThinking ? 'bg-amber-500' : 'bg-cyan-500'}`}></span>
+                            </span>
+                            <p className="text-[10px] text-cyan-200/70 font-mono uppercase tracking-wider">{PERSONAS[selectedPersona].role}</p>
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-1 bg-slate-800/50 p-1 rounded-lg">
+                <div className="flex gap-1 bg-[#020617]/50 p-1 rounded-xl border border-white/10">
                     {(Object.keys(PERSONAS) as PersonaKey[]).map((p) => (
                         <button
                             key={p}
                             onClick={() => switchPersona(p)}
-                            className={`w-8 h-8 rounded-md flex items-center justify-center text-xs transition-all ${selectedPersona === p ? 'bg-slate-700 text-white shadow-sm' : 'text-slate-500 hover:text-slate-300'}`}
+                            className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all ${selectedPersona === p ? 'bg-cyan-900/50 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-cyan-500/30' : 'text-slate-500 hover:text-slate-300'}`}
                         >
                             {p === 'AZHAR' ? '👳🏻‍♂️' : p === 'AISHAH' ? '🧕🏻' : '🧢'}
                         </button>
@@ -113,35 +122,34 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
             {/* --- CHAT TAB --- */}
             {activeTab === 'CHAT' && (
                 <>
-                    <div ref={scrollRef} className={`flex-1 overflow-y-auto p-4 space-y-4 ${hasBottomNav ? 'pb-32' : 'pb-24'} scroll-smooth`}>
-                         <div className="text-center py-4">
-                            <p className="text-xs text-slate-500 uppercase tracking-widest mb-2">Hari Ini</p>
+                    <div ref={scrollRef} className={`flex-1 overflow-y-auto p-4 space-y-4 ${hasBottomNav ? 'pb-32' : 'pb-24'} scroll-smooth relative z-10`}>
+                        <div className="text-center py-4">
+                            <p className="text-[10px] text-cyan-500/50 uppercase tracking-[0.2em] font-bold">Hari Ini</p>
                         </div>
 
                         <AnimatePresence>
                             {messages.map((msg, idx) => (
-                                <motion.div 
-                                    key={idx} 
-                                    initial={{ opacity: 0, y: 10 }}
-                                    animate={{ opacity: 1, y: 0 }}
+                                <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                    animate={{ opacity: 1, y: 0, scale: 1 }}
                                     className={`flex flex-col gap-2 ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                                 >
                                     <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 ${msg.role === 'user' ? 'bg-cyan-600' : 'bg-slate-800'}`}>
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 shadow-lg ${msg.role === 'user' ? 'bg-cyan-600 border border-cyan-400' : 'bg-[#0f1e38] border border-white/10'}`}>
                                             {msg.role === 'user' ? '😎' : (msg.role === 'assistant' && selectedPersona === 'AZHAR' ? '👳🏻‍♂️' : selectedPersona === 'AISHAH' ? '🧕🏻' : '🧢')}
                                         </div>
-                                        <div className={`rounded-2xl p-3 text-sm leading-relaxed shadow-sm ${
-                                            msg.role === 'user' 
-                                                ? 'bg-cyan-600 text-white rounded-br-none' 
-                                                : 'bg-slate-800/80 text-slate-200 border border-white/5 rounded-bl-none'
-                                        }`}>
+                                        <div className={`rounded-3xl p-4 text-sm leading-relaxed shadow-xl backdrop-blur-md ${msg.role === 'user'
+                                            ? 'bg-gradient-to-br from-cyan-600 to-blue-700 text-white rounded-br-none border border-cyan-400/30 shadow-[0_0_20px_rgba(6,182,212,0.2)]'
+                                            : 'bg-[#0f1e38]/80 text-custom-light-blue border border-cyan-500/10 rounded-bl-none shadow-[0_4px_20px_rgba(0,0,0,0.3)]'
+                                            }`}>
                                             {/* Render Clean Text */}
                                             {cleanAIResponse(msg.content)}
-                                            
+
                                             {/* Compliance: Report Button */}
                                             {msg.role === 'assistant' && (
-                                                <div className="mt-2 pt-2 border-t border-white/10 flex justify-end">
-                                                    <button 
+                                                <div className="mt-2 pt-2 border-t border-white/5 flex justify-end">
+                                                    <button
                                                         className="text-[10px] text-slate-500 hover:text-red-400 flex items-center gap-1 transition-colors"
                                                         title="Lapor jawapan tidak tepat"
                                                         onClick={() => alert("Laporan dihantar.")}
@@ -165,64 +173,65 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
 
                         {isThinking && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-                                 <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-xs">⏳</div>
-                                 <div className="bg-slate-800/50 p-3 rounded-2xl rounded-bl-none border border-white/5">
+                                <div className="w-8 h-8 rounded-full bg-[#0f1e38] border border-white/10 flex items-center justify-center text-xs animate-spin-slow">⏳</div>
+                                <div className="bg-[#0f1e38]/80 p-3 rounded-2xl rounded-bl-none border border-cyan-500/20">
                                     <NeuralTyping />
-                                 </div>
+                                </div>
                             </motion.div>
                         )}
-                        
-                        {/* Suggestion Chips if chat is empty/start */}
+
+                        {/* Suggestion Chips */}
                         {messages.length < 3 && !isThinking && (
-                             <SuggestionChips onSelect={(text) => setInput(text)} />
+                            <SuggestionChips onSelect={(text) => setInput(text)} />
                         )}
                     </div>
 
                     <div className={`absolute inset-x-0 p-4 bg-gradient-to-t from-[#020617] via-[#020617]/95 to-transparent z-20 ${hasBottomNav ? 'bottom-[80px]' : 'bottom-0'}`}>
                         {/* JAKIM Disclaimer */}
-                        <div className="text-[10px] text-slate-500 text-center mb-2 italic">
+                        <div className="text-[9px] text-slate-500 text-center mb-3 italic opacity-60">
                             "Ustaz AI adalah alat bantuan pembelajaran. Untuk hukum syarak muktamad, rujuk asatizah bertauliah."
                         </div>
 
-                        {/* Speech Error Message */}
+                        {/* Speech Error */}
                         {speechError && (
-                            <div className="mb-2 p-2 bg-red-500/20 border border-red-500/30 rounded-lg text-red-400 text-xs text-center">
+                            <div className="mb-2 p-2 bg-red-900/20 border border-red-500/30 rounded-lg text-red-400 text-xs text-center backdrop-blur-sm">
                                 <i className="fa-solid fa-triangle-exclamation mr-1"></i>
                                 {speechError}
                             </div>
                         )}
-                        <div className={`flex gap-2 items-end bg-slate-900/80 p-2 rounded-2xl border transition-all backdrop-blur-xl shadow-2xl ${isThinking ? 'border-amber-500/30 shadow-amber-900/20' : 'border-cyan-500/30'}`}>
+
+                        {/* Input Area */}
+                        <div className={`flex gap-2 items-end bg-[#0f1e38]/90 p-2 rounded-2xl border transition-all backdrop-blur-xl shadow-2xl ${isThinking ? 'border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.1)]' : 'border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.1)]'}`}>
                             <button
                                 onClick={isListening ? stopListening : startListening}
                                 disabled={!isSupported}
                                 title={!isSupported ? 'Browser tidak menyokong pengecaman suara' : isListening ? 'Henti' : 'Tekan untuk bercakap'}
-                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-colors ${
-                                    !isSupported 
-                                        ? 'bg-slate-800 text-slate-600 cursor-not-allowed' 
-                                        : isListening 
-                                            ? 'bg-red-500 animate-pulse text-white' 
-                                            : 'hover:bg-slate-700 text-slate-400'
-                                }`}
+                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all ${!isSupported
+                                    ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
+                                    : isListening
+                                        ? 'bg-red-500/80 animate-pulse text-white shadow-[0_0_15px_rgba(239,68,68,0.5)]'
+                                        : 'hover:bg-cyan-900/30 text-cyan-400 hover:text-cyan-300'
+                                    }`}
                             >
                                 <i className={`fa-solid ${isListening ? 'fa-microphone-slash' : 'fa-microphone'}`}></i>
                             </button>
-                            
+
                             <textarea
                                 ref={textareaRef}
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={handleKeyDown}
-                                placeholder="Tanya ustaz..."
-                                className="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-slate-500 resize-none py-2 max-h-32 text-sm"
+                                placeholder="Tanya ustaz apa sahaja..."
+                                className="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-slate-500 resize-none py-2 max-h-32 text-sm font-medium"
                                 rows={1}
                             />
 
                             <button
                                 onClick={handleSend}
                                 disabled={!input.trim() || isThinking}
-                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-colors ${input.trim() && !isThinking ? 'bg-cyan-500 text-black hover:bg-cyan-400' : 'bg-slate-800 text-slate-600 cursor-not-allowed'}`}
+                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all ${input.trim() && !isThinking ? 'bg-cyan-500 text-black hover:bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)]' : 'bg-slate-800/50 text-slate-600 cursor-not-allowed'}`}
                             >
-                                <i className="fa-solid fa-paper-plane"></i>
+                                <i className="fa-solid fa-paper-plane transform translate-x-px translate-y-px"></i>
                             </button>
                         </div>
                     </div>

@@ -32,7 +32,8 @@ const LETTER_MAP: Record<string, string> = {
     'ة': 'ta', // Ta Marbutah sounds like Ta or Ha depending on stop, usually Ha in alphabet
     'ي': 'ya',
     'ى': 'ya',
-    'ء': 'alif' // Hamzah often uses Alif sound in isolation
+    'ء': 'alif', // Hamzah often uses Alif sound in isolation
+    'لا': 'lam', 'لأ': 'lam' // Map 'Lam Alif' to 'Lam'
 };
 
 export const useIqraAudio = () => {
@@ -40,9 +41,10 @@ export const useIqraAudio = () => {
 
     const speak = useCallback((text: string) => {
         // 1. Clean the text to get the base letter
-        // Remove harakat (Fathah, Kasrah, Dammah, etc.)
-        const cleanChar = text.replace(/[ًٌٍَُِّْ]/g, '').trim(); 
-        
+        // Remove harakat to find key, AND remove non-Arabic chars (Latin, symbols) for TTS/Map
+        const cleanChar = text.replace(/[a-zA-Z0-9\(\)\-\=\s]/g, '').replace(/[ًٌٍَُِّْ]/g, '').trim();
+        const textForTTS = text.replace(/[a-zA-Z0-9\(\)\-\=]/g, '').trim(); // Keep harakat for TTS
+
         // 2. Find the audio filename
         // If text is multiple letters (e.g. "ba ta"), we might need a sequencer.
         // For Iqra 1 (Single letters), this works perfectly.
@@ -56,22 +58,32 @@ export const useIqraAudio = () => {
         // 3. Play Local MP3
         const audioUrl = `/audio/hijaiyah/${audioKey}.mp3`;
         const audio = new Audio(audioUrl);
-        
+
         setIsSpeaking(true);
-        
+
         audio.play()
             .then(() => console.log("Playing:", audioUrl))
             .catch(e => console.error("Audio Play Error:", e));
-        
+
+        audio.onended = () => setIsSpeaking(false);
         audio.onended = () => setIsSpeaking(false);
         audio.onerror = (e) => {
-            console.error("Local Audio Error:", e);
+            console.warn("Local Audio Missing, switching to TTS fallback:", e);
+            speakWithTTS(textForTTS); // Fallback to Neural/Native TTS
             setIsSpeaking(false);
         };
 
     }, []);
 
     return { speak, isSpeaking, supported: true };
+};
+
+// Internal helper for fallback TTS
+const speakWithTTS = (text: string) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ar-SA'; // Arabic
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
 };
 
 export const useVoiceRecorder = () => {
@@ -105,7 +117,7 @@ export const useVoiceRecorder = () => {
         if (mediaRecorder && isRecording) {
             mediaRecorder.stop();
             setIsRecording(false);
-            mediaRecorder.stream.getTracks().forEach(track => track.stop()); 
+            mediaRecorder.stream.getTracks().forEach(track => track.stop());
         }
     };
 

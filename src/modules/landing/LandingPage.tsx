@@ -35,57 +35,57 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
   // Sticky CTA Logic
   useEffect(() => {
-      const handleScroll = () => {
-          if (window.scrollY > 600) {
-              setShowStickyCTA(true);
-          } else {
-              setShowStickyCTA(false);
-          }
-      };
-      window.addEventListener('scroll', handleScroll);
-      return () => window.removeEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      if (window.scrollY > 600) {
+        setShowStickyCTA(true);
+      } else {
+        setShowStickyCTA(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#050505] text-white font-sans relative overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-100 flex flex-col">
-      
+    <div className="min-h-screen bg-[#0A1E42] text-white font-sans relative overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-100 flex flex-col">
+
       {/* --- BACKGROUND ATMOSPHERE --- */}
-      <div className="landing-bg fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#0f172a] via-[#050505] to-[#000000] z-0"></div>
+      <div className="landing-bg fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#1E5A9F] via-[#0A1E42] to-[#050b18] z-0"></div>
       <FloatingOrbs />
       <PulseWave />
       <Starfield />
-      <div className="landing-bg fixed top-[-20%] left-[-20%] w-[140%] h-[140%] bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-transparent blur-[120px] animate-aurora z-0 pointer-events-none mix-blend-screen"></div>
+      <div className="landing-bg fixed top-[-20%] left-[-20%] w-[140%] h-[140%] bg-gradient-to-br from-cyan-500/10 via-blue-600/10 to-transparent blur-[120px] animate-aurora z-0 pointer-events-none mix-blend-screen"></div>
       {/* Optimized Noise Overlay (CSS Base64) */}
       <div className="landing-bg fixed inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxmaWx0ZXIgaWQ9Im4iPjxmZVR1cmJ1bGVuY2UgdHlwZT0iZnJhY3RhbE5vaXNlIiBiYXNlRnJlcXVlbmN5PSIwLjY1IiBudW1PY3RhdmVzPSIzIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI24pIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4=')] z-0 mix-blend-overlay pointer-events-none"></div>
-      
+
       {/* --- NAVBAR --- */}
       <nav className="relative z-50 px-4 sm:px-6 py-4 sm:py-6 flex justify-between items-center w-full max-w-7xl mx-auto">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 relative flex items-center justify-center group cursor-pointer">
-                <div className="absolute inset-0 bg-primary blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <img src="/logo-full.png" alt="Quran Pulse" className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_10px_rgba(90,185,255,0.5)] group-hover:scale-105 transition-transform" />
-            </div>
-            <span className="font-black text-lg sm:text-xl tracking-tight">
-                <span className="text-white">Quran</span> <span className="text-primary">Pulse</span>
-            </span>
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 relative flex items-center justify-center group cursor-pointer">
+            <div className="absolute inset-0 bg-primary blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
+            <img src="/logo-full.png" alt="Quran Pulse" className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_10px_rgba(90,185,255,0.5)] group-hover:scale-105 transition-transform" />
           </div>
-          
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
-              <a href="#mission" className="hover:text-white transition-colors">Mission</a>
-              <a href="#features" className="hover:text-white transition-colors">Features</a>
-              <a href="#premium" className="hover:text-white transition-colors">Premium</a>
-          </div>
+          <span className="font-black text-lg sm:text-xl tracking-tight">
+            <span className="text-white">Quran</span> <span className="text-primary">Pulse</span>
+          </span>
+        </div>
 
-          <button 
-            onClick={onGetStarted}
-            className="group relative px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md overflow-hidden transition-all hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
-          >
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:animate-shimmer"></div>
-              <span className="relative flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-300 group-hover:text-cyan-400 transition-colors">
-                  <i className="fa-solid fa-right-to-bracket"></i>
-                  <span className="hidden sm:inline">Member</span> Login
-              </span>
-          </button>
+        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-400">
+          <a href="#mission" className="hover:text-white transition-colors">Mission</a>
+          <a href="#features" className="hover:text-white transition-colors">Features</a>
+          <a href="#premium" className="hover:text-white transition-colors">Premium</a>
+        </div>
+
+        <button
+          onClick={onGetStarted}
+          className="group relative px-4 sm:px-6 py-2 sm:py-2.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md overflow-hidden transition-all hover:border-cyan-500/50 hover:shadow-[0_0_20px_rgba(6,182,212,0.3)]"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:animate-shimmer"></div>
+          <span className="relative flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-300 group-hover:text-cyan-400 transition-colors">
+            <i className="fa-solid fa-right-to-bracket"></i>
+            <span className="hidden sm:inline">Member</span> Login
+          </span>
+        </button>
       </nav>
 
       {/* --- NEW HERO SECTION --- */}
@@ -94,22 +94,22 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       {/* --- THE STRUGGLE (PAIN POINTS) --- */}
       <ProblemSection />
 
-        {/* IQRA Digital Books Button */}
-        <div className="flex justify-center mt-0 pb-16 bg-[#020617]">
-          <button
-            onClick={() => navigate('/iqra')}
-            className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full hover:shadow-lg transition-shadow"
-          >
-            Explore Digital Iqra Books
-          </button>
-        </div>
+      {/* IQRA Digital Books Button */}
+      <div className="flex justify-center mt-0 pb-16 bg-[#020617]">
+        <button
+          onClick={() => navigate('/iqra')}
+          className="px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-full hover:shadow-lg transition-shadow"
+        >
+          Explore Digital Iqra Books
+        </button>
+      </div>
 
       {/* --- ANIMATED STATS SECTION --- */}
       <AnimatedStats />
 
       {/* --- BENTO GRID FEATURES --- */}
       <div id="features">
-         <BentoGridFeatures />
+        <BentoGridFeatures />
       </div>
 
       {/* --- TRUST SECTION --- */}
@@ -117,7 +117,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
       {/* --- COMPARISON SECTION --- */}
       <div id="premium">
-         <ComparisonSection />
+        <ComparisonSection />
       </div>
 
       {/* --- ADVANCED TOOLS --- */}
@@ -128,25 +128,25 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
       {/* --- GLOW FOOTER --- */}
       <GlowFooter />
-      
+
       {/* Sticky CTA */}
       <AnimatePresence>
-          {showStickyCTA && (
-              <motion.div 
-                  initial={{ y: 100, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: 100, opacity: 0 }}
-                  className="fixed bottom-6 left-6 right-6 z-40 flex justify-center pointer-events-none"
-              >
-                  <button 
-                      onClick={onGetStarted}
-                      className="pointer-events-auto px-8 py-3 bg-cyan-600 text-white font-bold rounded-full shadow-2xl shadow-cyan-500/20 hover:bg-cyan-500 transition-colors flex items-center gap-2"
-                  >
-                      <span>Join Genesis Batch</span>
-                      <i className="fa-solid fa-arrow-right"></i>
-                  </button>
-              </motion.div>
-          )}
+        {showStickyCTA && (
+          <motion.div
+            initial={{ y: 100, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: 100, opacity: 0 }}
+            className="fixed bottom-6 left-6 right-6 z-40 flex justify-center pointer-events-none"
+          >
+            <button
+              onClick={onGetStarted}
+              className="pointer-events-auto px-8 py-3 bg-cyan-600 text-white font-bold rounded-full shadow-2xl shadow-cyan-500/20 hover:bg-cyan-500 transition-colors flex items-center gap-2"
+            >
+              <span>Join Genesis Batch</span>
+              <i className="fa-solid fa-arrow-right"></i>
+            </button>
+          </motion.div>
+        )}
       </AnimatePresence>
 
       <WhatsAppButton />

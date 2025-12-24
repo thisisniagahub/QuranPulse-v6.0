@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Tappable Letter Practice (V1) Refined</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&amp;family=Amiri:wght@400;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#58CC02", // Duolingo Green
+                        "primary-dark": "#46A302", // Darker Green for 3D effect
+                        "primary-light": "#89E219",
+                        "background-light": "#FFFFFF",
+                        "background-dark": "#131F24",
+                        "surface-light": "#F7F7F7", // Very light grey for slight contrast
+                        "surface-dark": "#202F36", // Dark card bg
+                        "text-main-light": "#4B4B4B",
+                        "text-main-dark": "#E5E5E5",
+                        "border-light": "#E5E5E5",
+                        "border-dark": "#37464F",
+                        "danger": "#FF4B4B",
+                    },
+                    fontFamily: {
+                        display: ["Nunito", "sans-serif"],
+                        arabic: ["Amiri", "serif"],
+                    },
+                    boxShadow: {
+                        'btn': '0 4px 0 0', // Custom hard shadow for "3D" buttons
+                        'card': '0 2px 0 0',
+                    }
+                },
+            },
+        };
+    </script>
+    <style>
+        .btn-action {
+            transition: all 0.1s ease;
+            transform: translateY(0);
+            box-shadow: 0 4px 0 0 currentColor;
+        }
+
+        .btn-action:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 0 currentColor;
+        }
+
+        .card-btn {
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            touch-action: manipulation;
+        }
+
+        .card-btn:active {
+            transform: scale(0.96);
+            border-color: #58CC02;
+            background-color: #F0FDF4;
+        }
+
+        .dark .card-btn:active {
+            background-color: #202F36;
+            border-color: #58CC02;
+        }
+
+        .card-btn:active::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle, rgba(88, 204, 2, 0.1) 0%, rgba(255, 255, 255, 0) 70%);
+            opacity: 1;
+        }
+
+        .arabic-text {
+            line-height: 1.5;
+            direction: rtl;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-text-main-light dark:text-text-main-dark selection:bg-primary selection:text-white h-screen overflow-hidden flex flex-col items-center">
+    <div class="w-full max-w-md h-full flex flex-col bg-background-light dark:bg-background-dark relative shadow-2xl">
+        <header
+            class="px-5 py-4 flex items-center gap-4 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm z-20 border-b border-transparent">
+            <button
+                class="text-border-light hover:bg-gray-100 dark:hover:bg-surface-dark rounded-full p-2 -ml-2 transition-colors">
+                <span class="material-symbols-outlined text-2xl text-gray-400 dark:text-gray-500 font-bold">close</span>
+            </button>
+            <div class="flex-1 h-4 bg-gray-200 dark:bg-gray-700 rounded-2xl overflow-hidden relative">
+                <div
+                    class="absolute top-0 left-0 h-full bg-primary w-[35%] rounded-2xl transition-all duration-500 ease-out shadow-[0_2px_0_0_rgba(0,0,0,0.1)]">
+                    <div class="absolute top-1 left-2 right-2 h-1.5 bg-white/25 rounded-full"></div>
+                </div>
+            </div>
+            <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-danger text-3xl fill-1">favorite</span>
+                <span class="text-danger font-bold text-lg">5</span>
+            </div>
+        </header>
+        <main class="flex-1 overflow-y-auto overflow-x-hidden px-5 pb-32 no-scrollbar">
+            <div class="mt-4 mb-6">
+                <h1 class="text-2xl font-extrabold text-gray-700 dark:text-white mb-2">Tap to hear the sound</h1>
+                <p class="text-lg text-gray-500 dark:text-gray-400 font-medium leading-tight">Listen carefully to the
+                    difference in pronunciation.</p>
+            </div>
+            <section class="grid grid-cols-2 gap-4 mb-8">
+                <button
+                    class="card-btn group flex flex-col items-center justify-center p-6 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-2xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] hover:bg-gray-50 dark:hover:bg-[#2A3B44] w-full h-48">
+                    <span
+                        class="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">ZHO</span>
+                    <span
+                        class="font-arabic text-7xl text-gray-800 dark:text-white mb-2 group-active:text-primary transition-colors">ظَ</span>
+                    <span
+                        class="absolute top-3 right-3 text-primary opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-200">
+                        <span class="material-symbols-outlined text-xl">volume_up</span>
+                    </span>
+                </button>
+                <button
+                    class="card-btn group flex flex-col items-center justify-center p-6 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-2xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] hover:bg-gray-50 dark:hover:bg-[#2A3B44] w-full h-48">
+                    <span
+                        class="text-xs font-black text-gray-400 dark:text-gray-500 uppercase tracking-widest mb-3">THO</span>
+                    <span
+                        class="font-arabic text-7xl text-gray-800 dark:text-white mb-2 group-active:text-primary transition-colors">طَ</span>
+                    <span
+                        class="absolute top-3 right-3 text-primary opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-200">
+                        <span class="material-symbols-outlined text-xl">volume_up</span>
+                    </span>
+                </button>
+            </section>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="h-0.5 bg-gray-200 dark:bg-gray-700 flex-1 rounded-full"></div>
+                <span class="text-sm font-bold text-gray-400 uppercase tracking-wide">Practice Rows</span>
+                <div class="h-0.5 bg-gray-200 dark:bg-gray-700 flex-1 rounded-full"></div>
+            </div>
+            <div class="space-y-4">
+                <div class="grid grid-cols-3 gap-3">
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">ظَ
+                            حَ ذَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">بَ
+                            طَ ظَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">ظَ
+                            أَ طَ</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">طَ
+                            حَ ذَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">دَ
+                            صَ ظَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">سَ
+                            ضَ ظَ</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">زَ
+                            خَ طَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">سَ
+                            رَ صَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">شَ
+                            أَ ظَ</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">ثَ
+                            ضَ ظَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">زَ
+                            خَ ضَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">ثَ
+                            رَ ضَ</span>
+                    </button>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">شَ
+                            طَ ظَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">جَ
+                            طَ ضَ</span>
+                    </button>
+                    <button
+                        class="card-btn h-24 bg-white dark:bg-surface-dark border-2 border-border-light dark:border-border-dark rounded-xl shadow-[0_2px_0_0_#E5E5E5] dark:shadow-[0_2px_0_0_#37464F] flex items-center justify-center group">
+                        <span
+                            class="font-arabic text-3xl text-gray-700 dark:text-gray-200 group-active:text-primary group-active:scale-110 transition-transform">صَ
+                            دَ شَ</span>
+                    </button>
+                </div>
+            </div>
+            <div class="mt-8">
+                <h2 class="text-xl font-extrabold text-gray-700 dark:text-gray-200 mb-4 px-1">Alphabet Review</h2>
+                <div
+                    class="bg-white dark:bg-surface-dark rounded-2xl border-2 border-border-light dark:border-border-dark p-6 mb-4 shadow-sm">
+                    <div
+                        class="flex flex-wrap justify-between items-center gap-y-4 font-arabic text-3xl text-gray-600 dark:text-gray-300">
+                        <span>خَ دَ ذَ</span>
+                        <div class="w-px h-8 bg-gray-200 dark:bg-gray-600"></div>
+                        <span>ثَ جَ حَ</span>
+                        <div class="w-px h-8 bg-gray-200 dark:bg-gray-600"></div>
+                        <span>أَ بَ تَ</span>
+                    </div>
+                </div>
+                <div
+                    class="bg-white dark:bg-surface-dark rounded-2xl border-2 border-border-light dark:border-border-dark p-6 shadow-sm">
+                    <div
+                        class="flex flex-wrap justify-between items-center gap-y-4 font-arabic text-3xl text-gray-600 dark:text-gray-300">
+                        <span>طَ ظَ</span>
+                        <div class="w-px h-8 bg-gray-200 dark:bg-gray-600"></div>
+                        <span>شَ صَ ضَ</span>
+                        <div class="w-px h-8 bg-gray-200 dark:bg-gray-600"></div>
+                        <span>رَ زَ سَ</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer
+            class="p-4 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark z-20">
+            <button
+                class="w-full btn-action bg-primary text-white font-extrabold text-lg rounded-2xl py-4 shadow-[0_4px_0_0_#46A302] text-primary-dark uppercase tracking-wider hover:brightness-105 active:shadow-none active:translate-y-1">
+                Continue
+            </button>
+        </footer>
+    </div>
+
+    <script>
+        // Web Speech API for Arabic pronunciation
+        const synth = window.speechSynthesis;
+
+        // Function to speak Arabic text
+        function speakArabic(text) {
+            // Cancel any ongoing speech
+            synth.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'ar-SA'; // Saudi Arabic
+            utterance.rate = 0.8; // Slower for learning
+            utterance.pitch = 1.0;
+            utterance.volume = 1.0;
+
+            synth.speak(utterance);
+        }
+
+        // Add click listeners to all buttons with Arabic text
+        document.addEventListener('DOMContentLoaded', () => {
+            const buttons = document.querySelectorAll('.card-btn');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const arabicText = button.querySelector('.font-arabic');
+                    if (arabicText) {
+                        const text = arabicText.textContent.trim();
+                        speakArabic(text);
+
+                        // Visual feedback
+                        button.classList.add('ring-2', 'ring-primary');
+                        setTimeout(() => {
+                            button.classList.remove('ring-2', 'ring-primary');
+                        }, 300);
+                    }
+                });
+            });
+
+            // Dark mode toggle (optional)
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (prefersDark) {
+                document.documentElement.classList.add('dark');
+            }
+        });
+    </script>
+</body>
+
+</html>

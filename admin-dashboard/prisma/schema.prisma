@@ -1,0 +1,131 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// -- Core User Data (Mirrors Supabase 'auth' and 'public' usage) --
+// Note: In Supabase, 'users' is in auth schema. We usually query 'profiles' in public.
+// This schema assumes we are connecting to the public schema for app data.
+
+model Profile {
+  id              String    @id @default(uuid())
+  email           String?   @unique
+  fullName        String?   @map("full_name")
+  avatarUrl       String?   @map("avatar_url")
+  subscriptionTier String   @default("FREE") @map("subscription_tier") // FREE, PRO, FAMILY
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  subscriptions   Subscription[]
+  payments        PaymentTransaction[]
+  chatSessions    AiChatSession[]
+  adminLogs       AdminAuditLog[]      @relation("AdminAction")
+
+  @@map("profiles")
+}
+
+model Subscription {
+  id            String    @id @default(uuid())
+  userId        String    @map("user_id")
+  planType      String    @map("plan_type") // PRO_MONTHLY, FAMILY_YEARLY
+  status        String    // active, cancelled, past_due
+  currentPeriodEnd DateTime @map("current_period_end")
+  provider      String    // toyyibpay, stripe
+  
+  user          Profile   @relation(fields: [userId], references: [id])
+
+  @@map("subscriptions")
+}
+
+model PaymentTransaction {
+  id              String    @id @default(uuid())
+  userId          String    @map("user_id")
+  amount          Decimal   @db.Decimal(10, 2)
+  currency        String    @default("MYR")
+  provider        String    // toyyibpay, stripe
+  providerTxId    String?   @map("provider_tx_id")
+  status          String    // pending, success, failed
+  description     String?
+  createdAt       DateTime  @default(now()) @map("created_at")
+
+  user            Profile   @relation(fields: [userId], references: [id])
+
+  @@map("payment_transactions")
+}
+
+// -- AI & Knowledge Base --
+
+model AiChatSession {
+  id            String    @id @default(uuid())
+  userId        String    @map("user_id")
+  title         String?
+  modelUsed     String?   @map("model_used") // gemini-1.5-flash, llama-3
+  createdAt     DateTime  @default(now()) @map("created_at")
+  
+  messages      AiChatMessage[]
+  user          Profile   @relation(fields: [userId], references: [id])
+
+  @@map("ai_chat_sessions")
+}
+
+model AiChatMessage {
+  id            String    @id @default(uuid())
+  sessionId     String    @map("session_id")
+  role          String    // user, assistant, system
+  content       String    @db.Text
+  isFlagged     Boolean   @default(false) @map("is_flagged")
+  flagReason    String?   @map("flag_reason")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  session       AiChatSession @relation(fields: [sessionId], references: [id])
+
+  @@map("ai_chat_messages")
+}
+
+// -- Admin Specific Tables --
+
+model AdminAuditLog {
+  id            String    @id @default(uuid())
+  adminId       String    @map("admin_id")
+  action        String    // BANNED_USER, REFUNDED_PAYMENT, UPDATED_BANNER
+  targetResource String?  @map("target_resource") // user_id:123, banner:ramadan_promo
+  details       Json?
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  admin         Profile   @relation("AdminAction", fields: [adminId], references: [id])
+
+  @@map("admin_audit_logs")
+}
+
+model ContentBanner {
+  id            String    @id @default(uuid())
+  title         String
+  imageUrl      String    @map("image_url")
+  linkUrl       String?   @map("link_url")
+  isActive      Boolean   @default(true) @map("is_active")
+  startDate     DateTime? @map("start_date")
+  endDate       DateTime? @map("end_date")
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  @@map("content_banners")
+}
+
+model OfficialMosque {
+  id            String    @id @default(uuid())
+  name          String
+  state         String
+  district      String?
+  address       String?
+  lat           Float?
+  lng           Float?
+  verifiedAt    DateTime  @default(now()) @map("verified_at")
+  jakimCode     String?   @unique @map("jakim_code")
+
+  @@map("official_mosques")
+}

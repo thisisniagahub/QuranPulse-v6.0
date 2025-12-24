@@ -146,8 +146,15 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
         return;
       }
 
+      console.log("🔐 Initiating Google Login...", {
+        siteUrl: import.meta.env.VITE_SITE_URL || window.location.origin
+      });
+
       const { error } = await supabase.auth.signInWithOAuth({
         provider: provider,
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        }
       });
       if (error) throw error;
     } catch (error: any) {

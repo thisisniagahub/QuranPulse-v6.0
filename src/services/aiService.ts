@@ -228,7 +228,7 @@ export const generateIslamicVideo = async (prompt: string) => "";
 export const getPersonalizedGreeting = async (n: string) => "";
 export const generateSpeech = async () => "";
 export const enhanceVideoPrompt = async (p: string) => p;
-export const chatWithVerseContext = async () => "";
+export const chatWithVerseContext = async (verseKey: string, verseText: string, query: string) => "";
 export const analyzeQuranRecitation = async () => ({});
 export const analyzeTajweedPosture = async () => ({});
 export const getVerseConnections = async () => ({});

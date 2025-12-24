@@ -14,21 +14,22 @@ import { useGamification } from '../../contexts/GamificationContext';
 import { QuranProvider, useQuran } from './contexts/QuranContext';
 
 // Sub-components
-import QuranList from './QuranList';
-import QuranReader from './QuranReader'; 
-import VerseStudio from './VerseStudio';
-import QuranDisplaySettings from './QuranDisplaySettings';
-import ShareCard from './ShareCard';
-import HafazanMode from './HafazanMode';
-import SurahInfoPanel from './SurahInfoPanel';
-import WordTooltip from './WordTooltip';
-import GoToVerseModal from './GoToVerseModal';
-import TafsirPanel from './TafsirPanel';
-import RangeRepeatModal from './RangeRepeatModal';
-import VerseNotesModal from './VerseNotesModal';
-import ReadingGoalsModal from './ReadingGoalsModal';
-import BookmarkCollectionsModal from './BookmarkCollectionsModal';
-import ThemeSettingsModal from './ThemeSettingsModal';
+import QuranList from './features/list/QuranList';
+import QuranReader from './features/reader/QuranReader';
+import VerseStudio from './features/studio/VerseStudio';
+import QuranDisplaySettings from './features/settings/QuranDisplaySettings';
+import ShareCard from './components/ShareCard';
+import HafazanMode from './features/reader/HafazanMode';
+import SurahInfoPanel from './components/SurahInfoPanel';
+import WordTooltip from './components/WordTooltip';
+import GoToVerseModal from './components/GoToVerseModal';
+import TafsirPanel from './features/studio/TafsirPanel';
+import RangeRepeatModal from './features/reader/RangeRepeatModal';
+import VerseNotesModal from './features/studio/VerseNotesModal';
+import ReadingGoalsModal from './features/settings/ReadingGoalsModal';
+import BookmarkCollectionsModal from './features/settings/BookmarkCollectionsModal';
+import ThemeSettingsModal from './features/settings/ThemeSettingsModal';
+import QuranTutorial from './components/QuranTutorial';
 import { chatWithVerseContext } from '../../services/aiService';
 
 const QuranContent: React.FC = () => {
@@ -36,14 +37,14 @@ const QuranContent: React.FC = () => {
         // View State
         view, setView,
         selectedChapter, setSelectedChapter,
-        
+
         // Data
         chapters, loadingChapters,
         verses,
-        
+
         // Actions
         handleWordClick,
-        
+
         // Feature States
         showSettings, setShowSettings,
         showSurahInfo, setShowSurahInfo,
@@ -52,7 +53,7 @@ const QuranContent: React.FC = () => {
         showReadingGoals, setShowReadingGoals,
         showBookmarkCollections, setShowBookmarkCollections,
         showThemeSettings, setShowThemeSettings,
-        
+
         // Interactive States
         shareVerse, setShareVerse,
         hafazanVerse, setHafazanVerse,
@@ -61,19 +62,19 @@ const QuranContent: React.FC = () => {
         bookmarkVerse, setBookmarkVerse,
         selectedWord, setSelectedWord,
         morphologyData,
-        
+
         // Studio
         studioVerse,
         studioTab, setStudioTab,
         openVerseStudio, closeVerseStudio,
-        
+
         // Search
         searchQuery, setSearchQuery,
         isSemanticMode, setIsSemanticMode,
         handleSemanticSearch,
         isSearchingSemantic,
         semanticResults,
-        
+
         // Settings State (for passing to modals)
         fontSize, setFontSize,
         showTranslation, setShowTranslation,
@@ -82,10 +83,12 @@ const QuranContent: React.FC = () => {
         selectedReciterId, setSelectedReciterId,
         showWordByWord, setShowWordByWord,
         autoScroll, setAutoScroll,
+        enableTranslationAudio, setEnableTranslationAudio,
         showTajwid, setShowTajwid,
         repeatMode, setRepeatMode,
-        nightMode, setNightMode
-        
+        theme, setTheme,
+        showTutorial, markTutorialSeen
+
     } = useQuran();
 
     // Gamification
@@ -102,7 +105,7 @@ const QuranContent: React.FC = () => {
     const [chatMessages, setChatMessages] = useState<any[]>([]);
     const [chatInput, setChatInput] = useState('');
     const [isChatLoading, setIsChatLoading] = useState(false);
-    
+
     // Reset chat when studio opens
     useEffect(() => {
         if (studioVerse) {
@@ -137,7 +140,7 @@ const QuranContent: React.FC = () => {
             // For now, passing verse key is enough as aiService handles lookup/context.
             const response = await chatWithVerseContext(
                 studioVerse.verse_key,
-                studioVerse.text_uthmani || "", 
+                studioVerse.text_uthmani || "",
                 currentInput
             );
 
@@ -196,11 +199,11 @@ const QuranContent: React.FC = () => {
 
             {/* === READING VIEW === */}
             {view === 'READING' && (
-                 <QuranReader />
+                <QuranReader />
             )}
 
             {/* === MODALS === */}
-            
+
             {/* Settings Modal */}
             {showSettings && (
                 <QuranDisplaySettings
@@ -219,12 +222,14 @@ const QuranContent: React.FC = () => {
                     setShowWordByWord={setShowWordByWord}
                     autoScroll={autoScroll}
                     setAutoScroll={setAutoScroll}
+                    enableTranslationAudio={enableTranslationAudio}
+                    setEnableTranslationAudio={setEnableTranslationAudio}
                     showTajwid={showTajwid}
                     setShowTajwid={setShowTajwid}
                     repeatMode={repeatMode}
                     setRepeatMode={setRepeatMode}
-                    nightMode={nightMode}
-                    setNightMode={setNightMode}
+                    theme={theme}
+                    setTheme={setTheme}
                     onOpenReadingGoals={() => { setShowSettings(false); setShowReadingGoals(true); }}
                     onOpenTheme={() => { setShowSettings(false); setShowThemeSettings(true); }}
                     onOpenRangeRepeat={() => { setShowSettings(false); setShowRangeRepeat(true); }}
@@ -283,7 +288,7 @@ const QuranContent: React.FC = () => {
                     onClose={() => setShowSurahInfo(false)}
                 />
             )}
-            
+
             {/* Go to Verse Modal */}
             {selectedChapter && (
                 <GoToVerseModal
@@ -321,13 +326,13 @@ const QuranContent: React.FC = () => {
             )}
 
             {/* Range Repeat Modal */}
-             {selectedChapter && (
+            {selectedChapter && (
                 <RangeRepeatModal
                     isOpen={showRangeRepeat}
                     onClose={() => setShowRangeRepeat(false)}
                     verses={verses}
                     currentChapter={selectedChapter.id}
-                    onStartRepeat={() => {}}
+                    onStartRepeat={() => { }}
                 />
             )}
 
@@ -342,17 +347,23 @@ const QuranContent: React.FC = () => {
                 isOpen={showBookmarkCollections}
                 onClose={() => { setShowBookmarkCollections(false); setBookmarkVerse(null); }}
                 currentVerse={bookmarkVerse}
-                onAddToCollection={() => {}}
+                onAddToCollection={() => { }}
             />
 
             {/* Theme Settings */}
             <ThemeSettingsModal
                 isOpen={showThemeSettings}
                 onClose={() => setShowThemeSettings(false)}
-                currentTheme={'dark'} // Should hook up to Context or LocalStorage
+                currentTheme={theme}
                 currentFont={'uthmani'}
-                onThemeChange={() => {}}
-                onFontChange={() => {}}
+                onThemeChange={setTheme}
+                onFontChange={() => { }}
+            />
+
+            {/* Tutorial Modal */}
+            <QuranTutorial
+                isOpen={showTutorial}
+                onClose={markTutorialSeen}
             />
 
             {/* XP Toast */}

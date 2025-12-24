@@ -10,6 +10,7 @@ export const Login = () => {
     const [rememberMe, setRememberMe] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [loginSuccess, setLoginSuccess] = useState(false);
 
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -17,6 +18,7 @@ export const Login = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
+        console.log("🚀 Login: Start handleLogin for", email);
 
         if (!email || !password) {
             setError("Sila isi emel dan kata laluan.");
@@ -25,6 +27,7 @@ export const Login = () => {
 
         // --- DEV BYPASS (Explicit Check) ---
         if (email === 'dev@qp.com' && password === 'dev123') {
+            console.log("🚧 Login: Dev Bypass Triggered");
             handleDevBypass();
             return;
         }
@@ -32,8 +35,16 @@ export const Login = () => {
         setLoading(true);
 
         try {
+            console.log("🔌 Login: Calling AuthContext login...");
             const { error } = await login({ email, password });
-            if (error) throw error;
+
+            if (error) {
+                console.error("❌ Login: AuthContext login returned error:", error);
+                throw error;
+            }
+
+            console.log("✅ Login: AuthContext login success. Navigating...");
+            setLoginSuccess(true);
 
             // Handle Remember Me
             if (rememberMe) {
@@ -42,14 +53,16 @@ export const Login = () => {
                 localStorage.removeItem('qp_remember_email');
             }
 
-            // Success
-            navigate('/');
+            // Success (wait a moment for the user to see the success state)
+            setTimeout(() => navigate('/'), 800);
         } catch (err: any) {
-            console.error("Login Error:", err);
+            console.error("❌ Login: Caught error in handleLogin:", err);
             if (err.message && err.message.includes("fetch")) {
                 setError("Gagal menyambung ke server Supabase. Sila semak internet atau API Keys.");
-            } else if (err.message && err.message.includes("Invalid login")) {
+            } else if (err.message && err.message.includes("Invalid login credentials") || err.message?.includes("Invalid login")) {
                 setError("Emel atau kata laluan salah.");
+            } else if (err.message && err.message.includes("Email not confirmed")) {
+                setError("Emel belum disahkan. Sila semak peti masuk emel anda.");
             } else {
                 setError(err.message || "Log masuk gagal. Sila cuba lagi.");
             }
@@ -236,6 +249,11 @@ export const Login = () => {
                             <>
                                 <i className="fa-solid fa-circle-notch fa-spin"></i>
                                 Memproses...
+                            </>
+                        ) : loginSuccess ? (
+                            <>
+                                <i className="fa-solid fa-check-circle"></i>
+                                Berjaya! Sedang masuk...
                             </>
                         ) : (
                             <>

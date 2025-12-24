@@ -4,11 +4,11 @@ import { NavView } from "../types";
 import kufiSplash from "@/assets/bg/kufi-splash.jpg";
 import kufiHeader from "@/assets/bg/kufi-header.jpg";
 import kufiFooter from "@/assets/bg/kufi-footer.jpg";
-import navHomeIcon from "@/assets/icons/nav-home-neon.png";
-import navQuranIcon from "@/assets/icons/nav-quran-neon.png";
-import navUstazAiIcon from "@/assets/icons/nav-ustaz-ai.png";
-import navQiblatIcon from "@/assets/icons/nav-qiblat-neon.png";
-import navIqraIcon from "@/assets/icons/nav-iqra-neon.png";
+import navHomeIcon from "@/assets/icons/home-3d.png";
+import navQuranIcon from "@/assets/icons/quran-3d.png";
+import navUstazAiIcon from "@/assets/icons/ustaz-ai-3d.png";
+import navQiblatIcon from "@/assets/icons/compass-3d.png";
+import navIqraIcon from "@/assets/icons/learning-3d.png";
 
 const Layout: React.FC = () => {
   const location = useLocation();
@@ -74,7 +74,7 @@ const Layout: React.FC = () => {
   return (
     <div className="flex h-screen w-full bg-background-dark overflow-hidden font-sans relative justify-center">
       {/* --- DESKTOP BACKDROP (Visible only on large screens) --- */}
-      <div 
+      <div
         className="absolute inset-0 bg-cover bg-center opacity-20 blur-xl hidden md:block pointer-events-none bg-[image:var(--bg-splash)]"
         // eslint-disable-next-line
         style={{ '--bg-splash': `url(${kufiSplash})` } as React.CSSProperties}
@@ -84,17 +84,17 @@ const Layout: React.FC = () => {
       <div className="flex flex-col h-full w-full max-w-[480px] bg-background-dark relative shadow-2xl md:border-x md:border-white">
         {/* --- VISUAL IDENTITY v5.0 GLOBAL BACKGROUNDS --- */}
         {/* Top Header Pattern */}
-        <div 
-            className="absolute top-0 left-0 w-full h-64 bg-top bg-no-repeat bg-contain -z-10 opacity-30 pointer-events-none mix-blend-screen bg-[image:var(--bg-header)]"
-            // eslint-disable-next-line
-            style={{ '--bg-header': `url(${kufiHeader})` } as React.CSSProperties}
+        <div
+          className="absolute top-0 left-0 w-full h-64 bg-top bg-no-repeat bg-contain -z-10 opacity-30 pointer-events-none mix-blend-screen bg-[image:var(--bg-header)]"
+          // eslint-disable-next-line
+          style={{ '--bg-header': `url(${kufiHeader})` } as React.CSSProperties}
         ></div>
 
         {/* Bottom Footer Pattern */}
-        <div 
-            className="absolute bottom-0 left-0 w-full h-64 bg-bottom bg-no-repeat bg-contain -z-10 opacity-20 pointer-events-none mix-blend-screen bg-[image:var(--bg-footer)]"
-            // eslint-disable-next-line
-            style={{ '--bg-footer': `url(${kufiFooter})` } as React.CSSProperties}
+        <div
+          className="absolute bottom-0 left-0 w-full h-64 bg-bottom bg-no-repeat bg-contain -z-10 opacity-20 pointer-events-none mix-blend-screen bg-[image:var(--bg-footer)]"
+          // eslint-disable-next-line
+          style={{ '--bg-footer': `url(${kufiFooter})` } as React.CSSProperties}
         ></div>
 
         {/* Global Gradient Overlay to ensure text readability */}
@@ -127,91 +127,94 @@ const Layout: React.FC = () => {
               )}
             </div>
             <div>
-                <h1 className="text-xl font-black tracking-tight text-white leading-none">
-                    Quran <span className="text-primary">Pulse</span>
-                </h1>
-                <p className="text-[10px] text-primary/70 font-bold tracking-[0.2em] uppercase">Your Digital Companion</p>
+              <h1 className="text-xl font-black tracking-tight text-white leading-none">
+                Quran <span className="text-primary">Pulse</span>
+              </h1>
+              <p className="text-[10px] text-primary/70 font-bold tracking-[0.2em] uppercase">Your Digital Companion</p>
             </div>
           </Link>
-          
+
           {/* Header Actions */}
           <div className="flex items-center gap-3 relative z-10">
-              <button aria-label="Notifications" className="w-9 h-9 rounded-full bg-slate-800/50 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all">
-                  <i className="fa-regular fa-bell"></i>
-              </button>
+            <button aria-label="Notifications" className="w-9 h-9 rounded-full bg-slate-800/50 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all">
+              <i className="fa-regular fa-bell"></i>
+            </button>
           </div>
         </header>
 
         {/* --- MAIN CONTENT AREA --- */}
         <main className="flex-1 overflow-y-auto scrollbar-hide relative z-0 pb-32">
-            <Outlet />
+          <Outlet />
         </main>
 
         {/* --- BOTTOM NAVIGATION BAR --- */}
-        <nav className="h-[88px] bg-sheet/80 backdrop-blur-xl border-t border-white relative z-50 shrink-0 pb-5">
-            <div className="flex items-center justify-around h-full px-2">
-                {navItems.map((item) => {
-                    const isActive = currentView === item.id;
-                    const isCenter = item.id === NavView.SMART_DEEN;
+        {/* --- BOTTOM NAVIGATION BAR (Restored 5-Items: Home, Quran, Ustaz, Qiblat, Iqra) --- */}
+        <nav className="h-[88px] bg-[#020617]/90 backdrop-blur-xl border-t border-cyan-500/20 relative z-50 shrink-0 pb-5">
+          <div className="flex items-center justify-around h-full px-2">
 
-                    return (
-                        <Link
-                            key={item.id}
-                            to={item.path}
-                            className="flex flex-col items-center justify-center relative group w-16"
-                        >
-                            <div
-                                className={`
-                                    relative rounded-full flex items-center justify-center transition-all duration-300 border
-                                    ${isCenter ? "w-16 h-16 -mt-8" : "w-10 h-10"}
-                                    ${
-                                      isActive && !isCenter
-                                        ? `bg-gradient-to-br ${item.color} border-white/20 shadow-lg shadow-cyan-500/20 scale-110`
-                                        : isActive && isCenter
-                                        ? "bg-transparent border-transparent scale-110"
-                                        : "bg-transparent border-transparent text-slate-500 group-hover:bg-white/5 group-hover:text-slate-300"
-                                    }
-                                `}
-                            >
-                                {/* Inner Glass Reflection for Active State */}
-                                {isActive && !isCenter && (
-                                    <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 to-transparent pointer-events-none"></div>
-                                )}
+            {/* 1. HOME */}
+            <Link
+              to="/"
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.DASHBOARD ? 'scale-110' : 'opacity-60 hover:opacity-100'}`}
+            >
+              <div className={`w-8 h-8 ${currentView === NavView.DASHBOARD ? '' : 'grayscale'}`}>
+                <img src="/assets/icons/nabdh/nav-home.png" alt="Home" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
+              </div>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.DASHBOARD ? 'text-cyan-400' : 'text-slate-500'}`}>Home</span>
+            </Link>
 
-                                {/* ICON (IMAGE BASED) */}
-                                {item.id === NavView.SMART_DEEN ? (
-                                    // CENTER BUTTON (USTAZ AI)
-                                    <div className="relative flex items-center justify-center w-full h-full -mt-8">
-                                        <div className="relative w-20 h-20 flex items-center justify-center bg-[#020617] rounded-full">
-                                            <img 
-                                                src={item.icon} 
-                                                alt={item.label}
-                                                className="w-full h-full object-contain scale-125 drop-shadow-[0_0_15px_rgba(34,211,238,0.6)]"
-                                            />
-                                        </div>
-                                    </div>
-                                ) : (
-                                    // STANDARD BUTTONS
-                                    <div className="relative flex items-center justify-center w-full h-full p-2">
-                                        <img 
-                                            src={item.icon} 
-                                            alt={item.label}
-                                            className={`w-full h-full object-contain transition-all duration-300 ${isActive ? "drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] brightness-110" : "opacity-60 grayscale"}`}
-                                        />
-                                    </div>
-                                )}
-                            </div>
+            {/* 2. AL-QURAN */}
+            <Link
+              to="/quran"
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.QURAN ? 'scale-110' : 'opacity-60 hover:opacity-100'}`}
+            >
+              <div className={`w-8 h-8 ${currentView === NavView.QURAN ? '' : 'grayscale'}`}>
+                <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
+              </div>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.QURAN ? 'text-cyan-400' : 'text-slate-500'}`}>Quran</span>
+            </Link>
 
-                            {/* Label (Visible on Active or Hover) - Hidden for Ustaz AI */}
-                            {item.id !== NavView.SMART_DEEN && (
-                                <span className={`text-[10px] font-bold mt-1 transition-colors duration-300 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-400'}`}>
-                                    {item.label}
-                                </span>
-                            )}
-                        </Link>
-                    );
-                })}
-            </div>
+            {/* 3. USTAZ AI (CENTER HIGHLIGHT) */}
+            <Link
+              to="/smart-deen"
+              className={`flex flex-col items-center justify-center relative -mt-8 transition-all duration-300 w-20 group`}
+            >
+              <div className={`w-20 h-20 rounded-full bg-[#020617] p-2 border-4 border-[#020617] shadow-[0_-5px_20px_rgba(0,191,255,0.2)] ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}>
+                <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-900/50 to-slate-900 flex items-center justify-center border border-cyan-500/30 shadow-inner relative overflow-hidden">
+                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                  <img
+                    src="/assets/icons/nabdh/nav-ustaz.png"
+                    alt="Ustaz AI"
+                    className={`w-full h-full object-contain p-1 drop-shadow-[0_0_15px_rgba(0,191,255,0.8)] ${currentView === NavView.SMART_DEEN ? 'animate-pulse-slow' : 'grayscale brightness-75'}`}
+                  />
+                </div>
+              </div>
+              <span className={`text-[9px] font-bold uppercase tracking-wider mt-1 ${currentView === NavView.SMART_DEEN ? 'text-cyan-400' : 'text-slate-500'}`}>Ustaz AI</span>
+            </Link>
+
+            {/* 4. QIBLAT */}
+            <Link
+              to="/ibadah"
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.IBADAH ? 'scale-110' : 'opacity-60 hover:opacity-100'}`}
+            >
+              <div className={`w-8 h-8 ${currentView === NavView.IBADAH ? '' : 'grayscale'}`}>
+                <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
+              </div>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IBADAH ? 'text-cyan-400' : 'text-slate-500'}`}>Qiblat</span>
+            </Link>
+
+            {/* 5. IQRA */}
+            <Link
+              to="/iqra"
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.IQRA ? 'scale-110' : 'opacity-60 hover:opacity-100'}`}
+            >
+              <div className={`w-8 h-8 ${currentView === NavView.IQRA ? '' : 'grayscale'}`}>
+                <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
+              </div>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IQRA ? 'text-cyan-400' : 'text-slate-500'}`}>Iqra</span>
+            </Link>
+
+          </div>
         </nav>
       </div>
     </div>

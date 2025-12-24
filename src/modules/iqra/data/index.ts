@@ -1,4 +1,5 @@
-import { IqraPage, IqraBook, TajweedTutorial } from '../../../types';
+import { IqraPage, IqraBook } from '../../../types';
+import { TajweedTutorial } from './types';
 import { IQRA_1 } from './iqra-1';
 import { IQRA_2 } from './iqra-2';
 import { IQRA_3 } from './iqra-3';
@@ -61,6 +62,7 @@ export const TAJWEED_TUTORIALS: TajweedTutorial[] = [
         title: 'The Qalqalah (Echo)',
         description: 'Learn how to bounce the sound of Qaf, Toa, Ba, Jim, Dal.',
         icon: 'fa-wave-square',
+        poster: '/src/assets/iqra/iqra-lesson-1.png',
         color: 'text-green-400',
         bgColor: 'bg-green-500/10',
         borderColor: 'border-green-500/30',
@@ -71,6 +73,7 @@ export const TAJWEED_TUTORIALS: TajweedTutorial[] = [
         title: 'The Madd (Elongation)',
         description: 'Understanding the different lengths of vowels (2, 4, 6).',
         icon: 'fa-wave-square',
+        poster: '/src/assets/iqra/iqra-lesson-2.png',
         color: 'text-purple-400',
         bgColor: 'bg-purple-500/10',
         borderColor: 'border-purple-500/30',
@@ -81,6 +84,7 @@ export const TAJWEED_TUTORIALS: TajweedTutorial[] = [
         title: 'Ghunnah (Nasal)',
         description: 'The nasal sound of Mim and Nun Mushaddadah.',
         icon: 'fa-wind',
+        poster: '/src/assets/iqra/iqra-lesson-3.png',
         color: 'text-pink-400',
         bgColor: 'bg-pink-500/10',
         borderColor: 'border-pink-500/30',
@@ -91,6 +95,7 @@ export const TAJWEED_TUTORIALS: TajweedTutorial[] = [
         title: 'Makhraj (Articulation)',
         description: 'Where exactly each letter sound comes from.',
         icon: 'fa-language',
+        poster: '/src/assets/iqra/iqra-lesson-4.png',
         color: 'text-red-400',
         bgColor: 'bg-red-500/10',
         borderColor: 'border-red-500/30',
