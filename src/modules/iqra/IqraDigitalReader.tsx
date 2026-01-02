@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import {
 import { ChevronLeft, ChevronRight, Volume2, Mic, Play, Square, BookOpen, Info, Settings, X, GraduationCap, CheckCircle } from 'lucide-react';
 import InteractiveSegment from './components/InteractiveSegment';
 import { useIqraAudio, useVoiceRecorder } from './hooks/useIqraTools';
