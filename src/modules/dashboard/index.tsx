@@ -13,11 +13,12 @@ interface DashboardProps {
     onNavigate: (view: NavView) => void;
 }
 
-gradient: 'from-[#0e3359]/60 via-[#051324]/80 to-[#051324]',
+const theme = {
+    gradient: 'from-[#0e3359]/60 via-[#051324]/80 to-[#051324]',
     glow: 'bg-primary/20',
-        border: 'border-white/20',
-            text: 'text-primary',
-                heroImage: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=2070&auto=format&fit=crop',
+    border: 'border-white/20',
+    text: 'text-primary',
+    heroImage: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=2070&auto=format&fit=crop',
 };
 
 // --- Local Components ---
