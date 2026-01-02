@@ -91,7 +91,7 @@ export const useVoiceRecorder = () => {
     const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
     const [audioUrl, setAudioUrl] = useState<string | null>(null);
 
-    const startRecording = async () => {
+    const startRecording = async (onComplete?: (blob: Blob) => void) => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             const recorder = new MediaRecorder(stream);
@@ -102,6 +102,7 @@ export const useVoiceRecorder = () => {
                 const blob = new Blob(chunks, { type: 'audio/webm' });
                 const url = URL.createObjectURL(blob);
                 setAudioUrl(url);
+                if (onComplete) onComplete(blob);
             };
 
             recorder.start();
@@ -114,7 +115,7 @@ export const useVoiceRecorder = () => {
     };
 
     const stopRecording = () => {
-        if (mediaRecorder && isRecording) {
+        if (mediaRecorder && mediaRecorder.state !== 'inactive') {
             mediaRecorder.stop();
             setIsRecording(false);
             mediaRecorder.stream.getTracks().forEach(track => track.stop());

@@ -25,28 +25,21 @@ const VerseStudio = lazy(() => import('./modules/quran/features/studio/VerseStud
 const AdminDashboard = lazy(() => import('./modules/admin/AdminDashboard'));
 const PrivacyPolicy = lazy(() => import('./modules/legal/PrivacyPolicy'));
 import GuideViewer from './modules/iqra/components/GuideViewer';
-import IQRA1 from '../IQRA_HUB/IQRA-1';
-import IQRA2 from '../IQRA_HUB/IQRA-2';
-import IQRA3 from '../IQRA_HUB/IQRA-3';
-import IQRA4 from '../IQRA_HUB/IQRA-4';
-import IQRA5 from '../IQRA_HUB/IQRA-5';
-import IQRA6 from '../IQRA_HUB/IQRA-6';
+
 
 // Loading fallback component
+import SplashScreen from './components/SplashScreen';
+
 const LoadingFallback = () => (
   <div className="flex flex-col items-center justify-center min-h-screen bg-[#050505] relative overflow-hidden">
     {/* Background Glow */}
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-900/20 via-[#050505] to-black"></div>
 
-    {/* Animated Rings */}
+    {/* Rings Removed */}
     <div className="relative w-32 h-32 flex items-center justify-center mb-8">
-      <div className="absolute inset-0 border-2 border-cyan-500/20 border-t-cyan-400 rounded-full animate-[spin_3s_linear_infinite]"></div>
-      <div className="absolute inset-3 border-2 border-purple-500/20 border-r-purple-400 rounded-full animate-[spin_2s_linear_infinite_reverse]"></div>
-      <div className="absolute inset-6 border-2 border-amber-500/20 border-b-amber-400 rounded-full animate-[spin_1.5s_linear_infinite]"></div>
-      <div className="relative z-10 w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center backdrop-blur-sm border border-cyan-500/20 animate-pulse">
-        <i className="fa-solid fa-cube text-2xl text-cyan-400 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]"></i>
+      <div className="relative z-10 w-20 h-20 bg-cyan-500/10 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-cyan-500/20 animate-pulse">
+        <i className="fa-solid fa-cube text-4xl text-cyan-400 drop-shadow-[0_0_15px_rgba(6,182,212,0.6)]"></i>
       </div>
-      <div className="absolute inset-0 bg-cyan-400/10 blur-2xl rounded-full animate-pulse"></div>
     </div>
 
     {/* Text */}
@@ -70,7 +63,7 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
   const { user, isLoading } = useAuth();
   const location = useLocation();
 
-  if (isLoading) return <LoadingFallback />;
+  if (isLoading) return null;
 
   if (!user) {
     // Redirect to Login, saving the current location they were trying to go to
@@ -81,9 +74,19 @@ const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
 };
 
 const AppContent: React.FC = () => {
-  // Removed artificial splash delay for performance
+  // Splash Screen State
+  const [showSplash, setShowSplash] = useState(true);
   const { user, isLoading, logout, updateProfile, updatePassword, uploadAvatar } = useAuth();
   const navigate = useNavigate();
+
+  // Handle Splash Complete
+  const handleSplashComplete = () => {
+    setShowSplash(false);
+  };
+
+  if (showSplash) {
+    return <SplashScreen onComplete={handleSplashComplete} />;
+  }
 
   if (isLoading) {
     // Temporary Bypass: If stuck loading for too long, just show the app
@@ -92,7 +95,7 @@ const AppContent: React.FC = () => {
   }
   return (
     <ErrorBoundary>
-      <Suspense fallback={<LoadingFallback />}>
+      <Suspense fallback={null}>
         <Routes>
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
@@ -129,12 +132,7 @@ const AppContent: React.FC = () => {
             } />
             {/* Guide Viewer Route */}
             <Route path="iqra/guides" element={<GuideViewer />} />
-            <Route path="iqra-1" element={<IQRA1 />} />
-            <Route path="iqra-2" element={<IQRA2 />} />
-            <Route path="iqra-3" element={<IQRA3 />} />
-            <Route path="iqra-4" element={<IQRA4 />} />
-            <Route path="iqra-5" element={<IQRA5 />} />
-            <Route path="iqra-6" element={<IQRA6 />} />
+
             {/* Direct Test Route for Verse Studio */}
             <Route path="verse-studio" element={<VerseStudio isOpen={true} onClose={() => navigate('/')} />} />
           </Route>

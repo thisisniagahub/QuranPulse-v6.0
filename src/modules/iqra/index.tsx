@@ -15,8 +15,10 @@ import VocabBuilder from './VocabBuilder';
 import IqraDigitalReader from './IqraDigitalReader';
 import IqraInteractiveCoach from './IqraInteractiveCoach';
 import IqraGameEngine from './game/IqraGameEngine';
+import IqraHub from './IqraHub';
+import IqraReaderView from './IqraReaderView';
 
-type IqraMode = 'DIGITAL' | 'READ' | 'COACH' | 'VISION_COACH' | 'TUTORIALS' | 'VOCAB' | 'ANALYTICS' | 'GAMES' | 'INTERACTIVE';
+type IqraMode = 'DIGITAL' | 'READ' | 'COACH' | 'VISION_COACH' | 'TUTORIALS' | 'VOCAB' | 'ANALYTICS' | 'GAMES' | 'INTERACTIVE' | 'MENU';
 
 interface IqraProps {
     user?: UserProfile;
@@ -24,7 +26,9 @@ interface IqraProps {
 }
 
 const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
-    const [mode, setMode] = useState<IqraMode>('DIGITAL');
+    const [mode, setMode] = useState<IqraMode>('MENU');
+    const [selectedPage, setSelectedPage] = useState(0);
+    const [selectedVolume, setSelectedVolume] = useState(1);
     const navigate = useNavigate();
 
     const modes = [
@@ -39,12 +43,24 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
         { id: 'ANALYTICS' as IqraMode, icon: 'fa-chart-pie', label: 'Stats' },
     ];
 
+    const immersiveModes = ['DIGITAL', 'INTERACTIVE', 'GAMES', 'COACH', 'VISION_COACH', 'READ'];
+    const isImmersive = immersiveModes.includes(mode);
+
     const renderContent = () => {
         switch (mode) {
             case 'DIGITAL':
-                return <IqraDigitalReader onClose={() => setMode('READ')} />;
+                // New User Requested UI
+                return (
+                    <IqraReaderView
+                        volume={selectedVolume}
+                        pageIndex={selectedPage}
+                        onBack={() => setMode('MENU')}
+                        onNext={() => setSelectedPage(prev => prev + 1)}
+                        onPrev={() => setSelectedPage(prev => Math.max(0, prev - 1))}
+                    />
+                );
             case 'INTERACTIVE':
-                return <IqraInteractiveCoach onClose={() => setMode('DIGITAL')} />;
+                return <IqraInteractiveCoach onClose={() => setMode('MENU')} />;
             case 'GAMES':
                 return <IqraGameEngine />;
             case 'READ':
@@ -52,22 +68,38 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
             case 'VOCAB':
                 return <VocabBuilder isDark={true} />;
             case 'TUTORIALS':
-                return <IqraTutorials onBack={() => setMode('DIGITAL')} />;
+                // Tutorials might need layout, but let's keep it immersive for now or strictly controlled
+                return <IqraTutorials onBack={() => setMode('MENU')} />;
             case 'ANALYTICS':
-                return <IqraAnalytics onBack={() => setMode('DIGITAL')} />;
+                return <IqraAnalytics onBack={() => setMode('MENU')} />;
             case 'VISION_COACH':
-                return <IqraVisionCoach onClose={() => setMode('DIGITAL')} />;
+                return <IqraVisionCoach onClose={() => setMode('MENU')} />;
             case 'COACH':
                 return <IqraVoiceCoach />;
+            case 'ANALYTICS':
+                return <IqraAnalytics onBack={() => setMode('MENU')} />;
+            case 'MENU':
             default:
-                return <IqraDigitalReader />;
+                return <IqraHub onSelectPage={(vol, idx) => {
+                    setSelectedVolume(vol);
+                    setSelectedPage(idx);
+                    setMode('DIGITAL');
+                }} />;
         }
     };
+
+    if (isImmersive) {
+        return (
+            <div className="h-full w-full overflow-hidden bg-background-dark">
+                {renderContent()}
+            </div>
+        );
+    }
 
     return (
         <div className="h-full flex flex-col p-4 pb-24 overflow-y-auto">
             {/* Cinematic Header Poster */}
-            <div className="relative w-full h-48 rounded-[2.5rem] overflow-hidden mb-8 shadow-2xl border border-white/10">
+            <div className="relative w-full h-48 rounded-[2.5rem] overflow-hidden mb-8 shadow-2xl border border-white/10 shrink-0">
                 <img
                     src="/src/assets/iqra/iqra-hero.png"
                     className="w-full h-full object-cover"
@@ -86,7 +118,7 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
             </div>
 
             {/* Mode Selector - Scrollable Horizontal */}
-            <div className="flex gap-2 mb-8 overflow-x-auto no-scrollbar pb-2 px-1">
+            <div className="flex gap-2 mb-8 overflow-x-auto no-scrollbar pb-2 px-1 shrink-0">
                 {modes.map((item) => (
                     <button
                         key={item.id}

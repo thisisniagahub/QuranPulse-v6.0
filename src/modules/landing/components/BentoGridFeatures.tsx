@@ -9,7 +9,8 @@ const BentoCard: React.FC<{
     delay?: number;
     gradient?: string;
     hasPattern?: boolean;
-}> = ({ title, description, icon, className, delay = 0, gradient = "from-slate-800 to-slate-900", hasPattern = false }) => (
+    stat?: string; // New: Add statistic
+}> = ({ title, description, icon, className, delay = 0, gradient = "from-slate-800 to-slate-900", hasPattern = false, stat }) => (
     <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         whileInView={{ opacity: 1, scale: 1 }}
@@ -19,7 +20,7 @@ const BentoCard: React.FC<{
     >
         {/* Subtle Pattern Overlay */}
         {hasPattern && (
-            <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='white' stroke-width='0.5' /%3E%3C/svg%3E")`, backgroundSize: '40px 40px' }}></div>
+            <div className="absolute inset-0 opacity-[0.03] group-hover:opacity-[0.07] transition-opacity duration-700 pointer-events-none bg-pattern-grid"></div>
         )}
 
         {/* Glow Effect */}
@@ -35,6 +36,9 @@ const BentoCard: React.FC<{
                 <i className={`fa-solid ${icon} text-lg`}></i>
             </div>
             <div>
+                {stat && (
+                    <div className="text-3xl font-black text-cyan-400 mb-1 tracking-tight">{stat}</div>
+                )}
                 <h3 className="text-xl font-bold text-white mb-2 group-hover:text-cyan-300 transition-colors tracking-tight">{title}</h3>
                 <p className="text-sm text-slate-400 leading-relaxed font-light group-hover:text-slate-300 transition-colors">{description}</p>
             </div>
@@ -60,7 +64,8 @@ export const BentoGridFeatures: React.FC = () => {
                     </p>
                 </motion.div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:grid-cols-[2fr_1fr_1fr] lg:grid-rows-2 h-auto lg:h-[650px]">
+                {/* Main Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:grid-cols-[2fr_1fr_1fr] lg:grid-rows-[300px_300px_300px] h-auto">
 
                     {/* Hero Feature: Quran */}
                     <BentoCard
@@ -72,41 +77,54 @@ export const BentoGridFeatures: React.FC = () => {
                         hasPattern={true}
                     />
 
-                    {/* Smart Deen */}
+                    {/* Smart Deen - Ustaz AI */}
                     <BentoCard
                         title="Ustaz AI 2.0"
-                        description="Powered by Gemini 2.5 Flash. Hybrid Cloud Intelligence with Neural Voice & Shafi'i Fiqh compliance."
+                        description="Hybrid Cloud Intelligence with Neural Voice & Shafi'i Fiqh compliance."
                         icon="fa-user-astronaut"
-                        className="lg:col-span-1 bg-gradient-to-br from-[#1e1b4b] to-[#0f172a]"
+                        className="lg:col-span-1 lg:row-span-2 bg-gradient-to-br from-[#1e1b4b] to-[#0f172a]"
                         delay={1}
                         hasPattern={true}
-                    />
-
-                    {/* Prayer & Adhan */}
-                    <BentoCard
-                        title="Precision Prayer"
-                        description="GPS-accurate times with beautiful Adhan notifications and a majestic geometric Qibla compass."
-                        icon="fa-mosque"
-                        className="lg:col-span-1 bg-gradient-to-br from-[#064e3b] to-[#022c22]"
-                        delay={2}
+                        stat="24/7"
                     />
 
                     {/* Iqra */}
                     <BentoCard
                         title="Iqra Learning"
-                        description="Master Arabic reading with interactive voice recognition feedback and digital vision coaching."
+                        description="Master Arabic reading with interactive voice recognition feedback."
                         icon="fa-graduation-cap"
                         className="lg:col-span-1 bg-gradient-to-br from-[#1e3a8a] to-[#1e1b4b]"
                         delay={3}
+                        stat="6 Volumes"
                     />
 
-                    {/* Souq */}
+                    {/* Prayer Stats */}
                     <BentoCard
-                        title="Halal Souq"
-                        description="Curated marketplace for premium Islamic lifestyle products, digital assets, and Barakah-infused art."
-                        icon="fa-gem"
-                        className="lg:col-span-1 bg-gradient-to-br from-[#450a0a] to-[#000000]"
+                        title="Global Prayers"
+                        description="Muslims praying on time worldwide with our precision GPS."
+                        icon="fa-users"
+                        className="lg:col-span-1 bg-gradient-to-br from-[#064e3b] to-[#022c22]"
+                        delay={2}
+                        stat="10k+"
+                    />
+
+                    {/* Audio Gen */}
+                    <BentoCard
+                        title="Neural Khatibs"
+                        description="AI-generated Khutbah summaries delivered in immersive audio."
+                        icon="fa-headphones-simple"
+                        className="lg:col-span-1 bg-gradient-to-br from-[#4c1d95] to-[#2e1065]"
                         delay={4}
+                    />
+
+                    {/* Analytics */}
+                    <BentoCard
+                        title="Deen Analytics"
+                        description="Track your spiritual growth with detailed charts and insights."
+                        icon="fa-chart-pie"
+                        className="md:col-span-2 bg-gradient-to-br from-[#0f172a] via-[#1e293b] to-[#0f172a]"
+                        delay={5}
+                        stat="Verified Growth"
                     />
                 </div>
             </div>

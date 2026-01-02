@@ -1,0 +1,528 @@
+[
+  {
+    "page": 1,
+    "title": "Cover",
+    "grid": [],
+    "teacher_notes": [
+      "IQRA 4",
+      "HOME QURAN",
+      "AL FATEH"
+    ]
+  },
+  {
+    "page": 2,
+    "title": "BARIS BAWAH (Kasrah)",
+    "focus": "Distinguishing Fatha (A) and Kasrah (I)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "تِ تَ",
+        "tengah_kanan": "دِ دَ",
+        "tengah_kiri": "نِ نَ",
+        "kiri": "مِ مَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "بَ بِ",
+        "tengah": "بَ بِ",
+        "kiri": "تَ تِ"
+      },
+      {
+        "baris": "3",
+        "kanan": "نَبَتَ",
+        "tengah": "نَبَتِ",
+        "kiri": "نَجِسَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "بَلَدَ",
+        "tengah": "بَلَدِ",
+        "kiri": "حَسَنِ"
+      },
+      {
+        "baris": "5",
+        "kanan": "عَمِلَ",
+        "tengah_kanan": "شَهِدَ",
+        "tengah_kiri": "فَهِمَ",
+        "kiri": "لَزِمَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "بِ تِ جِ حِ خِ",
+        "tengah": "دِ ذِ رِ زِ",
+        "kiri": "فِ قِ كِ مِ"
+      }
+    ]
+  },
+  {
+    "page": 3,
+    "title": "ADA ALIF BACA PANJANG",
+    "focus": "Mad Thabi'i (Alif)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "حَاضِرَاتِ",
+        "tengah": "عَابِدَاتِ",
+        "kiri": "خَاشِعَاتِ"
+      },
+      {
+        "baris": "2",
+        "kanan": "عَقِبَهَا",
+        "tengah": "غَنَامِيَا",
+        "kiri": "لَعِبَتِ"
+      },
+      {
+        "baris": "3",
+        "kanan": "رَافِعَاتِ",
+        "tengah": "نَازِعَاتِ",
+        "kiri": "نَاشِطَاتِ"
+      },
+      {
+        "baris": "4",
+        "kanan": "صَدَقَتِ",
+        "tengah": "وَمَلَىٰ",
+        "kiri": "فَمَلَىٰ"
+      },
+      {
+        "baris": "5",
+        "kanan": "زَكَاتِكَ",
+        "tengah": "فَوَاحِشَ",
+        "kiri": "لَوَاقِعَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "فَهَالِكَ",
+        "tengah": "جَنَاحِكَ",
+        "kiri": "جَرَيْتَ"
+      },
+      {
+        "baris": "7",
+        "kanan": "كَذَلِكَ",
+        "tengah": "مَغَارِبَ",
+        "kiri": "مَضَاجِعَ"
+      },
+      {
+        "baris": "8",
+        "kanan": "لَهَاتِفَ",
+        "tengah": "مَنَامِهَا",
+        "kiri": "مَرَاضِعَ"
+      }
+    ]
+  },
+  {
+    "page": 4,
+    "title": "MAD ASLI (YA)",
+    "focus": "Kasrah followed by Ya = 2 Harakat",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "بِي",
+        "tengah_kanan": "جِي",
+        "tengah_kiri": "نِي",
+        "kiri": "لِي",
+        "fokus": "فِي"
+      },
+      {
+        "baris": "2",
+        "kanan": "فَاعِلَ",
+        "tengah": "فِيعَالَ",
+        "kiri": "قِتَالًا"
+      },
+      {
+        "baris": "3",
+        "kanan": "وَاعَدَ",
+        "tengah": "مِيعَادَ",
+        "kiri": "يَسَارَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "بَاصِرَ",
+        "tengah_kanan": "بَصِيرِ",
+        "tengah_kiri": "قَادِرَ",
+        "kiri": "قَدِيرِ"
+      },
+      {
+        "baris": "5",
+        "kanan": "سَامِعَ",
+        "tengah_kanan": "سَمِيعِ",
+        "tengah_kiri": "حَاكِمَ",
+        "kiri": "حَكِيمِ"
+      },
+      {
+        "baris": "6",
+        "kanan": "بَشِيرَ",
+        "tengah_kanan": "نَذِيرِ",
+        "tengah_kiri": "كَبِيرِ",
+        "kiri": "صَغِيرِ"
+      }
+    ]
+  },
+  {
+    "page": 5,
+    "title": "BEZAKAN PANJANG DAN PENDEK",
+    "focus": "Distinguish long and short vowels",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "خَشَعَ",
+        "tengah": "خَاشِعِينَ",
+        "kiri": "خَاشِعَاتِ"
+      },
+      {
+        "baris": "2",
+        "kanan": "خَضَعَ",
+        "tengah": "خَاضِعِينَ",
+        "kiri": "صَغِيرَكَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "حَفِظَ",
+        "tengah": "حَافِظِينَ",
+        "kiri": "حَافِظَاتِ"
+      },
+      {
+        "baris": "4",
+        "kanan": "رَوَاسِيَ",
+        "tengah": "لَأَزِيدَ",
+        "kiri": "طَالِبِينَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "صَدَقَ",
+        "tengah": "صَادِقِينَ",
+        "kiri": "صَدِقَاتِ"
+      },
+      {
+        "baris": "6",
+        "kanan": "حَضَرَ",
+        "tengah": "حَاضِرِينَ",
+        "kiri": "حَاضِرَاتِ"
+      },
+      {
+        "baris": "7",
+        "kanan": "لَعِبَ",
+        "tengah": "لَاعِبِينَ",
+        "kiri": "لَاعِبَاتِ"
+      }
+    ]
+  },
+  {
+    "page": 6,
+    "title": "HII (PRONOUN HA)",
+    "focus": "Reading the inverted kasrah mark",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "لَفِيهِ",
+        "tengah_kanan": "هَذِهِ",
+        "tengah_kiri": "هَلَكَ",
+        "kiri": "نَهَرَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "هَمَزَ",
+        "tengah_kanan": "شَهِدَ",
+        "tengah_kiri": "وَبِهِ",
+        "kiri": "فِكْرَةِ"
+      },
+      {
+        "baris": "3",
+        "kanan": "هَدَمَ",
+        "tengah_kanan": "فِيهِمَا",
+        "tengah_kiri": "أَبِيهِ",
+        "kiri": "عِبَادِهِ"
+      },
+      {
+        "baris": "4",
+        "kanan": "لَأَزِيدَ",
+        "tengah": "فِي جِيدِهَا",
+        "kiri": "بِبَلَغِهِ"
+      },
+      {
+        "baris": "5",
+        "kanan": "بِغَلِيظِ",
+        "tengah": "بِضَنِينِ",
+        "kiri": "وَجَسَادِهِ"
+      },
+      {
+        "baris": "6",
+        "kanan": "وَطَاغِينَ",
+        "tengah": "بِيَمِينِكَ",
+        "kiri": "مِيثَاقِهِ"
+      }
+    ]
+  },
+  {
+    "page": 7,
+    "title": "DRILL",
+    "focus": "Mixed Practice",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "طَاهِرِينَ",
+        "tengah": "خَالِدِينَ",
+        "kiri": "شُهُودِهِ"
+      },
+      {
+        "baris": "2",
+        "kanan": "ظَالِمِينَ",
+        "tengah": "ثَاقِفِينَ",
+        "kiri": "حِسَابِهِ"
+      },
+      {
+        "baris": "3",
+        "kanan": "لَهَاتِفَ",
+        "tengah": "زَكَاتِكَ",
+        "kiri": "ءَاذَانِهِ"
+      },
+      {
+        "baris": "4",
+        "kanan": "حَافِظِينَ",
+        "tengah": "سَالِكِينَ",
+        "kiri": "مَوَاضِعِهِ"
+      },
+      {
+        "baris": "5",
+        "kanan": "طَالِبِينَ",
+        "tengah": "ذَاكِرِينَ",
+        "kiri": "أَصَابِعِهِ"
+      },
+      {
+        "baris": "6",
+        "kanan": "فَهَالِكَ",
+        "tengah": "مَوَالِيَ",
+        "kiri": "بِزِيَادِهِ"
+      },
+      {
+        "baris": "7",
+        "kanan": "قِيَامَى",
+        "tengah": "مَسَاكِينَ",
+        "kiri": "بِنَاصِرِهِ"
+      }
+    ]
+  },
+  {
+    "page": 8,
+    "title": "TA MARBUTOH",
+    "focus": "Reading Ta Marbuta (closed Ta)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "فَاتِحَةِ",
+        "tengah_kanan": "ءَاخِرَةِ",
+        "tengah_kiri": "رَافِقَةِ",
+        "kiri": "غَبَرَةِ"
+      },
+      {
+        "baris": "2",
+        "kanan": "عَمِلَ",
+        "tengah_kanan": "صَالِحَ",
+        "tengah_kiri": "ءَالِهَةِ",
+        "kiri": "حِجَارَةِ"
+      },
+      {
+        "baris": "3",
+        "kanan": "وَنَادَى",
+        "tengah_kanan": "خَطَايَ",
+        "tengah_kiri": "وَأَبِيهِ",
+        "kiri": "بَصَرِهِ"
+      },
+      {
+        "baris": "4",
+        "kanan": "عَقِيمَ",
+        "tengah_kanan": "مَحِيصَ",
+        "tengah_kiri": "دَاحِضَةِ",
+        "kiri": "غَاشِيَةِ"
+      },
+      {
+        "baris": "5",
+        "kanan": "مَضَاجِعَ",
+        "tengah_kanan": "ءَمِنِينَ",
+        "tengah_kiri": "طَعَامِهِ",
+        "kiri": "وَلَدِهِ"
+      },
+      {
+        "baris": "6",
+        "kanan": "بِصِحَافِ",
+        "tengah_kanan": "مَرِيضَ",
+        "tengah_kiri": "زَبَانِيَةِ",
+        "kiri": "قَتَرَةِ"
+      }
+    ]
+  },
+  {
+    "page": 9,
+    "title": "FI = FII",
+    "focus": "Reading drill with Ya endings",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "سَمِيعِ",
+        "tengah_kanan": "بَصِيرِ",
+        "tengah_kiri": "حَامِيَةِ",
+        "kiri": "عَصَانِي"
+      },
+      {
+        "baris": "2",
+        "kanan": "لَطِيفَ",
+        "tengah_kanan": "خَبِيرَ",
+        "tengah_kiri": "حَفِظَتِ",
+        "kiri": "بِبَنِي"
+      },
+      {
+        "baris": "3",
+        "kanan": "شَفَاعَةِ",
+        "tengah_kanan": "صَغِيرِ",
+        "tengah_kiri": "بَطِيئِهِ",
+        "kiri": "مَقَامِي"
+      },
+      {
+        "baris": "4",
+        "kanan": "عَزِيزِ",
+        "tengah_kanan": "حَكِيمِ",
+        "tengah_kiri": "نِعَاجِهِ",
+        "kiri": "عَذَابِي"
+      },
+      {
+        "baris": "5",
+        "kanan": "حَلِيمِ",
+        "tengah_kanan": "قَدِيرِ",
+        "tengah_kiri": "نَاصِيَةِ",
+        "kiri": "كَذِبَةِ"
+      },
+      {
+        "baris": "6",
+        "kanan": "نَوَاصِي",
+        "tengah_kanan": "مِيعَادَ",
+        "tengah_kiri": "تَجِرَةَ",
+        "kiri": "فَطَرَنِي"
+      },
+      {
+        "baris": "7",
+        "kanan": "شَاكِرِ",
+        "tengah_kanan": "شَاطِئِ",
+        "tengah_kiri": "فِي نَارِهِ",
+        "kiri": "فِي عَقِبِهِ"
+      }
+    ]
+  },
+  {
+    "page": 10,
+    "title": "BARIS DEPAN (BU)",
+    "focus": "Dhommah (u sound)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "بَ بِ بُ",
+        "tengah_kanan": "تَ تِ تُ",
+        "tengah_kiri": "ثَ ثِ ثُ",
+        "kiri": "جَ جِ جُ"
+      },
+      {
+        "baris": "2",
+        "kanan": "دَ دِ دُ",
+        "tengah_kanan": "ذَ ذِ ذُ",
+        "tengah_kiri": "رَ رِ رُ",
+        "kiri": "زَ زِ زُ"
+      },
+      {
+        "baris": "3",
+        "kanan": "فَعَلَ",
+        "tengah_kanan": "فُعِلَ",
+        "tengah_kiri": "كَتَبَ",
+        "kiri": "كُتِبَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "قَرَأَ",
+        "tengah_kanan": "قُرِئَ",
+        "tengah_kiri": "ضَرَبَ",
+        "kiri": "ضُرِبَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "حَسُنَ",
+        "tengah_kanan": "فَهُوَ",
+        "tengah_kiri": "يَمُنُ",
+        "kiri": "صُحُمَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "لَؤُمَ",
+        "tengah_kanan": "لَأُمَّ",
+        "tengah_kiri": "قَرُبَ",
+        "kiri": "كَرُمَ"
+      },
+      {
+        "baris": "7",
+        "kanan": "رَجُلُ",
+        "tengah_kanan": "عَظُمَ",
+        "tengah_kiri": "كَثُرَ",
+        "kiri": "رُسُلُ"
+      }
+    ]
+  },
+  {
+    "page": 11,
+    "title": "DRILL DHOMMAH",
+    "focus": "Reading sentences with Dhommah",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "ظُلُمَاتُ",
+        "tengah": "كَوَاكِبُ",
+        "kiri": "وَمُهِينُ"
+      },
+      {
+        "baris": "2",
+        "kanan": "بِمِثْلِهِ",
+        "tengah": "حُمِلَتِ",
+        "kiri": "فَخُشِيَتِ"
+      },
+      {
+        "baris": "3",
+        "kanan": "مَقَالِيدُ",
+        "tengah": "سَيُصِيبُ",
+        "kiri": "وَيَرِثُهَا"
+      },
+      {
+        "baris": "4",
+        "kanan": "صَدِقِينَ",
+        "tengah": "مَا يَغِيظُ",
+        "kiri": "غَاشِيَةِ"
+      },
+      {
+        "baris": "5",
+        "kanan": "بِغُلَمِ",
+        "tengah": "وَيُمِيتُ",
+        "kiri": "فَصِلُهُ"
+      },
+      {
+        "baris": "6",
+        "kanan": "سَرَابِيلَ",
+        "tengah": "صَوَامِعُ",
+        "kiri": "بِكَلِمَتِهِ"
+      },
+      {
+        "baris": "7",
+        "kanan": "سَتَجِدُنِي",
+        "tengah": "فَتُثِيرُ",
+        "kiri": "فِي صُحُفِ"
+      },
+      {
+        "baris": "8",
+        "kanan": "وَزَادَهُمَا",
+        "tengah": "طَامِعِينَ",
+        "kiri": "شِيعَتِهِ"
+      }
+    ]
+  },
+  {
+    "page": 12,
+    "title": "Back Cover",
+    "grid": [],
+    "teacher_notes": [
+      "Avengers Logo"
+    ]
+  }
+]

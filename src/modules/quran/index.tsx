@@ -165,10 +165,10 @@ const QuranContent: React.FC = () => {
     };
 
     return (
-        <div className="h-full flex flex-col bg-slate-950 overflow-hidden relative">
+        <div className="h-full flex flex-col bg-[#020617] overflow-hidden relative">
             {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-950 to-black pointer-events-none" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A1E42] via-[#020617] to-black pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#00BFFF]/5 blur-3xl rounded-full pointer-events-none" />
 
             {/* === LIST VIEW === */}
             {view === 'LIST' && (
@@ -367,7 +367,7 @@ const QuranContent: React.FC = () => {
             />
 
             {/* XP Toast */}
-            <div className={`fixed top-24 left-1/2 -translate-x-1/2 bg-slate-900/90 backdrop-blur-md border border-amber-500/30 text-white px-6 py-3 rounded-full shadow-2xl z-[100] flex items-center gap-3 transition-all duration-500 ${xpToast.show ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0 pointer-events-none'}`}>
+            <div className={`fixed top-24 left-1/2 -translate-x-1/2 bg-[#0A1E42]/90 backdrop-blur-md border border-amber-500/30 text-white px-6 py-3 rounded-full shadow-2xl z-[100] flex items-center gap-3 transition-all duration-500 ${xpToast.show ? 'translate-y-0 opacity-100' : '-translate-y-8 opacity-0 pointer-events-none'}`}>
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-black font-bold text-xs shadow-lg shadow-amber-500/20">
                     +{xpToast.amount}
                 </div>

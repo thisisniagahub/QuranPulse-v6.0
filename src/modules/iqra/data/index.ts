@@ -1,14 +1,9 @@
 import { IqraPage, IqraBook } from '../../../types';
 import { TajweedTutorial } from './types';
-import { IQRA_1 } from './iqra-1';
-import { IQRA_2 } from './iqra-2';
-import { IQRA_3 } from './iqra-3';
-import { IQRA_4 } from './iqra-4';
-import { IQRA_5 } from './iqra-5';
-import { IQRA_6 } from './iqra-6';
+import { IQRA_MASTER_DATA } from './master-index';
 
 export * from './types';
-export { IQRA_1, IQRA_2, IQRA_3, IQRA_4, IQRA_5, IQRA_6 };
+export { IQRA_MASTER_DATA };
 
 // --- LEGACY MOCK DATA (Migrated from old data.ts) ---
 export const MOCK_IQRA_PAGE_1: IqraPage = {

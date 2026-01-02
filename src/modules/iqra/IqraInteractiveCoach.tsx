@@ -185,8 +185,8 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
 
             {/* Background Orbs & Effects */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-0 -left-20 w-[30rem] h-[30rem] bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
-                <div className="absolute bottom-0 -right-20 w-[30rem] h-[30rem] bg-blue-600/10 rounded-full blur-[120px] animate-pulse"></div>
+                <div className="absolute top-0 -left-20 w-64 h-64 md:w-[30rem] md:h-[30rem] bg-primary/10 rounded-full blur-[80px] md:blur-[120px] animate-pulse"></div>
+                <div className="absolute bottom-0 -right-20 w-64 h-64 md:w-[30rem] md:h-[30rem] bg-blue-600/10 rounded-full blur-[80px] md:blur-[120px] animate-pulse"></div>
                 <div className="absolute inset-0 bg-pattern opacity-[0.03]"></div>
             </div>
 
@@ -197,6 +197,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                         <button
                             onClick={onClose}
                             className="w-12 h-12 flex items-center justify-center rounded-2xl bg-white/5 text-slate-400 hover:text-white hover:bg-white/10 transition-all border border-white/10"
+                            aria-label="Exit Coach Mode"
                         >
                             <ArrowLeft size={22} />
                         </button>
@@ -221,9 +222,9 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                     </div>
 
                     <div className="flex items-center gap-6">
-                        <div className="flex items-center gap-2 text-red-500 font-black scale-110">
-                            <Heart className="fill-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]" size={24} />
-                            <span className="text-xl glow-text">{hearts}</span>
+                        <div className="flex items-center gap-2 text-red-500 font-black md:scale-110">
+                            <Heart className="fill-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]" size={20} />
+                            <span className="text-lg md:text-xl glow-text">{hearts}</span>
                         </div>
                     </div>
                 </div>
@@ -262,7 +263,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                                 <div className="flex justify-between items-end">
                                     <div className="space-y-1">
                                         <p className="text-primary font-black uppercase tracking-[0.4em] text-[10px] neon-glow-primary">Protocol.ACTIVE_TASK</p>
-                                        <h2 className="text-3xl font-black text-white glow-text uppercase leading-tight">{step.instruction || step.name}</h2>
+                                        <h2 className="text-2xl md:text-3xl font-black text-white glow-text uppercase leading-tight">{step.instruction || step.name}</h2>
                                     </div>
                                     <button
                                         onClick={() => setChatOpen(!chatOpen)}
@@ -276,7 +277,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                                     <div className="flex flex-col items-center space-y-12 py-10">
                                         <motion.div
                                             whileHover={{ scale: 1.02 }}
-                                            className="relative w-72 h-96 rounded-[3rem] overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.8)] border-4 border-white/5 hud-border scale-110"
+                                            className="relative w-64 h-80 md:w-72 md:h-96 rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.8)] border-4 border-[#00BFFF]/20 hud-border hover:scale-105 transition-transform"
                                         >
                                             <img
                                                 src={`/src/assets/iqra/iqra-lesson-${step.id < 12 ? 1 : 2}.png`}
@@ -300,7 +301,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                                 )}
 
                                 {step.type === 'insight' && (
-                                    <div className="flex flex-col items-center justify-center py-20 space-y-10">
+                                    <div className="flex flex-col items-center justify-center py-10 md:py-20 space-y-6 md:space-y-10">
                                         <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 neon-glow-primary">
                                             <Sparkles size={40} className="text-primary" />
                                         </div>
@@ -313,15 +314,16 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                                 )}
 
                                 {step.type === 'intro' && (
-                                    <div className="flex flex-col items-center space-y-12 py-10 scale-105">
+                                    <div className="flex flex-col items-center space-y-8 py-6 md:space-y-12 md:py-10">
                                         <motion.button
                                             whileHover={{ scale: 1.05, rotateY: 10 }}
                                             whileTap={{ scale: 0.95 }}
                                             onClick={() => speak(step.letter)}
-                                            className="relative w-64 h-80 rounded-[3rem] glass-hud border border-white/10 flex flex-col items-center justify-center gap-6 shadow-[0_40px_100px_rgba(0,0,0,0.6)] group preserve-3d perspective-1000 hud-border"
+                                            className="relative w-full max-w-[16rem] h-64 md:w-64 md:h-80 rounded-[2.5rem] md:rounded-[3rem] glass-hud border border-white/10 flex flex-col items-center justify-center gap-6 shadow-[0_40px_100px_rgba(0,0,0,0.6)] group preserve-3d perspective-1000 hud-border"
                                         >
                                             <div className="absolute inset-0 bg-pattern opacity-[0.05]"></div>
-                                            <span className="text-[10rem] font-arabic text-white glow-text transition-all group-hover:scale-110 drop-shadow-[0_0_20px_rgba(var(--primary-rgb),0.5)]">{step.letter}</span>
+                                            <div className="absolute inset-0 bg-pattern opacity-[0.05]"></div>
+                                            <span className="text-8xl md:text-[10rem] font-arabic text-white glow-text transition-all group-hover:scale-110 drop-shadow-[0_0_20px_rgba(var(--primary-rgb),0.5)]">{step.letter}</span>
                                             <div className="flex flex-col items-center gap-1">
                                                 <span className="uppercase font-black text-primary tracking-[0.4em] text-xs neon-glow-primary">{step.sound}</span>
                                                 <Volume2 size={24} className="text-white/20 group-hover:text-primary transition-colors" />
@@ -365,14 +367,14 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                                 )}
 
                                 {step.type === 'practice' && (
-                                    <div className="space-y-16 py-10 scale-110">
+                                    <div className="space-y-10 py-6 md:space-y-16 md:py-10">
                                         <div className={getResponsiveGridClass(step.letters.length)} dir="rtl">
                                             {step.letters.map((l, i) => (
                                                 <motion.button
                                                     key={i}
                                                     whileHover={{ y: -5, scale: 1.05 }}
                                                     onClick={() => speak(l)}
-                                                    className="w-full h-44 rounded-full glass-hud border-2 border-primary/20 flex items-center justify-center text-8xl font-arabic transition-all shadow-[0_10px_30px_rgba(0,0,0,0.4)] text-white hover:border-primary hover:shadow-[0_0_30px_rgba(0,191,255,0.4)] group bg-black/20"
+                                                    className="w-full h-32 md:h-44 rounded-[2rem] md:rounded-full glass-hud border-2 border-primary/20 flex items-center justify-center text-6xl md:text-8xl font-arabic transition-all shadow-[0_10px_30px_rgba(0,0,0,0.4)] text-white hover:border-primary hover:shadow-[0_0_30px_rgba(0,191,255,0.4)] group bg-black/20"
                                                 >
                                                     <span className="group-hover:neon-glow-primary transition-all drop-shadow-[0_0_10px_rgba(0,191,255,0.5)]">{l}</span>
                                                 </motion.button>
@@ -391,7 +393,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                                             <button
                                                 key={i}
                                                 onClick={() => { if (isCorrect === null) { setSelectedOption(opt); speak(opt); } }}
-                                                className={`p-14 rounded-[3rem] border-2 text-9xl font-arabic flex items-center justify-center transition-all shadow-[0_30px_60px_rgba(0,0,0,0.6)] ${selectedOption === opt ? 'border-primary bg-primary/20 text-white neon-glow-primary shadow-primary/20' : 'glass-hud border-white/5 text-slate-500 hover:border-white/20 active:scale-95'}`}
+                                                className={`p-8 md:p-14 rounded-[2rem] md:rounded-[3rem] border-2 text-7xl md:text-9xl font-arabic flex items-center justify-center transition-all shadow-[0_30px_60px_rgba(0,0,0,0.6)] ${selectedOption === opt ? 'border-primary bg-primary/20 text-white neon-glow-primary shadow-primary/20' : 'glass-hud border-white/5 text-slate-500 hover:border-white/20 active:scale-95'}`}
                                             >
                                                 {opt}
                                             </button>
@@ -446,7 +448,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                                                 USTAZ_AI Stream
                                             </h3>
                                         </div>
-                                        <button onClick={() => setChatOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-slate-400 hover:text-white transition-all"><X size={20} /></button>
+                                        <button onClick={() => setChatOpen(false)} className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-slate-400 hover:text-white transition-all" aria-label="Close Chat"><X size={20} /></button>
                                     </div>
 
                                     <div className="space-y-8 relative z-10">

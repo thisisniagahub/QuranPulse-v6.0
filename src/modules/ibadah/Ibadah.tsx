@@ -10,12 +10,12 @@ import PrayerCard from './components/PrayerCard';
 
 // Color themes based on "Weather Widget" reference
 const PRAYER_THEMES = {
-    Subuh: { gradient: 'from-[#ff8c42] to-[#ff3c5f]', glow: 'shadow-orange-500/50', icon: 'fa-cloud-meatball' }, // Dawn Pink/Orange
-    Syuruk: { gradient: 'from-[#fdbb2d] to-[#22c1c3]', glow: 'shadow-yellow-500/50', icon: 'fa-sun' }, // Rising Sun
-    Zohor: { gradient: 'from-[#4facfe] to-[#00f2fe]', glow: 'shadow-blue-400/50', icon: 'fa-sun' }, // Noon Blue
-    Asar: { gradient: 'from-[#6a11cb] to-[#2575fc]', glow: 'shadow-purple-500/50', icon: 'fa-cloud-sun' }, // Afternoon Purple/Blue
-    Maghrib: { gradient: 'from-[#fa709a] to-[#fee140]', glow: 'shadow-pink-400/50', icon: 'fa-moon' }, // Dusk Pink/Yellow
-    Isyak: { gradient: 'from-[#1e3c72] to-[#2a5298]', glow: 'shadow-indigo-500/50', icon: 'fa-star-and-crescent' } // Night Deep Blue
+    Subuh: { gradient: 'from-[#ff8c42] to-[#ff3c5f]', glow: 'shadow-orange-500/50', icon: 'meteocons:sunrise-fill' }, // Dawn Pink/Orange
+    Syuruk: { gradient: 'from-[#fdbb2d] to-[#22c1c3]', glow: 'shadow-yellow-500/50', icon: 'meteocons:horizon-fill' }, // Rising Sun
+    Zohor: { gradient: 'from-[#4facfe] to-[#00f2fe]', glow: 'shadow-blue-400/50', icon: 'meteocons:clear-day-fill' }, // Noon Blue
+    Asar: { gradient: 'from-[#6a11cb] to-[#2575fc]', glow: 'shadow-purple-500/50', icon: 'meteocons:partly-cloudy-day-fill' }, // Afternoon Purple/Blue
+    Maghrib: { gradient: 'from-[#fa709a] to-[#fee140]', glow: 'shadow-pink-400/50', icon: 'meteocons:sunset-fill' }, // Dusk Pink/Yellow
+    Isyak: { gradient: 'from-[#1e3c72] to-[#2a5298]', glow: 'shadow-indigo-500/50', icon: 'meteocons:star-fill' } // Night Deep Blue
 };
 
 const Ibadah: React.FC = () => {
@@ -94,7 +94,7 @@ const Ibadah: React.FC = () => {
 
     // --- UI Elements ---
     const renderCompass = () => (
-        <div className="relative w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-br from-slate-900 to-slate-950 rounded-full flex items-center justify-center border-4 border-cyan-800 shadow-[0_0_50px_rgba(6,182,212,0.3)] mt-8">
+        <div className="relative w-72 h-72 sm:w-80 sm:h-80 bg-gradient-to-br from-[#0A1E42] to-[#020617] rounded-full flex items-center justify-center border-4 border-[#00BFFF]/30 shadow-[0_0_50px_rgba(0,191,255,0.2)] mt-8">
             {/* Compass background with North/South/East/West markers */}
             <motion.div
                 className="absolute inset-0 rounded-full"
@@ -195,14 +195,14 @@ const Ibadah: React.FC = () => {
     const renderMasjidHub = () => (
         <div className="w-full max-w-md space-y-6 mt-4 pb-24 animate-in fade-in slide-in-from-bottom-4">
             {/* Active Masjid Card */}
-            <div className="bg-slate-900 border border-emerald-500/30 rounded-3xl p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/5 rounded-full blur-2xl -mr-8 -mt-8"></div>
+            <div className="bg-[#0A1E42] border border-[#00BFFF]/30 rounded-3xl p-6 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-24 h-24 bg-[#00BFFF]/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
                 <div className="flex items-start justify-between mb-4">
                     <div>
-                        <h3 className="text-xl font-bold text-white">Masjid Al-Hidayah</h3>
+                        <h3 className="text-xl font-bold text-white font-[Montserrat]">Masjid Al-Hidayah</h3>
                         <p className="text-xs text-slate-400 italic">Kariah Gombak, Selangor</p>
                     </div>
-                    <div className="bg-emerald-500/20 text-emerald-400 p-2 rounded-xl">
+                    <div className="bg-[#00BFFF]/20 text-[#00BFFF] p-2 rounded-xl">
                         <i className="fa-solid fa-circle-check"></i>
                     </div>
                 </div>
@@ -239,18 +239,18 @@ const Ibadah: React.FC = () => {
             <div>
                 <h4 className="text-xs font-black uppercase tracking-[0.2em] text-slate-500 mb-3 ml-2">Tabung Infaq</h4>
                 <div className="grid grid-cols-1 gap-3">
-                    <div className="bg-gradient-to-br from-emerald-900/20 to-slate-900 border border-emerald-500/20 p-5 rounded-3xl relative overflow-hidden">
+                    <div className="bg-gradient-to-br from-[#1E3A5F]/30 to-[#0A1E42] border border-[#00BFFF]/20 p-5 rounded-3xl relative overflow-hidden">
                         <div className="flex justify-between items-start mb-4">
                             <div>
-                                <p className="text-sm font-bold text-white">Baik Pulih Bumbung</p>
+                                <p className="text-sm font-bold text-white font-[Montserrat]">Baik Pulih Bumbung</p>
                                 <p className="text-[10px] text-slate-400">Sasaran: RM 10,000</p>
                             </div>
-                            <span className="text-emerald-400 font-mono text-sm">45%</span>
+                            <span className="text-[#00BFFF] font-mono text-sm">45%</span>
                         </div>
                         <div className="w-full h-1.5 bg-slate-800 rounded-full mb-4">
-                            <div className="h-full bg-emerald-500 rounded-full" style={{ width: '45%' }}></div>
+                            <div className="h-full bg-[#00BFFF] rounded-full w-[45%]"></div>
                         </div>
-                        <button className="w-full py-2 bg-emerald-500 text-black text-xs font-black rounded-xl">CHIP-IN</button>
+                        <button className="w-full py-2 bg-[#00BFFF] text-[#0A1E42] text-xs font-black rounded-xl hover:bg-[#87CEEB] transition-colors">CHIP-IN</button>
                     </div>
                 </div>
             </div>
@@ -414,7 +414,7 @@ const Ibadah: React.FC = () => {
                         >
                             <div className="p-4 border-b border-slate-200 dark:border-white/10 flex justify-between items-center sticky top-0 bg-surface z-10 rounded-t-2xl">
                                 <h3 className="text-lg font-bold text-text-primary">Pilih Zon (JAKIM)</h3>
-                                <button onClick={() => setShowZoneModal(false)} className="w-8 h-8 rounded-full bg-card flex items-center justify-center text-slate-400 hover:text-white">
+                                <button onClick={() => setShowZoneModal(false)} className="w-8 h-8 rounded-full bg-card flex items-center justify-center text-slate-400 hover:text-white" aria-label="Close Zone Selection">
                                     <i className="fa-solid fa-xmark"></i>
                                 </button>
                             </div>

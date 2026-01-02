@@ -1,5 +1,4 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { Icon } from '@iconify/react';
 
 interface PrayerCardProps {
     name: string;
@@ -47,7 +46,7 @@ const PrayerCard: React.FC<PrayerCardProps> = ({
                     w-16 h-16 rounded-3xl flex items-center justify-center text-3xl
                     ${isNext ? 'bg-white/20 backdrop-blur-xl text-white' : 'bg-black/10 text-white/80'}
                 `}>
-                    <i className={`fa-solid ${icon}`}></i>
+                    <Icon icon={icon} className="text-3xl" />
                 </div>
             </div>
 

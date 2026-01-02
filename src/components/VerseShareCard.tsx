@@ -54,7 +54,7 @@ export const VerseShareCard: React.FC<VerseShareCardProps> = ({
 
   const handleDownload = async () => {
     if (!cardRef.current) return;
-    
+
     setIsGenerating(true);
     try {
       const canvas = await html2canvas(cardRef.current, {
@@ -62,7 +62,7 @@ export const VerseShareCard: React.FC<VerseShareCardProps> = ({
         scale: 2,
         useCORS: true,
       });
-      
+
       const link = document.createElement('a');
       link.download = `quranpulse-${verse.verse_key}.png`;
       link.href = canvas.toDataURL('image/png');
@@ -114,9 +114,8 @@ export const VerseShareCard: React.FC<VerseShareCardProps> = ({
             <button
               key={i}
               onClick={() => setSelectedTheme(i)}
-              className={`w-8 h-8 rounded-full ${t.bg} border-2 ${
-                selectedTheme === i ? 'border-white' : 'border-transparent'
-              } transition-all`}
+              className={`w-8 h-8 rounded-full ${t.bg} border-2 ${selectedTheme === i ? 'border-white' : 'border-transparent'
+                } transition-all`}
               title={t.name}
             />
           ))}
@@ -154,7 +153,7 @@ export const VerseShareCard: React.FC<VerseShareCardProps> = ({
 
           {/* Branding */}
           <div className="flex items-center justify-center gap-2 pt-4 border-t border-white/10">
-            <img src="/logo-full.png" alt="Quran Pulse" className="w-6 h-6" />
+            <img src="/logo-primary.png" alt="Quran Pulse" className="w-6 h-6 object-cover" />
             <span className={`text-xs font-bold ${theme.accent}`}>
               Quran Pulse
             </span>

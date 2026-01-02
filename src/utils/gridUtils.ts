@@ -16,5 +16,5 @@ export const getResponsiveGridClass = (itemCount: number): string => {
         lg: Math.min(itemCount, 6)
     };
 
-    return `grid grid-cols-${cols.base} sm:grid-cols-${cols.sm} md:grid-cols-${cols.md} lg:grid-cols-${cols.lg} gap-4`;
+    return `grid grid-cols-${cols.base} sm:grid-cols-${cols.sm} md:grid-cols-${cols.md} lg:grid-cols-${cols.lg} gap-2 sm:gap-4`;
 };

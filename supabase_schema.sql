@@ -158,3 +158,18 @@ create index idx_bookmarks_user_id on public.bookmarks(user_id);
 create index idx_reading_history_user_id on public.reading_history(user_id);
 create index idx_reading_history_session_date on public.reading_history(session_date);
 create index idx_ayahs_surah_number on public.ayahs(surah_number);
+-- ANALYTICS EVENTS
+create table public.analytics_events (
+  id uuid default uuid_generate_v4() primary key,
+  user_id text,
+  -- Can be 'anonymous' or UUID
+  name text not null,
+  properties jsonb default '{}'::jsonb,
+  timestamp timestamp with time zone default timezone('utc'::text, now())
+);
+alter table public.analytics_events enable row level security;
+create policy "Users can insert analytics" on public.analytics_events for
+insert with check (true);
+-- Public insert allowed for anon keys (validated by RLS if needed)
+create policy "Admins can view analytics" on public.analytics_events for
+select using (auth.role() = 'service_role');

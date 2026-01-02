@@ -4,6 +4,8 @@ import { AppStoreBadge, PlayStoreBadge } from './StoreBadges';
 import SmartDeen from '../../smart-deen/SmartDeen';
 import BottomNav from '../../../components/BottomNav';
 import { NavView } from '../../../types';
+import { Button } from '@/components/ui/Button';
+import { Icon } from '@iconify/react';
 
 interface HeroSectionProps {
     onGetStarted: () => void;
@@ -123,14 +125,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                         opacity: mockTheme === 'anmaat' ? 0.4 : 0.1,
                         scale: mockTheme === 'anmaat' ? 1.05 : 1
                     }}
-                    className="absolute inset-0 opacity-10 mix-blend-screen pointer-events-none"
-                    style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L100 50 L50 100 L0 50 Z' fill='none' stroke='white' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M50 20 L80 50 L50 80 L20 50 Z' fill='none' stroke='white' stroke-width='0.3' opacity='0.1'/%3E%3Ccircle cx='50' cy='50' r='5' fill='white' opacity='0.1'/%3E%3C/svg%3E")`,
-                        backgroundSize: '120px 120px'
-                    }}
+                    className="absolute inset-0 opacity-10 mix-blend-screen pointer-events-none bg-pattern-triangle"
                 />
 
-                <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(6,182,212,0.15) 1px, transparent 0)', backgroundSize: '40px 40px' }}></div>
+                <div className="absolute inset-0 opacity-20 bg-pattern-dots"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-[#0A1E42] via-[#0A1E42]/90 to-[#0A1E42]/40"></div>
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A1E42] via-transparent to-[#0A1E42]/60"></div>
 
@@ -163,7 +161,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                     </span>
                 </motion.div>
 
-                <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold font-serif leading-[1.1] tracking-tight mb-4 sm:mb-6">
+                <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black font-heading leading-[1.1] tracking-tighter mb-4 sm:mb-6">
                     <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-slate-200 to-slate-500">The Future of</span> <br />
                     <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-cyan-500 to-purple-500 animate-pulse-glow inline-block pb-2">
                         Islamic Intelligence
@@ -176,15 +174,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                 </motion.p>
 
                 <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-10 sm:mb-12 w-full sm:w-auto">
-                    <button onClick={onGetStarted} className="group relative w-full sm:w-auto px-8 py-4 bg-transparent overflow-hidden rounded-xl transition-all hover:scale-105 active:scale-95">
-                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-600 to-blue-600 group-hover:from-cyan-500 group-hover:to-blue-500 transition-colors"></div>
-                        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-                        <div className="relative flex items-center justify-center gap-3 text-white font-bold text-lg">
-                            <span>Get Started Free</span>
-                            <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                        </div>
-                        <div className="absolute -inset-1 bg-gradient-to-r from-cyan-400 to-blue-400 rounded-xl blur opacity-20 group-hover:opacity-40 transition-opacity"></div>
-                    </button>
+                    <Button
+                        onClick={onGetStarted}
+                        variant="glow"
+                        size="lg"
+                        className="w-full sm:w-auto text-lg font-bold py-4 rounded-xl"
+                        rightIcon={<i className="fa-solid fa-arrow-right text-sm"></i>}
+                    >
+                        Get Started Free
+                    </Button>
 
                     {/* NEW: RECITATION PULSE BUTTON */}
                     <button
@@ -246,7 +244,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
 
                         {/* ANMAAT ORNATE PATTERN IN MOCKUP */}
                         {mockTheme === 'anmaat' && (
-                            <div className="absolute inset-0 opacity-10 pointer-events-none" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='white' stroke-width='0.5' opacity='0.5'/%3E%3C/svg%3E")`, backgroundSize: '60px 60px' }}></div>
+                            <div className="absolute inset-0 opacity-10 pointer-events-none bg-pattern-anmaat"></div>
                         )}
 
                         {/* Dynamic Island */}
@@ -281,7 +279,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                     <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl"></div>
                                     <div className="flex justify-between items-start mb-2 relative z-10">
                                         <span className="text-[10px] uppercase tracking-wider text-cyan-400 font-bold">Next Prayer</span>
-                                        <i className="fa-solid fa-mosque text-slate-400 text-xs"></i>
+                                        <Icon icon="meteocons:partly-cloudy-day-fill" className="text-slate-400 text-lg" />
                                     </div>
                                     <h2 className="text-3xl font-bold text-white mb-1">Asr</h2>
                                     <p className="text-sm text-slate-300">4:23 PM <span className="text-[10px] text-slate-500 ml-2">(-0:45)</span></p>
@@ -294,7 +292,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                             if (i === 3) setActiveScreen('smart-deen');
                                         }} className="flex flex-col items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
                                             <div className={`w-12 h-12 rounded-xl border border-white/5 flex items-center justify-center ${i === 0 ? 'bg-cyan-500/20 text-cyan-400' : i === 3 ? 'bg-purple-500/20 text-purple-400' : 'bg-white/5 text-slate-400'}`}>
-                                                <i className={`fa-solid ${i === 0 ? 'fa-book-quran' : i === 1 ? 'fa-clock' : i === 2 ? 'fa-compass' : 'fa-robot'}`}></i>
+                                                {i === 0 ? <i className="fa-solid fa-book-quran"></i> :
+                                                    i === 1 ? <Icon icon="meteocons:clear-day-fill" className="text-lg" /> :
+                                                        i === 2 ? <i className="fa-solid fa-compass"></i> :
+                                                            <i className="fa-solid fa-robot"></i>}
                                             </div>
                                             <span className="text-[9px] text-slate-400">{item}</span>
                                         </div>
@@ -317,6 +318,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                                     <div className="flex gap-2 items-center">
                                         {/* Mock Theme Toggle */}
                                         <button
+                                            title="Toggle Theme"
+                                            aria-label="Toggle Theme"
                                             onClick={(e) => { e.stopPropagation(); setMockTheme(mockTheme === 'dark' ? 'anmaat' : 'dark'); }}
                                             className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all ${mockTheme === 'anmaat' ? 'bg-cyan-500 text-black shadow-[0_0_10px_rgba(6,182,212,0.5)]' : 'bg-slate-800 text-slate-400'}`}
                                         >

@@ -1,0 +1,34 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "G:/Downloads/IQRA-100"
+		}
+	],
+	"settings": {
+		"window.closeWhenEmpty": true,
+		"workbench.editor.enablePreviewFromCodeNavigation": true,
+		"workbench.editor.enablePreviewFromQuickOpen": true,
+		"workbench.editor.highlightModifiedTabs": true,
+		"workbench.editor.limit.enabled": true,
+		"workbench.editor.limit.excludeDirty": true,
+		"workbench.editor.limit.perEditorGroup": true,
+		"workbench.editor.preferHistoryBasedLanguageDetection": true,
+		"workbench.editor.revealIfOpen": true,
+		"workbench.editor.sharedViewState": true,
+		"workbench.editor.showTabIndex": true,
+		"workbench.editor.scrollToSwitchTabs": true,
+		"workbench.editor.pinnedTabsOnSeparateRow": true,
+		"workbench.editor.closeOnFileDelete": true,
+		"workbench.editor.centeredLayoutFixedWidth": true,
+		"workbench.editor.autoLockGroups": {
+			"mainThreadWebview-markdown.preview": true,
+			"antigravity.globalArtifactsEditorInput": true,
+			"antigravity.workflowEditor": true,
+			"antigravity.artifactsEditorInput": true
+		},
+		"workbench.editor.alwaysShowEditorActions": true
+	}
+}

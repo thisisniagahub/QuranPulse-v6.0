@@ -1,0 +1,13 @@
+torch>=2.0.0
+transformers>=4.30.0
+librosa>=0.10.0
+soundfile>=0.12.0
+accelerate>=0.20.0
+praat-parselmouth>=0.4.0
+tensorflow>=2.12.0
+tensorflow-hub>=0.13.0
+numpy<2.0.0
+protobuf==3.20.*
+fastapi
+uvicorn
+python-multipart

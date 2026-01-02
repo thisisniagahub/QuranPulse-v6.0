@@ -3,8 +3,9 @@ import { UserProfile, NavView } from '../../types';
 import { useGreeting } from '../../hooks/useGreeting';
 import { usePrayerTimes } from '../../hooks/usePrayerTimes';
 import BentoCard from './components/BentoCard';
-import HeroHeader from './components/HeroHeader';
-import PrayerTimesStrip from './components/PrayerTimesStrip';
+import PulseHero from './components/PulseHero';
+import UstazAiWidget from './components/UstazAiWidget';
+import DailyHikmah from './components/DailyHikmah';
 import ContinueReadingCard from './components/ContinueReadingCard';
 
 interface DashboardProps {
@@ -12,16 +13,11 @@ interface DashboardProps {
     onNavigate: (view: NavView) => void;
 }
 
-// --- VERSE STUDIO THEME (Single Unified Theme) ---
-const theme = {
-    bg: 'bg-background-dark',
-    accent: 'primary',
-    accentHex: '#5ab9ff',
-    gradient: 'from-[#0e3359]/60 via-[#051324]/80 to-[#051324]',
+gradient: 'from-[#0e3359]/60 via-[#051324]/80 to-[#051324]',
     glow: 'bg-primary/20',
-    border: 'border-white/20',
-    text: 'text-primary',
-    heroImage: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=2070&auto=format&fit=crop',
+        border: 'border-white/20',
+            text: 'text-primary',
+                heroImage: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=2070&auto=format&fit=crop',
 };
 
 // --- Local Components ---

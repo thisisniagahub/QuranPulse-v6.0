@@ -212,7 +212,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
 
             {/* The Logo Image */}
             <img
-              src="/logo-full.png"
+              src="/logo-primary.png"
               alt="Quran Pulse"
               className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(90,185,255,0.4)] relative z-10 transform group-hover:scale-105 transition-transform duration-500"
               onError={(e) => {

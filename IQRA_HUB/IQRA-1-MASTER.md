@@ -1,13 +1,15 @@
 ```markdown
-# PANDUAN LENGKAP IQRA HUB - JILID 1 (HURUF TUNGGAL)
-**Objektif:** Mengenal bentuk 28 Huruf Hijaiyah tunggal dan bunyi baris atas (Fathah) iaitu "A" (atau "O" untuk huruf tebal).
----
-## MUKA SURAT 1: MUKA DEPAN
-**(Logo & Tajuk)**
-- **Fokus:** Pengenalan IQRA 1. Huruf 'A' besar melambangkan permulaan (Alif).
----
-## MUKA SURAT 2: CARTA HURUF HIJAIYAH (ORIGINAL)
-**Fokus:** Peta keseluruhan huruf. Mengenal nama asal huruf.
+# IQRA 1 - MASTER GUIDE
+
+**Status**: FINAL / GOLD STANDARD
+**Volume**: 1
+**Focus**: Huruf Tunggal (Alif - Ya), Fathah (Baris Atas).
+
+## Metadata
+
+*   **Total Pages**: 21
+*   **Key Concept**: "Pengenalan Huruf & Makhraj"
+*   **Instruction**: "Baca terus (tanpa mengeja). Pendek sahaja (1 harakat)."
 ### Diagram Struktur Kotak (Grid Penuh)
 | Baris | Kotak 5 (Kanan) | Kotak 4 | Kotak 3 | Kotak 2 | Kotak 1 (Kiri) | Fokus Kumpulan |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -42,6 +44,7 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 ## MUKA SURAT 4: HURUF TA (ت)
 **Fokus:** Huruf TA (2 Titik Atas). Bunyi tajam "TA".
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **تَ (TA)** | **بَ (BA)** | **TA = 2 Titik Atas.** |
@@ -51,10 +54,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 4** | تَ اَ تَ | بَ اَ تَ | Latihan rawak. |
 | **Baris 5** | اَ تَ بَ | تَ تَ اَ | Ta berganda. |
 | **Baris 6** | اَ بَ تَ | اَ بَ تَ | Urutan Hijaiyah. |
+
 ---
 ## MUKA SURAT 5: HURUF TSA (ث)
 **Fokus:** Huruf TSA (3 Titik Atas). Bunyi lembut, hujung lidah di gigi.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **ثَ (TSA)** | **تَ (TA) - بَ (BA)** | **3 Titik = TSA.** |
@@ -64,10 +69,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 4** | ثَ ثَ أ | تَ بَ ثَ | Tsa berganda. |
 | **Baris 5** | ثَ تَ ثَ | بَ ثَ تَ | Latihan lidah (Lembut-Keras). |
 | **Baris 6** | اَ بَ تَ ثَ | اَ بَ تَ ثَ | Urutan 4 huruf. |
+
 ---
 ## MUKA SURAT 6: HURUF JIM, HA, KHO (ج ح خ)
 **Fokus:** Bentuk Perut Buncit. Ja (Titik Tengah), Ha (Kosong), Kho (Titik Atas).
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **جَ (JA)** | **حَ (HA) - خَ (KHO)** | **3 Beradik Perut.** |
@@ -77,10 +84,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 4** | ثَ جَ حَ | خَ تَ خَ | Latihan Kho dan Ja. |
 | **Baris 5** | خَ حَ خَ | خَ خَ حَ | Ujian makhraj Kho/Ha. |
 | **Baris 6** | اَ بَ تَ ثَ جَ حَ خَ | (Urutan Penuh) | Review. |
+
 ---
 ## MUKA SURAT 7: HURUF DAL & DZAL (د ذ)
 **Fokus:** Bentuk Siku. Dal (Kosong), Dzal (Titik).
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **دَ (DA)** | **ذَ (DZA)** | **DZA = Lidah gigit sikit.** |
@@ -91,10 +100,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | حَ دَ ثَ | اَ خَ دَ | Ha-Da-Tsa. |
 | **Baris 6** | دَ اَ ذَ | خَ دَ ذَ | Latihan pemantapan. |
 | **Baris 7** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ | (Urutan Penuh) | Review. |
+
 ---
 ## MUKA SURAT 8: HURUF RO & ZAI (ر ز)
 **Fokus:** Bentuk Pisang/Lengkung. Ro (Kosong - Tebal), Zai (Titik - Desing).
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **رَ (RO)** | **زَ (ZA)** | **RO = Tebal ('O'), ZA = Desing.** |
@@ -105,10 +116,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | ذَ حَ ثَ | بَ زَ رَ | Dza-Ha-Tsa. |
 | **Baris 6** | جَ اَ خَ | زَ اَ زَ | Ja-A-Kho. |
 | **Baris 7** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ رَ زَ | (Urutan Penuh) | Review. |
+
 ---
 ## MUKA SURAT 9: HURUF SIN & SYIN (س ش)
 **Fokus:** Bentuk Gigi 3. Sin (Kosong - Tajam), Syin (3 Titik - Hambur).
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **سَ (SA)** | **شَ (SYA)** | **SYA = Bunyi 'Shhh'.** |
@@ -119,10 +132,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | دَ خَ زَ | اَ سَ شَ | Da-Kho-Za. |
 | **Baris 6** | خَ سَ دَ | شَ زَ جَ | Kho-Sa-Da. |
 | **Baris 7** | ثَ جَ حَ خَ دَ ذَ رَ زَ سَ شَ | (Urutan Penuh) | Review. |
+
 ---
 ## MUKA SURAT 10: HURUF SOD & DHOD (ص ض)
 **Fokus:** Huruf Tebal. Mangkuk besar. Sod (Kosong), Dhod (Titik).
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **صَ (SO)** | **ضَ (DHO)** | **Bunyi Tebal ('O').** |
@@ -133,10 +148,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | ثَ خَ زَ | ضَ جَ سَ | Dho-Ja-Sa. |
 | **Baris 6** | صَ رَ ضَ | اَ بَ تَ ثَ جَ حَ خَ | Review Awal. |
 | **Baris 7** | دَ ذَ رَ زَ سَ شَ صَ ضَ | (Urutan Tebal) | Review. |
+
 ---
 ## MUKA SURAT 11: HURUF THO & ZHO (ط ظ)
 **Fokus:** Huruf Bertiang. Bunyi Tebal.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **طَ (THO)** | **ظَ (ZHO)** | **Tho (Kuat), Zho (Lidah keluar).** |
@@ -147,10 +164,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | صَ دَ شَ | جَ طَ ظَ | So-Da-Sya. |
 | **Baris 6** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ | Review Awal. |
 | **Baris 7** | رَ زَ سَ شَ صَ ضَ طَ ظَ | Review Akhir. |
+
 ---
 ## MUKA SURAT 12: HURUF 'AIN & GHOIN (ع غ)
 **Fokus:** Kepala Burung. 'Ain (Tengah Kerongkong), Ghoin (Atas Kerongkong/Serak).
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **غَ (GHO)** | **عَ ('A)** | **'A = Nyaring, GHO = Serak.** |
@@ -161,10 +180,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | شَ رَ ظَ | طَ عَ بَ | Sya-Ro-Zho. |
 | **Baris 6** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ رَ زَ | Review. |
 | **Baris 7** | سَ شَ صَ ضَ طَ ظَ عَ غَ | Review Tebal/Halqi. |
+
 ---
 ## MUKA SURAT 13: HURUF FA & QOF (ف ق)
 **Fokus:** Kepala Bulat. Fa (1 Titik), Qof (2 Titik - Tebal).
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **قَ (QO)** | **فَ (FA)** | **Fa = Angin, Qo = Tebal.** |
@@ -175,10 +196,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | اَ بَ تَ ثَ  جَ حَ خَ دَ ذَ | Review. |
 | **Baris 6** | رَ زَ | سَ شَ | صَ ضَ | Review. |
 | **Baris 7** | طَ ظَ | عَ غَ | فَ قَ | Review Akhir. |
+
 ---
 ## MUKA SURAT 14: HURUF KAF (ك)
 **Fokus:** Bentuk unik (ada hamzah kecil). Bunyi nipis "KA".
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **ك (KA)** | - | **Bunyi KA ada angin (Hams).** |
@@ -189,10 +212,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ | Review. |
 | **Baris 6** | رَ زَ سَ شَ صَ ضَ طَ ظَ | Review. |
 | **Baris 7** | عَ غَ فَ قَ كَ | Urutan baru. |
+
 ---
 ## MUKA SURAT 15: HURUF LAM (ل)
 **Fokus:** Bentuk mata kail.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **لَ (LA)** | - | **Bunyi Jelas.** |
@@ -203,10 +228,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ | Review. |
 | **Baris 6** | رَ زَ سَ شَ صَ ضَ | Review. |
 | **Baris 7** | طَ ظَ عَ غَ فَ قَ كَ لَ | Urutan baru. |
+
 ---
 ## MUKA SURAT 16: HURUF MIM (م)
 **Fokus:** Kepala bulat ekor ke bawah. Bunyi Bibir.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **مَ (MA)** | - | **Bibir rapat.** |
@@ -217,10 +244,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ | Review. |
 | **Baris 6** | رَ زَ سَ شَ صَ ضَ طَ ظَ | Review. |
 | **Baris 7** | عَ غَ فَ قَ كَ لَ مَ | Urutan baru. |
+
 ---
 ## MUKA SURAT 17: HURUF NUN (ن)
 **Fokus:** Mangkuk 1 Titik ATAS.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **نَ (NA)** | - | **Bunyi Hidung.** |
@@ -231,10 +260,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ | Review. |
 | **Baris 6** | رَ زَ سَ شَ صَ ضَ طَ ظَ | Review. |
 | **Baris 7** | عَ غَ فَ قَ كَ لَ مَ نَ | Urutan baru. |
+
 ---
 ## MUKA SURAT 18: HURUF WAU (و)
 **Fokus:** Muncung Bibir.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **وَ (WA)** | - | **Muncung "WA".** |
@@ -245,10 +276,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ | Review. |
 | **Baris 6** | رَ زَ سَ شَ صَ ضَ طَ ظَ | Review. |
 | **Baris 7** | عَ غَ فَ قَ كَ لَ مَ نَ وَ | Urutan baru. |
+
 ---
 ## MUKA SURAT 19: HURUF HA (هـ)
 **Fokus:** Simpul. Bunyi Dada.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **هَ (HA)** | - | **Bunyi Berat.** |
@@ -258,11 +291,33 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 4** | سَ هَ لَ | ذَ غَ صَ | Sa-Ha-La. |
 | **Baris 5** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ | Review. |
 | **Baris 6** | رَ زَ سَ شَ صَ ضَ طَ ظَ | Review. |
-| **Baris 7** | عَ غَ فَ قَ كَ لَ مَ نَ وَ هَ | Urutan baru. |
+| **Baris 7** | عَ غَ فَ قَ كَ لَ مَ nَ وَ هَ | Urutan baru. |
+
 ---
+### Page 2: HURUF HIJAIYAH (Reference Chart)
+
+* **Focus**: Reference Chart (Read Right to Left)
+* **Layout**: 4-Column Grid (Mapped to Kanan/Kiri for 2-col view)
+
+| Baris | Kotak Kanan (Mula) | Kotak Kiri | Nota Pengajar |
+| :--- | :--- | :--- | :--- |
+| **1** | ت ث | ا ب | Alif - Tsa |
+| **2** | خ د | ج ح | Jim - Dal |
+| **3** | ز س | ذ ر | Dzal - Sin |
+| **4** | ص ض | ش ص | Syin - Dhod |
+| **5** | ظ ع | ط ظ | Tho - 'Ain |
+| **6** | ف ق | غ ف | Ghoin - Qof |
+| **7** | ل م | ك ل | Kaf - Mim |
+| **8** | و هـ | ن و | Nun - Ha |
+| **9** | ي | ء ي | Hamzah - Ya |
+
+---
+
+### Page 3: HURUF BERBARIS (A - BA)
 ## MUKA SURAT 20: HURUF YA (ي)
 **Fokus:** Titik 2 Bawah.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Kotak Kanan (Mula) | Kotak Kiri | Fokus Latihan |
 | :--- | :--- | :--- | :--- |
 | **TAJUK** | **يَ (YA)** | - | **Bunyi YA.** |
@@ -273,10 +328,12 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **Baris 5** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ رَ زَ | Review Awal. |
 | **Baris 6** | GHO - A - ZHO - THO - DHO - SO - SYA - SA | Review Tengah. |
 | **Baris 7** | YA - HA - WA - NA - MA - LA - KA - QO - FA | Review Akhir. |
+
 ---
 ## MUKA SURAT 21: UJIAN AKHIR (SUSUNAN BARIS)
 **Fokus:** Kelancaran 100% semua huruf.
 ### Diagram Struktur Kotak (Penuh)
+
 | Baris | Bacaan (Kanan ke Kiri) |
 | :--- | :--- |
 | **1** | اَ بَ تَ ثَ جَ حَ خَ دَ ذَ رَ زَ |
@@ -286,4 +343,5 @@ B[Huruf بَ] --> B1(Mangkuk 1 Titik Bawah - BA)
 | **5** | غَ عَ ظَ طَ ضَ صَ شَ سَ | (Terbalik) |
 | **6** | زَ رَ ذَ دَ خَ حَ جَ ثَ تَ بَ اَ | (Terbalik) |
 **TAHNIAH! ANDA TAMAT IQRA 1.**
+
 ```

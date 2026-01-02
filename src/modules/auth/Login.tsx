@@ -3,11 +3,13 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
+import { Eye, EyeOff } from 'lucide-react';
 
 export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [rememberMe, setRememberMe] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [loginSuccess, setLoginSuccess] = useState(false);
@@ -113,170 +115,252 @@ export const Login = () => {
 
     return (
         <div className="min-h-screen bg-background-dark flex items-center justify-center p-4 relative overflow-hidden">
-            {/* Background Atmosphere */}
-            <div className="absolute inset-0 z-0">
+            {/* 🌌 Background Atmosphere (Animated) */}
+            <div className="absolute inset-0 z-0 bg-[#020617]">
+                {/* Mesh Gradients */}
+                <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow"></div>
+                <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-indigo-900/40 rounded-full blur-[120px] animate-pulse-slow delay-1000"></div>
+
+                {/* Starfield Overlay - assuming we have a CSS class or image for this, if not, using simple dots */}
+                <div className="absolute inset-0 opacity-30 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150"></div>
+            </div>
+
+            {/* 🕌 GIANT KUFI LOGO BACKGROUND (Watermark) */}
+            <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none opacity-[0.05]">
                 <img
-                    src="https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=2694&auto=format&fit=crop"
-                    alt="Nebula"
-                    className="w-full h-full object-cover opacity-40"
+                    src="/logo-primary.png"
+                    alt="Quran Pulse Kufi"
+                    className="w-[120vw] max-w-none h-auto object-cover rotate-12 blur-sm"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/80 to-transparent"></div>
             </div>
 
             {/* Floating Glows */}
-            <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-[100px] animate-pulse-slow"></div>
-            <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-gold-500/10 rounded-full blur-[100px] animate-pulse-slow delay-1000"></div>
+            <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-cyan-400/20 rounded-full blur-[80px] animate-bounce-slow"></div>
 
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
-                className="w-full max-w-md bg-sheet/50 backdrop-blur-2xl border border-white rounded-3xl p-8 shadow-2xl relative z-10"
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="w-full max-w-md relative z-10"
             >
-                <div className="text-center mb-8">
-                    <div className="w-24 h-24 mx-auto flex items-center justify-center mb-6 group relative">
-                        <div className="absolute inset-0 bg-primary blur-2xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                        <img src="/logo-full.png" alt="Quran Pulse" className="w-full h-full object-contain relative z-10 drop-shadow-[0_0_15px_rgba(90,185,255,0.5)]" />
-                    </div>
-                    <h2 className="text-3xl font-black text-white mb-1">
-                        Quran <span className="text-primary">Pulse</span>
-                    </h2>
-                    <p className="text-white/60 text-sm">Teruskan perjalanan rohani anda.</p>
-                </div>
+                {/* Glass Card */}
+                <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden group">
 
-                <form onSubmit={handleLogin} className="space-y-5">
-                    {/* Social Login */}
-                    <div className="grid grid-cols-2 gap-3 mb-6">
-                        <button
-                            type="button"
-                            onClick={handleGoogleLogin}
-                            disabled={loading}
-                            className="flex items-center justify-center gap-2 py-3 bg-surface-dark/50 hover:bg-surface-dark border border-white rounded-xl text-white text-sm font-medium transition-all group disabled:opacity-50"
-                        >
-                            <i className="fa-brands fa-google text-red-400 group-hover:text-red-300 transition-colors"></i>
-                            Google
-                        </button>
-                        <button
-                            type="button"
-                            onClick={handleAppleLogin}
-                            className="flex items-center justify-center gap-2 py-3 bg-surface-dark/50 hover:bg-surface-dark border border-white rounded-xl text-white text-sm font-medium transition-all group"
-                        >
-                            <i className="fa-brands fa-apple text-white group-hover:text-white transition-colors"></i>
-                            Apple
-                        </button>
-                    </div>
+                    {/* Shimmer Effect */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer pointer-events-none"></div>
 
-                    <div className="relative flex items-center gap-4 mb-6">
-                        <div className="h-px bg-white/20 flex-1"></div>
-                        <span className="text-xs text-white/50 font-medium uppercase tracking-wider">ATAU</span>
-                        <div className="h-px bg-white/20 flex-1"></div>
-                    </div>
-
-                    {/* Email Input */}
-                    <div className="space-y-1.5">
-                        <label className="text-xs font-bold text-primary uppercase tracking-wider ml-1">Emel</label>
-                        <div className="relative group">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i className="fa-solid fa-envelope text-white/40 group-focus-within:text-primary transition-colors"></i>
-                            </div>
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-surface-dark/50 border border-white rounded-xl py-4 pl-11 pr-4 text-white placeholder:text-white/40 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-medium"
-                                placeholder="nama@email.com"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Password Input */}
-                    <div className="space-y-1.5">
-                        <div className="flex justify-between items-center ml-1">
-                            <label className="text-xs font-bold text-primary uppercase tracking-wider">Kata Laluan</label>
-                            <a href="#" className="text-xs text-primary hover:text-white transition-colors">Lupa?</a>
-                        </div>
-                        <div className="relative group">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <i className="fa-solid fa-lock text-white/40 group-focus-within:text-primary transition-colors"></i>
-                            </div>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                className="w-full bg-surface-dark/50 border border-white rounded-xl py-4 pl-11 pr-4 text-white placeholder:text-white/40 outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all text-sm font-medium"
-                                placeholder="••••••••"
-                            />
-                        </div>
-                    </div>
-
-                    {/* Remember Me Checkbox */}
-                    <div className="flex items-center justify-between">
-                        <label htmlFor="remember-me" className="flex items-center gap-2 cursor-pointer group select-none">
-                            <div className="relative">
-                                <input
-                                    id="remember-me"
-                                    type="checkbox"
-                                    checked={rememberMe}
-                                    onChange={(e) => setRememberMe(e.target.checked)}
-                                    className="peer sr-only"
-                                />
-                                <div className={`w-5 h-5 rounded border flex items-center justify-center transition-all duration-200 ${rememberMe ? 'bg-primary border-primary' : 'bg-surface-dark border-white/50 group-hover:border-white'}`}>
-                                    <i className={`fa-solid fa-check text-xs text-background-dark transition-transform duration-200 ${rememberMe ? 'scale-100' : 'scale-0'}`}></i>
-                                </div>
-                            </div>
-                            <span className="text-sm text-white/70 group-hover:text-white transition-colors">Ingat Saya</span>
-                        </label>
-                    </div>
-
-                    {/* Error Message */}
-                    {error && (
+                    {/* Header */}
+                    <div className="text-center mb-10 relative">
                         <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: 'auto' }}
-                            className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs p-3 rounded-lg flex items-center gap-2"
+                            initial={{ y: -20, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.2 }}
+                            className="w-40 h-40 mx-auto flex items-center justify-center mb-4 relative"
                         >
-                            <i className="fa-solid fa-circle-exclamation"></i>
-                            {error}
+                            <div className="absolute inset-0 bg-primary/50 blur-xl rounded-full animate-pulse-slow"></div>
+                            <img
+                                src="/logo-primary.png"
+                                alt="Quran Pulse"
+                                className="w-full h-full object-cover scale-150 relative z-10 drop-shadow-[0_0_15px_rgba(0,191,255,0.6)]"
+                            />
                         </motion.div>
-                    )}
 
-                    <button
-                        type="submit"
-                        disabled={loading}
-                        className="w-full py-4 bg-primary text-background-dark font-bold rounded-xl shadow-neon hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 group"
-                    >
-                        {loading ? (
-                            <>
-                                <i className="fa-solid fa-circle-notch fa-spin"></i>
-                                Memproses...
-                            </>
-                        ) : loginSuccess ? (
-                            <>
-                                <i className="fa-solid fa-check-circle"></i>
-                                Berjaya! Sedang masuk...
-                            </>
-                        ) : (
-                            <>
-                                Log Masuk
-                                <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
-                            </>
+                        <motion.h2
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.3 }}
+                            className="text-4xl font-black text-white mb-2 font-heading tracking-tight"
+                        >
+                            Quran <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Pulse</span>
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.4 }}
+                            className="text-blue-200/60 text-sm font-medium tracking-wide"
+                        >
+                            Sistem Operasi Rohani Anda
+                        </motion.p>
+                    </div>
+
+                    <form onSubmit={handleLogin} className="space-y-6">
+                        {/* Social Login */}
+                        <div className="grid grid-cols-2 gap-4">
+                            <motion.button
+                                initial={{ opacity: 0, x: -20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5 }}
+                                type="button"
+                                onClick={handleGoogleLogin}
+                                disabled={loading}
+                                className="flex items-center justify-center gap-3 py-3 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 rounded-xl text-white text-sm font-medium transition-all duration-300 group disabled:opacity-50"
+                            >
+                                <i className="fa-brands fa-google text-red-500 text-lg group-hover:scale-110 transition-transform"></i>
+                                Google
+                            </motion.button>
+                            <motion.button
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                transition={{ delay: 0.5 }}
+                                type="button"
+                                onClick={handleAppleLogin}
+                                className="flex items-center justify-center gap-3 py-3 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 rounded-xl text-white text-sm font-medium transition-all duration-300 group"
+                            >
+                                <i className="fa-brands fa-apple text-white text-lg group-hover:scale-110 transition-transform"></i>
+                                Apple
+                            </motion.button>
+                        </div>
+
+                        <div className="relative flex items-center gap-4 my-6">
+                            <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent flex-1"></div>
+                            <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">ATAU</span>
+                            <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent flex-1"></div>
+                        </div>
+
+                        {/* Email Input */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.6 }}
+                            className="space-y-1.5"
+                        >
+                            <label className="text-xs font-bold text-cyan-400 uppercase tracking-wider ml-1">Emel</label>
+                            <div className="relative group">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <i className="fa-solid fa-envelope text-white/40 group-focus-within:text-cyan-400 transition-colors duration-300"></i>
+                                </div>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    className="w-full bg-black/20 focus:bg-black/40 border border-white/10 focus:border-cyan-500/50 rounded-xl py-4 pl-11 pr-4 text-white placeholder:text-white/20 outline-none transition-all duration-300 text-sm font-medium backdrop-blur-sm"
+                                    placeholder="nama@email.com"
+                                    autoComplete="email"
+                                />
+                            </div>
+                        </motion.div>
+
+                        {/* Password Input */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.7 }}
+                            className="space-y-1.5"
+                        >
+                            <div className="flex justify-between items-center ml-1">
+                                <label className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Kata Laluan</label>
+                                <a href="#" className="text-xs text-blue-300/70 hover:text-cyan-400 transition-colors">Lupa?</a>
+                            </div>
+                            <div className="relative group">
+                                <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                                    <i className="fa-solid fa-lock text-white/40 group-focus-within:text-cyan-400 transition-colors duration-300"></i>
+                                </div>
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    className="w-full bg-black/20 focus:bg-black/40 border border-white/10 focus:border-cyan-500/50 rounded-xl py-4 pl-11 pr-12 text-white placeholder:text-white/20 outline-none transition-all duration-300 text-sm font-medium backdrop-blur-sm"
+                                    placeholder="••••••••"
+                                    autoComplete="current-password"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-white/40 hover:text-white transition-colors"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
+                            </div>
+                        </motion.div>
+
+                        {/* Remember Me Checkbox */}
+                        <motion.div
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.8 }}
+                            className="flex items-center justify-between"
+                        >
+                            <label htmlFor="remember-me" className="flex items-center gap-3 cursor-pointer group select-none">
+                                <div className="relative">
+                                    <input
+                                        id="remember-me"
+                                        type="checkbox"
+                                        checked={rememberMe}
+                                        onChange={(e) => setRememberMe(e.target.checked)}
+                                        className="peer sr-only"
+                                    />
+                                    <div className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all duration-300 ${rememberMe ? 'bg-cyan-500 border-cyan-500 shadow-[0_0_10px_rgba(6,182,212,0.5)]' : 'bg-white/5 border-white/20 group-hover:border-white/40'}`}>
+                                        <i className={`fa-solid fa-check text-[10px] text-white transition-transform duration-200 ${rememberMe ? 'scale-100' : 'scale-0'}`}></i>
+                                    </div>
+                                </div>
+                                <span className="text-sm text-white/60 group-hover:text-white transition-colors">Ingat Saya</span>
+                            </label>
+                        </motion.div>
+
+                        {/* Error Message */}
+                        {error && (
+                            <motion.div
+                                initial={{ opacity: 0, height: 0, y: -10 }}
+                                animate={{ opacity: 1, height: 'auto', y: 0 }}
+                                className="bg-red-500/10 border border-red-500/30 text-red-300 text-xs p-4 rounded-xl flex items-center gap-3 backdrop-blur-md"
+                            >
+                                <i className="fa-solid fa-triangle-exclamation text-lg"></i>
+                                <span>{error}</span>
+                            </motion.div>
                         )}
-                    </button>
-                </form>
 
-                <div className="mt-8 text-center text-sm text-white/60">
-                    Belum ada akaun? <span className="text-primary font-bold cursor-pointer hover:underline">Daftar Sekarang</span>
+                        <motion.button
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: 0.9 }}
+                            type="submit"
+                            disabled={loading}
+                            className="w-full py-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold rounded-xl shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(6,182,212,0.5)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3 group relative overflow-hidden"
+                        >
+                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 skew-y-12"></div>
+                            {loading ? (
+                                <>
+                                    <i className="fa-solid fa-circle-notch fa-spin"></i>
+                                    Memproses...
+                                </>
+                            ) : loginSuccess ? (
+                                <>
+                                    <i className="fa-solid fa-check-circle text-lg"></i>
+                                    Berjaya!
+                                </>
+                            ) : (
+                                <>
+                                    <span className="relative z-10">Log Masuk</span>
+                                    <i className="fa-solid fa-arrow-right relative z-10 group-hover:translate-x-1 transition-transform"></i>
+                                </>
+                            )}
+                        </motion.button>
+                    </form>
+
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.0 }}
+                        className="mt-8 text-center text-sm text-white/50"
+                    >
+                        Belum ada akaun? <span className="text-cyan-400 font-bold cursor-pointer hover:text-cyan-300 hover:underline transition-colors">Daftar Sekarang</span>
+                    </motion.div>
                 </div>
 
-                <div className="mt-6 pt-6 border-t border-white/5 text-center">
+                {/* Footer Links */}
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 1.1 }}
+                    className="mt-8 text-center"
+                >
                     <a
                         onClick={() => navigate('/privacy')}
-                        className="text-[10px] text-white/30 hover:text-primary transition-colors cursor-pointer uppercase tracking-widest"
+                        className="text-[10px] text-white/20 hover:text-cyan-400 transition-colors cursor-pointer uppercase tracking-[0.2em] hover:tracking-[0.3em] duration-300"
                     >
                         Polisi Privasi & Adab Data
                     </a>
-                </div>
-
+                </motion.div>
             </motion.div>
         </div>
     );

@@ -4,6 +4,10 @@ import { GEMINI_API_KEYS, callGeminiFlashWithFailover, callGeminiDirect } from '
 import { GroqClient } from './ai/GroqClient';
 import { ChatMessage } from '../types';
 
+import { PERSONAS, DEFAULT_PERSONA, Persona } from '../config/personas';
+import { analyzeImageWithGemini } from './ai/GeminiVisionClient';
+import { VoiceService } from './ai/VoiceService';
+
 // --- TYPES ---
 export interface HybridResponse {
   summary: string;
@@ -12,24 +16,6 @@ export interface HybridResponse {
   related_topics?: string[];
   widget?: { id: string, props?: any }; // New Generative UI Field
 }
-
-// --- SYSTEM PROMPT ---
-const SYSTEM_INSTRUCTION = `
-ROLE: Anda adalah "Tok Imam AI".
-GOAL: Berikan jawapan JSON yang berstruktur untuk aplikasi QuranPulse.
-
-FORMAT JSON:
-{
-  "summary": "Jawapan padat (Max 3 ayat).",
-  "steps": ["Langkah 1", "Langkah 2"], // Optional
-  "resources": [{ "type": "link", "title": "...", "url": "..." }], // Optional
-  "widget": { "id": "ZAKAT_CALC" } // Optional. Pilihan: ZAKAT_CALC, INFAQ_CARD, PRAYER_TIMES, IQRA_LESSON
-}
-
-CONTOH:
-User: "Nak bayar zakat"
-Output: { "summary": "Boleh, mari kita kira.", "widget": { "id": "ZAKAT_CALC" } }
-`;
 
 // --- CACHE SERVICE ---
 
@@ -93,7 +79,8 @@ async function saveToCache(query: string, response: HybridResponse) {
 
 export const askUstazAI = async (
   messages: ChatMessage[],
-  onChunk?: (chunk: string) => void
+  onChunk?: (chunk: string) => void,
+  personaId: string = DEFAULT_PERSONA.id
 ): Promise<string> => {
   const lastUserMessage = messages[messages.length - 1].content;
 
@@ -117,9 +104,13 @@ export const askUstazAI = async (
 
   // 3. FETCH FROM CLOUD AI (Groq First for Speed, then Gemini)
 
+  // Select Persona
+  const activePersona: Persona = PERSONAS[personaId] || DEFAULT_PERSONA;
+  console.log(`🧠 AI Service using Persona: ${activePersona.name}`);
+
   // Inject System Prompt for JSON Structure
   const messagesWithSystem = [
-    { role: 'system', content: SYSTEM_INSTRUCTION, id: 'sys', timestamp: Date.now() },
+    { role: 'system', content: activePersona.systemPrompt, id: 'sys', timestamp: Date.now() },
     ...messages
   ];
 
@@ -216,7 +207,7 @@ export const generateDoaCard = async (topic: string): Promise<string> => {
   ];
   return askUstazAI(prompt);
 };
-import { analyzeImageWithGemini } from './ai/GeminiVisionClient';
+
 
 export const analyzeImage = async (base64Image: string, prompt: string): Promise<string> => {
   return analyzeImageWithGemini(base64Image, prompt);
@@ -226,7 +217,18 @@ export const analyzeText = async () => ({});
 export const generateIslamicImage = async () => "";
 export const generateIslamicVideo = async (prompt: string) => "";
 export const getPersonalizedGreeting = async (n: string) => "";
-export const generateSpeech = async () => "";
+
+
+export const generateSpeech = async (text: string, personaId: string = DEFAULT_PERSONA.id): Promise<string> => {
+  const activePersona: Persona = PERSONAS[personaId] || DEFAULT_PERSONA;
+  const audioBuffer = await VoiceService.generateVoice(text, activePersona.voiceId);
+
+  if (!audioBuffer) return "";
+
+  // Convert buffer to base64 data URI for frontend playback
+  const base64 = audioBuffer.toString('base64');
+  return `data:audio/mp3;base64,${base64}`;
+};
 export const enhanceVideoPrompt = async (p: string) => p;
 export const chatWithVerseContext = async (verseKey: string, verseText: string, query: string) => "";
 export const analyzeQuranRecitation = async () => ({});

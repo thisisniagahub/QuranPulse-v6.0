@@ -1,0 +1,420 @@
+[
+  {
+    "page": 1,
+    "title": "Cover",
+    "focus": "Title Page",
+    "grid": [],
+    "teacher_notes": [
+      "Title: IQRA 2",
+      "Subtitle: HOME QURAN"
+    ]
+  },
+  {
+    "page": 2,
+    "title": "Introduction to Joining",
+    "focus": "Letters Ba, Ta, Tha forms",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "تَ تَ | تَ دَ",
+        "kiri": "بَ رَ | بَوَ",
+        "fokus": "Basic Join"
+      },
+      {
+        "baris": "2",
+        "kanan": "بَ بَ | بَذَ",
+        "kiri": "تَرَ | تَزَ",
+        "fokus": "Medial Forms"
+      },
+      {
+        "baris": "3",
+        "kanan": "بَثَ | تَذَ",
+        "kiri": "ثَثَ | زَثَ",
+        "fokus": "Tha Practice"
+      },
+      {
+        "baris": "4",
+        "kanan": "بَ أ | بَأَتَ",
+        "kiri": "تَ أ | تَأَتَ",
+        "fokus": "Join with Alif/Hamza"
+      },
+      {
+        "baris": "5",
+        "kanan": "ثَبَ | ثَرَ",
+        "kiri": "بَرَ | تَوَ",
+        "fokus": "Mixed"
+      },
+      {
+        "baris": "6",
+        "kanan": "طَ هَ | جَ مَ",
+        "kiri": "كَ نَ | سَ عَ",
+        "fokus": "Joined Samples"
+      }
+    ]
+  },
+  {
+    "page": 3,
+    "title": "Letter Nun",
+    "focus": "Forms of Nun (ن)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "نَنَنَ | نَتَنَ",
+        "kiri": "نَبَبَ | بَنَنَ",
+        "fokus": "Red Header Row"
+      },
+      {
+        "baris": "2",
+        "kanan": "نَبَتَ | بَنَتَ",
+        "kiri": "تَبَنَ | نَتَبَ",
+        "fokus": "Nun Initial/Medial"
+      },
+      {
+        "baris": "3",
+        "kanan": "رَبَنَ | بَنَرَ",
+        "kiri": "بَذَنَ | نَبَذَ",
+        "fokus": "Nun Medial/End"
+      },
+      {
+        "baris": "4",
+        "kanan": "بَدَرَ | نَذَرَ",
+        "kiri": "ذَهَبَ | وَنَذَ",
+        "fokus": "Separated vs Joined"
+      },
+      {
+        "baris": "5",
+        "kanan": "ذَرَحَ | نَزَعَ",
+        "kiri": "نَ بَ أ | نَبَأ",
+        "fokus": "Hamza End"
+      },
+      {
+        "baris": "6",
+        "kanan": "ثَبَتَ | تَبَتَ",
+        "kiri": "وَنَأ | نَوَفَ",
+        "fokus": "WANA A"
+      },
+      {
+        "baris": "7",
+        "kanan": "بَدَنَ | دَنَتَ",
+        "kiri": "وَنَنَ | نَوَنَ",
+        "fokus": "NANANA"
+      }
+    ]
+  },
+  {
+    "page": 4,
+    "title": "Letter Ya",
+    "focus": "Forms of Ya (ي)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "رَبَيَ | يَبَرَ",
+        "kiri": "رَنَيَ | يَنَرَ",
+        "fokus": "Red Header Row"
+      },
+      {
+        "baris": "2",
+        "kanan": "بَيَنَ | نَبَيَ",
+        "kiri": "يَدَنَ | دَنَيَ",
+        "fokus": "Ya Initial/Medial"
+      },
+      {
+        "baris": "3",
+        "kanan": "ذَهَبَ | نَزَلَ",
+        "kiri": "نَذَرَ | يَدَيَ",
+        "fokus": "Ya End"
+      },
+      {
+        "baris": "4",
+        "kanan": "أَزَغَ | بَتَرَ",
+        "kiri": "زَيَنَ | زَنَيَ",
+        "fokus": "Ya in various positions"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَثَثَ | ثَنَأ",
+        "kiri": "يَأَبَ | أَيَتَ",
+        "fokus": "Hamza/Alif Interaction"
+      },
+      {
+        "baris": "6",
+        "kanan": "رَزَقَ | نَظَرَ",
+        "kiri": "أَتَيَ | وَنَدَ",
+        "fokus": "Alif Maqsurah"
+      },
+      {
+        "baris": "7",
+        "kanan": "يَيَيَ | فَتَيَ",
+        "kiri": "سَيَلَ | يَسَرَ",
+        "fokus": "Multiple Ya"
+      }
+    ]
+  },
+  {
+    "page": 5,
+    "title": "Jim Group",
+    "focus": "Letters Jim (ج), Ha (ح), Kha (خ)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "بَجَ | جَبَ",
+        "kiri": "خَدَ | نَدَ",
+        "fokus": "Red Header"
+      },
+      {
+        "baris": "2",
+        "kanan": "ثَجَ | هَوَ",
+        "kiri": "خَزَ | يَتَ",
+        "fokus": "Jim/Kha Initial"
+      },
+      {
+        "baris": "3",
+        "kanan": "نَجَ | حَيَ",
+        "kiri": "جَسَ | يَشَ",
+        "fokus": "Medial Forms"
+      },
+      {
+        "baris": "4",
+        "kanan": "مَثَ | رَصَ",
+        "kiri": "يَضَ | نَفَ",
+        "fokus": "Mixed Practice"
+      },
+      {
+        "baris": "5",
+        "kanan": "ظَنَ | دَعَ",
+        "kiri": "غَزَ | خَطَ",
+        "fokus": "Various Letters"
+      },
+      {
+        "baris": "6",
+        "kanan": "يَقَ | جَكَ",
+        "kiri": "خَلَ | يَيَ",
+        "fokus": "Jim/Kha Initial"
+      },
+      {
+        "baris": "7",
+        "kanan": "هَذَ | يَتَمَ",
+        "kiri": "نَجَحَ | جَيَ",
+        "fokus": "Jim/Ha End"
+      }
+    ]
+  },
+  {
+    "page": 6,
+    "title": "Ain Group",
+    "focus": "Letters Ain (ع), Ghain (غ)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "رَعَتَ | تَعَرَ",
+        "kiri": "عَتَرَ | رَتَعَ",
+        "fokus": "Ain Initial/Medial/End"
+      },
+      {
+        "baris": "2",
+        "kanan": "عَبَصَ | صَعَبَ",
+        "kiri": "يَغَضَ | غَيَضَ",
+        "fokus": "Ain/Ghain Forms"
+      },
+      {
+        "baris": "3",
+        "kanan": "حَذَرَ | جَعَلَ",
+        "kiri": "شَطَكَ | نَبَغَ",
+        "fokus": "Ghain End"
+      },
+      {
+        "baris": "4",
+        "kanan": "غَيَزَ | ثَغَفَ",
+        "kiri": "عَتَقَ | مَنَعَ",
+        "fokus": "Ghain Initial"
+      },
+      {
+        "baris": "5",
+        "kanan": "ثَقَلَ | نَظَمَ",
+        "kiri": "رَهَقَ | وَسَعَ",
+        "fokus": "Practice"
+      },
+      {
+        "baris": "6",
+        "kanan": "عَزَلَ | نَعَسَ",
+        "kiri": "غَوَضَ | يَغَضَ",
+        "fokus": "Practice"
+      }
+    ]
+  },
+  {
+    "page": 7,
+    "title": "Fa & Qaf",
+    "focus": "Letters Fa (ف), Qaf (ق)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "فَرَغَ | نَفَلَ",
+        "kiri": "قَبَحَ | وَقَعَ",
+        "fokus": "Fa/Qaf Initial"
+      },
+      {
+        "baris": "2",
+        "kanan": "فَصَحَ | جَرَمَ",
+        "kiri": "وَزَكَ | تَذَرَ",
+        "fokus": "Practice"
+      },
+      {
+        "baris": "3",
+        "kanan": "هَيَجَ | يَخَضَ",
+        "kiri": "شَرَعَ | نَظَفَ",
+        "fokus": "Practice"
+      },
+      {
+        "baris": "4",
+        "kanan": "يَدَكَ | ضَغَطَ",
+        "kiri": "ثَقَلَ | شَفَعَ",
+        "fokus": "Fa/Qaf Medial"
+      },
+      {
+        "baris": "5",
+        "kanan": "عَظَمَ | يَسَرَ",
+        "kiri": "طَبَقَ | نَفَرَ",
+        "fokus": "Practice"
+      },
+      {
+        "baris": "6",
+        "kanan": "عَقَمَ | فَرَدَ",
+        "kiri": "فَرَشَ | بَعَى",
+        "fokus": "Qaf Medial/End"
+      }
+    ]
+  },
+  {
+    "page": 8,
+    "title": "Letter Kaf",
+    "focus": "Forms of Kaf (ك)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "كَذَبَ | أَكَلَ",
+        "kiri": "حَكَمَ | تَرَكَ",
+        "fokus": "Kaf Initial/Medial/End"
+      },
+      {
+        "baris": "2",
+        "kanan": "كَفَرَ | نَقَصَ",
+        "kiri": "نَكَحَ | فَتَى",
+        "fokus": "Kaf Medial"
+      },
+      {
+        "baris": "3",
+        "kanan": "كَدَرَ | حَفَظَ",
+        "kiri": "زَكَا | خَطَى",
+        "fokus": "Practice"
+      },
+      {
+        "baris": "4",
+        "kanan": "كَتَمَ | ضَرَبَ",
+        "kiri": "ثَنَا | مَعَكَ",
+        "fokus": "Kaf End"
+      },
+      {
+        "baris": "5",
+        "kanan": "كَشَفَ | غَسَقَ",
+        "kiri": "وَتَرَ | فَصَلَ",
+        "fokus": "Kaf Initial"
+      },
+      {
+        "baris": "6",
+        "kanan": "كَظَمَ | خَدَكَ",
+        "kiri": "هَكَذَ | يَدَكَ",
+        "fokus": "Kaf Medial/End"
+      }
+    ]
+  },
+  {
+    "page": 9,
+    "title": "Lam & Alif",
+    "focus": "Lam-Alif (لا) Ligature",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "جَلَلَ | جَلَلَ",
+        "kiri": "لأَجَلَ",
+        "fokus": "Lam vs Lam-Alif"
+      },
+      {
+        "baris": "2",
+        "kanan": "لَسَأَلَ | لَضَلَلَ",
+        "kiri": "لَنَبَأ",
+        "fokus": "Lam Initial"
+      },
+      {
+        "baris": "3",
+        "kanan": "وَمَلأَ | لأَكَلَ",
+        "kiri": "فَبَلَغَ",
+        "fokus": "Lam-Alif Medial"
+      },
+      {
+        "baris": "4",
+        "kanan": "لَسَلَكَ | وَخَطَأ",
+        "kiri": "وَكَلاً",
+        "fokus": "Lam-Alif End"
+      },
+      {
+        "baris": "5",
+        "kanan": "سَأَلَكَ | لَلأَمَ",
+        "kiri": "وَحَلَلَ",
+        "fokus": "Complex Join"
+      }
+    ],
+    "teacher_notes": [
+      "PASTIKAN SEMUA BACAAN PENDEK !!! (Ensure all readings are short)"
+    ]
+  },
+  {
+    "page": 10,
+    "title": "Mixed Practice",
+    "focus": "Jama'a (Review)",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "عَمَدَ | صَمَدَ",
+        "kiri": "ظَلَمَ | لأَخَذَ",
+        "fokus": "Review"
+      },
+      {
+        "baris": "2",
+        "kanan": "هَمَزَ | نَفَحَ",
+        "kiri": "غَنَمَ | لأَسَدَ",
+        "fokus": "Review"
+      },
+      {
+        "baris": "3",
+        "kanan": "يَمَنَ | بَلَغَ",
+        "kiri": "ظَمَأ | لأَمَرَ",
+        "fokus": "Review"
+      },
+      {
+        "baris": "4",
+        "kanan": "كَمَدَ | طَمَعَ",
+        "kiri": "ضَوَى | لأَقَمَ",
+        "fokus": "Review"
+      },
+      {
+        "baris": "5",
+        "kanan": "زَمَلَ | صَنَعَ",
+        "kiri": "مَلَكَ | لأَذَنَ",
+        "fokus": "Review"
+      },
+      {
+        "baris": "6",
+        "kanan": "هَجَمَ | كَذَبَ",
+        "kiri": "هَشَمَ | لأَجَلَ",
+        "fokus": "Review"
+      },
+      {
+        "baris": "7",
+        "kanan": "ضَحَمَ | لَثَمَ",
+        "kiri": "قَلَمَ | لأَكَلَ",
+        "fokus": "Review"
+      }
+    ]
+  }
+]

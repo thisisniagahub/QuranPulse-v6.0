@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@300;400;600&family=Noto+Sans+Arabic:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap");
 @import "tailwindcss";
 
@@ -10,32 +10,45 @@
   /* ═══════════════════════════════════════════════════════════════════════════
      THEME: DARK (Default / Deep Space)
      ═══════════════════════════════════════════════════════════════════════════ */
-  --primary: #5ab9ff;
-  --primary-rgb: 90, 185, 255;
-  --primary-glow: rgba(90, 185, 255, 0.5);
+  /* ═══════════════════════════════════════════════════════════════════════════
+     THEME: DEFAULT (Nabdh / Deep Navy & Cyan)
+     ═══════════════════════════════════════════════════════════════════════════ */
+  --primary: #00BFFF;
+  /* Electric Cyan */
+  --primary-rgb: 0, 191, 255;
+  --primary-glow: rgba(0, 191, 255, 0.5);
 
-  /* Backgrounds */
-  --bg-main: #051324;
-  --bg-main-rgb: 5, 19, 36;
+  --bg-main: #0A1E42;
+  /* Deep Navy Blue */
+  --bg-main-rgb: 10, 30, 66;
 
-  --surface: #154270;
-  --surface-rgb: 21, 66, 112;
+  --surface: #1E5A9F;
+  /* Medium Blue Shadow/Glass */
+  --surface-rgb: 30, 90, 159;
 
-  --card: #152e4d;
-  --card-rgb: 21, 46, 77;
+  --card: #143260;
+  /* Slightly lighter Navy */
+  --card-rgb: 20, 50, 96;
 
-  --sheet: #0e3359;
-  --sheet-rgb: 14, 51, 89;
+  --sheet: #0d2650;
+  /* Deep Sheet */
+  --sheet-rgb: 13, 38, 80;
 
   /* Text */
-  --text-primary: #ffffff;
+  --text-primary: #FFFFFF;
   --text-primary-rgb: 255, 255, 255;
 
-  --text-secondary: rgba(255, 255, 255, 0.8);
-  --text-muted: rgba(255, 255, 255, 0.6);
+  --text-secondary: #87CEEB;
+  /* Sky Blue Highlight */
+  --text-muted: #5F9EA0;
 
   /* Accents */
-  --accent-gold: #FFD700;
+  --accent-gold: #00d2ff;
+
+  /* Theme-specific effects */
+  --pattern-opacity: 0.1;
+  --pattern-image: repeating-linear-gradient(45deg, rgba(0, 191, 255, 0.05) 0px, rgba(0, 191, 255, 0.05) 1px, transparent 1px, transparent 10px);
+  --clay-shadow: rgba(0, 191, 255, 0.2);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -260,14 +273,17 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  /* Chrome 54+, Chrome Android 54+, Safari */
   -moz-text-size-adjust: 100%;
+  /* Firefox */
   text-size-adjust: 100%;
+  /* Standard */
 }
 
 body {
   background-color: var(--bg-main);
   color: var(--text-primary);
-  font-family: 'Inter', sans-serif;
+  font-family: 'Open Sans', 'Inter', sans-serif;
   min-height: 100vh;
   transition: background-color 0.3s ease, color 0.3s ease;
   position: relative;
@@ -331,7 +347,10 @@ body::before {
 
 .no-scrollbar {
   -ms-overflow-style: none;
-  scrollbar-width: none;
+
+  @supports (scrollbar-width: none) {
+    scrollbar-width: none;
+  }
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -340,7 +359,10 @@ body::before {
 
 .scrollbar-hide {
   -ms-overflow-style: none;
-  scrollbar-width: none;
+
+  @supports (scrollbar-width: none) {
+    scrollbar-width: none;
+  }
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -351,9 +373,14 @@ body::before {
    TYPOGRAPHY
    ───────────────────────────────────────────────────────────────────────────── */
 
+.font-heading {
+  font-family: 'Montserrat', sans-serif;
+}
+
 .font-arabic {
-  font-family: "Noto Sans Arabic", "Amiri Quran", "Amiri", serif;
+  font-family: "Amiri", "Noto Sans Arabic", "Amiri Quran", serif;
   font-feature-settings: "kern" 1, "liga" 1;
+  direction: rtl;
 }
 
 .font-uthmani {
@@ -365,6 +392,10 @@ body::before {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-weight: 500;
+}
+
+.font-scheherazade {
+  font-family: "Scheherazade New", serif;
 }
 
 .font-transliteration {
@@ -477,6 +508,7 @@ body::before {
 
 .glass-hud {
   background: rgba(var(--bg-main-rgb), 0.4);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
   backdrop-filter: blur(24px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.1);
   box-shadow:
@@ -495,6 +527,26 @@ body::before {
   pointer-events: none;
 }
 
+.bg-pattern-grid {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='white' stroke-width='0.5' /%3E%3C/svg%3E");
+  background-size: 40px 40px;
+}
+
+.bg-pattern-triangle {
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0 L100 50 L50 100 L0 50 Z' fill='none' stroke='white' stroke-width='0.5' opacity='0.2'/%3E%3Cpath d='M50 20 L80 50 L50 80 L20 50 Z' fill='none' stroke='white' stroke-width='0.3' opacity='0.1'/%3E%3Ccircle cx='50' cy='50' r='5' fill='white' opacity='0.1'/%3E%3C/svg%3E");
+  background-size: 120px 120px;
+}
+
+.bg-pattern-dots {
+  background-image: radial-gradient(circle at 1px 1px, rgba(6, 182, 212, 0.15) 1px, transparent 0);
+  background-size: 40px 40px;
+}
+
+.bg-pattern-anmaat {
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='white' stroke-width='0.5' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 60px 60px;
+}
+
 .hud-border::before {
   top: 0;
   left: 0;
@@ -507,6 +559,10 @@ body::before {
   right: 0;
   border-left: 0;
   border-top: 0;
+}
+
+.bar-height {
+  height: var(--bar-height);
 }
 
 .mesh-gradient {
@@ -525,6 +581,7 @@ body::before {
 .text-gold-gradient {
   background: linear-gradient(135deg, #FFD700 0%, #B8860B 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

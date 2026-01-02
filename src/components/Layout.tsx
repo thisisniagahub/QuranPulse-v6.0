@@ -101,37 +101,14 @@ const Layout: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/50 via-[#020617]/90 to-[#020617]/80 -z-10 pointer-events-none"></div>
 
         {/* Header with Maze Pattern */}
-        <header className="h-16 bg-sheet/80 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden">
+        <header className="h-16 bg-[#020617]/80 backdrop-blur-xl border-b border-[#00BFFF]/20 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden">
           <Link
             to="/"
-            className="flex items-center gap-3 relative z-10 cursor-pointer group"
+            className="flex items-center gap-3 cursor-pointer group relative z-10"
             aria-label="Go to Dashboard"
           >
-            {/* Kufic Logo */}
-            <div className="w-12 h-12 relative flex items-center justify-center">
-              <div className="absolute inset-0 bg-primary blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-              {!imgError ? (
-                <img
-                  src="/logo-full.png"
-                  alt="Quran Pulse Logo"
-                  className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(90,185,255,0.5)] z-10 group-hover:scale-105 transition-transform"
-                  onError={() => setImgError(true)}
-                />
-              ) : (
-                <div
-                  id="nav-logo-fallback"
-                  className="w-full h-full rounded-xl bg-primary/20 border border-primary/50 flex items-center justify-center text-primary font-black text-lg"
-                >
-                  QP
-                </div>
-              )}
-            </div>
-            <div>
-              <h1 className="text-xl font-black tracking-tight text-white leading-none">
-                Quran <span className="text-primary">Pulse</span>
-              </h1>
-              <p className="text-[10px] text-primary/70 font-bold tracking-[0.2em] uppercase">Your Digital Companion</p>
-            </div>
+            <img src="/logo-primary.png" alt="Logo" className="w-16 h-16 object-contain scale-110 transition-transform hover:scale-125" />
+            <span className="font-bold text-xl tracking-tight text-white font-[Montserrat]">Quran<span className="text-[#00BFFF]">Pulse</span></span>
           </Link>
 
           {/* Header Actions */}

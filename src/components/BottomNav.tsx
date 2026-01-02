@@ -2,12 +2,11 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { NavView } from "../types";
 
-// Import Icons (Same as Layout.tsx)
-import navHomeIcon from "@/assets/icons/nav-home-neon.png";
-import navQuranIcon from "@/assets/icons/nav-quran-neon.png";
-import navUstazAiIcon from "@/assets/icons/nav-ustaz-ai.png";
-import navQiblatIcon from "@/assets/icons/nav-qiblat-neon.png";
-import navIqraIcon from "@/assets/icons/nav-iqra-neon.png";
+import { Icon } from "@iconify/react";
+
+// Import Icons
+// Import Icons
+// import navUstazAiIcon from "@/assets/icons/nav-ustaz-ai.png"; // Deprecated
 
 // Helper to determine active view
 const getActiveView = (pathname: string): NavView => {
@@ -36,21 +35,21 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
         {
             id: NavView.DASHBOARD,
             path: "/",
-            icon: navHomeIcon,
+            icon: "solar:home-angle-bold-duotone",
             label: "Home",
             color: "from-cyan-400 to-blue-500",
         },
         {
             id: NavView.QURAN,
             path: "/quran",
-            icon: navQuranIcon,
+            icon: "solar:book-bookmark-bold-duotone",
             label: "Al-Quran",
             color: "from-cyan-400 to-blue-500",
         },
         {
             id: NavView.SMART_DEEN,
             path: "/smart-deen",
-            icon: navUstazAiIcon,
+            icon: "/ustaz-ai-icon.png", // New Public Image source
             label: "Ustaz AI",
             isCenter: true,
             color: "from-cyan-400 to-amber-400",
@@ -58,21 +57,21 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
         {
             id: NavView.IBADAH,
             path: "/ibadah",
-            icon: navQiblatIcon,
+            icon: "solar:compass-bold-duotone",
             label: "Kiblat",
             color: "from-amber-400 to-cyan-500",
         },
         {
             id: NavView.IQRA,
             path: "/iqra",
-            icon: navIqraIcon,
+            icon: "solar:square-academic-cap-bold-duotone",
             label: "Iqra",
             color: "from-cyan-400 to-blue-500",
         },
     ];
 
     return (
-        <nav className="h-[88px] bg-sheet/90 backdrop-blur-xl border-t border-white relative z-50 shrink-0 pb-5">
+        <nav className="h-[88px] bg-[#020617]/90 backdrop-blur-xl border-t border-[#00BFFF]/20 relative z-50 shrink-0 pb-5">
             <div className="flex items-center justify-around h-full px-2">
                 {navItems.map((item) => {
                     const isActive = currentView === item.id;
@@ -94,12 +93,11 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
                                 className={`
                                     relative rounded-full flex items-center justify-center transition-all duration-300 border
                                     ${isCenter ? "w-16 h-16 -mt-8" : "w-10 h-10"}
-                                    ${
-                                      isActive && !isCenter
+                                    ${isActive && !isCenter
                                         ? `bg-gradient-to-br ${item.color} border-white/20 shadow-lg shadow-cyan-500/20 scale-110`
                                         : isActive && isCenter
-                                        ? "bg-transparent border-transparent scale-110"
-                                        : "bg-transparent border-transparent text-slate-500 group-hover:bg-white/5 group-hover:text-slate-300"
+                                            ? "bg-transparent border-transparent scale-110"
+                                            : "bg-transparent border-transparent text-slate-500 group-hover:bg-white/5 group-hover:text-slate-300"
                                     }
                                 `}
                             >
@@ -108,31 +106,33 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
                                     <div className="absolute inset-0 rounded-full bg-gradient-to-b from-white/30 to-transparent pointer-events-none"></div>
                                 )}
 
-                                {/* ICON (IMAGE BASED) - EXACTLY LIKE LAYOUT.TSX */}
+                                {/* ICON (IMAGE BASED or VECTOR) */}
                                 {isCenter ? (
-                                    // CENTER BUTTON (USTAZ AI)
+                                    // CENTER BUTTON (USTAZ AI) - KEEP IMAGE
                                     <div className="relative flex items-center justify-center w-full h-full -mt-8">
                                         <div className="relative w-20 h-20 flex items-center justify-center bg-[#020617] rounded-full">
-                                            <img 
-                                                src={item.icon} 
+                                            <img
+                                                src={item.icon}
                                                 alt={item.label}
                                                 className="w-full h-full object-contain scale-125 drop-shadow-[0_0_15px_rgba(34,211,238,0.6)]"
                                             />
                                         </div>
                                     </div>
                                 ) : (
-                                    // STANDARD BUTTONS
+                                    // STANDARD BUTTONS (SOLAR VECTORS)
                                     <div className="relative flex items-center justify-center w-full h-full p-2">
-                                        <img 
-                                            src={item.icon} 
-                                            alt={item.label}
-                                            className={`w-full h-full object-contain transition-all duration-300 ${isActive ? "drop-shadow-[0_0_8px_rgba(34,211,238,0.8)] brightness-110" : "opacity-60 grayscale"}`}
+                                        <Icon
+                                            icon={item.icon}
+                                            className={`text-2xl transition-all duration-300 ${isActive
+                                                ? "text-white scale-110 drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]"
+                                                : "text-slate-500 group-hover:text-slate-300"
+                                                }`}
                                         />
                                     </div>
                                 )}
                             </div>
 
-                            {/* Label (Visible on Active or Hover) - Hidden for Ustaz AI */}
+                            {/* Label */}
                             {!isCenter && (
                                 <span className={`text-[10px] font-bold mt-1 transition-colors duration-300 ${isActive ? 'text-white' : 'text-slate-500 group-hover:text-slate-400'}`}>
                                     {item.label}
