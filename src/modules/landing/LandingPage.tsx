@@ -65,153 +65,173 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </nav>
 
       {/* 2. HERO SECTION */}
-      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden perspective-container">
         {/* Background Elements */}
         <div className="absolute inset-0 z-0">
           <div className="absolute top-0 right-0 w-3/4 h-3/4 bg-[#1E3A5F]/20 rounded-full blur-[120px] translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-[#00BFFF]/10 rounded-full blur-[100px] -translate-x-1/4 translate-y-1/4"></div>
           {/* Grid Pattern */}
           <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 animate-noise"></div>
+          {/* Neon Ribbons (New) */}
+          <div className="absolute top-10 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00BFFF]/30 to-transparent blur-md"></div>
+          <div className="absolute bottom-20 right-0 w-full h-1 bg-gradient-to-r from-transparent via-[#00BFFF]/20 to-transparent blur-md rotate-3"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
           {/* Text Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            initial={{ opacity: 0, x: -50, rotateY: 10 }}
+            animate={{ opacity: 1, x: 0, rotateY: 0 }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="preserve-3d"
           >
-            <div className="inline-block px-4 py-1 rounded-full bg-[#1E3A5F]/50 border border-[#00BFFF]/30 text-[#00BFFF] text-xs font-bold tracking-widest uppercase mb-6 backdrop-blur-sm">
-              Membina Teknologi Melalui Lensa Ulul Albab
+            <div className="inline-block px-4 py-1 rounded-full bg-[#1E3A5F]/50 border border-[#00BFFF]/30 text-[#00BFFF] text-xs font-bold tracking-widest uppercase mb-6 backdrop-blur-sm neon-border-cyan">
+              Dimensi Baru Ketaqwaan Digital
             </div>
-            <h1 className="text-5xl md:text-7xl font-[Montserrat] font-extrabold leading-tight mb-6">
+            <h1 className="text-5xl md:text-7xl font-[Montserrat] font-extrabold leading-tight mb-6 tracking-tight">
               Teknologi untuk <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00BFFF] to-[#87CEEB]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00BFFF] via-[#87CEEB] to-[#ffffff] animate-shimmer-fast bg-[length:200%_auto]">
                 Taqwa & Syukur
               </span>
             </h1>
-            <p className="text-lg text-slate-300 mb-8 leading-relaxed max-w-xl">
-              "Untuk menjadi aplikasi super-Islamik yang paling disayangi, membantu setiap Muslim mengukuhkan hubungan dengan Allah SWT, memahami Al-Quran, dan menyebarkan kebaikan."
+            <p className="text-lg text-slate-300 mb-8 leading-relaxed max-w-xl font-light">
+              "Menjadi aplikasi super-Islamik pilihan ummah. Menghubungkan hati dengan pencipta melalui <span className="text-[#00BFFF] font-semibold">AI Generasi Baharu</span>."
             </p>
 
             <div className="flex flex-wrap gap-4">
               <motion.button
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.05, y: -5 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={onGetStarted}
-                className="px-8 py-4 bg-[#00BFFF] text-[#0A1E42] font-bold rounded-2xl shadow-[0_10px_30px_-10px_rgba(0,191,255,0.6)] flex items-center gap-3"
+                className="px-8 py-4 bg-[#00BFFF] text-[#0A1E42] font-bold rounded-2xl shadow-[0_0_20px_rgba(0,191,255,0.4)] flex items-center gap-3 relative overflow-hidden group neon-box-pulse"
               >
-                <Play className="fill-current w-5 h-5" />
-                Start Journey
+                <div className="absolute inset-0 bg-white/30 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out skew-x-12"></div>
+                <Play className="fill-current w-5 h-5 relative z-10" />
+                <span className="relative z-10">Enter the Pulse</span>
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.05, borderColor: '#00BFFF', color: '#00BFFF' }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-transparent border border-white/20 text-white font-bold rounded-2xl backdrop-blur-sm transition-colors"
+                className="px-8 py-4 bg-transparent border border-white/20 text-white font-bold rounded-2xl backdrop-blur-sm transition-colors glass-premium"
               >
                 Watch Demo
               </motion.button>
             </div>
           </motion.div>
 
-          {/* Visual Anchor (The Uploaded Logo style) */}
+          {/* Visual Anchor (Levitating 3D Phone Concept) */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
-            animate={{ opacity: 1, scale: 1, rotate: 0 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2 }}
-            className="relative flex items-center justify-center p-10"
+            className="relative flex items-center justify-center p-10 perspective-1000"
           >
-            {/* 3D Glass Effect Container */}
-            <div className="relative w-full aspect-square max-w-[500px] rounded-[3rem] bg-gradient-to-br from-[#1E3A5F]/40 to-[#0A1E42]/40 backdrop-blur-xl border border-white/10 shadow-2xl flex items-center justify-center overflow-hidden group">
+            {/* 3D Glass Card Container */}
+            <div className="relative w-full aspect-[4/5] max-w-[400px] rounded-[3rem] bg-gradient-to-br from-[#1E3A5F]/20 to-[#0A1E42]/60 backdrop-blur-2xl border border-white/10 shadow-2xl flex items-center justify-center overflow-hidden rotate-3d-hover levitate glass-premium group neon-border-cyan">
 
-              <div className="absolute inset-0 bg-gradient-to-tr from-[#00BFFF]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+              {/* Inner Glow Mesh */}
+              <div className="absolute inset-0 bg-gradient-radial from-[#00BFFF]/20 via-transparent to-transparent opacity-50 text-center"></div>
 
-              {/* The Logo Image */}
+              {/* The Logo Image (Acting as Screen Content) */}
               <motion.img
                 src="/logo-primary.png"
-                alt="Nabdat Al-Qira'ah Logo"
-                className="w-[120%] h-[120%] object-cover mix-blend-lighten opacity-90 hover:opacity-100 transition-opacity"
+                alt="QuranPulse Logo"
+                className="w-48 h-48 object-contain drop-shadow-[0_0_30px_rgba(0,191,255,0.6)] z-10"
                 animate={{
-                  y: [0, -15, 0],
-                  scale: [1, 1.02, 1]
+                  rotate: [0, 5, -5, 0],
+                  scale: [1, 1.05, 1]
                 }}
                 transition={{
-                  duration: 6,
+                  duration: 8,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
               />
 
-              {/* Floating Badges */}
+              {/* Holographic Overlays */}
+              <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-[#00BFFF]/10 to-transparent"></div>
+
+              {/* Floating Badge 1 (Top Right) */}
               <motion.div
-                className="absolute top-10 right-10 bg-[#0A1E42]/80 backdrop-blur-md p-4 rounded-2xl border border-[#00BFFF]/30 shadow-xl"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, delay: 1 }}
+                className="absolute top-8 right-8 bg-[#0A1E42]/80 backdrop-blur-md p-3 rounded-xl border border-[#00BFFF]/30 shadow-xl z-20"
+                animate={{ y: [0, 15, 0] }}
+                transition={{ duration: 5, repeat: Infinity, delay: 0.5 }}
               >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-[#00BFFF]/20 flex items-center justify-center text-[#00BFFF]">
-                    <Star className="fill-current w-5 h-5" />
-                  </div>
-                  <div>
-                    <div className="text-xs text-slate-400 uppercase tracking-wider">Rating</div>
-                    <div className="text-white font-bold">4.9/5.0</div>
-                  </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                  <div className="text-xs font-bold text-white">AI Active</div>
                 </div>
               </motion.div>
+
+              {/* Floating Badge 2 (Bottom Left) */}
+              <motion.div
+                className="absolute bottom-8 left-8 glass-premium p-4 rounded-2xl z-20"
+                animate={{ y: [0, -10, 0] }}
+                transition={{ duration: 6, repeat: Infinity, delay: 1 }}
+              >
+                <div className="text-xs text-slate-300 uppercase tracking-widest mb-1">Status</div>
+                <div className="text-[#00BFFF] font-bold flex items-center gap-1">
+                  <Zap className="w-3 h-3" /> Online
+                </div>
+              </motion.div>
+
             </div>
+
+            {/* Floor Reflection */}
+            <div className="absolute -bottom-10 w-[80%] h-4 bg-[#00BFFF] blur-2xl opacity-30 rounded-[100%]"></div>
           </motion.div>
         </div>
       </section>
 
-      {/* 2.5 PHILOSOPHY SECTION (New) */}
-      <section className="py-20 relative overflow-hidden">
-
+      {/* 2.5 PHILOSOPHY SECTION (Premium Glass) */}
+      <section className="py-24 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
-          <h2 className="text-[#00BFFF] font-bold tracking-widest uppercase mb-4">Falsafah Kami</h2>
-          <h3 className="text-4xl font-[Montserrat] font-bold text-white mb-12">Kerangka Ulul Albab</h3>
+          <h2 className="text-[#00BFFF] font-bold tracking-[0.5em] uppercase mb-4 text-sm">Falsafah Kami</h2>
+          <h3 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-white mb-16">Kerangka Ulul Albab</h3>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="glass-card p-8 rounded-3xl">
-              <div className="w-16 h-16 mx-auto bg-[#00BFFF]/10 rounded-full flex items-center justify-center mb-6 text-[#00BFFF]">
-                <Heart className="w-8 h-8" />
-              </div>
-              <h4 className="text-xl font-bold mb-4">Heartware</h4>
-              <p className="text-slate-400">Kompas dalaman dan penapis moral. Memastikan teknologi digunakan dengan niat yang lurus kerana Allah.</p>
-            </div>
-            <div className="glass-card p-8 rounded-3xl">
-              <div className="w-16 h-16 mx-auto bg-[#00BFFF]/10 rounded-full flex items-center justify-center mb-6 text-[#00BFFF]">
-                <BrainCircuit className="w-8 h-8" />
-              </div>
-              <h4 className="text-xl font-bold mb-4">Fikr & Zikir</h4>
-              <p className="text-slate-400">Penyatuan pemikiran kritis (Fikr) dan ingatan kepada Allah (Zikir) dalam setiap interaksi digital.</p>
-            </div>
-            <div className="glass-card p-8 rounded-3xl">
-              <div className="w-16 h-16 mx-auto bg-[#00BFFF]/10 rounded-full flex items-center justify-center mb-6 text-[#00BFFF]">
-                <Globe className="w-8 h-8" />
-              </div>
-              <h4 className="text-xl font-bold mb-4">Iqra' & Al-Qalam</h4>
-              <p className="text-slate-400">Mudemokrasikan ilmu melalui 'Pena Digital' (AI) untuk melahirkan masyarakat yang berilmu dan berhikmah.</p>
-            </div>
+          <div className="grid md:grid-cols-3 gap-8 perspective-container">
+            {[
+              { icon: Heart, title: "Heartware", desc: "Kompas dalaman dan penapis moral. Memastikan teknologi digunakan dengan niat yang lurus." },
+              { icon: BrainCircuit, title: "Fikr & Zikir", desc: "Penyatuan pemikiran kritis (Fikr) dan ingatan kepada Allah (Zikir) dalam setiap interaksi." },
+              { icon: Globe, title: "Iqra' & Al-Qalam", desc: "Mudemokrasikan ilmu melalui 'Pena Digital' (AI) untuk melahirkan masyarakat berhikmah." }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -10, rotateX: 5 }}
+                className="glass-premium p-10 rounded-3xl relative overflow-hidden group"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-[#00BFFF]/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 group-hover:bg-[#00BFFF]/10 transition-colors"></div>
+                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-[#1E3A5F] to-transparent rounded-2xl flex items-center justify-center mb-6 text-[#00BFFF] shadow-lg border border-white/5">
+                  <item.icon className="w-8 h-8 drop-shadow-[0_0_10px_rgba(0,191,255,0.5)]" />
+                </div>
+                <h4 className="text-xl font-bold mb-4 font-heading">{item.title}</h4>
+                <p className="text-slate-400 font-light leading-relaxed group-hover:text-slate-200 transition-colors">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* 3. SERVICES / FEATURES GRID */}
-      <section id="features" className="py-24 bg-[#050b18]">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-[#00BFFF] font-bold tracking-widest uppercase mb-4">Core Modules</h2>
-            <h3 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-white">Ecosystem of Faith</h3>
+      {/* 3. THE ECOSYSTEM (Was Services) */}
+      <section id="features" className="py-32 bg-[#050b18] relative">
+        {/* Ambient Light */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-b from-[#00BFFF]/5 to-transparent blur-3xl pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-[#00BFFF] font-bold tracking-[0.5em] uppercase mb-4 text-sm">Core Modules</h2>
+            <h3 className="text-4xl md:text-6xl font-[Montserrat] font-bold text-white mb-6">The <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00BFFF] to-[#ffffff]">Ecosystem</span></h3>
+            <p className="text-slate-400 max-w-2xl mx-auto">Satu platform integrasi untuk gaya hidup Muslim moden, dikuasakan oleh kecerdasan buatan dan reka bentuk futuristik.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
-              { icon: BookOpen, title: "Iqra Digital", desc: "Transformasi Data → Maklumat → Ilmu → Hikmah. Pembelajaran interaktif gamifikasi.", color: "#00BFFF" },
-              { icon: ShieldCheck, title: "Ustaz AI (Patuh Syariah)", desc: "Berpegang teguh kepada Mazhab Syafi'i dengan kawalan keselamatan fatwa ketat.", color: "#10B981" },
-              { icon: Layers, title: "Prinsip MADANI", desc: "Dibangunkan selaras dengan nilai Kemampanan, Kesejahteraan, dan Ihsan.", color: "#FBBF24" },
-              { icon: Smartphone, title: "Smart Deen", desc: "Hab ibadah lengkap dengan Waktu Solat, Kiblat, dan Integrasi Masjid.", color: "#87CEEB" },
-              { icon: Palette, title: "Immersive Reader", desc: "Tipografi indah dan tema 'Nabdat Al-Qira'ah' untuk fokus yang mendalam.", color: "#EC4899" },
-              { icon: Cpu, title: "Prestasi Tinggi", desc: "Dikuasakan oleh Supabase Edge Functions untuk respons pantas.", color: "#6366F1" }
+              { icon: BookOpen, title: "Iqra Digital", desc: "Perpustakaan 3D interaktif. Transformasi Data → Maklumat → Ilmu → Hikmah.", color: "#00BFFF" },
+              { icon: ShieldCheck, title: "Ustaz AI (Safe)", desc: "Enjin fatwa hibrid. Berpegang teguh kepada Mazhab Syafi'i dengan semakan ketat.", color: "#10B981" },
+              { icon: Layers, title: "Prinsip MADANI", desc: "Reka bentuk mampan yang memupuk kesejahteraan dan ihsan dalam komuniti.", color: "#FBBF24" },
+              { icon: Smartphone, title: "Smart Deen Hub", desc: "Pusat arahan ibadah: Waktu Solat tepat, Arah Kiblat AR, dan Integrasi Masjid.", color: "#87CEEB" },
+              { icon: Palette, title: "Immersive Reader", desc: "Antaramuka 'Glassmorphism' dengan tipografi premium untuk fokus yang mendalam.", color: "#EC4899" },
+              { icon: Cpu, title: "Supabase Power", desc: "Infrastruktur 'Edge' pantas untuk pengalaman tanpa lengah (Zero Latency).", color: "#6366F1" }
             ].map((feature, i) => (
               <motion.div
                 key={i}
@@ -219,16 +239,21 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className="p-8 rounded-[2rem] bg-[#0A1E42] border border-white/5 hover:border-[#00BFFF]/50 hover:bg-[#1E3A5F]/30 transition-all group"
+                className="p-8 rounded-[2rem] bg-[#0A1E42]/40 backdrop-blur-sm border border-white/5 hover:border-[#00BFFF]/50 hover:bg-[#1E3A5F]/40 transition-all group relative overflow-hidden"
                 style={{ '--feature-color': feature.color } as React.CSSProperties}
               >
-                <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform text-[var(--feature-color)]">
-                  <feature.icon className="w-7 h-7" />
+                {/* Hover Glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[var(--feature-color)]/0 to-[var(--feature-color)]/0 group-hover:from-[var(--feature-color)]/10 group-hover:to-transparent transition-all duration-500"></div>
+
+                <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 text-[var(--feature-color)] border border-white/5 group-hover:border-[var(--feature-color)]/30 transition-colors shadow-lg">
+                  <feature.icon className="w-8 h-8 group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                <h4 className="text-xl font-bold mb-3 font-[Montserrat]">{feature.title}</h4>
-                <p className="text-slate-400 leading-relaxed">{feature.desc}</p>
-                <div className="mt-6 flex items-center gap-2 text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300 text-[var(--feature-color)]">
-                  Learn More <ArrowRight className="w-4 h-4" />
+
+                <h4 className="text-xl font-bold mb-3 font-[Montserrat] text-white group-hover:text-[var(--feature-color)] transition-colors">{feature.title}</h4>
+                <p className="text-slate-400 leading-relaxed font-light group-hover:text-slate-300">{feature.desc}</p>
+
+                <div className="mt-8 flex items-center gap-2 text-xs font-bold uppercase tracking-widest opacity-60 group-hover:opacity-100 transition-opacity translate-y-2 group-hover:translate-y-0 duration-300 text-[var(--feature-color)]">
+                  Explore Module <ArrowRight className="w-3 h-3" />
                 </div>
               </motion.div>
             ))}
