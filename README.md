@@ -35,34 +35,48 @@ We use a cutting-edge stack to ensure performance and scalability:
     /landing     # Marketing Page (Animations)
   /components
     /ui          # Reusable Atom Components (Buttons, Modals)
-/supabase
-  /functions     # Edge Functions (AI Proxy)
-/scripts         # Utility Bots (Tok Imam)
-```
+/s# 🌌 QuranPulse v6.0 "Noor-e-Cyber"
 
-## 🚀 Getting Started
+> **"Teknologi untuk Taqwa & Syukur"**
+> The Super-Islamic App bridging spiritual depth with futuristic `Cyber-Islamic` design.
 
-### Prerequisites
-* Node.js 20+
-* Supabase Account
+![Banner](https://img.shields.io/badge/Status-Premium_Beta-cyan?style=for-the-badge&logo=react) ![Theme](https://img.shields.io/badge/Theme-Noor_Cyber-purple?style=for-the-badge)
 
-### Installation
+## 💎 The Premium Upgrade (v6.0)
+This version introduces the **"Noor-e-Cyber"** design language:
+*   **3D Levitation UI**: Interactive, floating elements (Pulse Command Center).
+*   **Neon & Glass**: Advanced glassmorphism with holographic borders and cyan glows.
+*   **The Ecosystem**: A modular architecture connecting Heartware, Fikr, and Zikir.
+
+## 🚀 Quick Start
+
+### 1. Main Application (Client)
 ```bash
-# Clone the repository
-git clone https://github.com/your-repo/quran-pulse-v6.0.git
-
-# Install dependencies
 npm install
-
-# Run Development Server
 npm run dev
+# Visit http://localhost:5173
 ```
 
-## 📅 Roadmap (Current Phase: "Alignment")
-* [x] **Visual Overhaul:** "Nabdh" Theme implementation.
-* [x] **Core Modules:** Landing Page, Ibadah, and Iqra UI complete.
-* [ ] **Intelligence Layer:** Connect Smart Deen UI to real Gemini API.
-* [ ] **Voice Layer:** Finalize ASR integration for Iqra.
+### 2. Admin Dashboard
+```bash
+cd ADMIN-DASHBOARD
+npm install
+npm run dev
+# Visit http://localhost:3000
+```
+
+## 📂 Documentation (Vault)
+We have centralized all documentation into `DOCS_VAULT` for easier navigation:
+* [Vision & Core Context](DOCS_VAULT/00_CORE_CONTEXT/)
+* [Implemented Features](DOCS_VAULT/01_FEATURES_IMPLEMENTED/)
+* [Roadmap](DOCS_VAULT/02_FEATURES_PENDING/)
+
+## ✨ Key Modules
+1. **Smart Deen Hub**: Precise prayer times, Qibla AR, and Masjid integration.
+2. **Ustaz AI**: Safe, Shafi'i-compliant AI Fatwa engine.
+3. **Iqra Digital**: 3D interactive library for Quranic learning.
+4. **Pulse Command Center**: The central dashboard for your spiritual day.
 
 ---
-*Built with ❤️ by the Antigravity Team.*
+*Built with ❤️ by the Antigravity Team using React, Vite, Tailwind CSS v4, and Supabase.*m.*
+```

@@ -76,8 +76,6 @@ const Iqra: React.FC<IqraProps> = ({ user, onUpdateUser }) => {
                 return <IqraVisionCoach onClose={() => setMode('MENU')} />;
             case 'COACH':
                 return <IqraVoiceCoach />;
-            case 'ANALYTICS':
-                return <IqraAnalytics onBack={() => setMode('MENU')} />;
             case 'MENU':
             default:
                 return <IqraHub onSelectPage={(vol, idx) => {

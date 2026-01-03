@@ -24,6 +24,9 @@ const LandingPage = lazy(() => import('./modules/landing/LandingPage'));
 const VerseStudio = lazy(() => import('./modules/quran/features/studio/VerseStudio')); // Test Route
 const AdminDashboard = lazy(() => import('./modules/admin/AdminDashboard'));
 const PrivacyPolicy = lazy(() => import('./modules/legal/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./modules/legal/TermsOfService'));
+const RefundPolicy = lazy(() => import('./modules/legal/RefundPolicy'));
+const Umrah = lazy(() => import('./modules/umrah')); // Umrah Companion Module
 import GuideViewer from './modules/iqra/components/GuideViewer';
 
 
@@ -100,6 +103,8 @@ const AppContent: React.FC = () => {
           {/* Public Routes */}
           <Route path="/login" element={<Login />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/terms" element={<TermsOfService />} />
+          <Route path="/refund" element={<RefundPolicy />} />
 
           {/* Root Route: Decides between Landing and Dashboard */}
           <Route path="/" element={
@@ -118,6 +123,7 @@ const AppContent: React.FC = () => {
             <Route path="souq" element={<ErrorBoundary><Souq /></ErrorBoundary>} />
             <Route path="barakah" element={<ErrorBoundary><InfaqPage /></ErrorBoundary>} />
             <Route path="media" element={<ErrorBoundary><MediaStudio /></ErrorBoundary>} />
+            <Route path="umrah" element={<ErrorBoundary><Umrah /></ErrorBoundary>} />
             <Route path="admin" element={<AdminRoute><ErrorBoundary><AdminDashboard /></ErrorBoundary></AdminRoute>} />
             <Route path="profile" element={
               <ErrorBoundary>
