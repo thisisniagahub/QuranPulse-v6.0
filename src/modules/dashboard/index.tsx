@@ -70,10 +70,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
             </div>
 
             {/* 📦 Main Scrollable Content */}
-            <div className="relative z-10 w-full max-w-2xl mx-auto px-5 pt-8 md:pt-12">
+            <div className="relative z-10 w-full max-w-2xl mx-auto px-4 pt-10 md:pt-14 h-[100dvh] flex flex-col">
 
                 {/* 1. TOP ANNOUNCEMENT / LOGO */}
-                <div className="flex justify-between items-center mb-10 group mt-4">
+                <div className="flex justify-between items-center mb-6 px-1">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
@@ -84,40 +84,36 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
                             <img
                                 src="/logo-icon.png"
                                 alt="QuranPulse"
-                                className="relative z-10 h-14 w-auto drop-shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-transform duration-500"
+                                className="relative z-10 h-10 w-auto drop-shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-transform duration-500"
                             />
                         </div>
                         <div>
-                            <span className="text-xl font-black text-white tracking-tight">Quran<span className="text-cyan-400">Pulse</span></span>
+                            <span className="text-lg font-black text-white tracking-tight">Quran<span className="text-cyan-400">Pulse</span></span>
                             <div className="flex items-center gap-1.5 mt-0.5">
                                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span>
-                                <span className="text-[10px] text-slate-400 font-bold tracking-widest uppercase">System Online</span>
+                                <span className="text-[9px] text-slate-400 font-bold tracking-widest uppercase">System Online</span>
                             </div>
                         </div>
                     </motion.div>
 
                     <div className="flex items-center gap-3 text-right">
-                        <div className="hidden sm:block">
-                            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">{greetingText.split(',')[0]}!</p>
-                            <p className="text-sm font-black text-white">{user.name.split(' ')[0]}</p>
-                        </div>
-                        <div className="w-12 h-12 rounded-2xl bg-slate-800/40 border border-white/10 flex items-center justify-center p-1 backdrop-blur-md group-hover:border-cyan-500/40 transition-colors">
-                            <div className="w-full h-full rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white overflow-hidden">
-                                {user.avatar ? <img src={user.avatar} className="object-cover w-full h-full" /> : <i className="fa-solid fa-user text-lg"></i>}
+                        <div className="w-10 h-10 rounded-xl bg-slate-800/40 border border-white/10 flex items-center justify-center p-1 backdrop-blur-md group-hover:border-cyan-500/40 transition-colors">
+                            <div className="w-full h-full rounded-lg bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-white overflow-hidden">
+                                {user.avatar ? <img src={user.avatar} className="object-cover w-full h-full" /> : <i className="fa-solid fa-user text-sm"></i>}
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* 2. OVERALL BENTO GRID */}
-                <div className="grid grid-cols-2 gap-4 md:gap-5">
+                {/* 2. OVERALL BENTO GRID - ZERO SCROLL */}
+                <div className="grid grid-cols-2 gap-3 flex-1 pb-4">
 
-                    {/* A. PULSE HERO (Spiritual Heartbeat) - FULL WIDTH */}
+                    {/* A. PULSE HERO (Heartbeat) */}
                     <div className="col-span-2">
                         <PulseHero user={user} prayerData={prayerData} />
                     </div>
 
-                    {/* B. PRAYER TIMES HORIZONTAL BAR - FULL WIDTH */}
+                    {/* B. PRAYER TIMES HORIZONTAL BAR - Compact */}
                     <div className="col-span-2">
                         <PrayerTimesStrip theme={theme} data={prayerData} loading={prayerLoading} />
                     </div>
@@ -127,22 +123,18 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
                     <ContinueReadingCard onNavigate={onNavigate} theme={theme} />
 
                     {/* D. INSIGHTS (Split Row - High Density) */}
-                    <DailyHikmah />
-                    <RecentActivity />
-
-                    {/* E. RECOMMENDED CONTENT (Discovery) - FULL WIDTH */}
-                    <div className="col-span-2">
-                        <RecommendedWidget />
+                    <div className="col-span-1 h-[140px] overflow-hidden rounded-2xl">
+                        <DailyHikmah />
                     </div>
-
+                    <div className="col-span-1 h-[140px] overflow-hidden rounded-2xl">
+                        <RecentActivity />
+                    </div>
                 </div>
 
-                {/* 3. FOOTER SPACE / LOGO REPETITION */}
-                <div className="mt-20 flex flex-col items-center justify-center opacity-20 hover:opacity-100 transition-opacity duration-700">
-                    <img src="/logo-icon.png" alt="" className="h-10 w-auto grayscale mb-4" />
-                    <p className="text-[10px] font-mono tracking-widest text-slate-500 uppercase">Built for the Digital Ummah • v6.0</p>
+                {/* 3. FOOTER (Minimal) */}
+                <div className="absolute bottom-4 left-0 w-full flex justify-center opacity-30 pointer-events-none">
+                    <p className="text-[9px] font-mono tracking-widest text-slate-500 uppercase">v6.0 • Digital Ummah</p>
                 </div>
-
             </div>
         </div>
     );

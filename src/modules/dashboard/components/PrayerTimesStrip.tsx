@@ -40,35 +40,23 @@ const PrayerTimesStrip: React.FC<PrayerTimesStripProps> = ({ data, loading }) =>
     }
 
     return (
-        <div className="col-span-2 -mb-2">
-            <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-4 px-1 snap-x">
+        <div className="col-span-2">
+            <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-full p-1 border border-white/5 shadow-inner">
                 {prayers.map((p, i) => (
-                    <motion.div
+                    <div
                         key={p.name}
-                        initial={{ opacity: 0, scale: 0.95 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.1 + (i * 0.05) }}
-                        className={`flex-shrink-0 min-w-[90px] md:min-w-[105px] py-4 px-2 rounded-2xl border relative overflow-hidden group snap-start transition-all duration-500 ${p.active
-                                ? 'bg-cyan-500/10 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.2)]'
-                                : 'bg-white/5 border-white/5 opacity-40 grayscale hover:opacity-100 hover:grayscale-0'
+                        className={`flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-full transition-all duration-500 ${p.active
+                            ? 'bg-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
+                            : 'opacity-40 hover:opacity-100 hover:bg-white/5'
                             }`}
                     >
-                        {/* Indicator for active */}
-                        {p.active && (
-                            <div className="absolute top-2 left-1/2 -translate-x-1/2">
-                                <span className="flex h-1 w-4 rounded-full bg-cyan-400/50"></span>
-                            </div>
-                        )}
-
-                        <div className="relative z-10 flex flex-col items-center gap-0.5 pt-1">
-                            <span className={`text-[8px] font-black uppercase tracking-[0.25em] block ${p.active ? 'text-cyan-400' : 'text-slate-500'}`}>
-                                {p.name}
-                            </span>
-                            <span className={`text-base md:text-lg font-black tracking-tight block ${p.active ? 'text-white' : 'text-slate-400'}`}>
-                                {p.time}
-                            </span>
-                        </div>
-                    </motion.div>
+                        <span className={`text-[8px] font-black uppercase tracking-widest block mb-0.5 ${p.active ? 'text-cyan-400' : 'text-slate-500'}`}>
+                            {p.name}
+                        </span>
+                        <span className={`text-xs md:text-sm font-black tracking-tighter block ${p.active ? 'text-white' : 'text-slate-400'}`}>
+                            {p.time}
+                        </span>
+                    </div>
                 ))}
             </div>
         </div>
