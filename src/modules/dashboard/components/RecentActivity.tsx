@@ -1,36 +1,41 @@
 import React from 'react';
+import { motion } from 'framer-motion';
+import BentoCard from './BentoCard';
 
 const activities = [
-  { id: 1, type: 'read', title: 'Completed Surah Al-Mulk', time: '4 mins ago', icon: 'fa-book-open', color: 'cyan' },
-  { id: 2, type: 'learn', title: 'Lesson: Noon Sakinah', time: '2 hours ago', icon: 'fa-graduation-cap', color: 'emerald' },
-  { id: 3, type: 'achievement', title: 'Achievement: Early Bird', time: '3 hours ago', icon: 'fa-trophy', color: 'amber' },
-  { id: 4, type: 'live', title: 'Joined Live Session', time: 'Yesterday', icon: 'fa-video', color: 'purple' },
+  { id: 1, type: 'read', title: 'Completed Surah Al-Mulk', time: '4 mins ago', icon: 'fa-book-open', color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
+  { id: 2, type: 'learn', title: 'Lesson: Noon Sakinah', time: '2 hours ago', icon: 'fa-graduation-cap', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+  { id: 3, type: 'achievement', title: 'Achievement: Early Bird', time: '3 hours ago', icon: 'fa-trophy', color: 'text-amber-400', bg: 'bg-amber-500/10' },
 ];
 
 const RecentActivity: React.FC = () => {
   return (
-    <div className="space-y-4">
-      <h3 className="text-lg font-bold text-white font-sans tracking-tight">Recent Activity</h3>
-      <div className="relative pl-4 border-l border-slate-700 space-y-6">
-        {activities.map((activity) => (
-          <div key={activity.id} className="relative pl-6 group cursor-pointer">
-            {/* Timeline Dot */}
-            <div className={`absolute -left-[21px] top-1 w-3 h-3 rounded-full bg-slate-900 border-2 border-${activity.color}-500 group-hover:scale-125 transition-transform duration-300 shadow-[0_0_10px_rgba(0,0,0,0.5)]`}></div>
-            
-            {/* Content */}
-            <div className="flex items-center gap-3">
-              <div className={`w-10 h-10 rounded-lg bg-slate-800/50 border border-white/5 flex items-center justify-center text-${activity.color}-400 group-hover:bg-${activity.color}-500/10 transition-colors`}>
-                <i className={`fa-solid ${activity.icon}`}></i>
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-slate-200 group-hover:text-white transition-colors">{activity.title}</h4>
-                <p className="text-xs text-slate-500">{activity.time}</p>
-              </div>
+    <BentoCard className="p-6 h-full border-white/5 bg-[#0A1E42]/40 backdrop-blur-xl">
+      <div className="flex justify-between items-center mb-6">
+        <h3 className="text-sm font-bold text-white uppercase tracking-wider">Recent Activity</h3>
+        <i className="fa-solid fa-clock-rotate-left text-slate-500 text-xs"></i>
+      </div>
+
+      <div className="space-y-5">
+        {activities.map((activity, idx) => (
+          <motion.div
+            key={activity.id}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: idx * 0.1 }}
+            className="flex items-center gap-4 group cursor-pointer"
+          >
+            <div className={`w-10 h-10 rounded-xl ${activity.bg} border border-white/5 flex items-center justify-center ${activity.color} group-hover:scale-110 transition-transform`}>
+              <i className={`fa-solid ${activity.icon} text-sm`}></i>
             </div>
-          </div>
+            <div className="flex-1 border-b border-white/5 pb-2 last:border-0">
+              <h4 className="text-xs font-bold text-slate-200 group-hover:text-cyan-400 transition-colors">{activity.title}</h4>
+              <p className="text-[10px] text-slate-500 font-medium mt-0.5">{activity.time}</p>
+            </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </BentoCard>
   );
 };
 
