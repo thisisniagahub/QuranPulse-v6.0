@@ -138,5 +138,8 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                     </span>
                 </div>
             </div>
+        </motion.div>
+    );
+};
 
-            export default PulseHero;
+export default PulseHero;

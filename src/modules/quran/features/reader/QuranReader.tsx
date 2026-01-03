@@ -264,31 +264,32 @@ const QuranReader: React.FC = () => {
                             </div>
                         )}
                     </div>
+                </div>
             )}
 
-                    {/* New Immersive Controls Overlay */}
-                    <ImmersiveControls
-                        isZenMode={isZenMode}
-                        toggleZenMode={handleToggleZen}
-                        isPlaying={isPlaying}
-                        onPlayPause={handlePlayPause}
-                        currentVerseKey={currentTrack?.verseKey || null}
-                        onNext={playNextVerse}
-                        onPrev={playPreviousVerse}
-                        showSettings={false} // Connect this if needed or keep using top header for detailed settings
-                        toggleSettings={() => setShowSettings(true)}
-                    />
+            {/* New Immersive Controls Overlay */}
+            <ImmersiveControls
+                isZenMode={isZenMode}
+                toggleZenMode={handleToggleZen}
+                isPlaying={isPlaying}
+                onPlayPause={handlePlayPause}
+                currentVerseKey={currentTrack?.verseKey || null}
+                onNext={playNextVerse}
+                onPrev={playPreviousVerse}
+                showSettings={false} // Connect this if needed or keep using top header for detailed settings
+                toggleSettings={() => setShowSettings(true)}
+            />
 
-                    {/* Standard Floating Audio Player - Hide in Zen Mode to prevent clutter, as ImmersiveControls handles it */}
-                    {!isZenMode && (
-                        <QuranAudioPlayer
-                            chapterName={selectedChapter.name_simple}
-                            onNext={playNextVerse}
-                            onPrevious={playPreviousVerse}
-                        />
-                    )}
-                </div>
-            );
+            {/* Standard Floating Audio Player - Hide in Zen Mode to prevent clutter, as ImmersiveControls handles it */}
+            {!isZenMode && (
+                <QuranAudioPlayer
+                    chapterName={selectedChapter.name_simple}
+                    onNext={playNextVerse}
+                    onPrevious={playPreviousVerse}
+                />
+            )}
+        </div>
+    );
 };
 
-            export default QuranReader;
+export default QuranReader;
