@@ -227,77 +227,94 @@ const PrayerScreen: React.FC = () => (
     </div>
 );
 
-// iPhone Frame Component
+// iPhone Frame Component with responsive sizing
 const IPhoneFrame: React.FC<{
     children: React.ReactNode;
     className?: string;
     delay?: number;
-}> = ({ children, className = '', delay = 0 }) => (
-    <motion.div
-        initial={{ opacity: 0, y: 50 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay }}
-        className={`relative ${className}`}
-    >
-        {/* Phone Frame */}
-        <div className="relative w-[220px] h-[450px] rounded-[3rem] bg-gradient-to-b from-slate-700 to-slate-900 p-[3px] shadow-2xl">
-            {/* Inner bezel */}
-            <div className="absolute inset-[3px] rounded-[2.7rem] bg-black">
-                {/* Dynamic Island */}
-                <div className="absolute top-4 left-1/2 -translate-x-1/2 w-24 h-6 bg-black rounded-full z-20"></div>
-                {/* Screen */}
-                <div className="absolute inset-[6px] rounded-[2.5rem] overflow-hidden">
-                    {children}
+    size?: 'sm' | 'md' | 'lg';
+}> = ({ children, className = '', delay = 0, size = 'md' }) => {
+    const sizeClasses = {
+        sm: 'w-[160px] h-[330px] rounded-[2rem]',
+        md: 'w-[180px] h-[370px] md:w-[200px] md:h-[410px] rounded-[2.5rem]',
+        lg: 'w-[200px] h-[410px] md:w-[220px] md:h-[450px] rounded-[3rem]'
+    };
+
+    return (
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay }}
+            className={`relative ${className}`}
+        >
+            {/* Phone Frame */}
+            <div className={`relative ${sizeClasses[size]} bg-gradient-to-b from-slate-700 to-slate-900 p-[3px] shadow-2xl`}>
+                {/* Inner bezel */}
+                <div className="absolute inset-[3px] rounded-[inherit] bg-black">
+                    {/* Dynamic Island */}
+                    <div className="absolute top-3 md:top-4 left-1/2 -translate-x-1/2 w-16 md:w-24 h-4 md:h-6 bg-black rounded-full z-20"></div>
+                    {/* Screen */}
+                    <div className="absolute inset-[4px] md:inset-[6px] rounded-[inherit] overflow-hidden">
+                        {children}
+                    </div>
                 </div>
             </div>
-        </div>
 
-        {/* Reflection / Gloss */}
-        <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none"></div>
-    </motion.div>
-);
+            {/* Reflection / Gloss */}
+            <div className="absolute inset-0 rounded-[inherit] bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none"></div>
+        </motion.div>
+    );
+};
 
-// Main 3 iPhone Mockup Component
+// Main 3 iPhone Mockup Component - Mobile First
 const ThreePhoneMockup: React.FC = () => {
     return (
-        <div className="relative flex items-center justify-center py-8">
+        <div className="relative flex items-center justify-center py-4 md:py-8">
             {/* Glow Effect */}
-            <div className="absolute inset-0 bg-cyan-500/10 blur-[100px] rounded-full"></div>
+            <div className="absolute inset-0 bg-cyan-500/10 blur-[80px] md:blur-[100px] rounded-full"></div>
 
-            {/* 3 Phones Container */}
+            {/* Mobile: Single Phone | Desktop: 3 Phones */}
             <div className="relative flex items-center justify-center">
-                {/* Left Phone - Prayer Times */}
+
+                {/* Left Phone - Hidden on mobile, visible on md+ */}
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                    className="relative z-10 -mr-12 transform -rotate-6"
+                    className="hidden md:block relative z-10 -mr-8 lg:-mr-12 transform -rotate-6"
                 >
-                    <IPhoneFrame delay={0.2}>
+                    <IPhoneFrame delay={0.2} size="sm">
                         <PrayerScreen />
                     </IPhoneFrame>
                 </motion.div>
 
-                {/* Center Phone - Home Screen (Elevated) */}
+                {/* Center Phone - Always visible, larger */}
                 <motion.div
-                    animate={{ y: [0, -20, 0] }}
+                    animate={{ y: [0, -15, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                    className="relative z-20 scale-110"
+                    className="relative z-20 scale-100 md:scale-110"
                 >
-                    <IPhoneFrame delay={0}>
+                    <IPhoneFrame delay={0} size="lg">
                         <HomeScreen />
                     </IPhoneFrame>
                 </motion.div>
 
-                {/* Right Phone - AI Chat */}
+                {/* Right Phone - Hidden on mobile, visible on md+ */}
                 <motion.div
                     animate={{ y: [0, -10, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                    className="relative z-10 -ml-12 transform rotate-6"
+                    className="hidden md:block relative z-10 -ml-8 lg:-ml-12 transform rotate-6"
                 >
-                    <IPhoneFrame delay={0.4}>
+                    <IPhoneFrame delay={0.4} size="sm">
                         <AIChatScreen />
                     </IPhoneFrame>
                 </motion.div>
+            </div>
+
+            {/* Mobile indicator dots */}
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 flex gap-2 md:hidden">
+                <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
+                <div className="w-2 h-2 rounded-full bg-white/30"></div>
+                <div className="w-2 h-2 rounded-full bg-white/30"></div>
             </div>
         </div>
     );
