@@ -138,17 +138,17 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
   // Dynamic Styling Logic
   const getContainerClasses = () => {
     // Base classes
-    let classes = "py-10 px-6 border-b transition-all duration-700 relative overflow-hidden group/card ";
+    let classes = "py-12 px-8 transition-all duration-1000 relative overflow-hidden group/card ";
 
     if (isPlaying) {
-      // Playing State (Override Zen)
-      classes += "bg-gradient-to-r from-cyan-900/40 via-cyan-900/10 to-transparent border-l-4 border-l-cyan-400 border-y border-r border-y-cyan-500/30 border-r-cyan-500/30 shadow-[0_0_50px_rgba(6,182,212,0.2)] scale-[1.02] z-10 rounded-xl backdrop-blur-xl ";
+      // Premium Cyber Highlight (Match Mockup)
+      classes += "scale-[1.02] z-10 rounded-[2.5rem] ";
     } else if (isZenMode) {
       // Zen Mode (Minimalist)
-      classes += "border-transparent hover:bg-white/5 rounded-3xl ";
+      classes += "border-transparent opacity-60 hover:opacity-100 translate-y-0 ";
     } else {
       // Standard Mode
-      classes += "hover:bg-white/5 bg-slate-900/40 backdrop-blur-md rounded-xl my-3 border border-white/10 hover:border-cyan-500/30 hover:shadow-[0_0_20px_rgba(6,182,212,0.05)] ";
+      classes += "hover:bg-white/5 bg-slate-900/40 backdrop-blur-md rounded-2xl my-4 border border-white/10 hover:border-cyan-500/30 ";
     }
     return classes;
   };
@@ -156,13 +156,29 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
   return (
     <motion.div
       ref={verseRef}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      layout
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
       className={getContainerClasses()}
     >
+      {/* 🌟 PREMIUM GLOW EFFECT (MOCKUP STYLE) */}
+      {isPlaying && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="absolute inset-x-0 inset-y-2 mx-2 bg-cyan-500/10 border border-cyan-400/30 rounded-[2rem] shadow-[0_0_40px_rgba(6,182,212,0.2)] pointer-events-none"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-transparent to-transparent"></div>
+          {/* Animated Edge Light */}
+          <motion.div
+            animate={{ opacity: [0.3, 0.6, 0.3], x: [-20, 20, -20] }}
+            transition={{ repeat: Infinity, duration: 4, ease: "linear" }}
+            className="absolute top-0 left-0 w-1/2 h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+          ></motion.div>
+        </motion.div>
+      )}
+
       {/* Cinematic Glow Background (Subtle) */}
-      {!isPlaying && (
+      {!isPlaying && !isZenMode && (
         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/0 via-purple-500/0 to-blue-500/0 opacity-0 group-hover/card:opacity-10 transition-opacity duration-700 pointer-events-none" />
       )}
       {/* Verse Header */}
@@ -196,8 +212,8 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
             onClick={onPlay}
             disabled={isAudioLoading}
             className={`w-9 h-9 rounded-full flex items-center justify-center transition-all border ${isPlaying
-                ? 'bg-cyan-500 text-black border-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.6)]'
-                : 'text-slate-400 border-slate-700/50 bg-slate-800/50 hover:bg-cyan-500/20 hover:text-cyan-400 hover:border-cyan-400/50'
+              ? 'bg-cyan-500 text-black border-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.6)]'
+              : 'text-slate-400 border-slate-700/50 bg-slate-800/50 hover:bg-cyan-500/20 hover:text-cyan-400 hover:border-cyan-400/50'
               }`}
           >
             {isAudioLoading && isPlaying ? (
@@ -228,8 +244,8 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
             <button
               onClick={handleRumiTTS}
               className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${isTTSPlaying
-                  ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
-                  : 'text-slate-400 hover:bg-slate-800 hover:text-emerald-400'
+                ? 'bg-emerald-500 text-black shadow-lg shadow-emerald-500/20'
+                : 'text-slate-400 hover:bg-slate-800 hover:text-emerald-400'
                 }`}
               title={isTTSPlaying ? 'Stop Rumi TTS' : 'Baca Rumi'}
             >
@@ -292,17 +308,17 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
                   data-word-location={word.location}
                   onClick={(e) => { e.stopPropagation(); onWordClick(word, e); }}
                   className={`flex flex-col items-center gap-1 rounded-xl p-2 cursor-pointer transition-all duration-200 group relative min-w-[70px] ${highlightedWordIndex === word.position
-                      ? 'scale-105 bg-cyan-500/10 ring-1 ring-cyan-500/30'
-                      : 'hover:bg-slate-800/50'
+                    ? 'scale-105 bg-cyan-500/10 ring-1 ring-cyan-500/30'
+                    : 'hover:bg-slate-800/50'
                     }`}
                 >
                   {/* 1. Arabic Glyph - TOP */}
                   <span
                     className={`font-uthmani text-center leading-[1.9] transition-all duration-300 ${highlightedWordIndex === word.position
-                        ? 'text-cyan-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.9)] scale-110 z-10'
-                        : activeWord?.id === word.id
-                          ? 'text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]'
-                          : 'text-white font-bold drop-shadow-[0_3px_5px_rgba(0,0,0,0.8)] group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]'
+                      ? 'text-cyan-300 drop-shadow-[0_0_25px_rgba(6,182,212,0.9)] scale-110 z-10'
+                      : activeWord?.id === word.id
+                        ? 'text-amber-300 drop-shadow-[0_0_15px_rgba(251,191,36,0.6)]'
+                        : 'text-white font-bold drop-shadow-[0_3px_5px_rgba(0,0,0,0.8)] group-hover:drop-shadow-[0_0_10px_rgba(255,255,255,0.4)]'
                       }`}
                     style={{ fontSize: `${fontSize}px` }}
                   >
@@ -416,8 +432,8 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
       {showTransliteration && !showWordByWord && (
         <div className="mb-4 px-2 text-right dir-ltr" dir="ltr">
           <p className={`font-serif text-base sm:text-lg italic tracking-wide leading-relaxed transition-all duration-500 ${isPlaying
-              ? 'text-emerald-200 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)] scale-[1.01]'
-              : 'text-emerald-400/70'
+            ? 'text-emerald-200 drop-shadow-[0_0_8px_rgba(52,211,153,0.4)] scale-[1.01]'
+            : 'text-emerald-400/70'
             }`}>
             {translitMode === 'jakim' ? dualTranslit.jakim : dualTranslit.academic}
           </p>

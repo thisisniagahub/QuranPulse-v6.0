@@ -10,14 +10,6 @@ interface PrayerTimesStripProps {
 
 const PrayerTimesStrip: React.FC<PrayerTimesStripProps> = ({ data, loading }) => {
 
-    const prayerIcons: Record<string, string> = {
-        'Subuh': '/assets/icons/prayer/subuh.png',
-        'Zohor': '/assets/icons/prayer/zohor.png',
-        'Asar': '/assets/icons/prayer/asar.png',
-        'Maghrib': '/assets/icons/prayer/maghrib.png',
-        'Isyak': '/assets/icons/prayer/isyak.png',
-    };
-
     const defaultPrayers = [
         { name: 'Subuh', time: '--:--', active: false },
         { name: 'Zohor', time: '--:--', active: false },
@@ -40,63 +32,42 @@ const PrayerTimesStrip: React.FC<PrayerTimesStripProps> = ({ data, loading }) =>
 
     if (loading) {
         return (
-            <div className="col-span-2 py-8 flex items-center justify-center gap-3 text-white/50 animate-pulse text-xs uppercase tracking-widest font-black">
-                <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
-                Menyegerakan Waktu Solat...
+            <div className="col-span-2 py-6 flex items-center justify-center gap-3 text-white/30 animate-pulse text-[10px] uppercase tracking-[0.3em] font-black">
+                <div className="w-1.5 h-1.5 rounded-full bg-cyan-500/50"></div>
+                Menyegerakan Waktu Solat
             </div>
         );
     }
 
     return (
-        <div className="col-span-2 mb-2">
-            <div className="flex gap-4 overflow-x-auto no-scrollbar py-4 px-1 snap-x">
+        <div className="col-span-2 -mb-2">
+            <div className="flex gap-2.5 overflow-x-auto no-scrollbar py-4 px-1 snap-x">
                 {prayers.map((p, i) => (
                     <motion.div
                         key={p.name}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, scale: 0.95 }}
+                        animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.1 + (i * 0.05) }}
-                        whileHover={{ scale: 1.05, y: -5 }}
-                        className={`flex-shrink-0 min-w-[110px] md:min-w-[130px] p-4 rounded-[2rem] border relative overflow-hidden group snap-start transition-all duration-300 ${p.active
-                                ? 'bg-cyan-500/10 border-cyan-500/50 shadow-[0_0_20px_rgba(6,182,212,0.2)] scale-105'
-                                : 'bg-white/5 border-white/10 opacity-70 grayscale-[0.3]'
+                        className={`flex-shrink-0 min-w-[90px] md:min-w-[105px] py-4 px-2 rounded-2xl border relative overflow-hidden group snap-start transition-all duration-500 ${p.active
+                                ? 'bg-cyan-500/10 border-cyan-500/40 shadow-[0_0_20px_rgba(6,182,212,0.2)]'
+                                : 'bg-white/5 border-white/5 opacity-40 grayscale hover:opacity-100 hover:grayscale-0'
                             }`}
                     >
-                        {/* 🌟 Active Glow Background */}
+                        {/* Indicator for active */}
                         {p.active && (
-                            <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/20 to-transparent pointer-events-none animated-active-gradient"></div>
+                            <div className="absolute top-2 left-1/2 -translate-x-1/2">
+                                <span className="flex h-1 w-4 rounded-full bg-cyan-400/50"></span>
+                            </div>
                         )}
 
-                        <div className="relative z-10 flex flex-col items-center gap-3">
-                            {/* 🖼️ 3D Sticky Icon */}
-                            <motion.div
-                                animate={p.active ? { y: [0, -4, 0] } : {}}
-                                transition={{ repeat: Infinity, duration: 2 }}
-                                className={`w-14 h-14 md:w-16 md:h-16 relative flex items-center justify-center ${p.active ? 'drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]' : ''}`}
-                            >
-                                <img
-                                    src={prayerIcons[p.name]}
-                                    alt={p.name}
-                                    className="w-full h-full object-contain"
-                                />
-                            </motion.div>
-
-                            <div className="text-center space-y-0.5">
-                                <span className={`text-[9px] font-black uppercase tracking-[0.2em] block ${p.active ? 'text-cyan-400' : 'text-slate-500'}`}>
-                                    {p.name}
-                                </span>
-                                <span className={`text-base md:text-lg font-black tracking-tighter block ${p.active ? 'text-white' : 'text-slate-300'}`}>
-                                    {p.time}
-                                </span>
-                            </div>
+                        <div className="relative z-10 flex flex-col items-center gap-0.5 pt-1">
+                            <span className={`text-[8px] font-black uppercase tracking-[0.25em] block ${p.active ? 'text-cyan-400' : 'text-slate-500'}`}>
+                                {p.name}
+                            </span>
+                            <span className={`text-base md:text-lg font-black tracking-tight block ${p.active ? 'text-white' : 'text-slate-400'}`}>
+                                {p.time}
+                            </span>
                         </div>
-
-                        {/* Status tag for active */}
-                        {p.active && (
-                            <div className="absolute top-2 right-2">
-                                <span className="flex h-1.5 w-1.5 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee]"></span>
-                            </div>
-                        )}
                     </motion.div>
                 ))}
             </div>

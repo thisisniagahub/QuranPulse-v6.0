@@ -79,13 +79,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
                         animate={{ opacity: 1, scale: 1 }}
                         className="flex items-center gap-3"
                     >
-                        <div className="relative">
+                        <div className="relative group/logo">
+                            <div className="absolute -inset-2 bg-cyan-500/40 blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-full"></div>
                             <img
                                 src="/logo-icon.png"
                                 alt="QuranPulse"
-                                className="h-14 w-auto drop-shadow-[0_0_15px_rgba(6,182,212,0.4)] group-hover:scale-110 transition-transform duration-500"
+                                className="relative z-10 h-14 w-auto drop-shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-transform duration-500"
                             />
-                            <div className="absolute -inset-1 bg-cyan-400/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
                         </div>
                         <div>
                             <span className="text-xl font-black text-white tracking-tight">Quran<span className="text-cyan-400">Pulse</span></span>
@@ -110,7 +110,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
                 </div>
 
                 {/* 2. OVERALL BENTO GRID */}
-                <div className="grid grid-cols-2 gap-5 md:gap-6">
+                <div className="grid grid-cols-2 gap-4 md:gap-5">
 
                     {/* A. PULSE HERO (Spiritual Heartbeat) - FULL WIDTH */}
                     <div className="col-span-2">
@@ -118,27 +118,20 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
                     </div>
 
                     {/* B. PRAYER TIMES HORIZONTAL BAR - FULL WIDTH */}
-                    <div className="col-span-2 -mt-2">
+                    <div className="col-span-2">
                         <PrayerTimesStrip theme={theme} data={prayerData} loading={prayerLoading} />
                     </div>
 
-                    {/* C. USTAZ AI WIDGET (The Intelligence) - FULL WIDTH */}
+                    {/* C. CORE FEATURES (Split Row - High Density) */}
                     <UstazAiWidget onNavigate={onNavigate} />
-
-                    {/* D. CONTINUE READING (Persistence) - FULL WIDTH */}
                     <ContinueReadingCard onNavigate={onNavigate} theme={theme} />
 
-                    {/* E. DAILY INSPIRATION & ACTIVITY (Split Row) */}
-                    <div className="col-span-2 md:col-span-1">
-                        <DailyHikmah />
-                    </div>
+                    {/* D. INSIGHTS (Split Row - High Density) */}
+                    <DailyHikmah />
+                    <RecentActivity />
 
-                    <div className="col-span-2 md:col-span-1">
-                        <RecentActivity />
-                    </div>
-
-                    {/* F. RECOMMENDED CONTENT (Discovery) - FULL WIDTH */}
-                    <div className="col-span-2 md:mt-4">
+                    {/* E. RECOMMENDED CONTENT (Discovery) - FULL WIDTH */}
+                    <div className="col-span-2">
                         <RecommendedWidget />
                     </div>
 

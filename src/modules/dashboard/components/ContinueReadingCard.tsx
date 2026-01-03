@@ -8,7 +8,7 @@ interface ContinueReadingCardProps {
     theme: any;
 }
 
-const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate, theme }) => {
+const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate }) => {
     const { lastRead } = useReadHistory();
 
     const handleClick = () => {
@@ -16,48 +16,44 @@ const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate, t
     };
 
     return (
-        <BentoCard 
-            className="col-span-2 min-h-[180px] p-6 border-white"
+        <BentoCard
+            className="col-span-1 min-h-[160px] p-5 border-white/5 bg-[#0A1E42]/80"
             onClick={handleClick}
             delay={0.1}
-            bgImage="/images/continue-reading-bg.png"
         >
-            <div className="flex flex-col justify-between h-full">
-                <div className="flex justify-between items-start">
-                    <div>
-                        <div className="flex items-center gap-2 mb-2">
-                            <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-neon-sm"></span>
-                            <p className="text-xs font-bold uppercase tracking-wider text-primary">Sambung Bacaan</p>
-                        </div>
-                        <h3 className="text-3xl font-bold text-white mb-1 drop-shadow-md">
-                            {lastRead ? `Surah ${lastRead.surahName}` : 'Mula Membaca'}
-                        </h3>
-                        <p className="text-white/80 text-sm font-medium drop-shadow-sm">
-                            {lastRead ? `Ayat ${lastRead.ayahId}` : 'Tiada rekod bacaan'}
-                        </p>
+            <div className="flex flex-col justify-between h-full relative z-10">
+                <div>
+                    <div className="flex items-center gap-1.5 mb-2 opacity-60">
+                        <i className="fa-solid fa-book-open text-[10px] text-cyan-400"></i>
+                        <p className="text-[10px] font-black uppercase tracking-widest text-white/70">Teruskan</p>
                     </div>
-                    <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur flex items-center justify-center border border-white group-hover:bg-white group-hover:text-background-dark transition-all duration-300">
-                        <i className={`fa-solid ${lastRead ? 'fa-play' : 'fa-book-open'} ml-1 text-inherit`}></i>
-                    </div>
+
+                    <h3 className="text-xl font-black text-white leading-tight mb-0.5">
+                        {lastRead ? lastRead.surahName : 'Mula Baca'}
+                    </h3>
+                    <p className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest">
+                        {lastRead ? `Ayat ${lastRead.ayahId}` : 'Tiada Rekod'}
+                    </p>
                 </div>
 
                 {lastRead && (
-                    <div className="mt-4">
-                        <div className="flex justify-between text-[10px] text-white/70 mb-1 font-bold uppercase tracking-widest drop-shadow-sm">
-                            <span>Progress</span>
-                            <span>{lastRead.totalVerses ? Math.round((lastRead.ayahId / lastRead.totalVerses) * 100) : '--'}%</span>
+                    <div className="mt-3">
+                        <div className="flex justify-between text-[8px] text-white/40 mb-1 font-black uppercase tracking-widest">
+                            <span>{lastRead.totalVerses ? Math.round((lastRead.ayahId / lastRead.totalVerses) * 100) : '0'}% Selesai</span>
                         </div>
-                        <div className="h-1.5 w-full bg-surface-dark rounded-full overflow-hidden border border-white/20">
-                            <div 
-                                className="h-full rounded-full bg-primary progress-neon" 
-                                style={{ 
-                                    width: `${lastRead.totalVerses ? (lastRead.ayahId / lastRead.totalVerses) * 100 : 0}%`
-                                }}
-                            ></div>
+                        <div className="h-1 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                            <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${lastRead.totalVerses ? (lastRead.ayahId / lastRead.totalVerses) * 100 : 0}%` }}
+                                className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 shadow-[0_0_8px_rgba(6,182,212,0.5)]"
+                            />
                         </div>
                     </div>
                 )}
             </div>
+
+            {/* Glowing Mesh Background */}
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-cyan-500/10 to-transparent pointer-events-none"></div>
         </BentoCard>
     );
 };
