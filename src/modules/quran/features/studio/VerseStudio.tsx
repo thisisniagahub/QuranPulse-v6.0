@@ -1,7 +1,8 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QuranVerse, QuranChapter, MorphologyResult } from '../../../../types';
 import ReactMarkdown from 'react-markdown';
+import { chatWithVerseContext } from '../../../../services/aiService';
 
 interface VerseStudioProps {
     verse: QuranVerse;
@@ -9,18 +10,11 @@ interface VerseStudioProps {
     onClose: () => void;
     tab: 'CHAT' | 'TAFSIR' | 'ANALYSIS';
     setTab: (tab: 'CHAT' | 'TAFSIR' | 'ANALYSIS') => void;
-
-    // Chat
-    chatMessages: any[];
-    chatInput: string;
-    setChatInput: (val: string) => void;
-    handleSend: () => void;
-    isChatLoading: boolean;
-
-    // Data
-    tafsirData: any;
-    loadingTafsir: boolean;
-    morphologyData: MorphologyResult | null;
+    
+    // External Data (Optional, can be fetched internally if needed)
+    tafsirData?: any;
+    loadingTafsir?: boolean;
+    morphologyData?: MorphologyResult | null;
 }
 
 const VerseStudio: React.FC<VerseStudioProps> = ({
@@ -29,21 +23,74 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
     onClose,
     tab,
     setTab,
-    chatMessages,
-    chatInput,
-    setChatInput,
-    handleSend,
-    isChatLoading,
     tafsirData,
     loadingTafsir,
     morphologyData
 }) => {
+    // --- Internal State ---
+    const [messages, setMessages] = useState<any[]>([]);
+    const [input, setInput] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const messagesEndRef = useRef<HTMLDivElement>(null);
+
+    // Initialize Chat on Mount / Verse Change
+    useEffect(() => {
+        setMessages([{
+            id: 'welcome',
+            role: 'assistant',
+            content: `Assalamualaikum. Saya Ustaz AI. Tanyalah saya apa sahaja tentang Surah ${chapter?.name_simple}, Ayat ${verse.verse_key.split(':')[1]}. Saya boleh huraikan tafsir, hukum tajwid, atau pengajaran ayat ini.`,
+            timestamp: Date.now()
+        }]);
+        setInput('');
+        setIsLoading(false);
+    }, [verse.id, chapter?.id]); // Reset when verse changes
 
     // Scroll chat to bottom
-    const messagesEndRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [chatMessages]);
+    }, [messages]);
+
+    const handleSend = async () => {
+        if (!input.trim()) return;
+
+        const userMsg = {
+            id: Date.now().toString(),
+            role: 'user',
+            content: input,
+            timestamp: Date.now()
+        };
+
+        setMessages(prev => [...prev, userMsg]);
+        const currentInput = input;
+        setInput('');
+        setIsLoading(true);
+
+        try {
+            const response = await chatWithVerseContext(
+                verse.verse_key,
+                verse.text_uthmani || "",
+                currentInput
+            );
+
+            setMessages(prev => [...prev, {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: response,
+                timestamp: Date.now()
+            }]);
+        } catch (error) {
+            console.error(error);
+            setMessages(prev => [...prev, {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: "Maaf, saya menghadapi masalah untuk menjawab soalan ini. Sila cuba lagi.",
+                timestamp: Date.now(),
+                isError: true
+            }]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <AnimatePresence>
@@ -146,13 +193,13 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
                         {tab === 'CHAT' && (
                             <div className="flex flex-col h-full animate-fade-in">
                                 <div className="flex-1 space-y-4 mb-4">
-                                    {chatMessages.length === 0 ? (
+                                    {messages.length === 0 ? (
                                         <div className="flex flex-col items-center justify-center h-full text-center space-y-3 opacity-60">
                                             <i className="fa-solid fa-robot text-4xl text-slate-600"></i>
                                             <p className="text-sm text-slate-400">Ask Ustaz AI about this verse...</p>
                                         </div>
                                     ) : (
-                                        chatMessages.map((msg, i) => (
+                                        messages.map((msg, i) => (
                                             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                                 <div className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user'
                                                         ? 'bg-cyan-600 text-white rounded-tr-sm'
@@ -171,17 +218,17 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
                                         className="w-full h-12 rounded-full bg-slate-900 border border-white/10 pl-5 pr-12 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 transition-all"
                                         placeholder="Type your question..."
                                         type="text"
-                                        value={chatInput}
-                                        onChange={(e) => setChatInput(e.target.value)}
+                                        value={input}
+                                        onChange={(e) => setInput(e.target.value)}
                                         onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                                        disabled={isChatLoading}
+                                        disabled={isLoading}
                                     />
                                     <button
                                         onClick={handleSend}
-                                        disabled={isChatLoading || !chatInput.trim()}
+                                        disabled={isLoading || !input.trim()}
                                         className="absolute right-1.5 top-3.5 h-9 w-9 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-500 hover:bg-cyan-500 hover:text-black transition-colors disabled:opacity-50"
                                     >
-                                        {isChatLoading ? (
+                                        {isLoading ? (
                                             <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
                                         ) : (
                                             <i className="fa-solid fa-paper-plane text-xs"></i>

@@ -51,6 +51,12 @@ interface QuranUIState {
     isSearchingSemantic: boolean;
     setIsSearchingSemantic: (is: boolean) => void;
     handleSemanticSearch: () => void;
+
+    // Voice & ASR
+    isVoiceSearchActive: boolean;
+    setIsVoiceSearchActive: (is: boolean) => void;
+    lastVoiceTranscription: string;
+    setLastVoiceTranscription: (t: string) => void;
 }
 
 const QuranUIContext = createContext<QuranUIState | undefined>(undefined);
@@ -88,6 +94,10 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
     const [isSemanticMode, setIsSemanticMode] = useState(false);
     const [semanticResults, setSemanticResults] = useState<SemanticResult[]>([]);
     const [isSearchingSemantic, setIsSearchingSemantic] = useState(false);
+
+    // 6. Voice
+    const [isVoiceSearchActive, setIsVoiceSearchActive] = useState(false);
+    const [lastVoiceTranscription, setLastVoiceTranscription] = useState('');
 
     // Actions
     const toggleBookmark = (verseKey: string) => {
@@ -140,7 +150,9 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
             isSemanticMode, setIsSemanticMode,
             semanticResults, setSemanticResults,
             isSearchingSemantic, setIsSearchingSemantic,
-            handleSemanticSearch
+            handleSemanticSearch,
+            isVoiceSearchActive, setIsVoiceSearchActive,
+            lastVoiceTranscription, setLastVoiceTranscription
         }}>
             {children}
         </QuranUIContext.Provider>

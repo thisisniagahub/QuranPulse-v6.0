@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useQuran } from '../contexts/QuranContext';
 
 interface ImmersiveControlsProps {
     isZenMode: boolean;
@@ -26,6 +27,7 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
 }) => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
+    const { isVoiceSearchActive, setIsVoiceSearchActive } = useQuran();
 
     // Auto-hide logic on scroll
     useEffect(() => {
@@ -84,26 +86,38 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
                                 {[...Array(30)].map((_, i) => (
                                     <motion.div
                                         key={i}
-                                        animate={isPlaying ? { height: [4, Math.random() * 24 + 4, 4] } : { height: 4 }}
+                                        animate={isPlaying || isVoiceSearchActive ? { height: [4, Math.random() * 24 + 4, 4] } : { height: 4 }}
                                         transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.05 }}
-                                        className="w-1 bg-cyan-400 rounded-full"
+                                        className={`w-1 ${isVoiceSearchActive ? 'bg-rose-500' : 'bg-cyan-400'} rounded-full`}
                                     ></motion.div>
                                 ))}
                             </div>
 
-                            <div className="flex items-center justify-between w-full">
+                            <div className="flex items-center justify-between w-full px-4">
                                 {/* Back */}
                                 <button onClick={onPrev} className="w-10 h-10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-colors">
                                     <i className="fa-solid fa-backward-step"></i>
                                 </button>
 
-                                {/* Play/Pause */}
-                                <button
-                                    onClick={onPlayPause}
-                                    className="w-16 h-16 rounded-full bg-cyan-500 text-black flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] group active:scale-95 transition-all"
-                                >
-                                    <i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'} text-xl`}></i>
-                                </button>
+                                <div className="flex items-center gap-6">
+                                    {/* VOICE RECITE BUTTON */}
+                                    <button
+                                        onClick={() => setIsVoiceSearchActive(!isVoiceSearchActive)}
+                                        className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${isVoiceSearchActive 
+                                            ? 'bg-rose-500 text-white shadow-[0_0_20px_rgba(244,63,94,0.5)] scale-110 animate-pulse' 
+                                            : 'bg-white/10 text-white/60 hover:bg-white/20'}`}
+                                    >
+                                        <i className="fa-solid fa-microphone"></i>
+                                    </button>
+
+                                    {/* Play/Pause */}
+                                    <button
+                                        onClick={onPlayPause}
+                                        className="w-16 h-16 rounded-full bg-cyan-500 text-black flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] group active:scale-95 transition-all"
+                                    >
+                                        <i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'} text-xl`}></i>
+                                    </button>
+                                </div>
 
                                 {/* Next */}
                                 <button onClick={onNext} className="w-10 h-10 rounded-full flex items-center justify-center text-white/40 hover:text-white transition-colors">
@@ -149,6 +163,14 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
                         <div className="w-px h-6 bg-white/10"></div>
                         <div className="flex items-center gap-6">
                             <button onClick={onPrev} className="text-slate-400 hover:text-white"><i className="fa-solid fa-backward-step"></i></button>
+                            
+                            <button
+                                onClick={() => setIsVoiceSearchActive(!isVoiceSearchActive)}
+                                className={`text-xl transition-all ${isVoiceSearchActive ? 'text-rose-500 animate-pulse scale-125' : 'text-slate-400 hover:text-rose-400'}`}
+                            >
+                                <i className="fa-solid fa-microphone"></i>
+                            </button>
+
                             <button onClick={onPlayPause} className="w-10 h-10 rounded-full bg-cyan-500 text-black flex items-center justify-center shadow-lg"><i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i></button>
                             <button onClick={onNext} className="text-slate-400 hover:text-white"><i className="fa-solid fa-forward-step"></i></button>
                         </div>

@@ -7,6 +7,7 @@ import QuranPageView from './QuranPageView';
 import QuranAudioPlayer from '../audio/QuranAudioPlayer';
 import ReadingProgressBar from '../../components/ReadingProgressBar';
 import ImmersiveControls from '../../components/ImmersiveControls';
+import VoiceActiveScroller from '../../components/VoiceActiveScroller';
 
 
 const QuranReader: React.FC = () => {
@@ -288,6 +289,9 @@ const QuranReader: React.FC = () => {
                     onPrevious={playPreviousVerse}
                 />
             )}
+
+            {/* AI Voice Navigation Engine */}
+            <VoiceActiveScroller />
         </div>
     );
 };

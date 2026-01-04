@@ -1,0 +1,33 @@
+{
+  "name": "quran-teaching-ai-agent",
+  "version": "1.0.0",
+  "description": "Advanced Quranic recitation analysis and teaching system with tajwid-focused audio processing",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "dev": "ts-node main.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "quran",
+    "ai",
+    "teaching",
+    "recitation",
+    "tajwid",
+    "asr",
+    "audio-processing"
+  ],
+  "author": "Quran AI Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "form-data": "^4.0.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "ts-node": "^10.9.0"
+  }
+}

@@ -1,65 +1,78 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Mic, Activity, RefreshCw } from 'lucide-react';
+import { Mic, Activity, RefreshCw, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IQRA_CONFIG } from '../constants';
+import { useAudioRecorder } from '../../../hooks/useAudioRecorder';
 
 interface ASRRecorderProps {
   expectedText: string;
-  onResult: (text: string, confidence: number) => void;
+  onResult: (text: string, confidence: number, feedback?: string) => void;
 }
 
 const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => {
-  const [isRecording, setIsRecording] = useState(false);
+  const { isRecording, startRecording, stopRecording, audioBlob, visualizerData } = useAudioRecorder();
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const cooldownRef = useRef<number>(0);
 
-  // Simulation Logic
+  // Triggered when recording stops and blob is ready
   useEffect(() => {
-    let recordingTimer: NodeJS.Timeout;
-    let processingTimer: NodeJS.Timeout;
-
-    if (isRecording) {
-      // Simulate recording duration
-      recordingTimer = setTimeout(() => {
-        setIsRecording(false);
-        setIsProcessing(true);
-        
-        // Simulate Processing time
-        processingTimer = setTimeout(() => {
-          setIsProcessing(false);
-          
-          // Generate a Mock Result (Simulated AI)
-          // Higher chance of success for demo purposes
-          const success = Math.random() > 0.2; 
-          const baseScore = success ? IQRA_CONFIG.SCORE_PASS_HIGH : IQRA_CONFIG.SCORE_PASS_LOW;
-          // Add some random variance (+- 0.1)
-          const confidence = Math.min(0.99, Math.max(0.1, baseScore + (Math.random() * 0.2 - 0.1)));
-          
-          onResult(expectedText, confidence);
-        }, IQRA_CONFIG.ASR_PROCESSING_DELAY);
-
-      }, IQRA_CONFIG.ASR_RECORDING_DURATION);
+    if (audioBlob && !isRecording) {
+      sendToBackend(audioBlob);
     }
+  }, [audioBlob, isRecording]);
 
-    return () => {
-      clearTimeout(recordingTimer);
-      clearTimeout(processingTimer);
-    };
-  }, [isRecording, expectedText, onResult]);
+  const sendToBackend = async (blob: Blob) => {
+    setIsProcessing(true);
+    setError(null);
+
+    const formData = new FormData();
+    formData.append('file', blob, 'recitation.webm');
+    formData.append('expected_text', expectedText);
+
+    try {
+      const response = await fetch('http://localhost:8000/analyze', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error('Backend offline');
+
+      const data = await response.json();
+      
+      // Pass the real score and feedback back to the UI
+      onResult(expectedText, data.confidence || 0, data.feedback);
+
+    } catch (err) {
+      console.error("ASR Error:", err);
+      setError("Backend offline. Sila jalankan server Python.");
+      // Fallback to simulation if backend fails (Optional, but good for UX)
+      setTimeout(() => {
+          onResult(expectedText, 0.5, "Ralat sambungan server.");
+      }, 1000);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   const handleRecordClick = () => {
     const now = Date.now();
-    // Security: Rate Limiting (Prevent spamming)
-    if (now - cooldownRef.current < 1000) {
-        return; 
-    }
+    if (now - cooldownRef.current < 1000) return;
     
-    if (!isProcessing && !isRecording) {
-        cooldownRef.current = now;
-        setIsRecording(true);
-    } else if (isRecording) {
-        // Allow cancelling? For now, no, enforcing full duration for 'consistency'
+    if (!isRecording && !isProcessing) {
+      cooldownRef.current = now;
+      startRecording();
+      // Auto-stop after duration from config
+      setTimeout(() => {
+          stopRecording();
+      }, IQRA_CONFIG.ASR_RECORDING_DURATION);
     }
+  };
+
+  const getAriaLabel = () => {
+    if (isProcessing) return "Sedang memproses bacaan";
+    if (isRecording) return "Sedang merakam suara";
+    return "Mula merakam bacaan";
   };
 
   return (
@@ -68,11 +81,12 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
         whileTap={{ scale: 0.95 }}
         onClick={handleRecordClick}
         disabled={isProcessing}
-        className={`relative w-16 h-16 rounded-full flex items-center justify-center transition-all ${
+        aria-label={getAriaLabel()}
+        className={`relative w-16 h-16 rounded-full flex items-center justify-center transition-all focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-offset-black ${
           isRecording 
             ? 'bg-red-500 shadow-[0_0_30px_rgba(239,68,68,0.5)]' 
             : isProcessing
-              ? 'bg-cyan-900 cursor-wait opacity-80'
+              ? 'bg-cyan-900 cursor-wait'
               : 'bg-cyan-500 hover:bg-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.4)]'
         }`}
       >
@@ -82,42 +96,53 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
           <Mic className={`w-8 h-8 ${isRecording ? 'text-white' : 'text-black'}`} />
         )}
 
-        {/* Pulse Ring Animation when Recording */}
-        {isRecording && (
+        {/* Real Visualizer Pulse when Recording */}
+        {isRecording && visualizerData && (
           <motion.div
-            animate={{ scale: [1, 2], opacity: [0.5, 0] }}
-            transition={{ repeat: Infinity, duration: 1.5 }}
-            className="absolute inset-0 rounded-full bg-red-500 -z-10"
+            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
+            transition={{ repeat: Infinity, duration: 0.5 }}
+            className="absolute inset-0 rounded-full bg-red-500/30 -z-10"
           />
         )}
       </motion.button>
       
-      {/* Status Text */}
+      {/* Status Text & Error */}
       <AnimatePresence mode="wait">
-        {isRecording ? (
-          <motion.div 
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="flex items-center gap-2 text-red-400 text-xs font-mono uppercase tracking-widest"
-          >
-            <Activity className="w-3 h-3 animate-pulse" />
-            Mendengar...
-          </motion.div>
-        ) : isProcessing ? (
-           <motion.div 
-            initial={{ opacity: 0, y: 5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0 }}
-            className="text-cyan-400 text-xs font-mono uppercase tracking-widest"
-          >
-            Menyemak...
-          </motion.div>
-        ) : (
-           <div className="text-slate-500 text-xs font-medium">
-             Tekan & Sebut
-           </div>
-        )}
+        <div aria-live="polite" className="h-5 flex flex-col items-center">
+            {isRecording ? (
+                <motion.div 
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="flex items-center gap-2 text-red-400 text-xs font-mono uppercase tracking-widest"
+                >
+                    <Activity className="w-3 h-3 animate-pulse" />
+                    Mendengar...
+                </motion.div>
+            ) : isProcessing ? (
+                <motion.div 
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    className="text-cyan-400 text-xs font-mono uppercase tracking-widest"
+                >
+                    Menyemak Suara...
+                </motion.div>
+            ) : error ? (
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    className="text-red-500 text-[10px] flex items-center gap-1"
+                >
+                    <AlertCircle className="w-3 h-3" />
+                    Backend Offline
+                </motion.div>
+            ) : (
+                <div className="text-slate-500 text-xs font-medium">
+                    Tekan & Sebut
+                </div>
+            )}
+        </div>
       </AnimatePresence>
     </div>
   );

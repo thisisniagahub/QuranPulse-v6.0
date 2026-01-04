@@ -1,18 +1,18 @@
-# Start QuranPulse ASR System
-Write-Host "Starting QuranPulse ASR Forensic Engine..." -ForegroundColor Cyan
+Write-Host "🚀 Sedang menghidupkan Enjin AI QuranPulse..." -ForegroundColor Cyan
 
-# Check if Python is available
-if (-not (Get-Command "python" -ErrorAction SilentlyContinue)) {
-    Write-Error "Python not found! Please install Python 3.10+."
-    exit 1
+# 1. Masuk ke folder
+cd prototypes/asr_engine
+
+# 2. Semak jika Python wujud
+if (-not (Get-Command python -ErrorAction SilentlyContinue)) {
+    Write-Error "Python tidak dijumpai! Sila install Python dulu."
+    exit
 }
 
-# Navigate to Prototypes
-Set-Location "prototypes\asr_engine"
+# 3. Install Dependencies (Jika perlu)
+Write-Host "📦 Memasang 'spare part' (Librosa, FastAPI)..." -ForegroundColor Yellow
+pip install -r requirements.txt
 
-# Install Dependencies (Optional check)
-# pip install -r requirements.txt
-
-# Start Server
-Write-Host "Launching FastAPI Server on http://localhost:8000..." -ForegroundColor Green
-python server.py
+# 4. Jalankan Server
+Write-Host "🧠 Menghidupkan Otak pada Port 8000..." -ForegroundColor Green
+python main.py

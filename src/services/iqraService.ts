@@ -8,13 +8,66 @@ export interface IqraProgress {
   completed_at: string;
 }
 
+export interface ASRAnalysis {
+  qwer: number;
+  level: string;
+  error_breakdown: {
+    makhraj: number;
+    tajwid: number;
+    harakat: number;
+    rhythm: number;
+  };
+  audio_info: {
+    transcription: string;
+    duration: number;
+  };
+}
+
+const ASR_API_URL = import.meta.env.VITE_ASR_API_URL || 'http://localhost:8000';
+
 export const IqraService = {
+  /**
+   * Sends audio blob to the ASR Microservice for Tajweed analysis.
+   */
+  async analyzeRecitation(audioBlob: Blob, expectedText: string = ""): Promise<ASRAnalysis | null> {
+    try {
+      console.log('🎙️ Sending recitation to ASR Engine...');
+      const formData = new FormData();
+      formData.append('file', audioBlob, 'recitation.wav');
+      formData.append('expected_text', expectedText);
+
+      const response = await fetch(`${ASR_API_URL}/analyze/audio`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(`ASR API Error: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      return data.analysis ? {
+        qwer: data.analysis.qwer,
+        level: data.analysis.level,
+        error_breakdown: data.analysis.error_breakdown,
+        audio_info: {
+          transcription: data.audio_info.transcription,
+          duration: data.audio_info.duration
+        }
+      } : null;
+
+    } catch (error) {
+      console.error('❌ ASR Analysis failed:', error);
+      return null;
+    }
+  },
+
   // Save or Update Progress
   async saveProgress(volume: number, lessonId: string, score: number) {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return null;
 
-    // Calculate stars based on score
+    // Calculate stars based on score (Lower Q-WER is better, but here we assume 'score' is accuracy 0-100)
     const stars = score >= 90 ? 3 : score >= 80 ? 2 : 1;
 
     const { data, error } = await supabase

@@ -1,36 +1,149 @@
-import { AlertTriangle, CheckCircle2, XCircle, MessageSquare, Brain, Send, Play, RefreshCw } from 'lucide-react'
+'use client'
+
+import { useState, useEffect, useCallback } from 'react'
+import {
+    Brain, AlertTriangle, CheckCircle2, BookOpen, Clock, Zap,
+    ThumbsUp, ThumbsDown, GraduationCap, Trash2, Send, AlertCircle
+} from 'lucide-react'
+import {
+    getFlaggedChats, getAIStats, approveFlaggedChat, rejectFlaggedChat,
+    addToTraining, deleteFlaggedChat, testPrompt
+} from '@/actions/ai'
+import type { FlaggedChat } from '@/types/crud'
 
 export default function AIOversightPage() {
-    const flaggedChats = [
-        { id: 'chat_29481', trigger: 'Keyword "Fatwa"', snippet: 'User asked about unauthorized fatwa regarding bitcoin investment...', severity: 'high', time: '5 mins ago' },
-        { id: 'chat_29482', trigger: 'Negative Sentiment', snippet: 'AI answer was deemed "confusing" by user. Requested clarification.', severity: 'medium', time: '32 mins ago' },
-        { id: 'chat_29483', trigger: 'Hallucination Check', snippet: 'Verse reference 2:256 did not match the actual quotation provided.', severity: 'low', time: '1 hour ago' },
-        { id: 'chat_29484', trigger: 'Low Rating (1 star)', snippet: 'User complained about incomplete answer on zakat calculation.', severity: 'medium', time: '2 hours ago' },
+    const [flagged, setFlagged] = useState<FlaggedChat[]>([])
+    const [loading, setLoading] = useState(true)
+    const [total, setTotal] = useState(0)
+    const [stats, setStats] = useState({ totalQueries: 0, pending: 0, approved: 0, trained: 0, avgResponseTime: 0 })
+
+    // Prompt testing
+    const [systemPrompt, setSystemPrompt] = useState('You are Ustaz AI, an Islamic knowledge assistant...')
+    const [userInput, setUserInput] = useState('')
+    const [testResult, setTestResult] = useState<{ output: string; tokensUsed: number; latency: number } | null>(null)
+    const [testLoading, setTestLoading] = useState(false)
+
+    const [actionLoading, setActionLoading] = useState<string | null>(null)
+    const [error, setError] = useState<string | null>(null)
+
+    const fetchData = useCallback(async () => {
+        setLoading(true)
+        try {
+            const [flaggedData, statsData] = await Promise.all([
+                getFlaggedChats(),
+                getAIStats()
+            ])
+            setFlagged(flaggedData.flagged)
+            setTotal(flaggedData.total)
+            setStats(statsData)
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to fetch data')
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    useEffect(() => {
+        fetchData()
+    }, [fetchData])
+
+    const handleApprove = async (id: string) => {
+        setActionLoading(id)
+        try {
+            await approveFlaggedChat(id, 'admin') // Would use real user ID
+            fetchData()
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to approve')
+        } finally {
+            setActionLoading(null)
+        }
+    }
+
+    const handleReject = async (id: string) => {
+        setActionLoading(id)
+        try {
+            await rejectFlaggedChat(id, 'admin')
+            fetchData()
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to reject')
+        } finally {
+            setActionLoading(null)
+        }
+    }
+
+    const handleAddToTraining = async (id: string) => {
+        setActionLoading(id)
+        try {
+            await addToTraining(id, 'admin')
+            fetchData()
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to add to training')
+        } finally {
+            setActionLoading(null)
+        }
+    }
+
+    const handleDelete = async (id: string) => {
+        setActionLoading(id)
+        try {
+            await deleteFlaggedChat(id)
+            fetchData()
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to delete')
+        } finally {
+            setActionLoading(null)
+        }
+    }
+
+    const handleTestPrompt = async () => {
+        if (!userInput.trim()) return
+        setTestLoading(true)
+        try {
+            const result = await testPrompt(systemPrompt, userInput)
+            setTestResult(result)
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to test prompt')
+        } finally {
+            setTestLoading(false)
+        }
+    }
+
+    const severityColor = (s: string) => {
+        switch (s) {
+            case 'high': return 'bg-red-500/10 text-red-400 border-red-500/20'
+            case 'medium': return 'badge-warning'
+            case 'low': return 'badge-info'
+            default: return 'bg-slate-500/10 text-slate-400'
+        }
+    }
+
+    const statCards = [
+        { label: 'Total Queries', value: stats.totalQueries.toLocaleString(), icon: Brain, color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
+        { label: 'Pending Review', value: stats.pending, icon: Clock, color: 'text-amber-400', bg: 'bg-amber-500/10' },
+        { label: 'Approved', value: stats.approved, icon: CheckCircle2, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+        { label: 'Added to Training', value: stats.trained, icon: GraduationCap, color: 'text-purple-400', bg: 'bg-purple-500/10' },
     ]
 
     return (
         <div className="p-8 space-y-8 text-white min-h-screen">
             {/* Header */}
-            <div className="flex items-center justify-between animate-fade-in">
-                <div>
-                    <h2 className="text-3xl font-bold tracking-tight">AI Oversight (RLHF)</h2>
-                    <p className="text-slate-400 mt-1">Review Hallucinations, Flags, and User Feedback for <code className="text-cyan-400">Ustaz AI</code> training.</p>
-                </div>
-                <div className="flex gap-2">
-                    <span className="badge badge-danger">12 Flagged</span>
-                    <span className="badge badge-warning">5 Low Ratings</span>
-                    <span className="badge badge-success">2.1k Today</span>
-                </div>
+            <div className="animate-fade-in">
+                <h2 className="text-3xl font-bold tracking-tight">AI Oversight</h2>
+                <p className="text-slate-400 mt-1">Monitor AI responses, review flagged content, and manage training data</p>
             </div>
+
+            {/* Error Display */}
+            {error && (
+                <div className="glass-card rounded-xl p-4 flex items-center gap-3 text-red-400 border-red-500/30">
+                    <AlertCircle className="h-5 w-5" />
+                    {error}
+                    <button onClick={() => setError(null)} className="ml-auto hover:text-red-300">×</button>
+                </div>
+            )}
 
             {/* Stats */}
             <div className="grid gap-4 md:grid-cols-4 animate-fade-in">
-                {[
-                    { label: 'Total Queries (24h)', value: '45,231', icon: MessageSquare, color: 'text-blue-400', bg: 'bg-blue-500/10' },
-                    { label: 'Auto-Resolved', value: '44,892', icon: CheckCircle2, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-                    { label: 'Flagged for Review', value: '339', icon: AlertTriangle, color: 'text-amber-400', bg: 'bg-amber-500/10' },
-                    { label: 'Avg Response Time', value: '1.2s', icon: Brain, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-                ].map((stat, i) => (
+                {statCards.map((stat, i) => (
                     <div key={i} className="glass-card rounded-xl p-4 flex items-center gap-4">
                         <div className={`p-3 rounded-xl ${stat.bg}`}>
                             <stat.icon className={`h-5 w-5 ${stat.color}`} />
@@ -44,85 +157,124 @@ export default function AIOversightPage() {
             </div>
 
             <div className="grid gap-6 lg:grid-cols-2">
-                {/* Flagged Conversations Queue */}
+                {/* Flagged Queue */}
                 <div className="glass-card rounded-xl p-6 animate-fade-in">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-lg font-semibold">Flagged for Review</h3>
-                        <button className="btn-ghost text-xs px-3 py-1.5 flex items-center gap-1">
-                            <RefreshCw className="h-3 w-3" /> Refresh
-                        </button>
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="text-lg font-semibold text-slate-200 flex items-center gap-2">
+                            <AlertTriangle className="h-5 w-5 text-amber-400" />
+                            Flagged for Review
+                            <span className="badge badge-warning">{total}</span>
+                        </h3>
                     </div>
-                    <div className="space-y-3">
-                        {flaggedChats.map((item) => (
-                            <div key={item.id} className="p-4 rounded-lg bg-slate-800/30 border border-slate-700/50 hover:border-slate-600 transition-all cursor-pointer group">
-                                <div className="flex justify-between items-start mb-2">
-                                    <span className="font-mono text-xs text-slate-500">{item.id}</span>
-                                    <div className="flex items-center gap-2">
-                                        <span className="text-[10px] text-slate-500">{item.time}</span>
-                                        <span className={`px-2 py-0.5 rounded text-[10px] uppercase font-bold ${item.severity === 'high' ? 'bg-red-500 text-white' :
-                                                item.severity === 'medium' ? 'bg-amber-500 text-black' :
-                                                    'bg-blue-500 text-white'
-                                            }`}>{item.severity}</span>
+
+                    {loading ? (
+                        <div className="flex items-center justify-center py-12">
+                            <div className="animate-spin h-8 w-8 border-2 border-cyan-500 border-t-transparent rounded-full"></div>
+                        </div>
+                    ) : flagged.length === 0 ? (
+                        <div className="text-center py-12 text-slate-500">
+                            <CheckCircle2 className="h-12 w-12 mx-auto mb-3 opacity-50" />
+                            <p>No flagged items to review</p>
+                        </div>
+                    ) : (
+                        <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                            {flagged.map((item) => (
+                                <div key={item.id} className="p-4 rounded-lg bg-slate-800/30 border border-slate-700/50 group">
+                                    <div className="flex items-start justify-between mb-2">
+                                        <span className={`badge ${severityColor(item.severity)}`}>
+                                            {item.severity.toUpperCase()}
+                                        </span>
+                                        <span className="text-xs text-slate-500">
+                                            {new Date(item.created_at).toLocaleDateString()}
+                                        </span>
+                                    </div>
+                                    <p className="text-sm text-slate-300 mb-2 line-clamp-2">{item.snippet}</p>
+                                    <p className="text-xs text-slate-500 mb-3">Trigger: {item.trigger}</p>
+
+                                    <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                                        <button
+                                            onClick={() => handleApprove(item.id)}
+                                            disabled={actionLoading === item.id}
+                                            className="flex-1 btn-ghost text-xs py-1.5 text-emerald-400 hover:bg-emerald-500/10"
+                                        >
+                                            <ThumbsUp className="h-3 w-3 mr-1" />
+                                            Approve
+                                        </button>
+                                        <button
+                                            onClick={() => handleAddToTraining(item.id)}
+                                            disabled={actionLoading === item.id}
+                                            className="flex-1 btn-ghost text-xs py-1.5 text-purple-400 hover:bg-purple-500/10"
+                                        >
+                                            <GraduationCap className="h-3 w-3 mr-1" />
+                                            Train
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(item.id)}
+                                            disabled={actionLoading === item.id}
+                                            className="btn-ghost text-xs py-1.5 text-red-400 hover:bg-red-500/10"
+                                        >
+                                            <Trash2 className="h-3 w-3" />
+                                        </button>
                                     </div>
                                 </div>
-                                <div className="text-sm font-medium text-slate-200 mb-1 flex items-center gap-2">
-                                    <AlertTriangle className="h-4 w-4 text-amber-400" />
-                                    {item.trigger}
-                                </div>
-                                <div className="text-xs text-slate-400 line-clamp-2 mb-3">"{item.snippet}"</div>
-                                <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button className="flex-1 py-1.5 text-xs bg-emerald-900/50 text-emerald-400 rounded-lg border border-emerald-900 hover:bg-emerald-900 transition-colors flex items-center justify-center gap-1">
-                                        <CheckCircle2 className="h-3 w-3" /> Approve
-                                    </button>
-                                    <button className="flex-1 py-1.5 text-xs bg-indigo-900/50 text-indigo-400 rounded-lg border border-indigo-900 hover:bg-indigo-900 transition-colors flex items-center justify-center gap-1">
-                                        <Brain className="h-3 w-3" /> Train (RLHF)
-                                    </button>
-                                    <button className="py-1.5 px-3 text-xs bg-red-900/50 text-red-400 rounded-lg border border-red-900 hover:bg-red-900 transition-colors">
-                                        <XCircle className="h-3 w-3" />
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div>
+                    )}
                 </div>
 
-                {/* Prompt Engineering Playground */}
-                <div className="glass-card rounded-xl p-6 flex flex-col animate-fade-in">
-                    <div className="flex items-center justify-between mb-6">
-                        <h3 className="text-lg font-semibold">Prompt Monitor (Live)</h3>
-                        <span className="badge badge-success">Connected</span>
-                    </div>
+                {/* Prompt Tester */}
+                <div className="glass-card rounded-xl p-6 animate-fade-in">
+                    <h3 className="text-lg font-semibold text-slate-200 mb-4 flex items-center gap-2">
+                        <Zap className="h-5 w-5 text-cyan-400" />
+                        Prompt Monitor (Test)
+                    </h3>
 
-                    <div className="flex-1 bg-slate-900/50 rounded-xl border border-slate-700/50 p-4 mb-4 font-mono text-xs overflow-y-auto max-h-[400px]">
-                        <div className="text-slate-500 mb-1">// System Prompt</div>
-                        <div className="mb-4 text-emerald-400 leading-relaxed">
-                            You are Ustaz AI. You must adhere to JAKIM guidelines. For complex fatwa questions, always recommend consulting local religious authorities...
+                    <div className="space-y-4">
+                        <div>
+                            <label className="block text-sm text-slate-400 mb-1.5">System Prompt</label>
+                            <textarea
+                                value={systemPrompt}
+                                onChange={(e) => setSystemPrompt(e.target.value)}
+                                className="input-modern w-full h-24 font-mono text-xs"
+                            />
                         </div>
 
-                        <div className="text-slate-500 mb-1">// User Input</div>
-                        <div className="mb-4 text-white bg-slate-800/50 p-2 rounded">
-                            Apakah hukum melabur dalam ASB?
+                        <div>
+                            <label className="block text-sm text-slate-400 mb-1.5">User Input</label>
+                            <div className="flex gap-2">
+                                <input
+                                    value={userInput}
+                                    onChange={(e) => setUserInput(e.target.value)}
+                                    placeholder="Test a query..."
+                                    className="input-modern flex-1"
+                                    onKeyDown={(e) => e.key === 'Enter' && handleTestPrompt()}
+                                />
+                                <button
+                                    onClick={handleTestPrompt}
+                                    disabled={testLoading}
+                                    className="btn-primary"
+                                >
+                                    {testLoading ? (
+                                        <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full" />
+                                    ) : (
+                                        <Send className="h-4 w-4" />
+                                    )}
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="text-slate-500 mb-1">// AI Output (Gemini-2.5-Flash)</div>
-                        <div className="text-slate-300 bg-slate-800/50 p-2 rounded leading-relaxed">
-                            Berdasarkan keputusan Muzakarah Jawatankuasa Fatwa Majlis Kebangsaan pada tahun 2008, pelaburan dalam ASB adalah <span className="text-cyan-400">HARUS</span> dengan syarat-syarat tertentu...
-                        </div>
-
-                        <div className="mt-4 pt-4 border-t border-slate-700">
-                            <div className="text-slate-500 mb-1">// Source Citations</div>
-                            <a href="#" className="text-blue-400 hover:underline">e-smaf.islam.gov.my?id=342</a>
-                        </div>
-                    </div>
-
-                    <div className="flex gap-2">
-                        <input
-                            className="input-modern flex-1"
-                            placeholder="Test a query against safety filters..."
-                        />
-                        <button className="btn-primary flex items-center gap-2">
-                            <Play className="h-4 w-4" /> Test
-                        </button>
+                        {testResult && (
+                            <div className="p-4 rounded-lg bg-slate-900/50 border border-slate-700/50">
+                                <div className="flex items-center justify-between mb-2">
+                                    <span className="text-xs text-slate-500">AI Response</span>
+                                    <div className="flex gap-3 text-xs text-slate-500">
+                                        <span>{testResult.tokensUsed} tokens</span>
+                                        <span>{testResult.latency}ms</span>
+                                    </div>
+                                </div>
+                                <p className="text-sm text-slate-300">{testResult.output}</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

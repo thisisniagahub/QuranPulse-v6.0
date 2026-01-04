@@ -7,6 +7,11 @@ export async function middleware(request: NextRequest) {
         return NextResponse.next()
     }
 
+    // DEV BYPASS - Skip all auth in development
+    if (process.env.NODE_ENV === 'development') {
+        return NextResponse.next()
+    }
+
     let response = NextResponse.next({
         request: {
             headers: request.headers,

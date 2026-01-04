@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { BookOpen, Star, Trophy, ChevronRight, Lock, Gamepad2, Mic } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { BookOpen, Star, Trophy, ChevronRight, Lock, Gamepad2, Mic, GraduationCap, Sparkles } from 'lucide-react';
 import IqraDigitalReader from './IqraDigitalReader';
 import IqraGameEngine from './game/IqraGameEngine';
+import KafaDashboard from './kafa/KafaDashboard';
 
 const IqraModule = () => {
   const [selectedVolume, setSelectedVolume] = useState<number | null>(null);
   const [mode, setMode] = useState<'MENU' | 'GAME'>('MENU');
+  const [activeTab, setActiveTab] = useState<'iqra' | 'kafa'>('iqra');
 
   const iqraBooks = [
     { id: 1, title: 'Iqra 1', subtitle: 'Pengenalan Huruf', color: 'from-emerald-500 to-teal-600', locked: false },
@@ -45,13 +47,22 @@ const IqraModule = () => {
         />
         <div className="absolute inset-0 flex flex-col justify-center px-6 z-20">
           <motion.div
+            key={activeTab}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <span className="text-cyan-400 font-mono text-xs tracking-widest uppercase mb-2 block">Pusat Pembelajaran</span>
-            <h1 className="text-4xl font-bold text-white mb-2">IQRA DIGITAL</h1>
+            <span className="text-cyan-400 font-mono text-xs tracking-widest uppercase mb-2 block flex items-center gap-2">
+                <Sparkles className="w-3 h-3" /> 
+                Pusat Pembelajaran
+            </span>
+            <h1 className="text-4xl font-bold text-white mb-2">
+                {activeTab === 'iqra' ? 'IQRA DIGITAL' : 'AKADEMI KAFA'}
+            </h1>
             <p className="text-slate-400 max-w-sm">
-              Mula perjalanan anda membaca Al-Quran dengan kaedah yang sistematik dan bantuan AI.
+                {activeTab === 'iqra' 
+                    ? "Mula perjalanan anda membaca Al-Quran dengan kaedah yang sistematik dan bantuan AI."
+                    : "Kuasai subjek UPKK dan fardu ain dengan modul interaktif yang menyeronokkan."}
             </p>
           </motion.div>
         </div>
@@ -67,7 +78,7 @@ const IqraModule = () => {
             </div>
             <div>
               <p className="text-xs text-slate-400">Tahap Semasa</p>
-              <p className="font-bold text-white">Iqra 1</p>
+              <p className="font-bold text-white">Level 1</p>
             </div>
           </div>
           <div className="h-8 w-px bg-white/10" />
@@ -82,83 +93,124 @@ const IqraModule = () => {
           </div>
         </div>
 
-        {/* Extra Modes */}
-        <div className="grid grid-cols-2 gap-4">
+        {/* Tab Switcher */}
+        <div className="bg-[#111] p-1 rounded-xl border border-white/10 flex relative">
+            <motion.div 
+                className="absolute top-1 bottom-1 bg-cyan-600 rounded-lg shadow-lg z-0"
+                initial={false}
+                animate={{
+                    left: activeTab === 'iqra' ? '4px' : '50%',
+                    right: activeTab === 'iqra' ? '50%' : '4px',
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            />
+            
             <button 
-                onClick={() => setMode('GAME')}
-                className="bg-[#111] border border-white/10 p-4 rounded-xl flex items-center gap-3 hover:bg-white/5 transition-colors"
+                onClick={() => setActiveTab('iqra')}
+                className={`flex-1 py-3 text-sm font-bold relative z-10 flex items-center justify-center gap-2 transition-colors ${activeTab === 'iqra' ? 'text-white' : 'text-slate-400 hover:text-white'}`}
             >
-                <div className="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
-                    <Gamepad2 className="w-4 h-4" />
-                </div>
-                <div className="text-left">
-                    <p className="font-bold text-sm">Mini Games</p>
-                    <p className="text-xs text-slate-500">Uji Minda</p>
-                </div>
+                <BookOpen className="w-4 h-4" />
+                Modul Iqra
             </button>
-            <button className="bg-[#111] border border-white/10 p-4 rounded-xl flex items-center gap-3 hover:bg-white/5 transition-colors opacity-50 cursor-not-allowed">
-                <div className="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center text-pink-400">
-                    <Mic className="w-4 h-4" />
-                </div>
-                <div className="text-left">
-                    <p className="font-bold text-sm">Voice Coach</p>
-                    <p className="text-xs text-slate-500">Coming Soon</p>
-                </div>
+            <button 
+                onClick={() => setActiveTab('kafa')}
+                className={`flex-1 py-3 text-sm font-bold relative z-10 flex items-center justify-center gap-2 transition-colors ${activeTab === 'kafa' ? 'text-white' : 'text-slate-400 hover:text-white'}`}
+            >
+                <GraduationCap className="w-4 h-4" />
+                Akademi KAFA
             </button>
         </div>
       </div>
 
-      {/* Book Grid */}
-      <div className="px-6">
-        <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-          <BookOpen className="w-5 h-5 text-cyan-400" />
-          Pilih Jilid
-        </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {iqraBooks.map((book, index) => (
-            <motion.button
-              key={book.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: index * 0.1 }}
-              onClick={() => !book.locked && setSelectedVolume(book.id)}
-              className={`relative overflow-hidden rounded-2xl p-6 text-left group transition-all ${book.locked ? 'opacity-50 grayscale' : 'hover:scale-[1.02]'}`}
+      {/* Content Area */}
+      <AnimatePresence mode="wait">
+        {activeTab === 'iqra' ? (
+            <motion.div
+                key="iqra-grid"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="px-6"
             >
-              {/* Background Gradient */}
-              <div className={`absolute inset-0 bg-gradient-to-br ${book.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
-              <div className="absolute inset-0 border border-white/5 rounded-2xl group-hover:border-white/20 transition-colors" />
+                <h2 className="text-white font-bold mb-4 flex items-center gap-2">
+                <BookOpen className="w-5 h-5 text-cyan-400" />
+                Pilih Jilid
+                </h2>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {iqraBooks.map((book, index) => (
+                    <motion.button
+                    key={book.id}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: index * 0.1 }}
+                    onClick={() => !book.locked && setSelectedVolume(book.id)}
+                    className={`relative overflow-hidden rounded-2xl p-6 text-left group transition-all ${book.locked ? 'opacity-50 grayscale' : 'hover:scale-[1.02]'}`}
+                    >
+                    <div className={`absolute inset-0 bg-gradient-to-br ${book.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
+                    <div className="absolute inset-0 border border-white/5 rounded-2xl group-hover:border-white/20 transition-colors" />
 
-              <div className="relative z-10 flex justify-between items-start">
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-1">{book.title}</h3>
-                  <p className="text-slate-400 text-sm">{book.subtitle}</p>
-                </div>
-                {book.locked ? (
-                  <Lock className="w-5 h-5 text-slate-500" />
-                ) : (
-                  <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${book.color} flex items-center justify-center shadow-lg`}>
-                    <ChevronRight className="w-5 h-5 text-white" />
-                  </div>
-                )}
-              </div>
+                    <div className="relative z-10 flex justify-between items-start">
+                        <div>
+                        <h3 className="text-2xl font-bold text-white mb-1">{book.title}</h3>
+                        <p className="text-slate-400 text-sm">{book.subtitle}</p>
+                        </div>
+                        {book.locked ? (
+                        <Lock className="w-5 h-5 text-slate-500" />
+                        ) : (
+                        <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${book.color} flex items-center justify-center shadow-lg`}>
+                            <ChevronRight className="w-5 h-5 text-white" />
+                        </div>
+                        )}
+                    </div>
 
-              {/* Progress Bar (Mock) */}
-              {!book.locked && (
-                <div className="mt-6">
-                  <div className="flex justify-between text-xs text-slate-400 mb-1">
-                    <span>Progres</span>
-                    <span>0%</span>
-                  </div>
-                  <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                    <div className="h-full bg-white w-0" />
-                  </div>
+                    {!book.locked && (
+                        <div className="mt-6">
+                        <div className="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Progres</span>
+                            <span>0%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
+                            <div className="h-full bg-white w-0" />
+                        </div>
+                        </div>
+                    )}
+                    </motion.button>
+                ))}
                 </div>
-              )}
-            </motion.button>
-          ))}
-        </div>
-      </div>
+
+                {/* Extra Modes (Mini Games) */}
+                <div className="mt-8">
+                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Aktiviti Tambahan</h3>
+                    <div className="grid grid-cols-2 gap-4">
+                        <button 
+                            onClick={() => setMode('GAME')}
+                            className="bg-[#111] border border-white/10 p-4 rounded-xl flex items-center gap-3 hover:bg-white/5 transition-colors"
+                        >
+                            <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                                <Gamepad2 className="w-5 h-5" />
+                            </div>
+                            <div className="text-left">
+                                <p className="font-bold text-sm text-white">Mini Games</p>
+                                <p className="text-xs text-slate-500">Uji Minda</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </motion.div>
+        ) : (
+            <motion.div
+                key="kafa-grid"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+            >
+                <KafaDashboard onSelectSubject={(id) => console.log("Selected KAFA:", id)} />
+            </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };

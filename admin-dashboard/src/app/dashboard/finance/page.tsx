@@ -1,17 +1,150 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Eye, EyeOff, Lock, TrendingUp, TrendingDown, Wallet, CreditCard, ArrowUpRight, RefreshCw } from 'lucide-react'
+import { useState, useEffect, useCallback } from 'react'
+import {
+    DollarSign, TrendingUp, TrendingDown, CreditCard, RefreshCw,
+    ArrowUpRight, AlertCircle, Key, Eye, EyeOff, RotateCw
+} from 'lucide-react'
+import { DataTable, DeleteConfirm } from '@/components/ui'
+import {
+    getTransactions, getTransactionStats, processRefund,
+    getMerchantKeys, rotateMerchantKey, getRevenueByMonth
+} from '@/actions/finance'
+import type { Transaction, CRUDColumn } from '@/types/crud'
+
+const transactionColumns: CRUDColumn<Transaction>[] = [
+    { key: 'id', label: 'ID', type: 'text', render: (v) => <span className="font-mono text-xs">{v.slice(0, 8)}...</span> },
+    {
+        key: 'type',
+        label: 'Type',
+        type: 'badge',
+        sortable: true,
+        options: [
+            { value: 'subscription', label: 'Subscription', color: 'badge-pro' },
+            { value: 'infaq', label: 'Infaq', color: 'badge-success' },
+            { value: 'refund', label: 'Refund', color: 'badge-warning' },
+        ]
+    },
+    {
+        key: 'amount',
+        label: 'Amount',
+        type: 'number',
+        sortable: true,
+        render: (v, row) => (
+            <span className={row.type === 'refund' ? 'text-red-400' : 'text-emerald-400'}>
+                {row.type === 'refund' ? '-' : '+'}RM {v?.toFixed(2) || '0.00'}
+            </span>
+        )
+    },
+    {
+        key: 'status',
+        label: 'Status',
+        type: 'badge',
+        options: [
+            { value: 'success', label: 'Success', color: 'badge-success' },
+            { value: 'pending', label: 'Pending', color: 'badge-warning' },
+            { value: 'failed', label: 'Failed', color: 'bg-red-500/10 text-red-400 border-red-500/20' },
+            { value: 'refunded', label: 'Refunded', color: 'bg-slate-500/10 text-slate-400 border-slate-500/20' },
+        ]
+    },
+    { key: 'created_at', label: 'Date', type: 'date', sortable: true },
+]
 
 export default function FinancePage() {
-    const [showKeys, setShowKeys] = useState(false)
+    const [transactions, setTransactions] = useState<Transaction[]>([])
+    const [loading, setLoading] = useState(true)
+    const [total, setTotal] = useState(0)
+    const [page, setPage] = useState(1)
+    const [pageSize, setPageSize] = useState(10)
 
-    const transactions = [
-        { id: 'txn_82391', user: 'ahmad@gmail.com', type: 'Subscription (PRO)', amount: 'RM 9.90', status: 'success', time: '2 mins ago' },
-        { id: 'txn_82392', user: 'siti@yahoo.com', type: 'Subscription (Family)', amount: 'RM 19.90', status: 'success', time: '15 mins ago' },
-        { id: 'txn_82393', user: 'ali@baba.com', type: 'Infaq', amount: 'RM 50.00', status: 'success', time: '1 hour ago' },
-        { id: 'txn_82394', user: 'nurul@test.com', type: 'Subscription (PRO)', amount: 'RM 9.90', status: 'pending', time: '2 hours ago' },
-        { id: 'txn_82395', user: 'hafiz@test.com', type: 'Refund', amount: '-RM 9.90', status: 'processed', time: '1 day ago' },
+    const [stats, setStats] = useState({ mrr: 0, totalInfaq: 0, refundCount: 0, refundAmount: 0 })
+    const [merchantKeys, setMerchantKeys] = useState<any[]>([])
+    const [showKeys, setShowKeys] = useState<Record<string, boolean>>({})
+    const [revenueData, setRevenueData] = useState<{ month: string; revenue: number }[]>([])
+
+    const [isRefundOpen, setIsRefundOpen] = useState(false)
+    const [selectedTransaction, setSelectedTransaction] = useState<Transaction | null>(null)
+    const [actionLoading, setActionLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+
+    const fetchTransactions = useCallback(async () => {
+        setLoading(true)
+        try {
+            const data = await getTransactions(page, pageSize)
+            setTransactions(data.transactions)
+            setTotal(data.total)
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to fetch transactions')
+        } finally {
+            setLoading(false)
+        }
+    }, [page, pageSize])
+
+    const fetchStats = useCallback(async () => {
+        try {
+            const data = await getTransactionStats()
+            setStats(data)
+        } catch (err) {
+            console.error('Failed to fetch stats:', err)
+        }
+    }, [])
+
+    const fetchMerchantKeys = useCallback(async () => {
+        try {
+            const data = await getMerchantKeys()
+            setMerchantKeys(data)
+        } catch (err) {
+            console.error('Failed to fetch merchant keys:', err)
+        }
+    }, [])
+
+    const fetchRevenueData = useCallback(async () => {
+        try {
+            const data = await getRevenueByMonth()
+            setRevenueData(data)
+        } catch (err) {
+            console.error('Failed to fetch revenue data:', err)
+        }
+    }, [])
+
+    useEffect(() => {
+        fetchTransactions()
+        fetchStats()
+        fetchMerchantKeys()
+        fetchRevenueData()
+    }, [fetchTransactions, fetchStats, fetchMerchantKeys, fetchRevenueData])
+
+    const handleRefund = async () => {
+        if (!selectedTransaction) return
+        setActionLoading(true)
+        try {
+            await processRefund(selectedTransaction.id)
+            setIsRefundOpen(false)
+            setSelectedTransaction(null)
+            fetchTransactions()
+            fetchStats()
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to process refund')
+        } finally {
+            setActionLoading(false)
+        }
+    }
+
+    const handleRotateKey = async (provider: string) => {
+        try {
+            await rotateMerchantKey(provider)
+            fetchMerchantKeys()
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Failed to rotate key')
+        }
+    }
+
+    const maxRevenue = Math.max(...revenueData.map(d => d.revenue), 1)
+
+    const statCards = [
+        { label: 'Monthly Revenue', value: `RM ${stats.mrr.toLocaleString()}`, icon: DollarSign, color: 'text-emerald-400', bg: 'bg-emerald-500/10', trend: '+12%' },
+        { label: 'Total Infaq', value: `RM ${stats.totalInfaq.toLocaleString()}`, icon: TrendingUp, color: 'text-purple-400', bg: 'bg-purple-500/10', trend: '+8%' },
+        { label: 'Refunds', value: stats.refundCount, icon: TrendingDown, color: 'text-amber-400', bg: 'bg-amber-500/10', trend: `-RM ${stats.refundAmount}` },
     ]
 
     return (
@@ -19,156 +152,137 @@ export default function FinancePage() {
             {/* Header */}
             <div className="flex items-center justify-between animate-fade-in">
                 <div>
-                    <h2 className="text-3xl font-bold tracking-tight">Financial Dashboard</h2>
-                    <p className="text-slate-400 mt-1">Track MRR, Infaq, and Subscription Health.</p>
+                    <h2 className="text-3xl font-bold tracking-tight">Finance Dashboard</h2>
+                    <p className="text-slate-400 mt-1">Manage transactions, subscriptions, and payment integrations</p>
                 </div>
-                <button className="btn-ghost flex items-center gap-2">
+                <button onClick={fetchTransactions} className="btn-ghost flex items-center gap-2">
                     <RefreshCw className="h-4 w-4" />
-                    Sync Data
+                    Refresh
                 </button>
             </div>
 
-            {/* Main Stats */}
+            {/* Error Display */}
+            {error && (
+                <div className="glass-card rounded-xl p-4 flex items-center gap-3 text-red-400 border-red-500/30">
+                    <AlertCircle className="h-5 w-5" />
+                    {error}
+                    <button onClick={() => setError(null)} className="ml-auto hover:text-red-300">×</button>
+                </div>
+            )}
+
+            {/* Stats Cards */}
             <div className="grid gap-4 md:grid-cols-3 animate-fade-in">
-                <div className="glass-card rounded-xl p-6">
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <p className="text-sm text-slate-400">Monthly Recurring Revenue</p>
-                            <p className="text-3xl font-bold text-emerald-400 mt-2">RM 14,230</p>
-                            <div className="flex items-center gap-1 mt-2 text-xs text-emerald-400">
-                                <TrendingUp className="h-3 w-3" />
-                                +12.5% vs last month
+                {statCards.map((stat, i) => (
+                    <div key={i} className="glass-card rounded-xl p-5">
+                        <div className="flex items-center justify-between mb-4">
+                            <div className={`p-3 rounded-xl ${stat.bg}`}>
+                                <stat.icon className={`h-5 w-5 ${stat.color}`} />
                             </div>
+                            <span className={`text-xs font-medium ${stat.trend.startsWith('+') ? 'text-emerald-400' : 'text-red-400'}`}>
+                                {stat.trend}
+                            </span>
                         </div>
-                        <div className="p-3 rounded-xl bg-emerald-500/10">
-                            <Wallet className="h-6 w-6 text-emerald-400" />
-                        </div>
+                        <p className="text-sm text-slate-400">{stat.label}</p>
+                        <p className={`text-2xl font-bold ${stat.color}`}>{stat.value}</p>
                     </div>
-                </div>
+                ))}
+            </div>
 
-                <div className="glass-card rounded-xl p-6">
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <p className="text-sm text-slate-400">Total Infaq Received</p>
-                            <p className="text-3xl font-bold text-blue-400 mt-2">RM 5,100</p>
-                            <p className="text-xs text-slate-500 mt-2">100% disbursed to causes</p>
-                        </div>
-                        <div className="p-3 rounded-xl bg-blue-500/10">
-                            <CreditCard className="h-6 w-6 text-blue-400" />
-                        </div>
-                    </div>
-                </div>
-
-                <div className="glass-card rounded-xl p-6">
-                    <div className="flex items-start justify-between">
-                        <div>
-                            <p className="text-sm text-slate-400">Churn Rate</p>
-                            <p className="text-3xl font-bold text-red-400 mt-2">2.4%</p>
-                            <div className="flex items-center gap-1 mt-2 text-xs text-red-400">
-                                <TrendingDown className="h-3 w-3" />
-                                Increased from 1.8%
+            {/* Revenue Chart */}
+            <div className="glass-card rounded-xl p-6 animate-fade-in">
+                <h3 className="text-lg font-semibold text-slate-200 mb-4">Revenue Trend (6 Months)</h3>
+                <div className="flex items-end gap-4 h-40">
+                    {revenueData.map((data, i) => (
+                        <div key={i} className="flex-1 flex flex-col items-center gap-2">
+                            <div
+                                className="w-full bg-gradient-to-t from-cyan-500/50 to-cyan-400/80 rounded-t relative group transition-all hover:from-cyan-400/60 hover:to-cyan-300/90"
+                                style={{ height: `${(data.revenue / maxRevenue) * 100}%`, minHeight: '8px' }}
+                            >
+                                <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-cyan-400 whitespace-nowrap">
+                                    RM {data.revenue.toLocaleString()}
+                                </div>
                             </div>
+                            <span className="text-xs text-slate-500">{data.month}</span>
                         </div>
-                        <div className="p-3 rounded-xl bg-red-500/10">
-                            <ArrowUpRight className="h-6 w-6 text-red-400" />
-                        </div>
-                    </div>
+                    ))}
                 </div>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-3">
-                {/* Transactions Table */}
-                <div className="lg:col-span-2 glass-card rounded-xl overflow-hidden animate-fade-in">
-                    <div className="p-4 border-b border-slate-800/50">
-                        <h3 className="text-lg font-semibold">Transaction History</h3>
-                    </div>
-                    <div className="overflow-auto">
-                        <table className="data-table">
-                            <thead>
-                                <tr>
-                                    <th>Transaction ID</th>
-                                    <th>User</th>
-                                    <th>Type</th>
-                                    <th>Amount</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {transactions.map((txn) => (
-                                    <tr key={txn.id}>
-                                        <td className="font-mono text-slate-300">{txn.id}</td>
-                                        <td className="text-slate-400">{txn.user}</td>
-                                        <td>{txn.type}</td>
-                                        <td className={txn.amount.startsWith('-') ? 'text-red-400' : 'text-emerald-400'}>
-                                            {txn.amount}
-                                        </td>
-                                        <td>
-                                            <span className={`badge ${txn.status === 'success' ? 'badge-success' :
-                                                    txn.status === 'pending' ? 'badge-warning' :
-                                                        'badge-info'
-                                                }`}>
-                                                {txn.status}
-                                            </span>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+            {/* Transactions Table */}
+            <div className="animate-fade-in">
+                <DataTable<Transaction>
+                    data={transactions}
+                    columns={transactionColumns}
+                    loading={loading}
+                    total={total}
+                    page={page}
+                    pageSize={pageSize}
+                    onPageChange={setPage}
+                    onPageSizeChange={setPageSize}
+                    title="Transaction History"
+                    searchPlaceholder="Search transactions..."
+                    onEdit={(t) => {
+                        if (t.status === 'success' && t.type !== 'refund') {
+                            setSelectedTransaction(t)
+                            setIsRefundOpen(true)
+                        }
+                    }}
+                />
+            </div>
+
+            {/* Merchant Keys */}
+            <div className="glass-card rounded-xl p-6 animate-fade-in">
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-lg font-semibold text-slate-200 flex items-center gap-2">
+                        <Key className="h-5 w-5 text-amber-400" />
+                        Payment Integrations
+                    </h3>
                 </div>
-
-                {/* Merchant Management */}
-                <div className="glass-card rounded-xl p-6 animate-fade-in">
-                    <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-lg font-semibold">Merchant Integrations</h3>
-                        <button
-                            onClick={() => setShowKeys(!showKeys)}
-                            className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 transition-colors"
-                        >
-                            {showKeys ? <EyeOff size={18} /> : <Eye size={18} />}
-                        </button>
-                    </div>
-
-                    <div className="space-y-4">
-                        {/* ToyyibPay */}
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">ToyyibPay (Malaysia)</label>
-                            <div className="p-3 rounded-lg bg-slate-900/50 border border-slate-700/50 flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="p-1.5 rounded-lg bg-emerald-500/10">
-                                        <Lock size={14} className="text-emerald-500" />
-                                    </div>
-                                    <span className="font-mono text-sm text-slate-300">
-                                        {showKeys ? 'toyyib-8fa291b4c2...' : '••••••••••••••••'}
-                                    </span>
+                <div className="space-y-3">
+                    {merchantKeys.map((key, i) => (
+                        <div key={i} className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30">
+                            <div className="flex items-center gap-4">
+                                <div className={`p-2 rounded-lg ${key.status === 'active' ? 'bg-emerald-500/10' : 'bg-red-500/10'}`}>
+                                    <CreditCard className={`h-5 w-5 ${key.status === 'active' ? 'text-emerald-400' : 'text-red-400'}`} />
                                 </div>
-                                <span className="badge badge-success">Active</span>
+                                <div>
+                                    <div className="font-medium text-slate-200">{key.name}</div>
+                                    <div className="text-xs text-slate-500">Last rotated: {key.lastRotated}</div>
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-3">
+                                <code className="px-3 py-1 bg-slate-900 rounded text-xs text-slate-400 font-mono">
+                                    {showKeys[key.provider] ? `${key.keyPrefix}XXXX` : '••••••••••••'}
+                                </code>
+                                <button
+                                    onClick={() => setShowKeys(p => ({ ...p, [key.provider]: !p[key.provider] }))}
+                                    className="p-2 text-slate-400 hover:text-white"
+                                >
+                                    {showKeys[key.provider] ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                </button>
+                                <button
+                                    onClick={() => handleRotateKey(key.provider)}
+                                    className="btn-ghost text-xs flex items-center gap-1"
+                                >
+                                    <RotateCw className="h-3 w-3" />
+                                    Rotate
+                                </button>
                             </div>
                         </div>
-
-                        {/* Stripe */}
-                        <div className="space-y-2">
-                            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider">Stripe (Global)</label>
-                            <div className="p-3 rounded-lg bg-slate-900/50 border border-slate-700/50 flex items-center justify-between">
-                                <div className="flex items-center gap-3">
-                                    <div className="p-1.5 rounded-lg bg-indigo-500/10">
-                                        <Lock size={14} className="text-indigo-500" />
-                                    </div>
-                                    <span className="font-mono text-sm text-slate-300">
-                                        {showKeys ? 'sk_live_51J2Kf...' : '••••••••••••••••'}
-                                    </span>
-                                </div>
-                                <span className="badge badge-pro">Active</span>
-                            </div>
-                        </div>
-
-                        <button className="btn-ghost w-full mt-4 flex items-center justify-center gap-2">
-                            <RefreshCw className="h-4 w-4" />
-                            Rotate API Keys
-                        </button>
-                    </div>
+                    ))}
                 </div>
             </div>
+
+            {/* Refund Confirm */}
+            <DeleteConfirm
+                isOpen={isRefundOpen}
+                onClose={() => { setIsRefundOpen(false); setSelectedTransaction(null) }}
+                onConfirm={handleRefund}
+                title="Process Refund"
+                message="Are you sure you want to process a refund for this transaction?"
+                itemName={selectedTransaction ? `RM ${selectedTransaction.amount?.toFixed(2)}` : undefined}
+                loading={actionLoading}
+            />
         </div>
     )
 }
