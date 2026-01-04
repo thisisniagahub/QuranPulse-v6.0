@@ -99,13 +99,13 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
     };
 
     return (
-        <div className="flex flex-col h-full relative bg-[#020617] overflow-hidden">
+        <div className="flex flex-col h-full relative bg-midnight-gradient overflow-hidden">
             {/* Ambient Background (Deep Navy) */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className={`absolute top-0 inset-x-0 h-96 bg-gradient-to-b from-[#0A1E42] to-transparent opacity-80`}></div>
                 <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[120px] opacity-40"></div>
                 <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#0A1E42] rounded-full blur-[100px] opacity-60"></div>
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
+                <div className="absolute inset-0 opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px]"></div>
             </div>
 
             {/* Register Generative UI Actions */}

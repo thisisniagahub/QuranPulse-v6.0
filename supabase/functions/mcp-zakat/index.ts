@@ -19,11 +19,22 @@ interface ZakatRequest {
     deductions?: number; // For income zakat
 }
 
+// --- CORS Headers Helper ---
+const corsHeaders = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
 serve(async (req) => {
+    // Handle CORS preflight requests
+    if (req.method === 'OPTIONS') {
+        return new Response('ok', { headers: corsHeaders });
+    }
+
     try {
         const payload = await req.json() as ZakatRequest;
         const { type, amount, state = 'WLP', deductions = 0 } = payload;
-        
+
         console.log(`💰 [MCP Zakat] Calculating ${type} for ${state}`);
 
         let zakatPayable = 0;
@@ -35,7 +46,7 @@ serve(async (req) => {
         if (type === "income") {
             nisabThreshold = ZAKAT_RATES.nisab_income_yearly;
             const netAmount = amount - deductions;
-            
+
             if (netAmount >= nisabThreshold) {
                 zakatPayable = netAmount * 0.025;
                 status = "eligible";
@@ -62,7 +73,7 @@ serve(async (req) => {
                 zakatPayable = (amount * ZAKAT_RATES.gold_price_g) * 0.025;
                 status = "eligible";
             }
-            
+
             breakdown = {
                 gold_weight_g: amount,
                 current_gold_price: ZAKAT_RATES.gold_price_g,
@@ -73,18 +84,18 @@ serve(async (req) => {
 
         // 3. ZAKAT WANG SIMPANAN (Savings)
         if (type === "savings") {
-             // Nisab is value of 85g gold
-             nisabThreshold = 85 * ZAKAT_RATES.gold_price_g;
-             
-             if (amount >= nisabThreshold) {
-                 zakatPayable = amount * 0.025;
-                 status = "eligible";
-             }
-             
-             breakdown = {
-                 lowest_balance_yearly: amount,
-                 nisab_value: nisabThreshold
-             };
+            // Nisab is value of 85g gold
+            nisabThreshold = 85 * ZAKAT_RATES.gold_price_g;
+
+            if (amount >= nisabThreshold) {
+                zakatPayable = amount * 0.025;
+                status = "eligible";
+            }
+
+            breakdown = {
+                lowest_balance_yearly: amount,
+                nisab_value: nisabThreshold
+            };
         }
 
         return new Response(JSON.stringify({
@@ -95,9 +106,12 @@ serve(async (req) => {
                 currency: "MYR",
                 breakdown
             }
-        }), { headers: { "Content-Type": "application/json" } });
+        }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
 
     } catch (err) {
-        return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
+        return new Response(JSON.stringify({ error: String(err) }), {
+            status: 500,
+            headers: { ...corsHeaders, "Content-Type": "application/json" }
+        });
     }
 });

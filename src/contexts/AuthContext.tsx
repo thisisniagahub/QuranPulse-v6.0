@@ -126,37 +126,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 profile.name = session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User';
               }
               setUser(profile);
+              return; // 🚀 Profile set, exit early
             } else {
               // FALLBACK: Profile missing or DB error
-              console.log("🔄 AuthContext: Using Session Metadata Fallback");
-              setUser({
-                id: session.user.id,
-                name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-                email: session.user.email || '',
-                level: 1, xp_total: 0, streak: 0, badges: [],
-                barakah_points: 0,
-                last_read_surah: 1,
-                last_read_ayah: 1,
-                avatar_url: session.user.user_metadata?.avatar_url
-              });
+              console.log("🔄 AuthContext: No profile found, using Session Metadata Fallback");
             }
           } catch (unknownErr) {
             console.warn("🔄 AuthContext: Network/Unknown error during profile fetch:", unknownErr);
-            setUser({
-              id: session.user.id,
-              name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
-              email: session.user.email || '',
-              level: 1, xp_total: 0, streak: 0, badges: [],
-              barakah_points: 0,
-              last_read_surah: 1,
-              last_read_ayah: 1,
-              avatar_url: session.user.user_metadata?.avatar_url
-            });
           }
 
-          // FALLBACK LOGIC: If DB fails, constructing a temporary profile from Session
+          // FALLBACK LOGIC: If DB fails or profile missing, construct temporary profile
           if (lastEventProcessed === timestamp) {
-            console.warn("⚠️ AuthContext: Using SESSION FALLBACK for user profile due to timeout/error.");
+            console.warn("⚠️ AuthContext: Applying SESSION FALLBACK for user profile.");
             setUser({
               id: session.user.id,
               name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',
@@ -174,140 +155,140 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
             });
           }
         } else {
-        console.log("🔄 AuthContext: Clearing user session");
-        setUser(null);
+          console.log("🔄 AuthContext: Clearing user session");
+          setUser(null);
+        }
+      } catch (globalErr) {
+        console.error("🔄 AuthContext: Error in onAuthStateChange callback:", globalErr);
+      } finally {
+        if (lastEventProcessed === timestamp) {
+          console.log("🔄 AuthContext: Finalizing state (isLoading = false)");
+          setIsLoading(false);
+        }
       }
-    } catch (globalErr) {
-      console.error("🔄 AuthContext: Error in onAuthStateChange callback:", globalErr);
-    } finally {
-      if (lastEventProcessed === timestamp) {
-        console.log("🔄 AuthContext: Finalizing state (isLoading = false)");
-        setIsLoading(false);
+    });
+
+    return () => {
+      mounted = false;
+      clearTimeout(safetyTimeout);
+      subscription.unsubscribe();
+    };
+  }, []);
+
+  const login = async ({ email, password }: LoginCredentials) => {
+    console.log("📥 AuthContext: login function called for:", email);
+    try {
+      console.log("📥 AuthContext: Invoking supabase.auth.signInWithPassword...");
+      const result = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      console.log("📥 AuthContext: supabase.auth.signInWithPassword returned:", { hasError: !!result.error, userId: result.data?.user?.id });
+
+      if (result.error) {
+        console.error("❌ AuthContext: Login error:", result.error.message, result.error);
+      } else {
+        console.log("✅ AuthContext: Login success confirmed");
       }
+
+      return { error: result.error };
+    } catch (e) {
+      console.error("🔥 AuthContext: CRITICAL CRASH in login function:", e);
+      return { error: e };
     }
-  });
-
-  return () => {
-    mounted = false;
-    clearTimeout(safetyTimeout);
-    subscription.unsubscribe();
   };
-}, []);
 
-const login = async ({ email, password }: LoginCredentials) => {
-  console.log("📥 AuthContext: login function called for:", email);
-  try {
-    console.log("📥 AuthContext: Invoking supabase.auth.signInWithPassword...");
-    const result = await supabase.auth.signInWithPassword({
+  const register = async (email: string, password: string, name: string) => {
+    const { error } = await supabase.auth.signUp({
       email,
       password,
-    });
-    console.log("📥 AuthContext: supabase.auth.signInWithPassword returned:", { hasError: !!result.error, userId: result.data?.user?.id });
-
-    if (result.error) {
-      console.error("❌ AuthContext: Login error:", result.error.message, result.error);
-    } else {
-      console.log("✅ AuthContext: Login success confirmed");
-    }
-
-    return { error: result.error };
-  } catch (e) {
-    console.error("🔥 AuthContext: CRITICAL CRASH in login function:", e);
-    return { error: e };
-  }
-};
-
-const register = async (email: string, password: string, name: string) => {
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        name: name, // Save name in metadata
+      options: {
+        data: {
+          name: name, // Save name in metadata
+        },
       },
-    },
-  });
-  return { error };
-};
-
-const logout = async () => {
-  await supabase.auth.signOut();
-  setUser(null);
-  setSession(null);
-};
-
-const updateProfile = async (updates: Partial<UserProfile>) => {
-  if (!user) return { error: "No user logged in" };
-
-  try {
-    // 1. Update Supabase Auth Metadata
-    const authData: any = {};
-    if (updates.name) authData.name = updates.name;
-    if (updates.avatar_url) authData.avatar_url = updates.avatar_url;
-
-    if (Object.keys(authData).length > 0) {
-      const { error } = await supabase.auth.updateUser({ data: authData });
-      if (error) return { error };
-    }
-
-    // 2. Update profiles table in database
-    const { error: dbError } = await supabase
-      .from('profiles')
-      .update({
-        ...updates,
-        updated_at: new Date().toISOString()
-      })
-      .eq('id', user.id);
-
-    if (dbError) {
-      console.warn('Profile DB update failed:', dbError);
-      // Don't fail completely if DB update fails - auth metadata was updated
-    }
-
-    // 3. Update Local State
-    setUser(prev => prev ? { ...prev, ...updates } : null);
-
-    return { error: null };
-  } catch (err) {
-    console.error('Profile update error:', err);
-    return { error: err };
-  }
-};
-
-
-const updatePassword = async (password: string) => {
-  const { error } = await supabase.auth.updateUser({ password });
-  return { error };
-};
-
-const uploadAvatar = async (file: File) => {
-  if (!user) return { error: "No user logged in" };
-
-  try {
-    const fileExt = file.name.split('.').pop();
-    const fileName = `${user.id}-${Math.random()}.${fileExt}`;
-    const filePath = `${fileName}`;
-
-    const { error: uploadError } = await supabase.storage
-      .from('avatars')
-      .upload(filePath, file);
-
-    if (uploadError) {
-      throw uploadError;
-    }
-
-    const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
-    return { error: null, url: data.publicUrl };
-  } catch (error) {
+    });
     return { error };
-  }
-};
+  };
 
-return (
-  <AuthContext.Provider value={{ user, session, isLoading, login, logout, register, updateProfile, updatePassword, uploadAvatar }}>
-    {children}
-  </AuthContext.Provider>
-);
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+    setSession(null);
+  };
+
+  const updateProfile = async (updates: Partial<UserProfile>) => {
+    if (!user) return { error: "No user logged in" };
+
+    try {
+      // 1. Update Supabase Auth Metadata
+      const authData: any = {};
+      if (updates.name) authData.name = updates.name;
+      if (updates.avatar_url) authData.avatar_url = updates.avatar_url;
+
+      if (Object.keys(authData).length > 0) {
+        const { error } = await supabase.auth.updateUser({ data: authData });
+        if (error) return { error };
+      }
+
+      // 2. Update profiles table in database
+      const { error: dbError } = await supabase
+        .from('profiles')
+        .update({
+          ...updates,
+          updated_at: new Date().toISOString()
+        })
+        .eq('id', user.id);
+
+      if (dbError) {
+        console.warn('Profile DB update failed:', dbError);
+        // Don't fail completely if DB update fails - auth metadata was updated
+      }
+
+      // 3. Update Local State
+      setUser(prev => prev ? { ...prev, ...updates } : null);
+
+      return { error: null };
+    } catch (err) {
+      console.error('Profile update error:', err);
+      return { error: err };
+    }
+  };
+
+
+  const updatePassword = async (password: string) => {
+    const { error } = await supabase.auth.updateUser({ password });
+    return { error };
+  };
+
+  const uploadAvatar = async (file: File) => {
+    if (!user) return { error: "No user logged in" };
+
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${user.id}-${Math.random()}.${fileExt}`;
+      const filePath = `${fileName}`;
+
+      const { error: uploadError } = await supabase.storage
+        .from('avatars')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        throw uploadError;
+      }
+
+      const { data } = supabase.storage.from('avatars').getPublicUrl(filePath);
+      return { error: null, url: data.publicUrl };
+    } catch (error) {
+      return { error };
+    }
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, session, isLoading, login, logout, register, updateProfile, updatePassword, uploadAvatar }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {

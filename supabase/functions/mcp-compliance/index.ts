@@ -22,17 +22,28 @@ interface ComplianceResponse {
   status: "found" | "not_found" | "error";
   data: {
     title?: string;
-    ruling?: string; 
+    ruling?: string;
     reference_url?: string;
     date?: string;
   };
 }
 
+// --- CORS Headers Helper ---
+export const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
 // --- CORE LOGIC ---
 serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   try {
     const { type, query, lang = "ms" } = await req.json() as RequestPayload;
-    
+
     if (!query || query.length < 3) {
       return new Response(JSON.stringify({ error: "Query too short" }), { status: 400 });
     }
@@ -52,7 +63,7 @@ serve(async (req) => {
     if (cachedData) {
       console.log(`✅ [Sequential Thinking] Cache HIT.`);
       return new Response(JSON.stringify({ ...cachedData.data, source: "cache" }), {
-        headers: { "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
@@ -69,8 +80,8 @@ serve(async (req) => {
           status: "found",
           data: {
             title: lang === "ms" ? "Hukum Forex" : "Forex Trading Ruling",
-            ruling: lang === "ms" 
-              ? "Haram kerana melibatkan elemen riba dan gharar." 
+            ruling: lang === "ms"
+              ? "Haram kerana melibatkan elemen riba dan gharar."
               : "Prohibited (Haram) due to elements of usury (riba) and uncertainty (gharar).",
             reference_url: "http://e-smaf.islam.gov.my/",
             date: "2012-02-15"
@@ -80,7 +91,7 @@ serve(async (req) => {
         result = { source: "jakim_fatwa", query: normalizedQuery, lang, status: "not_found", data: {} };
       }
     } else {
-       result = { source: "jakim_halal", query: normalizedQuery, lang, status: "not_found", data: { ruling: "Check Halal Portal" } };
+      result = { source: "jakim_halal", query: normalizedQuery, lang, status: "not_found", data: { ruling: "Check Halal Portal" } };
     }
     console.timeEnd("⏱️ External-Search");
 
@@ -99,13 +110,15 @@ serve(async (req) => {
       });
     }
 
-    // 5. FINAL RESPONSE
     return new Response(JSON.stringify(result), {
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
 
   } catch (err) {
     console.error("❌ [Sequential Thinking] Error:", err);
-    return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
+    return new Response(JSON.stringify({ error: String(err) }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" }
+    });
   }
 });

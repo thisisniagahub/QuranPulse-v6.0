@@ -8,63 +8,41 @@
 
 :root {
   /* ═══════════════════════════════════════════════════════════════════════════
-     THEME: MIDNIGHT NAVY (Unified V6.0 Theme)
-     Matches Landing Page Aesthetics
+     OFFICIAL QURAN PULSE V6.0 COLOR PALETTE
      ═══════════════════════════════════════════════════════════════════════════ */
   
-  /* Primary: Cyan 600 */
-  --primary: #0891b2;
-  --primary-rgb: 8, 145, 178;
-  --primary-glow: rgba(8, 145, 178, 0.5);
-
-  /* Secondary: Teal 600 */
-  --secondary: #0d9488;
-  --secondary-rgb: 13, 148, 136;
-
-  /* Backgrounds (Midnight Navy Gradient Components) */
-  --bg-start: #162c51;
-  --bg-middle: #0c224b;
-  --bg-end: #031a38;
+  --primary: #162c51;      /* Light Navy */
+  --secondary: #0c224b;    /* Deep Navy */
+  --bg-main: #031a38;      /* Midnight Black-Blue (Base) */
+  --highlight: #22d3ee;    /* Cyan-400 (Highlight) */
   
-  /* Default Solid Background (Middle) */
-  --bg-main: #0c224b; 
-  --bg-main-rgb: 12, 34, 75;
+  /* RGB Variants for Transparency */
+  --primary-rgb: 22, 44, 81;
+  --secondary-rgb: 12, 34, 75;
+  --bg-main-rgb: 3, 26, 56;
+  --highlight-rgb: 34, 211, 238;
 
-  /* Surfaces */
-  --surface: #1e3a8a; /* Deep Royal Blue */
-  --surface-rgb: 30, 58, 138;
-
-  --card: #162c51;    /* Lighter Navy */
-  --card-rgb: 22, 44, 81;
-
-  --sheet: #031a38;   /* Darkest Navy */
-  --sheet-rgb: 3, 26, 56;
-
-  /* Text */
-  --text-primary: #f8fafc; /* Slate 50 */
-  --text-primary-rgb: 248, 250, 252;
-
-  --text-secondary: #cbd5e1; /* Slate 300 */
-  --text-muted: #64748b;     /* Slate 500 */
-
-  /* Accents */
-  --accent-gold: #f59e0b; /* Amber 500 */
-  
-  /* Shared Effects */
-  --glass-border: rgba(255, 255, 255, 0.1);
+  /* Derived Tokens */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
   --glass-bg: rgba(12, 34, 75, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    UNIFIED BACKGROUND UTILITY
    ═══════════════════════════════════════════════════════════════════════════ */
 .bg-midnight-gradient {
-  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-middle) 50%, var(--bg-end) 100%);
-  background-attachment: fixed; /* Optional: Parallax feel */
+  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--bg-main) 100%);
+  background-attachment: fixed;
 }
 
-.text-midnight-primary {
-  color: var(--primary);
+.text-highlight {
+  color: var(--highlight);
+}
+
+.bg-highlight {
+  background-color: var(--highlight);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════

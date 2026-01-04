@@ -39,7 +39,7 @@ const UstazAiWidget: React.FC<UstazAiWidgetProps> = ({ onNavigate }) => {
             </div>
 
             {/* Subtle Grid Pattern */}
-            <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(rgba(255,255,255,.1)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.1)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
+            <div className="absolute inset-0 opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px]"></div>
         </motion.div>
     );
 };

@@ -14,8 +14,19 @@ interface RequestPayload {
   query: string;
 }
 
+// --- CORS Headers Helper ---
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
 // --- CORE LOGIC ---
 serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   try {
     const { intent, query } = await req.json() as RequestPayload;
     const normalizedQuery = query.toLowerCase().trim();
@@ -36,7 +47,7 @@ serve(async (req) => {
       return new Response(JSON.stringify({
         source: 'internal_db',
         results: data || []
-      }), { headers: { "Content-Type": "application/json" } });
+      }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
     // 2. TAFSIR LOOKUP (Mock for now, until Tafsir DB is populated)
@@ -45,16 +56,22 @@ serve(async (req) => {
       return new Response(JSON.stringify({
         source: 'mock_tafsir',
         results: [{
-            surah: "Al-Asr",
-            verse: 1,
-            tafsir: "Masa yang dimaksudkan adalah waktu asar atau masa secara umum di mana manusia sering kerugian melainkan mereka yang beriman."
+          surah: "Al-Asr",
+          verse: 1,
+          tafsir: "Masa yang dimaksudkan adalah waktu asar atau masa secara umum di mana manusia sering kerugian melainkan mereka yang beriman."
         }]
-      }), { headers: { "Content-Type": "application/json" } });
+      }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
     }
 
-    return new Response(JSON.stringify({ error: "Unknown Intent" }), { status: 400 });
+    return new Response(JSON.stringify({ error: "Unknown Intent" }), {
+      status: 400,
+      headers: { ...corsHeaders, "Content-Type": "application/json" }
+    });
 
   } catch (err) {
-    return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
+    return new Response(JSON.stringify({ error: String(err) }), {
+      status: 500,
+      headers: { ...corsHeaders, "Content-Type": "application/json" }
+    });
   }
 });

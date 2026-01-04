@@ -41,10 +41,9 @@ const QuranContent: React.FC = () => {
     } = useQuran();
 
     return (
-        <div className="h-full flex flex-col bg-[#020617] overflow-hidden relative">
-            {/* Background Gradient */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0A1E42] via-[#020617] to-black pointer-events-none" />
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-[#00BFFF]/5 blur-3xl rounded-full pointer-events-none" />
+        <div className="h-full flex flex-col bg-midnight-gradient overflow-hidden relative">
+            {/* Background Glow */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
 
             {/* === LIST VIEW === */}
             {view === 'LIST' && (

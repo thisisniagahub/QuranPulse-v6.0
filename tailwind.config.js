@@ -14,9 +14,10 @@ export default {
         // VERSE STUDIO DESIGN SYSTEM - Global Theme
         // ═══════════════════════════════════════════════════════════════
 
-        // Primary Accent
+        // Primary & Secondary Tones (Navy)
         "primary": "var(--primary)",
-        "primary-glow": "var(--primary-glow)",
+        "secondary": "var(--secondary)",
+        "highlight": "var(--highlight)",
 
         // Backgrounds
         "background-main": "var(--bg-main)",

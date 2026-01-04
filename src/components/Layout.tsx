@@ -132,10 +132,10 @@ const Layout: React.FC = () => {
             {/* 1. HOME */}
             <Link
               to="/"
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.DASHBOARD ? 'scale-110' : 'opacity-60 hover:opacity-100'}`}
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.DASHBOARD ? 'scale-110' : 'opacity-80 hover:opacity-100'}`}
             >
-              <div className={`w-8 h-8 ${currentView === NavView.DASHBOARD ? '' : 'grayscale'}`}>
-                <img src="/assets/icons/nabdh/nav-home.png" alt="Home" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
+              <div className="w-14 h-14">
+                <img src="/assets/icons/nabdh/nav-home.png" alt="Home" className="w-full h-full object-contain" />
               </div>
               <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.DASHBOARD ? 'text-cyan-600' : 'text-slate-500'}`}>Home</span>
             </Link>
@@ -143,10 +143,10 @@ const Layout: React.FC = () => {
             {/* 2. AL-QURAN */}
             <Link
               to="/quran"
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.QURAN ? 'scale-110' : 'opacity-60 hover:opacity-100'}`}
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.QURAN ? 'scale-110' : 'opacity-80 hover:opacity-100'}`}
             >
-              <div className={`w-8 h-8 ${currentView === NavView.QURAN ? '' : 'grayscale'}`}>
-                <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
+              <div className="w-14 h-14">
+                <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" className="w-full h-full object-contain" />
               </div>
               <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.QURAN ? 'text-cyan-600' : 'text-slate-500'}`}>Quran</span>
             </Link>
@@ -154,15 +154,14 @@ const Layout: React.FC = () => {
             {/* 3. USTAZ AI (CENTER HIGHLIGHT) */}
             <Link
               to="/smart-deen"
-              className={`flex flex-col items-center justify-center relative -mt-8 transition-all duration-300 w-20 group`}
+              className={`flex flex-col items-center justify-center relative -mt-10 transition-all duration-300 w-20 group`}
             >
-              <div className={`w-20 h-20 rounded-full bg-white p-2 border-4 border-slate-50 shadow-[0_-5px_20px_rgba(8,145,178,0.1)] ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}>
-                <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-50 to-white flex items-center justify-center border border-cyan-100 shadow-inner relative overflow-hidden">
-                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+              <div className={`w-20 h-20 rounded-full bg-white p-1 border-4 border-slate-50 shadow-xl ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}>
+                <div className="w-full h-full rounded-full bg-white flex items-center justify-center border border-cyan-100 relative">
                   <img
                     src="/assets/icons/nabdh/nav-ustaz.png"
                     alt="Ustaz AI"
-                    className={`w-full h-full object-contain p-1 drop-shadow-[0_0_15px_rgba(8,145,178,0.4)] ${currentView === NavView.SMART_DEEN ? 'animate-pulse-slow' : 'grayscale brightness-75'}`}
+                    className={`w-full h-full object-contain p-1 ${currentView === NavView.SMART_DEEN ? 'animate-pulse-slow' : ''}`}
                   />
                 </div>
               </div>
@@ -172,10 +171,10 @@ const Layout: React.FC = () => {
             {/* 4. QIBLAT */}
             <Link
               to="/ibadah"
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.IBADAH ? 'scale-110' : 'opacity-60 hover:opacity-100'}`}
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.IBADAH ? 'scale-110' : 'opacity-80 hover:opacity-100'}`}
             >
-              <div className={`w-8 h-8 ${currentView === NavView.IBADAH ? '' : 'grayscale'}`}>
-                <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
+              <div className="w-14 h-14">
+                <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" className="w-full h-full object-contain" />
               </div>
               <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IBADAH ? 'text-cyan-600' : 'text-slate-500'}`}>Qiblat</span>
             </Link>
@@ -183,10 +182,10 @@ const Layout: React.FC = () => {
             {/* 5. IQRA */}
             <Link
               to="/iqra"
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.IQRA ? 'scale-110' : 'opacity-60 hover:opacity-100'}`}
+              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.IQRA ? 'scale-110' : 'opacity-80 hover:opacity-100'}`}
             >
-              <div className={`w-8 h-8 ${currentView === NavView.IQRA ? '' : 'grayscale'}`}>
-                <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
+              <div className="w-14 h-14">
+                <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" className="w-full h-full object-contain" />
               </div>
               <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IQRA ? 'text-cyan-600' : 'text-slate-500'}`}>Iqra</span>
             </Link>

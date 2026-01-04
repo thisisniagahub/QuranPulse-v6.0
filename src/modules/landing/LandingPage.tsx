@@ -40,7 +40,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   return (
     <div className={`min-h-screen bg-midnight-gradient text-white font-sans overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200 relative`}>
       {/* Global Background Pattern Mask */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.05] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px]"></div>
 
       {/* 1. NAVBAR */}
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0c224b]/80 backdrop-blur-xl border-b border-white/5 py-3' : 'bg-transparent py-5'}`}>
@@ -92,13 +92,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden">
         {/* Background removed - clean look */}
 
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center relative z-10">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="text-center md:text-left"
+            className="flex flex-col items-center md:items-start text-center md:text-left"
           >
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-cyan-900/30 border border-cyan-500/30 text-cyan-400 text-[10px] md:text-xs font-bold tracking-widest uppercase mb-6 backdrop-blur-md shadow-sm">
               <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span>

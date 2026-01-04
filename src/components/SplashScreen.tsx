@@ -16,15 +16,9 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
     }, [onComplete]);
 
     return (
-        <div className="fixed inset-0 z-[9999] bg-[#020617] flex items-center justify-center overflow-hidden">
+        <div className="fixed inset-0 z-[9999] bg-midnight-gradient flex items-center justify-center overflow-hidden">
             {/* 🌌 Background Atmosphere */}
             <div className="absolute inset-0">
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1.5 }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] bg-[radial-gradient(ellipse_at_center,_#162c51_0%,_#0c224b_40%,_#031a38_100%)] opacity-80"
-                />
                 <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#0891b2_1px,transparent_1px),linear-gradient(to_bottom,#0891b2_1px,transparent_1px)] bg-[size:40px_40px]"></div>
                 {/* Starfield Overlay - Subtle sparkle */}
                 <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-110 contrast-125 mix-blend-multiply"></div>
