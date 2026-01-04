@@ -82,10 +82,10 @@ const QwerDemoSection: React.FC = () => {
     };
 
     return (
-        <section id="intelligence" className="py-32 bg-[#020617] relative overflow-hidden">
+        <section id="intelligence" className="py-24 bg-transparent relative overflow-hidden">
             {/* Background Effects */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-[#22d3ee]/5 rounded-full blur-[150px] pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-cyan-200/20 rounded-full blur-[150px] pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
 
             {/* Grid Pattern */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]"></div>
@@ -102,13 +102,13 @@ const QwerDemoSection: React.FC = () => {
                         <BarChart3 className="w-3 h-3" />
                         AI-Powered Analysis
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-[Montserrat] font-bold text-white mb-6 tracking-tight">
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400">Q-WER</span>
-                        <span className="text-[#22d3ee]"> Intelligence</span>
+                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-slate-800 mb-6 tracking-tight">
+                        <span className="text-slate-400">Q-WER</span>
+                        <span className="text-cyan-600"> Intelligence</span>
                     </h2>
-                    <p className="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
-                        Bukan sekadar "betul atau salah". Kami ukur <span className="text-[#22d3ee] font-semibold">ketepatan akustik</span> berdasarkan
-                        <span className="text-amber-400 font-semibold"> berat teologi</span> — seperti ustaz manusia menilai.
+                    <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
+                        Bukan sekadar "betul atau salah". Kami ukur <span className="text-cyan-700 font-bold">ketepatan akustik</span> berdasarkan
+                        <span className="text-amber-600 font-bold"> berat teologi</span> — seperti ustaz manusia menilai.
                     </p>
                 </motion.div>
 
@@ -121,7 +121,7 @@ const QwerDemoSection: React.FC = () => {
                         viewport={{ once: true }}
                         className="relative"
                     >
-                        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 relative overflow-hidden group">
+                        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2.5rem] p-8 relative overflow-hidden group shadow-sm">
                             {/* Glow Effect */}
                             <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#22d3ee]/10 blur-[80px] rounded-full group-hover:bg-[#22d3ee]/20 transition-all duration-700"></div>
 
@@ -132,8 +132,8 @@ const QwerDemoSection: React.FC = () => {
                                         <Mic className="w-5 h-5 text-[#22d3ee]" />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-white text-lg">Live Demo</h4>
-                                        <p className="text-xs text-slate-500">Cuba analisis Q-WER sekarang</p>
+                                        <h4 className="font-bold text-slate-800 text-lg">Live Demo</h4>
+                                        <p className="text-xs text-slate-500 font-medium">Cuba analisis Q-WER sekarang</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-1.5">
@@ -143,9 +143,9 @@ const QwerDemoSection: React.FC = () => {
                             </div>
 
                             {/* Reference Text Display */}
-                            <div className="bg-[#0f172a] rounded-2xl p-6 mb-6 border border-white/5">
-                                <p className="text-xs text-slate-500 uppercase tracking-widest mb-3">Reference Text</p>
-                                <p className="text-2xl md:text-3xl font-arabic text-white/90 text-center leading-relaxed" dir="rtl">
+                            <div className="bg-slate-50 rounded-2xl p-6 mb-6 border border-slate-100 shadow-inner">
+                                <p className="text-xs text-slate-400 uppercase tracking-widest mb-3 font-bold">Reference Text</p>
+                                <p className="text-2xl md:text-3xl font-arabic text-slate-800 text-center leading-relaxed" dir="rtl">
                                     بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
                                 </p>
                             </div>
@@ -169,8 +169,8 @@ const QwerDemoSection: React.FC = () => {
                                     disabled={isAnalyzing}
                                     whileTap={{ scale: 0.95 }}
                                     className={`flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all duration-300 ${isRecording
-                                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
-                                        : 'bg-[#22d3ee] text-[#020617] shadow-lg shadow-[#22d3ee]/30 hover:shadow-[#22d3ee]/50'
+                                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/30 font-bold'
+                                        : 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/20 hover:shadow-cyan-600/40 hover:scale-[1.02]'
                                         } ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : ''}`}
                                 >
                                     {isRecording ? (

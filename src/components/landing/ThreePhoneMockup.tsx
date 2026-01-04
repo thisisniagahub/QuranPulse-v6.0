@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 // ========================================
 
 const HomeScreen: React.FC = () => (
-    <div className="w-full h-full bg-[#020617] flex flex-col text-white overflow-hidden">
+    <div className="w-full h-full bg-white flex flex-col text-slate-800 overflow-hidden">
         {/* Status Bar */}
         <div className="h-7 flex justify-between items-center px-5 pt-1">
             <span className="text-[9px] font-semibold">9:41</span>
@@ -20,18 +20,18 @@ const HomeScreen: React.FC = () => (
         {/* Header */}
         <div className="px-4 pt-3 pb-2 flex justify-between items-center">
             <div>
-                <p className="text-[9px] text-slate-400">Assalamu Alaikum,</p>
-                <h3 className="text-sm font-bold">Megat Shazree</h3>
+                <p className="text-[9px] text-slate-500">Assalamu Alaikum,</p>
+                <h3 className="text-sm font-bold text-slate-800">Megat Shazree</h3>
             </div>
             <div className="w-7 h-7 rounded-full bg-gradient-to-br from-amber-400 to-orange-600"></div>
         </div>
 
         {/* Daily Verse Card */}
-        <div className="mx-4 mb-3 bg-gradient-to-br from-slate-800 to-slate-900 rounded-xl p-3 border border-white/10 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/20 rounded-full blur-xl"></div>
-            <span className="text-[8px] uppercase tracking-wider text-cyan-400 font-bold">Daily Verse</span>
-            <p className="font-arabic text-right text-base mt-1 leading-relaxed">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</p>
-            <p className="text-[8px] text-slate-400 mt-1">In the name of Allah, the Merciful...</p>
+        <div className="mx-4 mb-3 bg-gradient-to-br from-white to-blue-50 rounded-xl p-3 border border-blue-100 relative overflow-hidden shadow-sm">
+            <div className="absolute top-0 right-0 w-16 h-16 bg-cyan-500/10 rounded-full blur-xl"></div>
+            <span className="text-[8px] uppercase tracking-wider text-cyan-600 font-bold">Daily Verse</span>
+            <p className="font-arabic text-right text-base mt-1 leading-relaxed text-slate-800 font-bold">بِسْمِ ٱللَّهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</p>
+            <p className="text-[8px] text-slate-500 mt-1 font-medium">In the name of Allah, the Merciful...</p>
         </div>
 
         {/* Quick Actions */}
@@ -43,24 +43,24 @@ const HomeScreen: React.FC = () => (
                 { icon: 'fa-robot', label: 'AI' }
             ].map((item, i) => (
                 <div key={i} className="flex flex-col items-center gap-1">
-                    <div className="w-10 h-10 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center text-cyan-400 text-sm">
+                    <div className="w-10 h-10 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center text-cyan-600 text-sm shadow-sm">
                         <i className={`fa-solid ${item.icon}`}></i>
                     </div>
-                    <span className="text-[7px] text-slate-400">{item.label}</span>
+                    <span className="text-[7px] text-slate-500 font-medium">{item.label}</span>
                 </div>
             ))}
         </div>
 
         {/* Continue Learning */}
-        <div className="mx-4 bg-slate-900/80 rounded-xl p-3 border border-white/5">
-            <h4 className="text-[10px] font-bold mb-2">Continue Learning</h4>
-            <div className="flex items-center gap-2 bg-black/40 p-2 rounded-lg">
-                <div className="w-8 h-8 rounded-md bg-purple-900/50 flex items-center justify-center text-purple-400">
+        <div className="mx-4 bg-white rounded-xl p-3 border border-slate-100 shadow-sm">
+            <h4 className="text-[10px] font-bold mb-2 text-slate-800">Continue Learning</h4>
+            <div className="flex items-center gap-2 bg-slate-50 p-2 rounded-lg">
+                <div className="w-8 h-8 rounded-md bg-purple-100 flex items-center justify-center text-purple-600">
                     <i className="fa-solid fa-play text-[10px]"></i>
                 </div>
                 <div className="flex-1">
-                    <p className="text-[9px] font-semibold">Surah Al-Kahf</p>
-                    <div className="w-full h-1 bg-slate-700 rounded-full mt-1">
+                    <p className="text-[9px] font-bold text-slate-800">Surah Al-Kahf</p>
+                    <div className="w-full h-1 bg-slate-200 rounded-full mt-1">
                         <div className="w-[65%] h-full bg-purple-500 rounded-full"></div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@ const HomeScreen: React.FC = () => (
         <div className="flex-1"></div>
 
         {/* Bottom Nav */}
-        <div className="h-12 bg-black/90 border-t border-white/5 flex justify-around items-center">
+        <div className="h-12 bg-white border-t border-slate-100 flex justify-around items-center">
             {['fa-house', 'fa-book-open', 'fa-layer-group', 'fa-chart-simple', 'fa-user'].map((icon, i) => (
                 <div key={i} className={`w-7 h-7 flex items-center justify-center rounded-full text-xs ${i === 0 ? 'text-cyan-400 bg-cyan-900/30' : 'text-slate-500'}`}>
                     <i className={`fa-solid ${icon}`}></i>
@@ -135,10 +135,10 @@ const AIChatScreen: React.FC = () => (
         </div>
 
         {/* Input */}
-        <div className="p-3 bg-black/50 border-t border-white/5">
-            <div className="flex items-center gap-2 bg-slate-800 rounded-full px-3 py-2">
-                <span className="text-[9px] text-slate-400 flex-1">Tanya apa sahaja...</span>
-                <div className="w-6 h-6 rounded-full bg-cyan-500 flex items-center justify-center">
+        <div className="p-3 bg-white border-t border-slate-100">
+            <div className="flex items-center gap-2 bg-slate-100 rounded-full px-3 py-2">
+                <span className="text-[9px] text-slate-500 flex-1">Tanya apa sahaja...</span>
+                <div className="w-6 h-6 rounded-full bg-cyan-600 flex items-center justify-center">
                     <i className="fa-solid fa-paper-plane text-white text-[8px]"></i>
                 </div>
             </div>
