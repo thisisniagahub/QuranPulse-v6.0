@@ -14,6 +14,8 @@ interface VerseActionMenuProps {
   onNotes?: (verse: QuranVerse) => void;
   onAddToCollection?: (verse: QuranVerse) => void;
   onAskUstaz?: (verse: QuranVerse) => void;
+  onPlay?: () => void;
+  isPlaying?: boolean;
   isBookmarked?: boolean;
   hasNote?: boolean;
 }
@@ -122,12 +124,12 @@ const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className="py-1">
-             <div className="px-4 py-3 border-b border-cyan-500/20 bg-cyan-950/30">
-                <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-widest flex items-center justify-between">
-                    <span>SYSTEM MENU</span>
-                    <span>{verse.verse_key}</span>
-                </span>
-             </div>
+            <div className="px-4 py-3 border-b border-cyan-500/20 bg-cyan-950/30">
+              <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-widest flex items-center justify-between">
+                <span>SYSTEM MENU</span>
+                <span>{verse.verse_key}</span>
+              </span>
+            </div>
             {menuItems.map((item) => (
               <button
                 key={item.id}
@@ -135,7 +137,7 @@ const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
                 className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-100 flex items-center gap-3 transition-all group border-l-2 border-transparent hover:border-cyan-400"
               >
                 <div className={`w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center group-hover:bg-cyan-500/20 group-hover:shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all ${item.color}`}>
-                   <i className={`${item.solid ? 'fa-solid' : 'fa-regular'} ${item.icon} group-hover:text-cyan-300 transition-colors`}></i>
+                  <i className={`${item.solid ? 'fa-solid' : 'fa-regular'} ${item.icon} group-hover:text-cyan-300 transition-colors`}></i>
                 </div>
                 <span className="font-medium">{item.label}</span>
               </button>

@@ -10,7 +10,7 @@ export const TAJWID_RULES = {
     letters: ['ل', 'ر'],
   },
   idgham_bighunnah: {
-    name: 'Idgham Bi Ghunnah', 
+    name: 'Idgham Bi Ghunnah',
     color: '#A78BFA', // purple
     description: 'Gabungkan huruf nun mati atau tanwin dengan dengung 2 harakat.',
     letters: ['ي', 'ن', 'م', 'و'],
@@ -71,8 +71,8 @@ export const TajwidRuleCard: React.FC<TajwidRuleCardProps> = ({ ruleKey, rule, o
     className="flex items-center justify-between p-3 bg-slate-800/50 rounded-xl border border-slate-700/50"
   >
     <div className="flex items-center gap-3">
-      <div 
-        className="w-3 h-3 rounded-full" 
+      <div
+        className="w-3 h-3 rounded-full"
         style={{ backgroundColor: rule.color }}
       />
       <div>
@@ -84,8 +84,8 @@ export const TajwidRuleCard: React.FC<TajwidRuleCardProps> = ({ ruleKey, rule, o
       <button
         onClick={onLearn}
         className="px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
-        style={{ 
-          color: rule.color, 
+        style={{
+          color: rule.color,
           backgroundColor: `${rule.color}20`,
           borderColor: `${rule.color}40`,
           borderWidth: 1
@@ -98,12 +98,54 @@ export const TajwidRuleCard: React.FC<TajwidRuleCardProps> = ({ ruleKey, rule, o
 );
 
 interface TajwidDisplayProps {
-  detectedRules: string[]; // Array of rule keys
+  detectedRules?: string[]; // Array of rule keys (for rule detection mode)
   onLearnRule?: (ruleKey: string) => void;
+  // Word-by-word mode props
+  words?: any[]; // QuranWord[] from verse
+  onWordClick?: (word: any, event?: React.MouseEvent) => void;
+  activeWord?: any | null;
 }
 
-const TajwidDisplay: React.FC<TajwidDisplayProps> = ({ detectedRules, onLearnRule }) => {
-  if (detectedRules.length === 0) return null;
+const TajwidDisplay: React.FC<TajwidDisplayProps> = ({
+  detectedRules,
+  onLearnRule,
+  words,
+  onWordClick,
+  activeWord
+}) => {
+  // Word-by-word display mode
+  if (words && words.length > 0) {
+    return (
+      <div className="flex flex-wrap gap-3 justify-end">
+        {words
+          .filter(w => w.char_type_name !== 'end')
+          .map((word, index) => {
+            const isActive = activeWord && activeWord.position === word.position;
+            return (
+              <motion.span
+                key={`${word.position}-${index}`}
+                initial={{ opacity: 0, y: 5 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.02 }}
+                onClick={(e) => onWordClick?.(word, e)}
+                className={`
+                  cursor-pointer transition-all duration-200 inline-block
+                  ${isActive
+                    ? 'text-cyan-400 scale-110 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]'
+                    : 'hover:text-cyan-300 hover:scale-105'
+                  }
+                `}
+              >
+                {word.text_uthmani}
+              </motion.span>
+            );
+          })}
+      </div>
+    );
+  }
+
+  // Rule detection display mode
+  if (!detectedRules || detectedRules.length === 0) return null;
 
   return (
     <div className="mt-4 space-y-3">
@@ -131,30 +173,30 @@ const TajwidDisplay: React.FC<TajwidDisplayProps> = ({ detectedRules, onLearnRul
 // Utility function to detect tajwid rules in Arabic text
 export const detectTajwidRules = (arabicText: string): string[] => {
   const detected: string[] = [];
-  
+
   // Simple detection based on character patterns
   // In production, this would use proper Arabic NLP
-  
+
   if (arabicText.includes('نّ') || arabicText.includes('مّ')) {
     detected.push('ghunnah');
   }
-  
+
   // Check for Mad markers
   if (arabicText.includes('ٰ') || arabicText.includes('آ') || arabicText.includes('ـٓ')) {
     detected.push('mad_asli');
   }
-  
+
   // Check for Qalqalah letters when sukun
   const qalqalahLetters = ['قْ', 'طْ', 'بْ', 'جْ', 'دْ'];
   if (qalqalahLetters.some(letter => arabicText.includes(letter))) {
     detected.push('qalqalah');
   }
-  
+
   // Check for Idgham patterns (simplified)
   if (arabicText.includes('نۢ') || arabicText.includes('نّْ')) {
     detected.push('idgham_bighunnah');
   }
-  
+
   return detected;
 };
 
