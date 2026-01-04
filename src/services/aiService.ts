@@ -7,6 +7,7 @@ import { ChatMessage } from '../types';
 import { PERSONAS, DEFAULT_PERSONA, Persona } from '../config/personas';
 import { analyzeImageWithGemini } from './ai/GeminiVisionClient';
 import { VoiceService } from './ai/VoiceService';
+import { mcpService } from './mcpService';
 
 // --- TYPES ---
 export interface HybridResponse {
@@ -75,7 +76,7 @@ async function saveToCache(query: string, response: HybridResponse) {
   }
 }
 
-import { MCPService } from './mcpService';
+import { UstazOrchestrator } from './UstazOrchestrator';
 
 // --- MAIN SERVICE ---
 
