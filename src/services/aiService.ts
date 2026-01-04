@@ -100,7 +100,7 @@ export const askUstazAI = async (
   // 2. CHECK MCP (REAL-TIME DATA) - Pulse-MCP Integration
   // Checks for Intents: Worship (Solat) or Compliance (Fatwa/Halal)
   try {
-    const mcpResponse = await MCPService.detectAndCall(lastUserMessage, 'ms'); // Default to 'ms' for now
+    const mcpResponse = await UstazOrchestrator.detectAndCall(lastUserMessage, 'ms'); // Default to 'ms' for now
     if (mcpResponse) {
       const formatted = formatHybridResponse(mcpResponse);
       if (onChunk) onChunk(formatted);

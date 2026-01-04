@@ -24,7 +24,7 @@ export interface HijriDate {
   };
 }
 
-import { MCPService } from "./mcpService";
+import { UstazOrchestrator } from "./UstazOrchestrator";
 
 const ALADHAN_API = "https://api.aladhan.com/v1";
 
@@ -35,7 +35,7 @@ export const getPrayerTimes = async (lat: number, lng: number, zone?: string): P
     const targetZone = zone || 'WLP01'; // Default to KL
     
     console.log(`🕌 PrayerService: Fetching for zone ${targetZone} via MCP...`);
-    const mcpData = await MCPService.getWorshipData(targetZone);
+    const mcpData = await UstazOrchestrator.getWorshipData(targetZone);
 
     if (mcpData) {
       // Map MCP format to UI format

@@ -3,7 +3,7 @@ import { getCurriculumForVolume } from '../data/master-curriculum';
 import { getStrictPageData } from '../data/strict-loader';
 import { IqraLesson } from '../types';
 import { IQRA_CONFIG } from '../constants';
-import { IqraService } from '../../services/iqraService';
+import { IqraService } from '../../../services/iqraService';
 import { useAudioPlayer } from '../../../contexts/AudioPlayerContext';
 
 export const useIqraSession = (volume: number) => {
@@ -50,8 +50,8 @@ export const useIqraSession = (volume: number) => {
   const startLesson = useCallback(() => setLessonStarted(true), []);
 
   const resetResult = useCallback(() => {
-      setShowResult(null);
-      setAiFeedback('');
+    setShowResult(null);
+    setAiFeedback('');
   }, []);
 
   // Phonemic Modeling (Audio Playback)
@@ -60,12 +60,12 @@ export const useIqraSession = (volume: number) => {
     const baseChar = text.replace(/[\u064B-\u065F\u0670]/g, "").charAt(0);
 
     const audioMap: Record<string, string> = {
-        'ا': 'alif', 'أ': 'alif', 'إ': 'alif', 'آ': 'alif', 'ء': 'alif',
-        'ب': 'ba', 'ت': 'ta', 'ث': 'tsa', 'ج': 'jim', 'ح': 'ha', 'خ': 'kho',
-        'د': 'dal', 'ذ': 'dzal', 'ر': 'ro', 'ز': 'zai', 'س': 'sin', 'ش': 'syin',
-        'ص': 'sod', 'ض': 'dhod', 'ط': 'tho', 'ظ': 'zho', 'ع': 'ain', 'غ': 'ghain',
-        'ف': 'fa', 'ق': 'qof', 'ك': 'kaf', 'ل': 'lam', 'م': 'mim', 'ن': 'nun',
-        'و': 'wau', 'ه': 'haa', 'هـ': 'haa', 'ي': 'ya', 'ى': 'ya'
+      'ا': 'alif', 'أ': 'alif', 'إ': 'alif', 'آ': 'alif', 'ء': 'alif',
+      'ب': 'ba', 'ت': 'ta', 'ث': 'tsa', 'ج': 'jim', 'ح': 'ha', 'خ': 'kho',
+      'د': 'dal', 'ذ': 'dzal', 'ر': 'ro', 'ز': 'zai', 'س': 'sin', 'ش': 'syin',
+      'ص': 'sod', 'ض': 'dhod', 'ط': 'tho', 'ظ': 'zho', 'ع': 'ain', 'غ': 'ghain',
+      'ف': 'fa', 'ق': 'qof', 'ك': 'kaf', 'ل': 'lam', 'م': 'mim', 'ن': 'nun',
+      'و': 'wau', 'ه': 'haa', 'هـ': 'haa', 'ي': 'ya', 'ى': 'ya'
     };
 
     const filename = audioMap[baseChar];
@@ -79,13 +79,13 @@ export const useIqraSession = (volume: number) => {
   const evaluatePerformance = useCallback(async (confidence: number, feedback?: string) => {
     const requiredScore = (currentLesson?.assessment.passingScore || IQRA_CONFIG.DEFAULT_PASSING_SCORE) / 100;
     const passed = confidence >= requiredScore;
-    
+
     setAiFeedback(feedback || (passed ? 'Bacaan bagus!' : 'Sila cuba lagi.'));
     setShowResult(passed ? 'success' : 'fail');
 
     if (passed && currentLesson) {
-        const score = Math.round(confidence * 100);
-        await IqraService.saveProgress(volume, currentLesson.id, score);
+      const score = Math.round(confidence * 100);
+      await IqraService.saveProgress(volume, currentLesson.id, score);
     }
 
     return passed;

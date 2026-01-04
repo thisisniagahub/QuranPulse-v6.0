@@ -1,4 +1,4 @@
-import { MCPService } from '../mcpService';
+import { UstazOrchestrator } from '../UstazOrchestrator';
 import { supabase } from '@/lib/supabase';
 
 // Mock Supabase
@@ -10,33 +10,33 @@ jest.mock('@/lib/supabase', () => ({
   }
 }));
 
-describe('MCPService', () => {
+describe('UstazOrchestrator', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   test('should detect worship intent', () => {
-    expect(MCPService.isWorshipIntent('pukul berapa subuh hari ni')).toBe(true);
-    expect(MCPService.isWorshipIntent('waktu asar gombak')).toBe(true);
-    expect(MCPService.isWorshipIntent('hukum forex')).toBe(false);
+    expect(UstazOrchestrator.isWorshipIntent('pukul berapa subuh hari ni')).toBe(true);
+    expect(UstazOrchestrator.isWorshipIntent('waktu asar gombak')).toBe(true);
+    expect(UstazOrchestrator.isWorshipIntent('hukum forex')).toBe(false);
   });
 
   test('should detect compliance intent', () => {
-    expect(MCPService.isComplianceIntent('hukum makan babi')).toBe(true);
-    expect(MCPService.isComplianceIntent('status halal mcd')).toBe(true);
-    expect(MCPService.isComplianceIntent('waktu zohor')).toBe(false);
+    expect(UstazOrchestrator.isComplianceIntent('hukum makan babi')).toBe(true);
+    expect(UstazOrchestrator.isComplianceIntent('status halal mcd')).toBe(true);
+    expect(UstazOrchestrator.isComplianceIntent('waktu zohor')).toBe(false);
   });
 
   test('should detect quran intent', () => {
-    expect(MCPService.isQuranIntent('ayat tentang sabar')).toBe(true);
-    expect(MCPService.isQuranIntent('surah al-waqiah')).toBe(true);
-    expect(MCPService.isQuranIntent('status halal')).toBe(false);
+    expect(UstazOrchestrator.isQuranIntent('ayat tentang sabar')).toBe(true);
+    expect(UstazOrchestrator.isQuranIntent('surah al-waqiah')).toBe(true);
+    expect(UstazOrchestrator.isQuranIntent('status halal')).toBe(false);
   });
 
   test('should detect zakat intent', () => {
-    expect(MCPService.isZakatIntent('kira zakat emas')).toBe(true);
-    expect(MCPService.isZakatIntent('bayar fitrah')).toBe(true);
-    expect(MCPService.isZakatIntent('cari ayat')).toBe(false);
+    expect(UstazOrchestrator.isZakatIntent('kira zakat emas')).toBe(true);
+    expect(UstazOrchestrator.isZakatIntent('bayar fitrah')).toBe(true);
+    expect(UstazOrchestrator.isZakatIntent('cari ayat')).toBe(false);
   });
 
   test('should call mcp-worship for worship intent', async () => {
@@ -51,7 +51,7 @@ describe('MCPService', () => {
       error: null
     });
 
-    const result = await MCPService.detectAndCall('waktu zohor WLP01');
+    const result = await UstazOrchestrator.detectAndCall('waktu zohor WLP01');
     
     expect(supabase.functions.invoke).toHaveBeenCalledWith('mcp-worship', {
       body: { zone: 'WLP01' }
@@ -67,7 +67,7 @@ describe('MCPService', () => {
       error: null
     });
 
-    const result = await MCPService.detectAndCall('ayat tentang sabar');
+    const result = await UstazOrchestrator.detectAndCall('ayat tentang sabar');
 
     expect(supabase.functions.invoke).toHaveBeenCalledWith('mcp-quran', {
       body: { intent: 'search', query: 'sabar', lang: 'ms' }
@@ -83,7 +83,7 @@ describe('MCPService', () => {
       error: null
     });
 
-    const result = await MCPService.detectAndCall('kira zakat gaji 5000');
+    const result = await UstazOrchestrator.detectAndCall('kira zakat gaji 5000');
 
     expect(supabase.functions.invoke).toHaveBeenCalledWith('mcp-zakat', {
       body: { type: 'income', amount: 5000, state: 'WLP' }

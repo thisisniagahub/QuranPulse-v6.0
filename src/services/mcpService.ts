@@ -6,6 +6,20 @@ export interface MCPResponse {
     data: any;
 }
 
+export interface MCPWorshipData {
+    date: string;
+    times: {
+        imsak: string;
+        subuh: string;
+        syuruk: string;
+        zohor: string;
+        asar: string;
+        maghrib: string;
+        isyak: string;
+    };
+    source?: string;
+}
+
 export const mcpService = {
     async classifyIntent(query: string): Promise<MCPResponse> {
         // Placeholder implementation to satisfy build
@@ -24,5 +38,30 @@ export const mcpService = {
             return { type: 'widget', widget: 'PrayerTimes', data: params };
         }
         return null;
+    },
+
+    async getWorshipData(zone: string): Promise<MCPWorshipData | null> {
+        // Placeholder: In production, this would call Supabase Edge Function or external API
+        console.log(`📡 MCP: Fetching worship data for zone ${zone}`);
+
+        // Mock data for now
+        const mockData: MCPWorshipData = {
+            date: new Date().toISOString().split('T')[0],
+            times: {
+                imsak: '05:45',
+                subuh: '05:55',
+                syuruk: '07:10',
+                zohor: '13:15',
+                asar: '16:30',
+                maghrib: '19:20',
+                isyak: '20:35'
+            },
+            source: 'MCP Mock Service'
+        };
+
+        return mockData;
     }
 };
+
+// Export as both for compatibility
+export const MCPService = mcpService;
