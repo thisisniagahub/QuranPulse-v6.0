@@ -9,6 +9,8 @@ import KhatamPlanner from './components/KhatamPlanner';
 import { PERSONAS, PersonaKey } from '../../constants/personas';
 import { PrayerTimesAction } from './components/PrayerTimesAction';
 import { AIWidgetRenderer, cleanAIResponse } from '../../components/ai/AIWidgetRenderer';
+import { askUstazAI } from '../../services/aiService';
+import { ChatMessage } from '../../types';
 
 interface SmartDeenProps {
     userName?: string;
@@ -20,29 +22,50 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
     const displayName = userName || user?.name || "Sahabat";
     const [activeTab, setActiveTab] = useState<'CHAT' | 'JAWI' | 'HADITH' | 'PLANNER'>('CHAT');
 
-    // Mock implementation
-    const [messages, setMessages] = useState<any[]>([]);
+    // Real Implementation
+    const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [isThinking, setIsThinking] = useState(false);
     const [selectedPersona, setSelectedPersona] = useState<PersonaKey>('AZHAR');
     const switchPersona = (p: PersonaKey) => setSelectedPersona(p);
+
     const sendMessage = async (text: string) => {
-        setMessages(prev => [...prev, { role: 'user', content: text }]);
+        const newUserMsg: ChatMessage = {
+            id: Date.now().toString(),
+            role: 'user',
+            content: text,
+            timestamp: Date.now()
+        };
+
+        const newHistory = [...messages, newUserMsg];
+        setMessages(newHistory);
         setIsThinking(true);
 
-        setTimeout(() => {
-            let mockResponse = "Maaf, sistem sedang sibuk.";
-            if (text.toLowerCase().includes('zakat')) {
-                mockResponse = "Boleh, mari kita kira zakat anda. <<<WIDGET:{\"id\":\"ZAKAT_CALC\"}>>>";
-            } else if (text.toLowerCase().includes('infaq') || text.toLowerCase().includes('sedekah')) {
-                mockResponse = "Alhamdulillah, moga murah rezeki tuan. <<<WIDGET:{\"id\":\"INFAQ_CARD\",\"props\":{\"amount\":30}}>>>";
-            } else if (text.toLowerCase().includes('solat') || text.toLowerCase().includes('waktu')) {
-                mockResponse = "Berikut adalah waktu solat bagi kawasan anda. <<<WIDGET:{\"id\":\"PRAYER_TIMES\"}>>>";
-            } else {
-                mockResponse = "Saya faham. Boleh tuan jelaskan lagi?";
-            }
-            setMessages(prev => [...prev, { role: 'assistant', content: mockResponse }]);
+        try {
+            // Call Real AI Service
+            // Passing the full history ensures context is maintained
+            const responseText = await askUstazAI(newHistory, undefined, selectedPersona);
+
+            const aiMsg: ChatMessage = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: responseText,
+                timestamp: Date.now()
+            };
+
+            setMessages(prev => [...prev, aiMsg]);
+        } catch (error) {
+            console.error("Ustaz AI Error:", error);
+            const errorMsg: ChatMessage = {
+                id: (Date.now() + 1).toString(),
+                role: 'assistant',
+                content: "Maaf, sistem sedang sibuk. Sila cuba sebentar lagi.",
+                timestamp: Date.now(),
+                isError: true
+            };
+            setMessages(prev => [...prev, errorMsg]);
+        } finally {
             setIsThinking(false);
-        }, 1500);
+        }
     }; const [input, setInput] = useState('');
 
     // Refs

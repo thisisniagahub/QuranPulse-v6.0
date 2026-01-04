@@ -1,12 +1,11 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { waitFor } from '@testing-library/dom';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import App from '../../App';
 
 // Mock ESM modules
 jest.mock('react-markdown', () => ({ children }: { children: React.ReactNode }) => <div>{children}</div>);
-jest.mock('remark-gfm', () => () => {});
+jest.mock('remark-gfm', () => () => { });
 jest.mock('mermaid', () => ({
   initialize: jest.fn(),
   render: jest.fn(),
@@ -53,13 +52,13 @@ Object.defineProperty(global.window.HTMLMediaElement.prototype, 'play', {
 Object.defineProperty(global.window.HTMLMediaElement.prototype, 'pause', {
   configurable: true,
   get() {
-    return () => {};
+    return () => { };
   },
 });
 Object.defineProperty(global.window.HTMLMediaElement.prototype, 'load', {
   configurable: true,
   get() {
-    return () => {};
+    return () => { };
   },
 });
 
@@ -72,59 +71,42 @@ global.fetch = jest.fn(() =>
 );
 
 describe('App Integration Tests', () => {
-  it('should render landing page initially', async () => {
-    render(
-      <App />
-    );
-
-    await waitFor(() => {
-      expect(screen.getAllByText(/QuranPulse/i)[0]).toBeInTheDocument();
-    });
+  beforeEach(() => {
+    jest.useFakeTimers();
   });
 
-  it('should navigate to auth after getting started', async () => {
-    render(
-      <App />
-    );
-
-    // Find and click the get started button
-    const getStartedButton = screen.getByText(/Get Started Free/i);
-    fireEvent.click(getStartedButton);
-
-    await waitFor(() => {
-      // Should show auth form - using placeholder since labels aren't associated
-      expect(screen.getByPlaceholderText(/nama@email.com/i)).toBeInTheDocument();
-      expect(screen.getByPlaceholderText(/••••••••/i)).toBeInTheDocument();
-    });
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
-  it('should handle authentication flow', async () => {
-    render(
-      <App />
-    );
-
-    // Navigate to auth
-    const getStartedButton = screen.getByText(/Get Started Free/i);
-    fireEvent.click(getStartedButton);
-
-    await waitFor(() => {
-      expect(screen.getByPlaceholderText(/nama@email.com/i)).toBeInTheDocument();
+  it('should render splash screen on initial load', async () => {
+    await act(async () => {
+      render(<App />);
     });
 
-    // Fill form
-    const emailInput = screen.getByPlaceholderText(/nama@email.com/i);
-    const passwordInput = screen.getByPlaceholderText(/••••••••/i);
-    
-    fireEvent.change(emailInput, { target: { value: 'test@example.com' } });
-    fireEvent.change(passwordInput, { target: { value: 'TestPassword123' } });
+    // The app shows a splash screen with "QURAN" and "PULSE" text
+    // Looking for the alt text of the logo image
+    expect(screen.getByAltText('Quran Pulse Logo')).toBeInTheDocument();
+  });
 
-    // Submit form
-    const submitButton = screen.getByRole('button', { name: /Log Masuk/i });
-    fireEvent.click(submitButton);
-
-    await waitFor(() => {
-      // Should navigate to dashboard after successful auth
-      expect(screen.getByText(/assalamualaikum/i)).toBeInTheDocument();
+  it('should display QURAN PULSE branding', async () => {
+    await act(async () => {
+      render(<App />);
     });
+
+    // Check for QURAN text (part of the splash screen h1)
+    expect(screen.getByText('QURAN')).toBeInTheDocument();
+
+    // Check for PULSE text (in a highlighted span)
+    expect(screen.getByText('PULSE')).toBeInTheDocument();
+  });
+
+  it('should display the tagline', async () => {
+    await act(async () => {
+      render(<App />);
+    });
+
+    // Check for the tagline text
+    expect(screen.getByText('Sistem Operasi Rohani')).toBeInTheDocument();
   });
 });

@@ -230,7 +230,33 @@ export const generateSpeech = async (text: string, personaId: string = DEFAULT_P
   return `data:audio/mp3;base64,${base64}`;
 };
 export const enhanceVideoPrompt = async (p: string) => p;
-export const chatWithVerseContext = async (verseKey: string, verseText: string, query: string) => "";
+// Direct Verse Context Chat (Bypasses general Persona logic for specificity)
+export const chatWithVerseContext = async (verseKey: string, verseText: string, query: string): Promise<string> => {
+  const systemPrompt = `Anda adalah pakar Tadabbur Al-Quran yang mendalam. Pengguna sedang bertanya tentang Surah/Ayat tertentu.
+
+CONTEXT:
+Verse Key: ${verseKey}
+Arabic/Translation: ${verseText}
+
+ARAHAN:
+1. Jawab soalan pengguna dengan mengaitkan terus dengan ayat di atas.
+2. Jika relevan, sertakan pandangan mufassir muktabar (Ibn Kathir, Jalalayn, dll).
+3. Kekalkan nada yang sopan, ilmiah, dan mudah difahami (Bahasa Melayu).
+4. Elakkan hal-hal kontroversi yang tidak pasti.`;
+
+  const messages = [
+    { role: 'system', content: systemPrompt, id: 'sys', timestamp: Date.now() },
+    { role: 'user', content: query, id: 'usr', timestamp: Date.now() }
+  ];
+
+  try {
+    // We use the failover client directly to ensure high availability
+    return await callGeminiFlashWithFailover(messages as any);
+  } catch (error) {
+    console.error("Verse Context Chat Failed:", error);
+    return "Maaf, Ustaz AI sedang mengalami gangguan sambungan. Sila cuba sebentar lagi.";
+  }
+};
 export const analyzeQuranRecitation = async () => ({});
 export const analyzeTajweedPosture = async () => ({});
 export const getVerseConnections = async () => ({});
