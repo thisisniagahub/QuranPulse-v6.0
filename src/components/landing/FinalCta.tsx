@@ -32,7 +32,7 @@ const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
                     </div>
 
                     {/* Headline */}
-                    <h2 className="text-4xl md:text-6xl font-[Montserrat] font-bold text-slate-800 mb-6 tracking-tight leading-tight">
+                    <h2 className="text-4xl md:text-6xl font-[Poppins] font-bold text-slate-800 mb-6 tracking-tight leading-tight">
                         Mula Perjalanan Quran<br />
                         <span className="text-cyan-600">
                             Anda Hari Ini

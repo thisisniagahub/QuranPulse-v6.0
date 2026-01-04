@@ -16,18 +16,18 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
     }, [onComplete]);
 
     return (
-        <div className="fixed inset-0 z-[9999] bg-[#f0f9ff] flex items-center justify-center overflow-hidden">
+        <div className="fixed inset-0 z-[9999] bg-[#020617] flex items-center justify-center overflow-hidden">
             {/* 🌌 Background Atmosphere */}
             <div className="absolute inset-0">
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.5 }}
-                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] bg-gradient-radial from-blue-100/80 via-cyan-50/50 to-transparent"
+                    className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[150vw] h-[150vw] bg-[radial-gradient(ellipse_at_center,_#162c51_0%,_#0c224b_40%,_#031a38_100%)] opacity-80"
                 />
-                <div className="absolute inset-0 opacity-[0.03] bg-[linear-gradient(to_right,#0891b2_1px,transparent_1px),linear-gradient(to_bottom,#0891b2_1px,transparent_1px)] bg-[size:40px_40px]"></div>
+                <div className="absolute inset-0 opacity-[0.05] bg-[linear-gradient(to_right,#0891b2_1px,transparent_1px),linear-gradient(to_bottom,#0891b2_1px,transparent_1px)] bg-[size:40px_40px]"></div>
                 {/* Starfield Overlay - Subtle sparkle */}
-                <div className="absolute inset-0 opacity-10 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-110 contrast-125 mix-blend-multiply"></div>
+                <div className="absolute inset-0 opacity-20 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-110 contrast-125 mix-blend-multiply"></div>
             </div>
 
             {/* 🧬 Animated Orbits (Premium Liquid Feel) */}
@@ -48,7 +48,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                             delay: i * 0.4
                         }}
                         style={{ width: size, height: size }}
-                        className="absolute border border-cyan-400/20 rounded-full"
+                        className="absolute border border-cyan-400/10 rounded-full"
                     />
                 ))}
             </div>
@@ -76,7 +76,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                             opacity: [0.3, 0.6, 0.3],
                         }}
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute inset-0 bg-cyan-400/30 blur-[40px] rounded-full"
+                        className="absolute inset-0 bg-cyan-400/20 blur-[40px] rounded-full"
                     />
                     <img
                         src="/logo-primary.png"
@@ -91,9 +91,9 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                         initial={{ tracking: "-0.05em", opacity: 0, y: 10 }}
                         animate={{ tracking: "0.05em", opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 1 }}
-                        className="text-4xl font-[Montserrat] font-[900] text-slate-800 tracking-tight"
+                        className="text-4xl font-[Poppins] font-[900] text-white tracking-tight"
                     >
-                        QURAN <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 to-blue-700">PULSE</span>
+                        QURAN <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">PULSE</span>
                     </motion.h1>
 
                     <motion.div
@@ -127,7 +127,6 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                 </svg>
             </div>
         </div>
-        </div >
     );
 };
 

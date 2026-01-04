@@ -17,7 +17,7 @@ const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate })
 
     return (
         <BentoCard
-            className="col-span-1 min-h-[160px] p-5 border-white/5 bg-[#0A1E42]/80"
+            className="col-span-1 min-h-[160px] p-5 border-white/5 bg-[#0c224b]/80"
             onClick={handleClick}
             delay={0.1}
         >

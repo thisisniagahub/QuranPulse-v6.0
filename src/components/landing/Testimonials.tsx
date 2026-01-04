@@ -94,7 +94,7 @@ const Testimonials: React.FC = () => {
                         <Star className="w-3 h-3 fill-current" />
                         Testimoni
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-slate-800 mb-4 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-[Poppins] font-bold text-slate-800 mb-4 tracking-tight">
                         Dipercayai <span className="text-cyan-600">Ribuan Keluarga</span>
                     </h2>
                     <p className="text-slate-600 text-lg max-w-xl mx-auto font-medium">

@@ -11,19 +11,29 @@ import ContinueReadingCard from './components/ContinueReadingCard';
 import PrayerTimesStrip from './components/PrayerTimesStrip';
 import RecommendedWidget from './components/RecommendedWidget';
 import RecentActivity from './components/RecentActivity';
-import AnnouncementBanner from './components/AnnouncementBanner';
 
 interface DashboardProps {
     user: UserProfile;
     onNavigate: (view: NavView) => void;
 }
 
+// 🎨 THEME CONFIGURATION
+// Replace these hex codes to change the dashboard mood
 const theme = {
-    gradient: 'from-[#0A1E42] via-[#020617] to-[#010409]',
+    // Background Gradient (Top to Bottom) - Based on screen3.png analysis
+    bgStart: '#162c51',   // Lighter Navy (Top)
+    bgMiddle: '#0c224b',  // Deep Navy (Middle)
+    bgEnd: '#031a38',     // Darkest Blue (Bottom)
+    
+    // Accents
+    primary: 'cyan',      // Main highlight color
+    secondary: 'slate',   // Muted text
+    
+    // Utility classes (Tailwind)
+    gradient: 'from-[#162c51] via-[#0c224b] to-[#031a38]',
     glow: 'bg-cyan-500/20',
     border: 'border-white/10',
     text: 'text-cyan-400',
-    secondary: 'text-slate-400',
 };
 
 const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
@@ -54,11 +64,11 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
     const { data: prayerData, loading: prayerLoading } = usePrayerTimes(coords?.lat || 3.1390, coords?.lng || 101.6869);
 
     return (
-        <div className="min-h-full pb-32 bg-[#020617] relative font-sans selection:bg-cyan-500/30">
+        <div className={`min-h-full pb-32 bg-[${theme.bgMiddle}] relative font-sans selection:bg-cyan-500/30`}>
 
-            {/* 🌌 Ambient Cosmic Background */}
+            {/* 🌌 Ambient Background */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden">
-                <div className="absolute top-0 inset-x-0 h-full bg-gradient-to-b from-[#0A1E42] via-[#020617] to-black opacity-90"></div>
+                <div className={`absolute top-0 inset-x-0 h-full bg-gradient-to-b ${theme.gradient} opacity-90`}></div>
 
                 {/* Dynamic Glow Orbs */}
                 <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/10 rounded-full blur-[120px] animate-pulse-slow"></div>
@@ -82,7 +92,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
                         <div className="relative group/logo">
                             <div className="absolute -inset-2 bg-cyan-500/40 blur-2xl opacity-0 group-hover:opacity-100 transition-all duration-700 rounded-full"></div>
                             <img
-                                src="/logo-icon.png"
+                                src="/UstazAI-Icon.png"
                                 alt="QuranPulse"
                                 className="relative z-10 h-10 w-auto drop-shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 transition-transform duration-500"
                             />

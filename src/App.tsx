@@ -34,9 +34,9 @@ import GuideViewer from './modules/iqra/components/GuideViewer';
 import SplashScreen from './components/SplashScreen';
 
 const LoadingFallback = () => (
-  <div className="flex flex-col items-center justify-center min-h-screen bg-[#050505] relative overflow-hidden">
+  <div className="flex flex-col items-center justify-center min-h-screen bg-[#f0f9ff] relative overflow-hidden">
     {/* Background Glow */}
-    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-900/20 via-[#050505] to-black"></div>
+    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-100/50 via-cyan-50/30 to-transparent"></div>
 
     {/* Rings Removed */}
     <div className="relative w-32 h-32 flex items-center justify-center mb-8">
@@ -47,16 +47,16 @@ const LoadingFallback = () => (
 
     {/* Text */}
     <div className="text-center relative z-10 space-y-3">
-      <h3 className="text-2xl font-bold text-white tracking-widest font-serif">
-        QURAN<span className="text-cyan-400">PULSE</span>
+      <h3 className="text-2xl font-bold text-slate-800 tracking-widest font-serif">
+        QURAN<span className="text-cyan-600">PULSE</span>
       </h3>
-      <p className="text-lg text-amber-400/80 font-arabic animate-pulse">جاري التحميل...</p>
+      <p className="text-lg text-cyan-700/80 font-arabic animate-pulse">جاري التحميل...</p>
       <div className="flex items-center justify-center gap-2 mt-2">
         <span className="h-1.5 w-1.5 rounded-full bg-cyan-500 animate-bounce [animation-delay:-0.3s]"></span>
         <span className="h-1.5 w-1.5 rounded-full bg-purple-500 animate-bounce [animation-delay:-0.15s]"></span>
         <span className="h-1.5 w-1.5 rounded-full bg-amber-500 animate-bounce"></span>
       </div>
-      <p className="text-[10px] text-slate-400 font-mono uppercase tracking-[0.3em] mt-6">Initializing Genesis Engine</p>
+      <p className="text-[10px] text-slate-500 font-mono uppercase tracking-[0.3em] mt-6 font-bold">Initializing Genesis Engine</p>
     </div>
   </div>
 );

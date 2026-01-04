@@ -5,7 +5,7 @@ const DailyHikmah: React.FC = () => {
     return (
         <motion.div
             whileHover={{ y: -5 }}
-            className="col-span-2 md:col-span-1 bg-gradient-to-br from-[#1a1528] to-[#020617] rounded-3xl p-6 border border-purple-500/30 relative overflow-hidden h-full min-h-[220px] flex flex-col justify-between shadow-xl shadow-purple-500/5"
+            className="col-span-2 md:col-span-1 bg-gradient-to-br from-[#162c51] to-[#031a38] rounded-3xl p-6 border border-purple-500/30 relative overflow-hidden h-full min-h-[220px] flex flex-col justify-between shadow-xl shadow-purple-500/5"
         >
             {/* 🌌 Cyber Spiritual Atmosphere */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>

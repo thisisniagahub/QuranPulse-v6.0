@@ -75,7 +75,7 @@ const FeaturesBento: React.FC = () => {
                         <Sparkles className="w-3 h-3" />
                         Ekosistem Lengkap
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-slate-800 mb-6 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-[Poppins] font-bold text-slate-800 mb-6 tracking-tight">
                         Satu App, <span className="text-cyan-600">Pelbagai Dimensi</span>
                     </h2>
                     <p className="text-slate-600 text-lg max-w-2xl leading-relaxed font-medium">
@@ -93,8 +93,8 @@ const FeaturesBento: React.FC = () => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                             whileHover={{ y: -5, borderColor: `${feature.color}50` }}
-                            className={`relative p-8 rounded-[2rem] bg-white/5 backdrop-blur-xl border border-white/10 
-                         hover:bg-white/10 transition-all duration-300 group overflow-hidden
+                            className={`relative p-8 rounded-[2rem] bg-white/60 backdrop-blur-xl border border-white/80 
+                         hover:bg-white/80 transition-all duration-300 group overflow-hidden shadow-sm hover:shadow-md
                          ${feature.wide ? 'md:col-span-2' : 'md:col-span-1'}`}
                         >
                             {/* Glow effect on hover */}
@@ -122,7 +122,7 @@ const FeaturesBento: React.FC = () => {
                             </div>
 
                             {/* Content */}
-                            <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-3 font-[Montserrat]">
+                            <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-3 font-[Poppins]">
                                 {feature.title}
                             </h3>
                             <p className="text-slate-600 leading-relaxed text-sm md:text-base font-medium">

@@ -10,7 +10,7 @@ const UstazAiWidget: React.FC<UstazAiWidgetProps> = ({ onNavigate }) => {
     return (
         <motion.div
             whileHover={{ y: -5, scale: 1.02 }}
-            className="col-span-1 bg-gradient-to-br from-[#0A1E42] to-[#010409] rounded-[2rem] p-6 border border-cyan-500/20 shadow-xl relative overflow-hidden group cursor-pointer h-full min-h-[160px] flex flex-col justify-between"
+            className="col-span-1 bg-gradient-to-br from-[#0c224b] to-[#031a38] rounded-[2rem] p-6 border border-cyan-500/20 shadow-xl relative overflow-hidden group cursor-pointer h-full min-h-[160px] flex flex-col justify-between"
             onClick={() => onNavigate(NavView.SMART_DEEN)}
         >
             {/* 🌌 Cyber Glow Effect */}
@@ -28,7 +28,7 @@ const UstazAiWidget: React.FC<UstazAiWidgetProps> = ({ onNavigate }) => {
             <div className="relative z-10 mt-4 flex items-center justify-between">
                 <div className="flex -space-x-2">
                     {[1, 2, 3].map(i => (
-                        <div key={i} className="w-6 h-6 rounded-full border-2 border-[#0A1E42] bg-slate-800 flex items-center justify-center text-[8px] text-slate-400">
+                        <div key={i} className="w-6 h-6 rounded-full border-2 border-[#0c224b] bg-slate-800 flex items-center justify-center text-[8px] text-slate-400">
                             <i className="fa-solid fa-user"></i>
                         </div>
                     ))}

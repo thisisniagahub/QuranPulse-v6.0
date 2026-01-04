@@ -199,7 +199,7 @@ const Ibadah: React.FC = () => {
                 <div className="absolute top-0 right-0 w-24 h-24 bg-[#00BFFF]/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
                 <div className="flex items-start justify-between mb-4">
                     <div>
-                        <h3 className="text-xl font-bold text-white font-[Montserrat]">Masjid Al-Hidayah</h3>
+                        <h3 className="text-xl font-bold text-white font-[Poppins]">Masjid Al-Hidayah</h3>
                         <p className="text-xs text-slate-400 italic">Kariah Gombak, Selangor</p>
                     </div>
                     <div className="bg-[#00BFFF]/20 text-[#00BFFF] p-2 rounded-xl">
@@ -242,7 +242,7 @@ const Ibadah: React.FC = () => {
                     <div className="bg-gradient-to-br from-[#1E3A5F]/30 to-[#0A1E42] border border-[#00BFFF]/20 p-5 rounded-3xl relative overflow-hidden">
                         <div className="flex justify-between items-start mb-4">
                             <div>
-                                <p className="text-sm font-bold text-white font-[Montserrat]">Baik Pulih Bumbung</p>
+                                <p className="text-sm font-bold text-white font-[Poppins]">Baik Pulih Bumbung</p>
                                 <p className="text-[10px] text-slate-400">Sasaran: RM 10,000</p>
                             </div>
                             <span className="text-[#00BFFF] font-mono text-sm">45%</span>

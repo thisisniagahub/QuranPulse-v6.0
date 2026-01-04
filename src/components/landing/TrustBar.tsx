@@ -69,7 +69,7 @@ const TrustBar: React.FC = () => {
                                     </div>
                                     <div>
                                         <div
-                                            className="text-2xl md:text-3xl font-bold font-[Montserrat] dynamic-text"
+                                            className="text-2xl md:text-3xl font-bold font-[Poppins] dynamic-text"
                                             style={{ '--dynamic-color': stat.color } as React.CSSProperties}
                                         >
                                             {stat.value}

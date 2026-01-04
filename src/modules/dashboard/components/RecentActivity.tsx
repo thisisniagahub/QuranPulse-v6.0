@@ -10,7 +10,7 @@ const activities = [
 
 const RecentActivity: React.FC = () => {
   return (
-    <BentoCard className="p-6 h-full border-white/5 bg-[#0A1E42]/40 backdrop-blur-xl">
+    <BentoCard className="p-6 h-full border-white/5 bg-[#0c224b]/40 backdrop-blur-xl">
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-sm font-bold text-white uppercase tracking-wider">Recent Activity</h3>
         <i className="fa-solid fa-clock-rotate-left text-slate-500 text-xs"></i>

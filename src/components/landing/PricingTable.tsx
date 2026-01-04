@@ -95,7 +95,7 @@ const PricingTable: React.FC = () => {
                         <Crown className="w-3 h-3" />
                         Pelan Harga
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-slate-800 mb-4 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-[Poppins] font-bold text-slate-800 mb-4 tracking-tight">
                         Pilih <span className="text-cyan-600">Pelan Anda</span>
                     </h2>
                     <p className="text-slate-600 text-lg max-w-xl mx-auto mb-8 font-medium">
@@ -166,7 +166,7 @@ const PricingTable: React.FC = () => {
                                 <div className="flex items-baseline justify-center gap-1">
                                     <span className="text-2xl text-slate-400">RM</span>
                                     <span
-                                        className="text-5xl font-bold font-[Montserrat] dynamic-text"
+                                        className="text-5xl font-bold font-[Poppins] dynamic-text"
                                         style={{ '--dynamic-color': tier.color } as React.CSSProperties}
                                     >
                                         {tier.price[period]}

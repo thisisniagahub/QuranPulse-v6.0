@@ -72,7 +72,7 @@ const Layout: React.FC = () => {
   ];
 
   return (
-    <div className="flex h-screen w-full bg-background-dark overflow-hidden font-sans relative justify-center">
+    <div className="flex h-screen w-full bg-[#f0f9ff] overflow-hidden font-sans relative justify-center">
       {/* --- DESKTOP BACKDROP (Visible only on large screens) --- */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20 blur-xl hidden md:block pointer-events-none bg-[image:var(--bg-splash)]"
@@ -81,7 +81,7 @@ const Layout: React.FC = () => {
       ></div>
 
       {/* --- MOBILE APP SHELL CONTAINER --- */}
-      <div className="flex flex-col h-full w-full max-w-[480px] bg-background-dark relative shadow-2xl md:border-x md:border-white">
+      <div className="flex flex-col h-full w-full max-w-[480px] bg-white relative shadow-2xl md:border-x md:border-slate-200">
         {/* --- VISUAL IDENTITY v5.0 GLOBAL BACKGROUNDS --- */}
         {/* Top Header Pattern */}
         <div
@@ -98,22 +98,22 @@ const Layout: React.FC = () => {
         ></div>
 
         {/* Global Gradient Overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020617]/50 via-[#020617]/90 to-[#020617]/80 -z-10 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-white/90 to-blue-50/80 -z-10 pointer-events-none"></div>
 
         {/* Header with Maze Pattern */}
-        <header className="h-16 bg-[#020617]/80 backdrop-blur-xl border-b border-[#00BFFF]/20 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden">
+        <header className="h-16 bg-white/70 backdrop-blur-xl border-b border-cyan-100 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden">
           <Link
             to="/"
             className="flex items-center gap-3 cursor-pointer group relative z-10"
             aria-label="Go to Dashboard"
           >
             <img src="/logo-primary.png" alt="Logo" className="w-16 h-16 object-contain scale-110 transition-transform hover:scale-125" />
-            <span className="font-bold text-xl tracking-tight text-white font-[Montserrat]">Quran<span className="text-[#00BFFF]">Pulse</span></span>
+            <span className="font-bold text-xl tracking-tight text-slate-800 font-[Poppins]">Quran<span className="text-cyan-600">Pulse</span></span>
           </Link>
 
           {/* Header Actions */}
           <div className="flex items-center gap-3 relative z-10">
-            <button aria-label="Notifications" className="w-9 h-9 rounded-full bg-slate-800/50 border border-white/10 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-all">
+            <button aria-label="Notifications" className="w-9 h-9 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 hover:text-cyan-600 hover:bg-white transition-all">
               <i className="fa-regular fa-bell"></i>
             </button>
           </div>
@@ -126,7 +126,7 @@ const Layout: React.FC = () => {
 
         {/* --- BOTTOM NAVIGATION BAR --- */}
         {/* --- BOTTOM NAVIGATION BAR (Restored 5-Items: Home, Quran, Ustaz, Qiblat, Iqra) --- */}
-        <nav className="h-[88px] bg-[#020617]/90 backdrop-blur-xl border-t border-cyan-500/20 relative z-50 shrink-0 pb-5">
+        <nav className="h-[88px] bg-white/80 backdrop-blur-xl border-t border-cyan-100 relative z-50 shrink-0 pb-5">
           <div className="flex items-center justify-around h-full px-2">
 
             {/* 1. HOME */}
@@ -137,7 +137,7 @@ const Layout: React.FC = () => {
               <div className={`w-8 h-8 ${currentView === NavView.DASHBOARD ? '' : 'grayscale'}`}>
                 <img src="/assets/icons/nabdh/nav-home.png" alt="Home" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.DASHBOARD ? 'text-cyan-400' : 'text-slate-500'}`}>Home</span>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.DASHBOARD ? 'text-cyan-600' : 'text-slate-500'}`}>Home</span>
             </Link>
 
             {/* 2. AL-QURAN */}
@@ -148,7 +148,7 @@ const Layout: React.FC = () => {
               <div className={`w-8 h-8 ${currentView === NavView.QURAN ? '' : 'grayscale'}`}>
                 <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.QURAN ? 'text-cyan-400' : 'text-slate-500'}`}>Quran</span>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.QURAN ? 'text-cyan-600' : 'text-slate-500'}`}>Quran</span>
             </Link>
 
             {/* 3. USTAZ AI (CENTER HIGHLIGHT) */}
@@ -156,17 +156,17 @@ const Layout: React.FC = () => {
               to="/smart-deen"
               className={`flex flex-col items-center justify-center relative -mt-8 transition-all duration-300 w-20 group`}
             >
-              <div className={`w-20 h-20 rounded-full bg-[#020617] p-2 border-4 border-[#020617] shadow-[0_-5px_20px_rgba(0,191,255,0.2)] ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}>
-                <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-900/50 to-slate-900 flex items-center justify-center border border-cyan-500/30 shadow-inner relative overflow-hidden">
+              <div className={`w-20 h-20 rounded-full bg-white p-2 border-4 border-slate-50 shadow-[0_-5px_20px_rgba(8,145,178,0.1)] ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}>
+                <div className="w-full h-full rounded-full bg-gradient-to-br from-cyan-50 to-white flex items-center justify-center border border-cyan-100 shadow-inner relative overflow-hidden">
                   <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
                   <img
                     src="/assets/icons/nabdh/nav-ustaz.png"
                     alt="Ustaz AI"
-                    className={`w-full h-full object-contain p-1 drop-shadow-[0_0_15px_rgba(0,191,255,0.8)] ${currentView === NavView.SMART_DEEN ? 'animate-pulse-slow' : 'grayscale brightness-75'}`}
+                    className={`w-full h-full object-contain p-1 drop-shadow-[0_0_15px_rgba(8,145,178,0.4)] ${currentView === NavView.SMART_DEEN ? 'animate-pulse-slow' : 'grayscale brightness-75'}`}
                   />
                 </div>
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider mt-1 ${currentView === NavView.SMART_DEEN ? 'text-cyan-400' : 'text-slate-500'}`}>Ustaz AI</span>
+              <span className={`text-[9px] font-bold uppercase tracking-wider mt-1 ${currentView === NavView.SMART_DEEN ? 'text-cyan-600' : 'text-slate-500'}`}>Ustaz AI</span>
             </Link>
 
             {/* 4. QIBLAT */}
@@ -177,7 +177,7 @@ const Layout: React.FC = () => {
               <div className={`w-8 h-8 ${currentView === NavView.IBADAH ? '' : 'grayscale'}`}>
                 <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IBADAH ? 'text-cyan-400' : 'text-slate-500'}`}>Qiblat</span>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IBADAH ? 'text-cyan-600' : 'text-slate-500'}`}>Qiblat</span>
             </Link>
 
             {/* 5. IQRA */}
@@ -188,7 +188,7 @@ const Layout: React.FC = () => {
               <div className={`w-8 h-8 ${currentView === NavView.IQRA ? '' : 'grayscale'}`}>
                 <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" className="w-full h-full object-contain drop-shadow-[0_0_10px_rgba(0,191,255,0.6)]" />
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IQRA ? 'text-cyan-400' : 'text-slate-500'}`}>Iqra</span>
+              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IQRA ? 'text-cyan-600' : 'text-slate-500'}`}>Iqra</span>
             </Link>
 
           </div>

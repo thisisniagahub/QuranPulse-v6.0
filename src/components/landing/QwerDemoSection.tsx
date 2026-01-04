@@ -102,7 +102,7 @@ const QwerDemoSection: React.FC = () => {
                         <BarChart3 className="w-3 h-3" />
                         AI-Powered Analysis
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-slate-800 mb-6 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl font-[Poppins] font-bold text-slate-800 mb-6 tracking-tight">
                         <span className="text-slate-400">Q-WER</span>
                         <span className="text-cyan-600"> Intelligence</span>
                     </h2>
@@ -151,11 +151,11 @@ const QwerDemoSection: React.FC = () => {
                             </div>
 
                             {/* Waveform Visualizer */}
-                            <div className="h-20 flex items-center justify-center gap-1 mb-8 bg-[#0f172a] rounded-xl p-4">
+                            <div className="h-20 flex items-center justify-center gap-1 mb-8 bg-slate-900 rounded-xl p-4 shadow-inner">
                                 {waveformValues.map((value, index) => (
                                     <motion.div
                                         key={index}
-                                        className={`w-1.5 rounded-full ${isRecording ? 'bg-[#22d3ee]' : 'bg-slate-700'}`}
+                                        className={`w-1.5 rounded-full ${isRecording ? 'bg-cyan-400' : 'bg-slate-700'}`}
                                         animate={{ height: `${value * 100}%` }}
                                         transition={{ duration: 0.1 }}
                                     />
@@ -200,7 +200,7 @@ const QwerDemoSection: React.FC = () => {
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         onClick={resetDemo}
-                                        className="px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors"
+                                        className="px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:bg-white hover:text-slate-900 transition-colors shadow-sm"
                                     >
                                         Reset
                                     </motion.button>
@@ -214,23 +214,23 @@ const QwerDemoSection: React.FC = () => {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
-                                        className="mt-8 p-6 bg-gradient-to-br from-emerald-900/30 to-[#0f172a] rounded-2xl border border-emerald-500/20"
+                                        className="mt-8 p-6 bg-gradient-to-br from-emerald-50 to-white rounded-2xl border border-emerald-200 shadow-sm"
                                     >
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="flex items-center gap-2">
-                                                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                                                <span className="font-bold text-emerald-400">Jayyid (Good)</span>
+                                                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
+                                                <span className="font-bold text-emerald-600">Jayyid (Good)</span>
                                             </div>
                                             <div className="text-right">
-                                                <div className="text-3xl font-bold text-white">{demoScore}</div>
-                                                <div className="text-xs text-slate-500 uppercase tracking-wider">Q-WER Score</div>
+                                                <div className="text-3xl font-bold text-slate-900">{demoScore}</div>
+                                                <div className="text-xs text-slate-500 uppercase tracking-wider font-bold">Q-WER Score</div>
                                             </div>
                                         </div>
                                         <div className="grid grid-cols-4 gap-2 mt-4">
                                             {METRICS.map((metric, i) => (
-                                                <div key={i} className="text-center p-2 rounded-lg bg-black/30">
-                                                    <div className="text-xs text-slate-500 mb-1">{metric.label}</div>
-                                                    <div className="text-sm font-mono dynamic-text" style={{ '--dynamic-color': metric.color } as React.CSSProperties}>
+                                                <div key={i} className="text-center p-2 rounded-lg bg-white border border-slate-100 shadow-sm">
+                                                    <div className="text-[10px] text-slate-500 mb-1 font-bold uppercase">{metric.label}</div>
+                                                    <div className="text-sm font-mono dynamic-text font-bold" style={{ '--dynamic-color': metric.color } as React.CSSProperties}>
                                                         {(Math.random() * 5 + 2).toFixed(1)}%
                                                     </div>
                                                 </div>
@@ -250,12 +250,12 @@ const QwerDemoSection: React.FC = () => {
                         className="space-y-6"
                     >
                         <div className="mb-8">
-                            <h3 className="text-2xl font-bold text-white mb-4">
-                                Mengapa <span className="text-[#22d3ee]">Q-WER</span> Berbeza?
+                            <h3 className="text-2xl font-bold text-slate-800 mb-4">
+                                Mengapa <span className="text-cyan-600">Q-WER</span> Berbeza?
                             </h3>
-                            <p className="text-slate-400 leading-relaxed">
+                            <p className="text-slate-600 leading-relaxed font-medium">
                                 Standard ASR (Whisper, Google) optimum untuk <span className="text-red-400 line-through">semantic meaning</span>.
-                                Kami optimum untuk <span className="text-emerald-400 font-semibold">ketepatan tajweed</span> — kerana dalam solat,
+                                Kami optimum untuk <span className="text-emerald-600 font-bold">ketepatan tajweed</span> — kerana dalam solat,
                                 sebutan yang salah boleh ubah makna.
                             </p>
                         </div>
@@ -270,8 +270,8 @@ const QwerDemoSection: React.FC = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
                                     className={`p-5 rounded-2xl border backdrop-blur-md transition-all duration-500 group cursor-pointer ${activeMetricIndex === index
-                                        ? 'bg-white/10 border-white/20 scale-[1.02]'
-                                        : 'bg-white/5 border-white/5 hover:bg-white/10'
+                                        ? 'bg-white border-cyan-200 shadow-lg shadow-cyan-600/5 scale-[1.02]'
+                                        : 'bg-white/40 border-white/60 hover:bg-white/80'
                                         }`}
                                     onClick={() => setActiveMetricIndex(index)}
                                 >
@@ -284,7 +284,7 @@ const QwerDemoSection: React.FC = () => {
                                                 {metric.icon}
                                             </div>
                                             <div>
-                                                <h4 className="font-bold text-white text-lg">{metric.label}</h4>
+                                                <h4 className="font-bold text-slate-800 text-lg">{metric.label}</h4>
                                                 <p className="text-xs text-slate-500">
                                                     {metric.type === 'makhraj' && 'Titik artikulasi huruf'}
                                                     {metric.type === 'tajweed' && 'Peraturan bacaan (Ghunnah, Idgham)'}
@@ -354,17 +354,17 @@ const QwerDemoSection: React.FC = () => {
                 >
                     <div className="grid md:grid-cols-3 gap-8 items-center">
                         <div className="text-center">
-                            <div className="text-5xl font-bold text-slate-800 mb-2 font-[Montserrat]">18.5</div>
+                            <div className="text-5xl font-bold text-slate-800 mb-2 font-[Poppins]">18.5</div>
                             <div className="text-sm text-slate-500 font-medium">Average Q-WER Score</div>
                             <div className="text-xs text-emerald-600 font-bold mt-1 tracking-widest uppercase">INTERMEDIATE LEVEL</div>
                         </div>
                         <div className="text-center md:border-x border-slate-100 px-8">
-                            <div className="text-5xl font-bold text-cyan-600 mb-2 font-[Montserrat]">&lt; 200ms</div>
+                            <div className="text-5xl font-bold text-cyan-600 mb-2 font-[Poppins]">&lt; 200ms</div>
                             <div className="text-sm text-slate-500 font-medium">Analysis Latency</div>
                             <div className="text-xs text-cyan-600 font-bold mt-1 tracking-widest uppercase">REAL-TIME FEEDBACK</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-5xl font-bold text-amber-500 mb-2 font-[Montserrat]">4</div>
+                            <div className="text-5xl font-bold text-amber-500 mb-2 font-[Poppins]">4</div>
                             <div className="text-sm text-slate-500 font-medium">Error Categories</div>
                             <div className="text-xs text-amber-600 font-bold mt-1 tracking-widest uppercase">THEOLOGICAL WEIGHTED</div>
                         </div>

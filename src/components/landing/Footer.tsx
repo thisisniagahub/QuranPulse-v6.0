@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
                                 alt="QuranPulse Logo"
                                 className="w-12 h-12 object-contain"
                             />
-                            <span className="font-bold text-2xl font-[Montserrat] text-slate-900">
+                            <span className="font-bold text-2xl font-[Poppins] text-slate-900">
                                 Quran<span className="text-cyan-600">Pulse</span>
                             </span>
                         </div>

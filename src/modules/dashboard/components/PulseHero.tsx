@@ -75,7 +75,7 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                     />
                     {/* Artistic Overlays */}
                     <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
-                    <div className="absolute inset-0 bg-[#020617]/30 backdrop-blur-[1px]"></div>
+                    <div className="absolute inset-0 bg-[#031a38]/30 backdrop-blur-[1px]"></div>
                 </motion.div>
             </AnimatePresence>
 
