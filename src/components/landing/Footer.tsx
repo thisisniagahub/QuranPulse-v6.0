@@ -33,9 +33,9 @@ const SOCIAL_LINKS = [
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-[#020617] pt-24 pb-8 border-t border-white/5 relative overflow-hidden">
+        <footer className="bg-white/80 pt-24 pb-8 border-t border-cyan-100 relative overflow-hidden">
             {/* Background subtle */}
-            <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-[#22d3ee]/5 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-cyan-50/50 to-transparent pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Main Footer Grid */}
@@ -49,16 +49,16 @@ const Footer: React.FC = () => {
                                 alt="QuranPulse Logo"
                                 className="w-12 h-12 object-contain"
                             />
-                            <span className="font-bold text-2xl font-[Montserrat]">
-                                Quran<span className="text-[#22d3ee]">Pulse</span>
+                            <span className="font-bold text-2xl font-[Montserrat] text-slate-900">
+                                Quran<span className="text-cyan-600">Pulse</span>
                             </span>
                         </div>
 
-                        <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-sm">
+                        <p className="text-slate-600 text-sm leading-relaxed mb-6 max-w-sm font-medium">
                             Menghubungkan hikmat ilahi abadi dengan teknologi moden. Membina masa depan digital Ummah dengan Ihsan.
                         </p>
 
-                        <div className="text-xs font-bold text-[#22d3ee] tracking-widest uppercase mb-8">
+                        <div className="text-xs font-bold text-cyan-600 tracking-widest uppercase mb-8">
                             Teknologi untuk Taqwa
                         </div>
 
@@ -71,7 +71,7 @@ const Footer: React.FC = () => {
 
                     {/* Produk Column */}
                     <div>
-                        <h4 className="font-bold text-white mb-6">Produk</h4>
+                        <h4 className="font-bold text-slate-900 mb-6">Produk</h4>
                         <ul className="space-y-4">
                             {FOOTER_LINKS.produk.map((link) => (
                                 <li key={link.label}>
@@ -88,13 +88,13 @@ const Footer: React.FC = () => {
 
                     {/* Syarikat Column */}
                     <div>
-                        <h4 className="font-bold text-white mb-6">Syarikat</h4>
+                        <h4 className="font-bold text-slate-900 mb-6">Syarikat</h4>
                         <ul className="space-y-4">
                             {FOOTER_LINKS.syarikat.map((link) => (
                                 <li key={link.label}>
                                     <a
                                         href={link.href}
-                                        className="text-slate-400 hover:text-[#22d3ee] transition-colors text-sm flex items-center gap-1"
+                                        className="text-slate-600 hover:text-cyan-600 transition-colors text-sm flex items-center gap-1 font-medium"
                                     >
                                         {link.label}
                                     </a>
@@ -105,7 +105,7 @@ const Footer: React.FC = () => {
 
                     {/* Undang-undang Column */}
                     <div>
-                        <h4 className="font-bold text-white mb-6">Undang-undang</h4>
+                        <h4 className="font-bold text-slate-900 mb-6">Undang-undang</h4>
                         <ul className="space-y-4">
                             {FOOTER_LINKS.undangUndang.map((link) => (
                                 <li key={link.label}>
@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:scale-110 transition-all ${social.bg}`}
+                            className={`w-12 h-12 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center hover:scale-110 transition-all ${social.bg} shadow-sm group`}
                             aria-label={social.label}
                         >
                             <social.Icon />
@@ -149,7 +149,7 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Divider */}
-                <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8"></div>
+                <div className="h-px bg-gradient-to-r from-transparent via-cyan-100 to-transparent mb-8"></div>
 
                 {/* Bottom Bar */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
@@ -162,7 +162,7 @@ const Footer: React.FC = () => {
                         <span>Dibina dengan ❤️ di Kuala Lumpur, Malaysia</span>
                     </div>
 
-                    <div className="text-[#22d3ee] text-xs font-bold">
+                    <div className="text-cyan-700 text-xs font-bold">
                         Teknologi untuk Taqwa
                     </div>
                 </div>

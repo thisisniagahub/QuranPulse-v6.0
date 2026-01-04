@@ -95,10 +95,10 @@ const PricingTable: React.FC = () => {
                         <Crown className="w-3 h-3" />
                         Pelan Harga
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-white mb-4 tracking-tight">
-                        Pilih <span className="text-[#22d3ee]">Pelan Anda</span>
+                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-slate-800 mb-4 tracking-tight">
+                        Pilih <span className="text-cyan-600">Pelan Anda</span>
                     </h2>
-                    <p className="text-slate-400 text-lg max-w-xl mx-auto mb-8">
+                    <p className="text-slate-600 text-lg max-w-xl mx-auto mb-8 font-medium">
                         Mulakan percuma, upgrade bila-bila masa. Boleh batal bila-bila.
                     </p>
 
@@ -138,8 +138,8 @@ const PricingTable: React.FC = () => {
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
                             className={`relative rounded-[2rem] p-8 transition-all duration-300 ${tier.popular
-                                ? 'bg-gradient-to-b from-[#0f172a] to-[#020617] border-2 border-[#22d3ee]/50 scale-105 z-10 shadow-2xl shadow-[#22d3ee]/10'
-                                : 'bg-white/5 border border-white/10 hover:bg-white/10'
+                                ? 'bg-white border-2 border-cyan-500 scale-105 z-10 shadow-2xl shadow-cyan-200'
+                                : 'bg-white/60 border border-white/80 hover:bg-white/80 shadow-sm'
                                 }`}
                         >
                             {/* Popular Badge */}
@@ -157,8 +157,8 @@ const PricingTable: React.FC = () => {
                                 >
                                     {tier.icon}
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-1">{tier.name}</h3>
-                                <p className="text-sm text-slate-500">{tier.description}</p>
+                                <h3 className="text-xl font-bold text-slate-800 mb-1">{tier.name}</h3>
+                                <p className="text-sm text-slate-500 font-medium">{tier.description}</p>
                             </div>
 
                             {/* Price */}
@@ -172,7 +172,7 @@ const PricingTable: React.FC = () => {
                                         {tier.price[period]}
                                     </span>
                                     {tier.price[period] > 0 && (
-                                        <span className="text-slate-500">
+                                        <span className="text-slate-600 font-medium">
                                             /{period === 'monthly' ? 'bulan' : 'tahun'}
                                         </span>
                                     )}
@@ -193,9 +193,9 @@ const PricingTable: React.FC = () => {
                                         )}
                                         <span className={`text-sm ${feature.included
                                             ? feature.highlight
-                                                ? 'text-white font-semibold'
-                                                : 'text-slate-300'
-                                            : 'text-slate-600 line-through'
+                                                ? 'text-slate-900 font-bold'
+                                                : 'text-slate-700'
+                                            : 'text-slate-400 line-through'
                                             }`}>
                                             {feature.text}
                                         </span>
@@ -206,8 +206,8 @@ const PricingTable: React.FC = () => {
                             {/* CTA Button */}
                             <button
                                 className={`w-full py-4 rounded-xl font-bold text-sm transition-all ${tier.popular
-                                    ? 'bg-[#22d3ee] text-[#020617] shadow-lg shadow-[#22d3ee]/30 hover:shadow-[#22d3ee]/50'
-                                    : 'bg-white/10 text-white border border-white/20 hover:bg-white/20'
+                                    ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/20 hover:shadow-cyan-600/40 hover:scale-[1.02]'
+                                    : 'bg-slate-100 text-slate-800 border border-slate-200 hover:bg-white hover:border-cyan-300'
                                     }`}
                             >
                                 {tier.cta}

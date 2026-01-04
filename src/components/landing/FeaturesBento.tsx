@@ -59,9 +59,9 @@ const FEATURES: Feature[] = [
 
 const FeaturesBento: React.FC = () => {
     return (
-        <section id="features" className="py-32 bg-[#020617] relative overflow-hidden">
+        <section id="features" className="py-24 bg-transparent relative overflow-hidden">
             {/* Background glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#22d3ee]/5 rounded-full blur-[150px] pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-cyan-200/20 rounded-full blur-[150px] pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Section Header */}
@@ -75,10 +75,10 @@ const FeaturesBento: React.FC = () => {
                         <Sparkles className="w-3 h-3" />
                         Ekosistem Lengkap
                     </span>
-                    <h2 className="text-4xl md:text-6xl font-[Montserrat] font-bold text-white mb-6 tracking-tight">
-                        Satu App, <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#22d3ee] to-white">Pelbagai Dimensi</span>
+                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-slate-800 mb-6 tracking-tight">
+                        Satu App, <span className="text-cyan-600">Pelbagai Dimensi</span>
                     </h2>
-                    <p className="text-slate-400 text-lg max-w-2xl leading-relaxed">
+                    <p className="text-slate-600 text-lg max-w-2xl leading-relaxed font-medium">
                         Platform integrasi untuk gaya hidup Muslim moden. Semua yang anda perlukan untuk perjalanan rohani — dalam genggaman.
                     </p>
                 </motion.div>
@@ -122,10 +122,10 @@ const FeaturesBento: React.FC = () => {
                             </div>
 
                             {/* Content */}
-                            <h3 className="text-xl md:text-2xl font-bold text-white mb-3 font-[Montserrat]">
+                            <h3 className="text-xl md:text-2xl font-bold text-slate-800 mb-3 font-[Montserrat]">
                                 {feature.title}
                             </h3>
-                            <p className="text-slate-400 leading-relaxed text-sm md:text-base">
+                            <p className="text-slate-600 leading-relaxed text-sm md:text-base font-medium">
                                 {feature.description}
                             </p>
 

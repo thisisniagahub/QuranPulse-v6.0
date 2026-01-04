@@ -77,10 +77,10 @@ const Testimonials: React.FC = () => {
     };
 
     return (
-        <section id="testimonials" className="py-32 bg-[#020617] relative overflow-hidden">
+        <section id="testimonials" className="py-24 bg-transparent relative overflow-hidden">
             {/* Background elements */}
-            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-[#22d3ee]/5 rounded-full blur-[150px] -translate-x-1/2 pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-[150px] translate-x-1/2 pointer-events-none"></div>
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-cyan-200/20 rounded-full blur-[150px] -translate-x-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[150px] translate-x-1/2 pointer-events-none"></div>
 
             <div className="max-w-5xl mx-auto px-6 relative z-10">
                 {/* Section Header */}
@@ -94,10 +94,10 @@ const Testimonials: React.FC = () => {
                         <Star className="w-3 h-3 fill-current" />
                         Testimoni
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-white mb-4 tracking-tight">
-                        Dipercayai <span className="text-[#22d3ee]">Ribuan Keluarga</span>
+                    <h2 className="text-4xl md:text-5xl font-[Montserrat] font-bold text-slate-800 mb-4 tracking-tight">
+                        Dipercayai <span className="text-cyan-600">Ribuan Keluarga</span>
                     </h2>
-                    <p className="text-slate-400 text-lg max-w-xl mx-auto">
+                    <p className="text-slate-600 text-lg max-w-xl mx-auto font-medium">
                         Dengar sendiri pengalaman pengguna QuranPulse dari seluruh Malaysia.
                     </p>
                 </motion.div>
@@ -111,7 +111,7 @@ const Testimonials: React.FC = () => {
                             animate={{ opacity: 1, x: 0 }}
                             exit={{ opacity: 0, x: -50 }}
                             transition={{ duration: 0.5 }}
-                            className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden"
+                            className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-sm"
                         >
                             {/* Quote Icon */}
                             <Quote className="absolute top-8 right-8 w-16 h-16 text-[#22d3ee]/10" />
@@ -138,16 +138,15 @@ const Testimonials: React.FC = () => {
                                     </div>
 
                                     {/* Quote */}
-                                    <blockquote className="text-xl md:text-2xl text-white font-light leading-relaxed mb-6">
+                                    <blockquote className="text-xl md:text-2xl text-slate-800 font-light leading-relaxed mb-6">
                                         "{TESTIMONIALS[currentIndex].quote}"
                                     </blockquote>
-
                                     {/* Author */}
                                     <div>
-                                        <div className="font-bold text-white text-lg">
+                                        <div className="font-bold text-slate-900 text-lg">
                                             {TESTIMONIALS[currentIndex].name}
                                         </div>
-                                        <div className="text-sm text-slate-400">
+                                        <div className="text-sm text-slate-500 font-medium">
                                             {TESTIMONIALS[currentIndex].role} • {TESTIMONIALS[currentIndex].location}
                                         </div>
                                     </div>
@@ -160,7 +159,7 @@ const Testimonials: React.FC = () => {
                     <div className="flex items-center justify-center gap-4 mt-8">
                         <button
                             onClick={goToPrevious}
-                            className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+                            className="w-12 h-12 rounded-full bg-white/60 border border-white/80 flex items-center justify-center text-slate-700 hover:bg-white hover:text-cyan-600 transition-colors shadow-sm"
                             aria-label="Previous testimonial"
                         >
                             <ChevronLeft className="w-5 h-5" />
@@ -186,7 +185,7 @@ const Testimonials: React.FC = () => {
 
                         <button
                             onClick={goToNext}
-                            className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-white/10 transition-colors"
+                            className="w-12 h-12 rounded-full bg-white/60 border border-white/80 flex items-center justify-center text-slate-700 hover:bg-white hover:text-cyan-600 transition-colors shadow-sm"
                             aria-label="Next testimonial"
                         >
                             <ChevronRight className="w-5 h-5" />
