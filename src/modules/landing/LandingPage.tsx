@@ -37,17 +37,8 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Design DNA: "Midnight Navy" (Professional Dark Mode)
-  const colors = {
-    bg: "bg-gradient-to-br from-[#162c51] via-[#0c224b] to-[#031a38]",
-    primary: "#0891b2",  // Cyan 600
-    secondary: "#0d9488", // Teal 600
-    text: "#f8fafc",     // Slate 50 (White)
-    glass: "bg-[#0c224b]/70 border border-white/10 backdrop-blur-xl"
-  };
-
   return (
-    <div className={`min-h-screen ${colors.bg} text-white font-sans overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200 relative`}>
+    <div className={`min-h-screen bg-midnight-gradient text-white font-sans overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200 relative`}>
       {/* Global Background Pattern Mask */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.05] bg-[linear-gradient(to_right,#ffffff_1px,transparent_1px),linear-gradient(to_bottom,#ffffff_1px,transparent_1px)] bg-[size:40px_40px]"></div>
 

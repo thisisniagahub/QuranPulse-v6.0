@@ -8,74 +8,63 @@
 
 :root {
   /* ═══════════════════════════════════════════════════════════════════════════
-     THEME: DARK (Default / Deep Space)
+     THEME: MIDNIGHT NAVY (Unified V6.0 Theme)
+     Matches Landing Page Aesthetics
      ═══════════════════════════════════════════════════════════════════════════ */
-  /* ═══════════════════════════════════════════════════════════════════════════
-     THEME: DEFAULT (Nabdh / Deep Navy & Cyan)
-     ═══════════════════════════════════════════════════════════════════════════ */
-  --primary: #00BFFF;
-  /* Electric Cyan */
-  --primary-rgb: 0, 191, 255;
-  --primary-glow: rgba(0, 191, 255, 0.5);
+  
+  /* Primary: Cyan 600 */
+  --primary: #0891b2;
+  --primary-rgb: 8, 145, 178;
+  --primary-glow: rgba(8, 145, 178, 0.5);
 
-  --bg-main: #0A1E42;
-  /* Deep Navy Blue */
-  --bg-main-rgb: 10, 30, 66;
+  /* Secondary: Teal 600 */
+  --secondary: #0d9488;
+  --secondary-rgb: 13, 148, 136;
 
-  --surface: #1E5A9F;
-  /* Medium Blue Shadow/Glass */
-  --surface-rgb: 30, 90, 159;
+  /* Backgrounds (Midnight Navy Gradient Components) */
+  --bg-start: #162c51;
+  --bg-middle: #0c224b;
+  --bg-end: #031a38;
+  
+  /* Default Solid Background (Middle) */
+  --bg-main: #0c224b; 
+  --bg-main-rgb: 12, 34, 75;
 
-  --card: #143260;
-  /* Slightly lighter Navy */
-  --card-rgb: 20, 50, 96;
+  /* Surfaces */
+  --surface: #1e3a8a; /* Deep Royal Blue */
+  --surface-rgb: 30, 58, 138;
 
-  --sheet: #0d2650;
-  /* Deep Sheet */
-  --sheet-rgb: 13, 38, 80;
+  --card: #162c51;    /* Lighter Navy */
+  --card-rgb: 22, 44, 81;
+
+  --sheet: #031a38;   /* Darkest Navy */
+  --sheet-rgb: 3, 26, 56;
 
   /* Text */
-  --text-primary: #FFFFFF;
-  --text-primary-rgb: 255, 255, 255;
+  --text-primary: #f8fafc; /* Slate 50 */
+  --text-primary-rgb: 248, 250, 252;
 
-  --text-secondary: #87CEEB;
-  /* Sky Blue Highlight */
-  --text-muted: #5F9EA0;
+  --text-secondary: #cbd5e1; /* Slate 300 */
+  --text-muted: #64748b;     /* Slate 500 */
 
   /* Accents */
-  --accent-gold: #00d2ff;
+  --accent-gold: #f59e0b; /* Amber 500 */
+  
+  /* Shared Effects */
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-bg: rgba(12, 34, 75, 0.7);
+}
 
-  /* Theme-specific effects */
-  --pattern-opacity: 0.1;
-  --pattern-image: repeating-linear-gradient(45deg, rgba(0, 191, 255, 0.05) 0px, rgba(0, 191, 255, 0.05) 1px, transparent 1px, transparent 10px);
-  --clay-shadow: rgba(0, 191, 255, 0.2);
+/* ═══════════════════════════════════════════════════════════════════════════
+   UNIFIED BACKGROUND UTILITY
+   ═══════════════════════════════════════════════════════════════════════════ */
+.bg-midnight-gradient {
+  background: linear-gradient(135deg, var(--bg-start) 0%, var(--bg-middle) 50%, var(--bg-end) 100%);
+  background-attachment: fixed; /* Optional: Parallax feel */
+}
 
-  /* ═══════════════════════════════════════════════════════════════════════════
-     NOOR-E-CYBER LANDING PAGE DESIGN TOKENS (Modern Light)
-     ═══════════════════════════════════════════════════════════════════════════ */
-  --color-void: #f0f9ff;
-  /* Bright sky blue background */
-  --color-surface: #ffffff;
-  /* Pure white surfaces */
-  --color-glass: rgba(255, 255, 255, 0.7);
-  --color-glass-border: rgba(255, 255, 255, 0.4);
-  --color-neon: #0891b2;
-  /* Cyan 600 - More contrast for light theme */
-  --color-neon-rgb: 8, 145, 178;
-  --color-neon-glow: rgba(8, 145, 178, 0.3);
-  --color-gold: #d97706;
-  /* Amber 600 - High contrast gold */
-  --color-emerald: #059669;
-  /* Emerald 600 - JAKIM green */
-  --color-text: #0f172a;
-  /* Slate 900 */
-  --color-text-muted: #475569;
-  /* Slate 600 */
-
-  /* Gradients */
-  --gradient-hero: linear-gradient(135deg, #f0f9ff 0%, #cffafe 100%);
-  --gradient-neon: linear-gradient(90deg, #0891b2, #06b6d4);
-  --gradient-gold: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+.text-midnight-primary {
+  color: var(--primary);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
