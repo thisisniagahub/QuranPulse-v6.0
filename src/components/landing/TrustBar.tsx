@@ -38,7 +38,7 @@ const TRUST_STATS: TrustStat[] = [
 
 const TrustBar: React.FC = () => {
     return (
-        <section className="py-12 bg-[#020617] relative overflow-hidden">
+        <section className="py-12 bg-transparent relative overflow-hidden">
             {/* Subtle gradient line */}
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#22d3ee]/30 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#22d3ee]/30 to-transparent"></div>
@@ -48,7 +48,7 @@ const TrustBar: React.FC = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-6 md:p-8"
+                    className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-2xl p-6 md:p-8 shadow-sm"
                 >
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
                         {TRUST_STATS.map((stat, index) => (
@@ -74,7 +74,7 @@ const TrustBar: React.FC = () => {
                                         >
                                             {stat.value}
                                         </div>
-                                        <div className="text-xs md:text-sm text-slate-400 mt-1">
+                                        <div className="text-xs md:text-sm text-slate-600 mt-1 font-medium">
                                             {stat.label}
                                         </div>
                                     </div>

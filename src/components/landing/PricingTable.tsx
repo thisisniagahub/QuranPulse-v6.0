@@ -78,10 +78,10 @@ const PricingTable: React.FC = () => {
     const [period, setPeriod] = useState<PricingPeriod>('monthly');
 
     return (
-        <section id="pricing" className="py-32 bg-[#020617] relative overflow-hidden">
+        <section id="pricing" className="py-24 bg-transparent relative overflow-hidden">
             {/* Background */}
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 mix-blend-overlay pointer-events-none"></div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-[#22d3ee]/5 rounded-full blur-[150px] pointer-events-none"></div>
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-multiply pointer-events-none"></div>
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-cyan-200/20 rounded-full blur-[150px] pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Section Header */}

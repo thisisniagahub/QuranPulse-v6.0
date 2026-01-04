@@ -9,11 +9,11 @@ interface FinalCtaProps {
 
 const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
     return (
-        <section className="py-32 bg-[#020617] relative overflow-hidden">
+        <section className="py-24 bg-transparent relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-[#22d3ee]/10 via-transparent to-transparent"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#22d3ee]/10 rounded-full blur-[150px] pointer-events-none"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-cyan-100 via-transparent to-transparent opacity-50"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-200/20 rounded-full blur-[150px] pointer-events-none"></div>
             </div>
 
             {/* Grid pattern */}
@@ -32,17 +32,17 @@ const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
                     </div>
 
                     {/* Headline */}
-                    <h2 className="text-4xl md:text-6xl font-[Montserrat] font-bold text-white mb-6 tracking-tight leading-tight">
+                    <h2 className="text-4xl md:text-6xl font-[Montserrat] font-bold text-slate-800 mb-6 tracking-tight leading-tight">
                         Mula Perjalanan Quran<br />
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#22d3ee] to-white">
+                        <span className="text-cyan-600">
                             Anda Hari Ini
                         </span>
                     </h2>
 
                     {/* Subheadline */}
-                    <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
                         Percuma untuk bermula. Tiada kad kredit diperlukan.
-                        <span className="text-[#22d3ee]"> Batal bila-bila masa.</span>
+                        <span className="text-cyan-600 font-bold"> Batal bila-bila masa.</span>
                     </p>
 
                     {/* CTA Buttons */}
@@ -54,7 +54,7 @@ const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
                     {/* Web App Link */}
                     <button
                         onClick={onGetStarted}
-                        className="inline-flex items-center gap-2 text-[#22d3ee] font-bold text-sm hover:gap-3 transition-all group"
+                        className="inline-flex items-center gap-2 text-cyan-700 font-bold text-sm hover:gap-3 transition-all group"
                     >
                         Atau akses Web App sekarang
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
