@@ -11,6 +11,7 @@ import Link from 'next/link'
 import { getUsers } from '@/actions/users'
 import { getTransactionStats } from '@/actions/finance'
 import { getAIStats } from '@/actions/ai'
+import BotControlCenter from '@/components/BotControlCenter'
 
 export default function DashboardPage() {
     const [stats, setStats] = useState({
@@ -123,7 +124,7 @@ export default function DashboardPage() {
                                 <card.icon className={`h-5 w-5 ${card.color}`} />
                             </div>
                             <span className={`text-xs font-medium ${card.trend.includes('+') ? 'text-emerald-400' :
-                                    card.trend === 'Action Required' ? 'text-amber-400' : 'text-slate-400'
+                                card.trend === 'Action Required' ? 'text-amber-400' : 'text-slate-400'
                                 }`}>
                                 {card.trend}
                             </span>
@@ -164,9 +165,9 @@ export default function DashboardPage() {
                         {recentActivity.map((item, i) => (
                             <div key={i} className="flex items-start gap-3">
                                 <div className={`p-2 rounded-lg ${item.type === 'user' ? 'bg-blue-500/10 text-blue-400' :
-                                        item.type === 'payment' ? 'bg-emerald-500/10 text-emerald-400' :
-                                            item.type === 'ai' ? 'bg-amber-500/10 text-amber-400' :
-                                                'bg-purple-500/10 text-purple-400'
+                                    item.type === 'payment' ? 'bg-emerald-500/10 text-emerald-400' :
+                                        item.type === 'ai' ? 'bg-amber-500/10 text-amber-400' :
+                                            'bg-purple-500/10 text-purple-400'
                                     }`}>
                                     <item.icon className="h-4 w-4" />
                                 </div>
@@ -178,6 +179,15 @@ export default function DashboardPage() {
                         ))}
                     </div>
                 </div>
+            </div>
+
+            {/* Bot Control Center */}
+            <div className="animate-fade-in">
+                <h3 className="text-lg font-semibold text-slate-200 mb-4 flex items-center gap-2">
+                    <i className="fa-solid fa-robot text-cyan-400"></i>
+                    Neural Bot Network
+                </h3>
+                <BotControlCenter />
             </div>
 
             {/* System Status */}

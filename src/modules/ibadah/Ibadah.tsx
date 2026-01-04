@@ -195,25 +195,32 @@ const Ibadah: React.FC = () => {
     const renderMasjidHub = () => (
         <div className="w-full max-w-md space-y-6 mt-4 pb-24 animate-in fade-in slide-in-from-bottom-4">
             {/* Active Masjid Card */}
-            <div className="bg-[#0A1E42] border border-[#00BFFF]/30 rounded-3xl p-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-[#00BFFF]/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
-                <div className="flex items-start justify-between mb-4">
-                    <div>
-                        <h3 className="text-xl font-bold text-white font-[Poppins]">Masjid Al-Hidayah</h3>
-                        <p className="text-xs text-slate-400 italic">Kariah Gombak, Selangor</p>
-                    </div>
-                    <div className="bg-[#00BFFF]/20 text-[#00BFFF] p-2 rounded-xl">
-                        <i className="fa-solid fa-circle-check"></i>
-                    </div>
+            <div className="bg-[#0A1E42] border border-[#00BFFF]/30 rounded-3xl p-6 relative overflow-hidden group">
+                <div className="absolute inset-0 z-0">
+                    <img src="https://images.unsplash.com/photo-1564121211835-e88c852648ab?q=80&w=1000&auto=format&fit=crop" alt="Masjid Background" className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700"/>
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#0A1E42] to-[#0A1E42]/80"></div>
                 </div>
+                
+                <div className="relative z-10">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-[#00BFFF]/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
+                    <div className="flex items-start justify-between mb-4">
+                        <div>
+                            <h3 className="text-xl font-bold text-white font-[Poppins]">Masjid Al-Hidayah</h3>
+                            <p className="text-xs text-slate-400 italic">Kariah Gombak, Selangor</p>
+                        </div>
+                        <div className="bg-[#00BFFF]/20 text-[#00BFFF] p-2 rounded-xl">
+                            <i className="fa-solid fa-circle-check"></i>
+                        </div>
+                    </div>
 
-                <div className="flex gap-4">
-                    <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
-                        <i className="fa-solid fa-map-location-dot mr-2 text-cyan-400"></i>NAVIGASI
-                    </button>
-                    <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
-                        <i className="fa-brands fa-whatsapp mr-2 text-emerald-400"></i>AJK MASJID
-                    </button>
+                    <div className="flex gap-4">
+                        <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
+                            <i className="fa-solid fa-map-location-dot mr-2 text-cyan-400"></i>NAVIGASI
+                        </button>
+                        <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
+                            <i className="fa-brands fa-whatsapp mr-2 text-emerald-400"></i>AJK MASJID
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -270,30 +277,33 @@ const Ibadah: React.FC = () => {
     );
 
     return (
-        <div className="flex flex-col h-full bg-background-main items-center justify-start p-4 pt-8 text-text-primary overflow-y-auto">
-            {/* Header Toggle */}
-            <div className="bg-surface/80 p-1 rounded-full flex gap-1 mb-4 border border-slate-200 dark:border-slate-800 relative z-10 shrink-0 shadow-sm">
+        <div className="flex flex-col h-full bg-midnight-gradient items-center justify-start p-4 pt-8 pb-32 text-text-primary overflow-y-auto relative">
+            {/* Global Pattern Overlay */}
+            <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px] z-0"></div>
+
+            {/* Header Toggle (Floating Glass Segmented Control) */}
+            <div className="bg-[#0c224b]/60 backdrop-blur-xl p-1.5 rounded-2xl flex flex-wrap justify-center gap-2 mb-6 border border-white/10 relative z-10 shrink-0 shadow-lg mx-auto max-w-full">
                 <button
                     onClick={() => setViewMode('QIBLA')}
-                    className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'QIBLA' ? 'bg-cyan-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all border ${viewMode === 'QIBLA' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.2)]' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
                 >
                     <i className="fa-solid fa-compass mr-2"></i>Kiblat
                 </button>
                 <button
                     onClick={() => setViewMode('PRAYER')}
-                    className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'PRAYER' ? 'bg-amber-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all border ${viewMode === 'PRAYER' ? 'bg-amber-500/20 text-amber-400 border-amber-500/30 shadow-[0_0_15px_rgba(245,158,11,0.2)]' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
                 >
-                    <i className="fa-solid fa-clock mr-2"></i>Waktu Solat
+                    <i className="fa-solid fa-clock mr-2"></i>Waktu
                 </button>
                 <button
                     onClick={() => setViewMode('MASJID')}
-                    className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'MASJID' ? 'bg-emerald-500 text-black shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all border ${viewMode === 'MASJID' ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
                 >
-                    <i className="fa-solid fa-mosque mr-2"></i>Hub Masjid
+                    <i className="fa-solid fa-mosque mr-2"></i>Masjid
                 </button>
                 <button
                     onClick={() => setViewMode('ZAKAT')}
-                    className={`px-6 py-2 rounded-full text-xs font-bold transition-all ${viewMode === 'ZAKAT' ? 'bg-indigo-500 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all border ${viewMode === 'ZAKAT' ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.2)]' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
                 >
                     <i className="fa-solid fa-calculator mr-2"></i>Zakat
                 </button>

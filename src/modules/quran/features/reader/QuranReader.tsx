@@ -141,11 +141,11 @@ const QuranReader: React.FC = () => {
 
             {/* === SCROLL VIEW (LIST MODE) === */}
             {layoutMode === 'SCROLL' && (
-                <div className={`flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-hide pb-32 transition-colors duration-1000 relative ${isZenMode
+                <div className={`flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-hide pb-32 transition-colors duration-1000 relative min-h-full ${isZenMode
                     ? 'bg-[#020617]'
                     : theme === 'noor' || theme === 'light'
                         ? 'bg-[var(--bg-main)]'
-                        : 'bg-[#020617]'
+                        : 'bg-transparent' // Allow parent bg-midnight-gradient to show
                     }`}>
 
                     {/* 🌠 Starlight Background (Reading Mode only) */}

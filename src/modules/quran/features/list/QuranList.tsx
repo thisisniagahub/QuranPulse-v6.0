@@ -83,30 +83,36 @@ const QuranList: React.FC<QuranListProps> = ({
     const juzList = Array.from({ length: 30 }, (_, i) => i + 1);
 
     return (
-        <div className="min-h-screen pb-32 bg-background-dark relative overflow-hidden font-sans">
+        <div className="min-h-screen pb-32 bg-midnight-gradient relative overflow-hidden font-sans">
 
             {/* 1. ATMOSPHERE BACKGROUND */}
-            <div className="fixed inset-0 pointer-events-none z-0">
-                <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10"></div>
-                <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[100px] mix-blend-screen"></div>
-                <div className="absolute top-1/3 right-0 w-[400px] h-[400px] bg-sheet/20 rounded-full blur-[100px] mix-blend-screen"></div>
-            </div>
+            <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px] z-0"></div>
 
             {/* 2. PARALLAX HEADER */}
-            <div className="relative pt-24 pb-16 px-6 text-center z-10">
+            <div className="relative pt-24 pb-12 px-6 text-center z-10 overflow-hidden group">
+                {/* Background Image */}
+                <div className="absolute inset-0 z-0">
+                    <img
+                        src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop"
+                        alt="Celestial Library Background"
+                        className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-1000 ease-in-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-b from-midnight-gradient/0 via-midnight-gradient/60 to-midnight-gradient"></div>
+                </div>
+
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="relative inline-block"
+                    className="relative inline-block z-10"
                 >
-                    <h1 className="text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white/30 to-surface-dark tracking-tighter mb-2 opacity-10 absolute -top-4 left-1/2 -translate-x-1/2 w-full select-none pointer-events-none">
+                    <h1 className="text-6xl md:text-8xl font-black text-white/5 tracking-tighter mb-2 absolute -top-6 left-1/2 -translate-x-1/2 w-full select-none pointer-events-none">
                         AL-QURAN
                     </h1>
-                    <h1 className="text-4xl md:text-5xl font-bold text-white mb-2 relative z-10 drop-shadow-2xl">
-                        The Celestial <span className="text-primary">Library</span>
+                    <h1 className="text-3xl md:text-5xl font-black text-white mb-2 relative z-10 drop-shadow-[0_0_25px_rgba(255,255,255,0.2)] tracking-tight">
+                        The Celestial <span className="text-cyan-400">Library</span>
                     </h1>
                 </motion.div>
-                <div className="w-px h-16 bg-gradient-to-b from-primary to-transparent mx-auto mt-6 opacity-50"></div>
+                <div className="w-px h-12 bg-gradient-to-b from-cyan-500/50 to-transparent mx-auto mt-6 relative z-10"></div>
             </div>
 
             <div className="px-4 max-w-6xl mx-auto space-y-8 relative z-10">
@@ -130,14 +136,14 @@ const QuranList: React.FC<QuranListProps> = ({
                                 exit={{ opacity: 0, height: 0 }}
                                 className="flex justify-center mt-4"
                             >
-                                <div className="inline-flex p-1 bg-sheet/80 backdrop-blur-md rounded-full border border-white">
+                                <div className="inline-flex p-1 bg-[#0c224b]/80 backdrop-blur-md rounded-full border border-white/10 shadow-lg">
                                     {(['surah', 'juz', 'revelation'] as const).map((tab) => (
                                         <button
                                             key={tab}
                                             onClick={() => setActiveTab(tab)}
                                             className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest transition-all duration-300 ${activeTab === tab
-                                                    ? 'bg-primary text-background-dark shadow-neon'
-                                                    : 'text-white/60 hover:text-white'
+                                                ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.2)]'
+                                                : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
                                                 }`}
                                         >
                                             {tab === 'surah' ? 'SURAH' : tab === 'juz' ? 'JUZ GRID' : 'ORDER'}

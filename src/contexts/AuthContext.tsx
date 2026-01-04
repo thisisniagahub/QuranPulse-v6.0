@@ -33,10 +33,10 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     // Safety timeout to prevent infinite loading
     const safetyTimeout = setTimeout(() => {
       if (mounted && isLoading) {
-        console.warn("⚠️ AuthContext: Auth check timed out - forcing app load");
+        console.warn("⚠️ AuthContext: Auth check timed out after 10s - forcing app load");
         setIsLoading(false);
       }
-    }, 5000); // Increased to 5 seconds for robustness
+    }, 10000); // Increased to 10 seconds for robustness
 
     // 1. Check active session
     supabase.auth.getSession().then(async ({ data: { session } }) => {

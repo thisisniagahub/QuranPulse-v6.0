@@ -25,7 +25,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
         whileHover={!disabled ? { scale: 1.02 } : {}}
         whileTap={!disabled ? { scale: 0.98 } : {}}
         onClick={!disabled ? onClick : undefined}
-        className={`relative overflow-hidden rounded-2xl backdrop-blur-xl border border-white shadow-lg group ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${className}`}
+        className={`relative overflow-hidden rounded-[2rem] backdrop-blur-2xl border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] group ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${!bgImage ? 'bg-white/5' : ''} ${className}`}
     >
         {/* Real Image Background Layer */}
         {bgImage && (

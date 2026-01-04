@@ -81,117 +81,138 @@ const Layout: React.FC = () => {
       ></div>
 
       {/* --- MOBILE APP SHELL CONTAINER --- */}
-      <div className="flex flex-col h-full w-full max-w-[480px] bg-white relative shadow-2xl md:border-x md:border-slate-200">
+      <div className="flex flex-col h-full w-full max-w-[480px] bg-[#031a38] relative shadow-2xl md:border-x md:border-white/10">
         {/* --- VISUAL IDENTITY v5.0 GLOBAL BACKGROUNDS --- */}
         {/* Top Header Pattern */}
         <div
-          className="absolute top-0 left-0 w-full h-64 bg-top bg-no-repeat bg-contain -z-10 opacity-30 pointer-events-none mix-blend-screen bg-[image:var(--bg-header)]"
+          className="absolute top-0 left-0 w-full h-64 bg-top bg-no-repeat bg-contain -z-10 opacity-20 pointer-events-none mix-blend-screen bg-[image:var(--bg-header)]"
           // eslint-disable-next-line
           style={{ '--bg-header': `url(${kufiHeader})` } as React.CSSProperties}
         ></div>
 
-        {/* Bottom Footer Pattern */}
-        <div
-          className="absolute bottom-0 left-0 w-full h-64 bg-bottom bg-no-repeat bg-contain -z-10 opacity-20 pointer-events-none mix-blend-screen bg-[image:var(--bg-footer)]"
-          // eslint-disable-next-line
-          style={{ '--bg-footer': `url(${kufiFooter})` } as React.CSSProperties}
-        ></div>
+        {/* Global Gradient Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0c224b]/50 via-[#031a38]/90 to-[#031a38] -z-10 pointer-events-none"></div>
 
-        {/* Global Gradient Overlay to ensure text readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-50/50 via-white/90 to-blue-50/80 -z-10 pointer-events-none"></div>
-
-        {/* Header with Maze Pattern */}
-        <header className="h-16 bg-white/70 backdrop-blur-xl border-b border-cyan-100 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden">
+        {/* Header with Glass Effect */}
+        <header className="h-16 bg-[#0c224b]/60 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden shadow-lg">
           <Link
             to="/"
             className="flex items-center gap-3 cursor-pointer group relative z-10"
             aria-label="Go to Dashboard"
           >
-            <img src="/logo-primary.png" alt="Logo" className="w-16 h-16 object-contain scale-110 transition-transform hover:scale-125" />
-            <span className="font-bold text-xl tracking-tight text-slate-800 font-[Poppins]">Quran<span className="text-cyan-600">Pulse</span></span>
+            <img src="/logo-primary.png" alt="Logo" className="w-10 h-10 object-contain scale-110 transition-transform hover:scale-125 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]" />
+            <span className="font-bold text-xl tracking-tight text-white font-[Poppins] drop-shadow-md">Quran<span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]">Pulse</span></span>
           </Link>
 
           {/* Header Actions */}
           <div className="flex items-center gap-3 relative z-10">
-            <button aria-label="Notifications" className="w-9 h-9 rounded-full bg-slate-50 border border-slate-200 flex items-center justify-center text-slate-500 hover:text-cyan-600 hover:bg-white transition-all">
-              <i className="fa-regular fa-bell"></i>
+            <button aria-label="Notifications" className="relative w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 hover:bg-cyan-500/20 hover:scale-105 transition-all shadow-[0_0_15px_rgba(34,211,238,0.1)] group">
+              <i className="fa-regular fa-bell text-lg group-hover:animate-swing"></i>
+              <span className="absolute top-2.5 right-3 w-2 h-2 bg-red-500 rounded-full border border-[#0c224b] animate-pulse"></span>
             </button>
           </div>
         </header>
 
         {/* --- MAIN CONTENT AREA --- */}
-        <main className="flex-1 overflow-y-auto scrollbar-hide relative z-0 pb-32">
+        <main className="flex-1 overflow-y-auto scrollbar-hide relative z-0">
           <Outlet />
         </main>
 
-        {/* --- BOTTOM NAVIGATION BAR --- */}
-        {/* --- BOTTOM NAVIGATION BAR (Restored 5-Items: Home, Quran, Ustaz, Qiblat, Iqra) --- */}
-        <nav className="h-[88px] bg-white/80 backdrop-blur-xl border-t border-cyan-100 relative z-50 shrink-0 pb-5">
-          <div className="flex items-center justify-around h-full px-2">
+        {/* --- BOTTOM NAVIGATION BAR: FLOATING CYBER DOCK --- */}
+        <div className="fixed bottom-6 inset-x-4 z-50 flex justify-center pointer-events-none">
+          <nav className="w-full max-w-md h-[76px] bg-[#0c224b]/80 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-between px-2 relative pointer-events-auto ring-1 ring-white/5">
+            
+            {/* Glass Shine Effect */}
+            <div className="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
             {/* 1. HOME */}
             <Link
               to="/"
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.DASHBOARD ? 'scale-110' : 'opacity-80 hover:opacity-100'}`}
+              className="relative flex flex-col items-center justify-center w-16 h-full group"
             >
-              <div className="w-14 h-14">
-                <img src="/assets/icons/nabdh/nav-home.png" alt="Home" className="w-full h-full object-contain" />
+              {currentView === NavView.DASHBOARD && (
+                <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
+              )}
+              <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.DASHBOARD ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
+                <img src="/assets/icons/nabdh/nav-home.png" alt="Home" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.DASHBOARD ? 'text-cyan-600' : 'text-slate-500'}`}>Home</span>
             </Link>
 
             {/* 2. AL-QURAN */}
             <Link
               to="/quran"
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.QURAN ? 'scale-110' : 'opacity-80 hover:opacity-100'}`}
+              className="relative flex flex-col items-center justify-center w-16 h-full group"
             >
-              <div className="w-14 h-14">
-                <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" className="w-full h-full object-contain" />
+              {currentView === NavView.QURAN && (
+                <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
+              )}
+              <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.QURAN ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
+                <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.QURAN ? 'text-cyan-600' : 'text-slate-500'}`}>Quran</span>
             </Link>
 
-            {/* 3. USTAZ AI (CENTER HIGHLIGHT) */}
-            <Link
-              to="/smart-deen"
-              className={`flex flex-col items-center justify-center relative -mt-10 transition-all duration-300 w-20 group`}
-            >
-              <div className={`w-20 h-20 rounded-full bg-white p-1 border-4 border-slate-50 shadow-xl ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}>
-                <div className="w-full h-full rounded-full bg-white flex items-center justify-center border border-cyan-100 relative">
-                  <img
-                    src="/assets/icons/nabdh/nav-ustaz.png"
-                    alt="Ustaz AI"
-                    className={`w-full h-full object-contain p-1 ${currentView === NavView.SMART_DEEN ? 'animate-pulse-slow' : ''}`}
-                  />
+            {/* 3. USTAZ AI (LEVITATING ORB) */}
+            <div className="relative w-20 flex justify-center">
+              <Link
+                to="/smart-deen"
+                className="absolute -top-10"
+              >
+                <div className={`w-[72px] h-[72px] rounded-full p-1 transition-all duration-300 ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}
+                     style={{
+                       background: 'linear-gradient(135deg, #0c224b 0%, #031a38 100%)',
+                       boxShadow: currentView === NavView.SMART_DEEN 
+                         ? '0 0 30px rgba(8,145,178,0.6), inset 0 0 20px rgba(8,145,178,0.2)' 
+                         : '0 10px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.05)',
+                       border: '1px solid rgba(255,255,255,0.1)'
+                     }}
+                >
+                  <div className="w-full h-full rounded-full bg-[#031a38] flex items-center justify-center relative overflow-hidden">
+                    {/* Inner Noise */}
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
+                    
+                    {/* Ring Glow */}
+                    <div className={`absolute inset-0 rounded-full border-2 ${currentView === NavView.SMART_DEEN ? 'border-cyan-400/50' : 'border-white/5'}`}></div>
+                    
+                    <img
+                      src="/assets/icons/nabdh/nav-ustaz.png"
+                      alt="Ustaz AI"
+                      className={`w-10 h-10 object-contain relative z-10 ${currentView === NavView.SMART_DEEN ? 'animate-pulse-slow drop-shadow-[0_0_15px_rgba(34,211,238,1)]' : 'brightness-75'}`}
+                    />
+                  </div>
                 </div>
-              </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider mt-1 ${currentView === NavView.SMART_DEEN ? 'text-cyan-600' : 'text-slate-500'}`}>Ustaz AI</span>
-            </Link>
+                {/* Reflection below the floating button */}
+                <div className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-10 h-2 bg-black/50 blur-md rounded-full"></div>
+              </Link>
+            </div>
 
             {/* 4. QIBLAT */}
             <Link
               to="/ibadah"
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.IBADAH ? 'scale-110' : 'opacity-80 hover:opacity-100'}`}
+              className="relative flex flex-col items-center justify-center w-16 h-full group"
             >
-              <div className="w-14 h-14">
-                <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" className="w-full h-full object-contain" />
+              {currentView === NavView.IBADAH && (
+                <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
+              )}
+              <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.IBADAH ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
+                <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IBADAH ? 'text-cyan-600' : 'text-slate-500'}`}>Qiblat</span>
             </Link>
 
             {/* 5. IQRA */}
             <Link
               to="/iqra"
-              className={`flex flex-col items-center justify-center gap-1 transition-all duration-300 w-16 ${currentView === NavView.IQRA ? 'scale-110' : 'opacity-80 hover:opacity-100'}`}
+              className="relative flex flex-col items-center justify-center w-16 h-full group"
             >
-              <div className="w-14 h-14">
-                <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" className="w-full h-full object-contain" />
+              {currentView === NavView.IQRA && (
+                <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
+              )}
+              <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.IQRA ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
+                <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
-              <span className={`text-[9px] font-bold uppercase tracking-wider ${currentView === NavView.IQRA ? 'text-cyan-600' : 'text-slate-500'}`}>Iqra</span>
             </Link>
 
-          </div>
-        </nav>
+          </nav>
+        </div>
       </div>
     </div>
   );

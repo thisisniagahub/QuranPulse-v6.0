@@ -30,7 +30,8 @@ const telegramBot = new TelegramService();
 // We need to extend WhatsappService to accept a socket or emit events
 // For now, we'll patch it locally effectively by spying on console.log or adding hooks if possible.
 // Better yet, let's just initialize it and known it works in console.
-const whatsappBot = new WhatsappService();
+// 2. Initialize WhatsApp (With Socket support)
+const whatsappBot = new WhatsappService(io); // Pass IO instance
 
 // --- API ENDPOINTS (For Admin Dashboard) ---
 

@@ -111,30 +111,30 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
             {/* Register Generative UI Actions */}
             <PrayerTimesAction />
 
-            {/* Header / Persona Selector */}
-            <div className="flex items-center justify-between p-4 border-b border-cyan-500/20 bg-[#0A1E42]/80 backdrop-blur-md z-10 relative shadow-lg shadow-cyan-900/10">
-                <div className="flex items-center gap-3">
+            {/* Header / Persona Selector (Floating Glass) */}
+            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0c224b]/60 backdrop-blur-xl z-10 relative shadow-lg">
+                <div className="flex items-center gap-4">
                     <div className="relative">
                         <UstazAvatar persona={selectedPersona} isThinking={isThinking} />
                         {isThinking && <div className="absolute inset-0 rounded-full border-2 border-cyan-400 animate-pulse"></div>}
                     </div>
                     <div>
                         <h2 className="text-white font-bold text-sm tracking-wide drop-shadow-md">{PERSONAS[selectedPersona].name}</h2>
-                        <div className="flex items-center gap-2">
-                            <span className={`flex h-2 w-2 relative`}>
-                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isThinking ? 'bg-amber-400' : 'bg-cyan-400'}`}></span>
-                                <span className={`relative inline-flex rounded-full h-2 w-2 ${isThinking ? 'bg-amber-500' : 'bg-cyan-500'}`}></span>
+                        <div className="flex items-center gap-2 mt-1">
+                            <span className={`flex h-1.5 w-1.5 relative`}>
+                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isThinking ? 'bg-amber-400' : 'bg-emerald-400'}`}></span>
+                                <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${isThinking ? 'bg-amber-500' : 'bg-emerald-500'}`}></span>
                             </span>
-                            <p className="text-[10px] text-cyan-200/70 font-mono uppercase tracking-wider">{PERSONAS[selectedPersona].role}</p>
+                            <p className="text-[10px] text-slate-300 font-mono uppercase tracking-wider">{PERSONAS[selectedPersona].role}</p>
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-1 bg-[#020617]/50 p-1 rounded-xl border border-white/10">
+                <div className="flex gap-1 bg-black/20 p-1 rounded-xl border border-white/5 backdrop-blur-sm">
                     {(Object.keys(PERSONAS) as PersonaKey[]).map((p) => (
                         <button
                             key={p}
                             onClick={() => switchPersona(p)}
-                            className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs transition-all ${selectedPersona === p ? 'bg-cyan-900/50 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-cyan-500/30' : 'text-slate-500 hover:text-slate-300'}`}
+                            className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm transition-all ${selectedPersona === p ? 'bg-cyan-500/20 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-cyan-500/30' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
                         >
                             {p === 'AZHAR' ? '👳🏻‍♂️' : p === 'AISHAH' ? '🧕🏻' : '🧢'}
                         </button>
@@ -145,9 +145,14 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
             {/* --- CHAT TAB --- */}
             {activeTab === 'CHAT' && (
                 <>
-                    <div ref={scrollRef} className={`flex-1 overflow-y-auto p-4 space-y-4 ${hasBottomNav ? 'pb-32' : 'pb-24'} scroll-smooth relative z-10`}>
-                        <div className="text-center py-4">
-                            <p className="text-[10px] text-cyan-500/50 uppercase tracking-[0.2em] font-bold">Hari Ini</p>
+                    <div ref={scrollRef} className={`flex-1 overflow-y-auto p-4 space-y-6 ${hasBottomNav ? 'pb-32' : 'pb-24'} scroll-smooth relative z-10`}>
+                        {/* Chat Background Watermark */}
+                        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                             <img src="/assets/icons/nabdh/nav-ustaz.png" className="w-64 h-64 grayscale opacity-[0.03]" alt="" />
+                        </div>
+
+                        <div className="text-center py-4 relative z-10">
+                            <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold bg-black/20 inline-block px-3 py-1 rounded-full border border-white/5">Hari Ini</p>
                         </div>
 
                         <AnimatePresence>
@@ -156,24 +161,24 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                     key={idx}
                                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    className={`flex flex-col gap-2 ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
+                                    className={`flex flex-col gap-2 relative z-10 ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                                 >
                                     <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 shadow-lg ${msg.role === 'user' ? 'bg-cyan-600 border border-cyan-400' : 'bg-[#0f1e38] border border-white/10'}`}>
-                                            {msg.role === 'user' ? '😎' : (msg.role === 'assistant' && selectedPersona === 'AZHAR' ? '👳🏻‍♂️' : selectedPersona === 'AISHAH' ? '🧕🏻' : '🧢')}
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 shadow-lg border border-white/10 ${msg.role === 'user' ? 'bg-cyan-900/50 text-cyan-200' : 'bg-[#0f1e38] text-slate-300'}`}>
+                                            {msg.role === 'user' ? <i className="fa-solid fa-user"></i> : (msg.role === 'assistant' && selectedPersona === 'AZHAR' ? '👳🏻‍♂️' : selectedPersona === 'AISHAH' ? '🧕🏻' : '🧢')}
                                         </div>
-                                        <div className={`rounded-3xl p-4 text-sm leading-relaxed shadow-xl backdrop-blur-md ${msg.role === 'user'
-                                            ? 'bg-gradient-to-br from-cyan-600 to-blue-700 text-white rounded-br-none border border-cyan-400/30 shadow-[0_0_20px_rgba(6,182,212,0.2)]'
-                                            : 'bg-[#0f1e38]/80 text-custom-light-blue border border-cyan-500/10 rounded-bl-none shadow-[0_4px_20px_rgba(0,0,0,0.3)]'
+                                        <div className={`rounded-2xl p-4 text-sm leading-relaxed shadow-md backdrop-blur-md border ${msg.role === 'user'
+                                            ? 'bg-gradient-to-br from-cyan-600/90 to-blue-700/90 text-white rounded-br-sm border-cyan-400/20'
+                                            : 'bg-[#1e293b]/90 text-slate-200 rounded-bl-sm border-white/10'
                                             }`}>
                                             {/* Render Clean Text */}
                                             {cleanAIResponse(msg.content)}
 
                                             {/* Compliance: Report Button */}
                                             {msg.role === 'assistant' && (
-                                                <div className="mt-2 pt-2 border-t border-white/5 flex justify-end">
+                                                <div className="mt-3 pt-2 border-t border-white/5 flex justify-end">
                                                     <button
-                                                        className="text-[10px] text-slate-500 hover:text-red-400 flex items-center gap-1 transition-colors"
+                                                        className="text-[10px] text-slate-500 hover:text-red-400 flex items-center gap-1 transition-colors opacity-60 hover:opacity-100"
                                                         title="Lapor jawapan tidak tepat"
                                                         onClick={() => alert("Laporan dihantar.")}
                                                     >

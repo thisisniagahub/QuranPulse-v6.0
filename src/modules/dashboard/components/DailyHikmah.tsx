@@ -5,8 +5,17 @@ const DailyHikmah: React.FC = () => {
     return (
         <motion.div
             whileHover={{ y: -5 }}
-            className="col-span-2 md:col-span-1 bg-gradient-to-br from-[#162c51] to-[#031a38] rounded-3xl p-6 border border-purple-500/30 relative overflow-hidden h-full min-h-[220px] flex flex-col justify-between shadow-xl shadow-purple-500/5"
+            className="col-span-2 md:col-span-1 bg-[#162c51] rounded-3xl p-6 border border-purple-500/30 relative overflow-hidden h-full min-h-[220px] flex flex-col justify-between shadow-xl shadow-purple-500/5 group"
         >
+            {/* Background Image - Clean No Front Layer */}
+            <div className="absolute inset-0 z-0">
+                <img
+                    src="https://images.unsplash.com/photo-1534234828563-0254174097f3?q=80&w=1000&auto=format&fit=crop"
+                    alt="Spiritual Night"
+                    className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-1000"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#0c224b]/30 via-[#0c224b]/80 to-[#031a38]"></div>
+            </div>
             {/* 🌌 Cyber Spiritual Atmosphere */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-indigo-500/5 rounded-full blur-2xl"></div>

@@ -18,6 +18,17 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                         prayerData.isha
     ) : null;
 
+    // Background mapping based on prayer time (Unsplash Source)
+    const backgroundMap: Record<string, string> = {
+        'Subuh': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000&auto=format&fit=crop', // Dawn Field
+        'Syuruk': 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=1000&auto=format&fit=crop',
+        'Zohor': 'https://images.unsplash.com/photo-1561494262-2e4eb12d6aef?q=80&w=1000&auto=format&fit=crop', // Blue Sky Mosque
+        'Asar': 'https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?q=80&w=1000&auto=format&fit=crop', // Golden Hour
+        'Maghrib': 'https://images.unsplash.com/photo-1510253687831-0f982d7862fc?q=80&w=1000&auto=format&fit=crop', // Sunset
+        'Isyak': 'https://images.unsplash.com/photo-1534234828569-1f3553dadd1d?q=80&w=1000&auto=format&fit=crop', // Starry Night
+    };
+
+    // Timer Logic
     useEffect(() => {
         const interval = setInterval(() => {
             if (!nextPrayerTime) return;
@@ -43,20 +54,23 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
         return () => clearInterval(interval);
     }, [nextPrayerTime]);
 
-    // Background mapping based on prayer time
-    const backgroundMap: Record<string, string> = {
-        'Subuh': '/assets/backgrounds/rhythm/subuh.png',
-        'Zohor': '/assets/backgrounds/rhythm/zohor.png',
-        'Asar': '/assets/backgrounds/rhythm/asar.png',
-        'Maghrib': '/assets/backgrounds/rhythm/maghrib.png',
-        'Isyak': '/assets/backgrounds/rhythm/isyak.jpg',
-    };
+    // Circular Progress Calculation
+    const [progress, setProgress] = useState(0);
+    
+    useEffect(() => {
+        if (!nextPrayerTime) return;
+        const totalDuration = 1000 * 60 * 60 * 2; // Assume 2 hour window for visualization or calc real diff
+        const now = new Date();
+        const diff = nextPrayerTime.getTime() - now.getTime();
+        const p = Math.max(0, Math.min(100, (1 - diff / totalDuration) * 100));
+        setProgress(p);
+    }, [timeLeft]);
 
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="relative w-full h-[200px] md:h-[220px] rounded-[2rem] overflow-hidden group shadow-[0_10px_30px_rgba(0,0,0,0.5)] border border-white/5"
+            className="relative w-full h-[240px] rounded-[2.5rem] overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-white/10"
         >
             {/* 🌊 Dynamic Themed Background */}
             <AnimatePresence mode="wait">
@@ -71,58 +85,52 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                     <img
                         src={backgroundMap[nextPrayerGroup] || backgroundMap['Isyak']}
                         alt=""
-                        className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-[10s] ease-out"
+                        className="w-full h-full object-cover opacity-60 scale-110"
                     />
-                    {/* Artistic Overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
-                    <div className="absolute inset-0 bg-[#031a38]/30 backdrop-blur-[1px]"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0c224b]/80 via-[#0c224b]/40 to-[#031a38]"></div>
                 </motion.div>
             </AnimatePresence>
 
-            {/* 💎 Glass Content Layer - Horizontal Layout */}
-            <div className="relative z-10 h-full flex flex-row items-center justify-between p-6 md:p-8 gap-4">
+            {/* 🌀 Rotating Geometric Halo */}
+            <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
+                 <div className="w-[400px] h-[400px] bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-center bg-no-repeat bg-contain animate-spin-slow duration-[60s]"></div>
+            </div>
 
-                {/* Left: Greeting & Prayer Info */}
-                <div className="flex flex-col justify-center h-full space-y-2 max-w-[50%]">
-                    <motion.div
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        className="flex items-center gap-3"
-                    >
-                        <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/20 backdrop-blur-2xl flex items-center justify-center text-lg shadow-xl shadow-black/40">
-                            ✨
-                        </div>
-                        <div>
-                            <p className="text-[9px] text-cyan-400 font-bold tracking-[0.2em] uppercase opacity-80">Spiritual Rhythm</p>
-                            <h2 className="text-white text-base font-black tracking-tight leading-tight">Salam, {user.name.split(' ')[0]}</h2>
-                        </div>
-                    </motion.div>
+            {/* 💎 Glass Content Layer */}
+            <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 text-center">
+                
+                {/* CIRCULAR TIMER */}
+                <div className="relative w-40 h-40 flex items-center justify-center mb-4">
+                    {/* SVG Ring */}
+                    <svg className="absolute inset-0 w-full h-full -rotate-90">
+                        <circle cx="50%" cy="50%" r="70" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="6" />
+                        <motion.circle 
+                            cx="50%" cy="50%" r="70" 
+                            fill="none" 
+                            stroke="#22d3ee" 
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            strokeDasharray="440"
+                            strokeDashoffset={440 - (440 * progress) / 100}
+                            initial={{ strokeDashoffset: 440 }}
+                            animate={{ strokeDashoffset: 440 - (440 * progress) / 100 }}
+                            transition={{ duration: 1 }}
+                            className="drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+                        />
+                    </svg>
 
-                    <div className="mt-2">
-                        <p className="text-cyan-400/90 text-[10px] font-black tracking-[0.2em] uppercase drop-shadow-sm">Next Connection</p>
-                        <h1 className="text-5xl md:text-6xl font-black text-white tracking-tighter drop-shadow-[0_4px_10px_rgba(0,0,0,0.5)]">
-                            {nextPrayerGroup}
-                        </h1>
+                    {/* Center Text */}
+                    <div className="flex flex-col items-center">
+                        <p className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-1">Next Prayer</p>
+                        <h1 className="text-3xl font-black text-white tracking-tight">{nextPrayerGroup}</h1>
+                        <p className="text-xl font-mono font-medium text-slate-300 mt-1">{timeLeft}</p>
                     </div>
                 </div>
 
-                {/* Right: Timer & Metadata */}
-                <div className="flex flex-col items-end justify-center h-full space-y-3">
-                    <div className="flex items-center gap-3 text-slate-300 font-mono text-xs bg-black/60 px-5 py-2 rounded-2xl backdrop-blur-2xl border border-white/10 shadow-2xl">
-                        <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_#22d3ee]"></span>
-                        <span className="text-cyan-100 font-bold uppercase tracking-wider text-[9px]">Closing in:</span>
-                        <span className="text-white font-black text-base">{timeLeft}</span>
-                    </div>
-
-                    <div className="flex flex-col items-end gap-1 text-[9px] font-black text-white/60 tracking-[0.1em] uppercase">
-                        <div className="flex items-center gap-2 bg-black/30 px-3 py-1.5 rounded-lg border border-white/5 backdrop-blur-md">
-                            <i className="fa-solid fa-location-dot text-cyan-400"></i>
-                            <span className="text-white/80">Kuala Lumpur</span>
-                        </div>
-                        <span className="bg-black/30 px-3 py-1.5 rounded-lg border border-white/5 backdrop-blur-md text-white/80">
-                            {new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'short' })}
-                        </span>
-                    </div>
+                {/* Footer Pill */}
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                    <i className="fa-solid fa-location-dot text-cyan-400 text-xs"></i>
+                    <span className="text-[10px] font-bold text-white tracking-wider uppercase">Kuala Lumpur</span>
                 </div>
             </div>
         </motion.div>

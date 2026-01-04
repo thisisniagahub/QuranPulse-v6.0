@@ -35,7 +35,10 @@ const IqraModule = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#050505] pb-24 font-sans text-white">
+    <div className="min-h-screen bg-midnight-gradient pb-24 font-sans text-white relative">
+      {/* Global Pattern Overlay */}
+      <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px] z-0"></div>
+
       {/* Hero Section */}
       <div className="relative h-64 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-900/20 to-[#050505] z-10" />
@@ -70,51 +73,51 @@ const IqraModule = () => {
 
       {/* Quick Stats & Actions */}
       <div className="px-6 -mt-8 relative z-30 mb-8 space-y-4">
-        {/* Stats */}
-        <div className="bg-[#111] border border-white/10 rounded-2xl p-4 flex justify-between items-center shadow-xl backdrop-blur-md">
+        {/* Stats (Glass Card) */}
+        <div className="bg-[#0c224b]/60 border border-white/10 rounded-2xl p-4 flex justify-between items-center shadow-lg backdrop-blur-xl">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-500">
+            <div className="w-10 h-10 rounded-full bg-amber-500/20 flex items-center justify-center text-amber-400 shadow-[0_0_10px_rgba(251,191,36,0.2)] border border-amber-500/30">
               <Trophy className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-slate-400">Tahap Semasa</p>
-              <p className="font-bold text-white">Level 1</p>
+              <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Tahap Semasa</p>
+              <p className="text-lg font-black text-white leading-tight">Level 1</p>
             </div>
           </div>
           <div className="h-8 w-px bg-white/10" />
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-500">
+            <div className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-cyan-500/30">
               <Star className="w-5 h-5" />
             </div>
             <div>
-              <p className="text-xs text-slate-400">Bintang</p>
-              <p className="font-bold text-white">0/120</p>
+              <p className="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Bintang</p>
+              <p className="text-lg font-black text-white leading-tight">0/120</p>
             </div>
           </div>
         </div>
 
-        {/* Tab Switcher */}
-        <div className="bg-[#111] p-1 rounded-xl border border-white/10 flex relative">
+        {/* Tab Switcher (Floating Capsule) */}
+        <div className="bg-[#031a38]/80 p-1.5 rounded-2xl border border-white/10 flex relative shadow-md backdrop-blur-sm">
             <motion.div 
-                className="absolute top-1 bottom-1 bg-cyan-600 rounded-lg shadow-lg z-0"
+                className="absolute top-1.5 bottom-1.5 bg-cyan-600 rounded-xl shadow-[0_0_15px_rgba(8,145,178,0.4)] z-0"
                 initial={false}
                 animate={{
-                    left: activeTab === 'iqra' ? '4px' : '50%',
-                    right: activeTab === 'iqra' ? '50%' : '4px',
+                    left: activeTab === 'iqra' ? '6px' : '50%',
+                    right: activeTab === 'iqra' ? '50%' : '6px',
                 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
             />
             
             <button 
                 onClick={() => setActiveTab('iqra')}
-                className={`flex-1 py-3 text-sm font-bold relative z-10 flex items-center justify-center gap-2 transition-colors ${activeTab === 'iqra' ? 'text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`flex-1 py-3 text-xs font-black uppercase tracking-wider relative z-10 flex items-center justify-center gap-2 transition-colors ${activeTab === 'iqra' ? 'text-white' : 'text-slate-400 hover:text-white'}`}
             >
                 <BookOpen className="w-4 h-4" />
                 Modul Iqra
             </button>
             <button 
                 onClick={() => setActiveTab('kafa')}
-                className={`flex-1 py-3 text-sm font-bold relative z-10 flex items-center justify-center gap-2 transition-colors ${activeTab === 'kafa' ? 'text-white' : 'text-slate-400 hover:text-white'}`}
+                className={`flex-1 py-3 text-xs font-black uppercase tracking-wider relative z-10 flex items-center justify-center gap-2 transition-colors ${activeTab === 'kafa' ? 'text-white' : 'text-slate-400 hover:text-white'}`}
             >
                 <GraduationCap className="w-4 h-4" />
                 Akademi KAFA
@@ -149,6 +152,7 @@ const IqraModule = () => {
                     className={`relative overflow-hidden rounded-2xl p-6 text-left group transition-all ${book.locked ? 'opacity-50 grayscale' : 'hover:scale-[1.02]'}`}
                     >
                     <div className={`absolute inset-0 bg-gradient-to-br ${book.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
+                    <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
                     <div className="absolute inset-0 border border-white/5 rounded-2xl group-hover:border-white/20 transition-colors" />
 
                     <div className="relative z-10 flex justify-between items-start">

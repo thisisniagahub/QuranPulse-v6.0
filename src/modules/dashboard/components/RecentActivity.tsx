@@ -10,13 +10,16 @@ const activities = [
 
 const RecentActivity: React.FC = () => {
   return (
-    <BentoCard className="p-6 h-full border-white/5 bg-[#0c224b]/40 backdrop-blur-xl">
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-sm font-bold text-white uppercase tracking-wider">Recent Activity</h3>
-        <i className="fa-solid fa-clock-rotate-left text-slate-500 text-xs"></i>
+    <BentoCard 
+        className="p-6 h-full border-white/10"
+        bgImage="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop"
+    >
+      <div className="flex justify-between items-center mb-6 relative z-10">
+        <h3 className="text-sm font-black text-white uppercase tracking-wider drop-shadow-md">Recent Activity</h3>
+        <i className="fa-solid fa-clock-rotate-left text-cyan-400 text-xs"></i>
       </div>
 
-      <div className="space-y-5">
+      <div className="space-y-5 relative z-10">
         {activities.map((activity, idx) => (
           <motion.div
             key={activity.id}
@@ -25,12 +28,12 @@ const RecentActivity: React.FC = () => {
             transition={{ delay: idx * 0.1 }}
             className="flex items-center gap-4 group cursor-pointer"
           >
-            <div className={`w-10 h-10 rounded-xl ${activity.bg} border border-white/5 flex items-center justify-center ${activity.color} group-hover:scale-110 transition-transform`}>
+            <div className={`w-10 h-10 rounded-xl ${activity.bg} border border-white/10 flex items-center justify-center ${activity.color} group-hover:scale-110 transition-transform backdrop-blur-sm shadow-lg`}>
               <i className={`fa-solid ${activity.icon} text-sm`}></i>
             </div>
             <div className="flex-1 border-b border-white/5 pb-2 last:border-0">
-              <h4 className="text-xs font-bold text-slate-200 group-hover:text-cyan-400 transition-colors">{activity.title}</h4>
-              <p className="text-[10px] text-slate-500 font-medium mt-0.5">{activity.time}</p>
+              <h4 className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors drop-shadow-sm">{activity.title}</h4>
+              <p className="text-[10px] text-slate-300 font-medium mt-0.5">{activity.time}</p>
             </div>
           </motion.div>
         ))}
