@@ -101,7 +101,7 @@ export function AdminSidebar() {
                         <p className="text-sm font-medium text-slate-200 truncate">Super Admin</p>
                         <p className="text-xs text-slate-500 truncate">admin@quranpulse.my</p>
                     </div>
-                    <button className="p-1.5 rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-colors">
+                    <button className="p-1.5 rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-700/50 transition-colors" title="Settings" aria-label="Settings">
                         <Settings className="h-4 w-4" />
                     </button>
                 </div>

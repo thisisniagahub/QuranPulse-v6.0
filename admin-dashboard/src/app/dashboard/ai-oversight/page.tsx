@@ -137,7 +137,7 @@ export default function AIOversightPage() {
                 <div className="glass-card rounded-xl p-4 flex items-center gap-3 text-red-400 border-red-500/30">
                     <AlertCircle className="h-5 w-5" />
                     {error}
-                    <button onClick={() => setError(null)} className="ml-auto hover:text-red-300">×</button>
+                    <button onClick={() => setError(null)} className="ml-auto hover:text-red-300" aria-label="Dismiss error">×</button>
                 </div>
             )}
 
@@ -212,6 +212,8 @@ export default function AIOversightPage() {
                                             onClick={() => handleDelete(item.id)}
                                             disabled={actionLoading === item.id}
                                             className="btn-ghost text-xs py-1.5 text-red-400 hover:bg-red-500/10"
+                                            title="Delete"
+                                            aria-label="Delete"
                                         >
                                             <Trash2 className="h-3 w-3" />
                                         </button>
@@ -231,11 +233,13 @@ export default function AIOversightPage() {
 
                     <div className="space-y-4">
                         <div>
-                            <label className="block text-sm text-slate-400 mb-1.5">System Prompt</label>
+                            <label htmlFor="system-prompt" className="block text-sm text-slate-400 mb-1.5">System Prompt</label>
                             <textarea
+                                id="system-prompt"
                                 value={systemPrompt}
                                 onChange={(e) => setSystemPrompt(e.target.value)}
                                 className="input-modern w-full h-24 font-mono text-xs"
+                                placeholder="Enter system prompt..."
                             />
                         </div>
 

@@ -56,13 +56,13 @@ export function UserTable() {
                     />
                 </div>
                 <div className="flex items-center gap-2">
-                    <select className="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-cyan-500/50">
+                    <select aria-label="Filter by Role" className="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-cyan-500/50">
                         <option>All Roles</option>
                         <option>Admin</option>
                         <option>Moderator</option>
                         <option>User</option>
                     </select>
-                    <select className="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-cyan-500/50">
+                    <select aria-label="Filter by Plan" className="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-cyan-500/50">
                         <option>All Plans</option>
                         <option>Family</option>
                         <option>Pro</option>
@@ -77,7 +77,7 @@ export function UserTable() {
                     <thead>
                         <tr>
                             <th className="w-12">
-                                <input type="checkbox" className="rounded border-slate-700 bg-slate-800" />
+                                <input type="checkbox" className="rounded border-slate-700 bg-slate-800" aria-label="Select all users" />
                             </th>
                             <th>User</th>
                             <th>Role</th>
@@ -91,7 +91,7 @@ export function UserTable() {
                         {filteredUsers.map((user) => (
                             <tr key={user.id}>
                                 <td>
-                                    <input type="checkbox" className="rounded border-slate-700 bg-slate-800" />
+                                    <input type="checkbox" className="rounded border-slate-700 bg-slate-800" aria-label={`Select user ${user.name}`} />
                                 </td>
                                 <td>
                                     <div className="flex items-center gap-3">

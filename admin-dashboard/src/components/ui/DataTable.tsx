@@ -204,6 +204,7 @@ export function DataTable<T extends { id: string }>({
                         value={pageSize}
                         onChange={(e) => onPageSizeChange?.(Number(e.target.value))}
                         className="bg-slate-800/50 border border-slate-700 rounded-lg px-2 py-1 text-sm text-slate-300"
+                        aria-label="Rows per page"
                     >
                         <option value={10}>10 per page</option>
                         <option value={25}>25 per page</option>
@@ -214,6 +215,7 @@ export function DataTable<T extends { id: string }>({
                             onClick={() => onPageChange?.(page - 1)}
                             disabled={page <= 1}
                             className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            aria-label="Previous page"
                         >
                             <ChevronLeft className="h-4 w-4" />
                         </button>
@@ -224,6 +226,7 @@ export function DataTable<T extends { id: string }>({
                             onClick={() => onPageChange?.(page + 1)}
                             disabled={page >= totalPages}
                             className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-700/50 disabled:opacity-50 disabled:cursor-not-allowed"
+                            aria-label="Next page"
                         >
                             <ChevronRight className="h-4 w-4" />
                         </button>

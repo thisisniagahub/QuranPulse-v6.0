@@ -12,6 +12,7 @@
 A "Zero Latency" Quran app integrated with a Domain-Specific AI (MCP Ustaz) and Gamified Learning (Iqra Digital).
 
 ### 1.2 Functional Scope
+
 | Module | State | Requirement |
 | :--- | :--- | :--- |
 | **Quran Reader** | ✅ Ready | Optimized for sub-100ms load. |
@@ -25,19 +26,19 @@ A "Zero Latency" Quran app integrated with a Domain-Specific AI (MCP Ustaz) and 
 ## 2. Architecture & Tech Stack
 
 ### 2.1 The "Supabase-First" Monolith
-*   **Frontend:** React 18 + Vite (PWA) + Tailwind CSS v4.
-*   **State:** Zustand (Global) + TanStack Query (Server State).
-*   **Backend:** Supabase (PostgreSQL 15 + GoTrue Auth).
-*   **Compute:** Deno Edge Functions (Distributed globally).
-*   **AI:** Hybrid Router (Gemini 2.0 + Groq + MCP Tools).
+* **Frontend:** React 18 + Vite (PWA) + Tailwind CSS v4.
+* **State:** Zustand (Global) + TanStack Query (Server State).
+* **Backend:** Supabase (PostgreSQL 15 + GoTrue Auth).
+* **Compute:** Deno Edge Functions (Distributed globally).
+* **AI:** Hybrid Router (Gemini 2.0 + Groq + MCP Tools).
 
 ### 2.2 MCP Architecture (The "Brain")
-*   **Router:** Client-side intent classification (`mcpService.ts`).
-*   **Workers:** 
-    *   `mcp-worship` (Prayer/JAKIM)
-    *   `mcp-quran` (Semantic Search)
-    *   `mcp-zakat` (Calc Engine)
-    *   `mcp-compliance` (Fatwa Lookup)
+* **Router:** Client-side intent classification (`mcpService.ts`).
+* **Workers:**
+  * `mcp-worship` (Prayer/JAKIM)
+  * `mcp-quran` (Semantic Search)
+  * `mcp-zakat` (Calc Engine)
+  * `mcp-compliance` (Fatwa Lookup)
 
 ---
 
@@ -45,45 +46,45 @@ A "Zero Latency" Quran app integrated with a Domain-Specific AI (MCP Ustaz) and 
 
 ### Sprint 1: Foundation & Cleanup (Week 1-2)
 **Focus:** Reliability & Security
-*   [ ] **Refactor:** Delete `apiClient.ts` (Legacy Google Sheets).
-*   [ ] **Deploy:** Push all 5 MCP Functions to Supabase Cloud.
-*   [ ] **Security:** Audit RLS Policies & API Keys.
-*   [ ] **Test:** Achieve >80% Unit Test Coverage.
+* [ ] **Refactor:** Delete `apiClient.ts` (Legacy Google Sheets).
+* [ ] **Deploy:** Push all 5 MCP Functions to Supabase Cloud.
+* [ ] **Security:** Audit RLS Policies & API Keys.
+* [ ] **Test:** Achieve >80% Unit Test Coverage.
 
 ### Sprint 2: Mission Control (Week 3-4)
 **Focus:** Admin Capability
-*   [ ] **UI:** Build `AdminDashboard` Layout (Sidebar, Header).
-*   [ ] **Users:** Implement User Management Table (Ban/Promote).
-*   [ ] **Content:** Implement Poster/Announcement Uploader.
-*   [ ] **Analytics:** Visualize active users & retention charts.
+* [ ] **UI:** Build `AdminDashboard` Layout (Sidebar, Header).
+* [ ] **Users:** Implement User Management Table (Ban/Promote).
+* [ ] **Content:** Implement Poster/Announcement Uploader.
+* [ ] **Analytics:** Visualize active users & retention charts.
 
 ### Sprint 3: Monetization (Week 5-6)
 **Focus:** Revenue
-*   [ ] **Gateway:** Register & Integrate Stripe / ToyyibPay.
-*   [ ] **Webhooks:** Secure `verify-payment` Edge Function.
-*   [ ] **UI:** Build Subscription Plan Selection Screen.
-*   [ ] **Logic:** Implement Auto-Upgrade to Premium upon payment.
+* [ ] **Gateway:** Register & Integrate Stripe / ToyyibPay.
+* [ ] **Webhooks:** Secure `verify-payment` Edge Function.
+* [ ] **UI:** Build Subscription Plan Selection Screen.
+* [ ] **Logic:** Implement Auto-Upgrade to Premium upon payment.
 
 ### Sprint 4: Performance & Polish (Week 7-8)
 **Focus:** UX & Speed
-*   [ ] **ASR:** Deploy Python ASR Engine to Fly.io/Render.
-*   [ ] **PWA:** Test Offline Mode & Service Workers.
-*   [ ] **Lighthouse:** Optimize LCP (<1.2s) and CLS (0).
-*   [ ] **Launch:** App Store Submission Prep.
+* [ ] **ASR:** Deploy Python ASR Engine to Fly.io/Render.
+* [ ] **PWA:** Test Offline Mode & Service Workers.
+* [ ] **Lighthouse:** Optimize LCP (<1.2s) and CLS (0).
+* [ ] **Launch:** App Store Submission Prep.
 
 ---
 
 ## 4. Key Performance Indicators (KPIs)
 
 ### 4.1 Technical KPIs
-*   **Load Time:** < 1.0s (First Contentful Paint).
-*   **AI Latency:** < 500ms (Groq), < 2.0s (Gemini Reasoning).
-*   **Uptime:** 99.9% (Supabase SLA).
+* **Load Time:** < 1.0s (First Contentful Paint).
+* **AI Latency:** < 500ms (Groq), < 2.0s (Gemini Reasoning).
+* **Uptime:** 99.9% (Supabase SLA).
 
 ### 4.2 Business KPIs
-*   **Acquisition:** 1,000 MAU (Monthly Active Users) in Month 1.
-*   **Retention:** 40% Day-30 Retention.
-*   **Conversion:** 5% Free-to-Paid Conversion Rate.
+* **Acquisition:** 1,000 MAU (Monthly Active Users) in Month 1.
+* **Retention:** 40% Day-30 Retention.
+* **Conversion:** 5% Free-to-Paid Conversion Rate.
 
 ---
 

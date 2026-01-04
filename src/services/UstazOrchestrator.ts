@@ -32,7 +32,7 @@ export interface MCPComplianceData {
 
 // --- SERVICE ---
 
-export const MCPService = {
+export const UstazOrchestrator = {
   /**
    * Detects user intent and routes to the appropriate Supabase Edge Function.
    */
