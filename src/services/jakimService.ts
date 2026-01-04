@@ -1,6 +1,5 @@
 import { JAKIM_ZONES } from '../data/jakimZones';
-
-const BASE_API_URL = 'https://api.waktusolat.app/v2/solat';
+import { MCPService, MCPWorshipData } from './mcpService';
 
 export interface JakimPrayerData {
   hijri: string;
@@ -13,54 +12,37 @@ export interface JakimPrayerData {
   asr: string;
   maghrib: string;
   isha: string;
+  source?: string;
 }
 
 export const JakimService = {
   /**
-   * Fetch prayer times for a specific zone
+   * Fetch prayer times for a specific zone via MCP
    */
   async getPrayerTimes(zone: string): Promise<JakimPrayerData | null> {
     try {
-      const response = await fetch(`${BASE_API_URL}/${zone}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch JAKIM data');
-      }
+      console.log(`🕌 JakimService: Redirecting request for ${zone} to MCP...`);
+      const data = await MCPService.getWorshipData(zone);
       
-      const json = await response.json();
-      
-      // The API usually returns an array of prayer times for the week/month or just today
-      // Let's assume the API structure from documentation or inspection:
-      // Response: { prayers: [ { day: 1, ... } ], ... }
-      
-      // NOTE: `api.waktusolat.app/v2/solat/{zone}` returns an array `prayers`
-      // We need to find TODAY's entry.
-      
-      const today = new Date();
-      // Format today as DD-MMM-YYYY usually, or compare timestamps
-      // Let's inspect the typical response shape in a real scenario.
-      // Usually it returns: { status: "OK", prayers: [ { hijri: "...", day: "Tuesday", fajr: ... } ] }
-      
-      // Let's grab the first entry for "today" which corresponds to current day index or find by date match
-      // Ideally the API handles "today" logic or returns a week's worth.
-      
-      if (json && json.prayers && Array.isArray(json.prayers)) {
-          // Find the entry matching today's day of month?
-          // The API returns the whole year/month usually? 
-          // Actually api.waktusolat.app/v2/solat/WLY01 returns the current week/period usually.
-          
-          // Let's use the first one if it matches today, otherwise search.
-          // Simplification: Let's assume the API returns relevant data. 
-          // Actually, let's use a safer lookup.
-          const currentDayOfMonth = today.getDate();
-          const match = json.prayers.find((p: any) => p.day === currentDayOfMonth || parseInt(p.day) === currentDayOfMonth);
-          
-          return match || json.prayers[0]; // Fallback
-      }
+      if (!data) return null;
 
-      return null;
+      // Map MCP format to JakimPrayerData format
+      return {
+        hijri: "", // MCP current logic doesn't return hijri for all sources yet
+        date: data.date,
+        day: new Date(data.date).toLocaleDateString('ms-MY', { weekday: 'long' }),
+        imsak: data.times.imsak,
+        fajr: data.times.subuh,
+        syuruk: data.times.syuruk,
+        dhuhr: data.times.zohor,
+        asr: data.times.asar,
+        maghrib: data.times.maghrib,
+        isha: data.times.isyak,
+        source: data.source
+      };
 
     } catch (error) {
-      console.error("JAKIM Service Error:", error);
+      console.error("JAKIM Service Error (MCP Bridge):", error);
       return null;
     }
   },

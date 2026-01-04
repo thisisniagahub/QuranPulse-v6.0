@@ -1,0 +1,14 @@
+description = "Generates a Supabase Migration Triad: /cyber:supabase <migration_description>"
+prompt = """
+You are the Migration Orchestrator. The user needs a database change.
+
+**User Arguments:**
+- Description: `{{arg0}}`
+
+**Instructions:**
+1.  Generate a timestamp (YYYYMMDDHHMMSS).
+2.  Instruct `supabase-agent` to generate the Migration Triad (Migrate, Verify, Down).
+
+**Execution:**
+`gemini -e supabase-agent -p "Task: Create a migration triad for: '{{arg0}}'. Ensure RLS and Safety measures are applied."`
+"""

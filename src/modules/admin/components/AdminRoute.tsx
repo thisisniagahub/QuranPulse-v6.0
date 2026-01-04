@@ -22,13 +22,11 @@ const AdminRoute: React.FC = () => {
         .eq('id', user.id)
         .single();
 
-      // For MVP, let's assume specific email or tier
-      // Ideally, add 'role' column to profiles
+      // For production, we strictly check 'ADMIN' tier or specific dev email
       if (user.email === 'dev@qp.com' || data?.tier === 'ADMIN') { 
           setIsAdmin(true);
       } else {
-          // Temporary Bypass for Demo
-          setIsAdmin(true); 
+          setIsAdmin(false); 
       }
     };
 

@@ -2,19 +2,8 @@ import { createClient } from '@supabase/supabase-js';
 import { getEnv } from '../utils/env';
 
 // Environment variables for Supabase
-const rawUrl = getEnv('VITE_SUPABASE_URL');
-const rawKey = getEnv('VITE_SUPABASE_ANON_KEY');
-
-console.log('🔎 .env values:', { rawUrl, rawKey });
-if (!rawUrl || !rawKey) {
-  console.error('🚨 Supabase credentials missing in .env. Login will fail.');
-}
-
-
-const supabaseUrl = rawUrl || 'https://placeholder.supabase.co';
-const supabaseAnonKey = rawKey || 'placeholder-key';
-
-console.log("🔌 Initializing Supabase Client...");
+const supabaseUrl = getEnv('VITE_SUPABASE_URL') || 'https://placeholder.supabase.co';
+const supabaseAnonKey = getEnv('VITE_SUPABASE_ANON_KEY') || 'placeholder-key';
 
 // Create Supabase client with enhanced options
 export const supabase = createClient(
@@ -22,13 +11,9 @@ export const supabase = createClient(
   supabaseAnonKey,
   {
     auth: {
-      // Persist session in localStorage for "Remember Me" functionality
       persistSession: true,
-      // Auto-refresh token before it expires
       autoRefreshToken: true,
-      // Detect session from URL (for OAuth redirects)
       detectSessionInUrl: true,
-      // Storage type
       storage: typeof window !== 'undefined' ? window.localStorage : undefined,
     },
     global: {
@@ -40,16 +25,11 @@ export const supabase = createClient(
   }
 );
 
-if (rawUrl && rawKey) {
-  // Immediate health check for debugging email login issues
+// Health check for debugging - strictly internal logging
+if (getEnv('VITE_SUPABASE_URL')) {
   supabase.from('surahs').select('count', { count: 'exact', head: true }).then(({ error }) => {
     if (error) {
-      console.error("❌ Supabase Health Check Failed:", error.message, error);
-      if (error.message.includes("fetch")) {
-        console.error("💡 Tip: This usually means the browser rejected the request due to CSP or Network issues.");
-      }
-    } else {
-      console.log("✅ Supabase Health Check Passed. Database is reachable.");
+      console.warn("⚠️ Supabase Connection Warning:", error.message);
     }
   });
 }

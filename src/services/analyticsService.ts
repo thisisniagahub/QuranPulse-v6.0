@@ -23,6 +23,17 @@ export interface AnalyticsEvent {
   timestamp?: string;
 }
 
+// Generate or retrieve persistent anonymous ID
+const getAnonId = () => {
+  if (typeof window === 'undefined') return 'server-side';
+  let anonId = localStorage.getItem('qp_anon_id');
+  if (!anonId) {
+    anonId = `anon_${Math.random().toString(36).substring(2, 15)}`;
+    localStorage.setItem('qp_anon_id', anonId);
+  }
+  return anonId;
+};
+
 export const AnalyticsService = {
   /**
    * Log an event to Supabase
@@ -30,25 +41,34 @@ export const AnalyticsService = {
   async track(name: EventName, properties: Record<string, any> = {}) {
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      const user_id = session?.user?.id || 'anonymous';
+      
+      // Prioritize authenticated ID, fallback to persistent anon ID
+      const user_id = session?.user?.id || getAnonId();
 
-      console.log(`[Analytics] ${name}`, properties);
+      // Debug only in dev mode
+      if (import.meta.env.DEV) {
+        console.log(`[Analytics] ${name}`, { user_id, ...properties });
+      }
 
-      // In a real app, we would batch these or use a beacon
-      // For MVP, we insert directly to Supabase
       const { error } = await supabase.from('analytics_events').insert({
         name,
         user_id,
-        properties,
+        properties: {
+          ...properties,
+          is_anonymous: !session?.user?.id,
+          platform: 'web',
+          user_agent: navigator.userAgent
+        },
         timestamp: new Date().toISOString()
       });
 
       if (error) {
-        // If table doesn't exist, just warn silently
-        // console.warn("Analytics insert failed:", error.message);
+        // Silently fail in production to avoid disrupting UX
+        if (import.meta.env.DEV) console.warn("Analytics insert failed:", error.message);
       }
     } catch (e) {
-      console.error("Analytics Error:", e);
+      // Catch-all to prevent analytics from crashing the app
+      if (import.meta.env.DEV) console.error("Analytics Error:", e);
     }
   },
 

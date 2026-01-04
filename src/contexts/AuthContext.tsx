@@ -40,24 +40,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
     // 1. Check active session
     supabase.auth.getSession().then(async ({ data: { session } }) => {
-      console.log("🔑 AuthContext: Initial session check result:", { hasSession: !!session, userId: session?.user?.id });
-
       if (!mounted) return;
-
-      // --- DEV BYPASS FALLBACK ---
-      const devUser = localStorage.getItem('auth_user');
-      if (!session && devUser) {
-        console.log("🚧 AuthContext: Detected Dev Bypass User in localStorage");
-        try {
-          const parsed = JSON.parse(devUser);
-          setUser(parsed);
-          setIsLoading(false);
-          clearTimeout(safetyTimeout);
-          return;
-        } catch (e) {
-          console.error("Failed to parse dev user:", e);
-        }
-      }
 
       setSession(session);
       if (session?.user) {
@@ -71,7 +54,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         if (profile) {
           setUser(profile);
         } else {
-          // Fallback to metadata if profile doesn't exist yet (should be created on trigger)
+          // Fallback to metadata if profile doesn't exist yet
           setUser({
             id: session.user.id,
             name: session.user.user_metadata?.name || session.user.email?.split('@')[0] || 'User',

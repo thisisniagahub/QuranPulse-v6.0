@@ -75,6 +75,8 @@ async function saveToCache(query: string, response: HybridResponse) {
   }
 }
 
+import { MCPService } from './mcpService';
+
 // --- MAIN SERVICE ---
 
 export const askUstazAI = async (
@@ -94,7 +96,21 @@ export const askUstazAI = async (
     return response;
   }
 
-  // 2. CHECK DATABASE CACHE (Zero Token)
+  // 2. CHECK MCP (REAL-TIME DATA) - Pulse-MCP Integration
+  // Checks for Intents: Worship (Solat) or Compliance (Fatwa/Halal)
+  try {
+    const mcpResponse = await MCPService.detectAndCall(lastUserMessage, 'ms'); // Default to 'ms' for now
+    if (mcpResponse) {
+      const formatted = formatHybridResponse(mcpResponse);
+      if (onChunk) onChunk(formatted);
+      await saveToCache(lastUserMessage, mcpResponse); // Cache the MCP result
+      return formatted;
+    }
+  } catch (e) {
+    console.error("MCP Routing Failed, falling back to LLM:", e);
+  }
+
+  // 3. CHECK DATABASE CACHE (Zero Token)
   const cachedData = await findCachedResponse(lastUserMessage);
   if (cachedData) {
     const formatted = formatHybridResponse(cachedData);
