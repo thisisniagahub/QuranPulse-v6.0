@@ -36,7 +36,18 @@ interface WorshipResponse {
 
 // --- CORE LOGIC ---
 
+// CORS Headers Helper
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+};
+
 serve(async (req) => {
+  // Handle CORS preflight requests
+  if (req.method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
   try {
     // 1. INPUT VALIDATION
     const { zone = "WLP01", lat, lng, date } = await req.json() as RequestPayload;
@@ -57,7 +68,7 @@ serve(async (req) => {
     if (cachedData) {
       console.log(`✅ [Sequential Thinking] Cache HIT.`);
       return new Response(JSON.stringify({ ...cachedData.data, source: "cache" }), {
-        headers: { "Content-Type": "application/json" },
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
       });
     }
 
@@ -93,7 +104,7 @@ serve(async (req) => {
       }
     } catch (err) {
       console.error(`❌ [Sequential Thinking] JAKIM Fetch Failed:`, err);
-      
+
       // 4. STATE TRANSITION: FAILOVER CALCULATION (Adhan.js)
       if (lat && lng) {
         console.log(`🔄 [Sequential Thinking] Fallback: Calculating locally using Adhan.js`);
@@ -117,7 +128,10 @@ serve(async (req) => {
           },
         };
       } else {
-        return new Response(JSON.stringify({ error: "JAKIM down and no coordinates provided for fallback" }), { status: 500 });
+        return new Response(
+          JSON.stringify({ error: "JAKIM down and no coordinates provided for fallback" }),
+          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
       }
     }
 
@@ -139,10 +153,13 @@ serve(async (req) => {
 
     // 6. FINAL RESPONSE
     return new Response(JSON.stringify(result), {
-      headers: { "Content-Type": "application/json" },
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
     });
 
   } catch (err) {
-    return new Response(JSON.stringify({ error: String(err) }), { status: 500 });
+    return new Response(
+      JSON.stringify({ error: String(err) }),
+      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    );
   }
 });
