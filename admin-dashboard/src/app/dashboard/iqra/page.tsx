@@ -212,9 +212,8 @@ export default function IqraOpsPage() {
                             </div>
                             <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-2">
                                 <div
-                                    className="h-full bg-gradient-to-r from-cyan-500 to-emerald-500 transition-all w-[var(--progress-width)]"
-                                    // eslint-disable-next-line react/forbid-dom-props
-                                    style={{ '--progress-width': `${progress}%` } as React.CSSProperties}
+                                    className="h-full bg-gradient-to-r from-cyan-500 to-emerald-500 transition-all"
+                                    style={{ width: `${progress}%` }}
                                 />
                             </div>
                             <div className="flex justify-between text-xs text-slate-500">

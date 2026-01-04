@@ -64,6 +64,11 @@ export const UstazOrchestrator = {
         return await this.handleZakatIntent(lowerQuery, lang);
     }
 
+    // 6. CLUSTER F: IQRA LEARNING
+    if (this.isIqraIntent(lowerQuery)) {
+        return await this.handleIqraIntent(lowerQuery, lang);
+    }
+
     return null;
   },
 
@@ -93,6 +98,27 @@ export const UstazOrchestrator = {
   isZakatIntent(q: string): boolean {
     const keywords = ['zakat', 'fitrah', 'nisab', 'bayar', 'kalkulator', 'kira'];
     return keywords.some(k => q.includes(k));
+  },
+
+  isIqraIntent(q: string): boolean {
+    const keywords = ['iqra', 'belajar', 'mengaji', 'huruf', 'makhraj', 'tajwid', 'bacaan'];
+    return keywords.some(k => q.includes(k));
+  },
+
+  async handleIqraIntent(query: string, lang: 'ms' | 'en'): Promise<HybridResponse | null> {
+    console.log("🧠 MCP: Routing to 'Iqra Module'");
+    // For now, we guide them to the Iqra section or provide basic tips
+    // In future, this could call an 'mcp-iqra' edge function
+    
+    return {
+        summary: lang === 'ms' 
+            ? "📖 **Modul Iqra Digital**\n\nUntuk belajar mengaji dengan bantuan AI Voice Coach, sila ke bahagian **Iqra** dalam aplikasi."
+            : "📖 **Digital Iqra Module**\n\nTo learn recitation with AI Voice Coach assistance, please navigate to the **Iqra** section.",
+        steps: lang === 'ms' 
+            ? ["Buka menu 'Iqra'", "Pilih Tahap (1-6)", "Mula latihan suara"] 
+            : ["Open 'Iqra' menu", "Select Level (1-6)", "Start voice practice"],
+        widget: { id: 'iqra-navigation', props: { target: '/iqra' } } 
+    };
   },
 
   async handleEducationIntent(query: string, lang: 'ms' | 'en'): Promise<HybridResponse | null> {

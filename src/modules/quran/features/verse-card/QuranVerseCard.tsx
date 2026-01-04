@@ -96,8 +96,8 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={`relative p-6 rounded-2xl transition-all duration-300 ${activeWord
-          ? 'bg-cyan-900/10 border-cyan-500/20 shadow-lg shadow-cyan-500/5'
-          : 'hover:bg-slate-800/30 border-transparent hover:border-slate-700/50'
+        ? 'bg-cyan-900/10 border-cyan-500/20 shadow-lg shadow-cyan-500/5'
+        : 'hover:bg-slate-800/30 border-transparent hover:border-slate-700/50'
         } border`}
     >
       {/* Header: Verse Number & Actions */}
