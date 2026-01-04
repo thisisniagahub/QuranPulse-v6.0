@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QuranVerse } from '../../types';
+import { QuranVerse } from '../../../../types';
 
 interface VerseActionMenuProps {
   verse: QuranVerse;
