@@ -350,23 +350,23 @@ const QwerDemoSection: React.FC = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-24 bg-gradient-to-r from-[#22d3ee]/10 via-transparent to-amber-500/10 rounded-3xl border border-white/10 p-8 md:p-12"
+                    className="mt-24 bg-gradient-to-r from-cyan-100 via-white to-amber-50 rounded-3xl border border-white p-8 md:p-12 shadow-sm"
                 >
                     <div className="grid md:grid-cols-3 gap-8 items-center">
                         <div className="text-center">
-                            <div className="text-5xl font-bold text-white mb-2">18.5</div>
-                            <div className="text-sm text-slate-400">Average Q-WER Score</div>
-                            <div className="text-xs text-emerald-400 font-bold mt-1">INTERMEDIATE LEVEL</div>
+                            <div className="text-5xl font-bold text-slate-800 mb-2 font-[Montserrat]">18.5</div>
+                            <div className="text-sm text-slate-500 font-medium">Average Q-WER Score</div>
+                            <div className="text-xs text-emerald-600 font-bold mt-1 tracking-widest uppercase">INTERMEDIATE LEVEL</div>
                         </div>
-                        <div className="text-center md:border-x border-white/10 px-8">
-                            <div className="text-5xl font-bold text-[#22d3ee] mb-2">&lt; 200ms</div>
-                            <div className="text-sm text-slate-400">Analysis Latency</div>
-                            <div className="text-xs text-[#22d3ee] font-bold mt-1">REAL-TIME FEEDBACK</div>
+                        <div className="text-center md:border-x border-slate-100 px-8">
+                            <div className="text-5xl font-bold text-cyan-600 mb-2 font-[Montserrat]">&lt; 200ms</div>
+                            <div className="text-sm text-slate-500 font-medium">Analysis Latency</div>
+                            <div className="text-xs text-cyan-600 font-bold mt-1 tracking-widest uppercase">REAL-TIME FEEDBACK</div>
                         </div>
                         <div className="text-center">
-                            <div className="text-5xl font-bold text-amber-400 mb-2">4</div>
-                            <div className="text-sm text-slate-400">Error Categories</div>
-                            <div className="text-xs text-amber-400 font-bold mt-1">THEOLOGICAL WEIGHTED</div>
+                            <div className="text-5xl font-bold text-amber-500 mb-2 font-[Montserrat]">4</div>
+                            <div className="text-sm text-slate-500 font-medium">Error Categories</div>
+                            <div className="text-xs text-amber-600 font-bold mt-1 tracking-widest uppercase">THEOLOGICAL WEIGHTED</div>
                         </div>
                     </div>
                 </motion.div>

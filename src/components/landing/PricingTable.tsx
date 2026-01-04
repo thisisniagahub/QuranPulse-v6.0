@@ -103,12 +103,12 @@ const PricingTable: React.FC = () => {
                     </p>
 
                     {/* Period Toggle */}
-                    <div className="inline-flex items-center bg-white/5 border border-white/10 rounded-xl p-1">
+                    <div className="inline-flex items-center bg-slate-100/50 border border-slate-200 rounded-xl p-1 shadow-inner">
                         <button
                             onClick={() => setPeriod('monthly')}
                             className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all ${period === 'monthly'
-                                ? 'bg-[#22d3ee] text-[#020617]'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-cyan-600 text-white shadow-md'
+                                : 'text-slate-600 hover:text-slate-900'
                                 }`}
                         >
                             Bulanan
@@ -116,8 +116,8 @@ const PricingTable: React.FC = () => {
                         <button
                             onClick={() => setPeriod('yearly')}
                             className={`px-6 py-2.5 rounded-lg text-sm font-bold transition-all flex items-center gap-2 ${period === 'yearly'
-                                ? 'bg-[#22d3ee] text-[#020617]'
-                                : 'text-slate-400 hover:text-white'
+                                ? 'bg-cyan-600 text-white shadow-md'
+                                : 'text-slate-600 hover:text-slate-900'
                                 }`}
                         >
                             Tahunan
