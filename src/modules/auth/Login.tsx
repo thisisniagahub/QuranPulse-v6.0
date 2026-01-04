@@ -114,12 +114,12 @@ export const Login = () => {
     }, []);
 
     return (
-        <div className="min-h-screen bg-background-dark flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-blue-100 via-cyan-50 to-blue-200 flex items-center justify-center p-4 relative overflow-hidden">
             {/* 🌌 Background Atmosphere (Animated) */}
-            <div className="absolute inset-0 z-0 bg-[#020617]">
+            <div className="absolute inset-0 z-0">
                 {/* Mesh Gradients */}
-                <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-primary/20 rounded-full blur-[120px] animate-pulse-slow"></div>
-                <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-indigo-900/40 rounded-full blur-[120px] animate-pulse-slow delay-1000"></div>
+                <div className="absolute top-[-20%] left-[-10%] w-[70%] h-[70%] bg-cyan-300/30 rounded-full blur-[120px] animate-pulse-slow"></div>
+                <div className="absolute bottom-[-20%] right-[-10%] w-[70%] h-[70%] bg-blue-400/40 rounded-full blur-[120px] animate-pulse-slow delay-1000"></div>
 
                 {/* Starfield Overlay - assuming we have a CSS class or image for this, if not, using simple dots */}
                 <div className="absolute inset-0 opacity-30 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] brightness-100 contrast-150"></div>
@@ -141,10 +141,10 @@ export const Login = () => {
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="w-full max-w-md relative z-10"
+                className="w-full max-w-sm relative z-10"
             >
                 {/* Glass Card */}
-                <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-3xl p-8 shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] relative overflow-hidden group">
+                <div className="bg-white/80 backdrop-blur-2xl border border-cyan-200/50 rounded-3xl p-8 shadow-[0_8px_32px_rgba(0,0,0,0.1)] relative overflow-hidden group">
 
                     {/* Shimmer Effect */}
                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full group-hover:animate-shimmer pointer-events-none"></div>
@@ -169,7 +169,7 @@ export const Login = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.3 }}
-                            className="text-4xl font-black text-white mb-2 font-heading tracking-tight"
+                            className="text-4xl font-black text-slate-900 mb-2 font-heading tracking-tight"
                         >
                             Quran <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Pulse</span>
                         </motion.h2>
@@ -177,7 +177,7 @@ export const Login = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ delay: 0.4 }}
-                            className="text-blue-200/60 text-sm font-medium tracking-wide"
+                            className="text-slate-600 text-sm font-medium tracking-wide"
                         >
                             Sistem Operasi Rohani Anda
                         </motion.p>
@@ -193,7 +193,7 @@ export const Login = () => {
                                 type="button"
                                 onClick={handleGoogleLogin}
                                 disabled={loading}
-                                className="flex items-center justify-center gap-3 py-3 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 rounded-xl text-white text-sm font-medium transition-all duration-300 group disabled:opacity-50"
+                                className="flex items-center justify-center gap-3 py-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-cyan-400 rounded-xl text-slate-700 text-sm font-medium transition-all duration-300 group disabled:opacity-50 shadow-sm"
                             >
                                 <i className="fa-brands fa-google text-red-500 text-lg group-hover:scale-110 transition-transform"></i>
                                 Google
@@ -204,7 +204,7 @@ export const Login = () => {
                                 transition={{ delay: 0.5 }}
                                 type="button"
                                 onClick={handleAppleLogin}
-                                className="flex items-center justify-center gap-3 py-3 bg-white/5 hover:bg-white/10 border border-white/5 hover:border-white/20 rounded-xl text-white text-sm font-medium transition-all duration-300 group"
+                                className="flex items-center justify-center gap-3 py-3 bg-white hover:bg-slate-50 border border-slate-200 hover:border-cyan-400 rounded-xl text-slate-700 text-sm font-medium transition-all duration-300 group shadow-sm"
                             >
                                 <i className="fa-brands fa-apple text-white text-lg group-hover:scale-110 transition-transform"></i>
                                 Apple
@@ -213,7 +213,7 @@ export const Login = () => {
 
                         <div className="relative flex items-center gap-4 my-6">
                             <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent flex-1"></div>
-                            <span className="text-[10px] text-white/30 font-bold uppercase tracking-widest">ATAU</span>
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-widest">ATAU</span>
                             <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent flex-1"></div>
                         </div>
 
@@ -224,16 +224,16 @@ export const Login = () => {
                             transition={{ delay: 0.6 }}
                             className="space-y-1.5"
                         >
-                            <label className="text-xs font-bold text-cyan-400 uppercase tracking-wider ml-1">Emel</label>
+                            <label className="text-xs font-bold text-cyan-600 uppercase tracking-wider ml-1">Emel</label>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <i className="fa-solid fa-envelope text-white/40 group-focus-within:text-cyan-400 transition-colors duration-300"></i>
+                                    <i className="fa-solid fa-envelope text-slate-400 group-focus-within:text-cyan-600 transition-colors duration-300"></i>
                                 </div>
                                 <input
                                     type="email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="w-full bg-black/20 focus:bg-black/40 border border-white/10 focus:border-cyan-500/50 rounded-xl py-4 pl-11 pr-4 text-white placeholder:text-white/20 outline-none transition-all duration-300 text-sm font-medium backdrop-blur-sm"
+                                    className="w-full bg-white focus:bg-white border border-slate-200 focus:border-cyan-500 rounded-xl py-4 pl-11 pr-4 text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-300 text-sm font-medium backdrop-blur-sm shadow-sm"
                                     placeholder="nama@email.com"
                                     autoComplete="email"
                                 />
@@ -248,25 +248,25 @@ export const Login = () => {
                             className="space-y-1.5"
                         >
                             <div className="flex justify-between items-center ml-1">
-                                <label className="text-xs font-bold text-cyan-400 uppercase tracking-wider">Kata Laluan</label>
-                                <a href="#" className="text-xs text-blue-300/70 hover:text-cyan-400 transition-colors">Lupa?</a>
+                                <label className="text-xs font-bold text-cyan-600 uppercase tracking-wider">Kata Laluan</label>
+                                <a href="#" className="text-xs text-slate-600 hover:text-cyan-600 transition-colors">Lupa?</a>
                             </div>
                             <div className="relative group">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                    <i className="fa-solid fa-lock text-white/40 group-focus-within:text-cyan-400 transition-colors duration-300"></i>
+                                    <i className="fa-solid fa-lock text-slate-400 group-focus-within:text-cyan-600 transition-colors duration-300"></i>
                                 </div>
                                 <input
                                     type={showPassword ? "text" : "password"}
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    className="w-full bg-black/20 focus:bg-black/40 border border-white/10 focus:border-cyan-500/50 rounded-xl py-4 pl-11 pr-12 text-white placeholder:text-white/20 outline-none transition-all duration-300 text-sm font-medium backdrop-blur-sm"
+                                    className="w-full bg-white focus:bg-white border border-slate-200 focus:border-cyan-500 rounded-xl py-4 pl-11 pr-12 text-slate-900 placeholder:text-slate-400 outline-none transition-all duration-300 text-sm font-medium backdrop-blur-sm shadow-sm"
                                     placeholder="••••••••"
                                     autoComplete="current-password"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword(!showPassword)}
-                                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-white/40 hover:text-white transition-colors"
+                                    className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-slate-700 transition-colors"
                                 >
                                     {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                                 </button>
@@ -293,7 +293,7 @@ export const Login = () => {
                                         <i className={`fa-solid fa-check text-[10px] text-white transition-transform duration-200 ${rememberMe ? 'scale-100' : 'scale-0'}`}></i>
                                     </div>
                                 </div>
-                                <span className="text-sm text-white/60 group-hover:text-white transition-colors">Ingat Saya</span>
+                                <span className="text-sm text-slate-600 group-hover:text-slate-900 transition-colors">Ingat Saya</span>
                             </label>
                         </motion.div>
 
@@ -302,7 +302,7 @@ export const Login = () => {
                             <motion.div
                                 initial={{ opacity: 0, height: 0, y: -10 }}
                                 animate={{ opacity: 1, height: 'auto', y: 0 }}
-                                className="bg-red-500/10 border border-red-500/30 text-red-300 text-xs p-4 rounded-xl flex items-center gap-3 backdrop-blur-md"
+                                className="bg-red-50 border border-red-200 text-red-700 text-xs p-4 rounded-xl flex items-center gap-3 backdrop-blur-md shadow-sm"
                             >
                                 <i className="fa-solid fa-triangle-exclamation text-lg"></i>
                                 <span>{error}</span>
@@ -341,9 +341,9 @@ export const Login = () => {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ delay: 1.0 }}
-                        className="mt-8 text-center text-sm text-white/50"
+                        className="mt-8 text-center text-sm text-slate-600"
                     >
-                        Belum ada akaun? <span className="text-cyan-400 font-bold cursor-pointer hover:text-cyan-300 hover:underline transition-colors">Daftar Sekarang</span>
+                        Belum ada akaun? <span className="text-cyan-600 font-bold cursor-pointer hover:text-cyan-700 hover:underline transition-colors">Daftar Sekarang</span>
                     </motion.div>
                 </div>
 
@@ -356,7 +356,7 @@ export const Login = () => {
                 >
                     <a
                         onClick={() => navigate('/privacy')}
-                        className="text-[10px] text-white/20 hover:text-cyan-400 transition-colors cursor-pointer uppercase tracking-[0.2em] hover:tracking-[0.3em] duration-300"
+                        className="text-[10px] text-slate-400 hover:text-cyan-600 transition-colors cursor-pointer uppercase tracking-[0.2em] hover:tracking-[0.3em] duration-300"
                     >
                         Polisi Privasi & Adab Data
                     </a>
