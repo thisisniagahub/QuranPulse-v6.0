@@ -1,48 +1,73 @@
 import { supabase } from '../lib/supabase';
 
-export interface ClassificationResult {
-    label: string;
-    score: number;
+export interface IqraProgress {
+  volume: number;
+  lesson_id: string;
+  score: number;
+  stars: number;
+  completed_at: string;
 }
 
-/**
- * Sends audio blob to the 'audio-classifier' Edge Function.
- * Wraps the logic to convert Blob -> FormData -> API Call.
- */
-export const classifyAudio = async (audioBlob: Blob): Promise<ClassificationResult[]> => {
-    try {
-        const formData = new FormData();
-        formData.append('file', audioBlob, 'recording.webm');
+export const IqraService = {
+  // Save or Update Progress
+  async saveProgress(volume: number, lessonId: string, score: number) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return null;
 
-        const { data, error } = await supabase.functions.invoke('audio-classifier', {
-            body: formData,
-            // Header is implicitly handled if using FormData with Supabase client usually, 
-            // but sometimes explicit boundary is safer. 
-            // However, Supabase JS invoke handles FormData serialization automatically.
-        });
+    // Calculate stars based on score
+    const stars = score >= 90 ? 3 : score >= 80 ? 2 : 1;
 
-        if (error) {
-            console.error('Iqra AI Error:', error);
-            throw new Error(error.message);
-        }
+    const { data, error } = await supabase
+      .from('iqra_progress')
+      .upsert({
+        user_id: user.id,
+        volume,
+        lesson_id: lessonId,
+        score,
+        stars,
+        completed_at: new Date().toISOString()
+      }, { onConflict: 'user_id, lesson_id' })
+      .select()
+      .single();
 
-        return data as ClassificationResult[];
-    } catch (err) {
-        console.error('Classification Failed:', err);
-        throw err;
+    if (error) {
+      console.error('Error saving progress:', error);
+      return null;
     }
-};
+    return data;
+  },
 
-/**
- * Mock Service (Fallback) if API is offline
- */
-export const mockClassifyAudio = async (audioBlob: Blob): Promise<ClassificationResult[]> => {
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve([
-                { label: 'ba', score: 0.95 },
-                { label: 'ta', score: 0.05 }
-            ]);
-        }, 800);
-    });
+  // Get Progress for a Volume
+  async getVolumeProgress(volume: number) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return [];
+
+    const { data, error } = await supabase
+      .from('iqra_progress')
+      .select('*')
+      .eq('user_id', user.id)
+      .eq('volume', volume);
+
+    if (error) {
+      console.error('Error fetching progress:', error);
+      return [];
+    }
+    return data as IqraProgress[];
+  },
+
+  // Get Total Stars
+  async getTotalStars() {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return 0;
+
+    const { data, error } = await supabase
+      .from('iqra_progress')
+      .select('stars')
+      .eq('user_id', user.id);
+
+    if (error) return 0;
+    
+    // Sum up stars
+    return data.reduce((acc, curr) => acc + (curr.stars || 0), 0);
+  }
 };

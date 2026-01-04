@@ -74,7 +74,7 @@ export async function middleware(request: NextRequest) {
         const userRole = user.app_metadata?.role || user.user_metadata?.role
 
         // Bypass for development if needed (remove in production)
-        // if (process.env.NODE_ENV === 'development') return response;
+        if (process.env.NODE_ENV === 'development') return response;
 
         if (userRole !== 'admin') {
             // Redirect to unauthorized page or back to home

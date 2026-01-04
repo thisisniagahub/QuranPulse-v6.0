@@ -1,70 +1,110 @@
+import { CheckCircle2, AlertTriangle, Clock, Database, FileText, Upload, RefreshCw, ExternalLink } from 'lucide-react'
+
 export default function ContentPage() {
+    const syncSources = [
+        { name: 'JAKIM E-Solat (Prayer Times)', source: 'e-solat.gov.my/api', status: 'live', statusText: 'Live', lastSync: 'Real-time' },
+        { name: 'Halal Directory (SmartHalal)', source: 'myehalal.halal.gov.my', status: 'warning', statusText: 'Delay', lastSync: '2 hours ago' },
+        { name: 'E-Fatwa Repository', source: 'e-smaf.islam.gov.my', status: 'synced', statusText: 'Synced', lastSync: 'Daily at 00:00' },
+        { name: 'Mosque Database', source: 'jakim.gov.my/masjid', status: 'synced', statusText: 'Synced', lastSync: '6 hours ago' },
+    ]
+
+    const documents = [
+        { name: 'GARIS PANDUAN FATWA MALAYSIA.pdf', size: '651 KB', status: 'Indexed', chunks: 124 },
+        { name: 'GP_Perhotelan_Perlancongan.pdf', size: '293 KB', status: 'Indexed', chunks: 56 },
+        { name: 'Social_Media_ICT_dalam_Islam.pdf', size: '7.9 MB', status: 'Processing', chunks: 0 },
+        { name: 'nasihat.pdf', size: '2.9 MB', status: 'Indexed', chunks: 89 },
+        { name: 'Fiqh_Muamalat_2024.pdf', size: '4.2 MB', status: 'Queued', chunks: 0 },
+    ]
+
+    const complianceChecks = [
+        { name: 'Uthmani Text Verified', desc: 'MD5: a4f...21b', status: true, icon: '✅' },
+        { name: 'Qibla Algo Validated', desc: 'vs JAKIM Geo', status: true, icon: '🕌' },
+        { name: 'Audio Recitation', desc: 'Qari: Mishary', status: true, icon: '🎙️' },
+        { name: 'Translation Source', desc: 'JAKIM Official', status: true, icon: '📖' },
+    ]
+
     return (
-        <div className="p-8 space-y-8 text-white">
-            <div>
-                <h2 className="text-3xl font-bold tracking-tight">Content Operations</h2>
-                <p className="text-slate-400">Manage Quran metadata, Tafsir, and official JAKIM data syncs.</p>
+        <div className="p-8 space-y-8 text-white min-h-screen">
+            {/* Header */}
+            <div className="flex items-center justify-between animate-fade-in">
+                <div>
+                    <h2 className="text-3xl font-bold tracking-tight">Content Operations</h2>
+                    <p className="text-slate-400 mt-1">Manage Quran metadata, Tafsir, and official JAKIM data syncs.</p>
+                </div>
+                <div className="flex gap-2">
+                    <button className="btn-ghost flex items-center gap-2">
+                        <Upload className="h-4 w-4" />
+                        Upload PDF
+                    </button>
+                    <button className="btn-primary flex items-center gap-2">
+                        <RefreshCw className="h-4 w-4" />
+                        Sync All
+                    </button>
+                </div>
             </div>
 
             <div className="grid gap-6 md:grid-cols-2">
                 {/* Sync Status Card */}
-                <div className="rounded-xl border border-slate-800 bg-slate-900 p-6">
-                    <h3 className="text-lg font-medium mb-4">Official Data Sync (JAKIM)</h3>
-                    <div className="space-y-4">
-                        <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-                            <div>
-                                <div className="font-medium text-slate-200">JAKIM E-Solat (Prayer Times)</div>
-                                <div className="text-xs text-slate-500">Source: e-solat.gov.my/api</div>
+                <div className="glass-card rounded-xl p-6 animate-fade-in">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                            <Database className="h-5 w-5 text-cyan-400" />
+                            Official Data Sync (JAKIM)
+                        </h3>
+                    </div>
+                    <div className="space-y-3">
+                        {syncSources.map((source, i) => (
+                            <div key={i} className="flex items-center justify-between p-4 rounded-lg bg-slate-800/30 border border-slate-700/50 hover:border-slate-600 transition-colors">
+                                <div>
+                                    <div className="font-medium text-slate-200">{source.name}</div>
+                                    <div className="text-xs text-slate-500 flex items-center gap-1">
+                                        <ExternalLink className="h-3 w-3" />
+                                        {source.source}
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <div className="text-right">
+                                        <span className={`text-xs font-medium ${source.status === 'live' ? 'text-emerald-400' :
+                                                source.status === 'warning' ? 'text-amber-400' :
+                                                    'text-slate-400'
+                                            }`}>{source.statusText}</span>
+                                        <div className="text-[10px] text-slate-500">{source.lastSync}</div>
+                                    </div>
+                                    <span className={`flex h-2.5 w-2.5 rounded-full ${source.status === 'live' ? 'bg-emerald-500 animate-pulse' :
+                                            source.status === 'warning' ? 'bg-amber-500' :
+                                                'bg-blue-500'
+                                        }`}></span>
+                                </div>
                             </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-xs text-emerald-400">Live</span>
-                                <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                            </div>
-                        </div>
-                        <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-                            <div>
-                                <div className="font-medium text-slate-200">Halal Directory (SmartHalal)</div>
-                                <div className="text-xs text-slate-500">Source: myehalal.halal.gov.my</div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-xs text-amber-400">Scraper Delay (2h)</span>
-                                <span className="flex h-2 w-2 rounded-full bg-amber-500"></span>
-                            </div>
-                        </div>
-                        <div className="flex items-center justify-between p-4 rounded-lg bg-slate-800/50 border border-slate-700">
-                            <div>
-                                <div className="font-medium text-slate-200">E-Fatwa Repository</div>
-                                <div className="text-xs text-slate-500">Source: e-smaf.islam.gov.my</div>
-                            </div>
-                            <div className="flex items-center gap-2">
-                                <span className="text-xs text-slate-400">Synced Daily</span>
-                                <span className="flex h-2 w-2 rounded-full bg-blue-500"></span>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
 
-                {/* Knowledge Base Sources (PDF) */}
-                <div className="rounded-xl border border-slate-800 bg-slate-900 p-6">
-                    <h3 className="text-lg font-medium mb-4">Knowledge Base Sources (PDF)</h3>
-                    <div className="space-y-3">
-                        {[
-                            { name: 'GARIS PANDUAN FATWA MALAYSIA.pdf', size: '651 KB', status: 'Indexed' },
-                            { name: 'GP_Perhotelan_Perlancongan.pdf', size: '293 KB', status: 'Indexed' },
-                            { name: 'Social_Media_ICT_dalam_Islam.pdf', size: '7.9 MB', status: 'Processing' },
-                            { name: 'nasihat.pdf', size: '2.9 MB', status: 'Indexed' },
-                        ].map((doc) => (
-                            <div key={doc.name} className="flex items-center justify-between p-3 rounded bg-slate-800/30 border border-slate-700/50">
+                {/* Knowledge Base Sources */}
+                <div className="glass-card rounded-xl p-6 animate-fade-in">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                            <FileText className="h-5 w-5 text-indigo-400" />
+                            Knowledge Base (RAG)
+                        </h3>
+                        <span className="text-xs text-slate-500">269 chunks indexed</span>
+                    </div>
+                    <div className="space-y-2">
+                        {documents.map((doc, i) => (
+                            <div key={i} className="flex items-center justify-between p-3 rounded-lg bg-slate-800/30 border border-slate-700/50 hover:border-slate-600 transition-colors">
                                 <div className="flex items-center gap-3">
-                                    <div className="p-2 rounded bg-indigo-500/10 text-indigo-400">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" /><polyline points="14 2 14 8 20 8" /></svg>
+                                    <div className="p-2 rounded-lg bg-indigo-500/10">
+                                        <FileText className="h-4 w-4 text-indigo-400" />
                                     </div>
                                     <div>
-                                        <div className="text-sm font-medium text-slate-300 truncate max-w-[150px]">{doc.name}</div>
-                                        <div className="text-[10px] text-slate-500">{doc.size}</div>
+                                        <div className="text-sm font-medium text-slate-300 truncate max-w-[180px]">{doc.name}</div>
+                                        <div className="text-[10px] text-slate-500">{doc.size} • {doc.chunks} chunks</div>
                                     </div>
                                 </div>
-                                <span className={`text-[10px] px-2 py-0.5 rounded ${doc.status === 'Indexed' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
+                                <span className={`badge ${doc.status === 'Indexed' ? 'badge-success' :
+                                        doc.status === 'Processing' ? 'badge-warning' :
+                                            'badge-info'
+                                    }`}>
                                     {doc.status}
                                 </span>
                             </div>
@@ -73,40 +113,54 @@ export default function ContentPage() {
                 </div>
 
                 {/* Compliance Checker */}
-                <div className="rounded-xl border border-slate-800 bg-slate-900 p-6">
-                    <h3 className="text-lg font-medium mb-4">Compliance Check Indicator</h3>
-                    <div className="grid grid-cols-2 gap-4">
-                        <div className="p-4 rounded-lg bg-emerald-950/30 border border-emerald-900 flex flex-col items-center justify-center text-center">
-                            <span className="text-2xl mb-2">✅</span>
-                            <span className="text-sm font-medium text-emerald-400">Uthmani Text Verified</span>
-                            <span className="text-[10px] text-emerald-600">MD5: a4f...21b</span>
-                        </div>
-                        <div className="p-4 rounded-lg bg-emerald-950/30 border border-emerald-900 flex flex-col items-center justify-center text-center">
-                            <span className="text-2xl mb-2">🕌</span>
-                            <span className="text-sm font-medium text-emerald-400">Qibla Algo Validated</span>
-                            <span className="text-[10px] text-emerald-600">vs JAKIM Geo</span>
-                        </div>
+                <div className="glass-card rounded-xl p-6 animate-fade-in">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="text-lg font-semibold flex items-center gap-2">
+                            <CheckCircle2 className="h-5 w-5 text-emerald-400" />
+                            Compliance Verification
+                        </h3>
+                        <span className="badge badge-success">All Passed</span>
                     </div>
-                    <div className="mt-4 p-4 rounded-lg bg-amber-950/30 border border-amber-900">
+                    <div className="grid grid-cols-2 gap-3">
+                        {complianceChecks.map((check, i) => (
+                            <div key={i} className="p-4 rounded-lg bg-emerald-950/20 border border-emerald-900/30 flex flex-col items-center justify-center text-center">
+                                <span className="text-2xl mb-2">{check.icon}</span>
+                                <span className="text-sm font-medium text-emerald-400">{check.name}</span>
+                                <span className="text-[10px] text-emerald-600 mt-0.5">{check.desc}</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mt-4 p-4 rounded-lg bg-amber-950/20 border border-amber-900/30">
                         <div className="flex items-center gap-2 mb-2">
-                            <span className="text-amber-500">⚠️</span>
+                            <AlertTriangle className="h-4 w-4 text-amber-500" />
                             <span className="font-medium text-amber-200">Pending Review</span>
                         </div>
                         <p className="text-xs text-amber-400/80">3 new AI Chat flags require RLHF review.</p>
                     </div>
-                    {/* Masjid Database Stats */}
-                    <div className="mt-4 pt-4 border-t border-slate-800">
-                        <div className="flex justify-between text-sm text-slate-400">
-                            <span>Total Mosques Verified:</span>
-                            <span className="text-slate-200 font-mono">6,432</span>
-                        </div>
+                </div>
+
+                {/* Database Stats */}
+                <div className="glass-card rounded-xl p-6 animate-fade-in">
+                    <h3 className="text-lg font-semibold mb-6 flex items-center gap-2">
+                        <Database className="h-5 w-5 text-purple-400" />
+                        Database Statistics
+                    </h3>
+                    <div className="space-y-4">
+                        {[
+                            { label: 'Total Mosques Verified', value: '6,432' },
+                            { label: 'Halal Products', value: '12,891' },
+                            { label: 'Fatwa Entries', value: '2,456' },
+                            { label: 'Hadith Collection', value: '7,563' },
+                            { label: 'AI Knowledge Cache', value: '45,231 entries' },
+                        ].map((stat, i) => (
+                            <div key={i} className="flex justify-between items-center p-3 rounded-lg bg-slate-800/30">
+                                <span className="text-sm text-slate-400">{stat.label}</span>
+                                <span className="text-sm font-mono text-slate-200">{stat.value}</span>
+                            </div>
+                        ))}
                     </div>
                 </div>
-            </div>
-
-            {/* Content Editor Placeholder */}
-            <div className="rounded-xl border border-slate-800 bg-slate-900 p-6 h-[400px] flex items-center justify-center text-slate-500 border-dashed">
-                CMS Editor Component (Tiptap / JSON Editor)
             </div>
         </div>
     )

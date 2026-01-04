@@ -12,27 +12,27 @@ graph TD
         UI[UI Components]
         Store[Zustand Store]
         Router[React Router v7]
+        MCP_Router[mcpService]
     end
     
     subgraph Backend [Supabase]
         DB[(PostgreSQL)]
         Auth[GoTrue Auth]
-        Edge[Edge Functions]
-    end
-    
-    subgraph AI_Layer [External Intelligence]
-        Gemini[Google Gemini 2.0]
-        Groq[Groq LPU]
-        Whisper[ASR Engine]
+        subgraph MCP [MCP Servers]
+            Edge[chat-proxy]
+            Quran[mcp-quran]
+            Zakat[mcp-zakat]
+            Worship[mcp-worship]
+        end
     end
 
     User --> UI
     UI --> Store
     Store --> DB
-    Store --> Edge
+    Store --> MCP_Router
+    MCP_Router --> MCP
     Edge --> Gemini
     Edge --> Groq
-    UI --> Whisper
 ```
 
 ## Core Modules
@@ -40,21 +40,20 @@ graph TD
 ### 1. Client-Side (The "Body")
 * **Framework:** React 18 with Vite for lightning-fast HMR.
 * **State Management:** `zustand` for global state (User, Theme, Player).
-* **Styling:** `index.css` with CSS Variables for themes (`data-theme="nabdh"`).
+* **MCP Service:** `mcpService.ts` acts as the client-side router, detecting user intent and dispatching to the correct domain server.
 
 ### 2. Server-Side (The "Brain")
-* **Database:** PostgreSQL with Row Level Security (RLS). Direct access from client via `@supabase/supabase-js`.
-* **Edge Functions:** TypeScript/Deno functions in `supabase/functions`.
-  * `chat-proxy`: Handles AI requests, key rotation, and context window management.
-  * `verify-payment`: Secure webhook for payment gateways.
+* **Database:** PostgreSQL with Row Level Security (RLS). Optimized with **Partial Indexes** for the MCP cache layer.
+* **MCP Edge Functions:** Domain-driven TypeScript/Deno functions in `supabase/functions`.
+  * `chat-proxy`: Core AI orchestration and key rotation.
+  * `mcp-worship`: Prayer times with JAKIM API + Adhan.js failover.
+  * `mcp-quran`: Concept-based semantic search across translations.
+  * `mcp-zakat`: State-specific Zakat calculation engine (MY-standard).
+  * `mcp-compliance`: Halal and Fatwa lookup service.
 
 ### 3. AI Pipeline (The "Soul")
-* **Text Generation:** Hybrid failover strategy.
-  * Primary: **Groq (Llama 3)** for speed (<300ms latency).
-  * Complex/Reasoning: **Gemini 2.0 Flash** for depth.
-* **Speech Recognition (ASR):**
-  * CURRENT: Browser `SpeechRecognition` API (Pollyfill).
-  * TARGET: Server-side Whisper pipeline via FastAPI (Prototype exists in `prototypes/asr_engine`).
+* **Text Generation:** Hybrid failover strategy (Groq/Gemini) with **Zero Token Cache** (DB lookup before LLM).
+* **Testing:** Automated CI with Jest (Unit/Integration) and Playwright (E2E).
 
 ## Data Flow
 1. **Read:** Client fetches JSON data (Surahs/Hadith) from `src/data` (static) or Supabase (dynamic user data).
@@ -64,6 +63,7 @@ graph TD
 ## Security
 * **RLS:** All tables provided `Enable RLS`. Users can only select/insert their own rows.
 * **Env Vars:** API Keys stored in Supabase Vault not exposed to client.
+* **Hardened Admin:** Strict role-based access for Admin Dashboard.
 
 ## Future Scalability
 * **Microservices:** The ASR Engine is designed to be peeled off into a separate Python/FastAPI container service.

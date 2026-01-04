@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { AdminSidebar } from '@/components/admin/Sidebar'
-import '../globals.css'
+import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
 
