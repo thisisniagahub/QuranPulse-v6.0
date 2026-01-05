@@ -253,7 +253,7 @@ const ThreePhoneMockup: React.FC = () => {
             </div>
 
             {/* Phones Container - Scale down on mobile */}
-            <div className="relative flex items-end justify-center scale-[0.55] sm:scale-[0.7] md:scale-[0.85] lg:scale-100 origin-center">
+            <div className="relative flex items-end justify-center scale-[0.45] xs:scale-[0.55] sm:scale-[0.7] md:scale-[0.85] lg:scale-100 origin-center">
 
                 {/* Left Phone - Prayer Times */}
                 <motion.div

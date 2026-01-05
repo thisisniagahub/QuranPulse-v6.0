@@ -148,10 +148,10 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       </nav>
 
       {/* 2. HERO SECTION */}
-      <section className="relative min-h-[90vh] flex items-center pt-24 pb-16 overflow-hidden">
+      <section className="relative min-h-[90vh] flex items-center pt-20 md:pt-24 pb-12 md:pb-16 overflow-hidden">
         {/* Background removed - clean look */}
 
-        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-6 md:gap-16 items-center relative z-10">
           {/* Text Content */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
@@ -164,7 +164,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               #1 App Mengaji AI di Malaysia
             </div>
 
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-[Poppins] font-extrabold leading-[1.1] mb-6 md:mb-8 tracking-tight text-white">
+            <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-[Poppins] font-extrabold leading-[1.1] mb-4 md:mb-8 tracking-tight text-white">
               <span className="text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400">Mengaji Jadi Mudah</span>
               <br />
               <span className="text-cyan-400 drop-shadow-sm">
