@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useRef, useEffect, ReactNode } from 'react';
+import { audioCache } from '../services/audioCacheService';
 
 // Word segment for karaoke highlighting
 export interface WordSegment {
@@ -71,9 +72,9 @@ export const AudioPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
     audioRef.current = new Audio();
     // Enable CORS to avoid issues with some CDNs and allows analyzing audio if needed later
     audioRef.current.crossOrigin = "anonymous";
-    
+
     const audio = audioRef.current;
-    
+
     const handleTimeUpdate = () => {
       setCurrentTime(audio.currentTime);
       setDuration(audio.duration || 0);
@@ -117,7 +118,7 @@ export const AudioPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
   useEffect(() => {
     if (sleepTimer && isPlaying) {
       if (sleepTimeoutRef.current) clearTimeout(sleepTimeoutRef.current);
-      
+
       sleepTimeoutRef.current = setTimeout(() => {
         stopTrack();
         setSleepTimer(null);
@@ -165,11 +166,15 @@ export const AudioPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
 
     // ✨ FIX: Pause first to prevent AbortError
     audioRef.current.pause();
-    
+
     setCurrentTrack(track);
-    audioRef.current.src = track.url;
+
+    // ⚡ CACHE INTEGRATION: Get Blob URL if available, or trigger background download
+    const playableUrl = await audioCache.getAudio(track.url);
+
+    audioRef.current.src = playableUrl;
     audioRef.current.load(); // Explicit load
-    
+
     try {
       const playPromise = audioRef.current.play();
       if (playPromise !== undefined) {
@@ -188,6 +193,7 @@ export const AudioPlayerProvider: React.FC<{ children: ReactNode }> = ({ childre
     }
   };
 
+  // ... existing code ...
   const pauseTrack = () => {
     if (audioRef.current) {
       audioRef.current.pause();

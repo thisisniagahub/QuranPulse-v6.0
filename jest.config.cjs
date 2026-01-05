@@ -2,6 +2,17 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
+
+  // Exclude Playwright e2e tests (they use their own runner)
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/src/e2e/',
+  ],
+
+  // Worker stability settings
+  maxWorkers: '50%',
+  workerIdleMemoryLimit: '512MB',
+
   moduleNameMapper: {
     '^@/assets/.*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/src/__mocks__/fileMock.js',
     '^@/(.*)$': '<rootDir>/src/$1',
