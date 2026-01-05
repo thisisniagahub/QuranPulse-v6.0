@@ -16,7 +16,9 @@ export default function BotControlCenter() {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [status, setStatus] = useState<'CONNECTING' | 'CONNECTED' | 'DISCONNECTED'>('CONNECTING');
     const [qrCode, setQrCode] = useState<string | null>(null);
+    const [whatsappReady, setWhatsappReady] = useState(false); // Restored
     const [telegramStatus, setTelegramStatus] = useState<{ ready: boolean; username?: string; error?: string }>({ ready: false });
+    const [logs, setLogs] = useState<any[]>([]); // Restored
 
     useEffect(() => {
         const newSocket = io(BOT_SERVER_URL);

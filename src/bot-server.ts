@@ -1,6 +1,6 @@
 import '../scripts/env-loader.js'; // MUST BE FIRST - Load env vars before anything else
 
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
@@ -35,7 +35,7 @@ const whatsappBot = new WhatsappService(io); // Pass IO instance
 
 // --- API ENDPOINTS (For Admin Dashboard) ---
 
-app.get('/api/status', (req, res) => {
+app.get('/api/status', (req: Request, res: Response) => {
     res.json({
         whatsapp: 'INITIALIZING', // We'd need to expose real state
         telegram: 'ONLINE',
@@ -43,7 +43,7 @@ app.get('/api/status', (req, res) => {
     });
 });
 
-app.post('/api/broadcast', async (req, res) => {
+app.post('/api/broadcast', async (req: Request, res: Response) => {
     const { message, target } = req.body;
     // Logic to broadcast via bots
     res.json({ success: true, count: 0 });

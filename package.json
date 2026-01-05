@@ -49,6 +49,7 @@
     "@testing-library/jest-dom": "^6.1.4",
     "@testing-library/react": "^14.1.2",
     "@testing-library/user-event": "^14.4.3",
+    "@types/express": "^5.0.6",
     "@types/jest": "^29.5.5",
     "@types/node": "^22.14.0",
     "@types/qrcode-terminal": "^0.12.2",
