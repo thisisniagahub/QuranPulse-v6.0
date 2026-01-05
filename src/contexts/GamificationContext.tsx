@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
 
 // --- Types ---
 export interface Achievement {
@@ -14,16 +14,15 @@ export interface UserGamificationState {
   xp: number;
   level: number;
   streak: number;
-  lastActivityDate: string | null; // ISO Date string
+  lastActivityDate: string | null;
   achievements: Achievement[];
 }
 
-interface GamificationContextType {
-  state: UserGamificationState;
+interface GamificationActions {
   addXP: (amount: number, reason?: string) => void;
   unlockAchievement: (achievementId: string) => void;
   checkStreak: () => void;
-  getLevelProgress: () => number; // 0-100
+  getLevelProgress: () => number;
 }
 
 // --- Constants ---
@@ -38,34 +37,47 @@ const INITIAL_STATE: UserGamificationState = {
   achievements: []
 };
 
-// --- Context ---
-const GamificationContext = createContext<GamificationContextType | undefined>(undefined);
+// --- Contexts ---
+const GamificationStateContext = createContext<UserGamificationState | undefined>(undefined);
+const GamificationActionsContext = createContext<GamificationActions | undefined>(undefined);
 
 export const useGamification = () => {
-  const context = useContext(GamificationContext);
-  if (!context) {
+  const state = useContext(GamificationStateContext);
+  const actions = useContext(GamificationActionsContext);
+  
+  if (!state || !actions) {
     throw new Error('useGamification must be used within a GamificationProvider');
   }
-  return context;
+  
+  // Consolidate for compatibility while maintaining split benefits
+  return useMemo(() => ({ state, ...actions }), [state, actions]);
+};
+
+// Also export individual hooks for extreme optimization if needed
+export const useGamificationState = () => {
+    const state = useContext(GamificationStateContext);
+    if (!state) throw new Error('useGamificationState must be used within a GamificationProvider');
+    return state;
+};
+
+export const useGamificationActions = () => {
+    const actions = useContext(GamificationActionsContext);
+    if (!actions) throw new Error('useGamificationActions must be used within a GamificationProvider');
+    return actions;
 };
 
 // --- Provider ---
 export const GamificationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Load from localStorage or default
   const [state, setState] = useState<UserGamificationState>(() => {
     const saved = localStorage.getItem('quranpulse_gamification');
     return saved ? JSON.parse(saved) : INITIAL_STATE;
   });
 
-  // Persist to localStorage
   useEffect(() => {
     localStorage.setItem('quranpulse_gamification', JSON.stringify(state));
   }, [state]);
 
-  // Calculate Level based on XP
-  const calculateLevel = (xp: number) => {
-    // Simple formula: Level = floor(sqrt(xp / 100)) + 1
-    // Or iterative:
+  const calculateLevel = useCallback((xp: number) => {
     let level = 1;
     let required = LEVEL_BASE_XP;
     while (xp >= required) {
@@ -74,35 +86,24 @@ export const GamificationProvider: React.FC<{ children: ReactNode }> = ({ childr
       required = Math.floor(required * LEVEL_MULTIPLIER);
     }
     return level;
-  };
+  }, []);
 
-  const addXP = (amount: number, reason?: string) => {
+  const addXP = useCallback((amount: number) => {
     setState(prev => {
       const newXP = prev.xp + amount;
       const newLevel = calculateLevel(newXP);
-      
-      if (newLevel > prev.level) {
-        // Level Up Event! (Could trigger a modal via UIStore)
-        console.log(`🎉 Level Up! ${prev.level} -> ${newLevel}`);
-        // playSound('levelup');
-      }
-
-      return {
-        ...prev,
-        xp: newXP,
-        level: newLevel
-      };
+      if (newLevel > prev.level) console.log(`🎉 Level Up! ${prev.level} -> ${newLevel}`);
+      return { ...prev, xp: newXP, level: newLevel };
     });
-  };
+  }, [calculateLevel]);
 
-  const unlockAchievement = (achievementId: string) => {
+  const unlockAchievement = useCallback((achievementId: string) => {
     setState(prev => {
-      if (prev.achievements.some(a => a.id === achievementId)) return prev; // Already unlocked
+      if (prev.achievements.some(a => a.id === achievementId)) return prev;
 
-      // Mock Achievement Database (In real app, fetch from DB)
       const achievementDB: Record<string, Achievement> = {
-        'first_khatam': { id: 'first_khatam', title: 'First Khatam', description: 'Completed the Quran once', icon: '🏆', xpReward: 500 },
-        'streak_7': { id: 'streak_7', title: 'Week Warrior', description: '7 Day Streak', icon: '🔥', xpReward: 100 },
+        'first_khatam': { id: 'first_khatam', title: 'First Khatam', description: 'Completed the Quran once', icon: '🏆',  xpReward: 500 },
+        'streak_7': { id: 'streak_7', title: 'Week Warrior', description: '7 Day Streak', icon: '🔥', xpReward: 100 },    
         'early_bird': { id: 'early_bird', title: 'Early Bird', description: 'Read after Fajr', icon: '🌅', xpReward: 50 },
       };
 
@@ -115,54 +116,46 @@ export const GamificationProvider: React.FC<{ children: ReactNode }> = ({ childr
         achievements: [...prev.achievements, { ...achievement, unlockedAt: Date.now() }]
       };
     });
-  };
+  }, []);
 
-  const checkStreak = () => {
+  const checkStreak = useCallback(() => {
     const today = new Date().toISOString().split('T')[0];
-    
     setState(prev => {
-      if (prev.lastActivityDate === today) return prev; // Already counted today
-
+      if (prev.lastActivityDate === today) return prev;
       const yesterday = new Date();
       yesterday.setDate(yesterday.getDate() - 1);
       const yesterdayStr = yesterday.toISOString().split('T')[0];
 
       let newStreak = prev.streak;
-      if (prev.lastActivityDate === yesterdayStr) {
-        newStreak += 1;
-      } else {
-        newStreak = 1; // Reset or Start
-      }
+      if (prev.lastActivityDate === yesterdayStr) newStreak += 1;
+      else newStreak = 1;
 
-      return {
-        ...prev,
-        streak: newStreak,
-        lastActivityDate: today
-      };
+      return { ...prev, streak: newStreak, lastActivityDate: today };
     });
-  };
+  }, []);
 
-  const getLevelProgress = () => {
-    // Calculate progress to next level
+  const getLevelProgress = useCallback(() => {
     let xp = state.xp;
-    let level = 1;
     let required = LEVEL_BASE_XP;
-    
-    // Find current level base
     while (xp >= required) {
       xp -= required;
-      level++;
       required = Math.floor(required * LEVEL_MULTIPLIER);
     }
-    
-    // xp is now the remainder (progress into current level)
-    // required is the total needed for this level
     return Math.min(100, Math.floor((xp / required) * 100));
-  };
+  }, [state.xp]);
+
+  const actions = useMemo(() => ({
+    addXP,
+    unlockAchievement,
+    checkStreak,
+    getLevelProgress
+  }), [addXP, unlockAchievement, checkStreak, getLevelProgress]);
 
   return (
-    <GamificationContext.Provider value={{ state, addXP, unlockAchievement, checkStreak, getLevelProgress }}>
-      {children}
-    </GamificationContext.Provider>
+    <GamificationActionsContext.Provider value={actions}>
+      <GamificationStateContext.Provider value={state}>
+        {children}
+      </GamificationStateContext.Provider>
+    </GamificationActionsContext.Provider>
   );
 };

@@ -128,94 +128,93 @@ const PricingTable: React.FC = () => {
                     </div>
                 </motion.div>
 
-                {/* Pricing Cards */}
-                <div className="grid md:grid-cols-3 gap-8 items-stretch">
-                    {PRICING_TIERS.map((tier, index) => (
-                        <motion.div
-                            key={tier.name}
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className={`relative rounded-[2rem] p-8 transition-all duration-300 ${tier.popular
-                                ? 'bg-white border-2 border-cyan-500 scale-105 z-10 shadow-2xl shadow-cyan-200'
-                                : 'bg-white/60 border border-white/80 hover:bg-white/80 shadow-sm'
-                                }`}
-                        >
-                            {/* Popular Badge */}
-                            {tier.popular && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-[#22d3ee] text-[#020617] px-6 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">
-                                    Paling Popular
+                                {/* Pricing Cards */}
+                                <div className="grid md:grid-cols-3 gap-8 items-stretch">
+                                    {PRICING_TIERS.map((tier, index) => (
+                                        <motion.div
+                                            key={tier.name}
+                                            initial={{ opacity: 0, y: 30 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true }}
+                                            transition={{ delay: index * 0.1 }}
+                                            className={`relative rounded-[2rem] p-8 transition-all duration-300 backdrop-blur-xl ${tier.popular
+                                                ? 'bg-[#0c224b]/60 border-2 border-cyan-400 scale-105 z-10 shadow-[0_20px_50px_rgba(0,0,0,0.5),0_0_20px_rgba(34,211,238,0.15)]'
+                                                : 'bg-[#0c224b]/40 border border-white/10 hover:bg-[#0c224b]/60 shadow-2xl'
+                                                }`}
+                                        >
+                                            {/* Popular Badge */}
+                                            {tier.popular && (
+                                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-cyan-400 text-black px-6 py-1.5 rounded-full text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(34,211,238,0.5)]">
+                                                    Paling Popular
+                                                </div>
+                                            )}
+                
+                                            {/* Header */}
+                                            <div className="text-center mb-8">
+                                                <div
+                                                    className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center border transition-all duration-300 group-hover:scale-110 dynamic-bg-15 dynamic-border-30 dynamic-text shadow-lg"
+                                                    style={{ '--dynamic-color': tier.color } as React.CSSProperties}
+                                                >
+                                                    {tier.icon}
+                                                </div>
+                                                <h3 className="text-xl font-bold text-white mb-1 tracking-tight">{tier.name}</h3>
+                                                <p className="text-sm text-slate-400 font-medium">{tier.description}</p>
+                                            </div>
+                
+                                            {/* Price */}
+                                            <div className="text-center mb-8">
+                                                <div className="flex items-baseline justify-center gap-1">
+                                                    <span className="text-2xl text-slate-500 font-mono">RM</span>
+                                                    <span
+                                                        className="text-5xl font-bold font-[Poppins] dynamic-text drop-shadow-[0_0_10px_rgba(34,211,238,0.2)]"
+                                                        style={{ '--dynamic-color': tier.color } as React.CSSProperties}
+                                                    >
+                                                        {tier.price[period]}
+                                                    </span>
+                                                    {tier.price[period] > 0 && (
+                                                        <span className="text-slate-400 font-medium text-sm ml-1">
+                                                            /{period === 'monthly' ? 'bulan' : 'tahun'}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </div>
+                
+                                            {/* Features */}
+                                            <ul className="space-y-4 mb-8">
+                                                {tier.features.map((feature, i) => (
+                                                    <li key={i} className="flex items-start gap-3">
+                                                        {feature.included ? (
+                                                            <Check
+                                                                className="w-5 h-5 flex-shrink-0 mt-0.5"
+                                                                style={{ color: tier.color }}
+                                                            />
+                                                        ) : (
+                                                            <X className="w-5 h-5 text-slate-600 flex-shrink-0 mt-0.5" />
+                                                        )}
+                                                        <span className={`text-sm ${feature.included
+                                                            ? feature.highlight
+                                                                ? 'text-white font-bold'
+                                                                : 'text-slate-300'
+                                                            : 'text-slate-600 line-through'
+                                                            }`}>
+                                                            {feature.text}
+                                                        </span>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                
+                                            {/* CTA Button */}
+                                            <button
+                                                className={`w-full py-4 rounded-xl font-bold text-sm transition-all ${tier.popular        
+                                                    ? 'bg-cyan-500 text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:bg-cyan-400 hover:scale-[1.02]'
+                                                    : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:border-cyan-500/50'
+                                                    }`}
+                                            >
+                                                {tier.cta}
+                                            </button>
+                                        </motion.div>
+                                    ))}
                                 </div>
-                            )}
-
-                            {/* Header */}
-                            <div className="text-center mb-8">
-                                <div
-                                    className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center border dynamic-bg-15 dynamic-border-30 dynamic-text"
-                                    style={{ '--dynamic-color': tier.color } as React.CSSProperties}
-                                >
-                                    {tier.icon}
-                                </div>
-                                <h3 className="text-xl font-bold text-slate-800 mb-1">{tier.name}</h3>
-                                <p className="text-sm text-slate-500 font-medium">{tier.description}</p>
-                            </div>
-
-                            {/* Price */}
-                            <div className="text-center mb-8">
-                                <div className="flex items-baseline justify-center gap-1">
-                                    <span className="text-2xl text-slate-400">RM</span>
-                                    <span
-                                        className="text-5xl font-bold font-[Poppins] dynamic-text"
-                                        style={{ '--dynamic-color': tier.color } as React.CSSProperties}
-                                    >
-                                        {tier.price[period]}
-                                    </span>
-                                    {tier.price[period] > 0 && (
-                                        <span className="text-slate-600 font-medium">
-                                            /{period === 'monthly' ? 'bulan' : 'tahun'}
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Features */}
-                            <ul className="space-y-4 mb-8">
-                                {tier.features.map((feature, i) => (
-                                    <li key={i} className="flex items-start gap-3">
-                                        {feature.included ? (
-                                            <Check
-                                                className="w-5 h-5 flex-shrink-0 mt-0.5"
-                                                style={{ color: tier.color }}
-                                            />
-                                        ) : (
-                                            <X className="w-5 h-5 text-slate-600 flex-shrink-0 mt-0.5" />
-                                        )}
-                                        <span className={`text-sm ${feature.included
-                                            ? feature.highlight
-                                                ? 'text-slate-900 font-bold'
-                                                : 'text-slate-700'
-                                            : 'text-slate-400 line-through'
-                                            }`}>
-                                            {feature.text}
-                                        </span>
-                                    </li>
-                                ))}
-                            </ul>
-
-                            {/* CTA Button */}
-                            <button
-                                className={`w-full py-4 rounded-xl font-bold text-sm transition-all ${tier.popular
-                                    ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-600/20 hover:shadow-cyan-600/40 hover:scale-[1.02]'
-                                    : 'bg-slate-100 text-slate-800 border border-slate-200 hover:bg-white hover:border-cyan-300'
-                                    }`}
-                            >
-                                {tier.cta}
-                            </button>
-                        </motion.div>
-                    ))}
-                </div>
-
                 {/* Footer Note */}
                 <p className="text-center text-slate-500 text-sm mt-12">
                     Semua harga dalam Ringgit Malaysia (RM). Tiada yuran tersembunyi.

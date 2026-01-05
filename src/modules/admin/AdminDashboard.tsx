@@ -6,7 +6,7 @@ import KnowledgeBaseManager from './tools/KnowledgeBaseManager';
 import LiveAnalytics from './components/LiveAnalytics';
 import { useNavigate } from 'react-router-dom';
 
-type AdminView = 'OVERVIEW' | 'AI_STUDIO' | 'AUTOMATION' | 'KNOWLEDGE' | 'CRM' | 'FINANCE' | 'SETTINGS';
+type AdminView = 'OVERVIEW' | 'AI_STUDIO' | 'BROADCAST' | 'KNOWLEDGE' | 'CRM' | 'FINANCE' | 'SETTINGS';
 
 const AdminDashboard: React.FC = () => {
   const [activeView, setActiveView] = useState<AdminView>('OVERVIEW');
@@ -15,7 +15,7 @@ const AdminDashboard: React.FC = () => {
   const NAV_ITEMS = [
     { id: 'OVERVIEW', label: 'Command Center', icon: 'fa-chart-radar', color: 'text-cyan-400' },
     { id: 'AI_STUDIO', label: 'AI Content Studio', icon: 'fa-wand-magic-sparkles', color: 'text-purple-400' },
-    { id: 'AUTOMATION', label: 'Pulse Automator', icon: 'fa-network-wired', color: 'text-blue-400' },
+    { id: 'BROADCAST', label: 'Broadcasts', icon: 'fa-bullhorn', color: 'text-red-400' },
     { id: 'KNOWLEDGE', label: 'Knowledge Base', icon: 'fa-database', color: 'text-orange-400' },
     { id: 'CRM', label: 'Ummah CRM', icon: 'fa-users-rays', color: 'text-emerald-400' },
     { id: 'FINANCE', label: 'Treasury', icon: 'fa-vault', color: 'text-amber-400' },
@@ -112,38 +112,44 @@ const AdminDashboard: React.FC = () => {
                       </motion.div>
                   )}
 
-                  {activeView === 'AUTOMATION' && (
-                      <motion.div 
-                        key="automation"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -20 }}
-                        className="h-full"
-                      >
-                          <WorkflowEditor />
-                      </motion.div>
-                  )}
-
-                  {activeView === 'KNOWLEDGE' && (
-                      <motion.div 
-                        key="knowledge"
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        className="h-full"
-                      >
-                          <KnowledgeBaseManager />
-                      </motion.div>
-                  )}
-
-                  {activeView === 'CRM' && (
-                      <div className="text-center py-20 text-slate-500">
-                          <i className="fa-solid fa-users-rays text-4xl mb-4 opacity-50"></i>
-                          <p>Ummah CRM Module (Coming Soon)</p>
-                      </div>
-                  )}
-              </AnimatePresence>
-          </div>
+                                    {activeView === 'BROADCAST' && (
+                                        <motion.div
+                                          key="broadcast"
+                                          initial={{ opacity: 0, x: 20 }}
+                                          animate={{ opacity: 1, x: 0 }}
+                                          exit={{ opacity: 0, x: -20 }}
+                                          className="h-full"
+                                        >
+                                            <AnnouncementManager />
+                                        </motion.div>
+                                    )}
+                  import UserTable from './components/UserTable';
+                  
+                  // ... existing code ...
+                  
+                                    {activeView === 'KNOWLEDGE' && (
+                                        <motion.div
+                                          key="knowledge"
+                                          initial={{ opacity: 0, y: 20 }}
+                                          animate={{ opacity: 1, y: 0 }}
+                                          exit={{ opacity: 0, y: -20 }}
+                                          className="h-full"
+                                        >
+                                            <KnowledgeBaseManager />
+                                        </motion.div>
+                                    )}
+                  
+                                    {activeView === 'CRM' && (
+                                        <motion.div
+                                          key="crm"
+                                          initial={{ opacity: 0, scale: 0.95 }}
+                                          animate={{ opacity: 1, scale: 1 }}
+                                          exit={{ opacity: 0, scale: 0.95 }}
+                                        >
+                                            <UserTable />
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>          </div>
       </main>
     </div>
   );

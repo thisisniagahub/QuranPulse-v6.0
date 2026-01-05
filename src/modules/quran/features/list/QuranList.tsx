@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QuranChapter, SemanticResult } from '../../../../types';
+import { audioCache } from '../../../../services/audioCacheService';
 
 // Premium Components
 import QuantumSearchBar from '../../components/QuantumSearchBar';
@@ -44,6 +45,28 @@ const QuranList: React.FC<QuranListProps> = ({
     isSearchingSemantic,
     semanticResults
 }) => {
+    // Track cached surahs
+    const [cachedIds, setCachedIds] = useState<Set<number>>(new Set());
+
+    useEffect(() => {
+        const checkCache = async () => {
+            const cached = new Set<number>();
+            // Check first verse of each chapter for Reciter 7 (Mishary)
+            for (const chapter of chapters) {
+                const padSurah = chapter.id.toString().padStart(3, '0');
+                // Pattern for Mishary Rashid Alafasy
+                const url = `https://verses.quran.com/Alafasy/mp3/${padSurah}001.mp3`;
+                const isCached = await audioCache.isCached(url);
+                if (isCached) cached.add(chapter.id);
+            }
+            setCachedIds(cached);
+        };
+
+        if (chapters.length > 0) {
+            checkCache();
+        }
+    }, [chapters]);
+
     // Utility to remove diacritics
     const normalizeText = (text: string) => {
         return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
@@ -249,6 +272,7 @@ const QuranList: React.FC<QuranListProps> = ({
                                                     key={surah.id}
                                                     chapter={surah}
                                                     index={index}
+                                                    isOfflineReady={cachedIds.has(surah.id)}
                                                     onClick={() => onChapterSelect(surah)}
                                                 />
                                             ))}

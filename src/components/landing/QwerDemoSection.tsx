@@ -92,36 +92,34 @@ const QwerDemoSection: React.FC = () => {
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Section Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center mb-20"
-                >
-                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-6">
-                        <BarChart3 className="w-3 h-3" />
-                        AI-Powered Analysis
-                    </span>
-                    <h2 className="text-4xl md:text-5xl font-[Poppins] font-bold text-slate-800 mb-6 tracking-tight">
-                        <span className="text-slate-400">Q-WER</span>
-                        <span className="text-cyan-600"> Intelligence</span>
-                    </h2>
-                    <p className="text-slate-600 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
-                        Bukan sekadar "betul atau salah". Kami ukur <span className="text-cyan-700 font-bold">ketepatan akustik</span> berdasarkan
-                        <span className="text-amber-600 font-bold"> berat teologi</span> — seperti ustaz manusia menilai.
-                    </p>
-                </motion.div>
-
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    className="text-center mb-20"
+                                >
+                                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-bold tracking-widest uppercase mb-6">
+                                        <BarChart3 className="w-3 h-3" />
+                                        AI-Powered Analysis
+                                    </span>
+                                    <h2 className="text-4xl md:text-5xl font-[Poppins] font-bold text-white mb-6 tracking-tight">     
+                                        <span className="text-slate-400">Q-WER</span>
+                                        <span className="text-cyan-400"> Intelligence</span>
+                                    </h2>
+                                    <p className="text-slate-300 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
+                                        Bukan sekadar "betul atau salah". Kami ukur <span className="text-cyan-400 font-bold">ketepatan akustik</span> berdasarkan
+                                        <span className="text-amber-500 font-bold"> berat teologi</span> — seperti ustaz manusia menilai. 
+                                    </p>
+                                </motion.div>
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
 
-                    {/* Left: Interactive Demo Card */}
                     <motion.div
                         initial={{ opacity: 0, x: -30 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         className="relative"
                     >
-                        <div className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2.5rem] p-8 relative overflow-hidden group shadow-sm">
+                        <div className="bg-[#0c224b]/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 relative overflow-hidden group shadow-2xl">
                             {/* Glow Effect */}
                             <div className="absolute -top-20 -right-20 w-64 h-64 bg-[#22d3ee]/10 blur-[80px] rounded-full group-hover:bg-[#22d3ee]/20 transition-all duration-700"></div>
 
@@ -132,30 +130,30 @@ const QwerDemoSection: React.FC = () => {
                                         <Mic className="w-5 h-5 text-[#22d3ee]" />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-slate-800 text-lg">Live Demo</h4>
-                                        <p className="text-xs text-slate-500 font-medium">Cuba analisis Q-WER sekarang</p>
+                                        <h4 className="font-bold text-white text-lg">Live Demo</h4>
+                                        <p className="text-xs text-slate-400 font-medium">Cuba analisis Q-WER sekarang</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center gap-1.5">
                                     <span className={`w-2 h-2 rounded-full ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-emerald-500'}`}></span>
-                                    <span className="text-xs text-slate-500">{isRecording ? 'Recording...' : 'Ready'}</span>
+                                    <span className="text-xs text-slate-400">{isRecording ? 'Recording...' : 'Ready'}</span>
                                 </div>
                             </div>
 
                             {/* Reference Text Display */}
-                            <div className="bg-slate-50 rounded-2xl p-6 mb-6 border border-slate-100 shadow-inner">
-                                <p className="text-xs text-slate-400 uppercase tracking-widest mb-3 font-bold">Reference Text</p>
-                                <p className="text-2xl md:text-3xl font-arabic text-slate-800 text-center leading-relaxed" dir="rtl">
+                            <div className="bg-black/20 rounded-2xl p-6 mb-6 border border-white/5 shadow-inner">       
+                                <p className="text-xs text-slate-500 uppercase tracking-widest mb-3 font-bold">Reference Text</p>
+                                <p className="text-2xl md:text-3xl font-arabic text-white text-center leading-relaxed" dir="rtl">
                                     بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
                                 </p>
                             </div>
 
                             {/* Waveform Visualizer */}
-                            <div className="h-20 flex items-center justify-center gap-1 mb-8 bg-slate-900 rounded-xl p-4 shadow-inner">
+                            <div className="h-20 flex items-center justify-center gap-1 mb-8 bg-black/40 rounded-xl p-4 shadow-inner border border-white/5">
                                 {waveformValues.map((value, index) => (
                                     <motion.div
                                         key={index}
-                                        className={`w-1.5 rounded-full ${isRecording ? 'bg-cyan-400' : 'bg-slate-700'}`}
+                                        className={`w-1.5 rounded-full ${isRecording ? 'bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]' : 'bg-slate-800'}`}  
                                         animate={{ height: `${value * 100}%` }}
                                         transition={{ duration: 0.1 }}
                                     />
@@ -176,21 +174,21 @@ const QwerDemoSection: React.FC = () => {
                                     {isRecording ? (
                                         <>
                                             <Square className="w-5 h-5 fill-current" />
-                                            <span>Stop Recording</span>
+                                            <span>Henti Rakaman</span>
                                         </>
                                     ) : isAnalyzing ? (
                                         <>
                                             <motion.div
                                                 animate={{ rotate: 360 }}
                                                 transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                                className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                                                className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"  
                                             />
-                                            <span>Analyzing...</span>
+                                            <span>Menganalisis...</span>
                                         </>
                                     ) : (
                                         <>
                                             <Mic className="w-5 h-5" />
-                                            <span>Start Recording</span>
+                                            <span>Mula Rakaman</span>
                                         </>
                                     )}
                                 </motion.button>
@@ -200,7 +198,7 @@ const QwerDemoSection: React.FC = () => {
                                         initial={{ opacity: 0, scale: 0.8 }}
                                         animate={{ opacity: 1, scale: 1 }}
                                         onClick={resetDemo}
-                                        className="px-6 py-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-600 hover:bg-white hover:text-slate-900 transition-colors shadow-sm"
+                                        className="px-6 py-4 rounded-xl bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-colors shadow-sm"
                                     >
                                         Reset
                                     </motion.button>
@@ -214,21 +212,21 @@ const QwerDemoSection: React.FC = () => {
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         exit={{ opacity: 0, y: -20 }}
-                                        className="mt-8 p-6 bg-gradient-to-br from-emerald-50 to-white rounded-2xl border border-emerald-200 shadow-sm"
+                                        className="mt-8 p-6 bg-emerald-500/5 rounded-2xl border border-emerald-500/20 shadow-sm"
                                     >
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="flex items-center gap-2">
-                                                <CheckCircle2 className="w-5 h-5 text-emerald-600" />
-                                                <span className="font-bold text-emerald-600">Jayyid (Good)</span>
+                                                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                                                <span className="font-bold text-emerald-400">Jayyid (Bagus)</span>
                                             </div>
                                             <div className="text-right">
-                                                <div className="text-3xl font-bold text-slate-900">{demoScore}</div>
+                                                <div className="text-3xl font-bold text-white">{demoScore}</div>      
                                                 <div className="text-xs text-slate-500 uppercase tracking-wider font-bold">Q-WER Score</div>
                                             </div>
                                         </div>
                                         <div className="grid grid-cols-4 gap-2 mt-4">
                                             {METRICS.map((metric, i) => (
-                                                <div key={i} className="text-center p-2 rounded-lg bg-white border border-slate-100 shadow-sm">
+                                                <div key={i} className="text-center p-2 rounded-lg bg-black/20 border border-white/5 shadow-sm">
                                                     <div className="text-[10px] text-slate-500 mb-1 font-bold uppercase">{metric.label}</div>
                                                     <div className="text-sm font-mono dynamic-text font-bold" style={{ '--dynamic-color': metric.color } as React.CSSProperties}>
                                                         {(Math.random() * 5 + 2).toFixed(1)}%
@@ -250,12 +248,12 @@ const QwerDemoSection: React.FC = () => {
                         className="space-y-6"
                     >
                         <div className="mb-8">
-                            <h3 className="text-2xl font-bold text-slate-800 mb-4">
-                                Mengapa <span className="text-cyan-600">Q-WER</span> Berbeza?
+                            <h3 className="text-2xl font-bold text-white mb-4">
+                                Mengapa <span className="text-cyan-400">Q-WER</span> Berbeza?
                             </h3>
-                            <p className="text-slate-600 leading-relaxed font-medium">
-                                Standard ASR (Whisper, Google) optimum untuk <span className="text-red-400 line-through">semantic meaning</span>.
-                                Kami optimum untuk <span className="text-emerald-600 font-bold">ketepatan tajweed</span> — kerana dalam solat,
+                            <p className="text-slate-400 leading-relaxed font-medium">
+                                Standard ASR (Whisper, Google) optimum untuk <span className="text-red-400/50 line-through">semantic meaning</span>.
+                                Kami optimum untuk <span className="text-emerald-400 font-bold">ketepatan tajweed</span> — kerana dalam solat,
                                 sebutan yang salah boleh ubah makna.
                             </p>
                         </div>
@@ -270,24 +268,24 @@ const QwerDemoSection: React.FC = () => {
                                     viewport={{ once: true }}
                                     transition={{ delay: index * 0.1 }}
                                     className={`p-5 rounded-2xl border backdrop-blur-md transition-all duration-500 group cursor-pointer ${activeMetricIndex === index
-                                        ? 'bg-white border-cyan-200 shadow-lg shadow-cyan-600/5 scale-[1.02]'
-                                        : 'bg-white/40 border-white/60 hover:bg-white/80'
+                                        ? 'bg-white/10 border-cyan-500/30 shadow-lg shadow-cyan-600/10 scale-[1.02]'
+                                        : 'bg-[#0c224b]/20 border-white/5 hover:bg-white/5'
                                         }`}
                                     onClick={() => setActiveMetricIndex(index)}
                                 >
                                     <div className="flex items-center justify-between">
                                         <div className="flex items-center gap-4">
                                             <div
-                                                className="w-12 h-12 rounded-xl flex items-center justify-center border dynamic-bg-15 dynamic-border-30 dynamic-text"
-                                                style={{ '--dynamic-color': metric.color } as React.CSSProperties}
+                                                className="w-12 h-12 rounded-xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110 dynamic-bg-15 dynamic-border-30 dynamic-text"
+                                                style={{ '--dynamic-color': metric.color } as React.CSSProperties}        
                                             >
                                                 {metric.icon}
                                             </div>
                                             <div>
-                                                <h4 className="font-bold text-slate-800 text-lg">{metric.label}</h4>
-                                                <p className="text-xs text-slate-500">
+                                                <h4 className="font-bold text-white text-lg">{metric.label}</h4>      
+                                                <p className="text-xs text-slate-400">
                                                     {metric.type === 'makhraj' && 'Titik artikulasi huruf'}
-                                                    {metric.type === 'tajweed' && 'Peraturan bacaan (Ghunnah, Idgham)'}
+                                                    {metric.type === 'tajweed' && 'Peraturan bacaan (Ghunnah, Idgham)'}   
                                                     {metric.type === 'harakat' && 'Baris dan tempoh bunyi'}
                                                     {metric.type === 'rhythm' && 'Kelancaran dan waqaf'}
                                                 </p>
@@ -299,7 +297,7 @@ const QwerDemoSection: React.FC = () => {
                                             </div>
                                             <div
                                                 className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full dynamic-bg-20 dynamic-text"
-                                                style={{ '--dynamic-color': metric.color } as React.CSSProperties}
+                                                style={{ '--dynamic-color': metric.color } as React.CSSProperties}        
                                             >
                                                 {metric.severity}
                                             </div>
@@ -313,10 +311,10 @@ const QwerDemoSection: React.FC = () => {
                                                 initial={{ height: 0, opacity: 0 }}
                                                 animate={{ height: 'auto', opacity: 1 }}
                                                 exit={{ height: 0, opacity: 0 }}
-                                                className="mt-4 pt-4 border-t border-white/10"
+                                                className="mt-4 pt-4 border-t border-white/5"
                                             >
                                                 <div className="flex items-start gap-2 text-sm text-slate-400">
-                                                    <AlertTriangle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
+                                                    <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
                                                     <p>
                                                         {metric.type === 'makhraj' && 'Kesalahan makhraj boleh menyebabkan Lahnan Jaliyy — berubah makna dan membatalkan solat dalam mazhab tertentu.'}
                                                         {metric.type === 'tajweed' && 'Ghunnah yang tertinggal atau Idgham yang tidak sempurna dikira sebagai Lahnan Khafiyy — tidak membatalkan tetapi mengurangi pahala.'}
@@ -337,7 +335,7 @@ const QwerDemoSection: React.FC = () => {
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
-                            className="inline-flex items-center gap-2 text-[#22d3ee] font-bold text-sm mt-6 group"
+                            className="inline-flex items-center gap-2 text-cyan-400 font-bold text-sm mt-6 group"        
                         >
                             Dapatkan Akses Penuh ke AI Ustaz
                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -350,23 +348,23 @@ const QwerDemoSection: React.FC = () => {
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-24 bg-gradient-to-r from-cyan-100 via-white to-amber-50 rounded-3xl border border-white p-8 md:p-12 shadow-sm"
+                    className="mt-24 bg-gradient-to-r from-[#0c224b]/60 via-[#0c224b]/40 to-black/20 backdrop-blur-xl rounded-3xl border border-white/10 p-8 md:p-12 shadow-2xl"
                 >
                     <div className="grid md:grid-cols-3 gap-8 items-center">
                         <div className="text-center">
-                            <div className="text-5xl font-bold text-slate-800 mb-2 font-[Poppins]">18.5</div>
-                            <div className="text-sm text-slate-500 font-medium">Average Q-WER Score</div>
-                            <div className="text-xs text-emerald-600 font-bold mt-1 tracking-widest uppercase">INTERMEDIATE LEVEL</div>
+                            <div className="text-5xl font-bold text-white mb-2 font-[Poppins]">18.5</div>
+                            <div className="text-sm text-slate-400 font-medium">Average Q-WER Score</div>
+                            <div className="text-xs text-emerald-400 font-bold mt-1 tracking-widest uppercase">INTERMEDIATE LEVEL</div>
                         </div>
-                        <div className="text-center md:border-x border-slate-100 px-8">
-                            <div className="text-5xl font-bold text-cyan-600 mb-2 font-[Poppins]">&lt; 200ms</div>
-                            <div className="text-sm text-slate-500 font-medium">Analysis Latency</div>
-                            <div className="text-xs text-cyan-600 font-bold mt-1 tracking-widest uppercase">REAL-TIME FEEDBACK</div>
+                        <div className="text-center md:border-x border-white/5 px-8">
+                            <div className="text-5xl font-bold text-cyan-400 mb-2 font-[Poppins]">&lt; 200ms</div>        
+                            <div className="text-sm text-slate-400 font-medium">Analysis Latency</div>
+                            <div className="text-xs text-cyan-400 font-bold mt-1 tracking-widest uppercase">REAL-TIME FEEDBACK</div>
                         </div>
                         <div className="text-center">
                             <div className="text-5xl font-bold text-amber-500 mb-2 font-[Poppins]">4</div>
-                            <div className="text-sm text-slate-500 font-medium">Error Categories</div>
-                            <div className="text-xs text-amber-600 font-bold mt-1 tracking-widest uppercase">THEOLOGICAL WEIGHTED</div>
+                            <div className="text-sm text-slate-400 font-medium">Error Categories</div>
+                            <div className="text-xs text-amber-500 font-bold mt-1 tracking-widest uppercase">THEOLOGICAL WEIGHTED</div>
                         </div>
                     </div>
                 </motion.div>

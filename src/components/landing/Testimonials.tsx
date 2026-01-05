@@ -103,96 +103,95 @@ const Testimonials: React.FC = () => {
                 </motion.div>
 
                 {/* Testimonial Carousel */}
-                <div className="relative">
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={currentIndex}
-                            initial={{ opacity: 0, x: 50 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -50 }}
-                            transition={{ duration: 0.5 }}
-                            className="bg-white/60 backdrop-blur-xl border border-white/80 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-sm"
-                        >
-                            {/* Quote Icon */}
-                            <Quote className="absolute top-8 right-8 w-16 h-16 text-[#22d3ee]/10" />
-
-                            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-                                {/* Avatar */}
-                                <div className="flex-shrink-0">
-                                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#22d3ee]/20 to-[#22d3ee]/5 border border-[#22d3ee]/30 overflow-hidden">
-                                        <img
-                                            src={TESTIMONIALS[currentIndex].avatar}
-                                            alt={TESTIMONIALS[currentIndex].name}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="flex-1 text-center md:text-left">
-                                    {/* Rating */}
-                                    <div className="flex items-center justify-center md:justify-start gap-1 mb-4">
-                                        {[...Array(TESTIMONIALS[currentIndex].rating)].map((_, i) => (
-                                            <Star key={i} className="w-5 h-5 text-amber-400 fill-current" />
-                                        ))}
-                                    </div>
-
-                                    {/* Quote */}
-                                    <blockquote className="text-xl md:text-2xl text-slate-800 font-light leading-relaxed mb-6">
-                                        "{TESTIMONIALS[currentIndex].quote}"
-                                    </blockquote>
-                                    {/* Author */}
-                                    <div>
-                                        <div className="font-bold text-slate-900 text-lg">
-                                            {TESTIMONIALS[currentIndex].name}
+                                <div className="relative">
+                                    <AnimatePresence mode="wait">
+                                        <motion.div
+                                            key={currentIndex}
+                                            initial={{ opacity: 0, x: 50 }}
+                                            animate={{ opacity: 1, x: 0 }}
+                                            exit={{ opacity: 0, x: -50 }}
+                                            transition={{ duration: 0.5 }}
+                                            className="bg-[#0c224b]/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-2xl"
+                                        >
+                                            {/* Quote Icon */}
+                                            <Quote className="absolute top-8 right-8 w-16 h-16 text-cyan-400/5" />
+                
+                                            <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
+                                                {/* Avatar */}
+                                                <div className="flex-shrink-0">
+                                                    <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-transparent border border-cyan-500/30 overflow-hidden shadow-lg shadow-cyan-500/10">
+                                                        <img
+                                                            src={TESTIMONIALS[currentIndex].avatar}
+                                                            alt={TESTIMONIALS[currentIndex].name}
+                                                            className="w-full h-full object-cover"
+                                                        />
+                                                    </div>
+                                                </div>
+                
+                                                {/* Content */}
+                                                <div className="flex-1 text-center md:text-left">
+                                                    {/* Rating */}
+                                                    <div className="flex items-center justify-center md:justify-start gap-1 mb-4">        
+                                                        {[...Array(TESTIMONIALS[currentIndex].rating)].map((_, i) => (
+                                                            <Star key={i} className="w-5 h-5 text-amber-400 fill-current drop-shadow-[0_0_8px_rgba(251,191,36,0.4)]" />
+                                                        ))}
+                                                    </div>
+                
+                                                    {/* Quote */}
+                                                    <blockquote className="text-xl md:text-2xl text-slate-200 font-light leading-relaxed mb-6 italic">
+                                                        "{TESTIMONIALS[currentIndex].quote}"
+                                                    </blockquote>
+                                                    {/* Author */}
+                                                    <div>
+                                                        <div className="font-bold text-white text-lg tracking-tight">
+                                                            {TESTIMONIALS[currentIndex].name}
+                                                        </div>
+                                                        <div className="text-sm text-slate-400 font-medium uppercase tracking-wider">
+                                                            {TESTIMONIALS[currentIndex].role} • {TESTIMONIALS[currentIndex].location}     
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </motion.div>
+                                    </AnimatePresence>
+                
+                                    {/* Navigation Buttons */}
+                                    <div className="flex items-center justify-center gap-4 mt-8">
+                                        <button
+                                            onClick={goToPrevious}
+                                            className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:bg-cyan-500/20 hover:text-cyan-400 hover:border-cyan-500/30 transition-all shadow-lg"
+                                            aria-label="Previous testimonial"
+                                        >
+                                            <ChevronLeft className="w-5 h-5" />
+                                        </button>
+                
+                                        {/* Dots */}
+                                        <div className="flex items-center gap-2">
+                                            {TESTIMONIALS.map((_, index) => (
+                                                <button
+                                                    key={index}
+                                                    onClick={() => {
+                                                        setIsAutoPlaying(false);
+                                                        setCurrentIndex(index);
+                                                    }}
+                                                    className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex 
+                                                        ? 'bg-cyan-400 w-6 shadow-[0_0_10px_rgba(34,211,238,0.5)]'
+                                                        : 'bg-white/10 hover:bg-white/30'
+                                                        }`}
+                                                    aria-label={`Go to testimonial ${index + 1}`}
+                                                />
+                                            ))}
                                         </div>
-                                        <div className="text-sm text-slate-500 font-medium">
-                                            {TESTIMONIALS[currentIndex].role} • {TESTIMONIALS[currentIndex].location}
-                                        </div>
+                
+                                        <button
+                                            onClick={goToNext}
+                                            className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:bg-cyan-500/20 hover:text-cyan-400 hover:border-cyan-500/30 transition-all shadow-lg"
+                                            aria-label="Next testimonial"
+                                        >
+                                            <ChevronRight className="w-5 h-5" />
+                                        </button>
                                     </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </AnimatePresence>
-
-                    {/* Navigation Buttons */}
-                    <div className="flex items-center justify-center gap-4 mt-8">
-                        <button
-                            onClick={goToPrevious}
-                            className="w-12 h-12 rounded-full bg-white/60 border border-white/80 flex items-center justify-center text-slate-700 hover:bg-white hover:text-cyan-600 transition-colors shadow-sm"
-                            aria-label="Previous testimonial"
-                        >
-                            <ChevronLeft className="w-5 h-5" />
-                        </button>
-
-                        {/* Dots */}
-                        <div className="flex items-center gap-2">
-                            {TESTIMONIALS.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => {
-                                        setIsAutoPlaying(false);
-                                        setCurrentIndex(index);
-                                    }}
-                                    className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                                        ? 'bg-[#22d3ee] w-6'
-                                        : 'bg-white/30 hover:bg-white/50'
-                                        }`}
-                                    aria-label={`Go to testimonial ${index + 1}`}
-                                />
-                            ))}
-                        </div>
-
-                        <button
-                            onClick={goToNext}
-                            className="w-12 h-12 rounded-full bg-white/60 border border-white/80 flex items-center justify-center text-slate-700 hover:bg-white hover:text-cyan-600 transition-colors shadow-sm"
-                            aria-label="Next testimonial"
-                        >
-                            <ChevronRight className="w-5 h-5" />
-                        </button>
-                    </div>
-                </div>
-            </div>
+                                </div>            </div>
         </section>
     );
 };

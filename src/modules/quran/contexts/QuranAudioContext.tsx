@@ -139,10 +139,15 @@ export const QuranAudioProvider: React.FC<{ children: ReactNode }> = ({ children
         });
     };
 
+import { audioCache } from '../../../services/audioCacheService';
+
+// ... existing code ...
+
     // Play Verse Function
     const playVerse = async (verseKey: string) => {
         if (!audioMap[verseKey]) return;
 
+        // Start playback
         await playTrack({
             url: audioMap[verseKey],
             title: `Surah ${selectedChapter?.name_simple}`,
@@ -150,6 +155,20 @@ export const QuranAudioProvider: React.FC<{ children: ReactNode }> = ({ children
             verseKey,
             reciterId: selectedReciterId
         });
+
+        // ⚡ AUTO-PREFETCH: Load next 2 verses in background
+        const currentIndex = verses.findIndex(v => v.verse_key === verseKey);
+        if (currentIndex !== -1) {
+            const nextVerses = verses.slice(currentIndex + 1, currentIndex + 3);
+            const urlsToPrefetch = nextVerses
+                .map(v => audioMap[v.verse_key])
+                .filter(url => !!url);
+            
+            if (urlsToPrefetch.length > 0) {
+                // Background task
+                audioCache.prefetch(urlsToPrefetch);
+            }
+        }
 
         if (timingMap) {
             const verseTimings = timingMap.get(verseKey);

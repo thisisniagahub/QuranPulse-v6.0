@@ -6,9 +6,10 @@ interface HoloSurahCardProps {
     chapter: QuranChapter;
     onClick: () => void;
     index: number;
+    isOfflineReady?: boolean;
 }
 
-const HoloSurahCard: React.FC<HoloSurahCardProps> = ({ chapter, onClick, index }) => {
+const HoloSurahCard: React.FC<HoloSurahCardProps> = ({ chapter, onClick, index, isOfflineReady }) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -19,8 +20,17 @@ const HoloSurahCard: React.FC<HoloSurahCardProps> = ({ chapter, onClick, index }
         >
             <div className="absolute inset-0 bg-sheet/40 backdrop-blur-md rounded-2xl border border-white transition-all duration-300 group-hover:border-primary/50 group-hover:bg-surface-dark/60 group-hover:shadow-neon overflow-hidden">
                 
-                {/* 1. Massive Background Arabic (Watermark) */}
-                <div className="absolute -right-4 -bottom-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
+                {/* Offline Ready Badge */}
+                {isOfflineReady && (
+                    <div className="absolute top-2 left-2 z-20">
+                        <div className="bg-emerald-500/20 border border-emerald-500/40 px-1.5 py-0.5 rounded flex items-center gap-1 shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                            <i className="fa-solid fa-cloud-arrow-down text-emerald-400 text-[8px]"></i>
+                            <span className="text-[7px] font-black text-emerald-400 uppercase tracking-tighter">OFFLINE READY</span>
+                        </div>
+                    </div>
+                )}
+
+                {/* 1. Massive Background Arabic (Watermark) */}                <div className="absolute -right-4 -bottom-8 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none">
                     <span className="font-arabic text-9xl leading-none text-white blur-[1px]">{chapter.name_arabic}</span>
                 </div>
 

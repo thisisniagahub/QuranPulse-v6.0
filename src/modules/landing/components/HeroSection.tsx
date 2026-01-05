@@ -23,6 +23,14 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
     // --- 3D TILT LOGIC ---
     const x = useMotionValue(0);
     const y = useMotionValue(0);
+    const [isTouch, setIsTouch] = useState(false);
+
+    // Detect Touch Device
+    useEffect(() => {
+        if (window.matchMedia('(hover: none)').matches) {
+            setIsTouch(true);
+        }
+    }, []);
 
     // Smooth spring physics (Softer & Slower)
     const mouseX = useSpring(x, { stiffness: 50, damping: 20 });
@@ -33,6 +41,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
     const rotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5]); // Reduced from 15 to 5
 
     const handleMouseMove = (e: React.MouseEvent<HTMLElement>) => {
+        if (isTouch) return;
         const rect = e.currentTarget.getBoundingClientRect();
         const width = rect.width;
         const height = rect.height;
@@ -113,79 +122,58 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
             onMouseLeave={handleMouseLeave}
         >
 
-            {/* VIDEO BACKGROUND */}
-            <div className="absolute inset-0 w-screen h-full left-[50%] -translate-x-[50%] -z-20 overflow-hidden bg-[#0A1E42] pointer-events-none">
-                <video autoPlay loop muted playsInline poster="/images/hero-poster.jpg" className="w-full h-full object-cover opacity-30 scale-105 saturate-50 contrast-125">
-                    <source src="/videos/hero-bg.mp4" type="video/mp4" />
-                </video>
-
-                {/* ANMAAT BACKGROUND PATTERN - DYNAMIC */}
-                <motion.div
-                    animate={{
-                        opacity: mockTheme === 'anmaat' ? 0.4 : 0.1,
-                        scale: mockTheme === 'anmaat' ? 1.05 : 1
-                    }}
-                    className="absolute inset-0 opacity-10 mix-blend-screen pointer-events-none bg-pattern-triangle"
-                />
-
-                <div className="absolute inset-0 opacity-20 bg-pattern-dots"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-[#0A1E42] via-[#0A1E42]/90 to-[#0A1E42]/40"></div>
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1E42] via-transparent to-[#0A1E42]/60"></div>
-
-                {/* NOOR GLOW REACTIVE */}
-                <motion.div
-                    style={{
-                        x: useTransform(mouseX, [-0.5, 0.5], [-100, 100]),
-                        y: useTransform(mouseY, [-0.5, 0.5], [-100, 100])
-                    }}
-                    className={`absolute top-0 right-0 w-[60%] h-[60%] blur-[120px] rounded-full mix-blend-screen opacity-50 animate-pulse-slow ${mockTheme === 'anmaat' ? 'bg-cyan-500/20' : 'bg-blue-600/10'}`}
-                ></motion.div>
-            </div>
-
-            <audio ref={audioRef} src="https://verses.quran.com/Alafasy/mp3/067001.mp3" onEnded={() => setIsPlaying(false)} />
-
-            {/* LEFT: COPY */}
-            <motion.div
-                initial="hidden"
-                animate="visible"
-                variants={staggerContainer}
-                className="flex-1 text-center lg:text-left z-20 w-full"
-            >
-                <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 rounded-full border border-cyan-500/20 bg-cyan-950/30 backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.1)] mb-6 sm:mb-8 mx-auto lg:mx-0">
-                    <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-                    </span>
-                    <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">
-                        Public Beta • Genesis Edition
-                    </span>
-                </motion.div>
-
-                <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black font-heading leading-[1.1] tracking-tighter mb-4 sm:mb-6">
-                    <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-slate-200 to-slate-500">The Future of</span> <br />
-                    <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-cyan-500 to-purple-500 animate-pulse-glow inline-block pb-2">
-                        Islamic Intelligence
-                    </span>
-                </motion.h1>
-
-                <motion.p variants={fadeInUp} className="text-slate-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-8 sm:mb-10 font-light leading-relaxed px-2 sm:px-0">
-                    Experience the <span className="text-white border-b border-cyan-500/50 pb-0.5">world's first</span> AI-powered Quran companion.
-                    Designed for those who seek depth, clarity, and a premium spiritual journey.
-                </motion.p>
-
-                <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-10 sm:mb-12 w-full sm:w-auto">
-                    <Button
-                        onClick={onGetStarted}
-                        variant="glow"
-                        size="lg"
-                        className="w-full sm:w-auto text-lg font-bold py-4 rounded-xl"
-                        rightIcon={<i className="fa-solid fa-arrow-right text-sm"></i>}
-                    >
-                        Get Started Free
-                    </Button>
-
-                    {/* NEW: RECITATION PULSE BUTTON */}
-                    <button
+                        {/* VIDEO BACKGROUND */}
+                        <div className="absolute inset-0 w-screen h-full left-[50%] -translate-x-[50%] -z-20 overflow-hidden bg-[#0A1E42] pointer-events-none">
+                            <video autoPlay loop muted playsInline poster="/hero-mockup.png" className="w-full h-full object-cover opacity-30 scale-105 saturate-50 contrast-125">
+                                <source src="/videos/hero-bg.mp4" type="video/mp4" />
+                            </video>
+            
+                            {/* ... existing pattern code ... */}
+                        </div>
+            
+                        <audio ref={audioRef} src="https://verses.quran.com/Alafasy/mp3/067001.mp3" onEnded={() => setIsPlaying(false)} />
+            
+                        {/* LEFT: COPY */}
+                        <motion.div
+                            initial="hidden"
+                            animate="visible"
+                            variants={staggerContainer}
+                            className="flex-1 text-center lg:text-left z-20 w-full"
+                        >
+                            <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 rounded-full border border-cyan-500/20 bg-cyan-950/30 backdrop-blur-md shadow-[0_0_15px_rgba(6,182,212,0.1)] mb-6 sm:mb-8 mx-auto lg:mx-0">
+                                <span className="relative flex h-2 w-2">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
+                                </span>
+                                <span className="text-[9px] sm:text-[10px] font-bold uppercase tracking-[0.2em] text-cyan-300">       
+                                    Public Beta • Genesis Edition
+                                </span>
+                            </motion.div>
+            
+                            <motion.h1 variants={fadeInUp} className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black font-heading leading-[1.1] tracking-tighter mb-4 sm:mb-6">
+                                <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-slate-200 to-slate-500">Masa Depan</span> <br />
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 via-cyan-500 to-purple-500 animate-pulse-glow inline-block pb-2">
+                                    Kecerdasan Islamik
+                                </span>
+                            </motion.h1>
+            
+                            <motion.p variants={fadeInUp} className="text-slate-400 text-base sm:text-lg md:text-xl max-w-2xl mx-auto lg:mx-0 mb-8 sm:mb-10 font-light leading-relaxed px-2 sm:px-0">
+                                Alami pendamping Al-Quran berkuasa AI <span className="text-white border-b border-cyan-500/50 pb-0.5">pertama di dunia</span>.
+                                Direka khas untuk mereka yang mencari kedalaman rohani dan kualiti premium.
+                            </motion.p>
+            
+                            <motion.div variants={fadeInUp} className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-10 sm:mb-12 w-full sm:w-auto">
+                                <Button
+                                    onClick={onGetStarted}
+                                    variant="glow"
+                                    size="lg"
+                                    className="w-full sm:w-auto text-lg font-bold py-4 rounded-xl"
+                                    rightIcon={<i className="fa-solid fa-arrow-right text-sm"></i>}
+                                >
+                                    Mula Secara Percuma
+                                </Button>
+            
+                                {/* NEW: RECITATION PULSE BUTTON */}                    <button
                         onClick={togglePlay}
                         className={`group flex gap-3 px-6 py-4 rounded-xl border transition-all items-center text-sm font-bold ${isPlaying ? 'bg-cyan-500/20 border-cyan-500 text-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.3)]' : 'border-white/10 text-slate-400 hover:text-white hover:border-white/30'}`}
                     >
@@ -232,7 +220,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 1, delay: 0.2 }}
                 className="flex-1 relative z-10 w-full max-w-[300px] sm:max-w-[350px] lg:max-w-[400px] perspective-1000 group mx-auto"
-                style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+                style={!isTouch ? { rotateX, rotateY, transformStyle: "preserve-3d" } : {}}
             >
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-cyan-500/30 to-purple-500/30 blur-[60px] sm:blur-[80px] rounded-full animate-pulse-slow -z-10"></div>
 
