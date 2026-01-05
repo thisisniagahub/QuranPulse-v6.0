@@ -65,10 +65,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
             </div>
 
             {/* 📦 Main Scrollable Content */}
-            <div className="relative z-10 w-full max-w-2xl mx-auto px-4 pt-4 md:pt-6 h-[100dvh] flex flex-col">
+            <div className="relative z-10 w-full max-w-2xl mx-auto px-4 pt-2 md:pt-4 h-[100dvh] flex flex-col">
 
                 {/* 2. OVERALL BENTO GRID - ZERO SCROLL */}
-                <div className="grid grid-cols-2 gap-4 flex-1 pb-4">
+                <div className="grid grid-cols-2 gap-2.5 flex-1 pb-4">
 
                     {/* A. PULSE HERO (Heartbeat) */}
                     <div className="col-span-2">

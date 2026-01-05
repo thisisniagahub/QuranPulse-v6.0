@@ -10,8 +10,24 @@ import navUstazAiIcon from "@/assets/icons/ustaz-ai-3d.png";
 import navQiblatIcon from "@/assets/icons/compass-3d.png";
 import navIqraIcon from "@/assets/icons/learning-3d.png";
 
+import React from "react";
+import { Link, useLocation, Outlet } from "react-router-dom";
+import { NavView } from "../types";
+import { useAuth } from "../contexts/AuthContext";
+import { useGamification } from "../contexts/GamificationContext";
+import kufiSplash from "@/assets/bg/kufi-splash.jpg";
+import kufiHeader from "@/assets/bg/kufi-header.jpg";
+import kufiFooter from "@/assets/bg/kufi-footer.jpg";
+import navHomeIcon from "@/assets/icons/home-3d.png";
+import navQuranIcon from "@/assets/icons/quran-3d.png";
+import navUstazAiIcon from "@/assets/icons/ustaz-ai-3d.png";
+import navQiblatIcon from "@/assets/icons/compass-3d.png";
+import navIqraIcon from "@/assets/icons/learning-3d.png";
+
 const Layout: React.FC = () => {
   const location = useLocation();
+  const { user } = useAuth();
+  const { state: game } = useGamification();
   const [imgError, setImgError] = React.useState(false);
 
   // Map paths to NavView for highlighting
@@ -30,86 +46,69 @@ const Layout: React.FC = () => {
 
   const currentView = getActiveView(location.pathname);
 
-  // Optimized to 5 Core Items for cleaner UI
-  const navItems = [
-    {
-      id: NavView.DASHBOARD,
-      path: "/",
-      icon: navHomeIcon,
-      label: "Home",
-      color: "from-cyan-400 to-blue-500",
-    },
-    {
-      id: NavView.QURAN,
-      path: "/quran",
-      icon: navQuranIcon,
-      label: "Al-Quran",
-      color: "from-cyan-400 to-blue-500", // Changed to Blue/Cyan
-    },
-    // Center Highlighted Item (Ustaz AI)
-    {
-      id: NavView.SMART_DEEN,
-      path: "/smart-deen",
-      icon: navUstazAiIcon,
-      label: "Ustaz AI",
-      color: "from-cyan-400 to-amber-400", // Changed to Cyan/Gold
-      highlight: true,
-    },
-    {
-      id: NavView.IBADAH,
-      path: "/ibadah",
-      icon: navQiblatIcon, // Changed to Compass for Qiblat
-      label: "Qiblat",
-      color: "from-amber-400 to-cyan-500", // Changed to Gold/Blue
-    },
-    {
-      id: NavView.IQRA,
-      path: "/iqra",
-      icon: navIqraIcon,
-      label: "Iqra Digital",
-      color: "from-cyan-400 to-blue-500",
-    },
-  ];
-
   return (
     <div className="flex h-screen w-full bg-[#f0f9ff] overflow-hidden font-sans relative justify-center">
-      {/* --- DESKTOP BACKDROP (Visible only on large screens) --- */}
+      {/* --- DESKTOP BACKDROP --- */}
       <div
         className="absolute inset-0 bg-cover bg-center opacity-20 blur-xl hidden md:block pointer-events-none bg-[image:var(--bg-splash)]"
-        // eslint-disable-next-line
         style={{ '--bg-splash': `url(${kufiSplash})` } as React.CSSProperties}
       ></div>
 
       {/* --- MOBILE APP SHELL CONTAINER --- */}
       <div className="flex flex-col h-full w-full max-w-[480px] bg-[#031a38] relative shadow-2xl md:border-x md:border-white/10">
-        {/* --- VISUAL IDENTITY v5.0 GLOBAL BACKGROUNDS --- */}
-        {/* Top Header Pattern */}
+        
+        {/* Header with Maze Pattern Overlay */}
         <div
           className="absolute top-0 left-0 w-full h-64 bg-top bg-no-repeat bg-contain -z-10 opacity-20 pointer-events-none mix-blend-screen bg-[image:var(--bg-header)]"
-          // eslint-disable-next-line
           style={{ '--bg-header': `url(${kufiHeader})` } as React.CSSProperties}
         ></div>
 
         {/* Global Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#0c224b]/50 via-[#031a38]/90 to-[#031a38] -z-10 pointer-events-none"></div>
 
-        {/* Header with Glass Effect */}
-        <header className="h-16 bg-[#0c224b]/60 backdrop-blur-xl border-b border-white/10 flex items-center justify-between px-4 shrink-0 z-20 relative overflow-hidden shadow-lg">
-          <Link
-            to="/"
-            className="flex items-center gap-3 cursor-pointer group relative z-10"
-            aria-label="Go to Dashboard"
-          >
-            <img src="/logo-primary.png" alt="Logo" className="w-10 h-10 object-contain scale-110 transition-transform hover:scale-125 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]" />
-            <span className="font-bold text-xl tracking-tight text-white font-[Poppins] drop-shadow-md">Quran<span className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]">Pulse</span></span>
-          </Link>
+        {/* --- PREMIUM HEADER ATAS SEKALI --- */}
+        <header className="h-20 bg-[#0c224b]/60 backdrop-blur-xl border-b border-white/10 flex flex-col justify-center px-4 shrink-0 z-20 relative shadow-lg">
+          <div className="flex items-center justify-between">
+            {/* Left: Brand & Date */}
+            <Link to="/" className="flex flex-col">
+              <div className="flex items-center gap-2 group">
+                <img src="/logo-primary.png" alt="Logo" className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+                <span className="font-black text-lg tracking-tighter text-white font-[Poppins]">
+                  Quran<span className="text-cyan-400">Pulse</span>
+                </span>
+              </div>
+              <span className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-0.5 ml-0.5">
+                {new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'short' })} • Kuala Lumpur
+              </span>
+            </Link>
 
-          {/* Header Actions */}
-          <div className="flex items-center gap-3 relative z-10">
-            <button aria-label="Notifications" className="relative w-10 h-10 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 hover:bg-cyan-500/20 hover:scale-105 transition-all shadow-[0_0_15px_rgba(34,211,238,0.1)] group">
-              <i className="fa-regular fa-bell text-lg group-hover:animate-swing"></i>
-              <span className="absolute top-2.5 right-3 w-2 h-2 bg-red-500 rounded-full border border-[#0c224b] animate-pulse"></span>
-            </button>
+            {/* Center: Gamification Stats (Floating Pill) */}
+            <div className="flex items-center gap-2 bg-black/30 border border-white/10 px-3 py-1.5 rounded-full backdrop-blur-md shadow-inner">
+              <div className="flex items-center gap-1">
+                <span className="text-xs">🔥</span>
+                <span className="text-[10px] font-black text-orange-400">{game.streak}</span>
+              </div>
+              <div className="w-px h-3 bg-white/10 mx-0.5"></div>
+              <div className="flex items-center gap-1">
+                <span className="text-[10px] font-black text-cyan-400 uppercase tracking-tighter">LV.{game.level}</span>
+              </div>
+            </div>
+
+            {/* Right: Actions */}
+            <div className="flex items-center gap-3">
+              <button className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#1e3a8a] to-[#0c224b] border border-white/10 flex items-center justify-center text-cyan-400 shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] hover:scale-105 transition-all group">
+                <i className="fa-regular fa-bell text-sm group-hover:animate-swing"></i>
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0c224b] animate-pulse"></span>
+              </button>
+              
+              <Link to="/profile" className="w-9 h-9 rounded-full border-2 border-cyan-500/30 p-0.5 bg-[#0c224b] shadow-lg">
+                <img 
+                  src={user?.avatar || "https://api.dicebear.com/7.x/avataaars/svg?seed=" + (user?.name || 'User')} 
+                  alt="User" 
+                  className="w-full h-full rounded-full object-cover" 
+                />
+              </Link>
+            </div>
           </div>
         </header>
 
@@ -120,7 +119,7 @@ const Layout: React.FC = () => {
 
         {/* --- BOTTOM NAVIGATION BAR: FLOATING CYBER DOCK --- */}
         <div className="fixed bottom-6 inset-x-4 z-50 flex justify-center pointer-events-none">
-          <nav className="w-full max-w-md h-[76px] bg-[#0c224b]/80 backdrop-blur-2xl border border-white/10 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex items-center justify-between px-2 relative pointer-events-auto ring-1 ring-white/5">
+          <nav className="w-full max-w-md h-[76px] bg-[#1e3a8a]/60 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-between px-2 relative pointer-events-auto ring-1 ring-white/10">
             
             {/* Glass Shine Effect */}
             <div className="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>

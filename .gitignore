@@ -37,3 +37,6 @@ dist-ssr
 
 # Gemini
 .gemini/tmp/
+
+# WhatsApp Auth
+.wwebjs_auth/

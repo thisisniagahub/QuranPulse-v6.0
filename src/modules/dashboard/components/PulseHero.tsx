@@ -97,40 +97,65 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
             </div>
 
             {/* 💎 Glass Content Layer */}
-            <div className="relative z-10 h-full flex flex-col items-center justify-center p-6 text-center">
+            <div className="relative z-10 h-full flex flex-col justify-between p-6">
                 
-                {/* CIRCULAR TIMER */}
-                <div className="relative w-40 h-40 flex items-center justify-center mb-4">
-                    {/* SVG Ring */}
-                    <svg className="absolute inset-0 w-full h-full -rotate-90">
-                        <circle cx="50%" cy="50%" r="70" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="6" />
-                        <motion.circle 
-                            cx="50%" cy="50%" r="70" 
-                            fill="none" 
-                            stroke="#22d3ee" 
-                            strokeWidth="6"
-                            strokeLinecap="round"
-                            strokeDasharray="440"
-                            strokeDashoffset={440 - (440 * progress) / 100}
-                            initial={{ strokeDashoffset: 440 }}
-                            animate={{ strokeDashoffset: 440 - (440 * progress) / 100 }}
-                            transition={{ duration: 1 }}
-                            className="drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]"
-                        />
-                    </svg>
-
-                    {/* Center Text */}
-                    <div className="flex flex-col items-center">
-                        <p className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-1">Next Prayer</p>
-                        <h1 className="text-3xl font-black text-white tracking-tight">{nextPrayerGroup}</h1>
-                        <p className="text-xl font-mono font-medium text-slate-300 mt-1">{timeLeft}</p>
+                {/* Header: Greeting & Date */}
+                <div className="flex justify-between items-start w-full">
+                    <div>
+                        <p className="text-[10px] font-bold text-cyan-400 uppercase tracking-widest mb-0.5">Assalamualaikum,</p>
+                        <h2 className="text-lg font-black text-white tracking-tight">{user.name.split(' ')[0]}</h2>
+                    </div>
+                    <div className="text-right">
+                        <p className="text-lg font-black text-white tracking-tight leading-none">
+                            {new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true })}
+                        </p>
+                        <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-0.5">
+                            {new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'short', year: 'numeric' })}
+                        </p>
                     </div>
                 </div>
 
-                {/* Footer Pill */}
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
-                    <i className="fa-solid fa-location-dot text-cyan-400 text-xs"></i>
-                    <span className="text-[10px] font-bold text-white tracking-wider uppercase">Kuala Lumpur</span>
+                {/* CIRCULAR TIMER (Centered) */}
+                <div className="relative flex-1 flex items-center justify-center -mt-2">
+                    <div className="relative w-40 h-40 flex items-center justify-center">
+                        {/* SVG Ring */}
+                        <svg className="absolute inset-0 w-full h-full -rotate-90">
+                            <circle cx="50%" cy="50%" r="70" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="6" />
+                            <motion.circle 
+                                cx="50%" cy="50%" r="70" 
+                                fill="none" 
+                                stroke="#22d3ee" 
+                                strokeWidth="6"
+                                strokeLinecap="round"
+                                strokeDasharray="440"
+                                strokeDashoffset={440 - (440 * progress) / 100}
+                                initial={{ strokeDashoffset: 440 }}
+                                animate={{ strokeDashoffset: 440 - (440 * progress) / 100 }}        
+                                transition={{ duration: 1 }}
+                                className="drop-shadow-[0_0_10px_rgba(34,211,238,0.8)]"
+                            />
+                        </svg>
+
+                        {/* Center Text */}
+                        <div className="flex flex-col items-center">
+                            <p className="text-[9px] font-bold text-cyan-400 uppercase tracking-widest mb-1">Next</p>
+                            <h1 className="text-2xl font-black text-white tracking-tight">{nextPrayerGroup}</h1>
+                            <p className="text-lg font-mono font-medium text-slate-300 mt-0.5">{timeLeft}</p>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Footer: Location & Masjid */}
+                <div className="flex items-center justify-between gap-2 text-[9px] font-bold uppercase tracking-wider text-slate-300 bg-black/20 p-2 rounded-xl border border-white/5 backdrop-blur-sm">
+                    <div className="flex items-center gap-1.5 truncate">
+                        <i className="fa-solid fa-location-dot text-cyan-400"></i>
+                        <span className="truncate max-w-[80px]">{prayerData?.locationName || 'Kuala Lumpur'}</span>
+                    </div>
+                    <div className="h-3 w-px bg-white/10"></div>
+                    <div className="flex items-center gap-1.5 truncate">
+                        <i className="fa-solid fa-mosque text-emerald-400"></i>
+                        <span className="truncate text-emerald-100">Masjid Al-Hidayah <span className="text-emerald-400/70 text-[8px] normal-case">(1.2km)</span></span>
+                    </div>
                 </div>
             </div>
         </motion.div>

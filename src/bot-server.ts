@@ -24,7 +24,7 @@ const botLogs: any[] = [];
 console.log("🚀 Starting QuranPulse Unified Bot Server...");
 
 // 1. Initialize Telegram (Independent)
-const telegramBot = new TelegramService();
+const telegramBot = new TelegramService(io);
 
 // 2. Initialize WhatsApp (With Socket support)
 // We need to extend WhatsappService to accept a socket or emit events

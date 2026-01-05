@@ -51,6 +51,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.5.5",
     "@types/node": "^22.14.0",
+    "@types/qrcode-terminal": "^0.12.2",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@vitejs/plugin-react": "^5.0.0",

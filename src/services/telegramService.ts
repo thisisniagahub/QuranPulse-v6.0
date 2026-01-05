@@ -5,13 +5,18 @@ import { ChatMessage } from '../types';
 import { VoiceService } from './ai/VoiceService';
 import { supabase } from '../lib/supabase';
 
+import { Server } from 'socket.io';
+
 export class TelegramService {
     private bot!: Telegraf;
+    private io?: Server;
 
-    constructor() {
+    constructor(io?: Server) {
+        this.io = io;
         const token = process.env.TELEGRAM_BOT_TOKEN;
         if (!token) {
             console.warn("⚠️ Telegram Bot Token missing! Telegram bot disabled.");
+            if (this.io) this.io.emit('telegram_status', { ready: false, error: 'MISSING_TOKEN' });
             return;
         }
 
@@ -452,6 +457,13 @@ STRATEGI JAWAPAN:
 
         this.bot.launch();
         console.log("✅ Ustazah AI Telegram is ONLINE!");
+
+        if (this.io) {
+            this.io.emit('telegram_status', {
+                ready: true,
+                username: (await this.bot.telegram.getMe()).username
+            });
+        }
 
         // Enable graceful stop
         process.once('SIGINT', () => this.bot.stop('SIGINT'));

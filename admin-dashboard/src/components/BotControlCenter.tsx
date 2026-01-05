@@ -16,8 +16,7 @@ export default function BotControlCenter() {
     const [socket, setSocket] = useState<Socket | null>(null);
     const [status, setStatus] = useState<'CONNECTING' | 'CONNECTED' | 'DISCONNECTED'>('CONNECTING');
     const [qrCode, setQrCode] = useState<string | null>(null);
-    const [whatsappReady, setWhatsappReady] = useState(false);
-    const [logs, setLogs] = useState<any[]>([]);
+    const [telegramStatus, setTelegramStatus] = useState<{ ready: boolean; username?: string; error?: string }>({ ready: false });
 
     useEffect(() => {
         const newSocket = io(BOT_SERVER_URL);
@@ -30,6 +29,7 @@ export default function BotControlCenter() {
         newSocket.on('disconnect', () => {
             setStatus('DISCONNECTED');
             setWhatsappReady(false);
+            setTelegramStatus({ ready: false });
         });
 
         newSocket.on('whatsapp_qr', (qr: string) => {
@@ -42,6 +42,11 @@ export default function BotControlCenter() {
             console.log("✅ WhatsApp Ready");
             setWhatsappReady(true);
             setQrCode(null);
+        });
+
+        newSocket.on('telegram_status', (status: any) => {
+            console.log("Example Telegram Status:", status);
+            setTelegramStatus(status);
         });
 
         newSocket.on('logs_history', (history: any[]) => {
@@ -122,8 +127,8 @@ export default function BotControlCenter() {
                                 <CardDescription>Visual & Learning Assistant</CardDescription>
                             </div>
                         </div>
-                        <Badge variant="outline" className="border-blue-500 text-blue-400">
-                            ONLINE (ALWAYS)
+                        <Badge variant="outline" className={`border-blue-500 ${telegramStatus.ready ? 'text-blue-400' : 'text-red-400 border-red-500'}`}>
+                            {telegramStatus.ready ? 'ONLINE' : telegramStatus.error === 'MISSING_TOKEN' ? 'MISSING TOKEN' : 'OFFLINE'}
                         </Badge>
                     </div>
                 </CardHeader>
@@ -131,14 +136,22 @@ export default function BotControlCenter() {
                     <div className="space-y-4">
                         <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/10">
                             <p className="text-xs text-blue-300 font-mono mb-1">BOT USERNAME</p>
-                            <p className="text-lg font-bold text-white">@QuranPulseBot</p>
+                            <p className="text-lg font-bold text-white">
+                                {telegramStatus.ready ? `@${telegramStatus.username}` : telegramStatus.error === 'MISSING_TOKEN' ? 'TOKEN MISSING' : 'Connecting...'}
+                            </p>
                         </div>
                         <div className="p-4 rounded-lg bg-slate-900 border border-white/5">
                             <p className="text-xs text-slate-400 font-mono mb-1">FEATURES STATUS</p>
                             <ul className="space-y-2">
-                                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Vision-X (Image Analysis)</li>
-                                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> Voice Notes</li>
-                                <li className="flex items-center gap-2 text-sm text-slate-300"><CheckCircle2 className="w-4 h-4 text-emerald-500" /> User Linking</li>
+                                <li className={`flex items-center gap-2 text-sm ${telegramStatus.ready ? 'text-slate-300' : 'text-slate-600'}`}>
+                                    <CheckCircle2 className={`w-4 h-4 ${telegramStatus.ready ? 'text-emerald-500' : 'text-slate-700'}`} /> Vision-X (Image Analysis)
+                                </li>
+                                <li className={`flex items-center gap-2 text-sm ${telegramStatus.ready ? 'text-slate-300' : 'text-slate-600'}`}>
+                                    <CheckCircle2 className={`w-4 h-4 ${telegramStatus.ready ? 'text-emerald-500' : 'text-slate-700'}`} /> Voice Notes
+                                </li>
+                                <li className={`flex items-center gap-2 text-sm ${telegramStatus.ready ? 'text-slate-300' : 'text-slate-600'}`}>
+                                    <CheckCircle2 className={`w-4 h-4 ${telegramStatus.ready ? 'text-emerald-500' : 'text-slate-700'}`} /> User Linking
+                                </li>
                             </ul>
                         </div>
                     </div>
