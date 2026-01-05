@@ -2,6 +2,7 @@ import React, { createContext, useContext, useEffect, useRef, ReactNode } from '
 import { useAudioPlayer } from '../../../contexts/AudioPlayerContext';
 import { useQuranData } from './QuranDataContext';
 import { useQuranSettings } from './QuranSettingsContext';
+import { audioCache } from '../../../services/audioCacheService';
 
 interface QuranAudioState {
     playVerse: (verseKey: string) => void;
@@ -139,10 +140,6 @@ export const QuranAudioProvider: React.FC<{ children: ReactNode }> = ({ children
         });
     };
 
-import { audioCache } from '../../../services/audioCacheService';
-
-// ... existing code ...
-
     // Play Verse Function
     const playVerse = async (verseKey: string) => {
         if (!audioMap[verseKey]) return;
@@ -206,7 +203,7 @@ import { audioCache } from '../../../services/audioCacheService';
                     const translationText = verse.translations?.[0]?.text?.replace(/<[^>]*>/g, "") || "";
                     if (translationText) {
                         const lang = selectedTranslationId === 39 ? 'ms-MY' : 'en-US';
-                        try { await speakTranslation(translationText, lang); } catch (e) { console.warn("TTS skipped"); }
+                        try { await speakTranslation(translationText, lang); } catch (e) { console.warn("TTS skipped"); } 
                     }
                 }
 
