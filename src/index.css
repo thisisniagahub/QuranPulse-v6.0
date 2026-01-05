@@ -10,12 +10,16 @@
   /* ═══════════════════════════════════════════════════════════════════════════
      OFFICIAL QURAN PULSE V6.0 COLOR PALETTE
      ═══════════════════════════════════════════════════════════════════════════ */
-  
-  --primary: #162c51;      /* Light Navy */
-  --secondary: #0c224b;    /* Deep Navy */
-  --bg-main: #031a38;      /* Midnight Black-Blue (Base) */
-  --highlight: #22d3ee;    /* Cyan-400 (Highlight) */
-  
+
+  --primary: #162c51;
+  /* Light Navy */
+  --secondary: #0c224b;
+  /* Deep Navy */
+  --bg-main: #031a38;
+  /* Midnight Black-Blue (Base) */
+  --highlight: #22d3ee;
+  /* Cyan-400 (Highlight) */
+
   /* RGB Variants for Transparency */
   --primary-rgb: 22, 44, 81;
   --secondary-rgb: 12, 34, 75;
@@ -381,11 +385,9 @@
 
 html {
   -webkit-text-size-adjust: 100%;
-  /* Chrome 54+, Chrome Android 54+, Safari */
   -moz-text-size-adjust: 100%;
-  /* Firefox */
+  -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
-  /* Standard */
 }
 
 body {
@@ -816,20 +818,30 @@ body::before {
 }
 
 /* Color utilities using CSS custom properties */
+/* Note: color-mix requires Chrome 111+. For older browsers, set --dynamic-color-15 etc as fallbacks */
 .dynamic-bg {
   background-color: var(--dynamic-color);
 }
 
 .dynamic-bg-15 {
-  background-color: color-mix(in srgb, var(--dynamic-color) 15%, transparent);
+  /* Fallback for older browsers */
+  background-color: rgba(var(--primary-rgb), 0.15);
+  /* Modern browsers */
+  background-color: color-mix(in srgb, var(--dynamic-color, var(--primary)) 15%, transparent);
 }
 
 .dynamic-bg-20 {
-  background-color: color-mix(in srgb, var(--dynamic-color) 20%, transparent);
+  /* Fallback for older browsers */
+  background-color: rgba(var(--primary-rgb), 0.20);
+  /* Modern browsers */
+  background-color: color-mix(in srgb, var(--dynamic-color, var(--primary)) 20%, transparent);
 }
 
 .dynamic-border-30 {
-  border-color: color-mix(in srgb, var(--dynamic-color) 30%, transparent);
+  /* Fallback for older browsers */
+  border-color: rgba(var(--primary-rgb), 0.30);
+  /* Modern browsers */
+  border-color: color-mix(in srgb, var(--dynamic-color, var(--primary)) 30%, transparent);
 }
 
 .dynamic-text {
