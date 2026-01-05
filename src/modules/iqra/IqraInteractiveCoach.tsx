@@ -9,62 +9,20 @@ import {
 import { useIqraAudio } from './hooks/useIqraTools';
 import { askUstazAI } from '../../services/aiService';
 import { getResponsiveGridClass } from '../../utils/gridUtils';
+import { useIqraLoader, LessonStep } from './hooks/useIqraLoader';
+import { useGamification } from '../../contexts/GamificationContext';
 
-// --- DATA ---
-const ALPHABET_DATA = [
-    { char: 'ا', name: 'Alif', sound: 'Alif' }, { char: 'ب', name: 'Ba', sound: 'Ba' },
-    { char: 'ت', name: 'Ta', sound: 'Ta' }, { char: 'ث', name: 'Tsa', sound: 'Tsa' },
-    { char: 'ج', name: 'Jim', sound: 'Jim' }, { char: 'ح', name: 'Ha', sound: 'Ha' },
-    { char: 'خ', name: 'Kho', sound: 'Kho' }, { char: 'د', name: 'Dal', sound: 'Dal' },
-    { char: 'ذ', name: 'Dzal', sound: 'Dzal' }, { char: 'ر', name: 'Ro', sound: 'Ro' },
-    { char: 'ز', name: 'Zai', sound: 'Zai' }, { char: 'س', name: 'Sin', sound: 'Sin' },
-    { char: 'ش', name: 'Syin', sound: 'Syin' }, { char: 'ص', name: 'Sod', sound: 'Sod' },
-    { char: 'ض', name: 'Dhod', sound: 'Dhod' }, { char: 'ط', name: 'Tho', sound: 'Tho' },
-    { char: 'ظ', name: 'Zho', sound: 'Zho' }, { char: 'ع', name: 'Ain', sound: 'Ain' },
-    { char: 'غ', name: 'Ghain', sound: 'Ghain' }, { char: 'ف', name: 'Fa', sound: 'Fa' },
-    { char: 'ق', name: 'Qof', sound: 'Qof' }, { char: 'ك', name: 'Kaf', sound: 'Kaf' },
-    { char: 'ل', name: 'Lam', sound: 'Lam' }, { char: 'م', name: 'Mim', sound: 'Mim' },
-    { char: 'ن', name: 'Nun', sound: 'Nun' }, { char: 'و', name: 'Wau', sound: 'Wau' },
-    { char: 'هـ', name: 'Ha', sound: 'Ha' }, { char: 'لا', name: 'Lam Alif', sound: 'Lam Alif' },
-    { char: 'ء', name: 'Hamzah', sound: 'Hamzah' }, { char: 'ي', name: 'Ya', sound: 'Ya' }
-];
-
-const LESSON_DATA = [
-    // --- PAGE 1 ---
-    { id: 0, type: 'cover', letter: 'IQRA 1', name: 'Muka Surat 1', sound: 'Iqra 1', description: 'Permulaan perjalanan mengenal huruf Al-Quran.' },
-    { id: 1, type: 'intro', letter: 'أَ', name: 'Alif Fathah', sound: 'A', description: 'Bunyinya tajam "A". Pastikan mulut dibuka dengan betul.' },
-    { id: 2, type: 'intro', letter: 'بَ', name: 'Ba Fathah', sound: 'Ba', description: 'Bunyinya "Ba". Bibir dirapatkan dan dilepaskan dengan ringan.' },
-    { id: 3, type: 'practice', letters: ['أَ', 'بَ'], instruction: 'Iqra 1 (Baris 1): Cuba sebut dari kanan ke kiri.' },
-    { id: 4, type: 'practice', letters: ['بَ', 'أَ'], instruction: 'Iqra 1 (Baris 2): Terbalikkan kedudukan.' },
-    { id: 5, type: 'practice', letters: ['أَ', 'بَ', 'أَ'], instruction: 'Iqra 1 (Baris 3): Fokus pada perubahan bunyi.' },
-    { id: 6, type: 'practice', letters: ['بَ', 'أَ', 'بَ'], instruction: 'Iqra 1 (Baris 4): Ba-A-Ba.' },
-    { id: 7, type: 'quiz', letter: 'أَ', options: ['بَ', 'أَ'], instruction: 'Pilih huruf yang berbunyi "A".' },
-    { id: 8, type: 'quiz', letter: 'بَ', options: ['أَ', 'بَ'], instruction: 'Pilih huruf yang berbunyi "Ba".' },
-    { id: 9, type: 'practice', letters: ['أَ', 'أَ', 'أَ'], instruction: 'Iqra 1 (Baris 5): A-A-A.' },
-    { id: 10, type: 'practice', letters: ['بَ', 'بَ', 'بَ'], instruction: 'Iqra 1 (Baris 6): Ba-Ba-Ba.' },
-    { id: 11, type: 'challenge', letters: ['أَ', 'بَ', 'أَ', 'بَ'], target: 'أَ', instruction: 'Sentuh huruf "A" yang terakhir.' },
-
-    // --- PAGE 2 ---
-    { id: 12, type: 'cover', letter: 'IQRA 1', name: 'Muka Surat 2', sound: 'Iqra 1', description: 'Mengenal huruf Ta dan konsistensi baris atas.' },
-    { id: 13, type: 'insight', title: 'Hukum Sebutan', text: 'Semua huruf berbaris atas (Fathah) hujungnya berbunyi "A", kecuali huruf tebal hujungnya berbunyi "O".' },
-    { id: 14, type: 'intro', letter: 'تَ', name: 'Ta Fathah', sound: 'Ta', description: 'Bunyinya "Ta". Hujung lidah menyentuh pangkal gigi atas.' },
-    { id: 15, type: 'practice', letters: ['أَ', 'بَ', 'تَ'], instruction: 'Latihan Baris 1: A-Ba-Ta' },
-    { id: 16, type: 'practice', letters: ['بَ', 'أَ'], instruction: 'Latihan Baris 1: Ba-A' },
-    { id: 17, type: 'practice', letters: ['تَ', 'بَ', 'أَ'], instruction: 'Latihan Baris 2: Ta-Ba-A' },
-    { id: 18, type: 'practice', letters: ['تَ', 'أَ', 'تَ'], instruction: 'Latihan Baris 2: Ta-A-Ta' },
-    { id: 19, type: 'practice', letters: ['بَ', 'تَ', 'أَ'], instruction: 'Latihan Baris 3: Ba-Ta-A' },
-    { id: 20, type: 'practice', letters: ['بَ', 'تَ', 'بَ'], instruction: 'Latihan Baris 3: Ba-Ta-Ba' },
-    { id: 21, type: 'quiz', letter: 'تَ', options: ['أَ', 'بَ', 'تَ'], instruction: 'Pilih huruf "Ta".' },
-    { id: 22, type: 'practice', letters: ['أَ', 'تَ', 'تَ'], instruction: 'Latihan Baris 5: A-Ta-Ta' },
-    { id: 23, type: 'challenge', letters: ['تَ', 'بَ', 'أَ'], target: 'تَ', instruction: 'Cari huruf Ta.' },
-    { id: 24, type: 'intro', letter: 'أَ بَ تَ', name: 'Tamat Halaman 2', sound: 'A Ba Ta', description: 'Hebat! Anda telah menguasai tiga huruf asas Iqra 1.' },
-];
+// --- REMOVED HARDCODED DATA ---
 
 interface IqraInteractiveCoachProps {
+    volume?: number;
     onClose?: () => void;
 }
 
-const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) => {
+const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1, onClose }) => {
+    const { steps, loading: dataLoading } = useIqraLoader(volume);
+    const { addXP, unlockAchievement } = useGamification();
+    
     const [view, setView] = useState<'lesson' | 'chart'>('lesson');
     const [currentStep, setCurrentStep] = useState(0);
     const [hearts, setHearts] = useState(5);
@@ -81,8 +39,19 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
 
     const { speak } = useIqraAudio();
 
-    const step = LESSON_DATA[currentStep];
-    const progress = ((currentStep) / LESSON_DATA.length) * 100;
+    const step = steps[currentStep];
+    const progress = steps.length > 0 ? ((currentStep) / steps.length) * 100 : 0;
+
+    // Handle initial loading
+    if (dataLoading) {
+        return (
+            <div className="h-full flex items-center justify-center bg-background-dark text-cyan-400">
+                <Loader2 className="animate-spin mr-2" /> Initializing Neural Curriculum...
+            </div>
+        );
+    }
+
+    if (!step) return null;
 
     const handleCallAI = async (prompt: string, context: string) => {
         setAiLoading(true);
@@ -131,6 +100,8 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
             if (selectedOption === target) {
                 setIsCorrect(true);
                 speak(selectedOption!);
+                // 🎮 GAMIFICATION: Reward XP for correct answer
+                addXP(10, `Correct Answer: ${selectedOption}`);
             } else {
                 setIsCorrect(false);
                 setHearts(prev => Math.max(0, prev - 1));
@@ -141,7 +112,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
     };
 
     const handleNext = () => {
-        if (currentStep < LESSON_DATA.length - 1) {
+        if (currentStep < steps.length - 1) {
             setCurrentStep(prev => prev + 1);
             setSelectedOption(null);
             setIsCorrect(null);
@@ -149,8 +120,14 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
             setChatResponse("");
         } else {
             setIsComplete(true);
+            // 🎮 GAMIFICATION: Reward for finishing the module
+            addXP(100, `Completed Iqra Volume ${volume}`);
+            unlockAchievement('first_khatam'); // Using existing achievement ID for demo
         }
     };
+
+    // Derived unique letters for the index grid
+    const uniqueLetters = Array.from(new Set(steps.filter(s => s.letter).map(s => s.letter!)));
 
     if (isComplete) {
         return (
@@ -412,15 +389,14 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ onClose }) 
                                     <p className="text-primary text-xs font-black tracking-widest uppercase neon-glow-primary">Spectral Character Map</p>
                                 </div>
                                 <div className="grid grid-cols-4 sm:grid-cols-6 gap-4" dir="rtl">
-                                    {ALPHABET_DATA.map((item, idx) => (
+                                    {uniqueLetters.map((item, idx) => (
                                         <button
                                             key={idx}
-                                            onClick={() => speak(item.char)}
+                                            onClick={() => speak(item)}
                                             className="aspect-square flex flex-col items-center justify-center rounded-full glass-hud border border-primary/20 hover:border-primary transition-all active:scale-90 group relative overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_25px_rgba(0,191,255,0.4)]"
                                         >
                                             <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors rounded-full"></div>
-                                            <span className="text-4xl font-arabic mb-1 group-hover:text-white transition-all group-hover:scale-110 drop-shadow-[0_0_5px_rgba(0,191,255,0.8)]">{item.char}</span>
-                                            <span className="text-[8px] font-black uppercase text-primary/70 tracking-tighter group-hover:text-primary transition-colors">{item.name}</span>
+                                            <span className="text-4xl font-arabic mb-1 group-hover:text-white transition-all group-hover:scale-110 drop-shadow-[0_0_5px_rgba(0,191,255,0.8)]">{item}</span>
                                         </button>
                                     ))}
                                 </div>
