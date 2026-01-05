@@ -25,15 +25,28 @@ export interface HijriDate {
 }
 
 import { UstazOrchestrator } from "./UstazOrchestrator";
+import { getCachedOrFetchZone, coordinatesToMalaysiaZone } from "./geolocationService";
 
 const ALADHAN_API = "https://api.aladhan.com/v1";
 
 export const getPrayerTimes = async (lat: number, lng: number, zone?: string): Promise<{ timings: PrayerTimes; date: HijriDate; source: string }> => {
   try {
-    // 1. TRY MCP (JAKIM) FIRST if zone is provided or for Malaysia
-    // For now, we use a simple heuristic: if no zone is provided, we try to get one or fallback
-    const targetZone = zone || 'WLP01'; // Default to KL
-    
+    // 1. Determine zone: provided > geolocation > coordinate mapping > default
+    let targetZone = zone;
+
+    if (!targetZone) {
+      // Try geolocation-based zone detection
+      try {
+        targetZone = await getCachedOrFetchZone();
+        console.log(`📍 Auto-detected zone: ${targetZone}`);
+      } catch {
+        // Fallback to coordinate-based mapping
+        const mapped = coordinatesToMalaysiaZone(lat, lng);
+        targetZone = mapped.code !== 'INTL' ? mapped.code : 'WLP01';
+        console.log(`📍 Coordinate-mapped zone: ${targetZone}`);
+      }
+    }
+
     console.log(`🕌 PrayerService: Fetching for zone ${targetZone} via MCP...`);
     const mcpData = await UstazOrchestrator.getWorshipData(targetZone);
 
@@ -97,17 +110,17 @@ export const getPrayerTimes = async (lat: number, lng: number, zone?: string): P
 export const getNextPrayer = (timings: PrayerTimes): { name: string; time: string; remaining: string } => {
   const now = new Date();
   const currentTime = `${now.getHours()}:${now.getMinutes()}`;
-  
+
   const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
-  
+
   for (const prayer of prayers) {
     if (timings[prayer] > currentTime) {
-        // Simple logic for display purposes. 
-        // In a real app, full Date object comparison is needed for accurate countdown.
-        return { name: prayer, time: timings[prayer], remaining: "Coming Soon" };
+      // Simple logic for display purposes. 
+      // In a real app, full Date object comparison is needed for accurate countdown.
+      return { name: prayer, time: timings[prayer], remaining: "Coming Soon" };
     }
   }
-  
+
   return { name: 'Fajr', time: timings['Fajr'], remaining: "Tomorrow" };
 };
 
@@ -115,5 +128,5 @@ export const getQiblaDirection = (lat: number, lng: number): number => {
   // Simplified Qibla direction for Kuala Lumpur (approx)
   // In a real app, use spherical trigonometry:
   // λ = lng, φ = lat, λ_Mecca = 39.8262, φ_Mecca = 21.4225
-  return 292; 
+  return 292;
 };
