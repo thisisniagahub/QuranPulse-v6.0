@@ -64,8 +64,8 @@ export const BentoGridFeatures: React.FC = () => {
                     </p>
                 </motion.div>
 
-                {/* Main Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 md:grid-cols-[2fr_1fr_1fr] lg:grid-rows-[300px_300px_300px] h-auto">
+                {/* Main Grid: Single col on mobile, complex bento on desktop */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 auto-rows-[300px]">
 
                     {/* Hero Feature: Quran */}
                     <BentoCard

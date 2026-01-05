@@ -31,6 +31,10 @@ export class WhatsappService {
             puppeteer: {
                 headless: true,
                 args: ['--no-sandbox', '--disable-setuid-sandbox']
+            },
+            webVersionCache: {
+                type: 'remote',
+                remotePath: 'https://raw.githubusercontent.com/wppconnect-team/wa-version/main/html/2.2412.54.html',
             }
         });
 
@@ -62,8 +66,11 @@ export class WhatsappService {
         });
 
         // 3. Message Handling
-        this.client.on('message', async (msg: any) => { // Library emits 'any' effectively
-            if (msg.isStatus || msg.from.includes('@g.us')) return;
+        this.client.on('message', async (msg: any) => {
+            console.log("📨 RAW EVENT:", msg.type, msg.from, msg.body?.substring(0, 20)); // DEBUG
+            if (msg.isStatus) return;
+            if (msg.from.includes('@g.us')) return; // Ignore groups
+
             // Cast to our interface for internal usage
             await this.handleMessage(msg as WhatsAppMessage);
         });

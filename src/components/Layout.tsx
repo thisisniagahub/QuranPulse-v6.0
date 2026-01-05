@@ -69,7 +69,7 @@ const Layout: React.FC = () => {
         {/* --- PREMIUM HEADER ATAS SEKALI --- */}
         <header className="h-20 bg-[#0c224b]/60 backdrop-blur-xl border-b border-white/10 flex flex-col justify-center px-4 shrink-0 z-20 relative shadow-lg">
           <div className="flex items-center justify-between">
-            {/* Left: Brand & Date */}
+            {/* Left: Brand */}
             <Link to="/" className="flex flex-col">
               <div className="flex items-center gap-2 group">
                 <img src="/logo-primary.png" alt="Logo" className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
@@ -77,9 +77,6 @@ const Layout: React.FC = () => {
                   Quran<span className="text-cyan-400">Pulse</span>
                 </span>
               </div>
-              <span className="text-[8px] font-bold text-slate-400 uppercase tracking-[0.2em] mt-0.5 ml-0.5">
-                {new Date().toLocaleDateString('ms-MY', { day: 'numeric', month: 'short' })} • Kuala Lumpur
-              </span>
             </Link>
 
             {/* Center: Gamification Stats (Floating Pill) */}
@@ -103,9 +100,10 @@ const Layout: React.FC = () => {
               
               <Link to="/profile" className="w-9 h-9 rounded-full border-2 border-cyan-500/30 p-0.5 bg-[#0c224b] shadow-lg">
                 <img 
-                  src={user?.avatar || "https://api.dicebear.com/7.x/avataaars/svg?seed=" + (user?.name || 'User')} 
+                  src={user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name || 'User'}`} 
                   alt="User" 
-                  className="w-full h-full rounded-full object-cover" 
+                  className="w-full h-full rounded-full object-cover"
+                  onError={(e) => { e.currentTarget.src = '/assets/icons/nabdh/nav-profile.png'; }}
                 />
               </Link>
             </div>

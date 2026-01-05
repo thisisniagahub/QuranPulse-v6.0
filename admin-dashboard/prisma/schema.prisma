@@ -21,13 +21,39 @@ model Profile {
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime  @updatedAt @map("updated_at")
 
+  telegramId      BigInt?   @unique @map("telegram_id")
+  
   // Relations
   subscriptions   Subscription[]
   payments        PaymentTransaction[]
   chatSessions    AiChatSession[]
   adminLogs       AdminAuditLog[]      @relation("AdminAction")
+  botInteractions BotInteraction[]
 
   @@map("profiles")
+}
+
+model PendingBotLink {
+  id            String    @id @default(uuid())
+  telegramId    BigInt    @unique @map("telegram_id")
+  email         String
+  otp           String
+  createdAt     DateTime  @default(now()) @map("created_at")
+
+  @@map("pending_bot_links")
+}
+
+model BotInteraction {
+  id            String    @id @default(uuid())
+  telegramId    BigInt    @map("telegram_id")
+  actionType    String    @map("action_type") // AI_CHAT, VISION_X_SCAN
+  content       String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  
+  // Optional relation if we want to link verified users
+  user          Profile?  @relation(fields: [telegramId], references: [telegramId])
+
+  @@map("bot_interactions")
 }
 
 model Subscription {

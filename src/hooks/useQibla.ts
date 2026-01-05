@@ -131,12 +131,18 @@ export const useQibla = () => {
     }
   }, [qiblaData.qiblaAngle, qiblaData.deviceHeading]);
 
-  // Request geolocation permission on component mount or button click
+  // Request geolocation permission on component mount
   useEffect(() => {
-    if (!geoGranted && qiblaData.isGeolocationSupported && qiblaData.isLoading) {
+    // Initialize geolocation support check
+    const supported = !!navigator.geolocation;
+    setQiblaData(prev => ({ ...prev, isGeolocationSupported: supported }));
+    
+    if (supported && !geoGranted) {
         getUserLocation();
+    } else if (!supported) {
+        setQiblaData(prev => ({ ...prev, isLoading: false, error: 'Geolocation not supported' }));
     }
-  }, [geoGranted, qiblaData.isGeolocationSupported, qiblaData.isLoading, getUserLocation]);
+  }, [getUserLocation, geoGranted]);
 
 
   return qiblaData;

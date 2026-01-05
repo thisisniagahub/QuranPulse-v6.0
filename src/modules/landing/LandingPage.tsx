@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/Button';
 import {
   Play, Quote, Check, ArrowRight, Star,
   Smartphone, Globe, Palette, Zap, Cpu, Heart,
-  BrainCircuit, ShieldCheck, Layers, BookOpen
+  BrainCircuit, ShieldCheck, Layers, BookOpen, Menu, X
 } from 'lucide-react';
 import { AppStoreButton, GooglePlayButton } from '@/components/DownloadButtons';
 import QwerDemoSection from '@/components/landing/QwerDemoSection';
@@ -29,6 +29,7 @@ interface LandingPageProps {
 const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Scroll Handler
   useEffect(() => {
@@ -78,14 +79,72 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               </a>
             ))}
           </div>
+          <div className="hidden md:flex items-center gap-3">
+            <button
+              onClick={onGetStarted}
+              className="relative inline-flex items-center justify-center font-bold tracking-wide rounded-xl transition-all duration-300 disabled:opacity-50 active:scale-95 overflow-hidden group bg-cyan-600 text-white px-5 py-2 text-sm shadow-lg shadow-cyan-600/20 hover:shadow-cyan-600/40 border border-cyan-500"
+            >
+              <div className="absolute inset-0 bg-white/40 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out skew-x-12"></div>
+              <span className="relative z-10 flex items-center gap-2"><Zap size={14} className="fill-current" /> Launch App</span>
+            </button>
+          </div>
+
+          {/* Mobile Menu Toggle */}
           <button
-            onClick={onGetStarted}
-            className="relative inline-flex items-center justify-center font-bold tracking-wide rounded-xl transition-all duration-300 disabled:opacity-50 active:scale-95 overflow-hidden group bg-cyan-600 text-white px-5 py-2 text-sm shadow-lg shadow-cyan-600/20 hover:shadow-cyan-600/40 border border-cyan-500"
+            className="md:hidden text-white p-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
-            <div className="absolute inset-0 bg-white/40 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out skew-x-12"></div>
-            <span className="relative z-10 flex items-center gap-2"><Zap size={14} className="fill-current" /> Launch App</span>
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
+
+        {/* Mobile Menu Overlay */}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }}
+              className="md:hidden bg-[#0c224b]/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
+            >
+              <div className="flex flex-col p-6 space-y-4">
+                {[
+                  { label: 'Ekosistem', href: 'features' },
+                  { label: 'AI Ustaz', href: 'intelligence' },
+                  { label: 'Testimoni', href: 'testimonials' },
+                  { label: 'Harga', href: 'pricing' }
+                ].map((item) => (
+                  <a
+                    key={item.href}
+                    href={`#${item.href}`}
+                    className="text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-white/5"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsMobileMenuOpen(false);
+                      const element = document.getElementById(item.href);
+                      if (element) {
+                        const offset = 80;
+                        const top = element.getBoundingClientRect().top + window.scrollY - offset;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                      }
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                ))}
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    onGetStarted();
+                  }}
+                  className="w-full mt-4 bg-cyan-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-cyan-600/20"
+                >
+                  Launch App
+                </button>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* 2. HERO SECTION */}
@@ -158,9 +217,12 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
-            className="relative flex items-center justify-center"
+            className="relative flex items-center justify-center mt-10 md:mt-0"
           >
-            <ThreePhoneMockup />
+            {/* Scale down on mobile to prevent overflow */}
+            <div className="transform scale-75 md:scale-100 origin-center">
+              <ThreePhoneMockup />
+            </div>
           </motion.div>
         </div>
       </section>

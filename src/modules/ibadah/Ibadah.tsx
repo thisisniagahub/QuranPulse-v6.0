@@ -55,6 +55,19 @@ const Ibadah: React.FC = () => {
 
     // State to handle permission request UI
     const [showPermissionPrompt, setShowPermissionPrompt] = useState(false);
+    const [showTimeoutError, setShowTimeoutError] = useState(false);
+
+    useEffect(() => {
+        let timer: NodeJS.Timeout;
+        if (isLoading && viewMode === 'QIBLA') {
+            timer = setTimeout(() => {
+                setShowTimeoutError(true);
+            }, 8000);
+        } else {
+            setShowTimeoutError(false);
+        }
+        return () => clearTimeout(timer);
+    }, [isLoading, viewMode]);
 
     useEffect(() => {
         localStorage.setItem('pulse_zone', selectedZone);
@@ -125,8 +138,17 @@ const Ibadah: React.FC = () => {
 
             {/* Qibla Angle Display */}
             {qiblaAngle !== null && (
-                <div className="absolute bottom-10 text-cyan-400 font-mono text-xl font-bold tracking-widest">
-                    {Math.round(qiblaAngle)}°
+                <div className="absolute bottom-10 flex flex-col items-center">
+                    <div className="text-cyan-400 font-mono text-xl font-bold tracking-widest">
+                        {Math.round(qiblaAngle)}°
+                    </div>
+                    {/* Waktu dalam Qiblat */}
+                    {prayerData && (
+                        <div className="mt-2 flex flex-col items-center">
+                            <span className="text-[10px] text-slate-400 uppercase tracking-wider font-bold">{prayerData.nextPrayer}</span>
+                            <span className="text-sm text-white font-mono">{prayerData.timeRemaining}</span>
+                        </div>
+                    )}
                 </div>
             )}
         </div>
@@ -320,7 +342,7 @@ const Ibadah: React.FC = () => {
                     >
                         {/* Main Content */}
                         <div className="flex-1 flex flex-col items-center justify-center min-h-[50vh]">
-                            {isLoading && !error && (
+                            {isLoading && !error && !showTimeoutError && (
                                 <div className="flex flex-col items-center">
                                     <motion.div
                                         animate={{ rotate: 360 }}
@@ -328,6 +350,19 @@ const Ibadah: React.FC = () => {
                                         className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full mb-4"
                                     />
                                     <p className="text-slate-400">Mencari lokasi anda...</p>
+                                </div>
+                            )}
+
+                            {isLoading && !error && showTimeoutError && (
+                                <div className="flex flex-col items-center text-center p-6">
+                                    <i className="fa-solid fa-triangle-exclamation text-amber-500 text-3xl mb-4"></i>
+                                    <p className="text-slate-300 mb-4">Gagal mengesan lokasi secara automatik.</p>
+                                    <button 
+                                        onClick={() => window.location.reload()} 
+                                        className="px-6 py-2 bg-cyan-500 text-black rounded-full font-bold hover:bg-cyan-400 transition-colors"
+                                    >
+                                        Cuba Lagi
+                                    </button>
                                 </div>
                             )}
 
