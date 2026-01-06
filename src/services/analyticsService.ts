@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase';
 
-export type EventName = 
+export type EventName =
   | 'APP_OPEN'
   | 'PAGE_VIEW'
   | 'LOGIN'
@@ -14,7 +14,9 @@ export type EventName =
   | 'INFAQ_VIEW'
   | 'INFAQ_INITIATE'
   | 'INFAQ_SUCCESS'
-  | 'INFAQ_FAILURE';
+  | 'INFAQ_FAILURE'
+  | 'ZAKAT_CALC_VIEW'
+  | 'MASJID_HUB_VIEW';
 
 export interface AnalyticsEvent {
   name: EventName;
@@ -41,7 +43,7 @@ export const AnalyticsService = {
   async track(name: EventName, properties: Record<string, any> = {}) {
     try {
       const { data: { session } } = await supabase.auth.getSession();
-      
+
       // Prioritize authenticated ID, fallback to persistent anon ID
       const user_id = session?.user?.id || getAnonId();
 

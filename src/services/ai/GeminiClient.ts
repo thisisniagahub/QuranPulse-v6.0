@@ -1,7 +1,7 @@
 
-import { supabase } from '../../lib/supabase.ts';
-import { ChatMessage } from '../../types.ts';
-import { geminiRotator } from './MultiKeyRotator.ts';
+import { supabase } from '../../lib/supabase';
+import { ChatMessage } from '../../types';
+import { geminiRotator } from './MultiKeyRotator';
 import axios from 'axios';
 
 // Flag to indicate we are using the proxy for client-side.

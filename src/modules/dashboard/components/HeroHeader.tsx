@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { UserProfile } from '../../types';
+import { UserProfile } from '../../../types';
 
 interface HeroHeaderProps {
     user: UserProfile;
     greeting: string;
-    theme: any; 
+    theme: any;
     onCycleTheme: () => void;
 }
 
@@ -23,17 +23,17 @@ const HeroHeader: React.FC<HeroHeaderProps> = ({ user, greeting, theme, onCycleT
     return (
         <div className="flex justify-between items-end mb-8 px-2">
             <div>
-                <motion.div 
+                <motion.div
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     className="flex items-center gap-2 mb-1"
                 >
                     <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
-                        {theme.hijriDate || "15 Ramadhan 1446H"} 
+                        {theme.hijriDate || "15 Ramadhan 1446H"}
                     </span>
                     <span className="text-[10px] text-white/50">• {greeting}</span>
                 </motion.div>
-                <motion.h1 
+                <motion.h1
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}

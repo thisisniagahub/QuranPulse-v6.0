@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product, UserProfile, Announcement, Order, SystemLog, CartItem, AppConfigItem } from '../types';
-import { api } from './apiClient'; 
+import { api } from './apiClient';
 
 interface DataContextType {
     products: Product[];
@@ -10,16 +10,16 @@ interface DataContextType {
     orders: Order[];
     logs: SystemLog[];
     appConfig: AppConfigItem[];
-    
+
     addProduct: (product: Product) => Promise<void>;
     updateProduct: (product: Product) => Promise<void>;
     deleteProduct: (id: string) => Promise<void>;
-    
+
     addAnnouncement: (ann: Announcement) => Promise<void>;
     deleteAnnouncement: (id: string) => Promise<void>;
-    
+
     updateUser: (user: Partial<UserProfile>) => Promise<void>;
-    
+
     placeOrder: (cart: CartItem[], name: string) => Promise<boolean>;
     updateAppConfig: (key: string, value: string) => Promise<void>;
     refreshData: () => Promise<void>;
@@ -31,7 +31,7 @@ const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [products, setProducts] = useState<Product[]>([]);
-    const [users, setUsers] = useState<UserProfile[]>([]); 
+    const [users, setUsers] = useState<UserProfile[]>([]);
     const [announcements, setAnnouncements] = useState<Announcement[]>([]);
     const [orders, setOrders] = useState<Order[]>([]);
     const [logs, setLogs] = useState<SystemLog[]>([]);
@@ -85,7 +85,8 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     };
 
     const updateUser = async (user: Partial<UserProfile>) => {
-        await api.adminUpdateUser(user);
+        if (!user.id) return;
+        await api.adminUpdateUser({ id: user.id, ...user });
         await refreshData();
     }
 

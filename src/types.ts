@@ -136,6 +136,15 @@ export interface UserProfile {
 }
 
 // --- Iqra Types ---
+export interface IqraBook {
+  id: string;
+  title: string;
+  description?: string;
+  cover_url?: string;
+  level: number;
+  total_pages?: number;
+}
+
 export interface IqraCell {
   id: string;
   x: number;
@@ -213,33 +222,6 @@ export interface MultimediaContent {
   status: 'pending' | 'approved' | 'rejected' | 'published';
 }
 
-// --- Admin/CMS Types ---
-export interface AdminStat {
-  label: string;
-  value: string;
-  trend: string;
-  icon: string;
-  color: string;
-}
-
-export interface Announcement {
-  id: string;
-  title: string;
-  message: string;
-  type: 'INFO' | 'WARNING' | 'SUCCESS';
-  active: boolean;
-  date: string;
-}
-
-export interface FlaggedContent {
-  id: string;
-  user: string;
-  content_snippet: string;
-  reason: string;
-  severity: 'LOW' | 'MEDIUM' | 'HIGH';
-  timestamp: string;
-}
-
 // --- Quran API Types ---
 export interface QuranChapter {
   id: number;
@@ -307,6 +289,7 @@ export interface QuranVerse {
 export interface AudioFile {
   verse_key: string;
   url: string;
+  format?: string;
 }
 
 export interface Reciter {
@@ -322,12 +305,39 @@ export interface TafsirResult {
   keywords: { term: string; meaning: string }[];
 }
 
+export interface FlaggedContent {
+  id: string;
+  user: string;
+  content_snippet: string;
+  reason: string;
+  severity: 'LOW' | 'MEDIUM' | 'HIGH';
+  timestamp: string;
+}
+
+// --- Admin/CMS Types ---
+export interface AdminStat {
+  label: string;
+  value: string;
+  trend: string;
+  icon: string;
+  color: string;
+}
+
+export interface Announcement {
+  id: string;
+  title: string;
+  message?: string; // Optional message (legacy?)
+  content?: string; // Main content
+  priority?: 'normal' | 'high';
+  type: 'INFO' | 'WARNING' | 'SUCCESS';
+  active: boolean;
+  date: string;
+}
+
 export interface MorphologyResult {
+  morphology: Array<{ word: string; root: string; pattern: string; meaning: string }>;
   root: string;
-  type: string;
-  grammar: string;
-  translation: string;
-  usage_context: string;
+  pattern: string;
 }
 
 export interface SemanticResult {

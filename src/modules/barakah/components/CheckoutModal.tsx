@@ -12,19 +12,19 @@ interface CheckoutModalProps {
 
 const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, onSuccess, userEmail = "guest@example.com" }) => {
   const [status, setStatus] = useState<'IDLE' | 'PROCESSING' | 'SUCCESS' | 'FAILED'>('IDLE');
-  
+
   const handlePayment = async () => {
     setStatus('PROCESSING');
     try {
       // 1. Create Intent
-      const intent = await PaymentService.createInfaqIntent(amount, userEmail);
-      
+      const intent = await (PaymentService as any).createInfaqIntent(amount, 'stripe', userEmail);
+
       // 2. Simulate User Paying (Delay)
       await new Promise(r => setTimeout(r, 2000));
-      
+
       // 3. Record Success (Simulated Webhook)
-      await PaymentService.recordTransaction({ ...intent, status: 'SUCCESS' }, 'current-user-id');
-      
+      await (PaymentService as any).recordTransaction({ ...intent, status: 'SUCCESS' }, 'current-user-id');
+
       setStatus('SUCCESS');
       setTimeout(() => {
         onSuccess();
@@ -41,7 +41,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-      <motion.div 
+      <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
@@ -78,8 +78,8 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
 
             <div className="p-6 space-y-4">
               <p className="text-xs text-slate-500 text-center mb-2">Pilih kaedah pembayaran selamat:</p>
-              
-              <button 
+
+              <button
                 onClick={handlePayment}
                 disabled={status === 'PROCESSING'}
                 className="w-full py-3 rounded-xl border border-slate-600 bg-slate-800/50 hover:bg-slate-700 flex items-center justify-center gap-3 transition-all"
@@ -88,7 +88,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
                 <span className="text-sm font-bold text-white">FPX / Online Banking</span>
               </button>
 
-              <button 
+              <button
                 onClick={handlePayment}
                 disabled={status === 'PROCESSING'}
                 className="w-full py-3 rounded-xl border border-slate-600 bg-slate-800/50 hover:bg-slate-700 flex items-center justify-center gap-3 transition-all"
@@ -103,7 +103,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
                   <p className="text-xs text-emerald-400 animate-pulse">Memproses transaksi...</p>
                 </div>
               )}
-              
+
               {status === 'FAILED' && (
                 <p className="text-xs text-red-400 text-center">Transaksi gagal. Sila cuba lagi.</p>
               )}
@@ -111,7 +111,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
 
             <div className="p-4 bg-slate-950 text-center">
               <p className="text-[10px] text-slate-600">
-                <i className="fa-solid fa-lock mr-1"></i> 
+                <i className="fa-solid fa-lock mr-1"></i>
                 Pembayaran dilindungi enkripsi SSL 256-bit
               </p>
             </div>

@@ -25,7 +25,7 @@ const UserTable: React.FC = () => {
     };
 
     const handleBan = async (id: string) => {
-        if(!confirm("Are you sure you want to ban this user?")) return;
+        if (!confirm("Are you sure you want to ban this user?")) return;
         await api.adminUpdateUser({ id, role: 'banned' }); // Assuming role update handles ban logic
         loadUsers();
     };
@@ -35,8 +35,8 @@ const UserTable: React.FC = () => {
         loadUsers();
     };
 
-    const filteredUsers = users.filter(u => 
-        u.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+    const filteredUsers = users.filter(u =>
+        u.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
         u.email?.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
@@ -47,9 +47,9 @@ const UserTable: React.FC = () => {
                 <h3 className="text-lg font-bold text-white">User Management</h3>
                 <div className="relative">
                     <i className="fa-solid fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
-                    <input 
-                        type="text" 
-                        placeholder="Search users..." 
+                    <input
+                        type="text"
+                        placeholder="Search users..."
                         value={searchTerm}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         className="bg-black/20 border border-white/10 rounded-lg pl-9 pr-4 py-2 text-xs text-white focus:outline-none focus:border-cyan-500 w-64"
@@ -76,15 +76,15 @@ const UserTable: React.FC = () => {
                             <tr><td colSpan={5} className="text-center py-10 text-slate-500">No users found.</td></tr>
                         ) : (
                             filteredUsers.map((user) => (
-                                <motion.tr 
-                                    key={user.id} 
+                                <motion.tr
+                                    key={user.id}
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
                                     className="hover:bg-white/5 transition-colors"
                                 >
                                     <td className="px-6 py-4 flex items-center gap-3">
                                         <div className="w-8 h-8 rounded-full bg-slate-700 overflow-hidden">
-                                            <img src={user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.id}`} alt="" className="w-full h-full object-cover"/>
+                                            <img src={user.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.id}`} alt="" className="w-full h-full object-cover" />
                                         </div>
                                         <div>
                                             <p className="font-bold text-white">{user.name}</p>
@@ -92,9 +92,8 @@ const UserTable: React.FC = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${
-                                            user.role === 'admin' ? 'bg-purple-500/20 text-purple-400' : 'bg-slate-700/50 text-slate-400'
-                                        }`}>
+                                        <span className={`px-2 py-1 rounded text-[10px] font-bold uppercase ${user.role === 'ADMIN' ? 'bg-purple-500/20 text-purple-400' : 'bg-slate-700/50 text-slate-400'
+                                            }`}>
                                             {user.role || 'User'}
                                         </span>
                                     </td>
@@ -107,11 +106,17 @@ const UserTable: React.FC = () => {
                                         {new Date().toLocaleDateString()} {/* Mock date if not in DB */}
                                     </td>
                                     <td className="px-6 py-4 text-right flex justify-end gap-2">
-                                        <button onClick={() => handlePromote(user.id)} title="Promote to Admin" className="w-7 h-7 rounded bg-slate-800 hover:bg-purple-500/20 hover:text-purple-400 text-slate-400 transition-colors flex items-center justify-center">
+                                        <button onClick={() => handlePromote(user.id || '')} title="Promote to Admin" className="w-7 h-7 rounded bg-slate-800 hover:bg-purple-500/20 hover:text-purple-400 text-slate-400 transition-colors flex items-center justify-center">
                                             <i className="fa-solid fa-crown text-xs"></i>
                                         </button>
-                                        <button onClick={() => handleBan(user.id)} title="Ban User" className="w-7 h-7 rounded bg-slate-800 hover:bg-red-500/20 hover:text-red-400 text-slate-400 transition-colors flex items-center justify-center">
-                                            <i className="fa-solid fa-ban text-xs"></i>
+                                        <button onClick={() => handleBan(user.id || '')} className="p-1 hover:bg-red-500/20 rounded text-red-500 transition-colors" title="Ban User">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-4 h-4">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+                                            </svg>
+                                        </button>
+                                        <button onClick={() => handlePromote(user.id || '')} className="p-1 hover:bg-cyan-500/20 rounded text-cyan-500 transition-colors" title="Make Admin">
+                                            <i className="fa-solid fa-crown text-xs"></i>
                                         </button>
                                     </td>
                                 </motion.tr>

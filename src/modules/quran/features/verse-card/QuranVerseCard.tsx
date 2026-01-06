@@ -118,6 +118,9 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
           onTafsir={onTafsir}
           onPlay={onPlay}
           isPlaying={isPlaying}
+          isOpen={showMenu}
+          onClose={() => setShowMenu(false)}
+          onHafazan={() => onHafazan?.(verse)}
         />
       </div>
 

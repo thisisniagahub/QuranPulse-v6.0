@@ -82,8 +82,8 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                 {/* Main Brand with Elegant Reveal */}
                 <div className="text-center">
                     <motion.h1
-                        initial={{ tracking: "-0.05em", opacity: 0, y: 10 }}
-                        animate={{ tracking: "0.05em", opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.6, duration: 1 }}
                         className="text-4xl font-[Poppins] font-[900] text-white tracking-tight"
                     >

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QuranWord } from '../../types';
+import { QuranWord } from '../../../types';
 
 interface WordTooltipProps {
   word: QuranWord;
@@ -33,7 +33,7 @@ const WordTooltip: React.FC<WordTooltipProps> = ({ word, isOpen, onClose, positi
             className="fixed inset-0 z-[80]"
             onClick={onClose}
           />
-          
+
           {/* Tooltip */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9, y: 10 }}
@@ -50,8 +50,8 @@ const WordTooltip: React.FC<WordTooltipProps> = ({ word, isOpen, onClose, positi
             <div className="p-4 flex flex-col items-center gap-3">
               {/* Header: Play + Word */}
               <div className="w-full flex items-center justify-between">
-                 {/* Play Audio Button (Small & Round) */}
-                 {word.audio_url && (
+                {/* Play Audio Button (Small & Round) */}
+                {word.audio_url && (
                   <button
                     onClick={playWordAudio}
                     disabled={isPlaying}
@@ -61,12 +61,12 @@ const WordTooltip: React.FC<WordTooltipProps> = ({ word, isOpen, onClose, positi
                       <span className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
                     ) : (
                       <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 ml-0.5">
-                        <path d="M8 5v14l11-7z"/>
+                        <path d="M8 5v14l11-7z" />
                       </svg>
                     )}
                   </button>
                 )}
-                
+
                 {/* Spacer */}
                 <div className="flex-1" />
               </div>
@@ -78,9 +78,9 @@ const WordTooltip: React.FC<WordTooltipProps> = ({ word, isOpen, onClose, positi
 
               {/* Transliteration */}
               {word.transliteration?.text && (
-                 <p className="text-emerald-400 font-serif italic text-lg tracking-wide">
-                   {word.transliteration.text}
-                 </p>
+                <p className="text-emerald-400 font-serif italic text-lg tracking-wide">
+                  {word.transliteration.text}
+                </p>
               )}
 
               {/* Divider */}
@@ -92,8 +92,8 @@ const WordTooltip: React.FC<WordTooltipProps> = ({ word, isOpen, onClose, positi
                   {word.translation?.text || 'Translation not available'}
                 </p>
                 <div className="flex gap-2 justify-center mt-2 text-[10px] text-slate-500 uppercase tracking-widest">
-                   <span>{word.char_type_name}</span>
-                   <span>{word.location || (word.page_number ? `Page ${word.page_number}` : '')}</span>
+                  <span>{word.char_type_name}</span>
+                  <span>{word.location || (word.page_number ? `Page ${word.page_number}` : '')}</span>
                 </div>
               </div>
             </div>

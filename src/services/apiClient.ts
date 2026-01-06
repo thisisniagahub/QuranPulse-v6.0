@@ -9,7 +9,7 @@ class ApiClient {
         const { data, error } = await supabase
             .from('app_config')
             .select('*');
-        
+
         if (error) {
             console.error('Error fetching config:', error);
             return [];
@@ -21,7 +21,7 @@ class ApiClient {
         const { error } = await supabase
             .from('app_config')
             .upsert({ key, value, updated_at: new Date().toISOString() });
-            
+
         return !error;
     }
 
@@ -60,7 +60,7 @@ class ApiClient {
             .from('products')
             .delete()
             .eq('id', id);
-            
+
         if (error) throw error;
     }
 
@@ -83,7 +83,7 @@ class ApiClient {
         const { error } = await supabase
             .from('announcements')
             .insert(ann);
-            
+
         if (error) throw error;
     }
 
@@ -92,7 +92,7 @@ class ApiClient {
             .from('announcements')
             .update({ active: false }) // Soft delete
             .eq('id', id);
-            
+
         if (error) throw error;
     }
 
@@ -102,14 +102,23 @@ class ApiClient {
         const { data, error } = await supabase
             .from('profiles')
             .select('*');
-            
+
         if (error) return [];
         return (data as any[]) || [];
     }
 
+    async adminUpdateUser(updates: { id: string; role?: string; status?: string }): Promise<void> {
+        const { error } = await supabase
+            .from('profiles')
+            .update(updates)
+            .eq('id', updates.id);
+
+        if (error) throw error;
+    }
+
     async placeOrder(cart: CartItem[], customerName: string): Promise<boolean> {
         const { data: { user } } = await supabase.auth.getUser();
-        
+
         const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
         const { error } = await supabase
@@ -134,7 +143,7 @@ class ApiClient {
             .from('orders')
             .select('*')
             .order('created_at', { ascending: false });
-            
+
         if (error) return [];
         return data || [];
     }
@@ -146,15 +155,26 @@ class ApiClient {
             .select('*')
             .order('created_at', { ascending: false })
             .limit(100);
-            
+
         if (error) return [];
         return data || [];
     }
 
     // Legacy method stub - Supabase Auth handles this automatically
     async syncUser(user: UserProfile): Promise<boolean> {
-        return true; 
+        return true;
+    }
+
+    getMode(): 'MOCK' | 'CLOUD' {
+        // Simple logic (could be env var based)
+        return 'CLOUD';
+    }
+
+    setSheetUrl(url: string) {
+        // Placeholder for runtime config
+        console.log("Setting sheet URL:", url);
     }
 }
 
 export const api = new ApiClient();
+// End of file

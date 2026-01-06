@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react';
+import { motion } from 'framer-motion';
 
 interface PrayerCardProps {
     name: string;

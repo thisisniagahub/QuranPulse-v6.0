@@ -3,7 +3,11 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 
-const AdminRoute: React.FC = () => {
+interface AdminRouteProps {
+  children?: React.ReactNode;
+}
+
+const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
   const { user, isLoading } = useAuth();
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
@@ -23,10 +27,10 @@ const AdminRoute: React.FC = () => {
         .single();
 
       // For production, we strictly check 'ADMIN' tier or specific dev email
-      if (user.email === 'dev@qp.com' || data?.tier === 'ADMIN') { 
-          setIsAdmin(true);
+      if (user.email === 'dev@qp.com' || data?.tier === 'ADMIN') {
+        setIsAdmin(true);
       } else {
-          setIsAdmin(false); 
+        setIsAdmin(false);
       }
     };
 
@@ -37,7 +41,7 @@ const AdminRoute: React.FC = () => {
     return <div className="min-h-screen flex items-center justify-center bg-black text-cyan-500">Checking clearance...</div>;
   }
 
-  return isAdmin ? <Outlet /> : <Navigate to="/" replace />;
+  return isAdmin ? <>{children ? children : <Outlet />}</> : <Navigate to="/" replace />;
 };
 
 export default AdminRoute;

@@ -1,7 +1,7 @@
 
 import axios from 'axios';
-import { ChatMessage } from '../../types.ts';
-import { groqRotator } from './MultiKeyRotator.ts';
+import { ChatMessage } from '../../types';
+import { groqRotator } from './MultiKeyRotator';
 
 /**
  * GROQ HIGH-SPEED CLIENT

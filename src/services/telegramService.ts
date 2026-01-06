@@ -440,9 +440,9 @@ STRATEGI JAWAPAN:
                 // B. Voice Reply (Ultra-Advanced Feature)
                 // Only for short answers or if requested
                 if (cleanAnswer.length < 300) {
-                    const audioBuffer = await VoiceService.generateVoice(cleanAnswer.replace(/\[.*?\]\(.*?\)/g, ''));
-                    if (audioBuffer) {
-                        await ctx.sendVoice({ source: audioBuffer });
+                    const result = await VoiceService.generateVoice(cleanAnswer.replace(/\[.*?\]\(.*?\)/g, ''));
+                    if (result && result.type === 'buffer' && result.data) {
+                        await ctx.sendVoice({ source: result.data });
                         console.log(`🎙️ [TG] Sent Voice Reply to ${name}`);
                     }
                 }

@@ -468,7 +468,7 @@ export const generateSpeech = async (text: string, personaId: string = DEFAULT_P
   if (!audioBuffer) return "";
 
   // Convert buffer to base64 data URI for frontend playback
-  const base64 = audioBuffer.toString('base64');
+  const base64 = (audioBuffer as any).toString('base64');
   return `data:audio/mp3;base64,${base64}`;
 };
 export const enhanceVideoPrompt = async (p: string) => p;

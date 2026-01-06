@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { act } from 'react';
 import IqraVoiceCoach from '../IqraVoiceCoach';
 import '@testing-library/jest-dom';
 
@@ -70,14 +71,14 @@ describe('IqraVoiceCoach Integration', () => {
 
   test('renders correctly', () => {
     render(<IqraVoiceCoach />);
-    // ASRRecorder component shows 'AI Tajweed Coach' as the header
-    expect(screen.getByText('AI Tajweed Coach')).toBeInTheDocument();
+    // ASRRecorder component shows 'Tekan & Sebut' initially
+    expect(screen.getByText('Tekan & Sebut')).toBeInTheDocument();
   });
 
   test('shows correct button state when not recording', () => {
     render(<IqraVoiceCoach />);
 
-    // Find microphone button - should show "Tap to Recite Ayah" initially
-    expect(screen.getByText('Tap to Recite Ayah')).toBeInTheDocument();
+    // Find microphone button - should show "Tekan & Sebut" initially
+    expect(screen.getByText('Tekan & Sebut')).toBeInTheDocument();
   });
 });

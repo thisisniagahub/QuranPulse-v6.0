@@ -1,5 +1,5 @@
 
-import { getEnv } from '../../utils/env.ts';
+import { getEnv } from '../../utils/env';
 
 export class MultiKeyRotator {
     private keys: string[] = [];

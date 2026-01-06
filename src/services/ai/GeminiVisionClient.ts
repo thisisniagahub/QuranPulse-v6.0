@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { geminiRotator } from './MultiKeyRotator.ts';
+import { geminiRotator } from './MultiKeyRotator';
 
 export const analyzeImageWithGemini = async (base64Image: string, prompt: string): Promise<string> => {
     return geminiRotator.executeWithRetry(async (apiKey) => {

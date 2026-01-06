@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QuranChapter } from '../../types';
+import { QuranChapter } from '../../../types';
 
 interface SurahInfoPanelProps {
   chapter: QuranChapter;
@@ -34,7 +34,7 @@ const getJuzInfo = (chapterId: number): { juz: number; hizb: number } => {
 
 const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClose }) => {
   const { juz, hizb } = getJuzInfo(chapter.id);
-  
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -47,7 +47,7 @@ const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClos
             className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60]"
             onClick={onClose}
           />
-          
+
           {/* Panel */}
           <motion.div
             initial={{ y: "100%", opacity: 0 }}
@@ -59,7 +59,7 @@ const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClos
             <div className="bg-slate-900 border-t border-cyan-500/30 rounded-t-3xl shadow-2xl overflow-hidden">
               {/* Handle */}
               <div className="w-12 h-1.5 bg-slate-700 rounded-full mx-auto mt-3" />
-              
+
               {/* Header with Arabic Name */}
               <div className="text-center px-6 pt-4 pb-6">
                 <h2 className="font-uthmani text-4xl text-white mb-2">
@@ -72,7 +72,7 @@ const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClos
                   {chapter.translated_name?.name || chapter.name_simple}
                 </p>
               </div>
-              
+
               {/* Stats Grid */}
               <div className="grid grid-cols-4 gap-2 px-4 pb-4">
                 <div className="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700">
@@ -92,14 +92,13 @@ const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClos
                   <p className="text-[10px] text-slate-400 uppercase tracking-wider">Tertib</p>
                 </div>
               </div>
-              
+
               {/* Revelation Type Badge */}
               <div className="px-4 pb-4">
-                <div className={`flex items-center justify-center gap-2 p-3 rounded-xl border ${
-                  chapter.revelation_place === 'makkah' 
+                <div className={`flex items-center justify-center gap-2 p-3 rounded-xl border ${chapter.revelation_place === 'makkah'
                     ? 'bg-amber-500/10 border-amber-500/30 text-amber-400'
                     : 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                }`}>
+                  }`}>
                   <span className="text-xl">
                     {chapter.revelation_place === 'makkah' ? '🕋' : '🕌'}
                   </span>
@@ -108,7 +107,7 @@ const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClos
                   </span>
                 </div>
               </div>
-              
+
               {/* Close Button */}
               <button
                 onClick={onClose}

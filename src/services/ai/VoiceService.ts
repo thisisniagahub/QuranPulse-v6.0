@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getEnv } from '../../utils/env.ts';
+import { getEnv } from '../../utils/env';
 
 /**
  * Voice generation response types

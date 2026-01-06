@@ -2,6 +2,7 @@ import React from 'react';
 import { NavView } from '../../../types';
 import BentoCard from './BentoCard';
 import { useReadHistory } from '../../../hooks/useReadHistory';
+import { motion } from 'framer-motion';
 
 interface ContinueReadingCardProps {
     onNavigate: (view: NavView) => void;
@@ -23,9 +24,9 @@ const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate })
         >
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
-                <img 
-                    src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop" 
-                    alt="Quran BG" 
+                <img
+                    src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop"
+                    alt="Quran BG"
                     className="w-full h-full object-cover opacity-50 transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0c224b] via-[#0c224b]/70 to-transparent"></div>
@@ -35,7 +36,7 @@ const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate })
                 <div>
                     <div className="flex items-center gap-1.5 mb-2">
                         <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center backdrop-blur-sm">
-                             <i className="fa-solid fa-book-open text-[10px] text-emerald-400"></i>
+                            <i className="fa-solid fa-book-open text-[10px] text-emerald-400"></i>
                         </div>
                         <p className="text-[10px] font-black uppercase tracking-widest text-emerald-300">Teruskan</p>
                     </div>

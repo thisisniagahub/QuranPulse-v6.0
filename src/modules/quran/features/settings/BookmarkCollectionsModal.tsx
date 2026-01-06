@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QuranVerse } from '../../types';
+import { QuranVerse } from '../../../../types';
 
 interface BookmarkCollection {
   id: string;
@@ -74,7 +74,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
 
   const handleCreateCollection = () => {
     if (!newName.trim()) return;
-    
+
     const newCollection: BookmarkCollection = {
       id: `collection_${Date.now()}`,
       name: newName.trim(),
@@ -83,7 +83,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
       verses: [],
       createdAt: new Date().toISOString()
     };
-    
+
     const updated = [...collections, newCollection];
     setCollections(updated);
     storeCollections(updated);
@@ -102,7 +102,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
 
   const handleAddToCollection = (collectionId: string) => {
     if (!currentVerse) return;
-    
+
     const updated = collections.map(c => {
       if (c.id === collectionId) {
         if (!c.verses.includes(currentVerse.verse_key)) {
@@ -111,7 +111,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
       }
       return c;
     });
-    
+
     setCollections(updated);
     storeCollections(updated);
     onAddToCollection?.(collectionId);
@@ -125,7 +125,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
       }
       return c;
     });
-    
+
     setCollections(updated);
     storeCollections(updated);
   };
@@ -162,7 +162,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                     <span>🔖</span>
                     {selectedCollection ? selectedCollection.name : 'Koleksi Penanda'}
                   </h3>
-                  <button 
+                  <button
                     onClick={() => selectedCollection ? setSelectedCollection(null) : onClose()}
                     className="w-8 h-8 rounded-full bg-slate-800 text-slate-400 flex items-center justify-center hover:bg-slate-700 hover:text-white transition-all"
                   >
@@ -188,7 +188,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                       </div>
                     ) : (
                       selectedCollection.verses.map(verseKey => (
-                        <div 
+                        <div
                           key={verseKey}
                           className="flex items-center justify-between p-3 bg-slate-800/50 rounded-xl border border-slate-700"
                         >
@@ -219,7 +219,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                         autoFocus
                       />
                     </div>
-                    
+
                     <div>
                       <label className="text-[10px] text-slate-500 uppercase tracking-wider block mb-2">
                         Ikon
@@ -229,11 +229,10 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                           <button
                             key={icon}
                             onClick={() => setNewIcon(icon)}
-                            className={`w-10 h-10 rounded-lg text-xl flex items-center justify-center transition-all ${
-                              newIcon === icon
+                            className={`w-10 h-10 rounded-lg text-xl flex items-center justify-center transition-all ${newIcon === icon
                                 ? 'bg-cyan-500/20 border-2 border-cyan-500'
                                 : 'bg-slate-800 border border-slate-700 hover:bg-slate-700'
-                            }`}
+                              }`}
                           >
                             {icon}
                           </button>
@@ -250,11 +249,10 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                           <button
                             key={color.id}
                             onClick={() => setNewColor(color.id)}
-                            className={`w-10 h-10 rounded-lg ${color.bg} transition-all ${
-                              newColor === color.id
+                            className={`w-10 h-10 rounded-lg ${color.bg} transition-all ${newColor === color.id
                                 ? `border-2 ${color.border}`
                                 : 'border border-slate-700'
-                            }`}
+                              }`}
                           />
                         ))}
                       </div>
@@ -282,7 +280,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                     {collections.map(collection => {
                       const colors = getColorClasses(collection.color);
                       const isInCollection = currentVerse && collection.verses.includes(currentVerse.verse_key);
-                      
+
                       return (
                         <div
                           key={collection.id}
@@ -299,11 +297,11 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                                 <p className="text-slate-400 text-xs">{collection.verses.length} ayat</p>
                               </div>
                             </button>
-                            
+
                             {currentVerse && isInCollection && (
                               <span className="text-emerald-400 text-sm">✓ Ditambah</span>
                             )}
-                            
+
                             {!currentVerse && collection.id !== 'favorites' && collection.id !== 'hafazan' && collection.id !== 'study' && (
                               <button
                                 onClick={() => handleDeleteCollection(collection.id)}

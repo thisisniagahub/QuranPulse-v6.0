@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { UserProfile } from '../../../../types';
+import { UserProfile } from '../../../types';
 
 interface ProfileHeadProps {
     user: UserProfile;
@@ -50,7 +50,7 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
             >
                 {/* Holographic Sheen */}
                 <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent skew-x-12 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
-                
+
                 {/* ID Header */}
                 <div className="flex justify-between items-start mb-6 relative z-10 transform translate-z-10">
                     <div className="flex items-center gap-2 text-cyan-400">
@@ -58,7 +58,7 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
                         <span className="text-[10px] font-mono tracking-[0.2em]">ISLAMIC.ID</span>
                     </div>
                     <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">
-                         <img src="/logo-icon.png" alt="QP" className="w-5 h-5 opacity-50" onError={(e) => e.currentTarget.style.display='none'} />
+                        <img src="/logo-icon.png" alt="QP" className="w-5 h-5 opacity-50" onError={(e) => e.currentTarget.style.display = 'none'} />
                     </div>
                 </div>
 
@@ -66,18 +66,18 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
                 <div className="flex items-center gap-6 relative z-10">
                     {/* Hexagon Avatar Container */}
                     <div className="relative w-24 h-24 shrink-0">
-                         <div className="absolute inset-0 bg-cyan-500 clip-path-hexagon animate-pulse opacity-20"></div>
-                         <div className="absolute inset-[2px] bg-slate-900 clip-path-hexagon flex items-center justify-center overflow-hidden border-2 border-cyan-500/30">
+                        <div className="absolute inset-0 bg-cyan-500 clip-path-hexagon animate-pulse opacity-20"></div>
+                        <div className="absolute inset-[2px] bg-slate-900 clip-path-hexagon flex items-center justify-center overflow-hidden border-2 border-cyan-500/30">
                             {user.avatar_url ? (
                                 <img src={user.avatar_url} alt="Profile" className="w-full h-full object-cover" />
                             ) : (
                                 <span className="text-4xl">🧕</span>
                             )}
-                         </div>
-                         {/* Level Badge */}
-                         <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-xs font-bold px-3 py-1 clip-path-slope shadow-lg">
+                        </div>
+                        {/* Level Badge */}
+                        <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-amber-500 to-orange-600 text-white text-xs font-bold px-3 py-1 clip-path-slope shadow-lg">
                             LVL {level}
-                         </div>
+                        </div>
                     </div>
 
                     <div className="flex-1 min-w-0">
@@ -88,7 +88,7 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
                             </button>
                         </h2>
                         <p className="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">{userTitle}</p>
-                        
+
                         {/* Micro Stats in Card */}
                         <div className="flex gap-4 mt-3">
                             <div>

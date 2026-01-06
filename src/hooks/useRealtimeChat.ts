@@ -7,7 +7,7 @@
  */
 
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { supabase } from '../../lib/supabase';
+import { supabase } from '../lib/supabase';
 import { RealtimeChannel, RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
 // ============================================================================
@@ -202,7 +202,7 @@ export function useRealtimeChat(options: RealtimeChatOptions): UseRealtimeChatRe
 
         // Listen for broadcast events (from trigger function)
         channel
-            .on('broadcast', { event: 'INSERT' }, (payload) => {
+            .on('broadcast' as any, { event: 'INSERT' }, (payload: any) => {
                 log('Broadcast INSERT received', payload);
                 const newMessage = payload.payload as WhatsAppMessage;
 
@@ -217,7 +217,7 @@ export function useRealtimeChat(options: RealtimeChatOptions): UseRealtimeChatRe
                     onNewMessage?.(newMessage);
                 }
             })
-            .on('broadcast', { event: 'UPDATE' }, (payload) => {
+            .on('broadcast' as any, { event: 'UPDATE' }, (payload: any) => {
                 log('Broadcast UPDATE received', payload);
                 const updatedMessage = payload.payload as WhatsAppMessage;
 
@@ -228,7 +228,7 @@ export function useRealtimeChat(options: RealtimeChatOptions): UseRealtimeChatRe
                     onMessageUpdate?.(updatedMessage);
                 }
             })
-            .on('broadcast', { event: 'DELETE' }, (payload) => {
+            .on('broadcast' as any, { event: 'DELETE' }, (payload: any) => {
                 log('Broadcast DELETE received', payload);
                 const deletedId = (payload.payload as { id: string }).id;
 
@@ -237,7 +237,7 @@ export function useRealtimeChat(options: RealtimeChatOptions): UseRealtimeChatRe
                     onMessageDelete?.(deletedId);
                 }
             })
-            .subscribe((status) => {
+            .subscribe((status: string) => {
                 log('Subscription status', status);
 
                 if (status === 'SUBSCRIBED') {

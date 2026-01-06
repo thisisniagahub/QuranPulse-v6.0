@@ -2,18 +2,18 @@ import '@testing-library/jest-dom';
 
 // Mock IntersectionObserver
 global.IntersectionObserver = class IntersectionObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  unobserve() {}
+  constructor() { }
+  disconnect() { }
+  observe() { }
+  unobserve() { }
 } as any;
 
 // Mock ResizeObserver
 global.ResizeObserver = class ResizeObserver {
-  constructor() {}
-  disconnect() {}
-  observe() {}
-  unobserve() {}
+  constructor() { }
+  disconnect() { }
+  observe() { }
+  unobserve() { }
 } as any;
 
 // Mock matchMedia
@@ -56,3 +56,21 @@ Object.defineProperty(navigator, 'clipboard', {
     writeText: jest.fn().mockImplementation(() => Promise.resolve()),
   },
 });
+
+// Mock indexedDB
+const indexedDBMock = {
+  open: jest.fn().mockReturnValue({
+    result: {
+      objectStoreNames: {
+        contains: jest.fn(),
+      },
+      createObjectStore: jest.fn(),
+      transaction: jest.fn(),
+      close: jest.fn(),
+    },
+    onupgradeneeded: null,
+    onsuccess: null,
+    onerror: null,
+  }),
+};
+global.indexedDB = indexedDBMock as any;

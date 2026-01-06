@@ -140,7 +140,7 @@ const AppContent: React.FC = () => {
             <Route path="iqra/guides" element={<GuideViewer />} />
 
             {/* Direct Test Route for Verse Studio */}
-            <Route path="verse-studio" element={<VerseStudio isOpen={true} onClose={() => navigate('/')} />} />
+            <Route path="verse-studio" element={<VerseStudio chapter={null} verse={{} as any} tab="CHAT" setTab={() => { }} onClose={() => navigate('/')} />} />
           </Route>
 
           {/* Catch all */}

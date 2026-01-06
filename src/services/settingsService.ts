@@ -43,7 +43,7 @@ export const getSettings = async (): Promise<UserSettings> => {
 
   try {
     const { data: { user } } = await supabase.auth.getUser();
-    
+
     if (!user) {
       return getLocalSettings();
     }
@@ -60,11 +60,11 @@ export const getSettings = async (): Promise<UserSettings> => {
     }
 
     settingsCache = data;
-    
+
     // Sync to localStorage as backup
     localStorage.setItem('qp_settings', JSON.stringify(settingsCache));
-    
-    return settingsCache;
+
+    return settingsCache as UserSettings;
   } catch (error) {
     console.error('Error fetching settings:', error);
     return getLocalSettings();
@@ -77,13 +77,13 @@ export const getSettings = async (): Promise<UserSettings> => {
 export const updateSettings = async (updates: Partial<UserSettings>): Promise<UserSettings> => {
   try {
     const { data: { user } } = await supabase.auth.getUser();
-    
+
     // Always update local cache first
     settingsCache = { ...(settingsCache || DEFAULT_SETTINGS), ...updates };
     localStorage.setItem('qp_settings', JSON.stringify(settingsCache));
-    
+
     if (!user) {
-      return settingsCache;
+      return settingsCache as UserSettings;
     }
 
     const { error } = await supabase
@@ -98,7 +98,7 @@ export const updateSettings = async (updates: Partial<UserSettings>): Promise<Us
       console.error('Error updating settings in DB:', error);
     }
 
-    return settingsCache;
+    return settingsCache as UserSettings;
   } catch (error) {
     console.error('Error updating settings:', error);
     return settingsCache || DEFAULT_SETTINGS;
@@ -111,7 +111,7 @@ export const updateSettings = async (updates: Partial<UserSettings>): Promise<Us
 export const resetSettings = async (): Promise<UserSettings> => {
   settingsCache = { ...DEFAULT_SETTINGS };
   localStorage.setItem('qp_settings', JSON.stringify(settingsCache));
-  
+
   try {
     const { data: { user } } = await supabase.auth.getUser();
     if (user) {
@@ -126,7 +126,7 @@ export const resetSettings = async (): Promise<UserSettings> => {
   } catch (error) {
     console.error('Error resetting settings:', error);
   }
-  
+
   return settingsCache;
 };
 
@@ -191,12 +191,12 @@ const getLocalSettings = (): UserSettings => {
     if (stored) {
       const parsed = JSON.parse(stored);
       settingsCache = { ...DEFAULT_SETTINGS, ...parsed };
-      return settingsCache;
+      return settingsCache as UserSettings;
     }
   } catch {
     console.warn('Failed to parse local settings');
   }
-  
+
   settingsCache = { ...DEFAULT_SETTINGS };
   localStorage.setItem('qp_settings', JSON.stringify(settingsCache));
   return settingsCache;

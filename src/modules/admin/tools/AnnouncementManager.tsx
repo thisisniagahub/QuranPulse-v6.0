@@ -33,6 +33,7 @@ const AnnouncementManager: React.FC = () => {
             title,
             content,
             priority,
+            type: 'INFO',
             active: true,
             date: new Date().toISOString()
         });
@@ -143,14 +144,14 @@ const AnnouncementManager: React.FC = () => {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             className={`p-6 rounded-2xl border flex justify-between items-start group transition-all ${ann.priority === 'high'
-                                    ? 'bg-red-500/10 border-red-500/30'
-                                    : 'bg-slate-800/40 border-white/5 hover:border-white/10'
+                                ? 'bg-red-500/10 border-red-500/30'
+                                : 'bg-slate-800/40 border-white/5 hover:border-white/10'
                                 }`}
                         >
                             <div className="flex gap-4">
                                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl shadow-lg ${ann.priority === 'high'
-                                        ? 'bg-red-500 text-white shadow-red-500/20'
-                                        : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
+                                    ? 'bg-red-500 text-white shadow-red-500/20'
+                                    : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
                                     }`}>
                                     <i className={`fa-solid ${ann.priority === 'high' ? 'fa-triangle-exclamation' : 'fa-bullhorn'}`}></i>
                                 </div>

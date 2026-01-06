@@ -1,14 +1,3 @@
-import React from "react";
-import { Link, useLocation, Outlet } from "react-router-dom";
-import { NavView } from "../types";
-import kufiSplash from "@/assets/bg/kufi-splash.jpg";
-import kufiHeader from "@/assets/bg/kufi-header.jpg";
-import kufiFooter from "@/assets/bg/kufi-footer.jpg";
-import navHomeIcon from "@/assets/icons/home-3d.png";
-import navQuranIcon from "@/assets/icons/quran-3d.png";
-import navUstazAiIcon from "@/assets/icons/ustaz-ai-3d.png";
-import navQiblatIcon from "@/assets/icons/compass-3d.png";
-import navIqraIcon from "@/assets/icons/learning-3d.png";
 
 import React from "react";
 import { Link, useLocation, Outlet } from "react-router-dom";
@@ -56,7 +45,7 @@ const Layout: React.FC = () => {
 
       {/* --- MOBILE APP SHELL CONTAINER --- */}
       <div className="flex flex-col h-full w-full max-w-[480px] bg-[#031a38] relative shadow-2xl md:border-x md:border-white/10">
-        
+
         {/* Header with Maze Pattern Overlay */}
         <div
           className="absolute top-0 left-0 w-full h-64 bg-top bg-no-repeat bg-contain -z-10 opacity-20 pointer-events-none mix-blend-screen bg-[image:var(--bg-header)]"
@@ -97,11 +86,11 @@ const Layout: React.FC = () => {
                 <i className="fa-regular fa-bell text-sm group-hover:animate-swing"></i>
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0c224b] animate-pulse"></span>
               </button>
-              
+
               <Link to="/profile" className="w-9 h-9 rounded-full border-2 border-cyan-500/30 p-0.5 bg-[#0c224b] shadow-lg">
-                <img 
-                  src={user?.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.name || 'User'}`} 
-                  alt="User" 
+                <img
+                  src={user?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
+                  alt="User"
                   className="w-full h-full rounded-full object-cover"
                   onError={(e) => { e.currentTarget.src = '/assets/icons/nabdh/nav-profile.png'; }}
                 />
@@ -118,7 +107,7 @@ const Layout: React.FC = () => {
         {/* --- BOTTOM NAVIGATION BAR: FLOATING CYBER DOCK --- */}
         <div className="fixed bottom-6 inset-x-4 z-50 flex justify-center pointer-events-none">
           <nav className="w-full max-w-md h-[76px] bg-[#1e3a8a]/60 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-between px-2 relative pointer-events-auto ring-1 ring-white/10">
-            
+
             {/* Glass Shine Effect */}
             <div className="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
 
@@ -155,21 +144,21 @@ const Layout: React.FC = () => {
                 className="absolute -top-10"
               >
                 <div className={`w-[72px] h-[72px] rounded-full p-1 transition-all duration-300 ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}
-                     style={{
-                       background: 'linear-gradient(135deg, #0c224b 0%, #031a38 100%)',
-                       boxShadow: currentView === NavView.SMART_DEEN 
-                         ? '0 0 30px rgba(8,145,178,0.6), inset 0 0 20px rgba(8,145,178,0.2)' 
-                         : '0 10px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.05)',
-                       border: '1px solid rgba(255,255,255,0.1)'
-                     }}
+                  style={{
+                    background: 'linear-gradient(135deg, #0c224b 0%, #031a38 100%)',
+                    boxShadow: currentView === NavView.SMART_DEEN
+                      ? '0 0 30px rgba(8,145,178,0.6), inset 0 0 20px rgba(8,145,178,0.2)'
+                      : '0 10px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.05)',
+                    border: '1px solid rgba(255,255,255,0.1)'
+                  }}
                 >
                   <div className="w-full h-full rounded-full bg-[#031a38] flex items-center justify-center relative overflow-hidden">
                     {/* Inner Noise */}
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
-                    
+
                     {/* Ring Glow */}
                     <div className={`absolute inset-0 rounded-full border-2 ${currentView === NavView.SMART_DEEN ? 'border-cyan-400/50' : 'border-white/5'}`}></div>
-                    
+
                     <img
                       src="/assets/icons/nabdh/nav-ustaz.png"
                       alt="Ustaz AI"

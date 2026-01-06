@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { act } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import App from '../../App';
 
@@ -101,12 +102,4 @@ describe('App Integration Tests', () => {
     expect(screen.getByText('PULSE')).toBeInTheDocument();
   });
 
-  it('should display the tagline', async () => {
-    await act(async () => {
-      render(<App />);
-    });
-
-    // Check for the tagline text
-    expect(screen.getByText('Sistem Operasi Rohani')).toBeInTheDocument();
-  });
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { QuranChapter } from '../../../types';
 import { IconBack, IconAudio, IconSettings, IconSpinner } from '../../../components/Icons';
+import { motion } from 'framer-motion';
 
 interface QuranHeaderProps {
   chapter?: QuranChapter;
@@ -45,8 +46,8 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
 }) => {
   return (
     <div className={`sticky top-0 z-[60] transition-all duration-700 ${isZenMode
-        ? 'bg-transparent border-none'
-        : 'bg-slate-950/95 backdrop-blur-md border-b border-cyan-500/20 shadow-lg shadow-cyan-500/5'
+      ? 'bg-transparent border-none'
+      : 'bg-slate-950/95 backdrop-blur-md border-b border-cyan-500/20 shadow-lg shadow-cyan-500/5'
       }`}>
       <div className={`px-4 py-4 flex justify-between items-center ${isZenMode ? 'max-w-4xl mx-auto' : ''}`}>
         {/* Left: Back + Title */}
@@ -55,8 +56,8 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
             onClick={onBack}
             aria-label="Kembali"
             className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isZenMode
-                ? 'bg-white/5 text-slate-400 hover:text-white border border-white/10'
-                : 'bg-slate-800/80 text-slate-300 hover:bg-cyan-500/20 hover:text-cyan-400 border border-slate-700'
+              ? 'bg-white/5 text-slate-400 hover:text-white border border-white/10'
+              : 'bg-slate-800/80 text-slate-300 hover:bg-cyan-500/20 hover:text-cyan-400 border border-slate-700'
               }`}
           >
             <i className="fa-solid fa-chevron-left text-sm"></i>

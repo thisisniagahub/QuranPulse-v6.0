@@ -22,7 +22,7 @@ interface IqraInteractiveCoachProps {
 const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1, onClose }) => {
     const { steps, loading: dataLoading } = useIqraLoader(volume);
     const { addXP, unlockAchievement } = useGamification();
-    
+
     const [view, setView] = useState<'lesson' | 'chart'>('lesson');
     const [currentStep, setCurrentStep] = useState(0);
     const [hearts, setHearts] = useState(5);
@@ -295,7 +295,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                         <motion.button
                                             whileHover={{ scale: 1.05, rotateY: 10 }}
                                             whileTap={{ scale: 0.95 }}
-                                            onClick={() => speak(step.letter)}
+                                            onClick={() => speak(step.letter || '')}
                                             className="relative w-full max-w-[16rem] h-64 md:w-64 md:h-80 rounded-[2.5rem] md:rounded-[3rem] glass-hud border border-white/10 flex flex-col items-center justify-center gap-6 shadow-[0_40px_100px_rgba(0,0,0,0.6)] group preserve-3d perspective-1000 hud-border"
                                         >
                                             <div className="absolute inset-0 bg-pattern opacity-[0.05]"></div>
@@ -312,7 +312,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
 
                                             <div className="flex flex-col gap-4 pt-6">
                                                 <button
-                                                    onClick={() => generateMnemonic(step.name, step.sound)}
+                                                    onClick={() => generateMnemonic(step.name || '', step.sound || '')}
                                                     disabled={aiLoading}
                                                     className="w-full flex items-center justify-center gap-3 py-5 bg-white/5 text-primary rounded-[1.5rem] font-black uppercase tracking-widest text-xs border border-white/10 hover:bg-white/10 transition-all"
                                                 >
@@ -345,8 +345,8 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
 
                                 {step.type === 'practice' && (
                                     <div className="space-y-10 py-6 md:space-y-16 md:py-10">
-                                        <div className={getResponsiveGridClass(step.letters.length)} dir="rtl">
-                                            {step.letters.map((l, i) => (
+                                        <div className={getResponsiveGridClass((step.letters || []).length)} dir="rtl">
+                                            {(step.letters || []).map((l, i) => (
                                                 <motion.button
                                                     key={i}
                                                     whileHover={{ y: -5, scale: 1.05 }}
@@ -366,7 +366,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
 
                                 {(step.type === 'quiz' || step.type === 'challenge') && (
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-10 px-4" dir="rtl">
-                                        {(step.options || step.letters).map((opt, i) => (
+                                        {(step.options || step.letters || []).map((opt, i) => (
                                             <button
                                                 key={i}
                                                 onClick={() => { if (isCorrect === null) { setSelectedOption(opt); speak(opt); } }}
@@ -497,7 +497,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
 
                                         {isCorrect === false && (
                                             <button
-                                                onClick={() => explainMistake(step.letter, selectedOption!)}
+                                                onClick={() => explainMistake(step.letter || '', selectedOption!)}
                                                 disabled={aiLoading}
                                                 className="w-full flex items-center justify-center gap-3 py-5 bg-white/5 rounded-2xl text-red-400 font-black text-xs uppercase tracking-[0.3em] border border-red-500/20 hover:bg-white/10 transition-all"
                                             >

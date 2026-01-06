@@ -1,0 +1,364 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/data/jakimZones.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">src/data</a> jakimZones.ts</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">100% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/0</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>0/1</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">export interface JakimZone {
+  code: string;
+  state: string;
+  description: string;
+}
+&nbsp;
+export const <span class="cstat-no" title="statement not covered" >JAKIM_ZONES: JakimZone[] = [</span>
+  // WILAYAH PERSEKUTUAN
+  { code: 'WLY01', state: 'Wilayah Persekutuan', description: 'Kuala Lumpur, Putrajaya' },
+  { code: 'WLY02', state: 'Wilayah Persekutuan', description: 'Labuan' },
+  
+  // SELANGOR
+  { code: 'SGR01', state: 'Selangor', description: 'Gombak, Petaling, Sepang, Hulu Langat, Hulu Selangor, S.Alam' },
+  { code: 'SGR02', state: 'Selangor', description: 'Kuala Selangor, Sabak Bernam' },
+  { code: 'SGR03', state: 'Selangor', description: 'Klang, Kuala Langat' },
+&nbsp;
+  // JOHOR
+  { code: 'JHR01', state: 'Johor', description: 'Pulau Aur dan Pulau Pemanggil' },
+  { code: 'JHR02', state: 'Johor', description: 'Johor Bahru, Kota Tinggi, Mersing' },
+  { code: 'JHR03', state: 'Johor', description: 'Kluang, Pontian' },
+  { code: 'JHR04', state: 'Johor', description: 'Batu Pahat, Muar, Segamat, Gemas Johor' },
+&nbsp;
+  // KEDAH
+  { code: 'KDH01', state: 'Kedah', description: 'Kota Setar, Kubang Pasu, Pokok Sena (Daerah Kecil)' },
+  { code: 'KDH02', state: 'Kedah', description: 'Kuala Muda, Yan, Pendang' },
+  { code: 'KDH03', state: 'Kedah', description: 'Padang Terap, Sik' },
+  { code: 'KDH04', state: 'Kedah', description: 'Baling' },
+  { code: 'KDH05', state: 'Kedah', description: 'Bandar Baharu, Kulim' },
+  { code: 'KDH06', state: 'Kedah', description: 'Langkawi' },
+  { code: 'KDH07', state: 'Kedah', description: 'Gunung Jerai' },
+&nbsp;
+  // KELANTAN
+  { code: 'KTN01', state: 'Kelantan', description: 'Bachok, Kota Bharu, Machang, Pasir Mas, Pasir Puteh, Tanah Merah, Tumpat, Kuala Krai, Mukim Chiku' },
+  { code: 'KTN03', state: 'Kelantan', description: 'Gua Musang (Daerah Galas Dan Bertam), Jeli' },
+  
+  // MELAKA
+  { code: 'MLK01', state: 'Melaka', description: 'Seluruh Negeri Melaka' },
+&nbsp;
+  // NEGERI SEMBILAN
+  { code: 'NGS01', state: 'Negeri Sembilan', description: 'Tampin, Jempol' },
+  { code: 'NGS02', state: 'Negeri Sembilan', description: 'Jelebu, Kuala Pilah, Port Dickson, Rembau, Seremban' },
+&nbsp;
+  // PAHANG
+  { code: 'PHG01', state: 'Pahang', description: 'Pulau Tioman' },
+  { code: 'PHG02', state: 'Pahang', description: 'Kuantan, Pekan, Rompin, Muadzam Shah' },
+  { code: 'PHG03', state: 'Pahang', description: 'Jerantut, Temerloh, Maran, Bera, Chenor, Jengka' },
+  { code: 'PHG04', state: 'Pahang', description: 'Bentong, Lipis, Raub' },
+  { code: 'PHG05', state: 'Pahang', description: 'Genting Sempah, Janda Baik, Bukit Tinggi' },
+  { code: 'PHG06', state: 'Pahang', description: 'Cameron Highlands, Genting Highlands, Bukit Fraser' },
+&nbsp;
+  // PERAK
+  { code: 'PRK01', state: 'Perak', description: 'Tapah, Slim River, Tanjung Malim' },
+  { code: 'PRK02', state: 'Perak', description: 'Kuala Kangsar, Sg. Siput (Daerah Kecil), Ipoh, Batu Gajah, Kampar' },
+  { code: 'PRK03', state: 'Perak', description: 'Lenggong, Pengkalan Hulu, Grik' },
+  { code: 'PRK04', state: 'Perak', description: 'Temengor, Belum' },
+  { code: 'PRK05', state: 'Perak', description: 'Kampung Gajah, Teluk Intan, Bagan Datuk, Seri Iskandar, Beruas, Parit, Lumut, Sitiawan, Pulau Pangkor' },
+  { code: 'PRK06', state: 'Perak', description: 'Selama, Taiping, Bagan Serai, Parit Buntar' },
+  { code: 'PRK07', state: 'Perak', description: 'Bukit Larut' },
+&nbsp;
+  // PERLIS
+  { code: 'PLS01', state: 'Perlis', description: 'Seluruh Negeri Perlis' },
+&nbsp;
+  // PULAU PINANG
+  { code: 'PNG01', state: 'Pulau Pinang', description: 'Seluruh Negeri Pulau Pinang' },
+&nbsp;
+  // SABAH
+  { code: 'SBH01', state: 'Sabah', description: 'Bahagian Sandakan (Timur), Bukit Garam, Semawang, Temanggong, Tambisan, Bandar Sandakan, Sukau' },
+  { code: 'SBH02', state: 'Sabah', description: 'Beluran, Telupid, Pinangah, Terusan, Kuamut, Bahagian Sandakan (Barat)' },
+  { code: 'SBH03', state: 'Sabah', description: 'Lahad Datu, Silabukan, Kunak, Sahabat, Semporna, Tungku, Bahagian Tawau (Timur)' },
+  { code: 'SBH04', state: 'Sabah', description: 'Bandar Tawau, Balung, Merotai, Kalabakan, Bahagian Tawau (Barat)' },
+  { code: 'SBH05', state: 'Sabah', description: 'Kudat, Kota Marudu, Pitas, Pulau Banggi, Bahagian Kudat' },
+  { code: 'SBH06', state: 'Sabah', description: 'Gunung Kinabalu' },
+  { code: 'SBH07', state: 'Sabah', description: 'Kota Kinabalu, Ranau, Kota Belud, Tuaran, Penampang, Papar, Putatan, Bahagian Pantai Barat' },
+  { code: 'SBH08', state: 'Sabah', description: 'Pensiangan, Keningau, Tambunan, Nabawan, Bahagian Pendalaman (Atas)' },
+  { code: 'SBH09', state: 'Sabah', description: 'Beaufort, Kuala Penyu, Sipitang, Tenom, Long Pa Sia, Membakut, Weston, Bahagian Pendalaman (Bawah)' },
+&nbsp;
+  // SARAWAK
+  { code: 'SWK01', state: 'Sarawak', description: 'Limbang, Lawas, Sundar, Trusan' },
+  { code: 'SWK02', state: 'Sarawak', description: 'Miri, Niah, Bekenu, Sibuti, Marudi' },
+  { code: 'SWK03', state: 'Sarawak', description: 'Pandaruan, Belaga, Suai, Tatau, Sebauh, Bintulu' },
+  { code: 'SWK04', state: 'Sarawak', description: 'Sibu, Mukah, Dalat, Song, Igan, Oya, Balingian, Kanowit, Kapit' },
+  { code: 'SWK05', state: 'Sarawak', description: 'Sarikei, Matu, Julau, Rajang, Daro, Bintangor, Belawai' },
+  { code: 'SWK06', state: 'Sarawak', description: 'Lubok Antu, Sri Aman, Roban, Debak, Kabong, Lingga, Engkelili, Betong, Spaoh, Pusa, Saratok' },
+  { code: 'SWK07', state: 'Sarawak', description: 'Serian, Simunjan, Samarahan, Sebuyau, Meludam' },
+  { code: 'SWK08', state: 'Sarawak', description: 'Kuching, Bau, Lundu, Sematan' },
+  { code: 'SWK09', state: 'Sarawak', description: 'Zon Khas (Kampung Patarikan)' },
+&nbsp;
+  // TERENGGANU
+  { code: 'TRG01', state: 'Terengganu', description: 'Kuala Terengganu, Marang, Kuala Nerus' },
+  { code: 'TRG02', state: 'Terengganu', description: 'Besut, Setiu' },
+  { code: 'TRG03', state: 'Terengganu', description: 'Hulu Terengganu' },
+  { code: 'TRG04', state: 'Terengganu', description: 'Dungun, Kemaman' },
+];
+&nbsp;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2026-01-06T22:20:12.580Z
+            </div>
+        <script src="../../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../../sorter.js"></script>
+        <script src="../../block-navigation.js"></script>
+    </body>
+</html>
+    
