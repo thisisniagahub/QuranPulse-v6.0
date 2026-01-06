@@ -8,6 +8,7 @@ import { PERSONAS, DEFAULT_PERSONA, Persona } from '../config/personas';
 import { analyzeImageWithGemini } from './ai/GeminiVisionClient';
 import { VoiceService } from './ai/VoiceService';
 import { mcpService } from './mcpService';
+import staticContentService, { TajweedRule, MakhrajPoint, Doa, FAQ, Hadith } from './staticContentService';
 
 // --- TYPES ---
 export interface HybridResponse {
@@ -20,57 +21,69 @@ export interface HybridResponse {
 
 // --- CACHE SERVICE ---
 
+// --- HELPER: FORMAT STATIC CONTENT ---
+function formatStaticContent(data: any): string {
+  if (Array.isArray(data)) {
+    if (data.length === 0) return "";
+    const first = data[0];
+
+    // Tajweed
+    if ('rule_id' in first) {
+      return data.map((r: TajweedRule) =>
+        `## ${r.name_ms} (${r.name_ar})\n\n${r.description_ms}\n\n**Contoh:**\n${r.examples.map(e => `- ${e.surah_ayah}: ${e.arabic} (${e.transliteration})`).join('\n')}`
+      ).join('\n\n---\n\n');
+    }
+
+    // Makhraj
+    if ('point_id' in first) {
+      return data.map((m: MakhrajPoint) =>
+        `## ${m.name_ms} (${m.name_ar})\n\n**Posisi:** ${m.position}\n${m.description_ms}\n\n**Cara Sebutan:** ${m.practice_tips_ms}`
+      ).join('\n\n---\n\n');
+    }
+
+    // Doa
+    if ('doa_id' in first) {
+      return data.map((d: Doa) =>
+        `## ${d.title_ms}\n\n${d.arabic}\n\n*${d.transliteration}*\n\n"${d.translation_ms}"\n\n**Kelebihan:** ${d.benefits}`
+      ).join('\n\n---\n\n');
+    }
+
+    // Hadith
+    if ('hadith_id' in first) {
+      return data.map((h: Hadith) =>
+        `## Hadith Riwayat ${h.source}\n\n${h.arabic}\n\n"${h.translation_ms}"\n\n**Pengajaran:** ${h.topics.join(', ')}`
+      ).join('\n\n---\n\n');
+    }
+
+    // FAQ
+    if ('faq_id' in first) {
+      return data.map((f: FAQ) =>
+        `💡 **${f.question_ms}**\n\n${f.answer_ms}`
+      ).join('\n\n');
+    }
+  }
+  return "";
+}
+
+// --- UNIFIED CACHE SERVICE ---
+
 /**
- * Check Supabase Cache for similar questions using Fuzzy Search (Zero Token Cost).
- * Uses 'pg_trgm' similarity or simple text matching.
+ * Check Supabase Cache (via staticContentService)
  */
 async function findCachedResponse(query: string): Promise<HybridResponse | null> {
-  try {
-    // 1. Clean query for better matching
-    const cleanQuery = query.toLowerCase().replace(/[^\w\s]/gi, '').trim();
-
-    // 2. Search DB (Using text matching for now to save embedding tokens)
-    // We look for questions that contain key words or are very similar.
-    // In a full production with pg_vector, we would use embeddings here.
-    const { data, error } = await supabase
-      .from('ai_knowledge_cache')
-      .select('structured_response')
-      .textSearch('query_text', cleanQuery, { type: 'websearch', config: 'english' }) // 'english' works decent for malay rumi
-      .limit(1)
-      .maybeSingle();
-
-    if (error) {
-      console.warn("Cache Lookup Error:", error.message);
-      return null;
-    }
-
-    if (data && data.structured_response) {
-      console.log("⚡ CACHE HIT: Serving from Database");
-      // Update access count (fire and forget)
-      // supabase.rpc('increment_cache_count', { row_id: data.id }); 
-      return data.structured_response as HybridResponse;
-    }
-  } catch (e) {
-    console.error("Cache Logic Failure:", e);
+  const cached = await staticContentService.getCachedResponse(query);
+  if (cached) {
+    return cached as HybridResponse;
   }
   return null;
 }
 
 /**
- * Save new AI knowledge to the database.
+ * Save new AI knowledge to the database (via staticContentService).
  */
 async function saveToCache(query: string, response: HybridResponse) {
   try {
-    const { error } = await supabase.from('ai_knowledge_cache').insert({
-      query_text: query,
-      answer_content: response.summary, // Fallback text
-      structured_response: response,
-      category: 'general',
-      source: 'ai_generated'
-    });
-
-    if (error) console.error("Failed to cache answer:", error.message);
-    else console.log("💾 Knowledge Cached for future use.");
+    await staticContentService.cacheResponse(query, response, 'general');
   } catch (e) {
     console.error("Cache Save Error:", e);
   }
@@ -137,7 +150,30 @@ export const askUstazAI = async (
     return response;
   }
 
-  // 2. CHECK MCP (REAL-TIME DATA) - Pulse-MCP Integration
+  // 2. CHECK STATIC CONTENT & CACHE (Unified Smart Lookup)
+  try {
+    const smartResult = await staticContentService.smartLookup(lastUserMessage, 'ms');
+    if (smartResult) {
+      if (smartResult.source === 'cache') {
+        console.log("⚡ SMART LOOKUP: Cache Hit");
+        const cachedData = smartResult.data as HybridResponse;
+        const formatted = formatHybridResponse(cachedData);
+        if (onChunk) onChunk(formatted);
+        return formatted;
+      } else {
+        console.log("⚡ SMART LOOKUP: Static Content found");
+        const formatted = formatStaticContent(smartResult.data);
+        if (formatted) {
+          if (onChunk) onChunk(formatted);
+          return formatted;
+        }
+      }
+    }
+  } catch (e) {
+    console.error("Smart Lookup Failed:", e);
+  }
+
+  // 3. CHECK MCP (REAL-TIME DATA) - Pulse-MCP Integration
   try {
     const mcpResponse = await UstazOrchestrator.detectAndCall(lastUserMessage, 'ms');
     if (mcpResponse) {
@@ -150,15 +186,7 @@ export const askUstazAI = async (
     console.error("MCP Routing Failed, falling back to LLM:", e);
   }
 
-  // 3. CHECK DATABASE CACHE (Zero Token)
-  const cachedData = await findCachedResponse(lastUserMessage);
-  if (cachedData) {
-    const formatted = formatHybridResponse(cachedData);
-    if (onChunk) onChunk(formatted);
-    return formatted;
-  }
-
-  // 3. FETCH FROM CLOUD AI (Groq First for Speed, then Gemini)
+  // 4. FETCH FROM CLOUD AI (Groq First for Speed, then Gemini)
 
   const activePersona: Persona = PERSONAS[personaId] || DEFAULT_PERSONA;
   const messagesWithSystem = [
@@ -223,7 +251,7 @@ export const askUstazAI = async (
     return finalOutput;
   }
 
-  // 4. FALLBACK SIMULATION
+  // 5. FALLBACK SIMULATION
   const simResponse = getSmartSimulationResponse(lastUserMessage);
   if (onChunk) onChunk(simResponse);
   return simResponse;
@@ -330,6 +358,17 @@ export const convertToJawi = async (text: string): Promise<string> => {
 // --- HADITH BY TOPIC ---
 export const getHadithByTopic = async (topic: string): Promise<{ arabic: string; translation: string; source?: string }> => {
   try {
+    // 1. Static Check
+    try {
+      const staticHadith = await staticContentService.getHadithByTopic(topic);
+      if (staticHadith.length > 0) {
+        const h = staticHadith[0];
+        return { arabic: h.arabic, translation: h.translation_ms, source: `${h.source} (Static)` };
+      }
+    } catch (e) {
+      console.warn("Static Hadith Check Failed:", e);
+    }
+
     const { data, error } = await supabase.functions.invoke('mcp-education', {
       body: { intent: 'hadith', query: topic }
     });

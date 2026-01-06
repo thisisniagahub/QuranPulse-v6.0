@@ -1,0 +1,245 @@
+[
+    {
+        "point_id": "halq_adna",
+        "name_ar": "أدنى الحلق",
+        "name_ms": "Tenggorok Atas",
+        "name_en": "Upper Throat",
+        "letters": [
+            "غ",
+            "خ"
+        ],
+        "position": "throat",
+        "description_ms": "Bahagian atas kerongkong, berdekatan dengan lelangit lembut. Ghain (غ) dan Kha (خ) keluar dari sini.",
+        "description_en": "Upper part of the throat, near the soft palate. Ghain (غ) and Kha (خ) originate from here.",
+        "practice_tips_ms": "Rasakan getaran di bahagian atas tekak. Cuba kata 'ghar' untuk Ghain.",
+        "practice_tips_en": "Feel the vibration in the upper throat. Try saying 'ghar' for Ghain.",
+        "svg_path": "M 80 60 Q 90 50 100 60"
+    },
+    {
+        "point_id": "halq_wasat",
+        "name_ar": "وسط الحلق",
+        "name_ms": "Tenggorok Tengah",
+        "name_en": "Middle Throat",
+        "letters": [
+            "ع",
+            "ح"
+        ],
+        "position": "throat",
+        "description_ms": "Bahagian tengah kerongkong. Ain (ع) dan Ha (ح) keluar dari sini.",
+        "description_en": "Middle part of the throat. Ain (ع) and Ha (ح) originate from here.",
+        "practice_tips_ms": "Ain memerlukan tekanan dari tengah tekak. Ha adalah nafas dari sini.",
+        "practice_tips_en": "Ain requires pressure from middle throat. Ha is a breath from here.",
+        "svg_path": "M 80 75 Q 90 70 100 75"
+    },
+    {
+        "point_id": "halq_aqsa",
+        "name_ar": "أقصى الحلق",
+        "name_ms": "Pangkal Tenggorok",
+        "name_en": "Deepest Throat",
+        "letters": [
+            "ء",
+            "ه"
+        ],
+        "position": "throat",
+        "description_ms": "Bahagian paling dalam kerongkong. Hamzah (ء) dan Ha (ه) keluar dari sini.",
+        "description_en": "Deepest part of the throat. Hamzah (ء) and Ha (ه) originate from here.",
+        "practice_tips_ms": "Hamzah adalah hentian dalam tekak. Ha adalah hembusan lembut.",
+        "practice_tips_en": "Hamzah is a glottal stop. Ha is a gentle breath.",
+        "svg_path": "M 80 90 Q 90 85 100 90"
+    },
+    {
+        "point_id": "lisan_aqsa",
+        "name_ar": "أقصى اللسان",
+        "name_ms": "Pangkal Lidah",
+        "name_en": "Back of Tongue",
+        "letters": [
+            "ق",
+            "ك"
+        ],
+        "position": "tongue_back",
+        "description_ms": "Pangkal lidah menyentuh langit-langit lembut. Qaf (ق) lebih belakang, Kaf (ك) sedikit ke depan.",
+        "description_en": "Back of tongue touching soft palate. Qaf (ق) is further back, Kaf (ك) slightly forward.",
+        "practice_tips_ms": "Qaf perlu tekanan kuat di pangkal lidah. Kaf lebih ringan.",
+        "practice_tips_en": "Qaf needs strong pressure at tongue base. Kaf is lighter.",
+        "svg_path": "M 110 70 Q 120 60 130 70"
+    },
+    {
+        "point_id": "lisan_wasat",
+        "name_ar": "وسط اللسان",
+        "name_ms": "Tengah Lidah",
+        "name_en": "Middle of Tongue",
+        "letters": [
+            "ج",
+            "ش",
+            "ي"
+        ],
+        "position": "tongue_middle",
+        "description_ms": "Tengah lidah menyentuh langit-langit keras. Jim (ج), Shin (ش), dan Ya (ي) keluar dari sini.",
+        "description_en": "Middle of tongue touching hard palate. Jim (ج), Shin (ش), and Ya (ي) originate here.",
+        "practice_tips_ms": "Jim seperti 'j' keras. Shin adalah 'sy'. Ya seperti 'y' dalam 'ya'.",
+        "practice_tips_en": "Jim is like hard 'j'. Shin is 'sh'. Ya is like 'y' in 'yes'.",
+        "svg_path": "M 130 85 Q 140 75 150 85"
+    },
+    {
+        "point_id": "lisan_haffa",
+        "name_ar": "حافة اللسان",
+        "name_ms": "Tepi Lidah",
+        "name_en": "Edge of Tongue",
+        "letters": [
+            "ض"
+        ],
+        "position": "tongue_edge",
+        "description_ms": "Tepi lidah menyentuh geraham atas. Dhad (ض) adalah huruf unik Arab, hanya ada dalam bahasa Arab.",
+        "description_en": "Edge of tongue touching upper molars. Dhad (ض) is unique to Arabic language.",
+        "practice_tips_ms": "Tekan tepi lidah ke geraham atas, bukan gigi depan.",
+        "practice_tips_en": "Press tongue edge against upper molars, not front teeth.",
+        "svg_path": "M 140 95 Q 150 90 160 95"
+    },
+    {
+        "point_id": "lisan_haffa_lam",
+        "name_ar": "حافة اللسان للام",
+        "name_ms": "Tepi Lidah (Lam)",
+        "name_en": "Tongue Edge (Lam)",
+        "letters": [
+            "ل"
+        ],
+        "position": "tongue_edge",
+        "description_ms": "Hujung depan tepi lidah menyentuh gusi atas dari gigi taring ke gigi taring.",
+        "description_en": "Front edge of tongue touching upper gums from canine to canine.",
+        "practice_tips_ms": "Lam keluar dari bahagian lebih depan berbanding Dhad.",
+        "practice_tips_en": "Lam comes from further front compared to Dhad.",
+        "svg_path": "M 145 98 Q 155 93 165 98"
+    },
+    {
+        "point_id": "lisan_adna",
+        "name_ar": "أدنى اللسان",
+        "name_ms": "Hujung Lidah + Gusi",
+        "name_en": "Tongue Tip + Gums",
+        "letters": [
+            "ن",
+            "ر"
+        ],
+        "position": "tongue_tip",
+        "description_ms": "Hujung lidah menyentuh gusi atas. Nun (ن) pada hujung, Ra (ر) sedikit lebih belakang.",
+        "description_en": "Tongue tip touching upper gums. Nun (ن) at the tip, Ra (ر) slightly further back.",
+        "practice_tips_ms": "Nun keluar dari hujung lidah. Ra perlu getaran ringan.",
+        "practice_tips_en": "Nun comes from tongue tip. Ra needs light vibration.",
+        "svg_path": "M 155 100 Q 165 95 175 100"
+    },
+    {
+        "point_id": "lisan_tarafa",
+        "name_ar": "طرف اللسان مع أصول الثنايا",
+        "name_ms": "Hujung Lidah + Pangkal Gigi",
+        "name_en": "Tongue Tip + Tooth Roots",
+        "letters": [
+            "ط",
+            "د",
+            "ت"
+        ],
+        "position": "tongue_tip",
+        "description_ms": "Hujung lidah menyentuh pangkal gigi atas. Ta (ت), Dal (د), Tha (ط) berbeza ketebalan.",
+        "description_en": "Tongue tip touching upper tooth roots. Ta (ت), Dal (د), Tha (ط) differ in thickness.",
+        "practice_tips_ms": "Tha adalah versi tebal Ta. Dal di antara keduanya.",
+        "practice_tips_en": "Tha is thick version of Ta. Dal is in between.",
+        "svg_path": "M 170 105 Q 180 100 190 105"
+    },
+    {
+        "point_id": "lisan_thana",
+        "name_ar": "طرف اللسان مع أطراف الثنايا",
+        "name_ms": "Hujung Lidah + Hujung Gigi",
+        "name_en": "Tongue Tip + Tooth Tips",
+        "letters": [
+            "ظ",
+            "ذ",
+            "ث"
+        ],
+        "position": "tongue_tip",
+        "description_ms": "Hujung lidah keluar antara gigi atas dan bawah. Zha (ظ), Dzal (ذ), Tha (ث).",
+        "description_en": "Tongue tip protrudes between upper and lower teeth. Zha (ظ), Dzal (ذ), Tha (ث).",
+        "practice_tips_ms": "Lidah mesti nampak keluar sedikit antara gigi.",
+        "practice_tips_en": "Tongue must be slightly visible between teeth.",
+        "svg_path": "M 185 110 Q 195 105 205 110"
+    },
+    {
+        "point_id": "safir",
+        "name_ar": "الصفير",
+        "name_ms": "Huruf Siulan",
+        "name_en": "Whistling Letters",
+        "letters": [
+            "ص",
+            "س",
+            "ز"
+        ],
+        "position": "tongue_tip",
+        "description_ms": "Hujung lidah berdekatan gigi bawah, menghasilkan bunyi siulan. Sad (ص), Sin (س), Zay (ز).",
+        "description_en": "Tongue tip near lower teeth, producing whistling sound. Sad (ص), Sin (س), Zay (ز).",
+        "practice_tips_ms": "Bunyi 's' dengan udara melalui celah gigi.",
+        "practice_tips_en": "A 's' sound with air passing through teeth gap.",
+        "svg_path": "M 180 115 Q 190 110 200 115"
+    },
+    {
+        "point_id": "shafa_batin",
+        "name_ar": "بطن الشفة السفلى",
+        "name_ms": "Bibir Bawah + Gigi",
+        "name_en": "Lower Lip + Teeth",
+        "letters": [
+            "ف"
+        ],
+        "position": "lips",
+        "description_ms": "Bibir bawah dalam menyentuh hujung gigi atas. Fa (ف).",
+        "description_en": "Inner lower lip touching upper teeth tips. Fa (ف).",
+        "practice_tips_ms": "Seperti bunyi 'f' dalam bahasa Inggeris.",
+        "practice_tips_en": "Like the 'f' sound in English.",
+        "svg_path": "M 195 125 Q 205 120 215 125"
+    },
+    {
+        "point_id": "shafatan",
+        "name_ar": "الشفتان",
+        "name_ms": "Dua Bibir",
+        "name_en": "Both Lips",
+        "letters": [
+            "ب",
+            "م",
+            "و"
+        ],
+        "position": "lips",
+        "description_ms": "Kedua-dua bibir bertemu. Ba (ب), Mim (م), Waw (و).",
+        "description_en": "Both lips meeting. Ba (ب), Mim (م), Waw (و).",
+        "practice_tips_ms": "Ba dan Mim bibir rapat. Waw bibir membulat.",
+        "practice_tips_en": "Ba and Mim lips closed. Waw lips rounded.",
+        "svg_path": "M 200 120 Q 210 115 220 120"
+    },
+    {
+        "point_id": "khayshum",
+        "name_ar": "الخيشوم",
+        "name_ms": "Rongga Hidung",
+        "name_en": "Nasal Cavity",
+        "letters": [
+            "ن",
+            "م"
+        ],
+        "position": "nasal",
+        "description_ms": "Rongga hidung untuk bunyi dengung (ghunnah). Digunakan dalam Nun dan Mim bertasydid.",
+        "description_en": "Nasal cavity for nasalization (ghunnah). Used in Nun and Mim with shaddah.",
+        "practice_tips_ms": "Ghunnah keluar dari hidung, bukan mulut.",
+        "practice_tips_en": "Ghunnah comes from nose, not mouth.",
+        "svg_path": "M 150 40 Q 160 30 170 40"
+    },
+    {
+        "point_id": "jawf",
+        "name_ar": "الجوف",
+        "name_ms": "Rongga Mulut",
+        "name_en": "Oral Cavity",
+        "letters": [
+            "ا",
+            "و",
+            "ي"
+        ],
+        "position": "cavity",
+        "description_ms": "Rongga mulut dan tekak untuk huruf mad. Alif, Waw, Ya apabila menjadi huruf mad.",
+        "description_en": "Oral and throat cavity for prolongation letters. Alif, Waw, Ya when functioning as mad letters.",
+        "practice_tips_ms": "Bunyi keluar dari rongga tanpa halangan.",
+        "practice_tips_en": "Sound exits from cavity without obstruction.",
+        "svg_path": "M 100 100 Q 130 80 160 100"
+    }
+]

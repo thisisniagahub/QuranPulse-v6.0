@@ -1,0 +1,428 @@
+[
+    {
+        "rule_id": "ikhfa_haqiqi",
+        "name_ar": "الإخفاء الحقيقي",
+        "name_ms": "Ikhfa' Haqiqi",
+        "name_en": "True Concealment",
+        "category": "nun_sakinah",
+        "description_ms": "Menyembunyikan bunyi Nun Sakinah atau Tanwin dengan dengung (ghunnah) apabila bertemu 15 huruf Ikhfa'. Dengung mestilah 2 harakat.",
+        "description_en": "Concealing the sound of Nun Sakinah or Tanwin with a nasal sound (ghunnah) when meeting the 15 Ikhfa' letters. The ghunnah should be 2 counts.",
+        "examples": [
+            {
+                "arabic": "مِنْ تَحْتِهَا",
+                "transliteration": "min tahtiha",
+                "surah_ayah": "Al-Baqarah: 25"
+            },
+            {
+                "arabic": "أَنْثَى",
+                "transliteration": "untha",
+                "surah_ayah": "An-Nisa: 11"
+            },
+            {
+                "arabic": "مَنْ ذَا",
+                "transliteration": "man dza",
+                "surah_ayah": "Al-Baqarah: 255"
+            }
+        ],
+        "common_mistakes": [
+            "Tidak mengeluarkan dengung",
+            "Dengung terlalu panjang atau pendek",
+            "Mengizharkan huruf dengan jelas"
+        ],
+        "priority": 1
+    },
+    {
+        "rule_id": "idgham_bighunnah",
+        "name_ar": "الإدغام بغنة",
+        "name_ms": "Idgham Bighunnah",
+        "name_en": "Merging with Nasalization",
+        "category": "nun_sakinah",
+        "description_ms": "Memasukkan Nun Sakinah atau Tanwin ke dalam huruf يَنْمُو (Ya, Nun, Mim, Waw) dengan dengung 2 harakat.",
+        "description_en": "Merging Nun Sakinah or Tanwin into the letters Ya, Nun, Mim, Waw with a ghunnah of 2 counts.",
+        "examples": [
+            {
+                "arabic": "مَنْ يَعْمَلْ",
+                "transliteration": "may ya'mal",
+                "surah_ayah": "An-Nisa: 123"
+            },
+            {
+                "arabic": "مِنْ وَلِيٍّ",
+                "transliteration": "miw waliyyin",
+                "surah_ayah": "Al-Baqarah: 107"
+            }
+        ],
+        "common_mistakes": [
+            "Tidak memasukkan huruf dengan sempurna",
+            "Lupa dengung"
+        ],
+        "priority": 1
+    },
+    {
+        "rule_id": "idgham_bilaghunnah",
+        "name_ar": "الإدغام بلا غنة",
+        "name_ms": "Idgham Bila Ghunnah",
+        "name_en": "Merging without Nasalization",
+        "category": "nun_sakinah",
+        "description_ms": "Memasukkan Nun Sakinah atau Tanwin ke dalam huruf Lam atau Ra tanpa dengung.",
+        "description_en": "Merging Nun Sakinah or Tanwin into Lam or Ra without ghunnah.",
+        "examples": [
+            {
+                "arabic": "مِنْ رَبِّهِمْ",
+                "transliteration": "mir rabbihim",
+                "surah_ayah": "Al-Baqarah: 5"
+            },
+            {
+                "arabic": "مِنْ لَدُنْكَ",
+                "transliteration": "mil ladunka",
+                "surah_ayah": "Al-Kahf: 65"
+            }
+        ],
+        "common_mistakes": [
+            "Menambah dengung",
+            "Tidak memasukkan huruf dengan sempurna"
+        ],
+        "priority": 1
+    },
+    {
+        "rule_id": "iqlab",
+        "name_ar": "الإقلاب",
+        "name_ms": "Iqlab",
+        "name_en": "Conversion",
+        "category": "nun_sakinah",
+        "description_ms": "Menukarkan Nun Sakinah atau Tanwin kepada Mim apabila bertemu huruf Ba dengan dengung 2 harakat.",
+        "description_en": "Converting Nun Sakinah or Tanwin to Mim when meeting the letter Ba, with ghunnah of 2 counts.",
+        "examples": [
+            {
+                "arabic": "مِنْ بَعْدِ",
+                "transliteration": "mim ba'di",
+                "surah_ayah": "Al-Baqarah: 27"
+            },
+            {
+                "arabic": "أَنْبِئْهُمْ",
+                "transliteration": "ambi'hum",
+                "surah_ayah": "Al-Baqarah: 33"
+            }
+        ],
+        "common_mistakes": [
+            "Tidak menukar kepada Mim",
+            "Lupa dengung"
+        ],
+        "priority": 1
+    },
+    {
+        "rule_id": "izhar_halqi",
+        "name_ar": "الإظهار الحلقي",
+        "name_ms": "Izhar Halqi",
+        "name_en": "Clear Pronunciation (Throat)",
+        "category": "nun_sakinah",
+        "description_ms": "Menyebut Nun Sakinah atau Tanwin dengan jelas tanpa dengung apabila bertemu 6 huruf halqi: ء ه ع ح غ خ",
+        "description_en": "Pronouncing Nun Sakinah or Tanwin clearly without ghunnah when meeting the 6 throat letters.",
+        "examples": [
+            {
+                "arabic": "مِنْ عِنْدِ",
+                "transliteration": "min 'indi",
+                "surah_ayah": "Al-Baqarah: 79"
+            },
+            {
+                "arabic": "مَنْ آمَنَ",
+                "transliteration": "man aamana",
+                "surah_ayah": "Al-Baqarah: 62"
+            }
+        ],
+        "common_mistakes": [
+            "Menambah dengung",
+            "Menyembunyikan bunyi Nun"
+        ],
+        "priority": 1
+    },
+    {
+        "rule_id": "ikhfa_syafawi",
+        "name_ar": "الإخفاء الشفوي",
+        "name_ms": "Ikhfa' Syafawi",
+        "name_en": "Labial Concealment",
+        "category": "mim_sakinah",
+        "description_ms": "Menyembunyikan Mim Sakinah dengan dengung apabila bertemu huruf Ba.",
+        "description_en": "Concealing Mim Sakinah with ghunnah when meeting the letter Ba.",
+        "examples": [
+            {
+                "arabic": "تَرْمِيهِمْ بِحِجَارَةٍ",
+                "transliteration": "tarmiihim bihijaaratin",
+                "surah_ayah": "Al-Fil: 4"
+            }
+        ],
+        "common_mistakes": [
+            "Tidak mengeluarkan dengung",
+            "Bibir tidak rapat"
+        ],
+        "priority": 2
+    },
+    {
+        "rule_id": "idgham_mithlain",
+        "name_ar": "الإدغام المتماثلين",
+        "name_ms": "Idgham Mithlain",
+        "name_en": "Merging of Similar Letters",
+        "category": "mim_sakinah",
+        "description_ms": "Memasukkan Mim Sakinah ke dalam Mim dengan dengung.",
+        "description_en": "Merging Mim Sakinah into another Mim with ghunnah.",
+        "examples": [
+            {
+                "arabic": "لَهُمْ مَا",
+                "transliteration": "lahum maa",
+                "surah_ayah": "Al-Baqarah: 25"
+            }
+        ],
+        "common_mistakes": [
+            "Lupa dengung",
+            "Tidak memasukkan dengan sempurna"
+        ],
+        "priority": 2
+    },
+    {
+        "rule_id": "izhar_syafawi",
+        "name_ar": "الإظهار الشفوي",
+        "name_ms": "Izhar Syafawi",
+        "name_en": "Labial Clear Pronunciation",
+        "category": "mim_sakinah",
+        "description_ms": "Menyebut Mim Sakinah dengan jelas apabila bertemu huruf selain Ba dan Mim.",
+        "description_en": "Pronouncing Mim Sakinah clearly when meeting letters other than Ba and Mim.",
+        "examples": [
+            {
+                "arabic": "هُمْ فِيهَا",
+                "transliteration": "hum fiihaa",
+                "surah_ayah": "Al-Baqarah: 25"
+            }
+        ],
+        "common_mistakes": [
+            "Menambah dengung"
+        ],
+        "priority": 2
+    },
+    {
+        "rule_id": "madd_asli",
+        "name_ar": "المد الأصلي",
+        "name_ms": "Mad Asli (Tabi'i)",
+        "name_en": "Natural Prolongation",
+        "category": "madd",
+        "description_ms": "Panjangkan 2 harakat dengan huruf mad (Alif, Waw, Ya) tanpa sebab.",
+        "description_en": "Prolong for 2 counts with mad letters (Alif, Waw, Ya) without any cause.",
+        "examples": [
+            {
+                "arabic": "قَالُوا",
+                "transliteration": "qaaluu",
+                "surah_ayah": "Al-Baqarah: 11"
+            },
+            {
+                "arabic": "فِيهِ",
+                "transliteration": "fiihi",
+                "surah_ayah": "Al-Baqarah: 2"
+            }
+        ],
+        "common_mistakes": [
+            "Mad terlalu panjang atau pendek"
+        ],
+        "priority": 1
+    },
+    {
+        "rule_id": "madd_wajib",
+        "name_ar": "المد الواجب المتصل",
+        "name_ms": "Mad Wajib Muttasil",
+        "name_en": "Obligatory Connected Prolongation",
+        "category": "madd",
+        "description_ms": "Panjangkan 4-5 harakat apabila huruf mad bertemu hamzah dalam satu kalimah.",
+        "description_en": "Prolong 4-5 counts when a mad letter meets hamzah in the same word.",
+        "examples": [
+            {
+                "arabic": "جَاءَ",
+                "transliteration": "jaa-a",
+                "surah_ayah": "An-Nasr: 1"
+            },
+            {
+                "arabic": "سُوءٌ",
+                "transliteration": "suu-un",
+                "surah_ayah": "Al-An'am: 31"
+            }
+        ],
+        "common_mistakes": [
+            "Tidak cukup panjang",
+            "Terlalu panjang melebihi 5 harakat"
+        ],
+        "priority": 2
+    },
+    {
+        "rule_id": "madd_jaiz",
+        "name_ar": "المد الجائز المنفصل",
+        "name_ms": "Mad Jaiz Munfasil",
+        "name_en": "Permissible Separated Prolongation",
+        "category": "madd",
+        "description_ms": "Panjangkan 2-4-5 harakat apabila huruf mad di akhir kalimah bertemu hamzah di awal kalimah seterusnya.",
+        "description_en": "Prolong 2-4-5 counts when a mad letter at the end of a word meets hamzah at the start of the next word.",
+        "examples": [
+            {
+                "arabic": "بِمَا أُنْزِلَ",
+                "transliteration": "bimaa unzila",
+                "surah_ayah": "Al-Baqarah: 4"
+            },
+            {
+                "arabic": "فِي أَنْفُسِكُمْ",
+                "transliteration": "fii anfusikum",
+                "surah_ayah": "Al-Baqarah: 235"
+            }
+        ],
+        "common_mistakes": [
+            "Inconsistent prolongation"
+        ],
+        "priority": 2
+    },
+    {
+        "rule_id": "madd_lazim",
+        "name_ar": "المد اللازم",
+        "name_ms": "Mad Lazim",
+        "name_en": "Obligatory Prolongation",
+        "category": "madd",
+        "description_ms": "Panjangkan 6 harakat apabila huruf mad bertemu sukun asli dalam satu kalimah.",
+        "description_en": "Prolong for 6 counts when a mad letter meets an original sukun in the same word.",
+        "examples": [
+            {
+                "arabic": "الضَّالِّينَ",
+                "transliteration": "ad-daalliiin",
+                "surah_ayah": "Al-Fatihah: 7"
+            },
+            {
+                "arabic": "الْحَاقَّةُ",
+                "transliteration": "al-haaqqah",
+                "surah_ayah": "Al-Haqqah: 1"
+            }
+        ],
+        "common_mistakes": [
+            "Tidak cukup 6 harakat"
+        ],
+        "priority": 2
+    },
+    {
+        "rule_id": "qalqalah",
+        "name_ar": "القلقلة",
+        "name_ms": "Qalqalah",
+        "name_en": "Echoing/Bouncing Sound",
+        "category": "special",
+        "description_ms": "Menghasilkan bunyi pantulan pada huruf ق ط ب ج د apabila berbaris mati. Qalqalah Sughra (tengah) dan Kubra (akhir/waqf).",
+        "description_en": "Producing an echoing sound on letters Qaf, Tha, Ba, Jim, Dal when they carry sukun. Sughra (middle) and Kubra (end/stop).",
+        "examples": [
+            {
+                "arabic": "يَخْلُقْ",
+                "transliteration": "yakhluq",
+                "surah_ayah": "Al-Mulk: 3"
+            },
+            {
+                "arabic": "أَحَدٌ",
+                "transliteration": "ahad",
+                "surah_ayah": "Al-Ikhlas: 1"
+            }
+        ],
+        "common_mistakes": [
+            "Qalqalah terlalu kuat atau lemah",
+            "Menambah huruf tambahan"
+        ],
+        "priority": 1
+    },
+    {
+        "rule_id": "ghunnah",
+        "name_ar": "الغنة",
+        "name_ms": "Ghunnah",
+        "name_en": "Nasalization",
+        "category": "special",
+        "description_ms": "Bunyi dengung dari hidung selama 2 harakat. Berlaku pada Nun dan Mim bertasydid, serta dalam hukum ikhfa' dan idgham.",
+        "description_en": "Nasal sound from the nose for 2 counts. Occurs with Nun and Mim with shaddah, and in ikhfa' and idgham rules.",
+        "examples": [
+            {
+                "arabic": "إِنَّ",
+                "transliteration": "inna",
+                "surah_ayah": "Al-Baqarah: 6"
+            },
+            {
+                "arabic": "ثُمَّ",
+                "transliteration": "thumma",
+                "surah_ayah": "Al-Baqarah: 28"
+            }
+        ],
+        "common_mistakes": [
+            "Dengung terlalu panjang atau pendek",
+            "Bunyi tidak keluar dari hidung"
+        ],
+        "priority": 1
+    },
+    {
+        "rule_id": "ra_tafkhim",
+        "name_ar": "الراء المفخمة",
+        "name_ms": "Ra Tafkhim",
+        "name_en": "Heavy Ra",
+        "category": "ra",
+        "description_ms": "Ra dibaca tebal apabila berbaris fathah, dhammah, atau sukun selepas fathah/dhammah.",
+        "description_en": "Ra is pronounced thick/heavy when it has fathah, dhammah, or sukun after fathah/dhammah.",
+        "examples": [
+            {
+                "arabic": "رَبِّ",
+                "transliteration": "rabb",
+                "surah_ayah": "Al-Fatihah: 2"
+            },
+            {
+                "arabic": "الْقُرْآنَ",
+                "transliteration": "al-qur-aan",
+                "surah_ayah": "Ya-Sin: 2"
+            }
+        ],
+        "common_mistakes": [
+            "Ra terlalu nipis"
+        ],
+        "priority": 2
+    },
+    {
+        "rule_id": "ra_tarqiq",
+        "name_ar": "الراء المرققة",
+        "name_ms": "Ra Tarqiq",
+        "name_en": "Light Ra",
+        "category": "ra",
+        "description_ms": "Ra dibaca nipis apabila berbaris kasrah atau sukun selepas kasrah.",
+        "description_en": "Ra is pronounced thin/light when it has kasrah or sukun after kasrah.",
+        "examples": [
+            {
+                "arabic": "رِجَالٌ",
+                "transliteration": "rijaal",
+                "surah_ayah": "An-Nur: 37"
+            },
+            {
+                "arabic": "فِرْعَوْنَ",
+                "transliteration": "fir'awn",
+                "surah_ayah": "Al-Baqarah: 49"
+            }
+        ],
+        "common_mistakes": [
+            "Ra terlalu tebal"
+        ],
+        "priority": 2
+    },
+    {
+        "rule_id": "lam_jalalah",
+        "name_ar": "لام الجلالة",
+        "name_ms": "Lam Jalalah",
+        "name_en": "Lam of Allah",
+        "category": "special",
+        "description_ms": "Lam dalam lafaz Allah. Tebal selepas fathah/dhammah, nipis selepas kasrah.",
+        "description_en": "The Lam in the word Allah. Thick after fathah/dhammah, thin after kasrah.",
+        "examples": [
+            {
+                "arabic": "قُلِ اللَّهُ",
+                "transliteration": "qulil-laah",
+                "surah_ayah": "Al-Ikhlas: 1"
+            },
+            {
+                "arabic": "بِسْمِ اللَّهِ",
+                "transliteration": "bismil-laah",
+                "surah_ayah": "Al-Fatihah: 1"
+            }
+        ],
+        "common_mistakes": [
+            "Tidak membezakan tebal dan nipis"
+        ],
+        "priority": 2
+    }
+]

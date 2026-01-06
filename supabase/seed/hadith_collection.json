@@ -1,0 +1,315 @@
+[
+    {
+        "hadith_id": "bukhari_001",
+        "arabic": "إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى",
+        "translation_ms": "Sesungguhnya setiap amalan bergantung kepada niat, dan sesungguhnya setiap orang hanya mendapat apa yang diniatkan.",
+        "translation_en": "Actions are judged by intentions, and everyone will get what they intended.",
+        "narrator": "Umar bin Al-Khattab",
+        "source": "Bukhari",
+        "book_number": 1,
+        "hadith_number": 1,
+        "grade": "sahih",
+        "topics": [
+            "niat",
+            "amalan",
+            "ikhlas"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_002",
+        "arabic": "بُنِيَ الإِسْلاَمُ عَلَى خَمْسٍ: شَهَادَةِ أَنْ لاَ إِلَهَ إِلاَّ اللَّهُ وَأَنَّ مُحَمَّدًا رَسُولُ اللَّهِ، وَإِقَامِ الصَّلاَةِ، وَإِيتَاءِ الزَّكَاةِ، وَالْحَجِّ، وَصَوْمِ رَمَضَانَ",
+        "translation_ms": "Islam dibina atas lima perkara: Bersaksi bahawa tiada tuhan selain Allah dan Muhammad adalah utusan Allah, mendirikan solat, menunaikan zakat, mengerjakan haji, dan berpuasa di bulan Ramadan.",
+        "translation_en": "Islam is built upon five pillars: Testifying that there is no god but Allah and Muhammad is His messenger, establishing prayer, giving zakat, performing Hajj, and fasting Ramadan.",
+        "narrator": "Abdullah bin Umar",
+        "source": "Bukhari",
+        "book_number": 2,
+        "hadith_number": 8,
+        "grade": "sahih",
+        "topics": [
+            "rukun islam",
+            "asas"
+        ]
+    },
+    {
+        "hadith_id": "muslim_001",
+        "arabic": "الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",
+        "translation_ms": "Orang Muslim adalah orang yang Muslim lain selamat dari lidah dan tangannya.",
+        "translation_en": "A Muslim is one from whose tongue and hand other Muslims are safe.",
+        "narrator": "Abdullah bin Amr",
+        "source": "Muslim",
+        "book_number": 1,
+        "hadith_number": 64,
+        "grade": "sahih",
+        "topics": [
+            "akhlak",
+            "muslim"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_003",
+        "arabic": "لاَ يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ",
+        "translation_ms": "Tidak sempurna iman seseorang sehingga dia mencintai untuk saudaranya apa yang dicintainya untuk dirinya sendiri.",
+        "translation_en": "None of you truly believes until he loves for his brother what he loves for himself.",
+        "narrator": "Anas bin Malik",
+        "source": "Bukhari",
+        "book_number": 2,
+        "hadith_number": 13,
+        "grade": "sahih",
+        "topics": [
+            "iman",
+            "ukhuwah",
+            "kasih sayang"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_004",
+        "arabic": "الطُّهُورُ شَطْرُ الْإِيمَانِ",
+        "translation_ms": "Kebersihan adalah separuh daripada iman.",
+        "translation_en": "Purity is half of faith.",
+        "narrator": "Abu Malik Al-Asy'ari",
+        "source": "Muslim",
+        "book_number": 1,
+        "hadith_number": 223,
+        "grade": "sahih",
+        "topics": [
+            "iman",
+            "kebersihan",
+            "taharah"
+        ]
+    },
+    {
+        "hadith_id": "tirmidzi_001",
+        "arabic": "مَنْ قَرَأَ حَرْفًا مِنْ كِتَابِ اللَّهِ فَلَهُ بِهِ حَسَنَةٌ، وَالْحَسَنَةُ بِعَشْرِ أَمْثَالِهَا",
+        "translation_ms": "Sesiapa yang membaca satu huruf dari Kitab Allah, baginya satu kebaikan, dan kebaikan itu digandakan sepuluh kali.",
+        "translation_en": "Whoever recites a letter from the Book of Allah gets one good deed, and good deeds are multiplied by ten.",
+        "narrator": "Abdullah bin Mas'ud",
+        "source": "Tirmidzi",
+        "book_number": 45,
+        "hadith_number": 2910,
+        "grade": "hasan sahih",
+        "topics": [
+            "quran",
+            "pahala",
+            "bacaan"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_005",
+        "arabic": "خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",
+        "translation_ms": "Sebaik-baik kamu adalah orang yang belajar Al-Quran dan mengajarkannya.",
+        "translation_en": "The best of you are those who learn the Quran and teach it.",
+        "narrator": "Uthman bin Affan",
+        "source": "Bukhari",
+        "book_number": 66,
+        "hadith_number": 5027,
+        "grade": "sahih",
+        "topics": [
+            "quran",
+            "ilmu",
+            "mengajar"
+        ]
+    },
+    {
+        "hadith_id": "muslim_002",
+        "arabic": "الدُّعَاءُ هُوَ الْعِبَادَةُ",
+        "translation_ms": "Doa adalah ibadah.",
+        "translation_en": "Supplication is worship.",
+        "narrator": "Nu'man bin Bashir",
+        "source": "Tirmidzi",
+        "book_number": 45,
+        "hadith_number": 3247,
+        "grade": "sahih",
+        "topics": [
+            "doa",
+            "ibadah"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_006",
+        "arabic": "مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ",
+        "translation_ms": "Sesiapa yang berpuasa Ramadan dengan penuh keimanan dan mengharap pahala, akan diampunkan dosa-dosanya yang lalu.",
+        "translation_en": "Whoever fasts Ramadan with faith and seeking reward, his past sins will be forgiven.",
+        "narrator": "Abu Hurairah",
+        "source": "Bukhari",
+        "book_number": 30,
+        "hadith_number": 1901,
+        "grade": "sahih",
+        "topics": [
+            "puasa",
+            "ramadan",
+            "ampun"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_007",
+        "arabic": "إِذَا مَاتَ الْإِنْسَانُ انْقَطَعَ عَنْهُ عَمَلُهُ إِلَّا مِنْ ثَلَاثَةٍ: صَدَقَةٍ جَارِيَةٍ، أَوْ عِلْمٍ يُنْتَفَعُ بِهِ، أَوْ وَلَدٍ صَالِحٍ يَدْعُو لَهُ",
+        "translation_ms": "Apabila seseorang meninggal, terputuslah amalannya kecuali tiga perkara: sedekah jariah, ilmu yang bermanfaat, atau anak soleh yang mendoakannya.",
+        "translation_en": "When a person dies, his deeds are cut off except for three: ongoing charity, beneficial knowledge, or a righteous child who prays for him.",
+        "narrator": "Abu Hurairah",
+        "source": "Muslim",
+        "book_number": 25,
+        "hadith_number": 1631,
+        "grade": "sahih",
+        "topics": [
+            "kematian",
+            "sedekah",
+            "ilmu"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_008",
+        "arabic": "لاَ تَغْضَبْ",
+        "translation_ms": "Jangan marah.",
+        "translation_en": "Do not get angry.",
+        "narrator": "Abu Hurairah",
+        "source": "Bukhari",
+        "book_number": 73,
+        "hadith_number": 6116,
+        "grade": "sahih",
+        "topics": [
+            "akhlak",
+            "marah",
+            "sabar"
+        ]
+    },
+    {
+        "hadith_id": "muslim_003",
+        "arabic": "الْكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ",
+        "translation_ms": "Perkataan yang baik adalah sedekah.",
+        "translation_en": "A good word is charity.",
+        "narrator": "Abu Hurairah",
+        "source": "Bukhari",
+        "book_number": 56,
+        "hadith_number": 2989,
+        "grade": "sahih",
+        "topics": [
+            "akhlak",
+            "sedekah",
+            "lidah"
+        ]
+    },
+    {
+        "hadith_id": "tirmidzi_002",
+        "arabic": "أَكْمَلُ الْمُؤْمِنِينَ إِيمَانًا أَحْسَنُهُمْ خُلُقًا",
+        "translation_ms": "Orang mukmin yang paling sempurna imannya adalah yang paling baik akhlaknya.",
+        "translation_en": "The most complete believers in faith are those with the best character.",
+        "narrator": "Abu Hurairah",
+        "source": "Tirmidzi",
+        "book_number": 18,
+        "hadith_number": 1162,
+        "grade": "hasan sahih",
+        "topics": [
+            "iman",
+            "akhlak"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_009",
+        "arabic": "مَنْ كَانَ يُؤْمِنُ بِاللَّهِ وَالْيَوْمِ الْآخِرِ فَلْيَقُلْ خَيْرًا أَوْ لِيَصْمُتْ",
+        "translation_ms": "Barangsiapa beriman kepada Allah dan hari akhirat, maka hendaklah dia berkata baik atau diam.",
+        "translation_en": "Whoever believes in Allah and the Last Day should speak good or remain silent.",
+        "narrator": "Abu Hurairah",
+        "source": "Bukhari",
+        "book_number": 81,
+        "hadith_number": 6475,
+        "grade": "sahih",
+        "topics": [
+            "iman",
+            "lidah",
+            "diam"
+        ]
+    },
+    {
+        "hadith_id": "muslim_004",
+        "arabic": "الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَنُ، ارْحَمُوا مَنْ فِي الأَرْضِ يَرْحَمْكُمْ مَنْ فِي السَّمَاءِ",
+        "translation_ms": "Orang yang penyayang akan disayangi oleh Yang Maha Penyayang. Sayangilah yang di bumi, nescaya yang di langit akan menyayangi kamu.",
+        "translation_en": "The merciful are shown mercy by the Most Merciful. Show mercy to those on earth, and the One in heaven will show mercy to you.",
+        "narrator": "Abdullah bin Amr",
+        "source": "Tirmidzi",
+        "book_number": 27,
+        "hadith_number": 1924,
+        "grade": "sahih",
+        "topics": [
+            "kasih sayang",
+            "rahmat"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_010",
+        "arabic": "مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ طَرِيقًا إِلَى الْجَنَّةِ",
+        "translation_ms": "Sesiapa yang menempuh jalan untuk menuntut ilmu, Allah akan memudahkan baginya jalan ke syurga.",
+        "translation_en": "Whoever takes a path seeking knowledge, Allah will make easy for him a path to Paradise.",
+        "narrator": "Abu Hurairah",
+        "source": "Muslim",
+        "book_number": 35,
+        "hadith_number": 2699,
+        "grade": "sahih",
+        "topics": [
+            "ilmu",
+            "syurga"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_011",
+        "arabic": "تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ صَدَقَةٌ",
+        "translation_ms": "Senyumanmu kepada saudaramu adalah sedekah.",
+        "translation_en": "Your smile to your brother is charity.",
+        "narrator": "Abu Dzar",
+        "source": "Tirmidzi",
+        "book_number": 27,
+        "hadith_number": 1956,
+        "grade": "hasan",
+        "topics": [
+            "sedekah",
+            "senyum",
+            "akhlak"
+        ]
+    },
+    {
+        "hadith_id": "muslim_005",
+        "arabic": "الْمُسْلِمُ أَخُو الْمُسْلِمِ لاَ يَظْلِمُهُ وَلاَ يَخْذُلُهُ وَلاَ يَحْقِرُهُ",
+        "translation_ms": "Muslim adalah saudara Muslim yang lain. Dia tidak menzaliminya, tidak menghinanya, dan tidak merendahkannya.",
+        "translation_en": "A Muslim is the brother of another Muslim. He does not wrong him, forsake him, or look down upon him.",
+        "narrator": "Abu Hurairah",
+        "source": "Muslim",
+        "book_number": 32,
+        "hadith_number": 2564,
+        "grade": "sahih",
+        "topics": [
+            "ukhuwah",
+            "muslim"
+        ]
+    },
+    {
+        "hadith_id": "bukhari_012",
+        "arabic": "لَيْسَ الْغِنَى عَنْ كَثْرَةِ الْعَرَضِ، وَلَكِنَّ الْغِنَى غِنَى النَّفْسِ",
+        "translation_ms": "Kekayaan bukanlah dari banyaknya harta, tetapi kekayaan adalah kekayaan jiwa.",
+        "translation_en": "Richness is not in having many possessions, but richness is in contentment of the soul.",
+        "narrator": "Abu Hurairah",
+        "source": "Bukhari",
+        "book_number": 81,
+        "hadith_number": 6446,
+        "grade": "sahih",
+        "topics": [
+            "kekayaan",
+            "qanaah",
+            "jiwa"
+        ]
+    },
+    {
+        "hadith_id": "tirmidzi_003",
+        "arabic": "الدُّنْيَا سِجْنُ الْمُؤْمِنِ وَجَنَّةُ الْكَافِرِ",
+        "translation_ms": "Dunia adalah penjara bagi orang mukmin dan syurga bagi orang kafir.",
+        "translation_en": "The world is a prison for the believer and paradise for the disbeliever.",
+        "narrator": "Abu Hurairah",
+        "source": "Muslim",
+        "book_number": 53,
+        "hadith_number": 2956,
+        "grade": "sahih",
+        "topics": [
+            "dunia",
+            "akhirat",
+            "zuhud"
+        ]
+    }
+]

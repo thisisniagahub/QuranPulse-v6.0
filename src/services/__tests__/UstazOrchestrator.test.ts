@@ -52,7 +52,7 @@ describe('UstazOrchestrator', () => {
     });
 
     const result = await UstazOrchestrator.detectAndCall('waktu zohor WLP01');
-    
+
     expect(supabase.functions.invoke).toHaveBeenCalledWith('mcp-worship', {
       body: { zone: 'WLP01' }
     });
@@ -89,5 +89,57 @@ describe('UstazOrchestrator', () => {
       body: { type: 'income', amount: 5000, state: 'WLP' }
     });
     expect(result?.summary).toContain('RM125');
+  });
+
+  test('should detect admin intent', () => {
+    expect(UstazOrchestrator.isAdminIntent('show user stats')).toBe(true);
+    expect(UstazOrchestrator.isAdminIntent('system health check')).toBe(true);
+    expect(UstazOrchestrator.isAdminIntent('berapa pengguna')).toBe(true);
+    expect(UstazOrchestrator.isAdminIntent('waktu zohor')).toBe(false);
+  });
+
+  test('should call mcp-admin for admin intent', async () => {
+    (supabase.functions.invoke as jest.Mock).mockResolvedValue({
+      data: {
+        success: true,
+        intent: 'user_stats',
+        data: {
+          total_users: 1234,
+          new_users: 56,
+          timeframe: 'today',
+          summary: '📊 Total: 1234 users | New (today): 56'
+        }
+      },
+      error: null
+    });
+
+    const result = await UstazOrchestrator.detectAndCall('show user stats');
+
+    expect(supabase.functions.invoke).toHaveBeenCalledWith('mcp-admin', {
+      body: { intent: 'user_stats', query: 'show user stats', timeframe: 'today' }
+    });
+    expect(result?.summary).toContain('Admin');
+  });
+
+  test('should detect admin content stats intent', async () => {
+    (supabase.functions.invoke as jest.Mock).mockResolvedValue({
+      data: {
+        success: true,
+        intent: 'content_stats',
+        data: {
+          quran_verses: 6236,
+          hadiths: 7275,
+          summary: '📖 Quran Verses: 6236 | Hadiths: 7275'
+        }
+      },
+      error: null
+    });
+
+    const result = await UstazOrchestrator.detectAndCall('content stats analytics');
+
+    expect(supabase.functions.invoke).toHaveBeenCalledWith('mcp-admin', {
+      body: { intent: 'content_stats', query: 'content stats analytics', timeframe: 'today' }
+    });
+    expect(result?.summary).toContain('Admin');
   });
 });
