@@ -40,3 +40,6 @@ dist-ssr
 
 # WhatsApp Auth
 .wwebjs_auth/
+
+# Testing
+coverage/
