@@ -247,4 +247,10 @@ The most effective collaborations happen when:
 - Complex requests are broken down into specific components
 - We build on successful interactions to tackle increasingly complex challenges
 
-I'm here to assist you with your tasks and look forward to working together to achieve your goals.
+- Always run `pnpm lint` and `pnpm test` before committing.
+
+## Deployment Status
+- **Vercel Project:** quran-pulse-v6.0
+- **Last Configuration Check:** 2026-01-07
+- **CI/CD:** GitHub Actions -> Vercel
+
