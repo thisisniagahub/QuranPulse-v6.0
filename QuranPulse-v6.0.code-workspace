@@ -1,12 +1,15 @@
 {
 	"folders": [
 		{
+			"name": "QuranPulse-v6.0",
 			"path": "."
 		},
 		{
+			"name": "IQRA-100",
 			"path": "G:/Downloads/IQRA-100"
 		},
 		{
+			"name": "quran-agent",
 			"path": "C:/quran-agent"
 		}
 	],

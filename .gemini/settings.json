@@ -3,6 +3,26 @@
     "fileName": "AGENTS.md"
   },
   "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
+    },
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git", "."]
+    },
+    "time": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-time"]
+    },
+    "fetch": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-fetch"]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
     "google-maps-platform-code-assist": {
       "command": "npx",
       "args": [
@@ -14,7 +34,7 @@
       "url": "https://mcp.supabase.com/mcp?project_ref=bomjkgyrkvuivqodzqzf"
     },
     "supabase_auth": {
-      "url": "https://mcp.supabase.com/mcp?project_ref=bomjkgyrkvuivqodzqzf&access_token=sbp_f17ba692f0bfdb3fdfbbb4120b5f7c78fc3330d6"
+      "url": "https://mcp.supabase.com/mcp?project_ref=bomjkgyrkvuivqodzqzf"
     }
   }
 }

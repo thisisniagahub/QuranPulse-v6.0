@@ -6,7 +6,7 @@ import '@testing-library/jest-dom';
 // --- MOCKS ---
 
 // Mock Contexts
-jest.mock('../../contexts/QuranContext', () => ({
+jest.mock('../contexts/QuranContext', () => ({
     useQuran: () => ({
         selectedChapter: {
             id: 1,
@@ -46,7 +46,7 @@ jest.mock('../../contexts/QuranContext', () => ({
     })
 }));
 
-jest.mock('../../../../contexts/AudioPlayerContext', () => ({
+jest.mock('../../../contexts/AudioPlayerContext', () => ({
     useAudioPlayer: () => ({
         currentTrack: null,
         isPlaying: false,
@@ -56,8 +56,8 @@ jest.mock('../../../../contexts/AudioPlayerContext', () => ({
 }));
 
 // Mock Child Components to isolate Reader logic
-jest.mock('../../components/ImmersiveControls', () => () => <div data-testid="immersive-controls">Controls</div>);
-jest.mock('../../components/VoiceActiveScroller', () => () => <div data-testid="voice-scroller">Voice</div>);
+jest.mock('../components/ImmersiveControls', () => () => <div data-testid="immersive-controls">Controls</div>);
+jest.mock('../components/VoiceActiveScroller', () => () => <div data-testid="voice-scroller">Voice</div>);
 jest.mock('../features/audio/QuranAudioPlayer', () => () => <div data-testid="audio-player">AudioPlayer</div>);
 
 describe('QuranReader', () => {

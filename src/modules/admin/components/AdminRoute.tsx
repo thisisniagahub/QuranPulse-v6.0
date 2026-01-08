@@ -3,45 +3,86 @@ import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 
+// HARDCODED SUPERADMINS (Safety Net)
+const SUPER_ADMINS = [
+  'dev@qp.com',
+  'megat@quranpulse.my', 
+  'admin@quranpulse.my'
+];
+
 interface AdminRouteProps {
   children?: React.ReactNode;
 }
 
 const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
   const { user, isLoading } = useAuth();
-  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [isAuthorized, setIsAuthorized] = useState<boolean | null>(null);
 
   useEffect(() => {
-    const checkAdmin = async () => {
+    let mounted = true;
+
+    const verifyAccess = async () => {
       if (!user) {
-        setIsAdmin(false);
+        if (mounted) setIsAuthorized(false);
         return;
       }
 
-      // Check 'profiles' table for role
-      // Note: We need to ensure 'role' column exists or use metadata
-      const { data, error } = await supabase
-        .from('profiles')
-        .select('tier') // Assuming 'TUTOR' or 'FAMILY_OWNER' allows partial access, but for SuperAdmin we might need a specific flag
-        .eq('id', user.id)
-        .single();
+      // 1. Level 1 Check: Email Whitelist (Fastest & Safest)
+      if (user.email && SUPER_ADMINS.includes(user.email)) {
+        if (mounted) setIsAuthorized(true);
+        return;
+      }
 
-      // For production, we strictly check 'ADMIN' tier or specific dev email
-      if (user.email === 'dev@qp.com' || data?.tier === 'ADMIN') {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
+      // 2. Level 2 Check: Database Role (Requires DB trip)
+      try {
+        // We re-fetch user to ensure token isn't stale
+        const { data: { user: freshUser }, error: authError } = await supabase.auth.getUser();
+        
+        if (authError || !freshUser) {
+           throw new Error('Auth session invalid');
+        }
+
+        const { data: profile, error: dbError } = await supabase
+          .from('profiles')
+          .select('role') // We use 'role' column specifically for RBAC
+          .eq('id', freshUser.id)
+          .single();
+
+        if (dbError) {
+            console.warn('AdminRoute: DB check failed', dbError);
+            if (mounted) setIsAuthorized(false);
+            return;
+        }
+
+        if (profile?.role === 'ADMIN' || profile?.role === 'SUPERADMIN') {
+          if (mounted) setIsAuthorized(true);
+        } else {
+          if (mounted) setIsAuthorized(false);
+        }
+
+      } catch (err) {
+        console.error('Admin verification failed:', err);
+        if (mounted) setIsAuthorized(false);
       }
     };
 
-    if (!isLoading) checkAdmin();
+    if (!isLoading) {
+      verifyAccess();
+    }
+
+    return () => { mounted = false; };
   }, [user, isLoading]);
 
-  if (isLoading || isAdmin === null) {
-    return <div className="min-h-screen flex items-center justify-center bg-black text-cyan-500">Checking clearance...</div>;
+  if (isLoading || isAuthorized === null) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center bg-black text-cyan-500 font-mono gap-4">
+        <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin"></div>
+        <p className="animate-pulse tracking-widest text-xs">VERIFYING CLEARANCE LEVEL 5...</p>
+      </div>
+    );
   }
 
-  return isAdmin ? <>{children ? children : <Outlet />}</> : <Navigate to="/" replace />;
+  return isAuthorized ? <>{children ? children : <Outlet />}</> : <Navigate to="/" replace />;
 };
 
 export default AdminRoute;
