@@ -9,6 +9,7 @@ import Layout from './components/Layout';
 import ErrorBoundary from './components/ErrorBoundary';
 import { Login } from './modules/auth/Login'; // Import Login
 import AdminRoute from './modules/admin/components/AdminRoute';
+import SplashScreen from './components/SplashScreen';
 
 // Lazy load modules
 const Dashboard = lazy(() => import('./modules/dashboard'));
@@ -30,9 +31,9 @@ const Umrah = lazy(() => import('./modules/umrah')); // Umrah Companion Module
 import GuideViewer from './modules/iqra/components/GuideViewer';
 
 
-// Loading fallback component
-import SplashScreen from './components/SplashScreen';
+import PWAInstallPrompt from './components/PWAInstallPrompt';
 
+// Loading fallback component
 const LoadingFallback = () => (
   <div className="flex flex-col items-center justify-center min-h-screen bg-[#f0f9ff] relative overflow-hidden">
     {/* Background Glow */}
@@ -146,6 +147,7 @@ const AppContent: React.FC = () => {
           {/* Catch all */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        <PWAInstallPrompt />
       </Suspense>
     </ErrorBoundary>
   );
