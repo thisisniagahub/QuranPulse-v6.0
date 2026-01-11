@@ -57,7 +57,7 @@ jest.mock('../../../contexts/AudioPlayerContext', () => ({
 
 // Mock Child Components to isolate Reader logic
 jest.mock('../components/ImmersiveControls', () => () => <div data-testid="immersive-controls">Controls</div>);
-jest.mock('../components/VoiceActiveScroller', () => () => <div data-testid="voice-scroller">Voice</div>);
+jest.mock('../features/reader/VoiceActiveReader', () => () => <div data-testid="voice-active-reader">VoiceReader</div>);
 jest.mock('../features/audio/QuranAudioPlayer', () => () => <div data-testid="audio-player">AudioPlayer</div>);
 
 describe('QuranReader', () => {
@@ -77,6 +77,6 @@ describe('QuranReader', () => {
     it('renders navigation controls', () => {
         render(<QuranReader />);
         expect(screen.getByTestId('immersive-controls')).toBeInTheDocument();
-        expect(screen.getByTestId('voice-scroller')).toBeInTheDocument();
+        expect(screen.getByTestId('voice-active-reader')).toBeInTheDocument();
     });
 });

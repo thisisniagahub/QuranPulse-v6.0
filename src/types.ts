@@ -112,6 +112,7 @@ export interface UserProfile {
   id?: string;
   email?: string;
   name: string;
+  full_name?: string; // Used by admin dashboard
   username?: string; // New
   avatar_url?: string;
   role?: 'USER' | 'ADMIN' | 'MODERATOR';
@@ -125,14 +126,17 @@ export interface UserProfile {
   bookmarks?: Bookmark[];
   family_members?: FamilyMember[];
   joinedDate?: string;
+  created_at?: string; // Used by admin dashboard
   status?: 'ACTIVE' | 'BANNED';
   // New fields
   subscription_tier?: 'free' | 'premium' | 'family';
+  tier?: 'FREE' | 'PRO' | 'FAMILY'; // Used by admin dashboard
   fiqh_preference?: 'shafii' | 'hanafi' | 'maliki' | 'hambali';
   hijri_date_preference?: 'gregorian' | 'hijri';
   current_level?: string;
   level?: number; // Added for gamification compatibility
   badges?: any[]; // Added for gamification compatibility
+  is_verified_tutor?: boolean; // Used by admin dashboard
 }
 
 // --- Iqra Types ---

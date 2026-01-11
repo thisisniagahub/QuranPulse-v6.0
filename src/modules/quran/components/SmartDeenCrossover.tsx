@@ -17,11 +17,11 @@ import {
 } from 'lucide-react';
 
 interface SmartDeenCrossoverProps {
-    surahNumber: number;
-    surahName: string;
-    verseNumber: number;
-    arabicText: string;
-    translation: string;
+    surahNumber?: number;
+    surahName?: string;
+    verseNumber?: number;
+    arabicText?: string;
+    translation?: string;
     onAskUstaz?: (question: string, context: VerseContext) => void;
     onOpenSmartDeen?: (context: VerseContext) => void;
 }
@@ -42,11 +42,11 @@ interface QuickPrompt {
 }
 
 const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
-    surahNumber,
-    surahName,
-    verseNumber,
-    arabicText,
-    translation,
+    surahNumber = 0,
+    surahName = '',
+    verseNumber = 0,
+    arabicText = '',
+    translation = '',
     onAskUstaz,
     onOpenSmartDeen
 }) => {

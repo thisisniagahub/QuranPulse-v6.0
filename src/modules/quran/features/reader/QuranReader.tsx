@@ -296,8 +296,19 @@ const QuranReader: React.FC = () => {
                 />
             )}
 
-            {/* Tier 2: Voice Active Navigation Engine */}
-            <VoiceActiveReader />
+            {/* AI Voice Navigation Engine */}
+            {activeVerse && (
+                <div className="fixed bottom-24 right-4 z-50">
+                    <VoiceActiveReader
+                        verseKey={activeVerse.verse_key}
+                        arabicText={activeVerse.text_uthmani || ''}
+                        isActive={isVoiceMode}
+                        onToggle={() => setIsVoiceMode(!isVoiceMode)}
+                        onNextVerse={playNextVerse}
+                        onVerseComplete={() => {}}
+                    />
+                </div>
+            )}
         </div>
     );
 };
