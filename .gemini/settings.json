@@ -5,23 +5,40 @@
   "mcpServers": {
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "."]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "."
+      ]
     },
     "git": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-git", "."]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-git",
+        "."
+      ]
     },
     "time": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-time"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-time"
+      ]
     },
     "fetch": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-fetch"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ]
     },
     "puppeteer": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ]
     },
     "google-maps-platform-code-assist": {
       "command": "npx",
@@ -35,6 +52,19 @@
     },
     "supabase_auth": {
       "url": "https://mcp.supabase.com/mcp?project_ref=bomjkgyrkvuivqodzqzf"
+    }
+  },
+  "general": {
+    "enablePromptCompletion": true
+  },
+  "experimental": {
+    "introspectionAgentSettings": {
+      "enabled": true
+    }
+  },
+  "security": {
+    "folderTrust": {
+      "enabled": true
     }
   }
 }
