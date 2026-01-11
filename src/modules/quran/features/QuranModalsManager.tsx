@@ -19,6 +19,7 @@ const VerseNotesModal = React.lazy(() => import('./studio/VerseNotesModal'));
 const ReadingGoalsModal = React.lazy(() => import('./settings/ReadingGoalsModal'));
 const BookmarkCollectionsModal = React.lazy(() => import('./settings/BookmarkCollectionsModal'));
 const ThemeSettingsModal = React.lazy(() => import('./settings/ThemeSettingsModal'));
+const IqraGraduation = React.lazy(() => import('../components/IqraGraduation'));
 
 export const QuranModalsManager: React.FC = () => {
     const {
@@ -30,6 +31,7 @@ export const QuranModalsManager: React.FC = () => {
         showReadingGoals, setShowReadingGoals,
         showBookmarkCollections, setShowBookmarkCollections,
         showThemeSettings, setShowThemeSettings,
+        showGraduation, setShowGraduation,
         showTutorial, markTutorialSeen,
 
         // Interactive State
@@ -210,6 +212,19 @@ export const QuranModalsManager: React.FC = () => {
                 currentFont={'uthmani'}
                 onThemeChange={setTheme}
                 onFontChange={() => { }}
+            />
+
+            {/* Graduation Ceremony */}
+            <IqraGraduation
+                isOpen={showGraduation}
+                onClose={() => setShowGraduation(false)}
+                userName="Sahabat Al-Quran"
+                iqraLevel={6}
+                completionDate={new Date().toISOString()}
+                onStartQuran={() => {
+                    setShowGraduation(false);
+                    // navigate to quran? (Already in Quran module)
+                }}
             />
 
             {/* Tutorial Modal */}

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 import { QuranVerse, QuranWord, SemanticResult } from '../../../types';
+import { useSemanticSearch } from '../features/search/useSemanticSearch';
 
 interface QuranUIState {
     view: 'LIST' | 'READING';
@@ -15,6 +16,7 @@ interface QuranUIState {
     showReadingGoals: boolean; setShowReadingGoals: (show: boolean) => void;
     showBookmarkCollections: boolean; setShowBookmarkCollections: (show: boolean) => void;
     showThemeSettings: boolean; setShowThemeSettings: (show: boolean) => void;
+    showGraduation: boolean; setShowGraduation: (show: boolean) => void;
 
     // Interactive
     bookmarkedVerses: Set<string>;
@@ -38,8 +40,8 @@ interface QuranUIState {
     studioVerse: QuranVerse | null;
     openVerseStudio: (verse: QuranVerse) => void;
     closeVerseStudio: () => void;
-    studioTab: 'CHAT' | 'TAFSIR' | 'ANALYSIS';
-    setStudioTab: (tab: 'CHAT' | 'TAFSIR' | 'ANALYSIS') => void;
+    studioTab: 'CHAT' | 'TAFSIR' | 'ANALYSIS' | 'TADABBUR';
+    setStudioTab: (tab: 'CHAT' | 'TAFSIR' | 'ANALYSIS' | 'TADABBUR') => void;
 
     // Search
     searchQuery: string;
@@ -47,9 +49,9 @@ interface QuranUIState {
     isSemanticMode: boolean;
     setIsSemanticMode: (is: boolean) => void;
     semanticResults: SemanticResult[];
-    setSemanticResults: (results: SemanticResult[]) => void;
+    // setSemanticResults removed - managed by hook
     isSearchingSemantic: boolean;
-    setIsSearchingSemantic: (is: boolean) => void;
+    // setIsSearchingSemantic removed - managed by hook
     handleSemanticSearch: () => void;
 
     // Voice & ASR
@@ -74,6 +76,7 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
     const [showReadingGoals, setShowReadingGoals] = useState(false);
     const [showBookmarkCollections, setShowBookmarkCollections] = useState(false);
     const [showThemeSettings, setShowThemeSettings] = useState(false);
+    const [showGraduation, setShowGraduation] = useState(false);
 
     // 3. Interactive
     const [bookmarkedVerses, setBookmarkedVerses] = useState<Set<string>>(new Set());
@@ -87,13 +90,14 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
 
     // 4. Studio
     const [studioVerse, setStudioVerse] = useState<QuranVerse | null>(null);
-    const [studioTab, setStudioTab] = useState<'CHAT' | 'TAFSIR' | 'ANALYSIS'>('CHAT');
+    const [studioTab, setStudioTab] = useState<'CHAT' | 'TAFSIR' | 'ANALYSIS' | 'TADABBUR'>('CHAT');
 
     // 5. Search
     const [searchQuery, setSearchQuery] = useState('');
     const [isSemanticMode, setIsSemanticMode] = useState(false);
-    const [semanticResults, setSemanticResults] = useState<SemanticResult[]>([]);
-    const [isSearchingSemantic, setIsSearchingSemantic] = useState(false);
+    
+    // Use Real Semantic Search Hook
+    const semanticSearch = useSemanticSearch();
 
     // 6. Voice
     const [isVoiceSearchActive, setIsVoiceSearchActive] = useState(false);
@@ -119,10 +123,7 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
     const closeVerseStudio = () => setStudioVerse(null);
 
     const handleSemanticSearch = () => {
-        // Semantic search logic usually requires a service call. 
-        // We'll keep it simple here, expecting component to call logic or we can inject service later.
-        setIsSearchingSemantic(true);
-        setTimeout(() => setIsSearchingSemantic(false), 2000); // Mock
+        semanticSearch.search(searchQuery);
     };
 
     return (
@@ -136,6 +137,7 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
             showReadingGoals, setShowReadingGoals,
             showBookmarkCollections, setShowBookmarkCollections,
             showThemeSettings, setShowThemeSettings,
+            showGraduation, setShowGraduation,
             bookmarkedVerses, toggleBookmark,
             shareVerse, setShareVerse,
             hafazanVerse, setHafazanVerse,
@@ -148,8 +150,8 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
             studioTab, setStudioTab,
             searchQuery, setSearchQuery,
             isSemanticMode, setIsSemanticMode,
-            semanticResults, setSemanticResults,
-            isSearchingSemantic, setIsSearchingSemantic,
+            semanticResults: semanticSearch.results as SemanticResult[],
+            isSearchingSemantic: semanticSearch.isSearching,
             handleSemanticSearch,
             isVoiceSearchActive, setIsVoiceSearchActive,
             lastVoiceTranscription, setLastVoiceTranscription

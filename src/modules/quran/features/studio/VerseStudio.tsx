@@ -4,12 +4,16 @@ import { QuranVerse, QuranChapter, MorphologyResult } from '../../../../types';
 import ReactMarkdown from 'react-markdown';
 import { chatWithVerseContext } from '../../../../services/aiService';
 
+// Tier 2 Components
+import TadabburAI from './TadabburAI';
+import WordRootExplorer from '../../components/WordRootExplorer';
+
 interface VerseStudioProps {
     verse: QuranVerse;
     chapter: QuranChapter | null;
     onClose: () => void;
-    tab: 'CHAT' | 'TAFSIR' | 'ANALYSIS';
-    setTab: (tab: 'CHAT' | 'TAFSIR' | 'ANALYSIS') => void;
+    tab: 'CHAT' | 'TAFSIR' | 'ANALYSIS' | 'TADABBUR';
+    setTab: (tab: 'CHAT' | 'TAFSIR' | 'ANALYSIS' | 'TADABBUR') => void;
     
     // External Data (Optional, can be fetched internally if needed)
     tafsirData?: any;
@@ -131,7 +135,7 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
 
                         {/* Tabs */}
                         <div className="flex p-1 rounded-xl bg-slate-900/50 border border-white/10">
-                            {(['CHAT', 'TAFSIR', 'ANALYSIS'] as const).map((t) => (
+                            {(['CHAT', 'TAFSIR', 'ANALYSIS', 'TADABBUR'] as const).map((t) => (
                                 <button
                                     key={t}
                                     onClick={() => setTab(t)}
@@ -151,28 +155,17 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
 
                         {tab === 'ANALYSIS' && (
                             <div className="space-y-6 animate-fade-in">
-                                {morphologyData ? (
-                                    <>
-                                        <div className="p-4 rounded-xl bg-slate-900 border border-cyan-500/20 flex items-start gap-3">
-                                            <i className="fa-solid fa-circle-info text-cyan-500 mt-1"></i>
-                                            <p className="text-slate-300 text-xs leading-relaxed">
-                                                Breakdown of grammar and morphology for this Ayah based on corpus data.
-                                            </p>
-                                        </div>
-                                        {/* TODO: Render Morphology Data properly */}
-                                        <div className="space-y-3">
-                                            {/* Minimal placeholder if data structure is complex */}
-                                            <pre className="text-xs text-slate-400 overflow-auto whitespace-pre-wrap">
-                                                {JSON.stringify(morphologyData, null, 2)}
-                                            </pre>
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div className="flex flex-col items-center justify-center h-40 opacity-50 space-y-4">
-                                        <div className="w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full animate-spin"></div>
-                                        <p className="text-xs text-slate-400">Analyzing Verse...</p>
-                                    </div>
-                                )}
+                                <div className="p-4 rounded-xl bg-slate-900 border border-cyan-500/20 flex items-start gap-3 mb-6">
+                                    <i className="fa-solid fa-circle-info text-cyan-500 mt-1"></i>
+                                    <p className="text-slate-300 text-xs leading-relaxed">
+                                        Word Root Explorer analyzes the triliteral roots of words in this verse to reveal deeper semantic connections across the Quran.
+                                    </p>
+                                </div>
+                                
+                                <WordRootExplorer 
+                                    verseKey={verse.verse_key}
+                                    text={verse.text_uthmani || ''}
+                                />
                             </div>
                         )}
 
@@ -187,6 +180,16 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
                                         (AI Tafsir Integration Placeholder - Connect to aiService)
                                     </p>
                                 </div>
+                            </div>
+                        )}
+
+                        {tab === 'TADABBUR' && (
+                            <div className="space-y-4 animate-fade-in">
+                                <TadabburAI 
+                                    verseKey={verse.verse_key}
+                                    text={verse.text_uthmani || ''}
+                                    translation={verse.translations?.[0]?.text || ''}
+                                />
                             </div>
                         )}
 

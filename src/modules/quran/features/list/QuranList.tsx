@@ -7,6 +7,9 @@ import { audioCache } from '../../../../services/audioCacheService';
 import QuantumSearchBar from '../../components/QuantumSearchBar';
 import HoloSurahCard from '../../components/HoloSurahCard';
 import NeuroJuzGrid from '../../components/NeuroJuzGrid';
+import DailyAyatWidget from '../../components/DailyAyatWidget';
+import KhatamProgressTracker from '../../components/KhatamProgressTracker';
+import SmartDeenCrossover from '../../components/SmartDeenCrossover';
 
 interface QuranListProps {
     chapters: QuranChapter[];
@@ -111,8 +114,20 @@ const QuranList: React.FC<QuranListProps> = ({
             {/* 1. ATMOSPHERE BACKGROUND */}
             <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px] z-0"></div>
 
-            {/* 2. PARALLAX HEADER */}
-            <div className="relative pt-24 pb-12 px-6 text-center z-10 overflow-hidden group">
+            {/* 2. DASHBOARD WIDGETS (New Tier 1) */}
+            <div className="relative pt-24 px-4 max-w-6xl mx-auto z-10 space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <DailyAyatWidget />
+                    <KhatamProgressTracker 
+                        currentJuz={1} 
+                        completedJuzs={[30]} 
+                        streak={5} 
+                    />
+                </div>
+            </div>
+
+            {/* 3. PARALLAX HEADER */}
+            <div className="relative pt-12 pb-12 px-6 text-center z-10 overflow-hidden group">
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                     <img
@@ -140,7 +155,7 @@ const QuranList: React.FC<QuranListProps> = ({
 
             <div className="px-4 max-w-6xl mx-auto space-y-8 relative z-10">
 
-                {/* 3. SEARCH & NAVIGATION */}
+                {/* 4. SEARCH & NAVIGATION */}
                 <div className="sticky top-4 z-40">
                     <QuantumSearchBar
                         searchQuery={searchQuery}
@@ -178,7 +193,7 @@ const QuranList: React.FC<QuranListProps> = ({
                     </AnimatePresence>
                 </div>
 
-                {/* 4. CONTENT GRID */}
+                {/* 5. CONTENT GRID */}
                 <AnimatePresence mode="wait">
 
                     {/* LOADING */}
@@ -295,6 +310,9 @@ const QuranList: React.FC<QuranListProps> = ({
                     )}
                 </AnimatePresence>
             </div>
+
+            {/* 6. FLOATING SMART DEEN CROSSOVER */}
+            <SmartDeenCrossover />
         </div>
     );
 };

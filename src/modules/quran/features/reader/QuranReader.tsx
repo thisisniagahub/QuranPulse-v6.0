@@ -7,7 +7,9 @@ import QuranPageView from './QuranPageView';
 import QuranAudioPlayer from '../audio/QuranAudioPlayer';
 import ReadingProgressBar from '../../components/ReadingProgressBar';
 import ImmersiveControls from '../../components/ImmersiveControls';
-import VoiceActiveScroller from '../../components/VoiceActiveScroller';
+// Tier 2 & 3 Upgrades
+import VoiceActiveReader from './VoiceActiveReader';
+import MushafView from './MushafView';
 
 
 const QuranReader: React.FC = () => {
@@ -78,6 +80,10 @@ const QuranReader: React.FC = () => {
 
     // State for Zen Mode (Immersive Reading)
     const [isZenMode, setIsZenMode] = React.useState(false);
+    const [isVoiceMode, setIsVoiceMode] = React.useState(false);
+
+    // Active Verse Calculation for Voice Reader
+    const activeVerse = verses.find(v => v.verse_key === (currentTrack?.verseKey || verses[0]?.verse_key));
 
     // Also scroll nicely when entering reading view?
     useEffect(() => {
@@ -135,7 +141,7 @@ const QuranReader: React.FC = () => {
             {/* === PAGE VIEW (MUSHAF MODE) === */}
             {layoutMode === 'PAGE' && (
                 <div className="flex-1 overflow-y-auto w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-[#0a0a0f] to-black">
-                    <QuranPageView />
+                    <MushafView />
                 </div>
             )}
 
@@ -290,8 +296,8 @@ const QuranReader: React.FC = () => {
                 />
             )}
 
-            {/* AI Voice Navigation Engine */}
-            <VoiceActiveScroller />
+            {/* Tier 2: Voice Active Navigation Engine */}
+            <VoiceActiveReader />
         </div>
     );
 };
