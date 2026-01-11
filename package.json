@@ -12,7 +12,10 @@
     "test:watch": "jest --config jest.config.cjs --watch",
     "test:coverage": "jest --config jest.config.cjs --coverage",
     "test:ci": "jest --config jest.config.cjs --ci --coverage --watchAll=false",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "deploy": "npx vercel --prod --yes",
+    "deploy:preview": "npx vercel --yes",
+    "ship": "git add -A && git commit -m \"ship: auto-deploy\" && git push origin main && npx vercel --prod --yes"
   },
   "dependencies": {
     "@sentry/react": "^7.120.4",

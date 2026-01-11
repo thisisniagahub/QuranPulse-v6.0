@@ -99,16 +99,46 @@ export default defineConfig(({ mode }) => {
               ]
           },
           manifest: {
+            id: 'quran-pulse-v6',
             name: 'Quran Pulse',
             short_name: 'QuranPulse',
-            description: 'Your Digital Islamic Companion - AI-powered Quran learning',
+            description: 'App Mengaji AI Pertama Malaysia. Belajar Iqra & Quran dengan Ustaz AI 24/7.',
             theme_color: '#051324',
             background_color: '#051324',
             display: 'standalone',
             orientation: 'portrait',
             scope: '/',
             start_url: '/',
-            categories: ['education', 'lifestyle', 'books'],
+            lang: 'ms-MY',
+            dir: 'ltr',
+            display_override: ['window-controls-overlay', 'minimal-ui'],
+            categories: ['education', 'lifestyle', 'productivity', 'books'],
+            launch_handler: {
+              client_mode: 'focus-existing'
+            },
+            screenshots: [
+              {
+                src: 'screenshots/screen1.png',
+                sizes: '1080x1920',
+                type: 'image/png',
+                form_factor: 'narrow',
+                label: 'Dashboard Utama'
+              },
+              {
+                src: 'screenshots/screen2.png',
+                sizes: '1080x1920',
+                type: 'image/png',
+                form_factor: 'narrow',
+                label: 'Bacaan Al-Quran'
+              },
+              {
+                src: 'screenshots/screen3.png',
+                sizes: '1080x1920',
+                type: 'image/png',
+                form_factor: 'narrow',
+                label: 'Pembelajaran AI'
+              }
+            ],
             icons: [
               {
                 src: 'logo-full.png',

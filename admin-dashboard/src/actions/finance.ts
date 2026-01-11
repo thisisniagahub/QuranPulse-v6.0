@@ -1,25 +1,18 @@
 'use server'
 
-import { createClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 import type { Transaction } from '@/types/crud'
-
-function getSupabaseAdmin() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        { auth: { autoRefreshToken: false, persistSession: false } }
-    )
-}
+import { requireAdmin } from '@/lib/auth-admin'
+import { logAdminAction } from '@/lib/audit'
 
 // ==================== TRANSACTIONS ====================
 
 export async function getTransactions(page = 1, pageSize = 10, filters?: { type?: string; status?: string }) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
     const from = (page - 1) * pageSize
     const to = from + pageSize - 1
 
-    let query = supabase
+    let query = adminClient
         .from('payments')
         .select('*', { count: 'exact' })
         .range(from, to)
@@ -39,10 +32,10 @@ export async function getTransactions(page = 1, pageSize = 10, filters?: { type?
 }
 
 export async function getTransactionStats() {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
 
     // Get MRR (Monthly Recurring Revenue)
-    const { data: subscriptions } = await supabase
+    const { data: subscriptions } = await adminClient
         .from('payments')
         .select('amount')
         .eq('type', 'subscription')
@@ -52,7 +45,7 @@ export async function getTransactionStats() {
     const mrr = subscriptions?.reduce((sum, p) => sum + p.amount, 0) || 0
 
     // Get total Infaq
-    const { data: infaq } = await supabase
+    const { data: infaq } = await adminClient
         .from('payments')
         .select('amount')
         .eq('type', 'infaq')
@@ -61,7 +54,7 @@ export async function getTransactionStats() {
     const totalInfaq = infaq?.reduce((sum, p) => sum + p.amount, 0) || 0
 
     // Get refunds
-    const { data: refunds, count: refundCount } = await supabase
+    const { data: refunds, count: refundCount } = await adminClient
         .from('payments')
         .select('*', { count: 'exact' })
         .eq('status', 'refunded')
@@ -75,10 +68,10 @@ export async function getTransactionStats() {
 }
 
 export async function processRefund(transactionId: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     // Get original transaction
-    const { data: transaction } = await supabase
+    const { data: transaction } = await adminClient
         .from('payments')
         .select('*')
         .eq('id', transactionId)
@@ -88,12 +81,14 @@ export async function processRefund(transactionId: string) {
     if (transaction.status === 'refunded') throw new Error('Transaction already refunded')
 
     // Update status to refunded
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('payments')
         .update({ status: 'refunded' })
         .eq('id', transactionId)
 
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'PROCESS_REFUND', transactionId, { amount: transaction.amount })
 
     // In production, would integrate with ToyyibPay/Stripe refund API here
 
@@ -104,6 +99,9 @@ export async function processRefund(transactionId: string) {
 // ==================== MERCHANT KEYS ====================
 
 export async function getMerchantKeys() {
+    // Check admin access even for read
+    await requireAdmin() 
+    
     // Would fetch from secure storage/vault
     return [
         {
@@ -124,8 +122,13 @@ export async function getMerchantKeys() {
 }
 
 export async function rotateMerchantKey(provider: string) {
+    const { user: adminUser } = await requireAdmin()
+
     // Would integrate with key rotation service
     console.log(`Rotating key for: ${provider}`)
+    
+    await logAdminAction(adminUser.id, 'ROTATE_KEY', provider, {})
+
     revalidatePath('/dashboard/finance')
     return { success: true, message: `Key rotation initiated for ${provider}` }
 }
@@ -133,7 +136,7 @@ export async function rotateMerchantKey(provider: string) {
 // ==================== ANALYTICS ====================
 
 export async function getRevenueByMonth() {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
 
     // Get last 6 months of revenue
     const months = []
@@ -143,7 +146,7 @@ export async function getRevenueByMonth() {
         const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1)
         const endOfMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0)
 
-        const { data } = await supabase
+        const { data } = await adminClient
             .from('payments')
             .select('amount')
             .eq('status', 'success')

@@ -252,42 +252,89 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted, spotsLef
                             </div>
                         </div>
 
-                        {/* --- SCREEN: HOME --- */}
+                        {/* --- SCREEN: HOME (MIRRORING ACTUAL DASHBOARD) --- */}
                         {activeScreen === 'home' && (
-                            <div className="flex-1 p-4 flex flex-col animate-fade-in">
-                                <div className="flex justify-between items-center mb-6 mt-2">
+                            <div className="flex-1 p-4 flex flex-col animate-fade-in relative overflow-hidden bg-[#020617]">
+                                {/* Background Ambient */}
+                                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/10 rounded-full blur-[60px]"></div>
+
+                                {/* Header */}
+                                <div className="flex justify-between items-center mb-4 mt-1 relative z-10">
                                     <div>
-                                        <p className="text-xs text-slate-400">Assalamu Alaikum,</p>
-                                        <h3 className="text-lg font-bold text-white">Megat Shazree Zainal</h3>
+                                        <p className="text-[10px] text-slate-400 font-medium">Assalamu Alaikum,</p>
+                                        <h3 className="text-base font-bold text-white leading-tight">Megat Shazree</h3>
                                     </div>
-                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-400 to-orange-600 border border-white/20"></div>
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 border border-white/20 shadow-lg shadow-cyan-500/20">
+                                        <img src="https://i.pravatar.cc/100?img=11" alt="Profile" className="w-full h-full rounded-full object-cover" />
+                                    </div>
                                 </div>
 
-                                <div className="bg-gradient-to-br from-cyan-900/50 to-slate-900 rounded-2xl p-4 border border-white/5 mb-4 relative overflow-hidden">
-                                    <div className="absolute top-0 right-0 w-24 h-24 bg-cyan-500/10 rounded-full blur-xl"></div>
-                                    <div className="flex justify-between items-start mb-2 relative z-10">
-                                        <span className="text-[10px] uppercase tracking-wider text-cyan-400 font-bold">Next Prayer</span>
-                                        <Icon icon="meteocons:partly-cloudy-day-fill" className="text-slate-400 text-lg" />
-                                    </div>
-                                    <h2 className="text-3xl font-bold text-white mb-1">Asr</h2>
-                                    <p className="text-sm text-slate-300">4:23 PM <span className="text-[10px] text-slate-500 ml-2">(-0:45)</span></p>
-                                </div>
-
-                                <div className="grid grid-cols-4 gap-2 mb-6">
-                                    {['Quran', 'Prayer', 'Qibla', 'AI Chat'].map((item, i) => (
-                                        <div key={i} onClick={() => {
-                                            if (i === 0) setActiveScreen('quran');
-                                            if (i === 3) setActiveScreen('smart-deen');
-                                        }} className="flex flex-col items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity">
-                                            <div className={`w-12 h-12 rounded-xl border border-white/5 flex items-center justify-center ${i === 0 ? 'bg-cyan-500/20 text-cyan-400' : i === 3 ? 'bg-purple-500/20 text-purple-400' : 'bg-white/5 text-slate-400'}`}>
-                                                {i === 0 ? <i className="fa-solid fa-book-quran"></i> :
-                                                    i === 1 ? <Icon icon="meteocons:clear-day-fill" className="text-lg" /> :
-                                                        i === 2 ? <i className="fa-solid fa-compass"></i> :
-                                                            <i className="fa-solid fa-robot"></i>}
+                                {/* Main Grid Layout (Matching Dashboard.tsx) */}
+                                <div className="grid grid-cols-2 gap-2 relative z-10 flex-1">
+                                    
+                                    {/* A. PULSE HERO (Simulation) */}
+                                    <div className="col-span-2 h-32 bg-gradient-to-br from-slate-900 to-slate-950 rounded-2xl p-4 border border-white/5 relative overflow-hidden flex flex-col justify-between group cursor-pointer hover:border-cyan-500/30 transition-all">
+                                        <div className="absolute inset-0 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] opacity-10 bg-[size:20px]"></div>
+                                        <div className="absolute right-0 top-0 w-24 h-24 bg-cyan-500/5 rounded-full blur-xl"></div>
+                                        
+                                        <div className="flex justify-between items-start z-10">
+                                            <div className="flex items-center gap-1.5 bg-slate-800/50 backdrop-blur-md px-2 py-1 rounded-full border border-white/5">
+                                                <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+                                                <span className="text-[9px] text-slate-300 font-medium">Asr • 4:23 PM</span>
                                             </div>
-                                            <span className="text-[9px] text-slate-400">{item}</span>
+                                            <div className="text-[9px] text-slate-400 bg-slate-800/30 px-2 py-1 rounded-lg">Kuala Lumpur</div>
                                         </div>
-                                    ))}
+
+                                        <div className="z-10 mt-1">
+                                            <div className="text-[10px] text-slate-400 mb-0.5">Next Prayer in</div>
+                                            <div className="text-3xl font-bold text-white tracking-tight flex items-baseline gap-1">
+                                                00:42<span className="text-xs text-slate-500 font-normal">min</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* B. USTAZ AI WIDGET (Simulation) */}
+                                    <div 
+                                        onClick={() => setActiveScreen('smart-deen')}
+                                        className="col-span-1 h-28 bg-gradient-to-br from-violet-950/40 to-slate-900 rounded-2xl p-3 border border-purple-500/20 relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform"
+                                    >
+                                        <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-purple-500/20 rounded-full blur-xl"></div>
+                                        <div className="w-8 h-8 rounded-lg bg-purple-500/20 flex items-center justify-center text-purple-400 mb-2 border border-purple-500/10">
+                                            <i className="fa-solid fa-robot text-sm"></i>
+                                        </div>
+                                        <h4 className="text-xs font-bold text-white mb-0.5">Tanya Ustaz</h4>
+                                        <p className="text-[9px] text-purple-200/60 leading-tight">AI Islamic Assistant 24/7</p>
+                                    </div>
+
+                                    {/* C. CONTINUE READING (Simulation) */}
+                                    <div 
+                                        onClick={() => setActiveScreen('quran')}
+                                        className="col-span-1 h-28 bg-gradient-to-br from-cyan-950/40 to-slate-900 rounded-2xl p-3 border border-cyan-500/20 relative overflow-hidden cursor-pointer hover:scale-[1.02] transition-transform"
+                                    >
+                                        <div className="absolute -right-4 -bottom-4 w-16 h-16 bg-cyan-500/20 rounded-full blur-xl"></div>
+                                        <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 mb-2 border border-cyan-500/10">
+                                            <i className="fa-solid fa-book-open text-sm"></i>
+                                        </div>
+                                        <h4 className="text-xs font-bold text-white mb-0.5">Jom Mengaji</h4>
+                                        <p className="text-[9px] text-cyan-200/60 leading-tight">Al-Mulk: Ayah 5</p>
+                                    </div>
+
+                                    {/* D. DAILY HIKMAH & STATS (Simulation) */}
+                                    <div className="col-span-2 grid grid-cols-2 gap-2 h-24">
+                                         <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-3 flex flex-col justify-center">
+                                            <span className="text-[9px] text-amber-400 font-bold mb-1">DAILY HIKMAH</span>
+                                            <p className="text-[9px] text-slate-300 italic leading-relaxed">"Sabar is not simply enduring..."</p>
+                                         </div>
+                                         <div className="bg-slate-900/50 border border-white/5 rounded-2xl p-3 flex flex-col justify-center items-center relative overflow-hidden">
+                                            <div className="absolute inset-0 bg-green-500/5"></div>
+                                            <span className="text-xl font-bold text-white">12</span>
+                                            <span className="text-[9px] text-slate-400">Days Streak</span>
+                                            <div className="flex gap-0.5 mt-1">
+                                                {[1,2,3,4,5].map(i => <div key={i} className={`w-1 h-1 rounded-full ${i>1 ? 'bg-green-500' : 'bg-slate-700'}`}></div>)}
+                                            </div>
+                                         </div>
+                                    </div>
+
                                 </div>
                             </div>
                         )}

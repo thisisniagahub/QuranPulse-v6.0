@@ -1,25 +1,18 @@
 'use server'
 
-import { createClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 import type { Banner, KnowledgeBase } from '@/types/crud'
-
-function getSupabaseAdmin() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        { auth: { autoRefreshToken: false, persistSession: false } }
-    )
-}
+import { requireAdmin } from '@/lib/auth-admin'
+import { logAdminAction } from '@/lib/audit'
 
 // ==================== BANNERS ====================
 
 export async function getBanners(page = 1, pageSize = 10) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
     const from = (page - 1) * pageSize
     const to = from + pageSize - 1
 
-    const { data, error, count } = await supabase
+    const { data, error, count } = await adminClient
         .from('content_banners')
         .select('*', { count: 'exact' })
         .range(from, to)
@@ -30,7 +23,7 @@ export async function getBanners(page = 1, pageSize = 10) {
 }
 
 export async function createBanner(formData: FormData) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     const banner = {
         title: formData.get('title') as string,
@@ -42,15 +35,17 @@ export async function createBanner(formData: FormData) {
         end_date: formData.get('end_date') as string || null,
     }
 
-    const { error } = await supabase.from('content_banners').insert(banner)
+    const { error } = await adminClient.from('content_banners').insert(banner)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'CREATE_BANNER', banner.title, banner)
 
     revalidatePath('/dashboard/content')
     return { success: true }
 }
 
 export async function updateBanner(id: string, formData: FormData) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     const updates: Partial<Banner> = {}
 
@@ -66,26 +61,32 @@ export async function updateBanner(id: string, formData: FormData) {
     if (link_url !== null) updates.link_url = link_url as string || null
     if (active !== null) updates.active = active === 'on' || active === 'true'
 
-    const { error } = await supabase.from('content_banners').update(updates).eq('id', id)
+    const { error } = await adminClient.from('content_banners').update(updates).eq('id', id)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'UPDATE_BANNER', id, updates)
 
     revalidatePath('/dashboard/content')
     return { success: true }
 }
 
 export async function deleteBanner(id: string) {
-    const supabase = getSupabaseAdmin()
-    const { error } = await supabase.from('content_banners').delete().eq('id', id)
+    const { adminClient, user: adminUser } = await requireAdmin()
+    const { error } = await adminClient.from('content_banners').delete().eq('id', id)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'DELETE_BANNER', id, {})
 
     revalidatePath('/dashboard/content')
     return { success: true }
 }
 
 export async function toggleBannerActive(id: string, active: boolean) {
-    const supabase = getSupabaseAdmin()
-    const { error } = await supabase.from('content_banners').update({ active }).eq('id', id)
+    const { adminClient, user: adminUser } = await requireAdmin()
+    const { error } = await adminClient.from('content_banners').update({ active }).eq('id', id)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'TOGGLE_BANNER', id, { active })
 
     revalidatePath('/dashboard/content')
     return { success: true }
@@ -94,11 +95,11 @@ export async function toggleBannerActive(id: string, active: boolean) {
 // ==================== KNOWLEDGE BASE ====================
 
 export async function getKnowledgeBase(page = 1, pageSize = 10) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
     const from = (page - 1) * pageSize
     const to = from + pageSize - 1
 
-    const { data, error, count } = await supabase
+    const { data, error, count } = await adminClient
         .from('ai_knowledge_base')
         .select('*', { count: 'exact' })
         .range(from, to)
@@ -109,7 +110,7 @@ export async function getKnowledgeBase(page = 1, pageSize = 10) {
 }
 
 export async function createKnowledgeEntry(formData: FormData) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     const entry = {
         title: formData.get('title') as string,
@@ -118,15 +119,17 @@ export async function createKnowledgeEntry(formData: FormData) {
         category: formData.get('category') as KnowledgeBase['category'],
     }
 
-    const { error } = await supabase.from('ai_knowledge_base').insert(entry)
+    const { error } = await adminClient.from('ai_knowledge_base').insert(entry)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'CREATE_KB_ENTRY', entry.title, entry)
 
     revalidatePath('/dashboard/content')
     return { success: true }
 }
 
 export async function updateKnowledgeEntry(id: string, formData: FormData) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     const updates: Partial<KnowledgeBase> = {}
 
@@ -140,17 +143,21 @@ export async function updateKnowledgeEntry(id: string, formData: FormData) {
     if (source) updates.source = source as string
     if (category) updates.category = category as KnowledgeBase['category']
 
-    const { error } = await supabase.from('ai_knowledge_base').update(updates).eq('id', id)
+    const { error } = await adminClient.from('ai_knowledge_base').update(updates).eq('id', id)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'UPDATE_KB_ENTRY', id, updates)
 
     revalidatePath('/dashboard/content')
     return { success: true }
 }
 
 export async function deleteKnowledgeEntry(id: string) {
-    const supabase = getSupabaseAdmin()
-    const { error } = await supabase.from('ai_knowledge_base').delete().eq('id', id)
+    const { adminClient, user: adminUser } = await requireAdmin()
+    const { error } = await adminClient.from('ai_knowledge_base').delete().eq('id', id)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'DELETE_KB_ENTRY', id, {})
 
     revalidatePath('/dashboard/content')
     return { success: true }
@@ -169,7 +176,11 @@ export async function getDataSources() {
 }
 
 export async function triggerSync(source: string) {
+    const { adminClient, user: adminUser } = await requireAdmin()
     // Would trigger actual sync job
     console.log(`Triggering sync for: ${source}`)
+    
+    await logAdminAction(adminUser.id, 'TRIGGER_SYNC', source, {})
+    
     return { success: true, message: `Sync started for ${source}` }
 }

@@ -8,9 +8,9 @@ export async function middleware(request: NextRequest) {
     }
 
     // DEV BYPASS - Skip all auth in development
-    if (process.env.NODE_ENV === 'development') {
-        return NextResponse.next()
-    }
+    // if (process.env.NODE_ENV === 'development') {
+    //     return NextResponse.next()
+    // }
 
     let response = NextResponse.next({
         request: {
@@ -79,7 +79,7 @@ export async function middleware(request: NextRequest) {
         const userRole = user.app_metadata?.role || user.user_metadata?.role
 
         // Bypass for development if needed (remove in production)
-        if (process.env.NODE_ENV === 'development') return response;
+        // if (process.env.NODE_ENV === 'development') return response;
 
         if (userRole !== 'admin') {
             // Redirect to unauthorized page or back to home
@@ -88,9 +88,11 @@ export async function middleware(request: NextRequest) {
 
         return response
     } catch (e) {
-        // If there is an issue with Supabase client (e.g. missing env vars), allow req if in dev, else block
+        // Fail closed - Redirect to login on error
         console.error('Middleware Error:', e)
-        return NextResponse.next()
+        const url = request.nextUrl.clone()
+        url.pathname = '/login'
+        return NextResponse.redirect(url)
     }
 }
 

@@ -1,25 +1,18 @@
 'use server'
 
-import { createClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 import type { FlaggedChat } from '@/types/crud'
-
-function getSupabaseAdmin() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        { auth: { autoRefreshToken: false, persistSession: false } }
-    )
-}
+import { requireAdmin } from '@/lib/auth-admin'
+import { logAdminAction } from '@/lib/audit'
 
 // ==================== FLAGGED CONVERSATIONS ====================
 
 export async function getFlaggedChats(page = 1, pageSize = 10, severity?: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
     const from = (page - 1) * pageSize
     const to = from + pageSize - 1
 
-    let query = supabase
+    let query = adminClient
         .from('ai_flagged_conversations')
         .select('*', { count: 'exact' })
         .eq('status', 'pending')
@@ -37,20 +30,20 @@ export async function getFlaggedChats(page = 1, pageSize = 10, severity?: string
 }
 
 export async function getAIStats() {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
 
     // Count flagged by status
-    const { count: pending } = await supabase
+    const { count: pending } = await adminClient
         .from('ai_flagged_conversations')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'pending')
 
-    const { count: approved } = await supabase
+    const { count: approved } = await adminClient
         .from('ai_flagged_conversations')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'approved')
 
-    const { count: trained } = await supabase
+    const { count: trained } = await adminClient
         .from('ai_flagged_conversations')
         .select('*', { count: 'exact', head: true })
         .eq('status', 'trained')
@@ -68,9 +61,9 @@ export async function getAIStats() {
 }
 
 export async function approveFlaggedChat(id: string, reviewerId: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('ai_flagged_conversations')
         .update({
             status: 'approved',
@@ -81,14 +74,16 @@ export async function approveFlaggedChat(id: string, reviewerId: string) {
 
     if (error) throw new Error(error.message)
 
+    await logAdminAction(adminUser.id, 'APPROVE_CHAT', id, { reviewer: reviewerId })
+
     revalidatePath('/dashboard/ai-oversight')
     return { success: true }
 }
 
 export async function rejectFlaggedChat(id: string, reviewerId: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('ai_flagged_conversations')
         .update({
             status: 'rejected',
@@ -99,15 +94,17 @@ export async function rejectFlaggedChat(id: string, reviewerId: string) {
 
     if (error) throw new Error(error.message)
 
+    await logAdminAction(adminUser.id, 'REJECT_CHAT', id, { reviewer: reviewerId })
+
     revalidatePath('/dashboard/ai-oversight')
     return { success: true }
 }
 
 export async function addToTraining(id: string, reviewerId: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     // Get the flagged conversation
-    const { data: flagged } = await supabase
+    const { data: flagged } = await adminClient
         .from('ai_flagged_conversations')
         .select('*')
         .eq('id', id)
@@ -116,7 +113,7 @@ export async function addToTraining(id: string, reviewerId: string) {
     if (!flagged) throw new Error('Conversation not found')
 
     // Add to training data queue
-    const { error: insertError } = await supabase
+    const { error: insertError } = await adminClient
         .from('ai_training_queue')
         .insert({
             input: flagged.snippet,
@@ -128,7 +125,7 @@ export async function addToTraining(id: string, reviewerId: string) {
     if (insertError) throw new Error(insertError.message)
 
     // Update status
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('ai_flagged_conversations')
         .update({
             status: 'trained',
@@ -139,19 +136,23 @@ export async function addToTraining(id: string, reviewerId: string) {
 
     if (error) throw new Error(error.message)
 
+    await logAdminAction(adminUser.id, 'ADD_TO_TRAINING', id, {})
+
     revalidatePath('/dashboard/ai-oversight')
     return { success: true }
 }
 
 export async function deleteFlaggedChat(id: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('ai_flagged_conversations')
         .delete()
         .eq('id', id)
 
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'DELETE_FLAGGED_CHAT', id, {})
 
     revalidatePath('/dashboard/ai-oversight')
     return { success: true }
@@ -160,6 +161,7 @@ export async function deleteFlaggedChat(id: string) {
 // ==================== PROMPT TESTING ====================
 
 export async function testPrompt(systemPrompt: string, userInput: string) {
+    await requireAdmin()
     // Would call actual AI endpoint for testing
     // For now, mock response
     return {

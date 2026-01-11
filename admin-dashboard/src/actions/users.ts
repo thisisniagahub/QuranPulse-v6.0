@@ -1,24 +1,16 @@
 'use server'
 
-import { createClient } from '@supabase/supabase-js'
 import { revalidatePath } from 'next/cache'
 import type { User } from '@/types/crud'
-
-// Server-side Supabase client with service role
-function getSupabaseAdmin() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        { auth: { autoRefreshToken: false, persistSession: false } }
-    )
-}
+import { requireAdmin } from '@/lib/auth-admin'
+import { logAdminAction } from '@/lib/audit'
 
 export async function getUsers(page = 1, pageSize = 10) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
     const from = (page - 1) * pageSize
     const to = from + pageSize - 1
 
-    const { data, error, count } = await supabase
+    const { data, error, count } = await adminClient
         .from('profiles')
         .select('*', { count: 'exact' })
         .range(from, to)
@@ -29,7 +21,7 @@ export async function getUsers(page = 1, pageSize = 10) {
 }
 
 export async function createUser(formData: FormData) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     const email = formData.get('email') as string
     const full_name = formData.get('full_name') as string
@@ -37,7 +29,7 @@ export async function createUser(formData: FormData) {
     const subscription_tier = formData.get('subscription_tier') as string || 'FREE'
 
     // Create auth user first
-    const { data: authData, error: authError } = await supabase.auth.admin.createUser({
+    const { data: authData, error: authError } = await adminClient.auth.admin.createUser({
         email,
         email_confirm: true,
         user_metadata: { full_name, role }
@@ -46,7 +38,7 @@ export async function createUser(formData: FormData) {
     if (authError) throw new Error(authError.message)
 
     // Update profile with additional fields
-    const { error: profileError } = await supabase
+    const { error: profileError } = await adminClient
         .from('profiles')
         .update({
             full_name,
@@ -58,12 +50,14 @@ export async function createUser(formData: FormData) {
 
     if (profileError) throw new Error(profileError.message)
 
+    await logAdminAction(adminUser.id, 'CREATE_USER', authData.user.id, { email, role, tier: subscription_tier })
+
     revalidatePath('/dashboard/users')
     return { success: true, user_id: authData.user.id }
 }
 
 export async function updateUser(id: string, formData: FormData) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     const updates: Partial<User> = {}
 
@@ -77,47 +71,53 @@ export async function updateUser(id: string, formData: FormData) {
     if (subscription_tier) updates.subscription_tier = subscription_tier as User['subscription_tier']
     if (is_active !== null) updates.is_active = is_active === 'on' || is_active === 'true'
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('profiles')
         .update(updates)
         .eq('id', id)
 
     if (error) throw new Error(error.message)
 
+    await logAdminAction(adminUser.id, 'UPDATE_USER', id, updates)
+
     revalidatePath('/dashboard/users')
     return { success: true }
 }
 
 export async function deleteUser(id: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
     // Delete from auth (this will cascade to profile if trigger exists)
-    const { error } = await supabase.auth.admin.deleteUser(id)
+    const { error } = await adminClient.auth.admin.deleteUser(id)
 
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'DELETE_USER', id, {})
 
     revalidatePath('/dashboard/users')
     return { success: true }
 }
 
 export async function banUser(id: string, banned: boolean) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('profiles')
         .update({ is_active: !banned })
         .eq('id', id)
 
     if (error) throw new Error(error.message)
 
+    await logAdminAction(adminUser.id, 'BAN_USER', id, { banned })
+
     revalidatePath('/dashboard/users')
     return { success: true }
 }
 
 export async function updateUserRole(id: string, role: User['role']) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('profiles')
         .update({ role })
         .eq('id', id)
@@ -125,23 +125,27 @@ export async function updateUserRole(id: string, role: User['role']) {
     if (error) throw new Error(error.message)
 
     // Also update auth.users app_metadata
-    await supabase.auth.admin.updateUserById(id, {
+    await adminClient.auth.admin.updateUserById(id, {
         app_metadata: { role }
     })
+
+    await logAdminAction(adminUser.id, 'UPDATE_ROLE', id, { role })
 
     revalidatePath('/dashboard/users')
     return { success: true }
 }
 
 export async function updateUserSubscription(id: string, tier: User['subscription_tier']) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('profiles')
         .update({ subscription_tier: tier })
         .eq('id', id)
 
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'UPDATE_SUBSCRIPTION', id, { tier })
 
     revalidatePath('/dashboard/users')
     return { success: true }
