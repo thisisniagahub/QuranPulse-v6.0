@@ -54,6 +54,7 @@ Documentation for completed features.
 
 | Document | Description |
 |----------|-------------|
+| [QURAN_MODULE.md](./01_FEATURES_IMPLEMENTED/QURAN_MODULE.md) | **Quran module (9 features)** |
 | [TESTING.md](./01_FEATURES_IMPLEMENTED/TESTING.md) | Testing guide |
 | [BACKEND_README.md](./01_FEATURES_IMPLEMENTED/BACKEND_README.md) | Backend setup |
 | [KNOWLEDGE.md](./01_FEATURES_IMPLEMENTED/KNOWLEDGE.md) | Knowledge base |

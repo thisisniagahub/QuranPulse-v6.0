@@ -21,6 +21,39 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2026-01-11]
+
+### Added - Quran Module Major Upgrade
+- [AGENT:Gemini] **Tier 1 Quick Wins**
+  - Semantic Search with pgvector (`features/search/`)
+  - Daily Ayat Widget with 7 themed verses
+  - Khatam Progress Tracker with confetti celebrations
+
+- [AGENT:Gemini] **Tier 2 Medium Features**
+  - Tadabbur AI Mode - Reflection questions + AI follow-up
+  - Voice-Active Reader - ASR auto-scroll + word highlighting
+  - Word Root Explorer - Arabic etymology + derivatives
+
+- [AGENT:Gemini] **Tier 3 Advanced Features**
+  - Digital Mushaf View - Noor-e-Cyber themed 604-page layout
+  - Iqra Graduation Ceremony - Digital certificate + reading plan
+  - Smart Deen Crossover - Floating AI button + context prompts
+
+### Documentation
+- `DOCS_VAULT/01_FEATURES_IMPLEMENTED/QURAN_MODULE.md` - Full module docs
+
+### Database
+- Added `verse_embeddings` table for semantic search
+- Added 4 PDF content tables for knowledge base
+- Created `search_verses_semantic()` RPC function
+
+### Verified
+- Build: ✅ Pass (1m 19s)
+- Tests: ✅ 82/82 Pass (26.38s)
+- Commits: 6 feature commits pushed to main
+
+---
+
 ## [2026-01-08]
 
 ### Added
