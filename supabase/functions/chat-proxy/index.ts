@@ -3,7 +3,7 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2.0.0";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-app-name",
 };
 
 // --- LOGGING UTILITY ---
@@ -56,10 +56,10 @@ serve(async (req) => {
     }
 
     // --- ROTATION LOGIC START ---
-    
+
     // Shuffle keys to distribute load initially
     let availableKeys = [...allKeys].sort(() => Math.random() - 0.5);
-    
+
     let lastError = null;
     let success = false;
     let attempt = 0;
@@ -76,7 +76,7 @@ serve(async (req) => {
     while (attempt < MAX_RETRIES && !success) {
       const currentKey = availableKeys[attempt];
       const masked = maskKey(currentKey);
-      
+
       log("INFO", `Attempt ${attempt + 1}/${MAX_RETRIES} using key ${masked}`);
 
       try {
@@ -88,25 +88,25 @@ serve(async (req) => {
           body: JSON.stringify({
             contents: formattedContents,
             generationConfig: {
-                temperature: 0.3,
-                maxOutputTokens: 1024,
+              temperature: 0.3,
+              maxOutputTokens: 1024,
             }
           }),
         });
 
         if (!response.ok) {
-            const status = response.status;
-            
-            // Handle Rate Limit (429) or Auth Error (403/401) -> Rotate
-            if (status === 429 || status === 403 || status === 401) {
-                log("WARN", `Key ${masked} failed with status ${status}. Rotating...`);
-                attempt++;
-                continue; // Try next key
-            }
+          const status = response.status;
 
-            // Handle Server Error (5xx) -> Don't rotate immediately, maybe backoff (simplified here to just throw for now)
-            const errData = await response.json();
-            throw new Error(`Gemini API Error: ${status} - ${JSON.stringify(errData)}`);
+          // Handle Rate Limit (429) or Auth Error (403/401) -> Rotate
+          if (status === 429 || status === 403 || status === 401) {
+            log("WARN", `Key ${masked} failed with status ${status}. Rotating...`);
+            attempt++;
+            continue; // Try next key
+          }
+
+          // Handle Server Error (5xx) -> Don't rotate immediately, maybe backoff (simplified here to just throw for now)
+          const errData = await response.json();
+          throw new Error(`Gemini API Error: ${status} - ${JSON.stringify(errData)}`);
         }
 
         const data = await response.json();
