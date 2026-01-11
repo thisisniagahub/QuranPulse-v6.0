@@ -315,8 +315,8 @@ const MushafView: React.FC<MushafViewProps> = ({
                             {pageData?.verses[0]?.isSurahStart && (
                                 <div className="pt-6 pb-2 text-center">
                                     <div className={`inline-block px-8 py-2 rounded-full ${isNightMode
-                                            ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30'
-                                            : 'bg-gradient-to-r from-amber-200/50 to-amber-300/50 border border-amber-400/30'
+                                        ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30'
+                                        : 'bg-gradient-to-r from-amber-200/50 to-amber-300/50 border border-amber-400/30'
                                         }`}>
                                         <span className={`text-2xl font-arabic ${isNightMode ? 'text-cyan-300' : 'text-amber-800'
                                             }`}>
@@ -372,8 +372,8 @@ const MushafView: React.FC<MushafViewProps> = ({
                             {/* Page Number */}
                             <div className="absolute bottom-3 left-0 right-0 text-center">
                                 <span className={`px-4 py-1 rounded-full text-sm ${isNightMode
-                                        ? 'bg-slate-800/50 text-slate-400'
-                                        : 'bg-amber-100 text-amber-700'
+                                    ? 'bg-slate-800/50 text-slate-400'
+                                    : 'bg-amber-100 text-amber-700'
                                     }`}>
                                     {currentPage}
                                 </span>
@@ -444,6 +444,8 @@ const MushafView: React.FC<MushafViewProps> = ({
                                 max={TOTAL_PAGES}
                                 value={currentPage}
                                 onChange={(e) => goToPage(parseInt(e.target.value), 'left')}
+                                title="Pilih halaman"
+                                aria-label="Pilih halaman"
                                 className="w-full h-1 bg-slate-700 rounded-full appearance-none cursor-pointer
                           [&::-webkit-slider-thumb]:appearance-none
                           [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
@@ -461,10 +463,10 @@ const MushafView: React.FC<MushafViewProps> = ({
 
                         {/* Quick Actions */}
                         <div className="flex items-center gap-2 ml-4">
-                            <button className="p-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-lg transition-colors">
+                            <button className="p-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-lg transition-colors" title="Penanda buku">
                                 <Bookmark className="w-4 h-4 text-amber-400" />
                             </button>
-                            <button className="p-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-lg transition-colors">
+                            <button className="p-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-lg transition-colors" title="Senarai halaman">
                                 <Layers className="w-4 h-4 text-slate-400" />
                             </button>
                         </div>

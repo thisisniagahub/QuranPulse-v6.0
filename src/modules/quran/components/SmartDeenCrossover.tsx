@@ -187,6 +187,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                                 <button
                                     onClick={() => setIsOpen(false)}
                                     className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+                                    title="Tutup panel"
                                 >
                                     <X className="w-5 h-5 text-slate-400" />
                                 </button>
@@ -240,6 +241,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                                         className="absolute right-2 top-1/2 -translate-y-1/2 p-2 
                              bg-gradient-to-r from-cyan-500 to-purple-500 
                              rounded-lg text-white disabled:opacity-50"
+                                        title="Hantar soalan"
                                     >
                                         <Send className="w-4 h-4" />
                                     </button>

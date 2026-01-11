@@ -198,6 +198,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                         <button
                             onClick={onClose}
                             className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+                            title="Tutup panel"
                         >
                             <X className="w-5 h-5 text-slate-400" />
                         </button>
@@ -312,8 +313,8 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                                 setShowAllQuestions(false);
                                             }}
                                             className={`w-full text-left p-3 rounded-lg transition-colors ${i === currentQuestionIndex
-                                                    ? 'bg-purple-500/20 border border-purple-500/30'
-                                                    : 'bg-slate-800 hover:bg-slate-700'
+                                                ? 'bg-purple-500/20 border border-purple-500/30'
+                                                : 'bg-slate-800 hover:bg-slate-700'
                                                 }`}
                                         >
                                             <span className="text-xs text-purple-400">{q.theme}</span>

@@ -238,9 +238,9 @@ const VoiceActiveReader: React.FC<VoiceActiveReaderProps> = ({
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${status === 'listening' ? 'bg-green-500 animate-pulse' :
-                            status === 'success' ? 'bg-cyan-500' :
-                                status === 'error' ? 'bg-red-500' :
-                                    'bg-slate-500'
+                        status === 'success' ? 'bg-cyan-500' :
+                            status === 'error' ? 'bg-red-500' :
+                                'bg-slate-500'
                         }`} />
                     <span className="text-sm font-medium text-white">
                         {status === 'listening' ? 'Mendengar...' :
@@ -253,6 +253,7 @@ const VoiceActiveReader: React.FC<VoiceActiveReaderProps> = ({
                 <button
                     onClick={onToggle}
                     className="p-1 hover:bg-slate-700 rounded-lg transition-colors"
+                    title="Tutup mod suara"
                 >
                     <X className="w-4 h-4 text-slate-400" />
                 </button>
@@ -265,8 +266,8 @@ const VoiceActiveReader: React.FC<VoiceActiveReaderProps> = ({
                         <span
                             key={index}
                             className={`inline-block mx-1 px-1 rounded transition-colors ${index <= highlightedWordIndex
-                                    ? 'text-cyan-400 bg-cyan-500/20'
-                                    : 'text-white'
+                                ? 'text-cyan-400 bg-cyan-500/20'
+                                : 'text-white'
                                 }`}
                         >
                             {word}
@@ -292,8 +293,8 @@ const VoiceActiveReader: React.FC<VoiceActiveReaderProps> = ({
                     <div className="h-1.5 bg-slate-700 rounded-full overflow-hidden">
                         <motion.div
                             className={`h-full rounded-full ${confidence > 0.7 ? 'bg-green-500' :
-                                    confidence > 0.4 ? 'bg-yellow-500' :
-                                        'bg-red-500'
+                                confidence > 0.4 ? 'bg-yellow-500' :
+                                    'bg-red-500'
                                 }`}
                             initial={{ width: 0 }}
                             animate={{ width: `${confidence * 100}%` }}

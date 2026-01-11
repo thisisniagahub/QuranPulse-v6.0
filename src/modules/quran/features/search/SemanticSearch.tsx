@@ -75,6 +75,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                         <button
                             onClick={clearSearch}
                             className="p-1 hover:bg-slate-700 rounded-full transition-colors"
+                            title="Kosongkan carian"
                         >
                             <X className="w-4 h-4 text-slate-400" />
                         </button>

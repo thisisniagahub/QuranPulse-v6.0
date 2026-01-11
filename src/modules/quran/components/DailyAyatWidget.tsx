@@ -306,6 +306,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
                             onClick={() => setIsLiked(!isLiked)}
                             className={`p-2 rounded-lg transition-all ${isLiked ? 'bg-pink-500/20 text-pink-400' : 'hover:bg-white/10 text-slate-400'
                                 }`}
+                            title={isLiked ? 'Buang kegemaran' : 'Tambah kegemaran'}
                         >
                             <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
                         </button>
@@ -326,6 +327,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
                             className="p-2 bg-gradient-to-r from-cyan-500 to-purple-500 
                          rounded-lg text-white hover:shadow-lg hover:shadow-cyan-500/25 
                          transition-all"
+                            title="Kongsi ayat ini"
                         >
                             <Share2 className="w-4 h-4" />
                         </button>

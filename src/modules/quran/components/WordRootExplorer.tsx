@@ -215,6 +215,7 @@ const WordRootExplorer: React.FC<WordRootExplorerProps> = ({
                         <button
                             onClick={onClose}
                             className="p-2 hover:bg-slate-800 rounded-lg transition-colors"
+                            title="Tutup panel"
                         >
                             <X className="w-5 h-5 text-slate-400" />
                         </button>
