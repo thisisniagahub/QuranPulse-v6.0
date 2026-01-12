@@ -120,7 +120,12 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
                                 <div className="h-2 w-2 rounded-full bg-cyan-500 animate-pulse"></div>
                                 <span className="text-xs font-bold text-cyan-500 tracking-[0.2em] uppercase">Verse Studio</span>
                             </div>
-                            <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors">
+                            <button
+                                onClick={onClose}
+                                className="w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white transition-colors"
+                                aria-label="Close Verse Studio"
+                                title="Close"
+                            >
                                 <i className="fa-solid fa-xmark text-sm"></i>
                             </button>
                         </div>

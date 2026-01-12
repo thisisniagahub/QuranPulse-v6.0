@@ -1,188 +1,178 @@
-# AGENTS.md - QuranPulse v6.0
+# AGENTS.md
 
-> **Universal Context File for ALL AI Coding Agents**
-> Last Updated: 2026-01-11 by Gemini Pro 3
-
----
-
-## 🚨 CRITICAL RULES FOR ALL AI AGENTS
-
-### Rule 1: Read Before Acting
-1. READ this entire file before ANY action
-2. CHECK `.agent/context/CURRENT_TASK.md` for active work
-3. REVIEW `.agent/context/PROTECTED_FILES.md` before deleting
-
-### Rule 2: Never Delete Without Permission
-- ❌ NEVER delete files without explicit `/approve-delete` from user
-- ❌ NEVER remove functions unless replacing with better version
-- ✅ ALWAYS explain WHY before removing any code
-- ✅ CREATE backup branch before major changes
-
-### Rule 3: Document Your Work
-- UPDATE `CURRENT_TASK.md` when starting/ending tasks
-- ADD entry to `HANDOFF_LOG.md` before session ends
-- COMMIT with prefix: `[AGENT:Name] type: message`
+> Universal context file for AI coding agents working on QuranPulse v6.0
+> Following the [agents.md](https://agents.md/) open standard
 
 ---
 
-## 📊 Project Status
+## Project Overview
 
-| Field | Value |
-|-------|-------|
-| **Phase** | DEVELOPMENT |
-| **Focus** | Quran Module Complete ✅ |
-| **Last Agent** | Gemini Pro 3 |
-| **Last Updated** | 2026-01-11 10:30 |
-| **Build** | ✅ Passing |
-| **Tests** | ✅ 82/82 Passing |
+**QuranPulse v6.0 ("Noor-e-Cyber")** is a futuristic Islamic Progressive Web App (PWA) bridging spiritual depth with modern cyber-Islamic design. Features include Ustaz AI (chat), Iqra Digital (learning), and Pulse Command Center (dashboard).
 
----
-
-## 🛡️ Tech Stack (DO NOT CHANGE WITHOUT APPROVAL)
-
-| Layer | Technology | Status |
-|-------|------------|:------:|
-| Frontend | React 18 + Vite + TypeScript | 🔒 Locked |
-| Styling | Tailwind CSS v4 + Framer Motion | 🔒 Locked |
-| Backend | Supabase (PostgreSQL + Auth) | 🔒 Locked |
-| AI | Gemini 2.5 Flash + Groq Fallback | ⚙️ Configurable |
-| Testing | Jest + React Testing Library | ⚙️ Configurable |
-| Database | 103 tables, 174 indexes, 66 RLS policies | 📊 Audited |
+| Field | Value                                   |
+| ----- | --------------------------------------- |
+| Phase | PRODUCTION                              |
+| URL   | https://quranpulse.my                   |
+| Tech  | React 18 + Vite + TypeScript + Supabase |
 
 ---
 
-## 📂 Project Structure Quick Reference
-
-```
-src/
-├── modules/           # 15 feature modules
-│   ├── quran/         # Quran reader (44+ components) ✨ UPGRADED
-│   ├── iqra/          # Learning (17 files)
-│   ├── smart-deen/    # Ustaz AI chat
-│   ├── ibadah/        # Prayer times, Qibla
-│   ├── dashboard/     # Main dashboard
-│   └── ...
-├── services/          # 31 service files
-│   ├── aiService.ts   # Main AI orchestration
-│   ├── quranService.ts
-│   ├── pdfContentService.ts  # NEW - PDF knowledge base
-│   └── UstazOrchestrator.ts
-├── components/        # Shared UI components
-├── contexts/          # React contexts
-└── hooks/            # Custom hooks
-```
-
----
-
-## ✨ Quran Module Features (2026-01-11)
-
-### Tier 1 - Quick Wins ✅
-
-| Feature | File | Status |
-|---------|------|:------:|
-| Semantic Search | `features/search/` | ✅ |
-| Daily Ayat Widget | `components/DailyAyatWidget.tsx` | ✅ |
-| Khatam Tracker | `components/KhatamProgressTracker.tsx` | ✅ |
-
-### Tier 2 - Medium ✅
-
-| Feature | File | Status |
-|---------|------|:------:|
-| Tadabbur AI | `features/studio/TadabburAI.tsx` | ✅ |
-| Voice-Active Reader | `features/reader/VoiceActiveReader.tsx` | ✅ |
-| Word Root Explorer | `components/WordRootExplorer.tsx` | ✅ |
-
-### Tier 3 - Advanced ✅
-
-| Feature | File | Status |
-|---------|------|:------:|
-| Digital Mushaf | `features/reader/MushafView.tsx` | ✅ |
-| Iqra Graduation | `components/IqraGraduation.tsx` | ✅ |
-| Smart Deen Crossover | `components/SmartDeenCrossover.tsx` | ✅ |
-
----
-
-## 🔄 Current Task
-
-**See:** `.agent/context/CURRENT_TASK.md`
-
-**Recent Completions:**
-- ✅ Quran Module Tier 1, 2, 3 (9 features)
-- ✅ Database Audit (103 tables aligned)
-- ✅ PDF Content Integration (4 new tables)
-- ✅ Documentation Update
-
----
-
-## 🤖 Agent Workflows (MCP-Based)
-
-| Command | Agent Specialty | Use Case |
-|---------|-----------------|----------|
-| `/agent-quran` | Quran API | Verse search, audio |
-| `/agent-compliance` | JAKIM/Fatwa | Halal checks |
-| `/agent-education` | Hadith/Tafsir | Learning content |
-| `/agent-worship` | Prayer times | Solat, Qibla |
-| `/agent-asr` | Voice Analysis | Tajweed scoring |
-| `/agent-zakat` | Zakat Calculator | Zakat calculations |
-| `/agent-admin` | Admin Functions | System stats |
-
----
-
-## 📋 Priority Tasks
-
-### ✅ Completed (2026-01-11)
-- [x] Quran Semantic Search
-- [x] Daily Ayat + Khatam Tracker
-- [x] Tadabbur AI + Voice Reader
-- [x] Digital Mushaf View
-- [x] Documentation Update
-
-### 🔄 Pending
-1. **HIGH:** Increase test coverage (currently passing)
-2. **MEDIUM:** Complete Admin Dashboard CRUD
-3. **MEDIUM:** Add E2E tests with Playwright
-4. **LOW:** AR Quran Mode (Tier 3 Advanced)
-
----
-
-## 🔗 Key Documentation
-
-| Document | Description |
-|----------|-------------|
-| [QURAN_MODULE.md](DOCS_VAULT/01_FEATURES_IMPLEMENTED/QURAN_MODULE.md) | **Quran module (9 features)** |
-| [Deep Dive Audit](DOCS_VAULT/DEEP_DIVE_AUDIT.md) | Full code audit |
-| [Architecture Diagrams](DOCS_VAULT/ARCHITECTURE_DIAGRAM.md) | System diagrams |
-| [Testing Guide](DOCS_VAULT/01_FEATURES_IMPLEMENTED/TESTING.md) | Test setup |
-| [CHANGELOG](CHANGELOG.md) | Version history |
-
----
-
-## 💡 Quick Commands
+## Setup Commands
 
 ```bash
-# Development
-npm run dev           # Start dev server (port 5173)
-npm run build         # Production build
-npm test              # Run Jest tests (82 tests)
+# Install dependencies
+npm install
 
-# Admin Dashboard (separate app)
-cd admin-dashboard && npm run dev
+# Start dev server (port 5173)
+npm run dev
+
+# Production build
+npm run build
+
+# Run tests
+npm test
+
+# TypeScript check
+npx tsc --noEmit
+
+# Lint check
+npm run lint
 ```
 
 ---
 
-## 📈 Recent Commits (2026-01-11)
+## Code Style
 
-```
-8395b37 docs: Update documentation with Quran module features
-2186cc3 feat(quran): Add Tier 3 - Iqra graduation + Smart Deen
-b4d344f feat(quran): Add Digital Mushaf View
-b6d803f feat(quran): Add Tier 2 upgrades
-eecac6b feat(quran): Add Khatam Progress Tracker
-62660b7 feat(quran): Add Daily Ayat Widget
-295b329 feat(quran): Add semantic search implementation
+- TypeScript strict mode
+- Tailwind CSS for styling (Glassmorphism + Neon aesthetics)
+- Framer Motion for animations
+- Functional components with hooks
+- Zustand for global state, React Query for server state
+- Commit format: `[AGENT:Name] type: message`
+
+---
+
+## Testing Instructions
+
+Before claiming ANY task complete:
+
+1. **TypeScript Check** - `npx tsc --noEmit` → ZERO errors
+2. **Build Check** - `npm run build` → Must succeed
+3. **Test Suite** - `npm test` → All tests pass
+4. **Runtime Check** - `npm run dev` → No console errors
+
+⛔ **NEVER** say "done" without running these checks first!
+⛔ **NEVER** ask user to "check if it works" - verify yourself!
+
+---
+
+## Security Considerations
+
+- Check `.agent/context/PROTECTED_FILES.md` before deleting files
+- Never delete without explicit `/approve-delete` from user
+- Never expose API keys or secrets in code
+- Follow Supabase RLS (Row Level Security) policies
+
+---
+
+## Project Structure
+
+```text
+src/
+├── modules/          # Feature modules (quran, iqra, smart-deen, etc.)
+├── components/       # Reusable UI components
+├── services/         # API services (aiService, quranService, etc.)
+├── contexts/         # React contexts
+└── hooks/           # Custom hooks
+
+supabase/
+├── functions/       # Edge Functions (mcp-quran, mcp-worship, etc.)
+└── migrations/      # Database migrations
+
+.agent/
+├── PROJECT_STATUS.md              # Current project phase
+├── context/CURRENT_TASK.md        # Active work
+├── context/PROTECTED_FILES.md     # Don't delete these
+├── context/HANDOFF_LOG.md         # Session notes
+└── protocols/                     # Response templates
 ```
 
 ---
 
-**[End of AGENTS.md]**
+## Agent Workflows
+
+| Command             | Purpose                   |
+| ------------------- | ------------------------- |
+| `/agent-quran`      | Quran API operations      |
+| `/agent-worship`    | Prayer times, Qibla       |
+| `/agent-compliance` | Fatwa, Halal checks       |
+| `/agent-education`  | Hadith, Tafsir            |
+| `/agent-zakat`      | Zakat calculations        |
+| `/agent-asr`        | Speech recognition        |
+| `/plan-mvp`         | Structured MVP planning   |
+
+---
+
+## Session Protocol
+
+### Starting a Session
+
+1. Read this file (AGENTS.md)
+2. Read `.agent/PROJECT_STATUS.md`
+3. Read `.agent/context/CURRENT_TASK.md`
+4. Check `.agent/context/PROTECTED_FILES.md`
+
+### Ending a Session
+
+1. Update `.agent/context/CURRENT_TASK.md`
+2. Add entry to `.agent/context/HANDOFF_LOG.md`
+3. Commit with prefix: `[AGENT:Name] type: message`
+
+### Full Protocol
+
+See `.agent/protocols/comprehensive-response-protocol.md`
+
+---
+
+## PR / Commit Instructions
+
+Format: `[AGENT:Name] type: description`
+
+Types:
+
+- `feat` - New feature
+- `fix` - Bug fix
+- `docs` - Documentation
+- `refactor` - Code refactor
+- `test` - Tests
+- `deploy` - Deployment
+
+Example: `[AGENT:Gemini] feat(quran): Add semantic search`
+
+---
+
+## Critical Rules
+
+1. ✅ **Read before acting** - Load context files first
+2. ✅ **Verify before completing** - Run build/test checks
+3. ✅ **Document your work** - Update task/handoff files
+4. ❌ **Never delete without permission** - Check PROTECTED_FILES.md
+5. ❌ **Never assume** - Ask if unclear
+6. ❌ **Never skip verification** - Test everything
+
+---
+
+## Key Files Reference
+
+| File                               | Purpose                  |
+| ---------------------------------- | ------------------------ |
+| `AGENTS.md`                        | This file - main context |
+| `GEMINI.md`                        | Extended project context |
+| `.agent/PROJECT_STATUS.md`         | Current phase & health   |
+| `.agent/context/CURRENT_TASK.md`   | Active work items        |
+| `.agent/context/PROTECTED_FILES.md`| Files to never delete    |
+| `.agent/context/HANDOFF_LOG.md`    | Session handoff notes    |
+
+---
+
+*Following the [agents.md](https://agents.md/) open standard used by 60k+ projects.*

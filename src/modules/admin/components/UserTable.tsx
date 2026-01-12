@@ -51,7 +51,7 @@ const UserTable: React.FC = () => {
         await adminService.updateUser(id, { role: 'ADMIN' });
         loadUsers();
     };
-    
+
     const handleUpgradeTier = async (id: string, tier: 'PRO' | 'FAMILY') => {
         await adminService.updateUserTier(id, tier);
         loadUsers();
@@ -68,7 +68,7 @@ const UserTable: React.FC = () => {
                     </h3>
                     <p className="text-xs text-slate-500">Manage users, subscriptions, and roles.</p>
                 </div>
-                
+
                 <div className="relative group w-full md:w-auto">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-4 h-4 group-focus-within:text-cyan-400 transition-colors" />
                     <input
@@ -129,11 +129,10 @@ const UserTable: React.FC = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase border ${
-                                            user.tier === 'FAMILY' ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' :
+                                        <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase border ${user.tier === 'FAMILY' ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' :
                                             user.tier === 'PRO' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
-                                            'bg-slate-700/30 border-slate-600 text-slate-400'
-                                        }`}>
+                                                'bg-slate-700/30 border-slate-600 text-slate-400'
+                                            }`}>
                                             {user.tier || 'FREE'}
                                         </span>
                                     </td>
@@ -148,23 +147,23 @@ const UserTable: React.FC = () => {
                                     </td>
                                     <td className="px-6 py-4 text-right">
                                         <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                            <button 
-                                                onClick={() => handleUpgradeTier(user.id, 'PRO')} 
+                                            <button
+                                                onClick={() => user.id && handleUpgradeTier(user.id, 'PRO')}
                                                 title="Gift PRO"
                                                 className="p-2 rounded-lg bg-emerald-500/10 text-emerald-400 hover:bg-emerald-500 hover:text-white transition-all"
                                             >
                                                 <Crown className="w-4 h-4" />
                                             </button>
-                                            <button 
-                                                onClick={() => handlePromote(user.id)} 
+                                            <button
+                                                onClick={() => user.id && handlePromote(user.id)}
                                                 title="Make Admin"
                                                 className="p-2 rounded-lg bg-amber-500/10 text-amber-400 hover:bg-amber-500 hover:text-white transition-all"
                                             >
                                                 <ShieldAlert className="w-4 h-4" />
                                             </button>
-                                            <button 
-                                                onClick={() => handleBan(user.id)} 
-                                                title="Ban User" 
+                                            <button
+                                                onClick={() => user.id && handleBan(user.id)}
+                                                title="Ban User"
                                                 className="p-2 rounded-lg bg-rose-500/10 text-rose-400 hover:bg-rose-500 hover:text-white transition-all"
                                             >
                                                 <MoreVertical className="w-4 h-4" />
@@ -182,17 +181,21 @@ const UserTable: React.FC = () => {
             <div className="p-4 border-t border-white/5 flex justify-between items-center bg-black/20">
                 <span className="text-xs text-slate-500">Page {page} of {totalPages}</span>
                 <div className="flex gap-2">
-                    <button 
+                    <button
                         onClick={() => setPage(p => Math.max(1, p - 1))}
                         disabled={page === 1}
                         className="p-2 rounded-lg border border-white/10 text-slate-400 hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed"
+                        title="Previous page"
+                        aria-label="Previous page"
                     >
                         <ChevronLeft className="w-4 h-4" />
                     </button>
-                    <button 
+                    <button
                         onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                         disabled={page === totalPages}
                         className="p-2 rounded-lg border border-white/10 text-slate-400 hover:bg-white/5 disabled:opacity-30 disabled:cursor-not-allowed"
+                        title="Next page"
+                        aria-label="Next page"
                     >
                         <ChevronRight className="w-4 h-4" />
                     </button>

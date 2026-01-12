@@ -20,13 +20,25 @@ export async function getUsers(page = 1, pageSize = 10) {
     return { users: data as User[], total: count || 0 }
 }
 
+import { UserSchema, UserUpdateSchema } from '@/lib/validations'
+
 export async function createUser(formData: FormData) {
     const { adminClient, user: adminUser } = await requireAdmin()
 
-    const email = formData.get('email') as string
-    const full_name = formData.get('full_name') as string
-    const role = formData.get('role') as string || 'user'
-    const subscription_tier = formData.get('subscription_tier') as string || 'FREE'
+    const rawData = {
+        email: formData.get('email'),
+        full_name: formData.get('full_name'),
+        role: formData.get('role') || 'user',
+        subscription_tier: formData.get('subscription_tier') || 'FREE',
+    }
+
+    const validatedFields = UserSchema.safeParse(rawData)
+
+    if (!validatedFields.success) {
+        throw new Error(validatedFields.error.message)
+    }
+
+    const { email, full_name, role, subscription_tier } = validatedFields.data
 
     // Create auth user first
     const { data: authData, error: authError } = await adminClient.auth.admin.createUser({
@@ -59,17 +71,20 @@ export async function createUser(formData: FormData) {
 export async function updateUser(id: string, formData: FormData) {
     const { adminClient, user: adminUser } = await requireAdmin()
 
-    const updates: Partial<User> = {}
+    const rawData: Record<string, any> = {}
+    
+    if (formData.has('full_name')) rawData.full_name = formData.get('full_name')
+    if (formData.has('role')) rawData.role = formData.get('role')
+    if (formData.has('subscription_tier')) rawData.subscription_tier = formData.get('subscription_tier')
+    if (formData.has('is_active')) rawData.is_active = formData.get('is_active') === 'on' || formData.get('is_active') === 'true'
 
-    const full_name = formData.get('full_name')
-    const role = formData.get('role')
-    const subscription_tier = formData.get('subscription_tier')
-    const is_active = formData.get('is_active')
+    const validatedFields = UserUpdateSchema.safeParse(rawData)
 
-    if (full_name) updates.full_name = full_name as string
-    if (role) updates.role = role as User['role']
-    if (subscription_tier) updates.subscription_tier = subscription_tier as User['subscription_tier']
-    if (is_active !== null) updates.is_active = is_active === 'on' || is_active === 'true'
+    if (!validatedFields.success) {
+        throw new Error(validatedFields.error.message)
+    }
+
+    const updates = validatedFields.data
 
     const { error } = await adminClient
         .from('profiles')

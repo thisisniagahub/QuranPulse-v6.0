@@ -1,0 +1,58 @@
+# Windsurf Rules - QuranPulse v6.0
+
+name: QuranPulse v6.0
+description: Futuristic Islamic PWA with Ustaz AI
+phase: PRODUCTION
+url: https://quranpulse.my
+
+## Tech Stack (Locked)
+- React 18
+- Vite
+- TypeScript (strict mode)
+- Tailwind CSS v4
+- Framer Motion
+- Supabase
+- Zustand
+- React Query
+- Jest
+
+## Code Style
+- Use functional components with hooks
+- Use TypeScript strict mode
+- Use Tailwind CSS for styling
+- Use Framer Motion for animations
+- Prefer Zustand for global state
+- Prefer React Query for server state
+
+## Verification (MANDATORY!)
+Before saying "done":
+1. npx tsc --noEmit → ZERO errors
+2. npm run build → Success
+3. npm test → All pass
+4. Include results in response
+
+## Commands
+dev: npm run dev
+build: npm run build
+test: npm test
+typecheck: npx tsc --noEmit
+lint: npm run lint
+
+## NEVER
+- Say "done" without verification
+- Ask user to check if it works
+- Delete without checking PROTECTED_FILES.md
+- Leave TypeScript errors unfixed
+- Skip testing
+
+## ALWAYS
+- Read AGENTS.md first
+- Check .agent/PROJECT_STATUS.md
+- Run verification before completion
+- Commit as: [AGENT:Windsurf] type: message
+
+## Context Files
+- AGENTS.md - Main AI context
+- .agent/PROJECT_STATUS.md - Current phase
+- .agent/context/CURRENT_TASK.md - Active work
+- .agent/context/PROTECTED_FILES.md - Don't delete

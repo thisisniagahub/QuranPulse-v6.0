@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
-import { QuranVerse, QuranWord, SemanticResult } from '../../../types';
-import { useSemanticSearch } from '../features/search/useSemanticSearch';
+import { QuranVerse, QuranWord } from '../../../types';
+import { useSemanticSearch, SemanticSearchResult } from '../features/search/useSemanticSearch';
 
 interface QuranUIState {
     view: 'LIST' | 'READING';
@@ -48,7 +48,7 @@ interface QuranUIState {
     setSearchQuery: (query: string) => void;
     isSemanticMode: boolean;
     setIsSemanticMode: (is: boolean) => void;
-    semanticResults: SemanticResult[];
+    semanticResults: SemanticSearchResult[];
     // setSemanticResults removed - managed by hook
     isSearchingSemantic: boolean;
     // setIsSearchingSemantic removed - managed by hook
@@ -95,7 +95,7 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
     // 5. Search
     const [searchQuery, setSearchQuery] = useState('');
     const [isSemanticMode, setIsSemanticMode] = useState(false);
-    
+
     // Use Real Semantic Search Hook
     const semanticSearch = useSemanticSearch();
 
@@ -150,7 +150,7 @@ export const QuranUIProvider: React.FC<{ children: ReactNode }> = ({ children })
             studioTab, setStudioTab,
             searchQuery, setSearchQuery,
             isSemanticMode, setIsSemanticMode,
-            semanticResults: semanticSearch.results as SemanticResult[],
+            semanticResults: semanticSearch.results,
             isSearchingSemantic: semanticSearch.isSearching,
             handleSemanticSearch,
             isVoiceSearchActive, setIsVoiceSearchActive,

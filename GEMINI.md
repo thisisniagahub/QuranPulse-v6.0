@@ -70,3 +70,37 @@ npm run dev
 * `vite.config.ts`: Vite configuration.
 * `supabase_schema_final.sql`: Current database schema.
 * `DOCUMENTATION_PROJECT_BARU/TECH_STACK.md`: Detailed tech stack reference.
+
+## Agent Protocols & Workflows
+
+### ⚠️ MANDATORY: Before Any Response
+1. **READ** `.agent/PROJECT_STATUS.md` to understand current phase
+2. **IDENTIFY** request type (Bug/Feature/Review/Planning/Deploy/Explain/Refactor)
+3. **FOLLOW** the appropriate response template
+
+### Response Protocols
+* `.agent/protocols/comprehensive-response-protocol.md` - **MAIN PROTOCOL** (All response types)
+* `.agent/protocols/mvp-planning-protocol.md` - Structured MVP planning format
+
+### Project Status Tracking
+* `.agent/PROJECT_STATUS.md` - Current phase, active tasks, known issues
+
+### Available Workflows (Slash Commands)
+* `/plan-mvp` - Structured MVP planning with clarification, research, and acceptance criteria
+* `/agent-quran` - Quran verse search and navigation
+* `/agent-worship` - Prayer times and Qibla direction
+* `/agent-compliance` - Fatwa and Halal status checks
+* `/agent-education` - Hadith and Tafsir lookups
+* `/agent-zakat` - Zakat calculations
+* `/agent-admin` - System stats and analytics
+* `/agent-asr` - ASR Engine for Quran recitation
+
+### Response Structure Pattern
+When planning new features/projects:
+1. **Clarification Form** - Gather requirements first
+2. **Parallel Research** - Use multi-tool searches
+3. **Structured MVP Scope** - Platforms, tech stack, features
+4. **Acceptance Criteria** - Measurable metrics per feature
+5. **Phased Timeline** - 2-week sprint breakdown
+6. **References** - Cite all sources
+7. **Next Steps** - Actionable options

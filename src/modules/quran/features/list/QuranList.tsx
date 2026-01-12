@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QuranChapter, SemanticResult } from '../../../../types';
+import { QuranChapter } from '../../../../types';
+import { SemanticSearchResult } from '../../features/search/useSemanticSearch';
 import { audioCache } from '../../../../services/audioCacheService';
 
 // Premium Components
@@ -21,7 +22,7 @@ interface QuranListProps {
     setIsSemanticMode: (mode: boolean) => void;
     handleSemanticSearch: () => void;
     isSearchingSemantic: boolean;
-    semanticResults: SemanticResult[];
+    semanticResults: SemanticSearchResult[];
 }
 
 // Skeleton for premium loading state
@@ -118,10 +119,12 @@ const QuranList: React.FC<QuranListProps> = ({
             <div className="relative pt-24 px-4 max-w-6xl mx-auto z-10 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <DailyAyatWidget />
-                    <KhatamProgressTracker 
-                        currentJuz={1} 
-                        completedJuzs={[30]} 
-                        streak={5} 
+                    <KhatamProgressTracker
+                        compact={true}
+                        progress={{
+                            versesRead: 1500,
+                            currentStreak: 5
+                        }}
                     />
                 </div>
             </div>
@@ -245,16 +248,16 @@ const QuranList: React.FC<QuranListProps> = ({
                                                     transition={{ delay: i * 0.1 }}
                                                     className="bg-gradient-to-r from-slate-900/80 to-slate-900/40 border-l-4 border-amber-500 p-6 rounded-r-2xl hover:bg-slate-800 transition-all cursor-pointer group"
                                                     onClick={() => {
-                                                        const surah = chapters.find(c => c.name_simple.toLowerCase() === res.surah.toLowerCase());
+                                                        const surah = chapters.find(c => c.name_simple.toLowerCase() === res.surahName.toLowerCase());
                                                         if (surah) onChapterSelect(surah);
                                                     }}
                                                 >
                                                     <div className="flex justify-between items-start mb-2">
                                                         <span className="text-amber-500 font-mono text-xs font-bold">MATCH {i + 1}</span>
-                                                        <span className="text-slate-500 text-xs">{res.surah} • Ayat {res.ayah}</span>
+                                                        <span className="text-slate-500 text-xs">{res.surahName} • Ayat {res.verseNumber}</span>
                                                     </div>
-                                                    <p className="font-arabic text-2xl text-right text-white mb-2">{res.arabic}</p>
-                                                    <p className="text-slate-300 italic text-sm">"{res.text}"</p>
+                                                    <p className="font-arabic text-2xl text-right text-white mb-2">{res.arabicText}</p>
+                                                    <p className="text-slate-300 italic text-sm">"{res.translation}"</p>
                                                 </motion.div>
                                             ))}
                                         </div>

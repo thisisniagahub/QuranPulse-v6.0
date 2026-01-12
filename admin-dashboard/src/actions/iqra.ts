@@ -1,25 +1,21 @@
 'use server'
 
-import { createClient } from '@supabase/supabase-js'
+'use server'
+
 import { revalidatePath } from 'next/cache'
 import type { IqraLesson } from '@/types/crud'
-
-function getSupabaseAdmin() {
-    return createClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY!,
-        { auth: { autoRefreshToken: false, persistSession: false } }
-    )
-}
+import { requireAdmin } from '@/lib/auth-admin'
+import { logAdminAction } from '@/lib/audit'
+import { IqraLessonSchema, IqraLessonUpdateSchema } from '@/lib/validations'
 
 // ==================== IQRA LESSONS ====================
 
 export async function getLessons(volume?: number, page = 1, pageSize = 20) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
     const from = (page - 1) * pageSize
     const to = from + pageSize - 1
 
-    let query = supabase
+    let query = adminClient
         .from('iqra_lessons')
         .select('*', { count: 'exact' })
         .range(from, to)
@@ -38,29 +34,29 @@ export async function getLessons(volume?: number, page = 1, pageSize = 20) {
 }
 
 export async function getIqraStats() {
-    const supabase = getSupabaseAdmin()
+    const { adminClient } = await requireAdmin()
 
     // Get counts per volume
     const volumes = []
     for (let v = 1; v <= 6; v++) {
-        const { count: total } = await supabase
+        const { count: total } = await adminClient
             .from('iqra_lessons')
             .select('*', { count: 'exact', head: true })
             .eq('volume', v)
 
-        const { count: validated } = await supabase
+        const { count: validated } = await adminClient
             .from('iqra_lessons')
             .select('*', { count: 'exact', head: true })
             .eq('volume', v)
             .eq('status', 'validated')
 
-        const { count: live } = await supabase
+        const { count: live } = await adminClient
             .from('iqra_lessons')
             .select('*', { count: 'exact', head: true })
             .eq('volume', v)
             .eq('status', 'live')
 
-        const { count: withAudio } = await supabase
+        const { count: withAudio } = await adminClient
             .from('iqra_lessons')
             .select('*', { count: 'exact', head: true })
             .eq('volume', v)
@@ -79,60 +75,68 @@ export async function getIqraStats() {
 }
 
 export async function createLesson(formData: FormData) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const lesson = {
+    const rawData = {
         volume: parseInt(formData.get('volume') as string),
         page: parseInt(formData.get('page') as string),
         line: parseInt(formData.get('line') as string),
-        arabic_text: formData.get('arabic_text') as string,
-        transliteration: formData.get('transliteration') as string,
-        audio_url: formData.get('audio_url') as string || null,
+        arabic_text: formData.get('arabic_text'),
+        transliteration: formData.get('transliteration'),
+        audio_url: formData.get('audio_url') || null,
         status: 'pending',
     }
 
-    const { error } = await supabase.from('iqra_lessons').insert(lesson)
+    const validated = IqraLessonSchema.safeParse(rawData)
+    if (!validated.success) throw new Error(validated.error.message)
+    const lesson = validated.data
+
+    const { error } = await adminClient.from('iqra_lessons').insert(lesson)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'CREATE_LESSON', `Vol ${lesson.volume} P${lesson.page}`, lesson)
 
     revalidatePath('/dashboard/iqra')
     return { success: true }
 }
 
 export async function updateLesson(id: string, formData: FormData) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const updates: Partial<IqraLesson> = {}
+    const rawData: Record<string, any> = {}
+    if (formData.has('arabic_text')) rawData.arabic_text = formData.get('arabic_text')
+    if (formData.has('transliteration')) rawData.transliteration = formData.get('transliteration')
+    if (formData.has('audio_url')) rawData.audio_url = formData.get('audio_url')
+    if (formData.has('status')) rawData.status = formData.get('status')
 
-    const arabic = formData.get('arabic_text')
-    const translit = formData.get('transliteration')
-    const audio = formData.get('audio_url')
-    const status = formData.get('status')
+    const validated = IqraLessonUpdateSchema.safeParse(rawData)
+    if (!validated.success) throw new Error(validated.error.message)
+    const updates = validated.data
 
-    if (arabic) updates.arabic_text = arabic as string
-    if (translit) updates.transliteration = translit as string
-    if (audio !== null) updates.audio_url = audio as string || null
-    if (status) updates.status = status as IqraLesson['status']
-
-    const { error } = await supabase.from('iqra_lessons').update(updates).eq('id', id)
+    const { error } = await adminClient.from('iqra_lessons').update(updates).eq('id', id)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'UPDATE_LESSON', id, updates)
 
     revalidatePath('/dashboard/iqra')
     return { success: true }
 }
 
 export async function deleteLesson(id: string) {
-    const supabase = getSupabaseAdmin()
-    const { error } = await supabase.from('iqra_lessons').delete().eq('id', id)
+    const { adminClient, user: adminUser } = await requireAdmin()
+    const { error } = await adminClient.from('iqra_lessons').delete().eq('id', id)
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'DELETE_LESSON', id, {})
 
     revalidatePath('/dashboard/iqra')
     return { success: true }
 }
 
 export async function validateLesson(id: string, validatorId: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('iqra_lessons')
         .update({
             status: 'validated',
@@ -142,34 +146,40 @@ export async function validateLesson(id: string, validatorId: string) {
 
     if (error) throw new Error(error.message)
 
+    await logAdminAction(adminUser.id, 'VALIDATE_LESSON', id, { validatorId })
+
     revalidatePath('/dashboard/iqra')
     return { success: true }
 }
 
 export async function publishLesson(id: string) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('iqra_lessons')
         .update({ status: 'live' })
         .eq('id', id)
 
     if (error) throw new Error(error.message)
 
+    await logAdminAction(adminUser.id, 'PUBLISH_LESSON', id, {})
+
     revalidatePath('/dashboard/iqra')
     return { success: true }
 }
 
 export async function bulkPublishVolume(volume: number) {
-    const supabase = getSupabaseAdmin()
+    const { adminClient, user: adminUser } = await requireAdmin()
 
-    const { error } = await supabase
+    const { error } = await adminClient
         .from('iqra_lessons')
         .update({ status: 'live' })
         .eq('volume', volume)
         .eq('status', 'validated')
 
     if (error) throw new Error(error.message)
+
+    await logAdminAction(adminUser.id, 'BULK_PUBLISH', `Vol ${volume}`, {})
 
     revalidatePath('/dashboard/iqra')
     return { success: true }

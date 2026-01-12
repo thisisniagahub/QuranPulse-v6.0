@@ -5,6 +5,8 @@ import type { Banner, KnowledgeBase } from '@/types/crud'
 import { requireAdmin } from '@/lib/auth-admin'
 import { logAdminAction } from '@/lib/audit'
 
+import { BannerSchema, BannerUpdateSchema, KnowledgeBaseSchema, KnowledgeBaseUpdateSchema } from '@/lib/validations'
+
 // ==================== BANNERS ====================
 
 export async function getBanners(page = 1, pageSize = 10) {
@@ -25,15 +27,19 @@ export async function getBanners(page = 1, pageSize = 10) {
 export async function createBanner(formData: FormData) {
     const { adminClient, user: adminUser } = await requireAdmin()
 
-    const banner = {
-        title: formData.get('title') as string,
-        description: formData.get('description') as string,
-        image_url: formData.get('image_url') as string,
-        link_url: formData.get('link_url') as string || null,
+    const rawData = {
+        title: formData.get('title'),
+        description: formData.get('description'),
+        image_url: formData.get('image_url'),
+        link_url: formData.get('link_url') || null,
         active: formData.get('active') === 'on',
-        start_date: formData.get('start_date') as string || null,
-        end_date: formData.get('end_date') as string || null,
+        start_date: formData.get('start_date') || null,
+        end_date: formData.get('end_date') || null,
     }
+
+    const validated = BannerSchema.safeParse(rawData)
+    if (!validated.success) throw new Error(validated.error.message)
+    const banner = validated.data
 
     const { error } = await adminClient.from('content_banners').insert(banner)
     if (error) throw new Error(error.message)
@@ -47,19 +53,16 @@ export async function createBanner(formData: FormData) {
 export async function updateBanner(id: string, formData: FormData) {
     const { adminClient, user: adminUser } = await requireAdmin()
 
-    const updates: Partial<Banner> = {}
+    const rawData: Record<string, any> = {}
+    if (formData.has('title')) rawData.title = formData.get('title')
+    if (formData.has('description')) rawData.description = formData.get('description')
+    if (formData.has('image_url')) rawData.image_url = formData.get('image_url')
+    if (formData.has('link_url')) rawData.link_url = formData.get('link_url')
+    if (formData.has('active')) rawData.active = formData.get('active') === 'on' || formData.get('active') === 'true'
 
-    const title = formData.get('title')
-    const description = formData.get('description')
-    const image_url = formData.get('image_url')
-    const link_url = formData.get('link_url')
-    const active = formData.get('active')
-
-    if (title) updates.title = title as string
-    if (description) updates.description = description as string
-    if (image_url) updates.image_url = image_url as string
-    if (link_url !== null) updates.link_url = link_url as string || null
-    if (active !== null) updates.active = active === 'on' || active === 'true'
+    const validated = BannerUpdateSchema.safeParse(rawData)
+    if (!validated.success) throw new Error(validated.error.message)
+    const updates = validated.data
 
     const { error } = await adminClient.from('content_banners').update(updates).eq('id', id)
     if (error) throw new Error(error.message)
@@ -112,12 +115,16 @@ export async function getKnowledgeBase(page = 1, pageSize = 10) {
 export async function createKnowledgeEntry(formData: FormData) {
     const { adminClient, user: adminUser } = await requireAdmin()
 
-    const entry = {
-        title: formData.get('title') as string,
-        content: formData.get('content') as string,
-        source: formData.get('source') as string,
-        category: formData.get('category') as KnowledgeBase['category'],
+    const rawData = {
+        title: formData.get('title'),
+        content: formData.get('content'),
+        source: formData.get('source'),
+        category: formData.get('category'),
     }
+
+    const validated = KnowledgeBaseSchema.safeParse(rawData)
+    if (!validated.success) throw new Error(validated.error.message)
+    const entry = validated.data
 
     const { error } = await adminClient.from('ai_knowledge_base').insert(entry)
     if (error) throw new Error(error.message)
@@ -131,17 +138,15 @@ export async function createKnowledgeEntry(formData: FormData) {
 export async function updateKnowledgeEntry(id: string, formData: FormData) {
     const { adminClient, user: adminUser } = await requireAdmin()
 
-    const updates: Partial<KnowledgeBase> = {}
+    const rawData: Record<string, any> = {}
+    if (formData.has('title')) rawData.title = formData.get('title')
+    if (formData.has('content')) rawData.content = formData.get('content')
+    if (formData.has('source')) rawData.source = formData.get('source')
+    if (formData.has('category')) rawData.category = formData.get('category')
 
-    const title = formData.get('title')
-    const content = formData.get('content')
-    const source = formData.get('source')
-    const category = formData.get('category')
-
-    if (title) updates.title = title as string
-    if (content) updates.content = content as string
-    if (source) updates.source = source as string
-    if (category) updates.category = category as KnowledgeBase['category']
+    const validated = KnowledgeBaseUpdateSchema.safeParse(rawData)
+    if (!validated.success) throw new Error(validated.error.message)
+    const updates = validated.data
 
     const { error } = await adminClient.from('ai_knowledge_base').update(updates).eq('id', id)
     if (error) throw new Error(error.message)
