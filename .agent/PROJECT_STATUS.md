@@ -69,7 +69,7 @@
 | mcp-zakat      | ✅ Live   | Zakat calculator     |
 | mcp-admin      | ✅ Live   | System stats         |
 | mcp-asr        | ✅ Live   | Speech recognition   |
-| chat-proxy     | ✅ Ready  | Gemini API proxy     |
+| chat-proxy     | ✅ Live   | Gemini API proxy     |
 
 ---
 
