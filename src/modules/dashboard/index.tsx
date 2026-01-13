@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { UserProfile, NavView } from '../../types';
 import { useGreeting } from '../../hooks/useGreeting';
 import { usePrayerTimes } from '../../hooks/usePrayerTimes';
+import { useQibla } from '../../hooks/useQibla';
 import BentoCard from './components/BentoCard';
 import PulseHero from './components/PulseHero';
 import UstazAiWidget from './components/UstazAiWidget';
@@ -11,6 +12,11 @@ import ContinueReadingCard from './components/ContinueReadingCard';
 import PrayerTimesStrip from './components/PrayerTimesStrip';
 import RecommendedWidget from './components/RecommendedWidget';
 import RecentActivity from './components/RecentActivity';
+import CyberQuickActions from './components/CyberQuickActions';
+
+// Import Widgets
+import QiblaCompass from '../smart-deen/components/QiblaCompass';
+import { TasbihWidget, TakwimWidget } from '../ibadah/components';
 
 interface DashboardProps {
     user: UserProfile;
@@ -19,6 +25,10 @@ interface DashboardProps {
 
 const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
     const { greetingText } = useGreeting(user.name);
+    const [activeModal, setActiveModal] = useState<'none' | 'qibla' | 'tasbih' | 'takwim'>('none');
+    
+    // Qibla Data
+    const { qiblaAngle } = useQibla();
 
     // Geolocation Handling
     const [coords, setCoords] = useState<{ lat: number, lng: number } | null>(null);
@@ -44,6 +54,16 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
 
     const { data: prayerData, loading: prayerLoading } = usePrayerTimes(coords?.lat || 3.1390, coords?.lng || 101.6869);
 
+    const handleQuickAction = (id: string) => {
+        switch(id) {
+            case 'qibla': setActiveModal('qibla'); break;
+            case 'tasbih': setActiveModal('tasbih'); break;
+            case 'takwim': setActiveModal('takwim'); break;
+            case 'infaq': onNavigate(NavView.IBADAH); break; // Using IBADAH as fallback for Infaq
+            default: console.log('Action not implemented:', id);
+        }
+    };
+
     // Theme helpers passed to children
     const theme = {
         primary: 'cyan',
@@ -65,34 +85,57 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
             </div>
 
             {/* 📦 Main Scrollable Content */}
-            <div className="relative z-10 w-full max-w-2xl mx-auto px-4 pt-2 md:pt-4 h-[100dvh] flex flex-col">
+            <div className="relative z-10 w-full max-w-2xl mx-auto px-4 pt-4 min-h-screen flex flex-col gap-5">
 
-                {/* 2. OVERALL BENTO GRID - ZERO SCROLL */}
-                <div className="grid grid-cols-2 gap-2.5 flex-1 pb-4">
+                {/* 1. PULSE HERO (Heartbeat) */}
+                <PulseHero user={user} prayerData={prayerData} />
 
-                    {/* A. PULSE HERO (Heartbeat) */}
-                    <div className="col-span-2">
-                        <PulseHero user={user} prayerData={prayerData} />
+                {/* 2. QUICK ACTIONS (Horizontal Strip) */}
+                <CyberQuickActions onAction={handleQuickAction} />
+
+                {/* 3. CORE GRID */}
+                <div className="grid grid-cols-2 gap-3 pb-4">
+                    {/* Primary Actions - Taller Aspect Ratio */}
+                    <div className="col-span-1 aspect-[4/5]">
+                        <UstazAiWidget onNavigate={onNavigate} />
+                    </div>
+                    <div className="col-span-1 aspect-[4/5]">
+                        <ContinueReadingCard onNavigate={onNavigate} theme={theme} />
                     </div>
 
-                    {/* C. CORE FEATURES (Split Row - High Density) */}
-                    <UstazAiWidget onNavigate={onNavigate} />
-                    <ContinueReadingCard onNavigate={onNavigate} theme={theme} />
-
-                    {/* D. INSIGHTS (Split Row - High Density) */}
-                    <div className="col-span-1 h-[140px] overflow-hidden rounded-2xl">
+                    {/* Secondary Info - Wide widgets */}
+                    <div className="col-span-2 md:col-span-1 h-[140px] overflow-hidden rounded-2xl">
                         <DailyHikmah />
                     </div>
-                    <div className="col-span-1 h-[140px] overflow-hidden rounded-2xl">
+                    <div className="col-span-2 md:col-span-1 h-[140px] overflow-hidden rounded-2xl">
                         <RecentActivity />
                     </div>
                 </div>
 
-                {/* 3. FOOTER (Minimal) */}
-                <div className="absolute bottom-4 left-0 w-full flex justify-center opacity-30 pointer-events-none">
-                    <p className="text-[9px] font-mono tracking-widest text-slate-500 uppercase">v6.0 • Digital Ummah</p>
+                {/* 4. FOOTER (Minimal) */}
+                <div className="py-6 text-center opacity-30 pointer-events-none">
+                    <p className="text-[10px] font-mono tracking-widest text-slate-500 uppercase">v6.0 • Digital Ummah</p>
                 </div>
             </div>
+
+            {/* MODALS */}
+            <AnimatePresence>
+                {activeModal === 'qibla' && (
+                    <motion.div 
+                        initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+                    >
+                         <div className="relative w-full max-w-md">
+                            <button onClick={() => setActiveModal('none')} className="absolute top-2 right-2 z-10 p-2 bg-slate-800 rounded-full text-white">
+                                <i className="fa-solid fa-xmark"></i>
+                            </button>
+                            <QiblaCompass qiblaDirection={qiblaAngle || 0} />
+                         </div>
+                    </motion.div>
+                )}
+                {activeModal === 'tasbih' && <TasbihWidget onClose={() => setActiveModal('none')} />}
+                {activeModal === 'takwim' && <TakwimWidget onClose={() => setActiveModal('none')} />}
+            </AnimatePresence>
         </div>
     );
 };

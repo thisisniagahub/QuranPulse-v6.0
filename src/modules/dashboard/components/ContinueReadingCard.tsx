@@ -38,20 +38,20 @@ const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate })
                         <div className="w-6 h-6 rounded-full bg-emerald-500/20 flex items-center justify-center backdrop-blur-sm">
                             <i className="fa-solid fa-book-open text-[10px] text-emerald-400"></i>
                         </div>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-emerald-300">Teruskan</p>
+                        <p className="text-[9px] font-bold uppercase tracking-widest text-emerald-300">Teruskan</p>
                     </div>
 
-                    <h3 className="text-xl font-black text-white leading-tight mb-0.5 drop-shadow-lg">
+                    <h3 className="text-lg font-black text-white leading-tight mb-1 drop-shadow-lg truncate">
                         {lastRead ? lastRead.surahName : 'Mula Baca'}
                     </h3>
-                    <p className="text-[10px] text-slate-300 font-bold uppercase tracking-widest">
+                    <p className="text-xs text-slate-300 font-medium">
                         {lastRead ? `Ayat ${lastRead.ayahId}` : 'Tiada Rekod'}
                     </p>
                 </div>
 
                 {lastRead && (
                     <div className="mt-3">
-                        <div className="flex justify-between text-[8px] text-slate-300 mb-1 font-black uppercase tracking-widest">
+                        <div className="flex justify-between text-[10px] text-slate-300 mb-1 font-medium tracking-wide">
                             <span>{lastRead.totalVerses ? Math.round((lastRead.ayahId / lastRead.totalVerses) * 100) : '0'}% Selesai</span>
                         </div>
                         <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden border border-white/5">

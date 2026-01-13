@@ -33,16 +33,11 @@ const UstazAiWidget: React.FC<UstazAiWidgetProps> = ({ onNavigate }) => {
                     <p className="text-[10px] text-cyan-300 font-bold uppercase tracking-widest bg-black/30 inline-block px-2 py-1 rounded-lg backdrop-blur-sm">Syariah Intelligence</p>
                 </div>
 
-                <div className="flex items-center justify-between mt-2">
-                    <div className="flex -space-x-2">
-                        {[1, 2, 3].map(i => (
-                            <div key={i} className="w-6 h-6 rounded-full border-2 border-[#0c224b] bg-slate-800 flex items-center justify-center text-[8px] text-slate-400">
-                                <i className="fa-solid fa-user"></i>
-                            </div>
-                        ))}
-                    </div>
-                    <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white border border-white/20 group-hover:bg-cyan-500 group-hover:text-black transition-all">
-                        <i className="fa-solid fa-arrow-right text-xs"></i>
+                {/* Input Prompt Visual */}
+                <div className="mt-4 bg-black/40 border border-white/10 rounded-full px-3 py-2 flex items-center gap-2 backdrop-blur-sm group-hover:bg-black/50 group-hover:border-cyan-500/30 transition-all">
+                    <span className="text-[10px] text-slate-400 font-medium truncate">Tanya soalan agama...</span>
+                    <div className="ml-auto w-5 h-5 rounded-full bg-cyan-500 flex items-center justify-center text-black text-[10px]">
+                        <i className="fa-solid fa-arrow-right"></i>
                     </div>
                 </div>
             </div>
