@@ -235,6 +235,50 @@ const getVersesFromAPI = async (chapterId: number, translationId: number = 131):
   }
 };
 
+// =====================================
+// MUSHAF PAGES (For Digital Mushaf View)
+// =====================================
+
+export const getMushafPage = async (pageNumber: number): Promise<any> => {
+    // Check cache (we could add page cache, but for now let's just fetch)
+    // endpoint: /verses/by_page/{page_number}
+    
+    try {
+        const response = await fetch(
+            `${BASE_URL}/verses/by_page/${pageNumber}?words=false&fields=text_uthmani,chapter_id,hizb_number,juz_number&per_page=50`
+        );
+        
+        if (!response.ok) throw new Error('Failed to fetch page');
+        
+        const data = await response.json();
+        
+        // We need to group by Surah to handle pages with multiple surahs
+        // But for the simple view, just returning the list of verses is enough
+        // The View component handles grouping or display.
+        
+        // Enrich with Surah names if available in cache
+        const chapters = await getAllChapters();
+        
+        const verses = data.verses.map((v: any) => {
+           const surah = chapters.find(c => c.id === v.chapter_id);
+           return {
+               ...v,
+               surah_name: surah?.name_arabic || `Surah ${v.chapter_id}`
+           };
+        });
+        
+        return {
+            page_number: pageNumber,
+            verses: verses,
+            meta: data.meta
+        };
+        
+    } catch (err) {
+        console.error("❌ Error fetching mushaf page:", err);
+        throw err;
+    }
+};
+
 // Fallback Al-Fatiha data with transliteration
 const getFatihaFallback = (): QuranVerse[] => {
   return [

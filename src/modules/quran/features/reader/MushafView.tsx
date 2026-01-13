@@ -16,6 +16,7 @@ import {
     ChevronLeft, ChevronRight, BookOpen, Bookmark,
     Settings, Maximize2, Minimize2, Layers, Moon, Sun
 } from 'lucide-react';
+import { getMushafPage } from '@/services/quranService';
 
 interface MushafViewProps {
     initialPage?: number;
@@ -26,52 +27,19 @@ interface MushafViewProps {
 
 interface MushafPage {
     pageNumber: number;
-    surahNumber: number;
-    surahName: string;
     juzNumber: number;
     hizbNumber: number;
     verses: MushafVerse[];
 }
 
 interface MushafVerse {
-    verseNumber: number;
+    id: number;
+    verseNumber: number; // relative to surah
+    surahNumber: number;
+    surahName: string;
     arabicText: string;
-    isSurahStart?: boolean;
+    verseKey: string;
 }
-
-// Sample page data (in production, fetch from API)
-const SAMPLE_PAGES: Record<number, MushafPage> = {
-    1: {
-        pageNumber: 1,
-        surahNumber: 1,
-        surahName: 'الفاتحة',
-        juzNumber: 1,
-        hizbNumber: 1,
-        verses: [
-            { verseNumber: 1, arabicText: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', isSurahStart: true },
-            { verseNumber: 2, arabicText: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ' },
-            { verseNumber: 3, arabicText: 'الرَّحْمَٰنِ الرَّحِيمِ' },
-            { verseNumber: 4, arabicText: 'مَالِكِ يَوْمِ الدِّينِ' },
-            { verseNumber: 5, arabicText: 'إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ' },
-            { verseNumber: 6, arabicText: 'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ' },
-            { verseNumber: 7, arabicText: 'صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ' },
-        ],
-    },
-    2: {
-        pageNumber: 2,
-        surahNumber: 2,
-        surahName: 'البقرة',
-        juzNumber: 1,
-        hizbNumber: 1,
-        verses: [
-            { verseNumber: 1, arabicText: 'الٓمٓ', isSurahStart: true },
-            { verseNumber: 2, arabicText: 'ذَٰلِكَ الْكِتَابُ لَا رَيْبَ ۛ فِيهِ ۛ هُدًى لِّلْمُتَّقِينَ' },
-            { verseNumber: 3, arabicText: 'الَّذِينَ يُؤْمِنُونَ بِالْغَيْبِ وَيُقِيمُونَ الصَّلَاةَ وَمِمَّا رَزَقْنَاهُمْ يُنفِقُونَ' },
-            { verseNumber: 4, arabicText: 'وَالَّذِينَ يُؤْمِنُونَ بِمَا أُنزِلَ إِلَيْكَ وَمَا أُنزِلَ مِن قَبْلِكَ وَبِالْآخِرَةِ هُمْ يُوقِنُونَ' },
-            { verseNumber: 5, arabicText: 'أُولَٰئِكَ عَلَىٰ هُدًى مِّن رَّبِّهِمْ ۖ وَأُولَٰئِكَ هُمُ الْمُفْلِحُونَ' },
-        ],
-    },
-};
 
 const TOTAL_PAGES = 604;
 
@@ -91,12 +59,42 @@ const MushafView: React.FC<MushafViewProps> = ({
 
     // Load page data
     useEffect(() => {
+        let isMounted = true;
         setIsLoading(true);
-        // Simulate API call
-        setTimeout(() => {
-            setPageData(SAMPLE_PAGES[currentPage] || SAMPLE_PAGES[1]);
-            setIsLoading(false);
-        }, 200);
+        
+        const loadPage = async () => {
+            try {
+                const data = await getMushafPage(currentPage);
+                if (!isMounted) return;
+
+                const firstVerse = data.verses[0];
+                const processedPage: MushafPage = {
+                    pageNumber: data.page_number,
+                    juzNumber: firstVerse?.juz_number || 1,
+                    hizbNumber: firstVerse?.hizb_number || 1,
+                    verses: data.verses.map((v: any) => {
+                         const [surahNum, verseNum] = v.verse_key.split(':').map(Number);
+                         return {
+                             id: v.id,
+                             verseNumber: verseNum,
+                             surahNumber: surahNum,
+                             surahName: v.surah_name,
+                             arabicText: v.text_uthmani,
+                             verseKey: v.verse_key
+                         };
+                    })
+                };
+                
+                setPageData(processedPage);
+            } catch (err) {
+                console.error("Failed to load page", err);
+            } finally {
+                if (isMounted) setIsLoading(false);
+            }
+        };
+
+        loadPage();
+        return () => { isMounted = false; };
     }, [currentPage]);
 
     // Navigate pages
@@ -246,7 +244,7 @@ const MushafView: React.FC<MushafViewProps> = ({
                                 <h2 className="text-lg font-semibold text-white">Digital Mushaf</h2>
                                 {pageData && (
                                     <p className="text-xs text-slate-400">
-                                        سورة {pageData.surahName} • Juz {pageData.juzNumber}
+                                        Juz {pageData.juzNumber} • Page {pageData.pageNumber}
                                     </p>
                                 )}
                             </div>
@@ -311,46 +309,44 @@ const MushafView: React.FC<MushafViewProps> = ({
                             <div className={`absolute inset-3 rounded-xl border ${isNightMode ? 'border-cyan-500/10' : 'border-amber-300/30'
                                 }`} />
 
-                            {/* Surah Header */}
-                            {pageData?.verses[0]?.isSurahStart && (
-                                <div className="pt-6 pb-2 text-center">
-                                    <div className={`inline-block px-8 py-2 rounded-full ${isNightMode
-                                        ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30'
-                                        : 'bg-gradient-to-r from-amber-200/50 to-amber-300/50 border border-amber-400/30'
-                                        }`}>
-                                        <span className={`text-2xl font-arabic ${isNightMode ? 'text-cyan-300' : 'text-amber-800'
-                                            }`}>
-                                            سورة {pageData.surahName}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Bismillah */}
-                            {pageData?.surahNumber !== 1 && pageData?.verses[0]?.isSurahStart && pageData?.surahNumber !== 9 && (
-                                <div className="text-center py-4">
-                                    <span className={`text-2xl font-arabic ${isNightMode ? 'text-purple-300' : 'text-amber-700'
-                                        }`}>
-                                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-                                    </span>
-                                </div>
-                            )}
-
                             {/* Verses Content */}
-                            <div className="px-6 py-4">
+                            <div className="px-6 py-4 h-full overflow-y-auto no-scrollbar">
                                 {isLoading ? (
-                                    <div className="flex items-center justify-center h-64">
+                                    <div className="flex items-center justify-center h-full">
                                         <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
                                     </div>
                                 ) : (
-                                    <div className="text-center leading-[3] text-right" dir="rtl">
+                                    <div className="text-center leading-[3] text-right pt-4" dir="rtl">
                                         {pageData?.verses.map((verse, index) => (
-                                            <span key={verse.verseNumber}>
+                                            <React.Fragment key={verse.id}>
+                                                {/* DYNAMIC SURAH HEADER */}
+                                                {verse.verseNumber === 1 && (
+                                                    <div className="pt-6 pb-2 text-center w-full clear-both">
+                                                        <div className={`inline-block px-8 py-2 rounded-full mb-4 ${isNightMode
+                                                            ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30'
+                                                            : 'bg-gradient-to-r from-amber-200/50 to-amber-300/50 border border-amber-400/30'
+                                                            }`}>
+                                                            <span className={`text-2xl font-arabic ${isNightMode ? 'text-cyan-300' : 'text-amber-800'
+                                                                }`}>
+                                                                سورة {verse.surahName}
+                                                            </span>
+                                                        </div>
+                                                        {verse.surahNumber !== 1 && verse.surahNumber !== 9 && (
+                                                             <div className="text-center py-2 mb-2">
+                                                                <span className={`text-2xl font-arabic ${isNightMode ? 'text-purple-300' : 'text-amber-700'
+                                                                    }`}>
+                                                                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                                                                </span>
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                )}
+                                                
                                                 <span
                                                     className={`text-2xl md:text-3xl font-arabic cursor-pointer
                                      hover:text-cyan-400 transition-colors ${isNightMode ? 'text-white' : 'text-slate-800'
                                                         }`}
-                                                    onClick={() => onVerseClick?.(pageData.surahNumber, verse.verseNumber)}
+                                                    onClick={() => onVerseClick?.(verse.surahNumber, verse.verseNumber)}
                                                 >
                                                     {verse.arabicText}
                                                 </span>
@@ -363,17 +359,17 @@ const MushafView: React.FC<MushafViewProps> = ({
                                                     {verse.verseNumber}
                                                 </span>
                                                 {' '}
-                                            </span>
+                                            </React.Fragment>
                                         ))}
                                     </div>
                                 )}
                             </div>
 
                             {/* Page Number */}
-                            <div className="absolute bottom-3 left-0 right-0 text-center">
+                            <div className="absolute bottom-3 left-0 right-0 text-center pointer-events-none">
                                 <span className={`px-4 py-1 rounded-full text-sm ${isNightMode
-                                    ? 'bg-slate-800/50 text-slate-400'
-                                    : 'bg-amber-100 text-amber-700'
+                                    ? 'bg-slate-800/80 text-slate-400'
+                                    : 'bg-amber-100/80 text-amber-700'
                                     }`}>
                                     {currentPage}
                                 </span>

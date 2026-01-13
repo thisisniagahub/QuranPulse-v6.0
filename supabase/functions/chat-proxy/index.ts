@@ -80,7 +80,7 @@ serve(async (req) => {
       log("INFO", `Attempt ${attempt + 1}/${MAX_RETRIES} using key ${masked}`);
 
       try {
-        const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${currentKey}`;
+        const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${currentKey}`;
 
         const response = await fetch(GEMINI_URL, {
           method: "POST",

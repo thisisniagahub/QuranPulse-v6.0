@@ -23,12 +23,13 @@ export default defineConfig(({ mode }) => {
         // Custom Middleware removed for security
       VitePWA({
           registerType: 'autoUpdate',
-          includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'logo-full.png'],
+          includeAssets: ['favicon.ico', 'logo-full.png'],
           workbox: {
-              navigateFallbackDenylist: [/^\/api/], // Ignore API routes for Service Worker
-              globPatterns: ['**/*.{js,css,html,ico,svg,woff2}'],
-              // Exclude large icons from precaching - they'll load normally
-              globIgnores: ['**/IQRA-ICON.png', '**/QIBLAT-ICON.png', '**/HOME-ICON.png', '**/USTAZ-AI_ICON.png', '**/Al-QURAN-ICON.png'],
+              cleanupOutdatedCaches: true,
+              navigateFallbackDenylist: [/^\/api/, /\.[a-z]+$/], // Ignore API routes and file extensions
+              globPatterns: ['**/*.{js,css,html,ico,svg,woff2,png,json}'],
+              // Exclude large assets if necessary, but keep it clean
+              globIgnores: [],
               // Increase max file size for precaching
               maximumFileSizeToCacheInBytes: 10 * 1024 * 1024, // 10 MB
               runtimeCaching: [
@@ -163,14 +164,14 @@ export default defineConfig(({ mode }) => {
                 short_name: 'Quran',
                 description: 'Terus membaca Al-Quran',
                 url: '/quran',
-                icons: [{ src: 'Al-QURAN-ICON.png', sizes: '192x192' }]
+                icons: [{ src: 'logo-full.png', sizes: '192x192' }]
               },
               {
                 name: 'Tanya Ustaz AI',
                 short_name: 'Ustaz AI',
                 description: 'Chat dengan Ustaz AI',
                 url: '/smart-deen',
-                icons: [{ src: 'USTAZ-AI_ICON.png', sizes: '192x192' }]
+                icons: [{ src: 'ustaz-ai-icon.png', sizes: '192x192' }]
               }
             ]
           },
