@@ -134,6 +134,8 @@ async function transcribeWithGroq(audioBase64: string, apiKey?: string): Promise
     formData.append('file', audioBlob, 'recording.wav');
     formData.append('model', 'whisper-large-v3');
     formData.append('language', 'ar');
+    formData.append('temperature', '0'); // Deterministic output
+    formData.append('response_format', 'json');
 
     const response = await fetch('https://api.groq.com/openai/v1/audio/transcriptions', {
         method: 'POST',
@@ -155,8 +157,11 @@ async function transcribeWithGroq(audioBase64: string, apiKey?: string): Promise
  * Calculate Q-WER (Quran Weighted Error Rate)
  */
 function calculateQWER(transcription: string, expected: string) {
-    const transcriptionChars = transcription.replace(/\s/g, '').split('');
-    const expectedChars = expected.replace(/\s/g, '').split('');
+    // Normalize Arabic (remove simple tatweel, unify alifs) for fair comparison
+    const norm = (text: string) => text.replace(/[ـ]/g, '').replace(/[أإآ]/g, 'ا');
+    
+    const transcriptionChars = norm(transcription).replace(/\s/g, '').split('');
+    const expectedChars = norm(expected).replace(/\s/g, '').split('');
 
     let errors = 0;
     const errorBreakdown = { makhraj: 0, tajweed: 0, harakat: 0, rhythm: 0 };

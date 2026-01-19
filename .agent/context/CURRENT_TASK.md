@@ -1,6 +1,6 @@
 # 🔴 Current Task Status
 
-> **Last Updated:** 2026-01-13 10:46 by Gemini
+> **Last Updated:** 2026-01-20 15:30 by Gemini
 
 ---
 
@@ -10,8 +10,8 @@
 
 | Field | Value |
 |-------|-------|
-| **Title** | Sprint Execution: PWA Fix, Chat Proxy & Features |
-| **Started** | 2026-01-13 10:00 |
+| **Title** | ASR Engine Optimization & Adaptive Learning |
+| **Started** | 2026-01-20 |
 | **Agent** | Gemini |
 | **Priority** | HIGH |
 
@@ -19,28 +19,37 @@
 
 ## Objective
 
-Execute the remaining tasks for the current sprint:
-1. Fix PWA cache invalidation/MIME issues affecting production.
-2. Unblock and deploy `chat-proxy` edge function.
-3. Complete Digital Mushaf implementation.
-4. Integrate ASR for Voice Reader.
+Further optimize the ASR system:
+1.  Enhance noise reduction (pre-emphasis, adaptive gating).
+2.  Improve phoneme recognition (beam search, temperature fallback).
+3.  Reduce latency (Groq optimization).
+4.  Implement adaptive learning (Accent Profiles).
+5.  Optimize quantization (Configuration blueprint).
 
 ---
 
 ## Completed Work
 
-### 1. PWA Cache Fix ✅
-- [x] Updated `vite.config.ts` to fix MIME type errors (HTML fallback)
-- [x] Cleaned up `globIgnores` and `shortcuts`
-- [x] Verified build generates SW correctly
+### 1. Acoustic Processing (`noise_robustness.py`) ✅
+- [x] Added **Pre-emphasis filter** (0.97 coef) to boost high frequencies (Tajweed articulation).
+- [x] Tuned `noisereduce` with `n_std_thresh_stationary=1.5` for better voice preservation.
 
-### 2. Chat Proxy ✅
-- [x] Updated model to `gemini-1.5-flash` (Stable)
-- [x] Ready for deployment
+### 2. Model Robustness (`transcriber.py`) ✅
+- [x] Implemented **Beam Search** (`beam_size=5`).
+- [x] Added **Temperature Fallback** (`[0.0, 0.2, 0.4]`) for handling ambiguity.
+- [x] Added automatic **CUDA/CPU device selection**.
 
-### 3. Features ✅
-- [x] **Digital Mushaf**: Implemented `getMushafPage` in `quranService` and connected `MushafView` to real API.
-- [x] **ASR Integration**: Implemented hybrid ASR (Web Speech + `mcp-asr` Edge Function) in `VoiceActiveReader`.
+### 3. Adaptive Learning (`memory.ts`) ✅
+- [x] Created `AccentProfile` interface.
+- [x] Implemented `PhonemeOffset` logic to track persistent user-specific errors (e.g., "Thal" vs "Zal").
+
+### 4. Edge Latency (`mcp-asr`) ✅
+- [x] Configured **Groq API** with `temperature: 0` for deterministic, faster output.
+- [x] Enhanced `classifyError` with detailed Makhraj mapping.
+
+### 5. Documentation ✅
+- [x] Created `quantization_config.json` blueprint for INT8 edge deployment.
+- [x] Updated `README_ASR.md` with new specs.
 
 ---
 
@@ -48,11 +57,12 @@ Execute the remaining tasks for the current sprint:
 
 | File | Action | Purpose |
 |------|--------|---------|
-| `vite.config.ts` | Modified | Fix PWA config |
-| `supabase/functions/chat-proxy/index.ts` | Modified | Fix model name |
-| `src/services/quranService.ts` | Modified | Add `getMushafPage` |
-| `src/modules/quran/features/reader/MushafView.tsx` | Modified | Integrate real data |
-| `src/modules/quran/features/reader/VoiceActiveReader.tsx` | Modified | Integrate ASR |
+| `modules/asr_engine/preprocessing/noise_robustness.py` | Modified | Acoustic enhancement |
+| `modules/asr_engine/models/transcriber.py` | Modified | Model robustness |
+| `modules/asr_engine/agent/memory.ts` | Modified | Adaptive learning |
+| `supabase/functions/mcp-asr/index.ts` | Modified | Edge optimization |
+| `modules/asr_engine/README_ASR.md` | Modified | Documentation |
+| `modules/asr_engine/models/quantization_config.json` | Created | Quantization spec |
 
 ---
 

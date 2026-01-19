@@ -3,10 +3,24 @@
  * Manages learner profiles, error tracking, and progress analytics
  */
 
+export interface PhonemeOffset {
+  phoneme: string;
+  errorRate: number;
+  typicalSubstitution: string; // What they usually say instead (e.g., 'z' for 'dh')
+  confidencePenalty: number; // Reduce confidence for this phoneme
+}
+
+export interface AccentProfile {
+  region: 'Nusantara' | 'Arab' | 'Generic';
+  phonemeOffsets: Map<string, PhonemeOffset>;
+  commonSubstitutions: Record<string, string>; // e.g. {'ذ': 'ز', 'ث': 'س'}
+}
+
 export interface LearnerProfile {
   id: string;
   name: string;
   currentLevel: 'Beginner' | 'Intermediate' | 'Advanced';
+  accentProfile: AccentProfile; // NEW: Adaptive accent tracking
   registrationDate: Date;
   totalSessions: number;
   totalRecitations: number;
@@ -45,6 +59,11 @@ export class LearnerMemory {
       id: learnerId,
       name,
       currentLevel: 'Beginner',
+      accentProfile: {
+        region: 'Nusantara', // Default for this market
+        phonemeOffsets: new Map(),
+        commonSubstitutions: {}
+      },
       registrationDate: new Date(),
       totalSessions: 0,
       totalRecitations: 0,
@@ -67,6 +86,34 @@ export class LearnerMemory {
 
   getProfile(learnerId: string): LearnerProfile | undefined {
     return this.profiles.get(learnerId);
+  }
+
+  // Adaptive Learning: Update accent profile based on persistent errors
+  updateAccentProfile(learnerId: string, errorType: string, actualChar: string, expectedChar: string): void {
+    const profile = this.profiles.get(learnerId);
+    if (!profile) return;
+
+    // Detect common substitutions (e.g., thal -> zal)
+    if (errorType.includes('makhraj')) {
+        const key = expectedChar;
+        const offset = profile.accentProfile.phonemeOffsets.get(key) || {
+            phoneme: key,
+            errorRate: 0,
+            typicalSubstitution: actualChar,
+            confidencePenalty: 0
+        };
+
+        offset.errorRate = (offset.errorRate * 0.9) + 0.1; // Moving average
+        offset.typicalSubstitution = actualChar;
+        offset.confidencePenalty = Math.min(0.5, offset.errorRate); // Cap penalty at 0.5
+        
+        profile.accentProfile.phonemeOffsets.set(key, offset);
+
+        // Update common substitutions map for quick lookup
+        if (offset.errorRate > 0.3) {
+            profile.accentProfile.commonSubstitutions[key] = actualChar;
+        }
+    }
   }
 
   updateQWERHistory(learnerId: string, qwerScore: number, level: string, dominantErrors: string[]): void {

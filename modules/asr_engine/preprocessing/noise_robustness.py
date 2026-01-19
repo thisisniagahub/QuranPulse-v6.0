@@ -22,17 +22,28 @@ class AudioCleaner:
         # librosa loads as float32, normalized between -1 and 1
         y, _ = librosa.load(file_path, sr=self.sr)
 
-        # 2. Remove Stationary Noise (Fan/AC hum)
+        # 2. Pre-emphasis (High-frequency boost)
+        # Standard ASR technique to balance the frequency spectrum
+        y_pre = librosa.effects.preemphasis(y, coef=0.97)
+
+        # 3. Remove Stationary Noise (Fan/AC hum)
         # We assume the noise profile is constant-ish (typical Malaysian ceiling fan)
         # prop_decrease=0.75 means we remove 75% of the noise to avoid "robotic" artifacts
-        y_clean = nr.reduce_noise(y=y, sr=self.sr, stationary=True, prop_decrease=0.75)
+        # n_std_thresh_stationary=1.5 is more aggressive on noise detection
+        y_clean = nr.reduce_noise(
+            y=y_pre, 
+            sr=self.sr, 
+            stationary=True, 
+            prop_decrease=0.75,
+            n_std_thresh_stationary=1.5
+        )
 
-        # 3. Bandpass Filter (Human Voice Range)
+        # 4. Bandpass Filter (Human Voice Range)
         # Focus on 80Hz (Deep male voice) to 8000Hz (High Sibilance Sa, Shin)
         # This removes low rumble (lorry passing) and high frequency hiss
         y_filtered = self._bandpass_filter(y_clean, 80, 8000)
 
-        # 4. Normalize Volume (LUFS-style simple normalization)
+        # 5. Normalize Volume (LUFS-style simple normalization)
         y_normalized = librosa.util.normalize(y_filtered)
 
         return y_normalized
