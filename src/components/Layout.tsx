@@ -61,7 +61,7 @@ const Layout: React.FC = () => {
             {/* Left: Brand */}
             <Link to="/" className="flex flex-col">
               <div className="flex items-center gap-2 group">
-                <img src="/logo-primary.png" alt="Logo" className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+                <img src="/logo-primary.png" alt="QuranPulse" width="32" height="32" className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
                 <span className="font-black text-lg tracking-tighter text-white font-[Poppins]">
                   Quran<span className="text-cyan-400">Pulse</span>
                 </span>
@@ -82,7 +82,7 @@ const Layout: React.FC = () => {
 
             {/* Right: Actions */}
             <div className="flex items-center gap-3">
-              <button className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#1e3a8a] to-[#0c224b] border border-white/10 flex items-center justify-center text-cyan-400 shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] hover:scale-105 transition-all group">
+              <button aria-label="Notifications" className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#1e3a8a] to-[#0c224b] border border-white/10 flex items-center justify-center text-cyan-400 shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] hover:scale-105 transition-all group">
                 <i className="fa-regular fa-bell text-sm group-hover:animate-swing"></i>
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0c224b] animate-pulse"></span>
               </button>
@@ -91,6 +91,8 @@ const Layout: React.FC = () => {
                 <img
                   src={user?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
                   alt="User"
+                  width="36"
+                  height="36"
                   className="w-full h-full rounded-full object-cover"
                   onError={(e) => { e.currentTarget.src = '/assets/icons/nabdh/nav-profile.png'; }}
                 />
@@ -120,7 +122,7 @@ const Layout: React.FC = () => {
                 <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.DASHBOARD ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                <img src="/assets/icons/nabdh/nav-home.png" alt="Home" className="w-full h-full object-contain filter drop-shadow-lg" />
+                <img src="/assets/icons/nabdh/nav-home.png" alt="Home" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
             </Link>
 
@@ -133,7 +135,7 @@ const Layout: React.FC = () => {
                 <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.QURAN ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" className="w-full h-full object-contain filter drop-shadow-lg" />
+                <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
             </Link>
 
@@ -162,6 +164,8 @@ const Layout: React.FC = () => {
                     <img
                       src="/assets/icons/nabdh/nav-ustaz.png"
                       alt="Ustaz AI"
+                      width="40"
+                      height="40"
                       className={`w-10 h-10 object-contain relative z-10 ${currentView === NavView.SMART_DEEN ? 'animate-pulse-slow drop-shadow-[0_0_15px_rgba(34,211,238,1)]' : 'brightness-75'}`}
                     />
                   </div>
@@ -180,7 +184,7 @@ const Layout: React.FC = () => {
                 <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.IBADAH ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" className="w-full h-full object-contain filter drop-shadow-lg" />
+                <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
             </Link>
 
@@ -193,7 +197,7 @@ const Layout: React.FC = () => {
                 <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.IQRA ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" className="w-full h-full object-contain filter drop-shadow-lg" />
+                <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
             </Link>
 

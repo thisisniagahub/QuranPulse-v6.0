@@ -105,6 +105,7 @@ export function DataTable<T extends { id: string }>({
                         <input
                             type="text"
                             placeholder={searchPlaceholder}
+                            aria-label="Search"
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             className="input-modern pl-10 w-64"

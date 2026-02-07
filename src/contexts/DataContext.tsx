@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product, UserProfile, Announcement, Order, SystemLog, CartItem, AppConfigItem } from '../types';
-import { api } from './apiClient';
+import { api } from '../services/apiClient';
 
 interface DataContextType {
     products: Product[];

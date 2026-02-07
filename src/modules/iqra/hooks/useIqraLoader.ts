@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import iqra1Data from '../extracted_BUKU_IQRA1_structured.json';
+import iqra1Data from '../../../../content-data/iqra/extracted_BUKU_IQRA1_structured.json';
 
 export interface LessonStep {
     id: number;
@@ -23,11 +23,11 @@ export const useIqraLoader = (volume: number) => {
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
-            
+
             // For now, we only have Iqra 1 structured. 
             // In a real app, we'd fetch different JSONs based on volume.
             const rawData = volume === 1 ? iqra1Data : { grid: [] };
-            
+
             const generatedSteps: LessonStep[] = [];
             let currentId = 0;
 

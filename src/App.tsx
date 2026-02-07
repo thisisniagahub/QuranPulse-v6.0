@@ -1,7 +1,7 @@
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route, useNavigate, Navigate, useLocation } from 'react-router-dom';
-import { DataProvider } from './services/DataContext';
-import { QueryProvider } from './services/QueryProvider';
+import { DataProvider } from './contexts/DataContext';
+import { QueryProvider } from './contexts/QueryProvider';
 import { AudioPlayerProvider } from './contexts/AudioPlayerContext';
 import { GamificationProvider } from './contexts/GamificationContext';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
@@ -10,6 +10,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { Login } from './modules/auth/Login'; // Import Login
 import AdminRoute from './modules/admin/components/AdminRoute';
 import SplashScreen from './components/SplashScreen';
+import { SkipToContent, ToastProvider } from './components/ui';
 
 // Lazy load modules
 const Dashboard = lazy(() => import('./modules/dashboard'));
@@ -161,16 +162,19 @@ const App: React.FC = () => {
           <AudioPlayerProvider>
             <GamificationProvider>
               <AuthProvider>
-                <BrowserRouter>
-                  <Suspense fallback={<LoadingFallback />}>
-                    <AppContent />
-                  </Suspense>
-                  {/* MiniPlayer removed - using QuranAudioPlayer in Quran module instead */}
-                  {/* PulseControlCenter removed - features moved to Admin Dashboard Settings */}
-                  {/* <PulseControlCenter /> */}
-                  {/* AI Chatbot Widget */}
+                <ToastProvider>
+                  <BrowserRouter>
+                    <SkipToContent />
+                    <Suspense fallback={<LoadingFallback />}>
+                      <AppContent />
+                    </Suspense>
+                    {/* MiniPlayer removed - using QuranAudioPlayer in Quran module instead */}
+                    {/* PulseControlCenter removed - features moved to Admin Dashboard Settings */}
+                    {/* <PulseControlCenter /> */}
+                    {/* AI Chatbot Widget */}
 
-                </BrowserRouter>
+                  </BrowserRouter>
+                </ToastProvider>
               </AuthProvider>
             </GamificationProvider>
           </AudioPlayerProvider>

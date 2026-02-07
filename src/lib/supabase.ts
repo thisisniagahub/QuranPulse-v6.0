@@ -16,12 +16,8 @@ export const supabase = createClient(
       detectSessionInUrl: true,
       storage: typeof window !== 'undefined' ? window.localStorage : undefined,
     },
-    global: {
-      headers: {
-        'x-app-name': 'QuranPulse',
-        'x-app-version': '6.0',
-      },
-    },
+    // Note: Custom headers removed - they caused CORS issues with Edge Functions
+    // If needed, add these headers to Edge Function CORS config first
   }
 );
 

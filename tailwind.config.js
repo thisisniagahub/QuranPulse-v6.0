@@ -19,8 +19,23 @@ export default {
         "secondary": "var(--secondary)",
         "highlight": "var(--highlight)",
 
-        // Backgrounds
+        // Extended Background System
+        "bg-dark": "var(--bg-dark)",
+        "bg-navy": "var(--bg-navy)",
+        "bg-midnight": "var(--bg-midnight)",
+        "bg-card": "var(--bg-card)",
         "background-main": "var(--bg-main)",
+
+        // Accent Colors
+        "accent-cyan": "var(--accent-cyan)",
+        "accent-blue": "var(--accent-blue)",
+        "accent-teal": "var(--accent-teal)",
+
+        // Semantic Colors
+        "success": "var(--success)",
+        "warning": "var(--warning)",
+        "error": "var(--error)",
+        "info": "var(--info)",
 
         // Surfaces (Cards, Inputs, Elevated Elements)
         "surface": "var(--surface)",
@@ -102,9 +117,36 @@ export default {
         'bounce-slow': {
           '0%, 100%': { transform: 'translateY(0)' },
           '50%': { transform: 'translateY(-10px)' },
+        },
+        // Skeleton loading animation
+        'skeleton': {
+          '0%': { backgroundPosition: '200% 0' },
+          '100%': { backgroundPosition: '-200% 0' },
         }
       }
     }
   },
-  plugins: [],
+  plugins: [
+    // Safe Area Inset Plugin for iOS notch/home indicator support
+    function ({ addUtilities }) {
+      addUtilities({
+        '.pb-safe': {
+          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+        },
+        '.pb-safe-bottom': {
+          paddingBottom: 'env(safe-area-inset-bottom, 20px)',
+        },
+        '.pt-safe': {
+          paddingTop: 'env(safe-area-inset-top, 0px)',
+        },
+        '.min-h-safe-bottom': {
+          minHeight: 'calc(64px + env(safe-area-inset-bottom, 20px))',
+        },
+        '.touch-target': {
+          minWidth: '44px',
+          minHeight: '44px',
+        }
+      })
+    }
+  ],
 }

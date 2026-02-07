@@ -1,6 +1,6 @@
+@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;600&family=Noto+Sans+Arabic:wght@400;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap");
-@import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════════════════════
    VERSE STUDIO DESIGN SYSTEM - Global CSS
@@ -25,6 +25,45 @@
   --secondary-rgb: 12, 34, 75;
   --bg-main-rgb: 3, 26, 56;
   --highlight-rgb: 34, 211, 238;
+
+  /* Extended Color System */
+  --bg-dark: #020617;
+  /* Slate-950 - Darkest background */
+  --bg-dark-rgb: 2, 6, 23;
+  --bg-navy: #0c224b;
+  /* Deep Navy */
+  --bg-navy-rgb: 12, 34, 75;
+  --bg-midnight: #031a38;
+  /* Midnight Blue */
+  --bg-midnight-rgb: 3, 26, 56;
+  --bg-card: #0A1E42;
+  /* Card background */
+  --bg-card-rgb: 10, 30, 66;
+
+  /* Accent Colors */
+  --accent-cyan: #22d3ee;
+  /* Primary Accent */
+  --accent-cyan-rgb: 34, 211, 238;
+  --accent-blue: #00BFFF;
+  /* DeepSkyBlue */
+  --accent-blue-rgb: 0, 191, 255;
+  --accent-teal: #14b8a6;
+  /* Teal-500 */
+  --accent-teal-rgb: 20, 184, 166;
+
+  /* Semantic Colors */
+  --success: #10b981;
+  /* Emerald-500 */
+  --success-rgb: 16, 185, 129;
+  --warning: #f59e0b;
+  /* Amber-500 */
+  --warning-rgb: 245, 158, 11;
+  --error: #ef4444;
+  /* Red-500 */
+  --error-rgb: 239, 68, 68;
+  --info: #3b82f6;
+  /* Blue-500 */
+  --info-rgb: 59, 130, 246;
 
   /* Derived Tokens */
   --text-primary: #f8fafc;
@@ -882,4 +921,19 @@ section[id] {
 
 .animate-gradient {
   animation: gradient-shift 3s linear infinite;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ACCESSIBILITY - Reduced Motion Support
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

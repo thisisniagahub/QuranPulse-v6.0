@@ -71,8 +71,12 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
     ];
 
     return (
-        <nav className="h-[88px] bg-[#020617]/90 backdrop-blur-xl border-t border-[#00BFFF]/20 relative z-50 shrink-0 pb-5">
-            <div className="flex items-center justify-around h-full px-2">
+        <nav
+            className="bg-[#020617]/90 backdrop-blur-xl border-t border-[#00BFFF]/20 relative z-50 shrink-0 pb-safe-bottom min-h-safe-bottom"
+            role="navigation"
+            aria-label="Main navigation"
+        >
+            <div className="flex items-center justify-around h-16 px-2">
                 {navItems.map((item) => {
                     const isActive = currentView === item.id;
                     const isCenter = item.isCenter;
@@ -81,18 +85,21 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
                         <Link
                             key={item.id}
                             to={item.path}
-                            className="flex flex-col items-center justify-center relative group w-16"
+                            // FIXED: Touch target minimum 44x44px (was w-16 which is good)
+                            className="flex flex-col items-center justify-center relative group min-w-[44px] min-h-[44px] w-16"
                             onClick={(e) => {
                                 if (onNavigate) {
                                     e.preventDefault();
                                     onNavigate(item.id);
                                 }
                             }}
+                            aria-label={item.label}
+                            aria-current={isActive ? 'page' : undefined}
                         >
                             <div
                                 className={`
                                     relative rounded-full flex items-center justify-center transition-all duration-300 border
-                                    ${isCenter ? "w-16 h-16 -mt-8" : "w-10 h-10"}
+                                    ${isCenter ? "w-16 h-16 -mt-8" : "w-11 h-11"} 
                                     ${isActive && !isCenter
                                         ? `bg-gradient-to-br ${item.color} border-white/20 shadow-lg shadow-cyan-500/20 scale-110`
                                         : isActive && isCenter
@@ -113,7 +120,9 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
                                         <div className="relative w-20 h-20 flex items-center justify-center bg-[#020617] rounded-full">
                                             <img
                                                 src={item.icon}
-                                                alt={item.label}
+                                                alt="" // Decorative, aria-label on Link
+                                                width="80"
+                                                height="80"
                                                 className="w-full h-full object-contain scale-125 drop-shadow-[0_0_15px_rgba(34,211,238,0.6)]"
                                             />
                                         </div>
@@ -123,6 +132,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
                                     <div className="relative flex items-center justify-center w-full h-full p-2">
                                         <Icon
                                             icon={item.icon}
+                                            aria-hidden="true"
                                             className={`text-2xl transition-all duration-300 ${isActive
                                                 ? "text-white scale-110 drop-shadow-[0_0_5px_rgba(255,255,255,0.8)]"
                                                 : "text-slate-500 group-hover:text-slate-300"
@@ -147,3 +157,4 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
 };
 
 export default BottomNav;
+

@@ -55,16 +55,28 @@
     }
   },
   "general": {
-    "enablePromptCompletion": true
+    "enablePromptCompletion": true,
+    "previewFeatures": true
   },
   "experimental": {
     "introspectionAgentSettings": {
       "enabled": true
-    }
+    },
+    "useOSC52Paste": true
   },
   "security": {
     "folderTrust": {
       "enabled": true
+    },
+    "enablePermanentToolApproval": true
+  },
+  "tools": {
+    "autoAccept": true,
+    "shell": {
+      "showColor": true
     }
+  },
+  "ui": {
+    "showStatusInTitle": true
   }
 }

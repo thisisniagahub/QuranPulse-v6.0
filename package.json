@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "bot": "tsx src/bot-server.ts",
+    "bot": "tsx server/bot-server.ts",
     "test": "jest --config jest.config.cjs",
     "test:watch": "jest --config jest.config.cjs --watch",
     "test:coverage": "jest --config jest.config.cjs --coverage",
@@ -20,6 +20,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@sentry/react": "^7.120.4",
     "@sentry/tracing": "^7.120.4",
     "@supabase/supabase-js": "^2.86.0",
@@ -30,6 +31,7 @@
     "axios": "^1.13.2",
     "canvas-confetti": "^1.9.4",
     "cheerio": "^1.1.2",
+    "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "express": "^5.2.1",
@@ -42,11 +44,13 @@
     "qrcode-terminal": "^0.12.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.71.1",
     "react-markdown": "^10.1.0",
     "react-pdf": "^10.2.0",
     "react-router-dom": "^7.9.6",
     "remark-gfm": "^4.0.1",
     "socket.io": "^4.8.1",
+    "tailwind-merge": "^3.4.0",
     "telegraf": "^4.16.3",
     "whatsapp-web.js": "^1.23.0",
     "zustand": "^5.0.9"

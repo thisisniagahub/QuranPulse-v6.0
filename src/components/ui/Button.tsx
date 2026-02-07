@@ -51,7 +51,10 @@ export const Button: React.FC<ButtonProps> = ({
             )}
 
             {isLoading ? (
-                <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                <>
+                    <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                    <span className="sr-only">Loading</span>
+                </>
             ) : leftIcon ? (
                 <span className="mr-2">{leftIcon}</span>
             ) : null}

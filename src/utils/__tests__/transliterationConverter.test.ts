@@ -4,14 +4,14 @@
  */
 
 // Jest test suite - describe, it, expect are global
-import { 
-  convertToAcademicTransliteration, 
+import {
+  convertToAcademicTransliteration,
   hasProperDiacritics,
   getTransliterationStats,
   TRANSLITERATION_EXAMPLES,
   formatTransliteration,
-  transliterate99 
-} from './transliterationConverter';
+  transliterate99
+} from '../transliterationConverter';
 
 // ============================================================================
 // TEST 1: Simple Text to Academic Conversion
@@ -71,7 +71,7 @@ describe('99% Accuracy Mode (transliterate99)', () => {
   testCases.forEach(({ arabic, expectedRumi }) => {
     it(`should return correct structure for "${arabic.slice(0, 20)}..."`, () => {
       const result = transliterate99(arabic);
-      
+
       // Check structure
       expect(result).toHaveProperty('text');
       expect(result).toHaveProperty('tajwid');
@@ -151,7 +151,7 @@ describe('Transliteration Statistics', () => {
   it('should return valid stats object with counts', () => {
     const testText = 'Bismillāhir-Raḥmānir-Raḥīm Alḥamdu lillāhi Rabbil-ʿĀlamīn';
     const stats = getTransliterationStats(testText);
-    
+
     expect(stats).toHaveProperty('longVowels');
     expect(stats).toHaveProperty('emphatics');
     expect(stats).toHaveProperty('gutturals');
