@@ -26,7 +26,7 @@ interface DashboardProps {
 const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
     const { greetingText } = useGreeting(user.name);
     const [activeModal, setActiveModal] = useState<'none' | 'qibla' | 'tasbih' | 'takwim'>('none');
-    
+
     // Qibla Data
     const { qiblaAngle } = useQibla();
 
@@ -55,12 +55,12 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
     const { data: prayerData, loading: prayerLoading } = usePrayerTimes(coords?.lat || 3.1390, coords?.lng || 101.6869);
 
     const handleQuickAction = (id: string) => {
-        switch(id) {
+        switch (id) {
             case 'qibla': setActiveModal('qibla'); break;
             case 'tasbih': setActiveModal('tasbih'); break;
             case 'takwim': setActiveModal('takwim'); break;
             case 'infaq': onNavigate(NavView.IBADAH); break; // Using IBADAH as fallback for Infaq
-            default: console.log('Action not implemented:', id);
+            default: break;
         }
     };
 
@@ -121,16 +121,16 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
             {/* MODALS */}
             <AnimatePresence>
                 {activeModal === 'qibla' && (
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
                         className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
                     >
-                         <div className="relative w-full max-w-md">
+                        <div className="relative w-full max-w-md">
                             <button onClick={() => setActiveModal('none')} className="absolute top-2 right-2 z-10 p-2 bg-slate-800 rounded-full text-white">
                                 <i className="fa-solid fa-xmark"></i>
                             </button>
                             <QiblaCompass qiblaDirection={qiblaAngle || 0} />
-                         </div>
+                        </div>
                     </motion.div>
                 )}
                 {activeModal === 'tasbih' && <TasbihWidget onClose={() => setActiveModal('none')} />}

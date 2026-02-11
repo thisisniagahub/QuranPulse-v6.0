@@ -65,6 +65,26 @@ graph TD
 * **Env Vars:** API Keys stored in Supabase Vault not exposed to client.
 * **Hardened Admin:** Strict role-based access for Admin Dashboard.
 
+## VPS Infrastructure (srv1322432)
+
+The production backend runs on a dedicated VPS with the following topology:
+
+| Component | Runtime | Binding |
+|-----------|---------|---------|
+| OpenClaw (GangBot) | Root user systemd service | `100.100.205.64:18789` (Tailscale) |
+| QuranPulse API | Docker Compose | `0.0.0.0:3000` |
+| Qdrant Vector DB | Docker (in QP stack) | `0.0.0.0:6333` ⚠️ |
+| Redis | Docker (in QP stack) | `127.0.0.1:6379` |
+
+**Networking:**
+* **Tailscale VPN** (`100.100.205.64`) provides private mesh access for OpenClaw.
+* **Caddy** reverse proxy terminates TLS for `operator.gangniaga.my` and `api.gangniaga.my`.
+* **fail2ban** active with `sshd` jail for brute-force protection.
+
+> [!WARNING]
+> Qdrant is currently bound to `0.0.0.0` — should be restricted to `127.0.0.1`.
+> SSH still allows `PermitRootLogin yes` — needs hardening.
+
 ## Future Scalability
 * **Microservices:** The ASR Engine is designed to be peeled off into a separate Python/FastAPI container service.
 * **PWA:** Service Workers cache `quran-data` for offline reading.

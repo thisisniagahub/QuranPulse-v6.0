@@ -9,28 +9,28 @@ interface IqraVisionCoachProps {
 const IqraVisionCoach: React.FC<IqraVisionCoachProps> = ({ onClose }) => {
     const handleCellClick = (cell: IqraCell) => {
         const audio = new Audio(cell.content.audioUrl);
-        audio.play().catch(e => console.log("Audio play failed (mock)", e));
+        audio.play().catch(() => { /* Expected in mock/autoplay-restricted */ });
     };
 
     return (
         <div className="h-full flex flex-col relative bg-black">
             <div className="absolute inset-0 overflow-hidden">
-                <img 
-                    src="/images/iqra-book-open.jpg" 
-                    alt="Camera Feed" 
+                <img
+                    src="/images/iqra-book-open.jpg"
+                    alt="Camera Feed"
                     className="w-full h-full object-cover opacity-60"
                     onError={(e) => {
                         e.currentTarget.src = 'https://placehold.co/600x800/1e293b/white?text=Camera+Feed+Simulation';
                     }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40"></div>
-                
+
                 {/* AR Overlay */}
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[60%] border-2 border-teal-500/50 rounded-3xl shadow-[0_0_50px_rgba(20,184,166,0.3)] animate-pulse">
                     <div className="absolute top-4 left-4 bg-teal-500 text-black text-xs font-bold px-2 py-1 rounded animate-bounce">
                         <i className="fa-solid fa-expand mr-1"></i> Tracking Page 1
                     </div>
-                    
+
                     {/* AR Smart Cells */}
                     {MOCK_IQRA_PAGE_1.cells.map((cell) => (
                         <div
@@ -59,14 +59,14 @@ const IqraVisionCoach: React.FC<IqraVisionCoachProps> = ({ onClose }) => {
                     Point your camera at <span className="text-teal-400 font-bold">Iqra' Volume 1, Page 1</span>
                 </p>
                 <div className="flex gap-4">
-                    <button 
-                        className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center text-xl shadow-xl hover:scale-110 transition-transform" 
-                        title="Capture Image" 
+                    <button
+                        className="w-14 h-14 rounded-full bg-white text-black flex items-center justify-center text-xl shadow-xl hover:scale-110 transition-transform"
+                        title="Capture Image"
                         aria-label="Capture Image"
                     >
                         <i className="fa-solid fa-camera"></i>
                     </button>
-                    <button 
+                    <button
                         onClick={onClose}
                         className="w-14 h-14 rounded-full bg-slate-800/80 backdrop-blur text-white flex items-center justify-center text-xl border border-slate-600 hover:bg-slate-700 transition-colors"
                         title="Close AR Mode"

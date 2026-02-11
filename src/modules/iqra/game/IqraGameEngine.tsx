@@ -54,7 +54,7 @@ const IqraGameEngine: React.FC = () => {
 
     const logProgress = async (exerciseId: string, rating: number) => {
         // Implementation for SRS SM-2 logic and XP gain would go here
-        console.log(`Logging progress: ${exerciseId} with rating ${rating}`);
+        // TODO: Implement SM-2 SRS logic and XP persistence
     };
 
     if (loading) return <div className="flex items-center justify-center h-64 text-cyan-400 animate-pulse">Initializing IQRA Engine...</div>;

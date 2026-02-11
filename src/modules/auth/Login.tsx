@@ -20,16 +20,15 @@ export const Login = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setError(null);
-        console.log("🚀 Login: Start handleLogin for", email);
+
 
         if (!email || !password) {
             setError("Sila isi emel dan kata laluan.");
             return;
         }
 
-        // --- DEV BYPASS (Explicit Check) ---
-        if (email === 'dev@qp.com' && password === 'dev123') {
-            console.log("🚧 Login: Dev Bypass Triggered");
+        // --- DEV BYPASS (Only in development mode) ---
+        if (import.meta.env.DEV && email === 'dev@qp.com' && password === 'dev123') {
             handleDevBypass();
             return;
         }
@@ -37,7 +36,7 @@ export const Login = () => {
         setLoading(true);
 
         try {
-            console.log("🔌 Login: Calling AuthContext login...");
+
             const { error } = await login({ email, password });
 
             if (error) {
@@ -45,7 +44,7 @@ export const Login = () => {
                 throw error;
             }
 
-            console.log("✅ Login: AuthContext login success. Navigating...");
+
             setLoginSuccess(true);
 
             // Handle Remember Me

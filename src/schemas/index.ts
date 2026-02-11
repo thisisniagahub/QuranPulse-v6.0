@@ -116,7 +116,7 @@ export const lessonFeedbackSchema = z.object({
         .min(1, 'Rating diperlukan')
         .max(5, 'Rating maksimum 5'),
     difficulty: z.enum(['easy', 'medium', 'hard'], {
-        required_error: 'Sila pilih tahap kesukaran',
+        message: 'Sila pilih tahap kesukaran',
     }),
     feedback: z
         .string()

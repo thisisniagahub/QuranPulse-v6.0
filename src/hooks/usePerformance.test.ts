@@ -2,6 +2,7 @@
  * usePerformance Hook Tests
  */
 
+// @ts-expect-error — test environment uses jest transformer
 import { renderHook, act } from '@testing-library/react';
 import { useDebounce, useThrottle, useLocalStorage, usePrefersReducedMotion } from './usePerformance';
 
@@ -21,7 +22,7 @@ describe('useDebounce', () => {
 
     it('debounces value changes', () => {
         const { result, rerender } = renderHook(
-            ({ value }) => useDebounce(value, 300),
+            ({ value }: { value: string }) => useDebounce(value, 300),
             { initialProps: { value: 'initial' } }
         );
 
@@ -52,7 +53,7 @@ describe('useThrottle', () => {
 
     it('throttles rapid value changes', () => {
         const { result, rerender } = renderHook(
-            ({ value }) => useThrottle(value, 100),
+            ({ value }: { value: string }) => useThrottle(value, 100),
             { initialProps: { value: 'v1' } }
         );
 

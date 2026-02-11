@@ -31,7 +31,7 @@ export function useZodForm<TSchema extends z.ZodType<any, any, any>>(
 
     return useForm<z.infer<TSchema>>({
         ...formProps,
-        resolver: zodResolver(schema),
+        resolver: zodResolver(schema) as any,
     });
 }
 

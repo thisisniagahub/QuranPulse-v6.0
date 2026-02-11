@@ -71,7 +71,7 @@ const RealtimeChatDemo: React.FC<RealtimeChatDemoProps> = ({
     // Dummy notification sound
     const playNotificationSound = () => {
         // In production, use actual audio
-        console.log('🔔 Notification sound played');
+        // TODO: Implement actual notification audio playback
     };
 
     // Connection status indicator
@@ -151,8 +151,8 @@ const RealtimeChatDemo: React.FC<RealtimeChatDemoProps> = ({
                             >
                                 <div
                                     className={`max-w-[80%] px-4 py-2 rounded-2xl ${msg.message_type === 'outgoing'
-                                            ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-br-md'
-                                            : 'bg-slate-800 text-slate-100 rounded-bl-md'
+                                        ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-br-md'
+                                        : 'bg-slate-800 text-slate-100 rounded-bl-md'
                                         }`}
                                 >
                                     <p className="text-sm leading-relaxed">{msg.content}</p>

@@ -3,104 +3,148 @@
 ## Project Overview
 **QuranPulse v6.0 ("Noor-e-Cyber")** is a futuristic Islamic Progressive Web App (PWA) built to bridge spiritual depth with a modern, cyber-islamic design language. It features advanced modules like "Ustaz AI", "Iqra Digital" (interactive learning), and a "Pulse Command Center" for daily spiritual management.
 
+---
+
 ## Tech Stack
-* **Frontend:** React 18, Vite, TypeScript
-* **Styling:** Tailwind CSS v4, Framer Motion (Glassmorphism & Neon aesthetics)
-* **State Management:** Zustand, React Query, React Context
-* **Backend:** Supabase (PostgreSQL, Auth, Edge Functions)
-* **AI:** Gemini, Groq, OpenAI Whisper (ASR)
-* **Testing:** Jest, React Testing Library
-* **Routing:** React Router 7
 
-## Architecture & File Structure
-The project follows a modular architecture within `src/`:
+| Layer | Technology |
+|-------|------------|
+| Frontend | React 18, Vite, TypeScript |
+| Styling | Tailwind CSS v4, Framer Motion |
+| State | Zustand, React Query, React Context |
+| Backend | Supabase (PostgreSQL, Auth, Edge Functions) |
+| AI | Gemini via Antigravity, Groq, OpenAI Whisper |
+| Testing | Jest, React Testing Library |
+| Routing | React Router 7 |
 
-* `src/modules/`: Contains core feature modules (e.g., `quran`, `iqra`, `smart-deen`).
-* `src/components/`: Reusable UI components (Atoms, Molecules).
-* `src/services/`: API integration services (Supabase, AI endpoints).
-* `src/contexts/`: Global state providers (Theme, Audio).
-* `src/hooks/`: Custom React hooks.
-* `admin-dashboard/`: Separate Next.js application for administration.
-* `DOCS_VAULT/`: Centralized documentation repository.
+---
+
+## Infrastructure Architecture
+
+### VPS Deployment (srv1322432)
+
+| Component | Runtime | Domain |
+|-----------|---------|--------|
+| OpenClaw (GangBot) | Root user systemd | operator.gangniaga.my |
+| QuranPulse API | Docker Compose | api.gangniaga.my |
+| Qdrant | Docker (in QP stack) | localhost:6333 |
+| Frontend | Vercel | quranpulse.my |
+| Database | Supabase | Managed |
+| VPN | Tailscale | 100.100.205.64 |
+
+### AI Model Configuration (Actual — 2026-02-10)
+```json5
+{
+  agents: {
+    defaults: {
+      model: {
+        primary: "google-antigravity/gemini-3-flash",   // current active
+        fallbacks: ["google-antigravity/gemini-3-pro"]  // target upgrade
+      }
+    }
+  }
+}
+```
+
+See [docs/VPS_PRD.md](docs/VPS_PRD.md) for complete deployment architecture.
+
+---
+
+## File Structure
+```
+src/
+├── modules/          # quran, iqra, smart-deen
+├── components/       # Reusable UI components
+├── services/         # API services
+├── contexts/         # React contexts
+└── hooks/            # Custom hooks
+
+docs/
+├── VPS_PRD.md        # Deployment architecture
+├── VPS_STATUS.md     # Infrastructure status
+├── OPENCLAW_GUIDE.md # OpenClaw config
+└── ...               # Feature docs
+
+supabase/functions/   # Edge Functions
+admin-dashboard/      # Next.js admin app
+DOCS_VAULT/          # Documentation repository
+```
+
+---
 
 ## Quran Module Features (2026-01-11)
-The Quran module has been significantly upgraded with 9 new features:
 
 ### Tier 1 - Quick Wins
-* **Semantic Search** - Natural language search using pgvector
-* **Daily Ayat Widget** - 7 themed verses with PWA notifications
-* **Khatam Tracker** - Visual 30-juz progress with confetti
+- **Semantic Search** - Natural language search using pgvector
+- **Daily Ayat Widget** - 7 themed verses with PWA notifications
+- **Khatam Tracker** - Visual 30-juz progress with confetti
 
 ### Tier 2 - Medium Features
-* **Tadabbur AI Mode** - AI reflection questions after reading
-* **Voice-Active Reader** - ASR-powered auto-scroll
-* **Word Root Explorer** - Arabic etymology analysis
+- **Tadabbur AI Mode** - AI reflection questions after reading
+- **Voice-Active Reader** - ASR-powered auto-scroll
+- **Word Root Explorer** - Arabic etymology analysis
 
 ### Tier 3 - Advanced
-* **Digital Mushaf** - Noor-e-Cyber themed 604-page view
-* **Iqra Graduation** - Digital certificate ceremony
-* **Smart Deen Crossover** - Floating AI button for context questions
+- **Digital Mushaf** - Noor-e-Cyber themed 604-page view
+- **Iqra Graduation** - Digital certificate ceremony
+- **Smart Deen Crossover** - Floating AI button for context questions
 
-## Development Workflow
+---
 
-### Key Commands
-* **Install Dependencies:** `npm install`
-* **Start Dev Server:** `npm run dev` (Runs at http://localhost:5173)
-* **Build for Production:** `npm run build`
-* **Run Tests:** `npm run test`
-* **Run Tests (Watch):** `npm run test:watch`
+## Development Commands
+
+```bash
+npm install          # Install dependencies
+npm run dev          # Dev server (http://localhost:5173)
+npm run build        # Production build
+npm run test         # Run tests
+npm run test:watch   # Watch mode
+```
 
 ### Admin Dashboard
-To work on the admin dashboard:
 ```bash
 cd admin-dashboard
 npm install
 npm run dev
 ```
 
+---
+
 ## Conventions
-* **Styling:** Use Tailwind utility classes. Prefer `Framer Motion` for animations.
-* **Components:** Functional components with TypeScript.
-* **State:** Use `Zustand` for global app state and `React Query` for server state.
-* **Testing:** Write unit tests for new logic using Jest.
-* **Design System:** Adhere to the "Noor-e-Cyber" aesthetic (Cyan/Purple neon on dark backgrounds).
+- **Styling**: Tailwind CSS + Framer Motion
+- **Components**: Functional TypeScript
+- **State**: Zustand (global), React Query (server)
+- **Design**: "Noor-e-Cyber" aesthetic (Cyan/Purple neon on dark)
 
-## Important Files
-* `package.json`: Project dependencies and scripts.
-* `vite.config.ts`: Vite configuration.
-* `supabase_schema_final.sql`: Current database schema.
-* `DOCUMENTATION_PROJECT_BARU/TECH_STACK.md`: Detailed tech stack reference.
+---
 
-## Agent Protocols & Workflows
+## Agent Protocols
 
-### ⚠️ MANDATORY: Before Any Response
-1. **READ** `.agent/PROJECT_STATUS.md` to understand current phase
-2. **IDENTIFY** request type (Bug/Feature/Review/Planning/Deploy/Explain/Refactor)
-3. **FOLLOW** the appropriate response template
+### Before Any Response
+1. READ `.agent/PROJECT_STATUS.md`
+2. IDENTIFY request type
+3. FOLLOW appropriate protocol
 
-### Response Protocols
-* `.agent/protocols/comprehensive-response-protocol.md` - **MAIN PROTOCOL** (All response types)
-* `.agent/protocols/mvp-planning-protocol.md` - Structured MVP planning format
+### Workflows
 
-### Project Status Tracking
-* `.agent/PROJECT_STATUS.md` - Current phase, active tasks, known issues
+| Command | Purpose |
+|---------|---------|
+| `/plan-mvp` | MVP planning |
+| `/agent-quran` | Quran API |
+| `/agent-worship` | Prayer times |
+| `/agent-compliance` | Fatwa checks |
+| `/agent-education` | Hadith/Tafsir |
+| `/agent-zakat` | Calculations |
+| `/agent-asr` | ASR engine |
 
-### Available Workflows (Slash Commands)
-* `/plan-mvp` - Structured MVP planning with clarification, research, and acceptance criteria
-* `/agent-quran` - Quran verse search and navigation
-* `/agent-worship` - Prayer times and Qibla direction
-* `/agent-compliance` - Fatwa and Halal status checks
-* `/agent-education` - Hadith and Tafsir lookups
-* `/agent-zakat` - Zakat calculations
-* `/agent-admin` - System stats and analytics
-* `/agent-asr` - ASR Engine for Quran recitation
+---
 
-### Response Structure Pattern
-When planning new features/projects:
-1. **Clarification Form** - Gather requirements first
-2. **Parallel Research** - Use multi-tool searches
-3. **Structured MVP Scope** - Platforms, tech stack, features
-4. **Acceptance Criteria** - Measurable metrics per feature
-5. **Phased Timeline** - 2-week sprint breakdown
-6. **References** - Cite all sources
-7. **Next Steps** - Actionable options
+## Important Documentation
+
+| File | Purpose |
+|------|---------|
+| [docs/VPS_PRD.md](docs/VPS_PRD.md) | Deployment architecture |
+| [docs/VPS_STATUS.md](docs/VPS_STATUS.md) | Infrastructure status |
+| [docs/OPENCLAW_GUIDE.md](docs/OPENCLAW_GUIDE.md) | OpenClaw config |
+| [AGENTS.md](AGENTS.md) | Agent context |
+| `.agent/PROJECT_STATUS.md` | Current phase |

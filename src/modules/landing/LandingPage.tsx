@@ -21,6 +21,10 @@ import ParticlesBackground from '@/components/landing/ParticlesBackground';
 import { NumberCounter } from '@/components/landing/TextAnimations';
 import { ShimmerButton } from '@/components/landing/PremiumEffects';
 import { HeroSection } from './components/HeroSection';
+import { ProblemSection } from './components/ProblemSection';
+import { ComparisonSection } from './components/ComparisonSection';
+import { FAQSection } from './components/FAQSection';
+import { WhatsAppButton } from './components/WhatsAppButton';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -49,7 +53,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="relative">
               <div className="absolute inset-0 bg-cyan-400/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <img src="/logo-primary.png" alt="Logo" className="w-14 h-14 object-contain scale-110 relative z-10" />     
+              <img src="/logo-primary.png" alt="Logo" className="w-14 h-14 object-contain scale-110 relative z-10" />
             </div>
             <span className="font-bold text-xl tracking-tight hidden sm:block font-[Poppins] text-white">Quran<span className="text-cyan-400">Pulse</span></span>
           </div>
@@ -117,7 +121,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                   <a
                     key={item.href}
                     href={`#${item.href}`}
-                    className="text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-white/5"       
+                    className="text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-white/5"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsMobileMenuOpen(false);
@@ -137,7 +141,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                     setIsMobileMenuOpen(false);
                     onGetStarted();
                   }}
-                  className="w-full mt-4 bg-cyan-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-cyan-600/20"   
+                  className="w-full mt-4 bg-cyan-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-cyan-600/20"
                 >
                   Launch App
                 </button>
@@ -150,26 +154,38 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       {/* 2. HERO SECTION */}
       <HeroSection onGetStarted={onGetStarted} spotsLeft={42} />
 
-      {/* TRUST BAR - Social Proof */}
+      {/* 3. TRUST BAR - Social Proof */}
       <TrustBar />
 
-      {/* FEATURES BENTO GRID */}
+      {/* 4. PROBLEM SECTION - Agitate Pain Points */}
+      <ProblemSection />
+
+      {/* 5. FEATURES BENTO GRID - The Solution */}
       <FeaturesBento />
 
-      {/* Q-WER INTELLIGENCE DEMO */}
+      {/* 6. Q-WER INTELLIGENCE DEMO */}
       <QwerDemoSection />
 
-      {/* TESTIMONIALS */}
+      {/* 7. COMPARISON - vs Competitors */}
+      <ComparisonSection />
+
+      {/* 8. TESTIMONIALS - Social Proof */}
       <Testimonials />
 
-      {/* PRICING TABLE (RM) */}
+      {/* 9. PRICING TABLE (RM) */}
       <PricingTable />
 
-      {/* FINAL CTA */}
+      {/* 10. FAQ - Handle Objections */}
+      <FAQSection />
+
+      {/* 11. FINAL CTA */}
       <FinalCta onGetStarted={onGetStarted} />
 
-      {/* FOOTER */}
+      {/* 12. FOOTER */}
       <Footer />
+
+      {/* FLOATING WHATSAPP BUTTON */}
+      <WhatsAppButton />
 
     </div>
   );

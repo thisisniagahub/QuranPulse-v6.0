@@ -7,13 +7,46 @@
 
 ## Project Overview
 
-**QuranPulse v6.0 ("Noor-e-Cyber")** is a futuristic Islamic Progressive Web App (PWA) bridging spiritual depth with modern cyber-Islamic design. Features include Ustaz AI (chat), Iqra Digital (learning), and Pulse Command Center (dashboard).
+**QuranPulse v6.0 ("Noor-e-Cyber")** is a futuristic Islamic Progressive Web App (PWA) bridging spiritual depth with modern cyber-Islamic design.
 
-| Field | Value                                   |
-| ----- | --------------------------------------- |
-| Phase | PRODUCTION                              |
-| URL   | https://quranpulse.my                   |
-| Tech  | React 18 + Vite + TypeScript + Supabase |
+| Field | Value |
+|-------|-------|
+| Phase | PRODUCTION |
+| Frontend | https://quranpulse.my |
+| API | https://api.gangniaga.my |
+| Operator | https://operator.gangniaga.my |
+| Tech | React 18 + Vite + TypeScript + Supabase |
+
+---
+
+## Infrastructure Architecture
+
+### VPS (srv1322432 - 76.13.176.142)
+
+| Component | Runtime | Domain |
+|-----------|---------|--------|
+| OpenClaw (GangBot) | Root user systemd | operator.gangniaga.my |
+| QuranPulse API | Docker Compose | api.gangniaga.my |
+| Qdrant | Docker (in QP stack) | localhost:6333 |
+| Frontend | Vercel | quranpulse.my |
+| Database | Supabase | Managed |
+| VPN | Tailscale | 100.100.205.64 |
+
+### AI Model Configuration (Actual — 2026-02-10)
+```json5
+{
+  agents: {
+    defaults: {
+      model: {
+        primary: "google-antigravity/gemini-3-flash",   // current
+        fallbacks: ["google-antigravity/gemini-3-pro"]  // target upgrade
+      }
+    }
+  }
+}
+```
+
+See [docs/VPS_PRD.md](docs/VPS_PRD.md) for deployment architecture.
 
 ---
 
@@ -77,60 +110,58 @@ Before claiming ANY task complete:
 
 ## Project Structure
 
-```text
+```
 src/
-├── modules/          # Feature modules (quran, iqra, smart-deen, etc.)
+├── modules/          # Feature modules (quran, iqra, smart-deen)
 ├── components/       # Reusable UI components
-├── services/         # API services (aiService, quranService, etc.)
+├── services/         # API services
 ├── contexts/         # React contexts
-└── hooks/           # Custom hooks
+└── hooks/            # Custom hooks
+
+docs/
+├── VPS_PRD.md        # Deployment architecture
+├── VPS_STATUS.md     # Infrastructure status
+├── OPENCLAW_GUIDE.md # OpenClaw configuration
+└── ...               # Feature documentation
 
 supabase/
-├── functions/       # Edge Functions (mcp-quran, mcp-worship, etc.)
-└── migrations/      # Database migrations
+├── functions/        # Edge Functions
+└── migrations/       # Database migrations
 
 .agent/
-├── PROJECT_STATUS.md              # Current project phase
-├── context/CURRENT_TASK.md        # Active work
-├── context/PROTECTED_FILES.md     # Don't delete these
-├── context/HANDOFF_LOG.md         # Session notes
-└── protocols/                     # Response templates
+├── PROJECT_STATUS.md # Current project phase
+├── context/          # Task context files
+└── protocols/        # Response templates
 ```
 
 ---
 
 ## Agent Workflows
 
-| Command             | Purpose                   |
-| ------------------- | ------------------------- |
-| `/agent-quran`      | Quran API operations      |
-| `/agent-worship`    | Prayer times, Qibla       |
-| `/agent-compliance` | Fatwa, Halal checks       |
-| `/agent-education`  | Hadith, Tafsir            |
-| `/agent-zakat`      | Zakat calculations        |
-| `/agent-asr`        | Speech recognition        |
-| `/plan-mvp`         | Structured MVP planning   |
+| Command | Purpose |
+|---------|---------|
+| `/agent-quran` | Quran API operations |
+| `/agent-worship` | Prayer times, Qibla |
+| `/agent-compliance` | Fatwa, Halal checks |
+| `/agent-education` | Hadith, Tafsir |
+| `/agent-zakat` | Zakat calculations |
+| `/agent-asr` | Speech recognition |
+| `/plan-mvp` | Structured MVP planning |
 
 ---
 
 ## Session Protocol
 
 ### Starting a Session
-
 1. Read this file (AGENTS.md)
 2. Read `.agent/PROJECT_STATUS.md`
 3. Read `.agent/context/CURRENT_TASK.md`
 4. Check `.agent/context/PROTECTED_FILES.md`
 
 ### Ending a Session
-
 1. Update `.agent/context/CURRENT_TASK.md`
 2. Add entry to `.agent/context/HANDOFF_LOG.md`
 3. Commit with prefix: `[AGENT:Name] type: message`
-
-### Full Protocol
-
-See `.agent/protocols/comprehensive-response-protocol.md`
 
 ---
 
@@ -139,15 +170,15 @@ See `.agent/protocols/comprehensive-response-protocol.md`
 Format: `[AGENT:Name] type: description`
 
 Types:
-
 - `feat` - New feature
 - `fix` - Bug fix
 - `docs` - Documentation
 - `refactor` - Code refactor
 - `test` - Tests
 - `deploy` - Deployment
+- `infra` - Infrastructure
 
-Example: `[AGENT:Gemini] feat(quran): Add semantic search`
+Example: `[AGENT:Antigravity] infra: Update VPS security hardening`
 
 ---
 
@@ -164,14 +195,15 @@ Example: `[AGENT:Gemini] feat(quran): Add semantic search`
 
 ## Key Files Reference
 
-| File                               | Purpose                  |
-| ---------------------------------- | ------------------------ |
-| `AGENTS.md`                        | This file - main context |
-| `GEMINI.md`                        | Extended project context |
-| `.agent/PROJECT_STATUS.md`         | Current phase & health   |
-| `.agent/context/CURRENT_TASK.md`   | Active work items        |
-| `.agent/context/PROTECTED_FILES.md`| Files to never delete    |
-| `.agent/context/HANDOFF_LOG.md`    | Session handoff notes    |
+| File | Purpose |
+|------|---------|
+| `AGENTS.md` | This file - main context |
+| `GEMINI.md` | Extended project context |
+| `docs/VPS_PRD.md` | Deployment architecture |
+| `docs/VPS_STATUS.md` | Infrastructure status |
+| `docs/OPENCLAW_GUIDE.md` | OpenClaw configuration |
+| `.agent/PROJECT_STATUS.md` | Current phase & health |
+| `.agent/context/CURRENT_TASK.md` | Active work items |
 
 ---
 

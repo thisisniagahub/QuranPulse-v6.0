@@ -6,6 +6,32 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2026-02-10]
+
+### Fixed - VPS Infrastructure
+- [AGENT:Antigravity] **OpenClaw Port Conflict Resolved**
+  - Masked conflicting system service at `/etc/systemd/system/openclaw-gateway.service`
+  - Root user service confirmed as sole listener on port 18789
+  - Enabled `loginctl enable-linger root` for service persistence
+
+### Changed - Documentation Alignment
+- [AGENT:Antigravity] **Full documentation sync with live VPS state**
+  - Rewrote `VPS_STATUS.md` — corrected OpenClaw runtime, added Tailscale/Qdrant/cron
+  - Updated `VPS_PRD.md` — root user systemd, Tailscale binding, SSH security warnings
+  - Rewrote `OPENCLAW_GUIDE.md` — bot identity, linger, dual-service conflict, expanded troubleshooting
+  - Updated `AGENTS.md`, `GEMINI.md` — corrected infra table and model config
+  - Updated `README.md` — architecture section aligned
+  - Updated `PROJECT_STATUS.md` — added security findings
+  - Updated `ARCHITECTURE.md` — added VPS infrastructure section
+  - Corrected AI model: `gemini-3-flash` (actual) vs `gemini-3-pro` (target)
+  - Added fail2ban (active), Qdrant (running), Tailscale (active) to docs
+  - Flagged SSH security gap: `PermitRootLogin yes` still active
+
+### Removed
+- [AGENT:Antigravity] Deleted obsolete `CONDUKTOR_STATUS.md`, `CONDUCTOR_CHAT.md`, `CONDUCTOR_LIVE.md`
+
+---
+
 ## [2026-02-08]
 
 ### Fixed - Loading & Build Issues

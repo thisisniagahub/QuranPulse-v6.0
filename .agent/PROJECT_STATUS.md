@@ -1,6 +1,6 @@
 # 📊 QuranPulse v6.0 - Project Status
 
-> **Last Updated**: 2026-01-13T10:45:00+08:00
+> **Last Updated**: 2026-02-10T16:00:00+08:00
 > **Current Phase**: PRODUCTION (Active Maintenance)
 > **Sprint**: Post-Launch Stabilization
 
@@ -79,17 +79,23 @@
 | --- | -------- | ---------------------------------- | ---------- |
 | #1  | HIGH     | PWA cache mismatch (MIME errors)   | ✅ Fixed   |
 | #2  | MEDIUM   | chat-proxy deployment failing      | ✅ Fixed   |
+| #3  | HIGH     | SSH: PermitRootLogin still `yes`   | ⚠️ Open    |
+| #4  | HIGH     | SSH: PasswordAuth still `yes`      | ⚠️ Open    |
+| #5  | MEDIUM   | Qdrant exposed on 0.0.0.0         | ⚠️ Open    |
+| #6  | LOW      | UFW port 18789 redundant           | ⚠️ Open    |
 
 ---
 
-## 📈 Recent Changes (Last 7 days)
+## 📈 Recent Changes
 
 | Date       | Commit  | Description                             |
 | ---------- | ------- | --------------------------------------- |
+| 2026-02-10 | latest  | VPS service conflict fix + doc alignment |
+| 2026-02-09 | latest  | Competitor analysis deep dive           |
+| 2026-02-08 | latest  | Fix loading & build issues, CORS fix    |
+| 2026-02-07 | latest  | Fix TypeScript/CSS import, Vercel deploy |
 | 2026-01-13 | latest  | Fix PWA config + Chat Proxy + ASR       |
-| 2026-01-12 | latest  | Fix accessibility + markdown lint       |
 | 2026-01-12 | 6cdf9ce | TypeScript fixes - TadabburAI           |
-| 2026-01-11 | 922873c | Fix x-app-name CORS header              |
 
 ---
 

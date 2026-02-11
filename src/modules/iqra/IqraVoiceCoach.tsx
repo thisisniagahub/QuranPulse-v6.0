@@ -25,7 +25,7 @@ const IqraVoiceCoach: React.FC<IqraVoiceCoachProps> = ({ onBack }) => {
             )}
 
             <div className="w-full max-w-4xl z-10">
-                <ASRRecorder expectedText="Bismillah" onResult={(result) => console.log('ASR Result:', result)} />
+                <ASRRecorder expectedText="Bismillah" onResult={() => { }} />
             </div>
         </div>
     );

@@ -12,8 +12,8 @@ const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
         <section className="py-24 bg-transparent relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-cyan-100 via-transparent to-transparent opacity-50"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-200/20 rounded-full blur-[150px] pointer-events-none"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-cyan-500/5 via-transparent to-transparent opacity-50"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[150px] pointer-events-none"></div>
             </div>
 
             {/* Grid pattern */}
@@ -32,17 +32,17 @@ const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
                     </div>
 
                     {/* Headline */}
-                    <h2 className="text-4xl md:text-6xl font-[Poppins] font-bold text-slate-800 mb-6 tracking-tight leading-tight">
+                    <h2 className="text-4xl md:text-6xl font-[Poppins] font-bold text-white mb-6 tracking-tight leading-tight">
                         Mula Perjalanan Quran<br />
-                        <span className="text-cyan-600">
+                        <span className="text-cyan-400">
                             Anda Hari Ini
                         </span>
                     </h2>
 
                     {/* Subheadline */}
-                    <p className="text-xl text-slate-600 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
+                    <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
                         Percuma untuk bermula. Tiada kad kredit diperlukan.
-                        <span className="text-cyan-600 font-bold"> Batal bila-bila masa.</span>
+                        <span className="text-cyan-400 font-bold"> Batal bila-bila masa.</span>
                     </p>
 
                     {/* CTA Buttons */}
@@ -54,7 +54,7 @@ const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
                     {/* Web App Link */}
                     <button
                         onClick={onGetStarted}
-                        className="inline-flex items-center gap-2 text-cyan-700 font-bold text-sm hover:gap-3 transition-all group"
+                        className="inline-flex items-center gap-2 text-cyan-400 font-bold text-sm hover:gap-3 transition-all group"
                     >
                         Atau akses Web App sekarang
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

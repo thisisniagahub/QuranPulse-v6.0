@@ -17,18 +17,18 @@ const PWAInstallPrompt: React.FC = () => {
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
-      
+
       // Simple Client-Side A/B Testing Logic
       // Check if user has already seen/dismissed the prompt recently?
       const hasDismissed = localStorage.getItem('pwa_prompt_dismissed');
       if (!hasDismissed) {
-         // Randomize A/B (Uncomment for true 50/50 test)
-         // const isVariantB = Math.random() > 0.5;
-         // setVariant(isVariantB ? 'B' : 'A');
-         
-         // For now, enforcing Variant B (Winner)
-         setVariant('B');
-         setShowPrompt(true);
+        // Randomize A/B (Uncomment for true 50/50 test)
+        // const isVariantB = Math.random() > 0.5;
+        // setVariant(isVariantB ? 'B' : 'A');
+
+        // For now, enforcing Variant B (Winner)
+        setVariant('B');
+        setShowPrompt(true);
       }
     };
 
@@ -36,7 +36,7 @@ const PWAInstallPrompt: React.FC = () => {
     const handleAppInstalled = () => {
       setShowPrompt(false);
       setDeferredPrompt(null);
-      console.log('PWA was installed');
+      // Tracked via analytics
       // Track conversion here (e.g., analytics.track('PWA_Installed', { variant }))
     };
 
@@ -57,13 +57,9 @@ const PWAInstallPrompt: React.FC = () => {
 
     // Wait for the user to respond to the prompt
     const { outcome } = await deferredPrompt.userChoice;
-    
-    if (outcome === 'accepted') {
-      console.log('User accepted the install prompt');
-    } else {
-      console.log('User dismissed the install prompt');
-    }
-    
+
+    // outcome: 'accepted' | 'dismissed' — tracked via analytics
+
     setDeferredPrompt(null);
     setShowPrompt(false);
   };
@@ -103,43 +99,43 @@ const PWAInstallPrompt: React.FC = () => {
         className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 flex justify-center pointer-events-none"
       >
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-cyan-100 dark:border-cyan-900/30 p-4 w-full max-w-md pointer-events-auto flex items-center gap-4 relative overflow-hidden">
-            
-            {/* Background Glow */}
-            <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl"></div>
-            
-            {/* Icon */}
-            <div className="flex-shrink-0 w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center text-2xl shadow-sm border border-cyan-100">
-                {activeContent.icon}
-            </div>
 
-            {/* Text */}
-            <div className="flex-1">
-                <h4 className="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base leading-tight">
-                    {activeContent.headline}
-                </h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed line-clamp-2">
-                    {activeContent.body}
-                </p>
-            </div>
+          {/* Background Glow */}
+          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl"></div>
 
-            {/* Actions */}
-            <div className="flex flex-col gap-2">
-                <button 
-                    onClick={handleInstallClick}
-                    className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-lg shadow-cyan-500/20 transition-all active:scale-95 whitespace-nowrap flex items-center gap-1.5"
-                >
-                    <Download size={14} strokeWidth={2.5} />
-                    {activeContent.cta}
-                </button>
-            </div>
+          {/* Icon */}
+          <div className="flex-shrink-0 w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center text-2xl shadow-sm border border-cyan-100">
+            {activeContent.icon}
+          </div>
 
-            {/* Close */}
-            <button 
-                onClick={handleDismiss}
-                className="absolute top-2 right-2 text-slate-300 hover:text-slate-500 transition-colors"
+          {/* Text */}
+          <div className="flex-1">
+            <h4 className="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base leading-tight">
+              {activeContent.headline}
+            </h4>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed line-clamp-2">
+              {activeContent.body}
+            </p>
+          </div>
+
+          {/* Actions */}
+          <div className="flex flex-col gap-2">
+            <button
+              onClick={handleInstallClick}
+              className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-lg shadow-cyan-500/20 transition-all active:scale-95 whitespace-nowrap flex items-center gap-1.5"
             >
-                <X size={16} />
+              <Download size={14} strokeWidth={2.5} />
+              {activeContent.cta}
             </button>
+          </div>
+
+          {/* Close */}
+          <button
+            onClick={handleDismiss}
+            className="absolute top-2 right-2 text-slate-300 hover:text-slate-500 transition-colors"
+          >
+            <X size={16} />
+          </button>
         </div>
       </motion.div>
     </AnimatePresence>
