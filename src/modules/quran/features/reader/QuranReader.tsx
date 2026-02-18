@@ -13,6 +13,7 @@ import MushafView from './MushafView';
 
 
 const QuranReader: React.FC = () => {
+    const context = useQuran();
     const {
         selectedChapter,
         verses,
@@ -46,14 +47,15 @@ const QuranReader: React.FC = () => {
         setBookmarkVerse,
         setShowBookmarkCollections,
         setSelectedWord,
+        selectedTranslationId,
+        setSelectedTranslationId,
 
         // UI Toggles
         setShowSettings,
         setShowSurahInfo,
         setShowGoToVerse,
 
-
-    } = useQuran();
+    } = context;
 
     const {
         currentTrack,
@@ -83,7 +85,9 @@ const QuranReader: React.FC = () => {
     const [isVoiceMode, setIsVoiceMode] = React.useState(false);
 
     // Active Verse Calculation for Voice Reader
-    const activeVerse = verses.find(v => v.verse_key === (currentTrack?.verseKey || verses[0]?.verse_key));
+    const activeVerse = verses.length > 0
+        ? verses.find(v => v.verse_key === (currentTrack?.verseKey || verses[0]?.verse_key)) ?? null
+        : null;
 
     // Also scroll nicely when entering reading view?
     useEffect(() => {
@@ -94,10 +98,6 @@ const QuranReader: React.FC = () => {
 
     // Helper Wrappers for Header
     // Context has setShowTranslation(bool). Header expects onToggleTranslation().
-    // We can pass wrapper functions.
-
-    // We need to access the setters from context for the Header
-    const context = useQuran();
 
     // Handlers for Immersive Controls
     const handleToggleZen = () => setIsZenMode(!isZenMode);
@@ -126,8 +126,8 @@ const QuranReader: React.FC = () => {
                     onToggleTranslation={() => setShowTranslation(!showTranslation)}
                     showTransliteration={showTransliteration}
                     onToggleTransliteration={() => setShowTransliteration(!showTransliteration)}
-                    selectedTranslationId={context.selectedTranslationId}
-                    onTranslationChange={context.setSelectedTranslationId}
+                    selectedTranslationId={selectedTranslationId}
+                    onTranslationChange={setSelectedTranslationId}
                     isAudioLoading={isAudioLoading}
                     layoutMode={layoutMode}
                     isZenMode={isZenMode} // Pass Zen Mode here
@@ -157,7 +157,7 @@ const QuranReader: React.FC = () => {
                     {/* 🌠 Starlight Background (Reading Mode only) */}
                     {isZenMode && (
                         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03] contrast-150"></div>
+                            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/5 to-cyan-900/5 opacity-[0.03]"></div>
                             {/* Simple Star Particles (CSS-only for performance) */}
                             <div className="absolute top-20 left-1/4 w-0.5 h-0.5 bg-white rounded-full animate-pulse"></div>
                             <div className="absolute top-40 right-1/3 w-1 h-1 bg-cyan-400 rounded-full animate-pulse opacity-40" style={{ animationDelay: '1s' }}></div>
@@ -171,12 +171,13 @@ const QuranReader: React.FC = () => {
                             {/* Nature Background */}
                             <div className="absolute inset-0 z-0">
                                 <img
-                                    src="https://images.unsplash.com/photo-1518173946687-a4c8892bbd9f?q=80&w=2670&auto=format&fit=crop"
+                                    src="/assets/backgrounds/nature-surah.webp"
                                     alt="Nature Background"
                                     className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-1000 ease-out"
+                                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                                 />
                                 <div className={`absolute inset-0 bg-gradient-to-t ${theme === 'raudhah' || theme === 'light' ? 'from-[var(--bg-main)] via-[var(--bg-main)]/40 to-transparent' : 'from-slate-900 via-slate-900/40 to-slate-900/80'}`} />
-                                <div className={`absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')] ${theme === 'raudhah' ? 'opacity-10' : 'opacity-20 mix-blend-overlay'}`}></div>
+                                <div className={`absolute inset-0 bg-gradient-to-br from-emerald-900/10 via-transparent to-cyan-900/10 ${theme === 'raudhah' ? 'opacity-30' : 'opacity-20 mix-blend-overlay'}`}></div>
                             </div>
 
                             {/* Content */}
