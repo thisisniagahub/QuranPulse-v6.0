@@ -51,8 +51,8 @@ export const usePrayerTimes = (latitude: number | null, longitude: number | null
           processJakimData(jakimData, zoneCode);
           setUsingJakim(true);
         } else if (mounted) {
-           // Fallback to calculation if API fails
-           processCalculatedData();
+          // Fallback to calculation if API fails
+          processCalculatedData();
         }
       } catch (e) {
         if (mounted) processCalculatedData();
@@ -68,20 +68,20 @@ export const usePrayerTimes = (latitude: number | null, longitude: number | null
   useEffect(() => {
     if (!data) return;
     const timer = setInterval(() => {
-       // Refresh Next Prayer Logic only
-       // This is a simplified update to keep the countdown ticking without re-fetching
-       const now = new Date();
-       const nextTime = data.nextPrayerTime;
-       const diff = nextTime.getTime() - now.getTime();
-       
-       // If passed, trigger re-calculation (or full refresh)
-       if (diff <= 0) {
-           // Prayer time passed, force refresh logic
-           // For simplicity, we just let the main effect handle it on next render or force re-fetch
-           // But here we just update string
-       }
+      // Refresh Next Prayer Logic only
+      // This is a simplified update to keep the countdown ticking without re-fetching
+      const now = new Date();
+      const nextTime = data.nextPrayerTime;
+      const diff = nextTime.getTime() - now.getTime();
 
-       setData(prev => prev ? { ...prev, timeRemaining: formatTimeRemaining(diff) } : null);
+      // If passed, trigger re-calculation (or full refresh)
+      if (diff <= 0) {
+        // Prayer time passed, force refresh logic
+        // For simplicity, we just let the main effect handle it on next render or force re-fetch
+        // But here we just update string
+      }
+
+      setData(prev => prev ? { ...prev, timeRemaining: formatTimeRemaining(diff) } : null);
     }, 1000);
     return () => clearInterval(timer);
   }, [data?.nextPrayerTime]);
@@ -96,14 +96,14 @@ export const usePrayerTimes = (latitude: number | null, longitude: number | null
     // Let's assume "HH:mm" or "HH:mm:ss" based on typical response. 
     // If it's unix, we adjust. 
     // Checking api.waktusolat.app sample: "fajr": 1734472020 (UNIX timestamp)
-    
+
     // UPDATE: The API returns UNIX TIMESTAMPS (seconds).
     // Ref: https://github.com/mptwaktusolat/waktusolat-api
-    
+
     // Helper to handle timestamp vs string
     const toDate = (val: string | number) => {
-        if (typeof val === 'number') return new Date(val * 1000);
-        return parseTime(val as string);
+      if (typeof val === 'number') return new Date(val * 1000);
+      return parseTime(val as string);
     };
 
     const fajr = toDate(j.fajr);
@@ -114,7 +114,7 @@ export const usePrayerTimes = (latitude: number | null, longitude: number | null
     const isha = toDate(j.isha);
 
     const { next, nextTime } = getNextPrayer(fajr, dhuhr, asr, maghrib, isha);
-    
+
     setData({
       fajr, sunrise, dhuhr, asr, maghrib, isha,
       nextPrayer: next,
@@ -129,12 +129,12 @@ export const usePrayerTimes = (latitude: number | null, longitude: number | null
 
   const processCalculatedData = () => {
     if (!latitude || !longitude) {
-        setLoading(false);
-        return; 
+      setLoading(false);
+      return;
     }
 
     const coordinates = new Coordinates(latitude, longitude);
-    const params = CalculationMethod.Singapore(); 
+    const params = CalculationMethod.MuslimWorldLeague(); // MWL standard, closer to JAKIM parameters
     params.madhab = Madhab.Shafi;
     const date = new Date();
     const prayerTimes = new PrayerTimes(coordinates, date, params);
@@ -142,7 +142,7 @@ export const usePrayerTimes = (latitude: number | null, longitude: number | null
     const { next, nextTime } = getNextPrayer(prayerTimes.fajr, prayerTimes.dhuhr, prayerTimes.asr, prayerTimes.maghrib, prayerTimes.isha);
 
     const hijri = new Intl.DateTimeFormat('en-TN-u-ca-islamic', {
-        day: 'numeric', month: 'long', year: 'numeric',
+      day: 'numeric', month: 'long', year: 'numeric',
     }).format(Date.now());
 
     setData({
@@ -163,17 +163,17 @@ export const usePrayerTimes = (latitude: number | null, longitude: number | null
   };
 
   const getNextPrayer = (fajr: Date, dhuhr: Date, asr: Date, maghrib: Date, isha: Date) => {
-      const now = new Date();
-      if (now < fajr) return { next: 'Subuh', nextTime: fajr };
-      if (now < dhuhr) return { next: 'Zohor', nextTime: dhuhr };
-      if (now < asr) return { next: 'Asar', nextTime: asr };
-      if (now < maghrib) return { next: 'Maghrib', nextTime: maghrib };
-      if (now < isha) return { next: 'Isyak', nextTime: isha };
-      
-      // Next day Subuh
-      const tomorrowFajr = new Date(fajr);
-      tomorrowFajr.setDate(tomorrowFajr.getDate() + 1);
-      return { next: 'Subuh', nextTime: tomorrowFajr };
+    const now = new Date();
+    if (now < fajr) return { next: 'Subuh', nextTime: fajr };
+    if (now < dhuhr) return { next: 'Zohor', nextTime: dhuhr };
+    if (now < asr) return { next: 'Asar', nextTime: asr };
+    if (now < maghrib) return { next: 'Maghrib', nextTime: maghrib };
+    if (now < isha) return { next: 'Isyak', nextTime: isha };
+
+    // Next day Subuh
+    const tomorrowFajr = new Date(fajr);
+    tomorrowFajr.setDate(tomorrowFajr.getDate() + 1);
+    return { next: 'Subuh', nextTime: tomorrowFajr };
   };
 
   return { data, loading, usingJakim };
