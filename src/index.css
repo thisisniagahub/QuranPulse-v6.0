@@ -8,113 +8,64 @@
 
 :root {
   /* ═══════════════════════════════════════════════════════════════════════════
-     OFFICIAL QURAN PULSE V6.0 COLOR PALETTE
+     QURAN PULSE V7.0 "RAUDHAH" COLOR PALETTE (PREMIUM)
      ═══════════════════════════════════════════════════════════════════════════ */
 
-  --primary: #162c51;
-  /* Light Navy */
-  --secondary: #0c224b;
-  /* Deep Navy */
-  --bg-main: #031a38;
-  /* Midnight Black-Blue (Base) */
-  --highlight: #22d3ee;
-  /* Cyan-400 (Highlight) */
+  --bg-raudhah: #FCFBF7;
+  /* Warm Bone / Calm Background */
+  --primary-raudhah: #2D4039;
+  /* Deep Forest Sage - Mature & Grounded */
+  --accent-raudhah: #CBA35C;
+  /* Burnished Gold - Sacred & High-End */
+  --text-main: #1A1A1A;
+  /* High Contrast Noir */
+  --text-muted: #6B7280;
+  /* Subdued Grey */
 
-  /* RGB Variants for Transparency */
-  --primary-rgb: 22, 44, 81;
-  --secondary-rgb: 12, 34, 75;
-  --bg-main-rgb: 3, 26, 56;
-  --highlight-rgb: 34, 211, 238;
+  /* Micro-Shadow System (Anti-AI Slop) */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
 
-  /* Extended Color System */
-  --bg-dark: #020617;
-  /* Slate-950 - Darkest background */
-  --bg-dark-rgb: 2, 6, 23;
-  --bg-navy: #0c224b;
-  /* Deep Navy */
-  --bg-navy-rgb: 12, 34, 75;
-  --bg-midnight: #031a38;
-  /* Midnight Blue */
-  --bg-midnight-rgb: 3, 26, 56;
-  --bg-card: #0A1E42;
-  /* Card background */
-  --bg-card-rgb: 10, 30, 66;
-
-  /* Accent Colors */
-  --accent-cyan: #22d3ee;
-  /* Primary Accent */
-  --accent-cyan-rgb: 34, 211, 238;
-  --accent-blue: #00BFFF;
-  /* DeepSkyBlue */
-  --accent-blue-rgb: 0, 191, 255;
-  --accent-teal: #14b8a6;
-  /* Teal-500 */
-  --accent-teal-rgb: 20, 184, 166;
-
-  /* Semantic Colors */
-  --success: #10b981;
-  /* Emerald-500 */
-  --success-rgb: 16, 185, 129;
-  --warning: #f59e0b;
-  /* Amber-500 */
-  --warning-rgb: 245, 158, 11;
-  --error: #ef4444;
-  /* Red-500 */
-  --error-rgb: 239, 68, 68;
-  --info: #3b82f6;
-  /* Blue-500 */
-  --info-rgb: 59, 130, 246;
-
-  /* Derived Tokens */
-  --text-primary: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --glass-bg: rgba(12, 34, 75, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  /* Semantic Colors - Softened */
+  --success: #3E5F4F;
+  --warning: #B8860B;
+  --error: #8B0000;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   UNIFIED BACKGROUND UTILITY
+   PREMIUM UTILITIES
    ═══════════════════════════════════════════════════════════════════════════ */
-.bg-midnight-gradient {
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 50%, var(--bg-main) 100%);
-  background-attachment: fixed;
+
+.bg-raudhah {
+  background-color: var(--bg-raudhah);
 }
 
-.text-highlight {
-  color: var(--highlight);
+.text-raudhah {
+  color: var(--primary-raudhah);
 }
 
-.bg-highlight {
-  background-color: var(--highlight);
+/* ONE CTA ENFORCEMENT: Only one .cta-primary per page viewport */
+.cta-primary {
+  @apply px-8 py-4 bg-[var(--primary-raudhah)] text-[var(--bg-raudhah)] rounded-lg font-medium tracking-wide transition-all duration-300 transform;
+  box-shadow: var(--shadow-sm);
 }
 
-/* ═══════════════════════════════════════════════════════════════════════════
-   GLASSMORPHISM UTILITIES
-   ═══════════════════════════════════════════════════════════════════════════ */
-.glass {
-  background: var(--color-glass);
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
-  border: 1px solid var(--color-glass-border);
+.cta-primary:hover {
+  @apply scale-[1.02] brightness-110;
+  box-shadow: var(--shadow-md);
 }
 
-.glass-premium {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.02) 100%);
-  -webkit-backdrop-filter: blur(20px);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+.secondary-action {
+  @apply text-[var(--text-muted)] hover:text-[var(--primary-raudhah)] transition-colors duration-200 text-sm;
 }
 
-.neon-glow {
-  box-shadow: 0 0 20px var(--color-neon-glow), 0 0 40px rgba(34, 211, 238, 0.2);
+/* Glass Utility - Refined for v7.0 Raudhah */
+.glass-v7 {
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.neon-glow-hover:hover {
-  box-shadow: 0 0 30px var(--color-neon-glow), 0 0 60px rgba(34, 211, 238, 0.3);
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    LANDING PAGE ANIMATIONS
@@ -203,9 +154,9 @@
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   THEME: NOOR (Light / Celestial Blue)
+   THEME: RAUDHAH (Light / Celestial Blue)
    ═══════════════════════════════════════════════════════════════════════════ */
-[data-theme="noor"] {
+[data-theme="raudhah"] {
   /* Brands */
   --primary: #1A237E;
   /* Midnight Navy */
@@ -485,7 +436,7 @@ body::before {
 }
 
 [data-theme="dark"] .clay-card,
-[data-theme="noor"] .clay-card {
+[data-theme="raudhah"] .clay-card {
   box-shadow:
     10px 10px 20px rgba(0, 0, 0, 0.4),
     -5px -5px 15px rgba(255, 255, 255, 0.05),
@@ -750,101 +701,11 @@ body::before {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   PREMIUM "NOOR-E-CYBER" UTILITIES (Upgrade v6.0)
+   LEGACY NOOR-E-CYBER UTILITIES — REMOVED (v7.0 Raudhah transition)
+   Deleted: neon-text-cyan, neon-border-cyan, neon-box-pulse, glass-premium,
+            levitate, rotate-3d-hover, animate-shimmer-fast
+   Kept: neon-glow-primary, shadow-neon (still used by Iqra + Admin components)
    ═══════════════════════════════════════════════════════════════════════════ */
-
-/* 1. Neon Glows */
-.neon-text-cyan {
-  text-shadow:
-    0 0 5px #00bfff,
-    0 0 10px #00bfff,
-    0 0 20px #00bfff,
-    0 0 40px #00bfff;
-}
-
-.neon-border-cyan {
-  box-shadow:
-    0 0 5px #00bfff,
-    inset 0 0 5px #00bfff;
-  border-color: #00bfff;
-}
-
-.neon-box-pulse {
-  animation: neonPulse 2s infinite alternate;
-}
-
-@keyframes neonPulse {
-  from {
-    box-shadow: 0 0 10px rgba(0, 191, 255, 0.5), inset 0 0 10px rgba(0, 191, 255, 0.2);
-  }
-
-  to {
-    box-shadow: 0 0 20px rgba(0, 191, 255, 0.8), inset 0 0 15px rgba(0, 191, 255, 0.4);
-  }
-}
-
-/* 2. Advanced Glassmorphism (Frosted + Iridescent) */
-.glass-premium {
-  background: rgba(10, 30, 66, 0.4);
-  -webkit-backdrop-filter: blur(16px) saturate(180%);
-  backdrop-filter: blur(16px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.37),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-}
-
-.glass-premium:hover {
-  background: rgba(10, 30, 66, 0.6);
-  border: 1px solid rgba(0, 191, 255, 0.3);
-  box-shadow:
-    0 8px 32px 0 rgba(0, 191, 255, 0.15),
-    inset 0 0 0 1px rgba(0, 191, 255, 0.1);
-}
-
-/* 3. 3D Levitation & Perspective */
-.perspective-container {
-  perspective: 2000px;
-}
-
-.levitate {
-  animation: levitate 6s ease-in-out infinite;
-}
-
-@keyframes levitate {
-
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-
-  50% {
-    transform: translateY(-20px);
-  }
-}
-
-.rotate-3d-hover {
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.rotate-3d-hover:hover {
-  transform: rotateX(10deg) rotateY(10deg) scale(1.05);
-}
-
-/* 4. Shimmer Effects */
-.animate-shimmer-fast {
-  animation: shimmer 1.5s infinite linear;
-}
-
-@keyframes shimmer {
-  from {
-    background-position: 200% 0;
-  }
-
-  to {
-    background-position: -200% 0;
-  }
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    LANDING PAGE DYNAMIC COLOR UTILITIES

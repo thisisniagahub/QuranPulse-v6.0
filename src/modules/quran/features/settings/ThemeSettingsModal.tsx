@@ -27,8 +27,8 @@ const THEMES: { id: ThemeType; name: string; icon: string; preview: { bg: string
     preview: { bg: 'bg-white', text: 'text-gray-900', accent: 'bg-blue-500' }
   },
   {
-    id: 'noor',
-    name: 'Noor',
+    id: 'raudhah',
+    name: 'Raudhah',
     icon: '💠',
     preview: { bg: 'bg-[#F5F7FA]', text: 'text-[#1A237E]', accent: 'bg-[#FBC02D]' }
   },

@@ -2,7 +2,7 @@
  * Animation Utilities for QuranPulse v6.0
  * 
  * Standardized Framer Motion animation variants
- * Following "Noor-e-Cyber" aesthetic with smooth, elegant animations
+ * Following "Raudhah" aesthetic with smooth, elegant animations
  */
 
 import type { Variants, Transition } from 'framer-motion';
@@ -130,7 +130,7 @@ export const staggerItem: Variants = {
 };
 
 // ============================================
-// SPECIAL EFFECTS (Noor-e-Cyber themed)
+// SPECIAL EFFECTS (Raudhah themed)
 // ============================================
 
 export const glowPulse: Variants = {

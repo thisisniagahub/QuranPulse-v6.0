@@ -1,8 +1,8 @@
 /**
  * UI Component Library - Barrel Export
  * 
- * QuranPulse v6.0 Design System
- * All components follow the "Noor-e-Cyber" aesthetic
+ * QuranPulse v7.0 — Raudhah Design System
+ * All components follow the "Raudhah" aesthetic
  */
 
 // Core Components

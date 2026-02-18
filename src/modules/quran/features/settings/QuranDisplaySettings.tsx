@@ -188,7 +188,7 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                 {/* Header */}
                 <div className="flex justify-between items-center p-6 pb-2">
                     <h3 className="text-xl font-bold text-white">Tetapan</h3>
-                    <button onClick={onClose} className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 text-slate-400 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                    <button onClick={onClose} aria-label="Tutup tetapan" className="w-8 h-8 rounded-full bg-slate-900 border border-slate-800 text-slate-400 flex items-center justify-center hover:bg-white hover:text-black transition-all">
                         <IconClose className="w-4 h-4" />
                     </button>
                 </div>
@@ -232,6 +232,7 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                 <input
                                     type="range" min="20" max="60" value={fontSize}
                                     onChange={(e) => setFontSize(parseInt(e.target.value))}
+                                    aria-label="Saiz tulisan Arab"
                                     className="w-full accent-cyan-500 h-2 bg-slate-800 rounded-full appearance-none cursor-pointer"
                                 />
                             </div>
@@ -399,9 +400,9 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                         <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center">🌙</div>
                                         <span className="text-xs font-bold">Dark</span>
                                     </button>
-                                    <button onClick={() => setTheme?.('noor')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'noor' ? 'bg-[#F5F7FA] border-cyan-500 text-[#1A237E]' : 'border-slate-800 text-slate-500'}`}>
+                                    <button onClick={() => setTheme?.('raudhah')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'raudhah' ? 'bg-[#F5F7FA] border-cyan-500 text-[#1A237E]' : 'border-slate-800 text-slate-500'}`}>
                                         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">💠</div>
-                                        <span className="text-xs font-bold">Noor</span>
+                                        <span className="text-xs font-bold">Raudhah</span>
                                     </button>
                                     <button onClick={() => setTheme?.('sepia')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'sepia' ? 'bg-[#fef3c7] border-amber-500 text-[#78350f]' : 'border-slate-800 text-slate-500'}`}>
                                         <div className="w-8 h-8 rounded-full bg-[#fde68a] flex items-center justify-center">📜</div>

@@ -11,7 +11,7 @@ export enum NavView {
   ADMIN = 'ADMIN'
 }
 
-export type ThemeType = 'dark' | 'light' | 'noor' | 'sepia' | 'anmaat' | 'safar' | 'nabdh' | 'auto';
+export type ThemeType = 'dark' | 'light' | 'raudhah' | 'sepia' | 'anmaat' | 'safar' | 'nabdh' | 'auto';
 
 export interface AppConfigItem {
   key: string;

@@ -20,7 +20,7 @@ This PRD defines the architecture, deployment patterns, and security requirement
 |-----------|---------|-----------|
 | **Operator (GangBot)** | Root user systemd | Always-on, predictable restart, journald logging |
 | **QuranPulse** | Docker Compose | Application pattern, isolated services |
-| **Qdrant** | Docker (in QP stack) | Vector DB for semantic search |
+| **Qdrant** | Docker (in QP stack) | Vector DB for semantic search (not yet deployed) |
 | **Frontend** | Vercel | Edge deployment, auto-scaling |
 | **Database** | Supabase | Managed PostgreSQL, built-in auth |
 | **VPN** | Tailscale | Private mesh networking for operator access |
@@ -113,7 +113,7 @@ After=network.target
 [Service]
 Type=simple
 WorkingDirectory=/opt/operator/openclaw
-ExecStart=/usr/local/bin/openclaw gateway --port 18789
+ExecStart="/usr/bin/node" "/opt/operator/openclaw/repo/dist/index.js" gateway --port 18789
 Restart=always
 RestartSec=5
 Environment=NODE_ENV=production
@@ -144,16 +144,24 @@ A conflicting system service at `/etc/systemd/system/openclaw-gateway.service` w
 | Logging | journald | Separate driver |
 | Complexity | Less parts | More layers |
 
-### Model Configuration (Actual)
+### Model Configuration (Actual — verified 2026-02-12)
 ```json5
 {
   agents: {
     defaults: {
       model: {
-        primary: "google-antigravity/gemini-3-flash",  // current
-        fallbacks: ["google-antigravity/gemini-3-pro"] // target upgrade
+        primary: "google-antigravity/gemini-3-pro",
+        fallbacks: [
+          "google-antigravity/gemini-1.5-pro",
+          "google-antigravity/gemini-3-pro-low",
+          "google-antigravity/gemini-3-flash"
+        ]
       }
-    }
+    },
+    list: [
+      { id: "main", name: "NiagaBot", model: "claude-opus-4-6-thinking" },
+      { id: "niagahubbot", name: "NiagaHubBot", model: "gemini-3-pro" }
+    ]
   }
 }
 ```
@@ -179,7 +187,7 @@ A conflicting system service at `/etc/systemd/system/openclaw-gateway.service` w
 | quranpulse-agent-ustaz | Python | - |
 | quranpulse-agent-content | Python | - |
 | quranpulse-redis | Redis 7 | 6379 |
-| qdrant | Qdrant | 6333, 6334 |
+| ~~qdrant~~ | ~~Qdrant~~ | ~~6333, 6334~~ | ❌ Not yet deployed |
 
 ### Supabase Connection
 - **URL**: (configured in .env)
@@ -224,12 +232,12 @@ A conflicting system service at `/etc/systemd/system/openclaw-gateway.service` w
 
 ### SSH Hardening
 
-> [!CAUTION]
-> **Current reality (2026-02-10)**: SSH still has `PermitRootLogin yes` and `PasswordAuthentication yes`. Below is the PRD target that MUST be implemented.
+> [!NOTE]
+> **SSH hardening complete** (2026-02-11). Both targets have been implemented.
 
 ```
-PermitRootLogin prohibit-password    ← TARGET (currently: yes ⚠️)
-PasswordAuthentication no            ← TARGET (currently: yes ⚠️)
+PermitRootLogin prohibit-password    ← ✅ Active
+PasswordAuthentication no            ← ✅ Active
 PubkeyAuthentication yes             ← ✅ Active
 ```
 
@@ -251,7 +259,8 @@ X-XSS-Protection: 1; mode=block   ← ✅ Active
 
 ### SSL
 - Let's Encrypt certificates ✅
-- Auto-renewal via certbot.timer ✅
+- Auto-renewal via cron (`0 3 * * * /snap/bin/certbot renew`) ✅
+- certbot.timer: masked (renewal handled by cron)
 
 ---
 
@@ -261,9 +270,12 @@ X-XSS-Protection: 1; mode=block   ← ✅ Active
 
 | Schedule | Script | Purpose |
 |----------|--------|---------|
-| `0 3 * * *` | `/opt/shared/scripts/backup.sh` | Daily backup |
-| `*/60 * * * *` | Watchdog script | Service health check |
-| `0 2 * * *` | Update check | System updates |
+| `0 3 * * *` | `/opt/shared/scripts/backup.sh` | Daily backup (nginx, QP, OpenClaw) |
+| `0 2 * * *` | `/tmp/check_openclaw_updates.sh` | OpenClaw update check |
+| `*/30 * * * *` | `/opt/operator/openclaw/scripts/quota-alert.sh` | API quota monitoring |
+| `0 6 * * *` | `/opt/operator/openclaw/scripts/auto-research.sh` | Automated research |
+| `*/5 * * * *` | `/opt/operator/openclaw/scripts/watchdog.sh` | Service health watchdog |
+| `0 3 * * *` | `/snap/bin/certbot renew` | SSL certificate renewal |
 
 ### Backup Contents
 - Nginx configs
@@ -293,4 +305,4 @@ X-XSS-Protection: 1; mode=block   ← ✅ Active
 
 ---
 
-*Last Updated: 2026-02-10*
+*Last Updated: 2026-02-11*

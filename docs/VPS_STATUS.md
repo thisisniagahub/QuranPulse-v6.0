@@ -1,7 +1,7 @@
 # 🖥️ NIAGAHUB VPS Infrastructure Status
 
 > **Server**: srv1322432 | **Public IP**: 76.13.176.142 | **Tailscale IP**: 100.100.205.64
-> **Last Updated**: 2026-02-10
+> **Last Updated**: 2026-02-12
 
 ---
 
@@ -11,7 +11,7 @@
 
 | System | Purpose | Runtime | Status |
 |--------|---------|---------|--------|
-| **Operator (GangBot)** | Bo's personal AI assistant | Root user systemd | ✅ Active (PID 251093) |
+| **Operator (GangBot)** | Bo's personal AI assistant | Root user systemd | ✅ Active |
 | **QuranPulse** | App platform for users | Docker Compose | ✅ Running |
 
 ### Folder Structure
@@ -26,8 +26,9 @@
 
 ### Network Topology
 ```
-Internet → UFW (22,80,443,18789) → Nginx → localhost services
+Internet → UFW (22,80,443) → Nginx → localhost services
 Tailscale mesh → 100.100.205.64 → OpenClaw (18789)
+⚠️ Note: OpenClaw binds 0.0.0.0:18789 — protected by Nginx/Tailscale, UFW 18789 REMOVED (2026-02-12)
 ```
 
 ---
@@ -42,7 +43,7 @@ Tailscale mesh → 100.100.205.64 → OpenClaw (18789)
 | OS | Ubuntu 22.04.5 LTS |
 | CPU | AMD EPYC 9354P (2 vCPUs) |
 | RAM | 7.8 GB |
-| Disk | 97 GB SSD (~30% used) |
+| Disk | 97 GB SSD (~50% used, 49G free) |
 
 ---
 
@@ -67,18 +68,17 @@ Tailscale mesh → 100.100.205.64 → OpenClaw (18789)
 | Linger | Enabled (`loginctl enable-linger root`) |
 | System service | **Masked** (`/etc/systemd/system/openclaw-gateway.service → /dev/null`) |
 
-### Docker Containers (QuranPulse Stack + Qdrant)
+### Docker Containers (QuranPulse Stack)
 
 | Container | Purpose | Status |
 |-----------|---------|--------|
-| `quranpulse-api` | QuranPulse API | ✅ Running |
-| `quranpulse-agent-ustaz` | Ustaz AI Agent | ✅ Running |
-| `quranpulse-agent-content` | Content Agent | ✅ Running |
-| `quranpulse-redis` | Cache | ✅ Running |
-| `qdrant` | Vector Database | ✅ Running |
+| `quranpulse-api` | QuranPulse API | ✅ Running (47h+) |
+| `quranpulse-agent-ustaz` | Ustaz AI Agent | ✅ Running (47h+) |
+| `quranpulse-agent-content` | Content Agent | ✅ Running (47h+) |
+| `quranpulse-redis` | Cache (Redis 7 Alpine) | ✅ Running (47h+) |
 
-> [!WARNING]
-> **Qdrant** is binding to `0.0.0.0:6333-6334` — publicly accessible. Should be restricted to `127.0.0.1`.
+> [!NOTE]
+> **Qdrant** vector database is not currently running. Will need to be re-added when semantic search is deployed.
 
 ---
 
@@ -93,16 +93,19 @@ Tailscale mesh → 100.100.205.64 → OpenClaw (18789)
 - fail2ban active (sshd jail)
 - SSL certificates valid & auto-renewing
 - Nginx security headers active
+- SSH hardened: `PermitRootLogin prohibit-password` + `PasswordAuthentication no` ✅
 
 ### ⚠️ Needs Attention
-- **SSH**: `PermitRootLogin yes` and `PasswordAuthentication yes` — PRD requires `prohibit-password` and `no`
-- **Qdrant**: Exposed on `0.0.0.0` — should be `127.0.0.1`
+- **Qdrant**: Not running — needs to be deployed when semantic search is ready
 - **UFW port 18789**: Open publicly but OpenClaw binds to Tailscale — unnecessary rule
+- **Certbot timer**: Masked — renewal handled via cron instead
 
 ### ✅ Previously Tracked as Pending (Now Done)
 - ~~OpenClaw: Migrate from Docker to systemd~~ → **Done** (root user systemd)
 - ~~fail2ban: Install required~~ → **Active** (sshd jail running)
 - ~~Nginx security headers~~ → **Active**
+- ~~SSH: Harden root login~~ → **Done** (2026-02-11)
+- ~~SSH: Disable password auth~~ → **Done** (2026-02-11)
 
 ---
 
@@ -114,19 +117,19 @@ Status: active
 22/tcp   ALLOW   SSH
 80/tcp   ALLOW   HTTP
 443/tcp  ALLOW   HTTPS
-18789/tcp ALLOW  OpenClaw (⚠️ redundant — binds to Tailscale)
+~~18789/tcp~~ REMOVED (2026-02-12) — was redundant, OpenClaw uses Tailscale
 ```
 
 ### SSH
 ```
-PermitRootLogin: yes          ⚠️ SHOULD BE prohibit-password
-PasswordAuthentication: yes   ⚠️ SHOULD BE no
+PermitRootLogin: prohibit-password    ✅ Hardened
+PasswordAuthentication: no            ✅ Hardened
 Port: 22
 PubkeyAuthentication: yes
 ```
 
-> [!CAUTION]
-> **SSH is not hardened.** Root login with password is still allowed. This is a critical security risk.
+> [!NOTE]
+> **SSH is fully hardened** (2026-02-11). Key-based auth only, no password login allowed.
 
 ### fail2ban
 ```
@@ -137,9 +140,10 @@ Config: bantime=3600, maxretry=3
 
 ### SSL Certificates
 ```
-operator.gangniaga.my: ✅ Valid
-api.gangniaga.my: ✅ Valid
-Auto-renewal: certbot.timer active
+operator.gangniaga.my: ✅ Valid (HTTP 200)
+api.gangniaga.my: ✅ Valid (HTTP 200)
+Auto-renewal: cron (0 3 * * * /snap/bin/certbot renew)
+certbot.timer: masked (inactive) — renewal via cron instead
 ```
 
 ### Tailscale VPN
@@ -164,22 +168,33 @@ Purpose: Private mesh for OpenClaw access
 
 ### Directory
 ```
+/root/.openclaw/
+└── openclaw.json              ← Main config (ACTUAL location)
 /opt/operator/openclaw/
-├── data/
-│   └── .openclaw/
-│       └── openclaw.json    ← Main config
+├── repo/dist/                 ← OpenClaw source (ExecStart target)
+├── workspace/                 ← Agent workspaces
+├── data/agents/               ← Agent data
+├── scripts/                   ← Cron scripts
 ```
 
-### Model Configuration (Actual)
+### Model Configuration (Actual — verified 2026-02-12)
 ```json5
 {
   agents: {
     defaults: {
       model: {
-        primary: "google-antigravity/gemini-3-flash",  // ← actual current
-        fallbacks: ["google-antigravity/gemini-3-pro"] // ← target upgrade
+        primary: "google-antigravity/gemini-3-pro",
+        fallbacks: [
+          "google-antigravity/gemini-1.5-pro",
+          "google-antigravity/gemini-3-pro-low",
+          "google-antigravity/gemini-3-flash"
+        ]
       }
-    }
+    },
+    list: [
+      { id: "main", name: "NiagaBot", model: "claude-opus-4-6-thinking" },
+      { id: "niagahubbot", name: "NiagaHubBot", model: "gemini-3-pro" }
+    ]
   }
 }
 ```
@@ -233,14 +248,14 @@ docker logs quranpulse-api --tail 50
 
 ## Qdrant Vector Database
 
+> [!NOTE]
+> Qdrant is **not currently running**. Will be deployed when semantic search feature is ready.
+
 | Property | Value |
 |----------|-------|
-| Container | `qdrant` |
-| HTTP API | `0.0.0.0:6333` ⚠️ |
-| gRPC | `0.0.0.0:6334` ⚠️ |
+| Planned Port | `127.0.0.1:6333` |
 | Purpose | Semantic search embeddings |
-
-> Should be bound to `127.0.0.1` for security.
+| Status | ❌ Not deployed |
 
 ---
 
@@ -248,9 +263,12 @@ docker logs quranpulse-api --tail 50
 
 | Schedule | Script | Purpose |
 |----------|--------|---------|
-| `0 3 * * *` | `/opt/shared/scripts/backup.sh` | Daily backup |
-| `*/60 * * * *` | Watchdog script | Service health check |
-| `0 2 * * *` | Update check | System updates |
+| `0 3 * * *` | `/opt/shared/scripts/backup.sh` | Daily backup (nginx, QP, OpenClaw) |
+| `0 2 * * *` | `/opt/operator/openclaw/scripts/check_updates.sh` | OpenClaw update check |
+| `*/30 * * * *` | `/opt/operator/openclaw/scripts/quota-alert.sh` | API quota monitoring |
+| `0 6 * * *` | `/opt/operator/openclaw/scripts/auto-research.sh` | Automated research |
+| `*/5 * * * *` | `/opt/operator/openclaw/scripts/watchdog.sh` | Service health watchdog |
+| `0 3 * * *` | `/snap/bin/certbot renew` | SSL certificate renewal |
 
 ---
 
@@ -290,20 +308,26 @@ journalctl -u nginx --since "1 hour ago"
 
 ## Next Steps
 
-### Priority 1: Security Hardening
-- [ ] SSH: Set `PermitRootLogin prohibit-password`
-- [ ] SSH: Set `PasswordAuthentication no`
-- [ ] Qdrant: Bind to `127.0.0.1` only
-- [ ] UFW: Remove port 18789 rule (OpenClaw uses Tailscale)
+### ✅ Completed (Security Hardening)
+- [x] SSH: Set `PermitRootLogin prohibit-password` — Done 2026-02-11
+- [x] SSH: Set `PasswordAuthentication no` — Done 2026-02-11
+- [x] UFW: Removed port 18789 rule — Done 2026-02-12
+- [x] Moved `/tmp/check_openclaw_updates.sh` to `/opt/operator/openclaw/scripts/` — Done 2026-02-12
+- [x] Docker image/build cache pruned (52% → 50%) — Done 2026-02-12
+
+### Priority 1: Remaining Security
+- [ ] Fix OpenClaw bind address: `0.0.0.0` → `100.100.205.64` (Tailscale only)
+- [ ] Add Nginx jails to fail2ban
 
 ### Priority 2: Monitoring
-- [ ] Add Nginx jails to fail2ban
 - [ ] Setup uptime monitoring
+- [ ] Unmask certbot.timer or verify cron renewal is reliable
 
 ### Priority 3: QuranPulse Integration
 - [ ] Connect Supabase
 - [ ] Deploy frontend to Vercel
+- [ ] Deploy Qdrant for semantic search
 
 ---
 
-*Last Updated: 2026-02-10*
+*Last Updated: 2026-02-12*

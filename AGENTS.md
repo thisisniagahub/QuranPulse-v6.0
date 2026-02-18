@@ -27,7 +27,7 @@
 |-----------|---------|--------|
 | OpenClaw (GangBot) | Root user systemd | operator.gangniaga.my |
 | QuranPulse API | Docker Compose | api.gangniaga.my |
-| Qdrant | Docker (in QP stack) | localhost:6333 |
+| Qdrant | Docker (planned) | localhost:6333 (not yet deployed) |
 | Frontend | Vercel | quranpulse.my |
 | Database | Supabase | Managed |
 | VPN | Tailscale | 100.100.205.64 |

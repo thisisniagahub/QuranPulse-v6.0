@@ -1,10 +1,10 @@
 /**
  * 📖 Digital Mushaf View
- * Authentic Mushaf reading experience with Noor-e-Cyber themed frame
+ * Authentic Mushaf reading experience with Raudhah-themed frame
  * 
  * Features:
  * - 604-page digital mushaf layout
- * - Noor-e-Cyber glassmorphism frame design
+ * - Raudhah glassmorphism frame design
  * - Uthmani script display
  * - Book-like page flip animation
  * - Tajwid color coding support
@@ -61,7 +61,7 @@ const MushafView: React.FC<MushafViewProps> = ({
     useEffect(() => {
         let isMounted = true;
         setIsLoading(true);
-        
+
         const loadPage = async () => {
             try {
                 const data = await getMushafPage(currentPage);
@@ -73,18 +73,18 @@ const MushafView: React.FC<MushafViewProps> = ({
                     juzNumber: firstVerse?.juz_number || 1,
                     hizbNumber: firstVerse?.hizb_number || 1,
                     verses: data.verses.map((v: any) => {
-                         const [surahNum, verseNum] = v.verse_key.split(':').map(Number);
-                         return {
-                             id: v.id,
-                             verseNumber: verseNum,
-                             surahNumber: surahNum,
-                             surahName: v.surah_name,
-                             arabicText: v.text_uthmani,
-                             verseKey: v.verse_key
-                         };
+                        const [surahNum, verseNum] = v.verse_key.split(':').map(Number);
+                        return {
+                            id: v.id,
+                            verseNumber: verseNum,
+                            surahNumber: surahNum,
+                            surahName: v.surah_name,
+                            arabicText: v.text_uthmani,
+                            verseKey: v.verse_key
+                        };
                     })
                 };
-                
+
                 setPageData(processedPage);
             } catch (err) {
                 console.error("Failed to load page", err);
@@ -155,7 +155,7 @@ const MushafView: React.FC<MushafViewProps> = ({
             onMouseEnter={() => setShowControls(true)}
             onMouseLeave={() => setShowControls(false)}
         >
-            {/* === NOOR-E-CYBER FRAME === */}
+            {/* === RAUDHAH FRAME === */}
             <div className="absolute inset-0 pointer-events-none z-0">
                 {/* Corner Decorations */}
                 <div className="absolute top-0 left-0 w-24 h-24">
@@ -332,7 +332,7 @@ const MushafView: React.FC<MushafViewProps> = ({
                                                             </span>
                                                         </div>
                                                         {verse.surahNumber !== 1 && verse.surahNumber !== 9 && (
-                                                             <div className="text-center py-2 mb-2">
+                                                            <div className="text-center py-2 mb-2">
                                                                 <span className={`text-2xl font-arabic ${isNightMode ? 'text-purple-300' : 'text-amber-700'
                                                                     }`}>
                                                                     بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
@@ -341,7 +341,7 @@ const MushafView: React.FC<MushafViewProps> = ({
                                                         )}
                                                     </div>
                                                 )}
-                                                
+
                                                 <span
                                                     className={`text-2xl md:text-3xl font-arabic cursor-pointer
                                      hover:text-cyan-400 transition-colors ${isNightMode ? 'text-white' : 'text-slate-800'

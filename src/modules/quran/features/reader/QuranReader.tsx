@@ -149,7 +149,7 @@ const QuranReader: React.FC = () => {
             {layoutMode === 'SCROLL' && (
                 <div className={`flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-hide pb-32 transition-colors duration-1000 relative min-h-full ${isZenMode
                     ? 'bg-[#020617]'
-                    : theme === 'noor' || theme === 'light'
+                    : theme === 'raudhah' || theme === 'light'
                         ? 'bg-[var(--bg-main)]'
                         : 'bg-transparent' // Allow parent bg-midnight-gradient to show
                     }`}>
@@ -175,8 +175,8 @@ const QuranReader: React.FC = () => {
                                     alt="Nature Background"
                                     className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-1000 ease-out"
                                 />
-                                <div className={`absolute inset-0 bg-gradient-to-t ${theme === 'noor' || theme === 'light' ? 'from-[var(--bg-main)] via-[var(--bg-main)]/40 to-transparent' : 'from-slate-900 via-slate-900/40 to-slate-900/80'}`} />
-                                <div className={`absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')] ${theme === 'noor' ? 'opacity-10' : 'opacity-20 mix-blend-overlay'}`}></div>
+                                <div className={`absolute inset-0 bg-gradient-to-t ${theme === 'raudhah' || theme === 'light' ? 'from-[var(--bg-main)] via-[var(--bg-main)]/40 to-transparent' : 'from-slate-900 via-slate-900/40 to-slate-900/80'}`} />
+                                <div className={`absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')] ${theme === 'raudhah' ? 'opacity-10' : 'opacity-20 mix-blend-overlay'}`}></div>
                             </div>
 
                             {/* Content */}
@@ -192,7 +192,7 @@ const QuranReader: React.FC = () => {
                                     <h1 className="font-arabic text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-b from-white to-slate-400 drop-shadow-sm mb-2">
                                         {selectedChapter.name_arabic}
                                     </h1>
-                                    <h2 className={`text-2xl md:text-3xl font-bold tracking-tight ${theme === 'noor' || theme === 'light' ? 'text-[var(--text-primary)]' : 'text-white'}`}>
+                                    <h2 className={`text-2xl md:text-3xl font-bold tracking-tight ${theme === 'raudhah' || theme === 'light' ? 'text-[var(--text-primary)]' : 'text-white'}`}>
                                         {selectedChapter.name_simple}
                                     </h2>
                                     <p className="text-cyan-400/80 text-sm font-medium tracking-wide">
@@ -223,10 +223,10 @@ const QuranReader: React.FC = () => {
                             // Skeleton Loading
                             <div className="space-y-4 max-w-4xl mx-auto">
                                 {[1, 2, 3, 4, 5].map(i => (
-                                    <div key={i} className={`backdrop-blur-md border border-white/5 rounded-2xl p-6 animate-pulse ${theme === 'noor' || theme === 'light' ? 'bg-slate-200/50' : 'bg-slate-800/20'}`}>
-                                        <div className={`h-8 rounded mb-4 w-3/4 ml-auto ${theme === 'noor' || theme === 'light' ? 'bg-slate-300' : 'bg-slate-700/50'}`} />
-                                        <div className={`h-4 rounded w-full mb-2 ${theme === 'noor' || theme === 'light' ? 'bg-slate-300' : 'bg-slate-700/30'}`} />
-                                        <div className={`h-4 rounded w-2/3 ${theme === 'noor' || theme === 'light' ? 'bg-slate-300' : 'bg-slate-700/30'}`} />
+                                    <div key={i} className={`backdrop-blur-md border border-white/5 rounded-2xl p-6 animate-pulse ${theme === 'raudhah' || theme === 'light' ? 'bg-slate-200/50' : 'bg-slate-800/20'}`}>
+                                        <div className={`h-8 rounded mb-4 w-3/4 ml-auto ${theme === 'raudhah' || theme === 'light' ? 'bg-slate-300' : 'bg-slate-700/50'}`} />
+                                        <div className={`h-4 rounded w-full mb-2 ${theme === 'raudhah' || theme === 'light' ? 'bg-slate-300' : 'bg-slate-700/30'}`} />
+                                        <div className={`h-4 rounded w-2/3 ${theme === 'raudhah' || theme === 'light' ? 'bg-slate-300' : 'bg-slate-700/30'}`} />
                                     </div>
                                 ))}
                             </div>
@@ -305,7 +305,7 @@ const QuranReader: React.FC = () => {
                         isActive={isVoiceMode}
                         onToggle={() => setIsVoiceMode(!isVoiceMode)}
                         onNextVerse={playNextVerse}
-                        onVerseComplete={() => {}}
+                        onVerseComplete={() => { }}
                     />
                 </div>
             )}
