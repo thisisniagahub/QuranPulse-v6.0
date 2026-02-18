@@ -10,6 +10,7 @@ import { VoiceService } from './ai/VoiceService';
 import { mcpService } from './mcpService';
 import staticContentService, { TajweedRule, MakhrajPoint, Doa, FAQ, Hadith } from './staticContentService';
 import { checkFatwaSafety, sanitizeIslamicResponse } from './fatwaGuard';
+import { ragQuery } from './ragService';
 
 // --- TYPES ---
 export interface HybridResponse {
@@ -255,7 +256,26 @@ export const askUstazAI = async (
     await saveToCache(lastUserMessage, hybridData);
 
     // Format for UI
-    const finalOutput = formatHybridResponse(hybridData);
+    let finalOutput = formatHybridResponse(hybridData);
+
+    // Enrich with RAG sources for topic-heavy queries
+    const ragKeywords = ['tafsir', 'hadith', 'hukum', 'dalil', 'rujukan', 'sumber', 'hadis'];
+    if (ragKeywords.some(k => lastUserMessage.toLowerCase().includes(k))) {
+      try {
+        const ragResult = await ragQuery(lastUserMessage, 'ms');
+        if (ragResult.sources.length > 0) {
+          const citations = ragResult.sources
+            .slice(0, 3)
+            .map(s => `> 📖 *${s.reference}*`)
+            .join('\n');
+          finalOutput += `\n\n---\n📚 **Rujukan:**\n${citations}`;
+        }
+      } catch { /* RAG enrichment is optional */ }
+    }
+
+    // Fatwa Guard: sanitize all AI responses
+    finalOutput = sanitizeIslamicResponse(finalOutput, fatwaCheck);
+
     if (onChunk) onChunk(finalOutput);
     return finalOutput;
   }
