@@ -2,71 +2,58 @@ name: CI Pipeline
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [main, develop]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "npm"
+      - run: npm ci
+      - name: TypeScript Check
+        run: npx tsc --noEmit
+
   test:
     runs-on: ubuntu-latest
-    # Make tests informational, not blocking
+    needs: typecheck
     continue-on-error: true
-    
-    strategy:
-      matrix:
-        node-version: [20.x]
-    
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Run tests
-      run: npm run test:ci
-      
-    - name: Upload coverage reports
-      uses: codecov/codecov-action@v3
-      if: always()
-      with:
-        file: ./coverage/lcov.info
-        flags: unittests
-        name: codecov-umbrella
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "npm"
+      - run: npm ci
+      - name: Run tests
+        run: npm run test:ci
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
+        if: always()
+        with:
+          file: ./coverage/lcov.info
 
   build:
     runs-on: ubuntu-latest
-    # Make build informational only
-    continue-on-error: true
-    
+    needs: typecheck
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.x'
-        cache: 'npm'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Build application
-      run: npm run build
-      
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: build-files
-        path: dist/
-
-# NOTE: Vercel auto-deploys via its GitHub integration
-# Manual deployment jobs removed - Vercel handles production deploys directly
-# This workflow now focuses on CI (tests + build verification) only
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          cache: "npm"
+      - run: npm ci
+      - name: Build application
+        run: npm run build
+        timeout-minutes: 5
+      - uses: actions/upload-artifact@v4
+        with:
+          name: build-files
+          path: dist/
+# NOTE: Vercel auto-deploys via GitHub integration
+# This workflow handles CI (typecheck + tests + build) only

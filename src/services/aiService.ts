@@ -9,6 +9,7 @@ import { analyzeImageWithGemini } from './ai/GeminiVisionClient';
 import { VoiceService } from './ai/VoiceService';
 import { mcpService } from './mcpService';
 import staticContentService, { TajweedRule, MakhrajPoint, Doa, FAQ, Hadith } from './staticContentService';
+import { checkFatwaSafety, sanitizeIslamicResponse } from './fatwaGuard';
 
 // --- TYPES ---
 export interface HybridResponse {
@@ -139,6 +140,14 @@ export const askUstazAI = async (
   personaId: string = DEFAULT_PERSONA.id
 ): Promise<string> => {
   const lastUserMessage = messages[messages.length - 1].content;
+
+  // 0. FATWA GUARD — Safety check before any AI processing
+  const fatwaCheck = checkFatwaSafety(lastUserMessage);
+  if (fatwaCheck.shouldBlock) {
+    const blocked = `🛡️ **Fatwa Guard**\n\n${fatwaCheck.recommendation}\n\n${fatwaCheck.referralSuggestion || ''}${fatwaCheck.disclaimer || ''}`;
+    if (onChunk) onChunk(blocked);
+    return blocked;
+  }
 
   // 1. CHECK LOCAL HARDCODED FAQ (Fastest)
   const localMatch = ISLAMIC_FAQ.find(item =>
