@@ -11,6 +11,15 @@ interface ProgressStats {
     history: number[];
 }
 
+const safeLoadIqraProgress = (): Partial<ProgressStats> | null => {
+    try {
+        const saved = localStorage.getItem('iqra_progress');
+        return saved ? JSON.parse(saved) : null;
+    } catch {
+        return null;
+    }
+};
+
 const IqraAnalytics: React.FC<IqraAnalyticsProps> = ({ onBack }) => {
     const [stats, setStats] = useState<ProgressStats>({
         totalRead: 0,
@@ -20,9 +29,8 @@ const IqraAnalytics: React.FC<IqraAnalyticsProps> = ({ onBack }) => {
     });
 
     useEffect(() => {
-        const saved = localStorage.getItem('iqra_progress');
-        if (saved) {
-            const parsed = JSON.parse(saved);
+        const parsed = safeLoadIqraProgress();
+        if (parsed) {
             setStats(prev => ({ ...prev, ...parsed }));
         }
     }, []);

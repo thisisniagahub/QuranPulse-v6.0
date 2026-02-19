@@ -79,7 +79,7 @@ const PricingTable: React.FC = () => {
     const [period, setPeriod] = useState<PricingPeriod>('monthly');
 
     return (
-        <section id="pricing" className="py-32 relative overflow-hidden">
+        <section className="py-32 relative overflow-hidden">
             {/* Subtle background glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-raudhah-teal/5 rounded-full blur-[150px] pointer-events-none"></div>
 
@@ -152,10 +152,10 @@ const PricingTable: React.FC = () => {
                             {/* Header */}
                             <div className="text-center mb-8">
                                 <div className={`w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center border transition-all duration-300 ${tier.popular
-                                        ? 'bg-raudhah-teal/10 border-raudhah-teal/20 text-raudhah-teal'
-                                        : tier.accent === 'raudhah-gold'
-                                            ? 'bg-raudhah-gold/10 border-raudhah-gold/20 text-raudhah-gold'
-                                            : 'bg-raudhah-ink/5 border-raudhah-ink/10 text-raudhah-ink/60'
+                                    ? 'bg-raudhah-teal/10 border-raudhah-teal/20 text-raudhah-teal'
+                                    : tier.accent === 'raudhah-gold'
+                                        ? 'bg-raudhah-gold/10 border-raudhah-gold/20 text-raudhah-gold'
+                                        : 'bg-raudhah-ink/5 border-raudhah-ink/10 text-raudhah-ink/60'
                                     }`}>
                                     {tier.icon}
                                 </div>

@@ -24,7 +24,7 @@ export interface HijriDate {
   };
 }
 
-import { UstazOrchestrator } from "./UstazOrchestrator";
+import { UstazahOrchestrator } from "./UstazahOrchestrator";
 import { getCachedOrFetchZone, coordinatesToMalaysiaZone } from "./geolocationService";
 
 const ALADHAN_API = "https://api.aladhan.com/v1";
@@ -48,7 +48,7 @@ export const getPrayerTimes = async (lat: number, lng: number, zone?: string): P
     }
 
     console.log(`🕌 PrayerService: Fetching for zone ${targetZone} via MCP...`);
-    const mcpData = await UstazOrchestrator.getWorshipData(targetZone);
+    const mcpData = await UstazahOrchestrator.getWorshipData(targetZone);
 
     if (mcpData) {
       // Map MCP format to UI format

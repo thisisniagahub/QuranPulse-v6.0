@@ -10,6 +10,25 @@ interface VerseNotesModalProps {
   existingNote?: string;
 }
 
+const NOTES_KEY = 'quranpulse_verse_notes';
+
+const safeLoadNotes = (): Record<string, any> => {
+  try {
+    const raw = localStorage.getItem(NOTES_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch {
+    return {};
+  }
+};
+
+const safeSaveNotes = (notes: Record<string, any>): void => {
+  try {
+    localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
+  } catch {
+    // Ignore storage errors
+  }
+};
+
 const VerseNotesModal: React.FC<VerseNotesModalProps> = ({
   verse,
   isOpen,
@@ -31,14 +50,13 @@ const VerseNotesModal: React.FC<VerseNotesModalProps> = ({
     setIsSaving(true);
 
     // Save to localStorage
-    const notesKey = 'quranpulse_verse_notes';
-    const existingNotes = JSON.parse(localStorage.getItem(notesKey) || '{}');
+    const existingNotes = safeLoadNotes();
     existingNotes[verse.verse_key] = {
       note,
       updatedAt: new Date().toISOString(),
       verseText: verse.text_uthmani?.substring(0, 50)
     };
-    localStorage.setItem(notesKey, JSON.stringify(existingNotes));
+    safeSaveNotes(existingNotes);
 
     onSave(verse.verse_key, note);
     setIsSaving(false);
@@ -48,10 +66,9 @@ const VerseNotesModal: React.FC<VerseNotesModalProps> = ({
   const handleDelete = () => {
     if (!verse) return;
 
-    const notesKey = 'quranpulse_verse_notes';
-    const existingNotes = JSON.parse(localStorage.getItem(notesKey) || '{}');
+    const existingNotes = safeLoadNotes();
     delete existingNotes[verse.verse_key];
-    localStorage.setItem(notesKey, JSON.stringify(existingNotes));
+    safeSaveNotes(existingNotes);
 
     onSave(verse.verse_key, '');
     onClose();

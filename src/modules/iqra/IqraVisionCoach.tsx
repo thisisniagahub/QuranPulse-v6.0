@@ -15,7 +15,7 @@ const IqraVisionCoach: React.FC<IqraVisionCoachProps> = ({ onClose }) => {
     return (
         <div className="h-full flex flex-col relative bg-black">
             <div className="absolute inset-0 overflow-hidden">
-                <img
+                <img loading="lazy"
                     src="/images/iqra-book-open.jpg"
                     alt="Camera Feed"
                     className="w-full h-full object-cover opacity-60"
@@ -81,3 +81,4 @@ const IqraVisionCoach: React.FC<IqraVisionCoachProps> = ({ onClose }) => {
 };
 
 export default IqraVisionCoach;
+

@@ -51,7 +51,7 @@ export const Avatar: React.FC<AvatarProps> = ({
                 )}
             >
                 {src && !imageError ? (
-                    <img
+                    <img loading="lazy"
                         src={src}
                         alt={alt}
                         className="h-full w-full object-cover"
@@ -111,3 +111,4 @@ export const AvatarGroup: React.FC<AvatarGroupProps> = ({
 };
 
 export default Avatar;
+

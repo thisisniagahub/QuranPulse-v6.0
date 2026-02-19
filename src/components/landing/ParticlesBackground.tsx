@@ -1,114 +1,86 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useMemo } from 'react';
+import { motion } from 'framer-motion';
 
-interface Particle {
+interface ConfettiDot {
     x: number;
     y: number;
     size: number;
-    speedX: number;
-    speedY: number;
-    opacity: number;
+    color: string;
+    delay: number;
+    duration: number;
+    shape: 'circle' | 'square' | 'diamond';
 }
 
 interface ParticlesBackgroundProps {
     className?: string;
-    particleColor?: string;
-    particleCount?: number;
-    speed?: number;
+    dotCount?: number;
 }
+
+/**
+ * Confetti Dots Background — Antigravity-inspired scattered colored dots.
+ * CSS-based (no canvas) for better performance and smaller bundle.
+ * Creates a subtle, premium scattered dot pattern.
+ */
+const COLORS = [
+    '#14b8a6', // teal
+    '#0d9488', // teal dark
+    '#f59e0b', // gold
+    '#8b5cf6', // purple
+    '#6366f1', // indigo
+    '#ec4899', // pink
+    '#06b6d4', // cyan
+    '#10b981', // emerald
+];
 
 const ParticlesBackground: React.FC<ParticlesBackgroundProps> = ({
     className = '',
-    particleColor = '#22d3ee',
-    particleCount = 50,
-    speed = 0.5
+    dotCount = 60,
 }) => {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-    const particlesRef = useRef<Particle[]>([]);
-    const animationRef = useRef<number>();
-
-    useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
-
-        const ctx = canvas.getContext('2d');
-        if (!ctx) return;
-
-        const resizeCanvas = () => {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-        };
-
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        // Initialize particles
-        particlesRef.current = Array.from({ length: particleCount }, () => ({
-            x: Math.random() * canvas.width,
-            y: Math.random() * canvas.height,
-            size: Math.random() * 2 + 0.5,
-            speedX: (Math.random() - 0.5) * speed,
-            speedY: (Math.random() - 0.5) * speed,
-            opacity: Math.random() * 0.5 + 0.2
-        }));
-
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            particlesRef.current.forEach((particle) => {
-                // Update position
-                particle.x += particle.speedX;
-                particle.y += particle.speedY;
-
-                // Wrap around edges
-                if (particle.x < 0) particle.x = canvas.width;
-                if (particle.x > canvas.width) particle.x = 0;
-                if (particle.y < 0) particle.y = canvas.height;
-                if (particle.y > canvas.height) particle.y = 0;
-
-                // Draw particle
-                ctx.beginPath();
-                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                ctx.fillStyle = particleColor;
-                ctx.globalAlpha = particle.opacity;
-                ctx.fill();
-            });
-
-            // Draw connections
-            ctx.globalAlpha = 0.1;
-            ctx.strokeStyle = particleColor;
-            ctx.lineWidth = 0.5;
-
-            particlesRef.current.forEach((p1, i) => {
-                particlesRef.current.slice(i + 1).forEach((p2) => {
-                    const distance = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-                    if (distance < 120) {
-                        ctx.globalAlpha = 0.1 * (1 - distance / 120);
-                        ctx.beginPath();
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                        ctx.stroke();
-                    }
-                });
-            });
-
-            animationRef.current = requestAnimationFrame(animate);
-        };
-
-        animate();
-
-        return () => {
-            window.removeEventListener('resize', resizeCanvas);
-            if (animationRef.current) {
-                cancelAnimationFrame(animationRef.current);
-            }
-        };
-    }, [particleColor, particleCount, speed]);
+    const dots = useMemo<ConfettiDot[]>(() => {
+        return Array.from({ length: dotCount }, () => {
+            const shapes: ConfettiDot['shape'][] = ['circle', 'square', 'diamond'];
+            return {
+                x: Math.random() * 100,
+                y: Math.random() * 100,
+                size: Math.random() * 5 + 2,
+                color: COLORS[Math.floor(Math.random() * COLORS.length)],
+                delay: Math.random() * 8,
+                duration: Math.random() * 6 + 8,
+                shape: shapes[Math.floor(Math.random() * shapes.length)],
+            };
+        });
+    }, [dotCount]);
 
     return (
-        <canvas
-            ref={canvasRef}
-            className={`absolute inset-0 w-full h-full pointer-events-none z-layer-0 ${className}`}
-        />
+        <div className={`absolute inset-0 overflow-hidden pointer-events-none z-0 ${className}`}>
+            {dots.map((dot, i) => (
+                <motion.div
+                    key={i}
+                    className="absolute"
+                    style={{
+                        left: `${dot.x}%`,
+                        top: `${dot.y}%`,
+                        width: dot.size,
+                        height: dot.size,
+                        backgroundColor: dot.color,
+                        borderRadius: dot.shape === 'circle' ? '50%' : dot.shape === 'diamond' ? '2px' : '1px',
+                        transform: dot.shape === 'diamond' ? 'rotate(45deg)' : undefined,
+                        opacity: 0,
+                    }}
+                    animate={{
+                        opacity: [0, 0.6, 0.3, 0.6, 0],
+                        y: [0, -15, 5, -10, 0],
+                        scale: [0.8, 1.1, 0.9, 1.05, 0.8],
+                    }}
+                    transition={{
+                        duration: dot.duration,
+                        delay: dot.delay,
+                        repeat: Infinity,
+                        ease: 'easeInOut',
+                    }}
+                />
+            ))}
+        </div>
     );
 };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 import { QuranChapter } from '../../../types';
 
@@ -9,7 +9,7 @@ interface HoloSurahCardProps {
     isOfflineReady?: boolean;
 }
 
-const HoloSurahCard: React.FC<HoloSurahCardProps> = ({ chapter, onClick, index, isOfflineReady }) => {
+const HoloSurahCardComponent: React.FC<HoloSurahCardProps> = ({ chapter, onClick, index, isOfflineReady }) => {
     return (
         <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -88,4 +88,4 @@ const HoloSurahCard: React.FC<HoloSurahCardProps> = ({ chapter, onClick, index, 
     );
 };
 
-export default HoloSurahCard;
+export default memo(HoloSurahCardComponent);

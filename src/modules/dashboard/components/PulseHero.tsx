@@ -82,7 +82,7 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                     transition={{ duration: 1.5 }}
                     className="absolute inset-0"
                 >
-                    <img
+                    <img loading="lazy"
                         src={backgroundMap[nextPrayerGroup] || backgroundMap['Isyak']}
                         alt=""
                         className="w-full h-full object-cover opacity-60 scale-110"
@@ -163,3 +163,4 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
 };
 
 export default PulseHero;
+

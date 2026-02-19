@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mic, Square, Play, BarChart3, Target, Waves, ArrowRight, CheckCircle2, AlertTriangle, Volume2 } from 'lucide-react';
+import { ProductFrame } from './ProductFrame';
+import SplitText from '../ui/SplitText';
 
 interface QwerMetric {
     type: string;
@@ -102,10 +104,16 @@ const QwerDemoSection: React.FC = () => {
                         <BarChart3 className="w-3 h-3" />
                         Analisis Kecerdasan Raudhah
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-raudhah font-bold text-raudhah-ink mb-6 tracking-tight">
-                        <span className="text-raudhah-teal/60">Q-WER</span>
-                        <span className="text-raudhah-teal"> Intelligence</span>
-                    </h2>
+                    <SplitText
+                        text="Q-WER Intelligence"
+                        className="text-4xl md:text-5xl lg:text-6xl font-raudhah font-bold text-raudhah-teal mb-6 tracking-tight"
+                        tag="h2"
+                        splitType="words"
+                        duration={0.8}
+                        staggerChildren={0.08}
+                        from={{ opacity: 0, y: 25, filter: 'blur(4px)' }}
+                        to={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    />
                     <p className="text-raudhah-ink/70 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
                         Bukan sekadar "betul atau salah". Kami ukur <span className="text-raudhah-teal font-bold">ketepatan akustik</span> berdasarkan
                         <span className="text-raudhah-gold font-bold"> berat teologi</span> — seperti ustaz manusia menilai.
@@ -119,125 +127,124 @@ const QwerDemoSection: React.FC = () => {
                         viewport={{ once: true }}
                         className="relative"
                     >
-                        <div className="bg-white/70 backdrop-blur-xl border border-raudhah-teal/10 rounded-[2.5rem] p-8 relative overflow-hidden group shadow-2xl">
-                            {/* Glow Effect */}
-                            <div className="absolute -top-20 -right-20 w-64 h-64 bg-raudhah-teal/5 blur-[80px] rounded-full group-hover:bg-raudhah-teal/10 transition-all duration-700"></div>
-
-                            {/* Header */}
-                            <div className="flex items-center justify-between mb-8">
-                                <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 rounded-xl bg-raudhah-teal/5 border border-raudhah-teal/10 flex items-center justify-center">
-                                        <Mic className="w-5 h-5 text-raudhah-teal" />
+                        <ProductFrame title="Q-WER Engine" badge="LIVE DEMO" glowColor="rgba(20, 184, 166, 0.15)">
+                            <div className="p-6 sm:p-8 relative overflow-hidden">
+                                {/* Header */}
+                                <div className="flex items-center justify-between mb-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-xl bg-raudhah-teal/10 border border-raudhah-teal/20 flex items-center justify-center">
+                                            <Mic className="w-5 h-5 text-raudhah-teal" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-white text-lg">Cuba Sekarang</h4>
+                                            <p className="text-xs text-white/40 font-medium">Analisis AI bacaan anda</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <h4 className="font-bold text-raudhah-ink text-lg">Live Demo</h4>
-                                        <p className="text-xs text-raudhah-ink/50 font-medium">Cuba analisis AI Raudhah sekarang</p>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={`w-2 h-2 rounded-full ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-emerald-500'}`}></span>
+                                        <span className="text-xs text-white/40">{isRecording ? 'Recording...' : 'Ready'}</span>
                                     </div>
                                 </div>
-                                <div className="flex items-center gap-1.5">
-                                    <span className={`w-2 h-2 rounded-full ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-emerald-500'}`}></span>
-                                    <span className="text-xs text-raudhah-ink/40">{isRecording ? 'Recording...' : 'Ready'}</span>
+
+                                {/* Reference Text Display */}
+                                <div className="bg-white/[0.05] rounded-xl p-6 mb-5 border border-white/[0.06]">
+                                    <p className="text-xs text-white/30 uppercase tracking-widest mb-3 font-bold">Reference Text</p>
+                                    <p className="text-2xl md:text-3xl font-arabic text-white text-center leading-relaxed" dir="rtl">
+                                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                                    </p>
                                 </div>
-                            </div>
 
-                            {/* Reference Text Display */}
-                            <div className="bg-raudhah-ink/5 rounded-2xl p-6 mb-6 border border-raudhah-ink/10 shadow-inner">
-                                <p className="text-xs text-raudhah-ink/40 uppercase tracking-widest mb-3 font-bold">Reference Text</p>
-                                <p className="text-2xl md:text-3xl font-arabic text-raudhah-ink text-center leading-relaxed" dir="rtl">
-                                    بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
-                                </p>
-                            </div>
+                                {/* Waveform Visualizer */}
+                                <div className="h-20 flex items-center justify-center gap-1 mb-6 bg-white/[0.04] rounded-xl p-4 border border-white/[0.06]">
+                                    {waveformValues.map((value, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className={`w-1.5 rounded-full ${isRecording ? 'bg-raudhah-teal shadow-[0_0_10px_rgba(0,128,128,0.3)]' : 'bg-white/15'}`}
+                                            animate={{ height: `${value * 100}%` }}
+                                            transition={{ duration: 0.1 }}
+                                        />
+                                    ))}
+                                </div>
 
-                            {/* Waveform Visualizer */}
-                            <div className="h-20 flex items-center justify-center gap-1 mb-8 bg-raudhah-ink/5 rounded-xl p-4 shadow-inner border border-raudhah-ink/10">
-                                {waveformValues.map((value, index) => (
-                                    <motion.div
-                                        key={index}
-                                        className={`w-1.5 rounded-full ${isRecording ? 'bg-raudhah-teal shadow-[0_0_10px_rgba(0,128,128,0.3)]' : 'bg-raudhah-ink/15'}`}
-                                        animate={{ height: `${value * 100}%` }}
-                                        transition={{ duration: 0.1 }}
-                                    />
-                                ))}
-                            </div>
-
-                            {/* Control Buttons */}
-                            <div className="flex gap-4">
-                                <motion.button
-                                    onClick={handleRecordClick}
-                                    disabled={isAnalyzing}
-                                    whileTap={{ scale: 0.95 }}
-                                    className={`flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all duration-300 ${isRecording
-                                        ? 'bg-red-500 text-white shadow-lg shadow-red-500/30 font-bold'
-                                        : 'bg-raudhah-teal text-white shadow-lg shadow-raudhah-teal/20 hover:shadow-raudhah-teal/40 hover:scale-[1.02]'
-                                        } ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : ''}`}
-                                >
-                                    {isRecording ? (
-                                        <>
-                                            <Square className="w-5 h-5 fill-current" />
-                                            <span>Henti Rakaman</span>
-                                        </>
-                                    ) : isAnalyzing ? (
-                                        <>
-                                            <motion.div
-                                                animate={{ rotate: 360 }}
-                                                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                                className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
-                                            />
-                                            <span>Menganalisis...</span>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Mic className="w-5 h-5" />
-                                            <span>Mula Rakaman</span>
-                                        </>
-                                    )}
-                                </motion.button>
-
-                                {showResult && (
+                                {/* Control Buttons */}
+                                <div className="flex gap-3">
                                     <motion.button
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        onClick={resetDemo}
-                                        className="px-6 py-4 rounded-xl bg-raudhah-ink/5 border border-raudhah-ink/10 text-raudhah-ink/50 hover:bg-raudhah-ink/10 hover:text-raudhah-ink transition-colors shadow-sm"
+                                        onClick={handleRecordClick}
+                                        disabled={isAnalyzing}
+                                        whileTap={{ scale: 0.95 }}
+                                        className={`flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all duration-300 ${isRecording
+                                            ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
+                                            : 'bg-raudhah-teal text-white shadow-lg shadow-raudhah-teal/20 hover:shadow-raudhah-teal/40 hover:scale-[1.02]'
+                                            } ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     >
-                                        Reset
+                                        {isRecording ? (
+                                            <>
+                                                <Square className="w-5 h-5 fill-current" />
+                                                <span>Henti Rakaman</span>
+                                            </>
+                                        ) : isAnalyzing ? (
+                                            <>
+                                                <motion.div
+                                                    animate={{ rotate: 360 }}
+                                                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                                                />
+                                                <span>Menganalisis...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Mic className="w-5 h-5" />
+                                                <span>Mula Rakaman</span>
+                                            </>
+                                        )}
                                     </motion.button>
-                                )}
-                            </div>
 
-                            {/* Result Display */}
-                            <AnimatePresence>
-                                {showResult && (
-                                    <motion.div
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        exit={{ opacity: 0, y: -20 }}
-                                        className="mt-8 p-6 bg-emerald-500/5 rounded-2xl border border-emerald-500/20 shadow-sm"
-                                    >
-                                        <div className="flex items-center justify-between mb-4">
-                                            <div className="flex items-center gap-2">
-                                                <CheckCircle2 className="w-5 h-5 text-emerald-400" />
-                                                <span className="font-bold text-emerald-400">Jayyid (Bagus)</span>
-                                            </div>
-                                            <div className="text-right">
-                                                <div className="text-3xl font-bold text-raudhah-ink">{demoScore}</div>
-                                                <div className="text-xs text-raudhah-ink/40 uppercase tracking-wider font-bold">Q-WER Score</div>
-                                            </div>
-                                        </div>
-                                        <div className="grid grid-cols-4 gap-2 mt-4">
-                                            {METRICS.map((metric, i) => (
-                                                <div key={i} className="text-center p-2 rounded-lg bg-raudhah-ink/5 border border-raudhah-ink/10 shadow-sm">
-                                                    <div className="text-[10px] text-raudhah-ink/40 mb-1 font-bold uppercase">{metric.label}</div>
-                                                    <div className="text-sm font-mono text-raudhah-teal font-bold">
-                                                        {[3.2, 4.1, 2.8, 1.5][i]}%
-                                                    </div>
+                                    {showResult && (
+                                        <motion.button
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            onClick={resetDemo}
+                                            className="px-6 py-4 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/50 hover:bg-white/[0.08] hover:text-white transition-colors"
+                                        >
+                                            Reset
+                                        </motion.button>
+                                    )}
+                                </div>
+
+                                {/* Result Display */}
+                                <AnimatePresence>
+                                    {showResult && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -20 }}
+                                            className="mt-6 p-5 bg-emerald-500/10 rounded-xl border border-emerald-500/20"
+                                        >
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-2">
+                                                    <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                                                    <span className="font-bold text-emerald-400">Jayyid (Bagus)</span>
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
+                                                <div className="text-right">
+                                                    <div className="text-3xl font-bold text-white">{demoScore}</div>
+                                                    <div className="text-xs text-white/30 uppercase tracking-wider font-bold">Q-WER Score</div>
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-4 gap-2 mt-4">
+                                                {METRICS.map((metric, i) => (
+                                                    <div key={i} className="text-center p-2 rounded-lg bg-white/[0.05] border border-white/[0.06]">
+                                                        <div className="text-[10px] text-white/30 mb-1 font-bold uppercase">{metric.label}</div>
+                                                        <div className="text-sm font-mono text-raudhah-teal font-bold">
+                                                            {[3.2, 4.1, 2.8, 1.5][i]}%
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        </ProductFrame>
                     </motion.div>
 
                     {/* Right: Metrics Explanation */}

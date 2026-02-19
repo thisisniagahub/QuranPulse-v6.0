@@ -5,6 +5,23 @@ import { EmergencyInfo } from '../types';
 
 const STORAGE_KEY = 'quranpulse_umrah_emergency';
 
+const safeLoadEmergencyInfo = (): EmergencyInfo | null => {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch {
+        return null;
+    }
+};
+
+const safeSaveEmergencyInfo = (info: EmergencyInfo): void => {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(info));
+    } catch {
+        // Ignore storage errors
+    }
+};
+
 const DEFAULT_INFO: EmergencyInfo = {
     hotelName: '',
     hotelAddress: '',
@@ -22,15 +39,15 @@ const EmergencyCard: React.FC = () => {
 
     // Load from localStorage
     useEffect(() => {
-        const saved = localStorage.getItem(STORAGE_KEY);
+        const saved = safeLoadEmergencyInfo();
         if (saved) {
-            setInfo(JSON.parse(saved));
+            setInfo(saved);
         }
     }, []);
 
     // Save to localStorage
     const handleSave = () => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(info));
+        safeSaveEmergencyInfo(info);
         setIsEditing(false);
     };
 

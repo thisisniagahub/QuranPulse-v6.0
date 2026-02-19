@@ -57,13 +57,23 @@ describe('useThrottle', () => {
             { initialProps: { value: 'v1' } }
         );
 
-        // First update should go through
+        // Update within interval should not change immediately
         rerender({ value: 'v2' });
+        expect(result.current).toBe('v1');
+
+        act(() => {
+            jest.advanceTimersByTime(100);
+        });
         expect(result.current).toBe('v2');
 
-        // Rapid updates within interval should be throttled
+        // Rapid updates within interval are throttled until interval passes
         rerender({ value: 'v3' });
         expect(result.current).toBe('v2');
+
+        act(() => {
+            jest.advanceTimersByTime(100);
+        });
+        expect(result.current).toBe('v3');
     });
 });
 

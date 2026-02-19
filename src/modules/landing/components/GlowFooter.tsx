@@ -1,81 +1,91 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Twitter, Instagram, Youtube, Send, ArrowRight, Heart, ShieldCheck } from 'lucide-react';
+
+const socialLinks = [
+  { icon: Twitter, href: '#', label: 'Twitter' },
+  { icon: Instagram, href: '#', label: 'Instagram' },
+  { icon: Youtube, href: '#', label: 'YouTube' },
+  { icon: Send, href: '#', label: 'Telegram' },
+];
+
+const footerLinks = {
+  product: [
+    { name: 'Ciri-ciri', href: '#features' },
+    { name: 'Harga', href: '#pricing' },
+    { name: 'Ustaz AI', href: '#' },
+    { name: 'Iqra Digital', href: '#' },
+  ],
+  resources: [
+    { name: 'Dokumentasi', href: '#' },
+    { name: 'API', href: '#' },
+    { name: 'Komuniti', href: '#' },
+    { name: 'Sokongan', href: '#' },
+  ],
+  company: [
+    { name: 'Tentang Kami', href: '#about' },
+    { name: 'Blog', href: '#' },
+    { name: 'Kerjaya', href: '#' },
+    { name: 'Hubungi', href: '#' },
+  ],
+  legal: [
+    { name: 'Polisi Privasi', href: '/privacy' },
+    { name: 'Terma Perkhidmatan', href: '#' },
+    { name: 'Patuh Syariah', href: '#' },
+  ],
+};
 
 export const GlowFooter = () => {
-  const footerLinks = {
-    product: [
-      { name: 'Features', href: '#features' },
-      { name: 'Premium', href: '#premium' },
-      { name: 'Roadmap', href: '#roadmap' },
-      { name: 'Changelog', href: '#' },
-    ],
-    resources: [
-      { name: 'Documentation', href: '#' },
-      { name: 'API', href: '#' },
-      { name: 'Community', href: '#' },
-      { name: 'Support', href: '#' },
-    ],
-    company: [
-      { name: 'About', href: '#' },
-      { name: 'Blog', href: '#' },
-      { name: 'Careers', href: '#' },
-      { name: 'Contact', href: '#' },
-    ],
-    legal: [
-      { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Terms of Service', href: '#' },
-      { name: 'Shariah Compliance', href: '#' },
-    ],
-  };
-
-  const socialLinks = [
-    { icon: 'fa-brands fa-twitter', href: '#', label: 'Twitter' },
-    { icon: 'fa-brands fa-instagram', href: '#', label: 'Instagram' },
-    { icon: 'fa-brands fa-youtube', href: '#', label: 'YouTube' },
-    { icon: 'fa-brands fa-tiktok', href: '#', label: 'TikTok' },
-    { icon: 'fa-brands fa-telegram', href: '#', label: 'Telegram' },
-  ];
-
   return (
-    <footer className="relative z-10 border-t border-white/5 bg-black/60 backdrop-blur-xl">
-      {/* Gradient glow at top */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/2 h-20 bg-gradient-to-b from-cyan-500/10 to-transparent blur-2xl" />
+    <footer className="relative z-10 border-t border-raudhah-teal/10 bg-gradient-to-b from-white to-raudhah-ivory/80">
+      {/* Top glow line */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-raudhah-teal/30 to-transparent" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-1/3 h-20 bg-gradient-to-b from-raudhah-teal/5 to-transparent blur-2xl" />
 
       <div className="max-w-7xl mx-auto px-6 py-16 md:py-20">
-        {/* Main Footer Content */}
+        {/* Main Content */}
         <div className="grid grid-cols-2 md:grid-cols-6 gap-8 md:gap-12 mb-12">
-          {/* Brand Column & Newsletter */}
+          {/* Brand Column */}
           <div className="col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 relative flex items-center justify-center group">
-                <div className="absolute inset-0 bg-primary blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <img loading="lazy" src="/logo-primary.png" alt="Quran Pulse" className="w-full h-full object-cover scale-150 relative z-10 drop-shadow-[0_0_10px_rgba(90,185,255,0.5)]" />
+                <div className="absolute inset-0 bg-raudhah-teal/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
+                <img
+                  loading="lazy"
+                  src="/logo-primary.png"
+                  alt="QuranPulse"
+                  width={48}
+                  height={48}
+                  className="w-full h-full object-contain scale-125 relative z-10"
+                />
               </div>
-              <span className="font-black text-xl">
-                <span className="text-white">Quran</span> <span className="text-primary">Pulse</span>
+              <span className="font-bold text-xl font-raudhah">
+                <span className="text-raudhah-teal">Quran</span>
+                <span className="text-raudhah-gold">Pulse</span>
               </span>
             </div>
-            <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-xs">
-              The future of Islamic intelligence. Experience the Quran like never before with AI-powered insights.
+            <p className="text-raudhah-ink/50 text-sm leading-relaxed mb-6 max-w-xs">
+              Masa depan kecerdasan Islamik. Alami Al-Quran dengan cara yang tidak pernah anda bayangkan.
             </p>
 
-            {/* Newsletter Input */}
+            {/* Newsletter */}
             <div className="mb-8 max-w-xs">
-              <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-3">Join Genesis Batch</p>
+              <p className="text-xs text-raudhah-ink/40 font-bold uppercase tracking-wider mb-3">
+                Sertai Genesis Batch
+              </p>
               <div className="flex gap-2">
                 <input
                   type="email"
-                  placeholder="Enter your email"
-                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:border-cyan-500/50 transition-colors"
+                  placeholder="Email anda"
+                  className="flex-1 bg-white border border-raudhah-teal/15 rounded-xl px-3 py-2.5 text-sm text-raudhah-ink placeholder:text-raudhah-ink/30 focus:outline-none focus:border-raudhah-teal/40 focus:ring-2 focus:ring-raudhah-teal/10 transition-all"
                 />
-                <button className="bg-cyan-600 hover:bg-cyan-500 text-white rounded-lg px-3 py-2 transition-colors">
-                  <i className="fa-solid fa-arrow-right text-sm"></i>
+                <button aria-label="Hantar email" className="bg-raudhah-teal hover:bg-raudhah-teal/90 text-white rounded-xl px-4 py-2.5 transition-colors shadow-lg shadow-raudhah-teal/20">
+                  <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Social Links */}
+            {/* Social */}
             <div className="flex gap-3">
               {socialLinks.map((social, index) => (
                 <motion.a
@@ -84,90 +94,61 @@ export const GlowFooter = () => {
                   aria-label={social.label}
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 hover:bg-cyan-500/10 transition-all duration-300"
+                  className="w-10 h-10 rounded-full bg-raudhah-ivory border border-raudhah-teal/10 flex items-center justify-center text-raudhah-ink/40 hover:text-raudhah-teal hover:border-raudhah-teal/30 hover:bg-raudhah-teal/5 transition-all duration-300"
                 >
-                  <i className={`${social.icon} text-sm`} />
+                  <social.icon className="w-4 h-4" />
                 </motion.a>
               ))}
             </div>
           </div>
 
-          {/* Links Columns */}
-          <div>
-            <h4 className="font-semibold text-white text-sm mb-4 uppercase tracking-wider">Product</h4>
-            <ul className="space-y-3">
-              {footerLinks.product.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="text-slate-400 text-sm hover:text-cyan-400 transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-white text-sm mb-4 uppercase tracking-wider">Resources</h4>
-            <ul className="space-y-3">
-              {footerLinks.resources.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="text-slate-400 text-sm hover:text-cyan-400 transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-white text-sm mb-4 uppercase tracking-wider">Company</h4>
-            <ul className="space-y-3">
-              {footerLinks.company.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="text-slate-400 text-sm hover:text-cyan-400 transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="font-semibold text-white text-sm mb-4 uppercase tracking-wider">Legal</h4>
-            <ul className="space-y-3">
-              {footerLinks.legal.map((link, index) => (
-                <li key={index}>
-                  <a href={link.href} className="text-slate-400 text-sm hover:text-cyan-400 transition-colors">
-                    {link.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* Link Columns */}
+          {Object.entries(footerLinks).map(([category, links]) => (
+            <div key={category}>
+              <h4 className="font-semibold text-raudhah-ink text-sm mb-4 uppercase tracking-wider">
+                {category === 'product' ? 'Produk' : category === 'resources' ? 'Sumber' : category === 'company' ? 'Syarikat' : 'Undang-undang'}
+              </h4>
+              <ul className="space-y-3">
+                {links.map((link, index) => (
+                  <li key={index}>
+                    <a href={link.href} className="text-raudhah-ink/50 text-sm hover:text-raudhah-teal transition-colors">
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-500 text-sm">
-            © {new Date().getFullYear()} QuranPulse. All rights reserved.
+        <div className="pt-8 border-t border-raudhah-teal/10 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p className="text-raudhah-ink/40 text-sm flex items-center gap-1">
+            © {new Date().getFullYear()} QuranPulse. Dibuat dengan{' '}
+            <Heart className="w-3 h-3 text-red-400 fill-red-400 inline" />{' '}
+            di Malaysia.
           </p>
 
-          <div className="flex items-center gap-2 text-xs text-slate-500">
-            <span className="flex items-center gap-1">
-              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
-              All systems operational
+          <div className="flex items-center gap-4 text-xs text-raudhah-ink/40">
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-raudhah-teal" />
+              Patuh JAKIM
             </span>
-            <span className="mx-2 text-slate-700">•</span>
-            <span>v6.0 Genesis Edition</span>
+            <span className="text-raudhah-ink/20">•</span>
+            <span className="flex items-center gap-1.5">
+              <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
+              Sistem aktif
+            </span>
+            <span className="text-raudhah-ink/20">•</span>
+            <span>v6.0 Genesis</span>
           </div>
         </div>
       </div>
 
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-maze opacity-30 pointer-events-none" />
+      {/* Subtle background pattern */}
+      <div className="absolute inset-0 opacity-[0.02] pointer-events-none bg-pattern-grid bg-[size:60px_60px]" />
     </footer>
   );
 };
 
 export default GlowFooter;
-

@@ -117,7 +117,7 @@ const UserTable: React.FC = () => {
                                     <td className="px-6 py-4 flex items-center gap-4">
                                         <div className="relative">
                                             <div className="w-10 h-10 rounded-full bg-slate-800 border border-white/10 overflow-hidden">
-                                                <img src={user.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.id}`} alt="" className="w-full h-full object-cover" />
+                                                <img loading="lazy" src={user.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.id}`} alt="" className="w-full h-full object-cover" />
                                             </div>
                                             {user.is_verified_tutor && (
                                                 <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-blue-500 rounded-full border border-black flex items-center justify-center text-[8px] text-white">✓</div>

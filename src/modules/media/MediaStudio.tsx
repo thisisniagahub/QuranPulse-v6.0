@@ -1,6 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { generateIslamicVideo, enhanceVideoPrompt } from '../../services/aiService';
 
+const safeGetStorage = (key: string): string | null => {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+
+const safeSetStorage = (key: string, value: string): void => {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Ignore storage failures (quota/private mode)
+  }
+};
+
+const safeRemoveStorage = (key: string): void => {
+  try {
+    localStorage.removeItem(key);
+  } catch {
+    // Ignore storage failures
+  }
+};
+
 const MediaStudio: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'WATCH' | 'LISTEN' | 'CREATE'>('WATCH');
 
@@ -13,18 +37,18 @@ const MediaStudio: React.FC = () => {
 
   // Persistence Effects
   useEffect(() => {
-    const savedVideo = localStorage.getItem('last_generated_video');
-    const savedPrompt = localStorage.getItem('last_video_prompt');
+    const savedVideo = safeGetStorage('last_generated_video');
+    const savedPrompt = safeGetStorage('last_video_prompt');
     if (savedVideo) setVideoUrl(savedVideo);
     if (savedPrompt) setPrompt(savedPrompt);
   }, []);
 
   useEffect(() => {
-    if (videoUrl) localStorage.setItem('last_generated_video', videoUrl);
+    if (videoUrl) safeSetStorage('last_generated_video', videoUrl);
   }, [videoUrl]);
 
   useEffect(() => {
-    localStorage.setItem('last_video_prompt', prompt);
+    safeSetStorage('last_video_prompt', prompt);
   }, [prompt]);
 
   const handleEnhancePrompt = async () => {
@@ -45,7 +69,7 @@ const MediaStudio: React.FC = () => {
     
     setError(null);
     setVideoUrl(null);
-    localStorage.removeItem('last_generated_video'); // Clear old video
+    safeRemoveStorage('last_generated_video'); // Clear old video
 
     // Check for API Key selection (Required for Veo)
     try {

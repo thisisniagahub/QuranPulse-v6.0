@@ -13,6 +13,8 @@ import { checkFatwaSafety, sanitizeIslamicResponse } from './fatwaGuard';
 import { ragQuery } from './ragService';
 
 // --- TYPES ---
+export type EmotionType = 'sad' | 'anxious' | 'happy' | 'confused' | 'angry' | 'neutral';
+
 export interface HybridResponse {
   summary: string;
   steps?: string[];
@@ -91,7 +93,7 @@ async function saveToCache(query: string, response: HybridResponse) {
   }
 }
 
-import { UstazOrchestrator } from './UstazOrchestrator';
+import { UstazahOrchestrator } from './UstazahOrchestrator';
 
 // --- CIRCUIT BREAKER ---
 const CIRCUIT_THRESHOLD = 3;
@@ -185,7 +187,7 @@ export const askUstazAI = async (
 
   // 3. CHECK MCP (REAL-TIME DATA) - Pulse-MCP Integration
   try {
-    const mcpResponse = await UstazOrchestrator.detectAndCall(lastUserMessage, 'ms');
+    const mcpResponse = await UstazahOrchestrator.detectAndCall(lastUserMessage, 'ms');
     if (mcpResponse) {
       const formatted = formatHybridResponse(mcpResponse);
       if (onChunk) onChunk(formatted);
@@ -199,8 +201,14 @@ export const askUstazAI = async (
   // 4. FETCH FROM CLOUD AI (Groq First for Speed, then Gemini)
 
   const activePersona: Persona = PERSONAS[personaId] || DEFAULT_PERSONA;
+
+  // EMOTIONAL INTELLIGENCE INJECTION
+  const detectedEmotion = detectUserEmotion(lastUserMessage);
+  const emotionalContext = getEmotionalContext(detectedEmotion);
+  const emotionSystemPrompt = emotionalContext ? `\n\n${emotionalContext}` : "";
+
   const messagesWithSystem = [
-    { role: 'system', content: activePersona.systemPrompt, id: 'sys', timestamp: Date.now() },
+    { role: 'system', content: activePersona.systemPrompt + emotionSystemPrompt, id: 'sys', timestamp: Date.now() },
     ...messages
   ];
 
@@ -306,6 +314,68 @@ function formatHybridResponse(data: HybridResponse): string {
 
   return output;
 }
+
+// --- EMOTIONAL INTELLIGENCE ---
+
+const EMOTION_KEYWORDS: Record<EmotionType, string[]> = {
+  sad: ['sedih', 'duka', 'mati', 'kehilangan', 'menangis', 'meninggal', ' kecewa', 'patah hati'],
+  anxious: ['risau', 'takut', 'gelisah', 'stress', 'bimbang', 'cemas', 'serabut', 'gementar'],
+  happy: ['syukur', 'gembira', 'alhamdulillah', 'bahagia', 'bersyukur', 'seronok', 'tenang'],
+  confused: ['keliru', 'tak faham', 'bingung', 'macam mana', 'pening', 'was-was'],
+  angry: ['marah', 'kecewa', 'zalim', 'tak adil', 'bengkeng', 'geram', 'sakit hati'],
+  neutral: []
+};
+
+const COMFORT_VERSES: Record<EmotionType, Array<{ text: string, ref: string }>> = {
+  sad: [
+    { text: "Janganlah kamu bersikap lemah, dan janganlah kamu bersedih hati, padahal kamulah orang-orang yang paling tinggi (darjatnya), jika kamu orang-orang yang beriman.", ref: "Ali 'Imran: 139" },
+    { text: "Sesungguhnya bersama kesulitan ada kemudahan.", ref: "Al-Insyirah: 6" }
+  ],
+  anxious: [
+    { text: "Ingatlah, hanya dengan mengingati Allah-lah hati menjadi tenteram.", ref: "Ar-Ra'd: 28" },
+    { text: "Dan barangsiapa yang bertawakkal kepada Allah niscaya Allah akan mencukupkan (keperluan)nya.", ref: "At-Talaq: 3" }
+  ],
+  happy: [
+    { text: "Sesungguhnya jika kamu bersyukur, pasti Kami akan menambah (nikmat) kepadamu.", ref: "Ibrahim: 7" }
+  ],
+  confused: [
+    { text: "Maka bertanyalah kepada orang yang mempunyai pengetahuan jika kamu tidak mengetahui.", ref: "An-Nahl: 43" }
+  ],
+  angry: [
+    { text: "Dan orang-orang yang menahan amarahnya dan memaafkan (kesalahan) orang. Allah menyukai orang-orang yang berbuat kebajikan.", ref: "Ali 'Imran: 134" }
+  ],
+  neutral: []
+};
+
+function detectUserEmotion(message: string): EmotionType {
+  const lowerMsg = message.toLowerCase();
+  for (const [emotion, keywords] of Object.entries(EMOTION_KEYWORDS)) {
+    if (emotion === 'neutral') continue;
+    if (keywords.some(k => lowerMsg.includes(k))) {
+      return emotion as EmotionType;
+    }
+  }
+  return 'neutral';
+}
+
+function getEmotionalContext(emotion: EmotionType): string {
+  switch (emotion) {
+    case 'sad': return "USER EMOTION: SAD. Respond with a comforting, gentle tone. Acknowledge their pain validation first. Suggest a short Dua for peace.";
+    case 'anxious': return "USER EMOTION: ANXIOUS. Respond with a calming, reassuring tone. Emphasize Tawakkal (reliance on Allah). Remind them that Allah is in control.";
+    case 'happy': return "USER EMOTION: HAPPY. Respond with shared joy and encouragement. Remind them to say Alhamdulillah and use this energy for good.";
+    case 'confused': return "USER EMOTION: CONFUSED. Respond with extreme clarity and patience. Break down the answer step-by-step. Use simple analogies.";
+    case 'angry': return "USER EMOTION: ANGRY. Respond with patience and de-escalation. Validate their frustration but gently guide towards patience (Sabar) and forgiveness.";
+    default: return "";
+  }
+}
+
+function getEmotionVerse(emotion: EmotionType): string {
+  const verses = COMFORT_VERSES[emotion];
+  if (!verses || verses.length === 0) return "";
+  const v = verses[Math.floor(Math.random() * verses.length)];
+  return `\n\n> 🌿 *"${v.text}"* (${v.ref})`;
+}
+
 
 function getSmartSimulationResponse(query: string): string {
   const lowerQuery = query.toLowerCase();
@@ -529,12 +599,177 @@ ARAHAN:
   }
 };
 // --- QURAN RECITATION ANALYSIS ---
+type RecitationAssessmentColor = 'RED' | 'YELLOW' | 'GREEN';
+
+interface RecitationCategoryScores {
+  makhraj: number;
+  tajweedRules: number;
+  rhythm: number;
+  fluency: number;
+}
+
+interface TajweedCategoryFeedback {
+  category: string;
+  score: number;
+  feedback: string;
+  examples: string[];
+}
+
 export interface RecitationAnalysis {
   score: number; // 0-100
   feedback: string;
-  issues: Array<{ position: string; issue: string; suggestion: string }>;
+  issues: Array<{ position: string; issue: string; suggestion: string; exampleArabic?: string }>;
   overallAssessment: string;
+  assessmentColor?: RecitationAssessmentColor;
+  categoryScores?: RecitationCategoryScores;
+  tajweedCategoryFeedback?: TajweedCategoryFeedback[];
+  transcription?: string;
 }
+
+const RECITATION_RUBRIC_WEIGHTS: RecitationCategoryScores = {
+  makhraj: 30,
+  tajweedRules: 40,
+  rhythm: 20,
+  fluency: 10
+};
+
+const TAJWEED_CATEGORIES = [
+  'Idgham',
+  'Ikhfa',
+  'Iqlab',
+  'Izhar',
+  'Ghunnah',
+  "Madd Asli (Tabi'i)",
+  'Madd Wajib Muttasil',
+  'Madd Jaiz Munfasil',
+  'Madd Lazim',
+  "Madd 'Arid Lissukun",
+  'Madd Lin',
+  'Qalqalah'
+];
+
+const TAJWEED_ARABIC_EXAMPLES: Record<string, string[]> = {
+  Idgham: ['مِنْ رَبِّهِمْ', 'مَن يَعْمَلْ'],
+  Ikhfa: ['مِنْ شَرِّ', 'أَنْصَارًا'],
+  Iqlab: ['سَمِيعٌ بَصِيرٌ', 'أَنْبِئْهُمْ'],
+  Izhar: ['مِنْهُ', 'أَنْعَمْتَ'],
+  Ghunnah: ['إِنَّا', 'ثُمَّ'],
+  "Madd Asli (Tabi'i)": ['قَالَ', 'فِيهِ'],
+  'Madd Wajib Muttasil': ['السَّمَاءِ', 'جَاءَ'],
+  'Madd Jaiz Munfasil': ['فِي أَنْفُسِكُمْ', 'بِمَا أُنْزِلَ'],
+  'Madd Lazim': ['الضَّالِّينَ', 'الْحَاقَّةُ'],
+  "Madd 'Arid Lissukun": ['الْعَالَمِينَ', 'نَسْتَعِينُ'],
+  'Madd Lin': ['خَوْفٍ', 'قُرَيْشٍ'],
+  Qalqalah: ['أَحَدٌ', 'يَجْعَلْ']
+};
+
+type RecitationModelResponse = Partial<RecitationAnalysis> & {
+  categoryScores?: Partial<RecitationCategoryScores>;
+  tajweedCategoryFeedback?: Array<Partial<TajweedCategoryFeedback>>;
+};
+
+const clampScore = (value: unknown, fallback = 0): number => {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return fallback;
+  return Math.max(0, Math.min(100, Math.round(numeric)));
+};
+
+const resolveAssessmentColor = (score: number): RecitationAssessmentColor => {
+  if (score < 50) return 'RED';
+  if (score <= 80) return 'YELLOW';
+  return 'GREEN';
+};
+
+const extractJsonPayload = (response: string): RecitationModelResponse | null => {
+  const cleaned = response.replace(/```json|```/g, '').trim();
+  try {
+    return JSON.parse(cleaned);
+  } catch {
+    const start = cleaned.indexOf('{');
+    const end = cleaned.lastIndexOf('}');
+    if (start === -1 || end <= start) return null;
+    try {
+      return JSON.parse(cleaned.slice(start, end + 1));
+    } catch {
+      return null;
+    }
+  }
+};
+
+const normalizeCategoryScores = (raw: Partial<RecitationCategoryScores> | undefined, fallbackScore = 0): RecitationCategoryScores => ({
+  makhraj: clampScore(raw?.makhraj, fallbackScore),
+  tajweedRules: clampScore(raw?.tajweedRules, fallbackScore),
+  rhythm: clampScore(raw?.rhythm, fallbackScore),
+  fluency: clampScore(raw?.fluency, fallbackScore)
+});
+
+const calculateWeightedScore = (scores: RecitationCategoryScores): number => {
+  const weighted =
+    (scores.makhraj * RECITATION_RUBRIC_WEIGHTS.makhraj) +
+    (scores.tajweedRules * RECITATION_RUBRIC_WEIGHTS.tajweedRules) +
+    (scores.rhythm * RECITATION_RUBRIC_WEIGHTS.rhythm) +
+    (scores.fluency * RECITATION_RUBRIC_WEIGHTS.fluency);
+
+  return Math.round(weighted / 100);
+};
+
+const normalizeTajweedFeedback = (
+  rawFeedback: Array<Partial<TajweedCategoryFeedback>> | undefined,
+  fallbackScore: number
+): TajweedCategoryFeedback[] => {
+  if (!Array.isArray(rawFeedback) || rawFeedback.length === 0) {
+    return TAJWEED_CATEGORIES.map((category) => ({
+      category,
+      score: fallbackScore,
+      feedback: `Perlu latihan konsisten untuk ${category}.`,
+      examples: TAJWEED_ARABIC_EXAMPLES[category] || ['الرَّحْمَٰنِ']
+    }));
+  }
+
+  return rawFeedback.map((item) => {
+    const category = typeof item.category === 'string' && item.category.trim()
+      ? item.category.trim()
+      : 'Tajweed';
+
+    const examples = Array.isArray(item.examples)
+      ? item.examples.filter((e): e is string => typeof e === 'string' && e.trim().length > 0)
+      : [];
+
+    return {
+      category,
+      score: clampScore(item.score, fallbackScore),
+      feedback: typeof item.feedback === 'string' && item.feedback.trim()
+        ? item.feedback.trim()
+        : `Perbaiki penerapan ${category}.`,
+      examples: examples.length > 0 ? examples : (TAJWEED_ARABIC_EXAMPLES[category] || ['الرَّحْمَٰنِ'])
+    };
+  });
+};
+
+const normalizeIssues = (
+  rawIssues: Array<{ position?: unknown; issue?: unknown; suggestion?: unknown; exampleArabic?: unknown }> | undefined
+): Array<{ position: string; issue: string; suggestion: string; exampleArabic?: string }> => {
+  if (!Array.isArray(rawIssues)) return [];
+
+  return rawIssues
+    .filter(Boolean)
+    .map((issue, index) => {
+      const position = typeof issue.position === 'string' && issue.position.trim()
+        ? issue.position.trim()
+        : `Segmen ${index + 1}`;
+      const issueText = typeof issue.issue === 'string' && issue.issue.trim()
+        ? issue.issue.trim()
+        : 'Perlu semakan tajweed';
+      const suggestion = typeof issue.suggestion === 'string' && issue.suggestion.trim()
+        ? issue.suggestion.trim()
+        : 'Ulang bacaan perlahan sambil semak makhraj dan hukum tajwid.';
+      const exampleArabic = typeof issue.exampleArabic === 'string' && issue.exampleArabic.trim()
+        ? issue.exampleArabic.trim()
+        : undefined;
+
+      return { position, issue: issueText, suggestion, exampleArabic };
+    });
+};
 
 export const analyzeQuranRecitation = async (
   audioBase64: string,
@@ -542,36 +777,123 @@ export const analyzeQuranRecitation = async (
   expectedArabic?: string
 ): Promise<RecitationAnalysis> => {
   try {
-    // Use Gemini Vision/Audio for analysis
-    const prompt = `Anda adalah pakar tajwid Al-Quran. Analisis bacaan ini untuk ayat ${verseKey}.
-${expectedArabic ? `Teks yang sepatutnya: ${expectedArabic}` : ''}
+    const prompt = `Anda ialah pakar talaqqi dan tajwid Al-Quran. Tugas anda ialah menganalisis audio bacaan pengguna untuk ayat ${verseKey}.
 
-Berikan analisis dalam format JSON:
+EXPECTED ARABIC:
+${expectedArabic ? expectedArabic : '[Tidak diberikan oleh sistem]'}
+
+ANALYSIS REQUIREMENTS:
+1) Lakukan audio transcription ringkas berdasarkan bacaan pengguna.
+2) Bandingkan transkripsi tersebut dengan EXPECTED ARABIC untuk kesalahan huruf, harakat, waqaf/ibtida', dan panjang pendek.
+3) Nilai kategori tajwid berikut:
+   - Idgham
+   - Ikhfa
+   - Iqlab
+   - Izhar
+   - Ghunnah
+   - Madd Asli (Tabi'i)
+   - Madd Wajib Muttasil
+   - Madd Jaiz Munfasil
+   - Madd Lazim
+   - Madd 'Arid Lissukun
+   - Madd Lin
+   - Qalqalah
+4) Gunakan rubric skor:
+   - makhraj: 30%
+   - tajweedRules: 40%
+   - rhythm: 20%
+   - fluency: 10%
+5) Beri maklum balas yang spesifik, termasuk contoh Arab pada bahagian yang perlu dibetulkan.
+6) Jika audio tidak jelas, nyatakan secara jujur tetapi tetap beri cadangan pembaikan.
+
+RESPOND WITH STRICT JSON ONLY (no markdown, no prose):
 {
-  "score": 0-100,
-  "feedback": "Maklum balas ringkas",
-  "issues": [{"position": "perkataan ke-X", "issue": "jenis kesalahan", "suggestion": "cara betulkan"}],
-  "overallAssessment": "Penilaian keseluruhan"
+  "transcription": "string",
+  "categoryScores": {
+    "makhraj": 0,
+    "tajweedRules": 0,
+    "rhythm": 0,
+    "fluency": 0
+  },
+  "tajweedCategoryFeedback": [
+    {
+      "category": "Idgham",
+      "score": 0,
+      "feedback": "string",
+      "examples": ["مِنْ رَبِّهِمْ"]
+    }
+  ],
+  "issues": [
+    {
+      "position": "perkataan/frasa",
+      "issue": "jenis kesalahan",
+      "suggestion": "cara pembetulan",
+      "exampleArabic": "Arabic snippet"
+    }
+  ],
+  "feedback": "ringkasan maklum balas",
+  "overallAssessment": "ringkasan penilaian keseluruhan"
 }`;
 
     const response = await analyzeImageWithGemini(audioBase64, prompt);
-    try {
-      return JSON.parse(response.replace(/```json|```/g, '').trim());
-    } catch {
+    const parsed = extractJsonPayload(response);
+
+    if (!parsed) {
       return {
-        score: 70,
-        feedback: response,
+        score: 65,
+        feedback: response || 'Analisis diterima tetapi format respons tidak standard.',
         issues: [],
-        overallAssessment: 'Sila cuba lagi untuk analisis lebih tepat.'
+        overallAssessment: 'Sila ulang bacaan pada tempo perlahan untuk analisis yang lebih tepat.',
+        assessmentColor: resolveAssessmentColor(65),
+        categoryScores: {
+          makhraj: 65,
+          tajweedRules: 65,
+          rhythm: 65,
+          fluency: 65
+        },
+        tajweedCategoryFeedback: normalizeTajweedFeedback(undefined, 65)
       };
     }
-  } catch (e) {
-    console.error('analyzeQuranRecitation error:', e);
+
+    const fallbackScore = clampScore(parsed.score, 70);
+    const categoryScores = normalizeCategoryScores(parsed.categoryScores, fallbackScore);
+    const weightedScore = calculateWeightedScore(categoryScores);
+    const score = clampScore(weightedScore, fallbackScore);
+    const assessmentColor = resolveAssessmentColor(score);
+    const issues = normalizeIssues(
+      parsed.issues as Array<{ position?: unknown; issue?: unknown; suggestion?: unknown; exampleArabic?: unknown }> | undefined
+    );
+    const tajweedCategoryFeedback = normalizeTajweedFeedback(parsed.tajweedCategoryFeedback, categoryScores.tajweedRules);
+
+    return {
+      score,
+      feedback: typeof parsed.feedback === 'string' && parsed.feedback.trim()
+        ? parsed.feedback.trim()
+        : `Skor bacaan ${score}/100. Fokus pada makhraj dan pematuhan hukum tajwid.`,
+      issues,
+      overallAssessment: typeof parsed.overallAssessment === 'string' && parsed.overallAssessment.trim()
+        ? parsed.overallAssessment.trim()
+        : `Penilaian warna: ${assessmentColor}. Ulang latihan dengan fokus pada contoh-contoh Arab yang diberi.`,
+      assessmentColor,
+      categoryScores,
+      tajweedCategoryFeedback,
+      transcription: typeof parsed.transcription === 'string' ? parsed.transcription.trim() : undefined
+    };
+  } catch (error) {
+    console.error('analyzeQuranRecitation error:', error);
     return {
       score: 0,
       feedback: 'Gagal menganalisis bacaan.',
       issues: [],
-      overallAssessment: 'Perkhidmatan tidak tersedia.'
+      overallAssessment: 'Perkhidmatan tidak tersedia.',
+      assessmentColor: 'RED',
+      categoryScores: {
+        makhraj: 0,
+        tajweedRules: 0,
+        rhythm: 0,
+        fluency: 0
+      },
+      tajweedCategoryFeedback: normalizeTajweedFeedback(undefined, 0)
     };
   }
 };

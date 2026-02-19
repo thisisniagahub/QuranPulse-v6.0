@@ -128,7 +128,7 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
                             {/* Info */}
                             <div className="flex items-center gap-3">
                                 <div className="w-8 h-8 rounded-full bg-slate-800 border border-white/10 overflow-hidden">
-                                    <img src="https://i.pravatar.cc/100?u=reciter" alt="Reciter" />
+                                    <img loading="lazy" src="https://i.pravatar.cc/100?u=reciter" alt="Reciter" />
                                 </div>
                                 <span className="text-[10px] font-black tracking-widest text-white/80 uppercase">Mishary Rashid Al-Afasy</span>
                             </div>
@@ -195,3 +195,4 @@ const SidebarItem = ({ icon, label, active, onClick }: { icon: string, label: st
 );
 
 export default ImmersiveControls;
+

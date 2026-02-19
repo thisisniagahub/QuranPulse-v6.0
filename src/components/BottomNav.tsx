@@ -118,7 +118,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
                                     // CENTER BUTTON (USTAZ AI) - KEEP IMAGE
                                     <div className="relative flex items-center justify-center w-full h-full -mt-8">
                                         <div className="relative w-20 h-20 flex items-center justify-center bg-[#020617] rounded-full">
-                                            <img
+                                            <img loading="lazy"
                                                 src={item.icon}
                                                 alt="" // Decorative, aria-label on Link
                                                 width="80"
@@ -157,4 +157,5 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
 };
 
 export default BottomNav;
+
 

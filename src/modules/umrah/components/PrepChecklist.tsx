@@ -6,6 +6,23 @@ import { ChecklistItem } from '../types';
 
 const STORAGE_KEY = 'quranpulse_umrah_checklist';
 
+const safeLoadChecklist = (): { items: ChecklistItem[]; gender: 'lelaki' | 'wanita' } | null => {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        return saved ? JSON.parse(saved) : null;
+    } catch {
+        return null;
+    }
+};
+
+const safeSaveChecklist = (payload: { items: ChecklistItem[]; gender: 'lelaki' | 'wanita' }): void => {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+    } catch {
+        // Ignore storage errors
+    }
+};
+
 const PrepChecklist: React.FC = () => {
     const [items, setItems] = useState<ChecklistItem[]>([]);
     const [filter, setFilter] = useState<string>('all');
@@ -14,9 +31,8 @@ const PrepChecklist: React.FC = () => {
 
     // Load from localStorage
     useEffect(() => {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            const parsed = JSON.parse(saved);
+        const parsed = safeLoadChecklist();
+        if (parsed) {
             setItems(parsed.items || CHECKLIST_ITEMS);
             setGender(parsed.gender || 'lelaki');
         } else {
@@ -27,7 +43,7 @@ const PrepChecklist: React.FC = () => {
     // Save to localStorage
     useEffect(() => {
         if (items.length > 0) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify({ items, gender }));
+            safeSaveChecklist({ items, gender });
         }
     }, [items, gender]);
 

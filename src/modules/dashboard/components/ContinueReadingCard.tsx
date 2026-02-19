@@ -24,7 +24,7 @@ const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate })
         >
             {/* Background Image */}
             <div className="absolute inset-0 z-0">
-                <img
+                <img loading="lazy"
                     src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop"
                     alt="Quran BG"
                     className="w-full h-full object-cover opacity-50 transition-transform duration-700 group-hover:scale-110"
@@ -69,3 +69,4 @@ const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate })
 };
 
 export default ContinueReadingCard;
+

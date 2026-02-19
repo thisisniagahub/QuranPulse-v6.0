@@ -31,7 +31,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
         {bgImage && (
             <>
                 <div className="absolute inset-0">
-                    <img src={bgImage} alt="bg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-50" />
+                    <img loading="lazy" src={bgImage} alt="bg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-50" />
                 </div>
                 {/* Gradient Overlay for Readability */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/70 to-transparent" />
@@ -51,3 +51,4 @@ const BentoCard: React.FC<BentoCardProps> = ({
 );
 
 export default BentoCard;
+

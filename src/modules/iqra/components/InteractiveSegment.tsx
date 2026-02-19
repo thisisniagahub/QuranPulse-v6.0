@@ -23,7 +23,7 @@ const InteractiveSegment: React.FC<InteractiveSegmentProps> = ({
 
     return (
         <motion.div
-            layout
+            layout={false}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={() => {

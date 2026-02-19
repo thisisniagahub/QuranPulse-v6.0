@@ -8,6 +8,22 @@ import { AnalyticsService } from '../../services/analyticsService';
 import ZakatCalculator from './components/ZakatCalculator';
 import PrayerCard from './components/PrayerCard';
 
+const safeGetStorage = (key: string, fallback: string): string => {
+    try {
+        return localStorage.getItem(key) || fallback;
+    } catch {
+        return fallback;
+    }
+};
+
+const safeSetStorage = (key: string, value: string): void => {
+    try {
+        localStorage.setItem(key, value);
+    } catch {
+        // Ignore storage errors
+    }
+};
+
 // Color themes based on "Weather Widget" reference
 const PRAYER_THEMES = {
     Subuh: { gradient: 'from-[#ff8c42] to-[#ff3c5f]', glow: 'shadow-orange-500/50', icon: 'meteocons:sunrise-fill' }, // Dawn Pink/Orange
@@ -20,7 +36,7 @@ const PRAYER_THEMES = {
 
 const Ibadah: React.FC = () => {
     const [viewMode, setViewMode] = useState<'QIBLA' | 'PRAYER' | 'MASJID' | 'ZAKAT'>('QIBLA');
-    const [selectedZone, setSelectedZone] = useState(() => localStorage.getItem('pulse_zone') || 'WLY01');
+    const [selectedZone, setSelectedZone] = useState(() => safeGetStorage('pulse_zone', 'WLY01'));
     const [showZoneModal, setShowZoneModal] = useState(false);
 
     // Track View Changes
@@ -70,7 +86,7 @@ const Ibadah: React.FC = () => {
     }, [isLoading, viewMode]);
 
     useEffect(() => {
-        localStorage.setItem('pulse_zone', selectedZone);
+        safeSetStorage('pulse_zone', selectedZone);
     }, [selectedZone]);
 
     useEffect(() => {
@@ -131,6 +147,9 @@ const Ibadah: React.FC = () => {
                 >
                     <div className={`w-3 h-36 bg-emerald-500 rounded-t-full shadow-lg origin-bottom transition-all duration-300 ${isPointingQibla ? 'scale-y-110 shadow-emerald-400' : ''}`} />
                 </motion.div>
+
+                {/* Background Decoration */}
+                <div className="absolute inset-0 bg-pattern-dots-raudhah opacity-5 pointer-events-none"></div>
 
                 {/* Center Dot */}
                 <div className="absolute w-6 h-6 bg-cyan-500 rounded-full shadow-inner shadow-white/50" />
@@ -219,10 +238,10 @@ const Ibadah: React.FC = () => {
             {/* Active Masjid Card */}
             <div className="bg-[#0A1E42] border border-[#00BFFF]/30 rounded-3xl p-6 relative overflow-hidden group">
                 <div className="absolute inset-0 z-0">
-                    <img src="https://images.unsplash.com/photo-1564121211835-e88c852648ab?q=80&w=1000&auto=format&fit=crop" alt="Masjid Background" className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700"/>
+                    <img loading="lazy" src="https://images.unsplash.com/photo-1564121211835-e88c852648ab?q=80&w=1000&auto=format&fit=crop" alt="Masjid Background" className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700" />
                     <div className="absolute inset-0 bg-gradient-to-r from-[#0A1E42] to-[#0A1E42]/80"></div>
                 </div>
-                
+
                 <div className="relative z-10">
                     <div className="absolute top-0 right-0 w-24 h-24 bg-[#00BFFF]/10 rounded-full blur-2xl -mr-8 -mt-8"></div>
                     <div className="flex items-start justify-between mb-4">
@@ -301,7 +320,7 @@ const Ibadah: React.FC = () => {
     return (
         <div className="flex flex-col h-full bg-midnight-gradient items-center justify-start p-4 pt-8 pb-32 text-text-primary overflow-y-auto relative">
             {/* Global Pattern Overlay */}
-            <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px] z-0"></div>
+            <div className="absolute inset-0 pointer-events-none opacity-20 bg-pattern-dots-raudhah z-0"></div>
 
             {/* Header Toggle (Floating Glass Segmented Control) */}
             <div className="bg-[#0c224b]/60 backdrop-blur-xl p-1.5 rounded-2xl flex flex-wrap justify-center gap-2 mb-6 border border-white/10 relative z-10 shrink-0 shadow-lg mx-auto max-w-full">
@@ -357,8 +376,8 @@ const Ibadah: React.FC = () => {
                                 <div className="flex flex-col items-center text-center p-6">
                                     <i className="fa-solid fa-triangle-exclamation text-amber-500 text-3xl mb-4"></i>
                                     <p className="text-slate-300 mb-4">Gagal mengesan lokasi secara automatik.</p>
-                                    <button 
-                                        onClick={() => window.location.reload()} 
+                                    <button
+                                        onClick={() => window.location.reload()}
                                         className="px-6 py-2 bg-cyan-500 text-black rounded-full font-bold hover:bg-cyan-400 transition-colors"
                                     >
                                         Cuba Lagi
@@ -499,3 +518,4 @@ const Ibadah: React.FC = () => {
 };
 
 export default Ibadah;
+

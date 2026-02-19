@@ -15,7 +15,6 @@ import {
     BookOpen, Trophy, Target, Calendar, TrendingUp,
     Sparkles, Star, Clock, ChevronRight
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 interface KhatamProgress {
     totalVerses: number;       // 6236 total
@@ -51,6 +50,22 @@ const JUZ_MILESTONES = [
 ];
 
 const STORAGE_KEY = 'quranpulse_khatam_progress';
+
+const fireConfetti = async () => {
+    if (typeof window === 'undefined') return;
+
+    try {
+        const { default: confetti } = await import('canvas-confetti');
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#06b6d4', '#8b5cf6', '#f59e0b'],
+        });
+    } catch {
+        // Ignore animation failures
+    }
+};
 
 const getStoredProgress = (): KhatamProgress => {
     try {
@@ -128,15 +143,8 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
     }, [progress.versesRead]);
 
     const celebrateMilestone = () => {
-        // Confetti effect
-        if (typeof window !== 'undefined' && confetti) {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 },
-                colors: ['#06b6d4', '#8b5cf6', '#f59e0b'],
-            });
-        }
+        // Lazy-load confetti to avoid increasing the initial bundle.
+        void fireConfetti();
 
         setTimeout(() => setShowCelebration(false), 3000);
     };
@@ -362,7 +370,11 @@ export const updateKhatamProgress = (versesRead: number) => {
         versesRead,
         juzCompleted: Math.floor((versesRead / TOTAL_VERSES) * TOTAL_JUZ),
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+        // Ignore storage errors
+    }
     return updated;
 };
 

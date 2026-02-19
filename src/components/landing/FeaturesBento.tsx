@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import { PixelCard } from '../ui/PixelCard';
 import { Magnet } from '../ui/Magnet';
+import SplitText from '../ui/SplitText';
 
 interface Feature {
     icon: React.ReactNode;
@@ -55,7 +56,7 @@ const FEATURES: Feature[] = [
 
 const FeaturesBento: React.FC = () => {
     return (
-        <section id="features" className="py-24 bg-raudhah-ivory relative overflow-hidden">
+        <section className="py-24 bg-raudhah-ivory relative overflow-hidden">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-[0.05] pointer-events-none bg-pattern-dots-raudhah"></div>
 
@@ -71,9 +72,16 @@ const FeaturesBento: React.FC = () => {
                         <Sparkles className="w-3 h-3" />
                         Ekosistem Raudhah
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-raudhah font-bold text-raudhah-ink mb-6 tracking-tight">
-                        Satu App, <span className="text-raudhah-teal">Seribu Keberkatan</span>
-                    </h2>
+                    <SplitText
+                        text="Satu App, Seribu Keberkatan"
+                        className="text-4xl md:text-5xl font-raudhah font-bold text-raudhah-ink mb-6 tracking-tight"
+                        tag="h2"
+                        splitType="words"
+                        duration={0.8}
+                        staggerChildren={0.06}
+                        from={{ opacity: 0, y: 30 }}
+                        to={{ opacity: 1, y: 0 }}
+                    />
                     <p className="text-raudhah-ink/60 text-lg max-w-2xl leading-relaxed font-normal">
                         Platform integrasi gaya hidup Muslim moden. Semua yang anda perlukan untuk perjalanan rohani — dipermudahkan dengan AI.
                     </p>

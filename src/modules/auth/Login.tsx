@@ -5,6 +5,30 @@ import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
 import { Eye, EyeOff } from 'lucide-react';
 
+const safeGetStorage = (key: string): string | null => {
+    try {
+        return localStorage.getItem(key);
+    } catch {
+        return null;
+    }
+};
+
+const safeSetStorage = (key: string, value: string): void => {
+    try {
+        localStorage.setItem(key, value);
+    } catch {
+        // Ignore storage errors
+    }
+};
+
+const safeRemoveStorage = (key: string): void => {
+    try {
+        localStorage.removeItem(key);
+    } catch {
+        // Ignore storage errors
+    }
+};
+
 export const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -49,9 +73,9 @@ export const Login = () => {
 
             // Handle Remember Me
             if (rememberMe) {
-                localStorage.setItem('qp_remember_email', email);
+                safeSetStorage('qp_remember_email', email);
             } else {
-                localStorage.removeItem('qp_remember_email');
+                safeRemoveStorage('qp_remember_email');
             }
 
             // Success (wait a moment for the user to see the success state)
@@ -98,14 +122,14 @@ export const Login = () => {
 
     // Temporary Bypass for Demo/Dev
     const handleDevBypass = () => {
-        localStorage.setItem('auth_token', 'dev-token');
-        localStorage.setItem('auth_user', JSON.stringify({ name: 'Dev User', email: 'dev@qp.com', id: 'dev-user-id' }));
+        safeSetStorage('auth_token', 'dev-token');
+        safeSetStorage('auth_user', JSON.stringify({ name: 'Dev User', email: 'dev@qp.com', id: 'dev-user-id' }));
         window.location.href = '/';
     };
 
     // Load remembered email on mount
     React.useEffect(() => {
-        const rememberedEmail = localStorage.getItem('qp_remember_email');
+        const rememberedEmail = safeGetStorage('qp_remember_email');
         if (rememberedEmail) {
             setEmail(rememberedEmail);
             setRememberMe(true);
@@ -126,7 +150,7 @@ export const Login = () => {
 
             {/* 🕌 GIANT KUFI LOGO BACKGROUND (Watermark) */}
             <div className="absolute inset-0 flex items-center justify-center z-0 pointer-events-none opacity-[0.03]">
-                <img
+                <img loading="lazy"
                     src="/logo-primary.png"
                     alt="Quran Pulse Kufi"
                     className="w-[120vw] max-w-none h-auto object-cover rotate-12 blur-sm invert"
@@ -157,7 +181,7 @@ export const Login = () => {
                             className="w-40 h-40 mx-auto flex items-center justify-center mb-4 relative"
                         >
                             <div className="absolute inset-0 bg-cyan-500/20 blur-xl rounded-full animate-pulse-slow"></div>
-                            <img
+                            <img loading="lazy"
                                 src="/logo-primary.png"
                                 alt="Quran Pulse"
                                 className="w-full h-full object-cover scale-150 relative z-10 drop-shadow-[0_0_20px_rgba(6,182,212,0.6)]"
@@ -366,3 +390,4 @@ export const Login = () => {
 };
 
 export default Login;
+

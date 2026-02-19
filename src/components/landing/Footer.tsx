@@ -27,7 +27,9 @@ const FOOTER_LINKS = {
 const SOCIAL_LINKS = [
     { label: 'WhatsApp', Icon: SocialIcons.WhatsApp, href: 'https://wa.me/60123456789', bg: 'hover:bg-[#25D366]/20' },
     { label: 'Instagram', Icon: SocialIcons.Instagram, href: 'https://instagram.com/quranpulse', bg: 'hover:bg-pink-500/20' },
-    { label: 'TikTok', Icon: SocialIcons.TikTok, href: 'https://tiktok.com/@quranpulse', bg: 'hover:bg-white/20' },
+    { label: 'Facebook', Icon: SocialIcons.Facebook, href: 'https://facebook.com/quranpulse', bg: 'hover:bg-[#1877F2]/20' },
+    { label: 'TikTok', Icon: SocialIcons.TikTok, href: 'https://tiktok.com/@quranpulse', bg: 'hover:bg-gray-500/20' },
+    { label: 'X', Icon: SocialIcons.X, href: 'https://x.com/quranpulse', bg: 'hover:bg-gray-500/20' },
     { label: 'YouTube', Icon: SocialIcons.YouTube, href: 'https://youtube.com/@quranpulse', bg: 'hover:bg-red-500/20' }
 ];
 

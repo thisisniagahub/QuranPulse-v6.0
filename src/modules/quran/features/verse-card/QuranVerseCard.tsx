@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { memo, useCallback, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { QuranVerse, QuranWord } from '../../../../types';
 import VerseActionMenu from './VerseActionMenu';
-import TajwidDisplay, { detectTajwidRules } from '../../components/TajwidDisplay';
-import { formatTransliteration, formatTransliterationJAKIM, getDualTransliteration } from '../../../../utils/transliterationConverter';
+import TajwidDisplay from '../../components/TajwidDisplay';
+import { getDualTransliteration } from '../../../../utils/transliterationConverter';
 import { useRumiTTS } from '../../../../utils/rumiTTS';
 import { BookmarkButton } from '../../../../components/BookmarkButton';
 
@@ -38,7 +38,7 @@ const toArabicNumerals = (n: string) => {
   return n.replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[parseInt(d)]);
 };
 
-const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
+const QuranVerseCardComponent: React.FC<QuranVerseCardProps> = ({
   verse,
   chapterName,
   fontSize,
@@ -66,33 +66,35 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [translitMode] = useState<'academic' | 'jakim'>('jakim');
-  const verseNumber = verse.verse_key.split(':')[1];
-  const arabicVerseNumber = toArabicNumerals(verseNumber);
+  const verseNumber = useMemo(() => verse.verse_key.split(':')[1], [verse.verse_key]);
+  const arabicVerseNumber = useMemo(() => toArabicNumerals(verseNumber), [verseNumber]);
 
   const { isPlaying: isTTSPlaying, speak: speakRumi, stop: stopRumi, isSupported: isTTSSupported } = useRumiTTS();
 
-  const arabicWords = verse.words?.filter(w => w.char_type_name !== 'end').map(w => w.text_uthmani) || [];
-  const fullVerseArabic = arabicWords.join(' ');
-  const dualTranslit = getDualTransliteration(fullVerseArabic);
+  const fullVerseArabic = useMemo(() => {
+    const arabicWords = verse.words?.filter(w => w.char_type_name !== 'end').map(w => w.text_uthmani) || [];
+    return arabicWords.join(' ');
+  }, [verse.words]);
+  const dualTranslit = useMemo(() => getDualTransliteration(fullVerseArabic), [fullVerseArabic]);
 
-  const handleRumiTTS = () => {
+  const handleRumiTTS = useCallback(() => {
     if (isTTSPlaying) stopRumi();
     else speakRumi(dualTranslit.jakim);
-  };
+  }, [dualTranslit.jakim, isTTSPlaying, speakRumi, stopRumi]);
 
-  const handleCopy = async (v: QuranVerse) => {
+  const handleCopy = useCallback(async (v: QuranVerse) => {
     const text = `${v.text_uthmani}\n\n${v.translations?.[0]?.text || ''}`;
     try {
       await navigator.clipboard.writeText(text);
     } catch (err) {
       console.error('Failed to copy verse:', err);
     }
-  };
+  }, []);
 
   return (
     <motion.div
       ref={verseRef}
-      layout
+      layout={false}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={`relative p-6 rounded-2xl transition-all duration-300 ${activeWord
@@ -166,4 +168,20 @@ const QuranVerseCard: React.FC<QuranVerseCardProps> = ({
   );
 };
 
-export default QuranVerseCard;
+const areEqual = (prev: QuranVerseCardProps, next: QuranVerseCardProps) => (
+  prev.verse.verse_key === next.verse.verse_key &&
+  prev.fontSize === next.fontSize &&
+  prev.showTranslation === next.showTranslation &&
+  prev.showTransliteration === next.showTransliteration &&
+  prev.showWordByWord === next.showWordByWord &&
+  prev.showTajwid === next.showTajwid &&
+  prev.isPlaying === next.isPlaying &&
+  prev.isAudioLoading === next.isAudioLoading &&
+  prev.highlightedWordIndex === next.highlightedWordIndex &&
+  prev.isBookmarked === next.isBookmarked &&
+  prev.hasNote === next.hasNote &&
+  prev.isZenMode === next.isZenMode &&
+  prev.activeWord?.id === next.activeWord?.id
+);
+
+export default memo(QuranVerseCardComponent, areEqual);

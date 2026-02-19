@@ -14,7 +14,7 @@ import { QuranProvider, useQuran } from './contexts/QuranContext';
 
 // Core Views
 import QuranList from './features/list/QuranList';
-import QuranReader from './features/reader/QuranReader';
+const QuranReader = React.lazy(() => import('./features/reader/QuranReader'));
 
 // Managers
 import { QuranModalsManager } from './features/QuranModalsManager';
@@ -74,7 +74,15 @@ const QuranContent: React.FC = () => {
 
             {/* === READING VIEW === */}
             {view === 'READING' && (
-                <QuranReader />
+                <React.Suspense
+                    fallback={
+                        <div className="flex items-center justify-center h-64">
+                            <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                        </div>
+                    }
+                >
+                    <QuranReader />
+                </React.Suspense>
             )}
 
             {/* === MODAL MANAGER (Lazy Loaded Overlays) === */}

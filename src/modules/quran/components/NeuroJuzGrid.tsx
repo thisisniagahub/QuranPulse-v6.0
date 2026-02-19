@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { motion } from 'framer-motion';
 
 interface NeuroJuzGridProps {
@@ -7,7 +7,7 @@ interface NeuroJuzGridProps {
     onSelect: (startSurahId: number) => void;
 }
 
-const NeuroJuzGrid: React.FC<NeuroJuzGridProps> = ({ juzList, juzStartSurahMap, onSelect }) => {
+const NeuroJuzGridComponent: React.FC<NeuroJuzGridProps> = ({ juzList, juzStartSurahMap, onSelect }) => {
     return (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
             {juzList.map((juzNum, index) => (
@@ -39,4 +39,4 @@ const NeuroJuzGrid: React.FC<NeuroJuzGridProps> = ({ juzList, juzStartSurahMap, 
     );
 };
 
-export default NeuroJuzGrid;
+export default memo(NeuroJuzGridComponent);

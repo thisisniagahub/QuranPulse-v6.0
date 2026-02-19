@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QuranChapter } from '../../../../types';
 import { SemanticSearchResult } from '../../features/search/useSemanticSearch';
@@ -8,9 +8,9 @@ import { audioCache } from '../../../../services/audioCacheService';
 import QuantumSearchBar from '../../components/QuantumSearchBar';
 import HoloSurahCard from '../../components/HoloSurahCard';
 import NeuroJuzGrid from '../../components/NeuroJuzGrid';
-import DailyAyatWidget from '../../components/DailyAyatWidget';
-import KhatamProgressTracker from '../../components/KhatamProgressTracker';
-import SmartDeenCrossover from '../../components/SmartDeenCrossover';
+const DailyAyatWidget = lazy(() => import('../../components/DailyAyatWidget'));
+const KhatamProgressTracker = lazy(() => import('../../components/KhatamProgressTracker'));
+const SmartDeenCrossover = lazy(() => import('../../components/SmartDeenCrossover'));
 
 interface QuranListProps {
     chapters: QuranChapter[];
@@ -52,42 +52,44 @@ const QuranList: React.FC<QuranListProps> = ({
     // Track cached surahs
     const [cachedIds, setCachedIds] = useState<Set<number>>(new Set());
 
-    useEffect(() => {
-        const checkCache = async () => {
-            const cached = new Set<number>();
-            // Check first verse of each chapter for Reciter 7 (Mishary)
-            for (const chapter of chapters) {
-                const padSurah = chapter.id.toString().padStart(3, '0');
-                // Pattern for Mishary Rashid Alafasy
-                const url = `https://verses.quran.com/Alafasy/mp3/${padSurah}001.mp3`;
-                const isCached = await audioCache.isCached(url);
-                if (isCached) cached.add(chapter.id);
-            }
-            setCachedIds(cached);
-        };
+    const checkCache = useCallback(async () => {
+        const cacheChecks = chapters.map(async (chapter) => {
+            const padSurah = chapter.id.toString().padStart(3, '0');
+            const url = `https://verses.quran.com/Alafasy/mp3/${padSurah}001.mp3`;
+            const isCached = await audioCache.isCached(url);
+            return isCached ? chapter.id : null;
+        });
 
+        const cachedResults = await Promise.all(cacheChecks);
+        const cached = new Set<number>(cachedResults.filter((id): id is number => id !== null));
+        setCachedIds(cached);
+    }, [chapters]);
+
+    useEffect(() => {
         if (chapters.length > 0) {
             checkCache();
         }
-    }, [chapters]);
+    }, [chapters.length, checkCache]);
 
     // Utility to remove diacritics
-    const normalizeText = (text: string) => {
-        return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
-    };
+    const normalizeText = useCallback((text: string) => (
+        text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase()
+    ), []);
 
-    const filteredChapters = chapters.filter(c => {
+    const filteredChapters = useMemo(() => {
         const query = normalizeText(searchQuery);
-        const nameSimple = normalizeText(c.name_simple || '');
-        const nameComplex = normalizeText(c.name_complex || '');
-        const nameArabic = c.name_arabic || '';
-        const idStr = c.id.toString();
+        return chapters.filter(c => {
+            const nameSimple = normalizeText(c.name_simple || '');
+            const nameComplex = normalizeText(c.name_complex || '');
+            const nameArabic = c.name_arabic || '';
+            const idStr = c.id.toString();
 
-        return nameSimple.includes(query) ||
-            nameComplex.includes(query) ||
-            nameArabic.includes(searchQuery) ||
-            idStr === query;
-    });
+            return nameSimple.includes(query) ||
+                nameComplex.includes(query) ||
+                nameArabic.includes(searchQuery) ||
+                idStr === query;
+        });
+    }, [chapters, normalizeText, searchQuery]);
 
     const [activeTab, setActiveTab] = React.useState<'surah' | 'juz' | 'revelation'>('surah');
 
@@ -98,34 +100,37 @@ const QuranList: React.FC<QuranListProps> = ({
         21: 29, 22: 33, 23: 36, 24: 39, 25: 41, 26: 46, 27: 51, 28: 58, 29: 67, 30: 78
     };
 
-    const getSortedChapters = () => {
-        let sorted = [...filteredChapters];
+    const sortedList = useMemo(() => {
+        const sorted = [...filteredChapters];
         if (activeTab === 'revelation') {
             sorted.sort((a, b) => a.revelation_order - b.revelation_order);
         }
         return sorted;
-    };
+    }, [activeTab, filteredChapters]);
 
-    const sortedList = getSortedChapters();
-    const juzList = Array.from({ length: 30 }, (_, i) => i + 1);
+    const juzList = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
 
     return (
         <div className="min-h-screen pb-32 bg-midnight-gradient relative overflow-hidden font-sans">
 
             {/* 1. ATMOSPHERE BACKGROUND */}
-            <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px] z-0"></div>
+            <div className="absolute inset-0 pointer-events-none opacity-20 bg-pattern-dots-raudhah z-0"></div>
 
             {/* 2. DASHBOARD WIDGETS (New Tier 1) */}
             <div className="relative pt-24 px-4 max-w-6xl mx-auto z-10 space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <DailyAyatWidget />
-                    <KhatamProgressTracker
-                        compact={true}
-                        progress={{
-                            versesRead: 1500,
-                            currentStreak: 5
-                        }}
-                    />
+                    <Suspense fallback={<div className="h-36 rounded-2xl bg-slate-900/40 border border-white/5 animate-pulse" />}>
+                        <DailyAyatWidget />
+                    </Suspense>
+                    <Suspense fallback={<div className="h-36 rounded-2xl bg-slate-900/40 border border-white/5 animate-pulse" />}>
+                        <KhatamProgressTracker
+                            compact={true}
+                            progress={{
+                                versesRead: 1500,
+                                currentStreak: 5
+                            }}
+                        />
+                    </Suspense>
                 </div>
             </div>
 
@@ -133,7 +138,7 @@ const QuranList: React.FC<QuranListProps> = ({
             <div className="relative pt-12 pb-12 px-6 text-center z-10 overflow-hidden group">
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
-                    <img
+                    <img loading="lazy"
                         src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop"
                         alt="Celestial Library Background"
                         className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-1000 ease-in-out"
@@ -315,9 +320,12 @@ const QuranList: React.FC<QuranListProps> = ({
             </div>
 
             {/* 6. FLOATING SMART DEEN CROSSOVER */}
-            <SmartDeenCrossover />
+            <Suspense fallback={null}>
+                <SmartDeenCrossover />
+            </Suspense>
         </div>
     );
 };
 
 export default QuranList;
+

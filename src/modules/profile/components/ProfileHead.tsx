@@ -58,7 +58,7 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
                         <span className="text-[10px] font-mono tracking-[0.2em]">ISLAMIC.ID</span>
                     </div>
                     <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center">
-                        <img src="/logo-icon.png" alt="QP" className="w-5 h-5 opacity-50" onError={(e) => e.currentTarget.style.display = 'none'} />
+                        <img loading="lazy" src="/logo-icon.png" alt="QP" className="w-5 h-5 opacity-50" onError={(e) => e.currentTarget.style.display = 'none'} />
                     </div>
                 </div>
 
@@ -69,7 +69,7 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
                         <div className="absolute inset-0 bg-cyan-500 clip-path-hexagon animate-pulse opacity-20"></div>
                         <div className="absolute inset-[2px] bg-slate-900 clip-path-hexagon flex items-center justify-center overflow-hidden border-2 border-cyan-500/30">
                             {user.avatar_url ? (
-                                <img src={user.avatar_url} alt="Profile" className="w-full h-full object-cover" />
+                                <img loading="lazy" src={user.avatar_url} alt="Profile" className="w-full h-full object-cover" />
                             ) : (
                                 <span className="text-4xl">🧕</span>
                             )}
@@ -126,3 +126,4 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
 };
 
 export default ProfileHead;
+

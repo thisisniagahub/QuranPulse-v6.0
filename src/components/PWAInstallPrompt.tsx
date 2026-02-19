@@ -7,6 +7,22 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
+const safeGetStorage = (key: string): string | null => {
+  try {
+    return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+
+const safeSetStorage = (key: string, value: string): void => {
+  try {
+    localStorage.setItem(key, value);
+  } catch {
+    // Ignore storage errors
+  }
+};
+
 const PWAInstallPrompt: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
@@ -20,7 +36,7 @@ const PWAInstallPrompt: React.FC = () => {
 
       // Simple Client-Side A/B Testing Logic
       // Check if user has already seen/dismissed the prompt recently?
-      const hasDismissed = localStorage.getItem('pwa_prompt_dismissed');
+      const hasDismissed = safeGetStorage('pwa_prompt_dismissed');
       if (!hasDismissed) {
         // Randomize A/B (Uncomment for true 50/50 test)
         // const isVariantB = Math.random() > 0.5;
@@ -67,7 +83,7 @@ const PWAInstallPrompt: React.FC = () => {
   const handleDismiss = () => {
     setShowPrompt(false);
     // Hide for 7 days (example logic)
-    localStorage.setItem('pwa_prompt_dismissed', new Date().toISOString());
+    safeSetStorage('pwa_prompt_dismissed', new Date().toISOString());
   };
 
   if (!showPrompt) return null;
@@ -132,6 +148,8 @@ const PWAInstallPrompt: React.FC = () => {
           {/* Close */}
           <button
             onClick={handleDismiss}
+            title="Tutup"
+            aria-label="Tutup prompt pemasangan"
             className="absolute top-2 right-2 text-slate-300 hover:text-slate-500 transition-colors"
           >
             <X size={16} />

@@ -1,10 +1,10 @@
 import React, { Component, ErrorInfo, ReactNode } from 'react';
-import * as Sentry from '@sentry/react';
 
 interface Props {
   children: ReactNode;
   fallback?: ReactNode;
   onError?: (error: Error, errorInfo: ErrorInfo) => void;
+  resetKey?: string | number;
 }
 
 interface State {
@@ -13,49 +13,119 @@ interface State {
   errorInfo: ErrorInfo | null;
 }
 
+const NAVIGATION_EVENT = 'qp:navigation-change';
+let historyPatched = false;
+
+const getLocationSnapshot = () => {
+  if (typeof window === 'undefined') return '';
+  return `${window.location.pathname}${window.location.search}${window.location.hash}`;
+};
+
+const patchHistoryEvents = () => {
+  if (historyPatched || typeof window === 'undefined') return;
+
+  const { pushState, replaceState } = window.history;
+
+  window.history.pushState = function pushStatePatched(...args) {
+    const result = pushState.apply(this, args as Parameters<History['pushState']>);
+    window.dispatchEvent(new Event(NAVIGATION_EVENT));
+    return result;
+  };
+
+  window.history.replaceState = function replaceStatePatched(...args) {
+    const result = replaceState.apply(this, args as Parameters<History['replaceState']>);
+    window.dispatchEvent(new Event(NAVIGATION_EVENT));
+    return result;
+  };
+
+  historyPatched = true;
+};
+
+const reportToMonitoring = (error: Error, context: Record<string, unknown>) => {
+  import('../utils/monitoring')
+    .then((monitoring) => {
+      monitoring.captureError(error, context);
+    })
+    .catch(() => {
+      // Keep boundary resilient in non-Vite test runtimes.
+    });
+};
+
 class ErrorBoundary extends Component<Props, State> {
+  private lastLocationSnapshot = getLocationSnapshot();
+
   constructor(props: Props) {
     super(props);
-    this.state = { 
-      hasError: false, 
-      error: null, 
-      errorInfo: null 
+    this.state = {
+      hasError: false,
+      error: null,
+      errorInfo: null
     };
   }
 
   static getDerivedStateFromError(error: Error): State {
-    return { 
-      hasError: true, 
-      error, 
-      errorInfo: null 
+    return {
+      hasError: true,
+      error,
+      errorInfo: null
     };
+  }
+
+  componentDidMount() {
+    if (typeof window === 'undefined') return;
+
+    patchHistoryEvents();
+    window.addEventListener(NAVIGATION_EVENT, this.handleNavigationChange);
+    window.addEventListener('popstate', this.handleNavigationChange);
+    window.addEventListener('hashchange', this.handleNavigationChange);
+  }
+
+  componentDidUpdate(prevProps: Props) {
+    if (prevProps.resetKey !== this.props.resetKey && this.state.hasError) {
+      this.resetBoundary();
+    }
+  }
+
+  componentWillUnmount() {
+    if (typeof window === 'undefined') return;
+
+    window.removeEventListener(NAVIGATION_EVENT, this.handleNavigationChange);
+    window.removeEventListener('popstate', this.handleNavigationChange);
+    window.removeEventListener('hashchange', this.handleNavigationChange);
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     console.error('[ErrorBoundary] Caught error:', error, errorInfo);
-    
-    // Report to Sentry
-    Sentry.captureException(error, {
-      extra: {
-        componentStack: errorInfo.componentStack,
-      },
+
+    reportToMonitoring(error, {
+      componentStack: errorInfo.componentStack,
+      boundary: 'ErrorBoundary',
+      location: this.lastLocationSnapshot
     });
-    
-    // Call optional callback
+
     this.props.onError?.(error, errorInfo);
-    
+
     this.setState({
       error,
       errorInfo
     });
   }
 
+  handleNavigationChange = () => {
+    const current = getLocationSnapshot();
+    if (current === this.lastLocationSnapshot) return;
 
-  handleRetry = () => {
-    this.setState({ 
-      hasError: false, 
-      error: null, 
-      errorInfo: null 
+    this.lastLocationSnapshot = current;
+    if (this.state.hasError) {
+      this.resetBoundary();
+    }
+  };
+
+  resetBoundary = () => {
+    this.setState({
+      hasError: false,
+      error: null,
+      errorInfo: null
     });
   };
 
@@ -66,53 +136,35 @@ class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="min-h-screen bg-islamic-dark flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-700 rounded-2xl p-8 max-w-md w-full text-center">
-            <div className="w-16 h-16 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-              <i className="fa-solid fa-exclamation-triangle text-red-400 text-2xl"></i>
+        <div className="min-h-screen w-full bg-[#031a38] relative overflow-hidden flex items-center justify-center px-4 py-8">
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.18),transparent_45%),radial-gradient(circle_at_80%_85%,rgba(139,92,246,0.14),transparent_40%)]" />
+          <div className="relative w-full max-w-md rounded-2xl border border-cyan-400/20 bg-[#0c224b]/70 backdrop-blur-xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.45)] text-center">
+            <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/20 px-4 py-2 mb-5">
+              <img loading="lazy" src="/logo-primary.png" alt="QuranPulse" className="h-8 w-8 object-contain" />
+              <span className="text-sm font-bold tracking-wide text-cyan-300">QuranPulse</span>
             </div>
-            
-            <h2 className="text-white text-xl font-bold mb-2">
-              Something went wrong
+
+            <h2 className="text-xl sm:text-2xl font-extrabold text-white">
+              Maaf, berlaku masalah
             </h2>
-            
-            <p className="text-slate-400 text-sm mb-6">
-              We apologize for the inconvenience. An unexpected error occurred.
+            <p className="mt-2 text-sm text-slate-300">
+              Something went wrong. Sila cuba lagi sebentar.
             </p>
 
             {process.env.NODE_ENV === 'development' && this.state.error && (
-              <details className="text-left mb-6">
-                <summary className="text-slate-500 text-xs cursor-pointer mb-2">
-                  Error Details (Development)
-                </summary>
-                <div className="bg-slate-800 rounded-lg p-3 mt-2">
-                  <p className="text-red-400 text-xs font-mono mb-2">
-                    {this.state.error.message}
-                  </p>
-                  {this.state.error.stack && (
-                    <pre className="text-slate-500 text-xs overflow-auto max-h-32">
-                      {this.state.error.stack}
-                    </pre>
-                  )}
-                </div>
+              <details className="mt-4 text-left rounded-xl border border-red-400/20 bg-black/30 p-3">
+                <summary className="cursor-pointer text-xs text-red-300">Debug details</summary>
+                <p className="mt-2 text-xs text-red-200 break-words">{this.state.error.message}</p>
               </details>
             )}
 
-            <div className="flex gap-3 justify-center">
-              <button
-                onClick={this.handleRetry}
-                className="px-6 py-2 bg-primary hover:bg-primary-hover text-white rounded-xl font-bold text-sm transition-colors"
-              >
-                Try Again
-              </button>
-              
-              <button
-                onClick={() => window.location.reload()}
-                className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-xl font-bold text-sm transition-colors"
-              >
-                Reload Page
-              </button>
-            </div>
+            <button
+              type="button"
+              onClick={this.resetBoundary}
+              className="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-bold text-slate-950 bg-gradient-to-r from-cyan-400 to-cyan-300 hover:from-cyan-300 hover:to-cyan-200 transition-all shadow-[0_0_24px_rgba(34,211,238,0.35)]"
+            >
+              Cuba Lagi
+            </button>
           </div>
         </div>
       );
@@ -123,3 +175,4 @@ class ErrorBoundary extends Component<Props, State> {
 }
 
 export default ErrorBoundary;
+

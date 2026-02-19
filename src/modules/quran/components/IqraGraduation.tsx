@@ -15,7 +15,6 @@ import {
     Award, BookOpen, Star, ChevronRight, Play,
     Sparkles, Target, Calendar, Trophy
 } from 'lucide-react';
-import confetti from 'canvas-confetti';
 
 interface IqraGraduationProps {
     userName: string;
@@ -48,33 +47,54 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
 
     // Trigger confetti on open
     useEffect(() => {
-        if (isOpen && showCeremony) {
-            // Multiple confetti bursts
-            const duration = 3000;
-            const end = Date.now() + duration;
+        if (!(isOpen && showCeremony)) return;
 
-            const frame = () => {
-                confetti({
-                    particleCount: 3,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    colors: ['#06b6d4', '#8b5cf6', '#f59e0b'],
-                });
-                confetti({
-                    particleCount: 3,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    colors: ['#06b6d4', '#8b5cf6', '#f59e0b'],
-                });
+        let cancelled = false;
 
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            };
-            frame();
-        }
+        const runConfetti = async () => {
+            if (typeof window === 'undefined') return;
+
+            try {
+                const { default: confetti } = await import('canvas-confetti');
+                if (cancelled) return;
+
+                const duration = 3000;
+                const end = Date.now() + duration;
+
+                const frame = () => {
+                    if (cancelled) return;
+
+                    confetti({
+                        particleCount: 3,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0 },
+                        colors: ['#06b6d4', '#8b5cf6', '#f59e0b'],
+                    });
+                    confetti({
+                        particleCount: 3,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 1 },
+                        colors: ['#06b6d4', '#8b5cf6', '#f59e0b'],
+                    });
+
+                    if (Date.now() < end) {
+                        requestAnimationFrame(frame);
+                    }
+                };
+
+                frame();
+            } catch {
+                // Ignore animation failures
+            }
+        };
+
+        void runConfetti();
+
+        return () => {
+            cancelled = true;
+        };
     }, [isOpen, showCeremony]);
 
     const readingPlans = {

@@ -225,7 +225,7 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                     <span className="text-xs font-mono text-cyan-400">{fontSize}px</span>
                                 </div>
                                 <div className="h-16 flex items-center justify-center mb-4 relative">
-                                    <p className="font-uthmani text-white text-center drop-shadow-md transition-all" style={{ fontSize: `${fontSize}px` }}>
+                                    <p className="font-uthmani text-white text-center drop-shadow-md transition-all" style={{ fontSize: `${fontSize}px` }}> {/* eslint-disable-line react-dom/no-unsafe-inline-style */}
                                         بِسْمِ ٱللَّهِ
                                     </p>
                                 </div>

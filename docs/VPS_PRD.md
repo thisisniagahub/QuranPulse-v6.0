@@ -1,308 +1,237 @@
-# 🖥️ NIAGAHUB 1-VPS Deployment PRD
+# NIAGAHUB 1-VPS Deployment PRD
 
-> **Single VPS Strategy** - Two systems, one server
-
----
-
-## Executive Summary
-
-NIAGAHUB runs **TWO separate systems** on a single VPS:
-1. **Operator Agent (GangBot/OpenClaw)** - Personal AI assistant for Bo
-2. **QuranPulse App Platform** - Islamic app for end users
-
-This PRD defines the architecture, deployment patterns, and security requirements.
+> Scope: production runtime design for QuranPulse + OpenClaw on one VPS  
+> Revision: **2026-02-19** (aligned with live server verification)
 
 ---
 
-## Architecture Decision
+## 1. Executive Summary
 
-| Component | Runtime | Rationale |
-|-----------|---------|-----------|
-| **Operator (GangBot)** | Root user systemd | Always-on, predictable restart, journald logging |
-| **QuranPulse** | Docker Compose | Application pattern, isolated services |
-| **Qdrant** | Docker (in QP stack) | Vector DB for semantic search (not yet deployed) |
-| **Frontend** | Vercel | Edge deployment, auto-scaling |
-| **Database** | Supabase | Managed PostgreSQL, built-in auth |
-| **VPN** | Tailscale | Private mesh networking for operator access |
+Single VPS, two operational domains:
 
-### Why This Split?
-- **systemd for Operator**: System-level reliability, minimal overhead, direct logging
-- **Docker for QuranPulse**: Multi-service orchestration, easy scaling, environment isolation
+1. **Operator Domain (OpenClaw)**  
+   Internal operator gateway, managed as root user `systemd --user` service.
+2. **Application Domain (QuranPulse API Stack)**  
+   Queue ingress API + workers + Redis via Docker Compose.
 
----
-
-## Folder Structure Law
-
-```
-/root/           → Lab only (testing, experiments)
-/opt/operator/   → OpenClaw/GangBot data (production)
-/opt/openclaw/   → OpenClaw source repository
-/opt/codex/      → Codex integration
-/opt/apps/       → QuranPulse (production)
-/opt/shared/     → Scripts, backups, logs
-```
+Design objective:
+- keep operations simple,
+- isolate responsibilities,
+- use Nginx as the single public ingress,
+- keep internal services on localhost.
 
 ---
 
-## Server Specifications
+## 2. Infrastructure Profile
 
 | Property | Value |
-|----------|-------|
-| Hostname | srv1322432 |
-| Public IP | 76.13.176.142 |
-| Tailscale IP | 100.100.205.64 |
+|---|---|
+| Hostname | `srv1322432` |
+| Public IP | `76.13.176.142` |
+| Tailscale IP | `100.100.205.64` |
 | OS | Ubuntu 22.04.5 LTS |
-| CPU | AMD EPYC 9354P (2 vCPUs) |
+| CPU | AMD EPYC (2 vCPU) |
 | RAM | 7.8 GB |
 | Disk | 97 GB SSD |
 
 ---
 
-## Network Security
+## 3. Runtime Architecture
 
-### Port Policy
-```
-OPEN (UFW):
-- 22/tcp   (SSH) - Key-based auth only
-- 80/tcp   (HTTP) - Redirect to HTTPS
-- 443/tcp  (HTTPS) - All public services
-- 18789/tcp (OpenClaw) - ⚠️ UFW allows, but service binds Tailscale only
+### 3.1 OpenClaw (Operator)
 
-CLOSED: Everything else
-```
-
-### Service Binding
-```
-QuranPulse services → 127.0.0.1 (localhost)
-OpenClaw Gateway    → 100.100.205.64 (Tailscale only)
-Public access       → ONLY via Nginx reverse proxy
-```
-
-> [!IMPORTANT]
-> OpenClaw binds to Tailscale IP (`100.100.205.64:18789`), NOT localhost. This means it is accessible only from within the Tailscale mesh network.
-
-### Tailscale VPN
-```
-Purpose: Private mesh network for operator access
-IP: 100.100.205.64
-Use: OpenClaw Gateway binding, SSH access
-```
-
-### Domains
-
-| Domain | Internal | Service |
-|--------|----------|---------|
-| operator.gangniaga.my | Tailscale `100.100.205.64:18789` | OpenClaw Gateway |
-| api.gangniaga.my | `127.0.0.1:18080` | QuranPulse API |
-
----
-
-## 6. Operator Agent Runtime
-
-### OpenClaw Gateway as Root User systemd Service
-
-> [!WARNING]
-> OpenClaw runs as a **root user service** (not a system service). The service file is at a user-level path, NOT `/etc/systemd/system/`.
+- Service type: `systemd --user` (root)
+- Unit path: `/root/.config/systemd/user/openclaw-gateway.service`
+- Binary:
 
 ```ini
-# /root/.config/systemd/user/openclaw-gateway.service
-[Unit]
-Description=OpenClaw Gateway
-After=network.target
-
-[Service]
-Type=simple
-WorkingDirectory=/opt/operator/openclaw
 ExecStart="/usr/bin/node" "/opt/operator/openclaw/repo/dist/index.js" gateway --port 18789
-Restart=always
-RestartSec=5
-Environment=NODE_ENV=production
-
-[Install]
-WantedBy=default.target
 ```
 
-### Critical: Linger & System Service
+- Current socket bind: `127.0.0.1:18789`
+- Public exposure only through Nginx reverse proxy.
+
+### 3.2 QuranPulse API Stack
+
+Compose path:
+
+```text
+/opt/apps/quranpulse/compose/docker-compose.yml
+```
+
+Services:
+
+| Service | Runtime | Port |
+|---|---|---|
+| `quranpulse-api` | Node.js + Express | `127.0.0.1:18080` |
+| `quranpulse-agent-ustaz` | Node.js worker | internal |
+| `quranpulse-agent-content` | Node.js worker | internal |
+| `quranpulse-redis` | Redis 7 | `127.0.0.1:6379` |
+
+Current `quranpulse-api` endpoints:
+- `GET /health`
+- `POST /enqueue`
+
+---
+
+## 4. Ingress and DNS
+
+Domains:
+
+| Domain | Public role | Upstream |
+|---|---|---|
+| `api.gangniaga.my` | API ingress | `http://127.0.0.1:18080` |
+| `operator.gangniaga.my` | OpenClaw UI/gateway ingress | `http://127.0.0.1:18789/` |
+
+Nginx active files:
+- `/etc/nginx/sites-enabled/api.gangniaga.my.conf`
+- `/etc/nginx/sites-enabled/operator.gangniaga.my.conf`
+
+---
+
+## 5. Security Design
+
+### 5.1 Firewall
+
+UFW allow-list:
+- `22/tcp`
+- `80/tcp`
+- `443/tcp`
+
+No public bind for Redis/API/OpenClaw internals.
+
+### 5.2 SSH
+
+Required posture:
+- `PermitRootLogin prohibit-password`
+- `PasswordAuthentication no`
+- key-only auth
+
+### 5.3 Abuse protection
+
+- fail2ban enabled (`sshd` jail)
+
+### 5.4 TLS
+
+- Let’s Encrypt certificates for both domains.
+- Renewal by cron with nginx reload deploy hook.
+
+---
+
+## 6. Config and Secrets Layout
+
+### OpenClaw
+
+- unit: `/root/.config/systemd/user/openclaw-gateway.service`
+- runtime/config data under `/opt/operator/openclaw` and `/root/.openclaw`
+
+### QuranPulse compose envs
+
+```text
+/opt/apps/quranpulse/compose/.env.api
+/opt/apps/quranpulse/compose/.env.agent_ustaz
+/opt/apps/quranpulse/compose/.env.agent_content
+```
+
+Minimum sensitive keys:
+- Supabase URL/keys
+- service role key
+- LLM provider keys
+
+Rules:
+- do not commit `.env*`,
+- do not print secrets in logs,
+- backup encrypted.
+
+---
+
+## 7. Queue Pattern (Current)
+
+Flow today:
+
+1. Client/API caller hits `POST /enqueue`.
+2. API pushes payload to Redis list queue (`agent_ustaz` or `agent_content`).
+3. Worker consumes queue via blocking pop.
+4. Worker processes payload (currently log/consume behavior).
+
+Production gap:
+- no response/result callback contract yet.
+- no `POST /ai/query` synchronous endpoint yet.
+
+---
+
+## 8. Target Enhancement for AI Delivery
+
+To turn queue stack into full AI API:
+
+1. Add `POST /ai/query` in `quranpulse-api`.
+2. Generate `jobId`, enqueue payload with `jobId`.
+3. Worker writes result to Redis key `result:{jobId}` (with TTL).
+4. API waits/polls for result with timeout, returns final JSON.
+5. Add auth + rate-limit + audit logging.
+
+Optional:
+- Keep Supabase `chat-proxy` as fallback channel.
+
+---
+
+## 9. Operations Commands
+
+### Core checks
+
 ```bash
-# Root user service persists after SSH logout
-loginctl enable-linger root
-
-# System-level service MUST be masked to prevent port conflict
-systemctl mask openclaw-gateway.service  # → /dev/null
+curl -s https://api.gangniaga.my/health
+curl -s -o /dev/null -w "%{http_code}\n" https://operator.gangniaga.my/health
+docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"
+systemctl --user status openclaw-gateway.service --no-pager -l
 ```
 
-### Why Root User systemd (not system service)?
-The `openclaw onboard --install-daemon` installer creates a **user** service.
-A conflicting system service at `/etc/systemd/system/openclaw-gateway.service` was disabled and masked on 2026-02-10 to resolve port 18789 conflicts.
+### Nginx
 
-### Why systemd (not Docker)?
+```bash
+nginx -t
+systemctl reload nginx
+```
 
-| Factor | systemd | Docker |
-|--------|---------|--------|
-| Reliability | Always-on | Container restarts |
-| Restart | Predictable | Orchestration |
-| Logging | journald | Separate driver |
-| Complexity | Less parts | More layers |
+### Stack restart
 
-### Model Configuration (Actual — verified 2026-02-12)
-```json5
-{
-  agents: {
-    defaults: {
-      model: {
-        primary: "google-antigravity/gemini-3-pro",
-        fallbacks: [
-          "google-antigravity/gemini-1.5-pro",
-          "google-antigravity/gemini-3-pro-low",
-          "google-antigravity/gemini-3-flash"
-        ]
-      }
-    },
-    list: [
-      { id: "main", name: "NiagaBot", model: "claude-opus-4-6-thinking" },
-      { id: "niagahubbot", name: "NiagaHubBot", model: "gemini-3-pro" }
-    ]
-  }
-}
+```bash
+cd /opt/apps/quranpulse/compose
+docker compose restart
+```
+
+### Logs
+
+```bash
+docker logs --tail 100 quranpulse-api
+docker logs --tail 100 quranpulse-agent-ustaz
+journalctl --user -u openclaw-gateway.service --since "1 hour ago"
 ```
 
 ---
 
-## 7. QuranPulse Platform
+## 10. Non-Goals
 
-### Docker Compose Structure
-```
-/opt/apps/quranpulse/compose/
-├── docker-compose.yml
-├── .env.api
-├── .env.agent_ustaz
-└── .env.agent_content
-```
-
-### Services
-
-| Service | Image | Port |
-|---------|-------|------|
-| quranpulse-api | Node.js | 18080 |
-| quranpulse-agent-ustaz | Python | - |
-| quranpulse-agent-content | Python | - |
-| quranpulse-redis | Redis 7 | 6379 |
-| ~~qdrant~~ | ~~Qdrant~~ | ~~6333, 6334~~ | ❌ Not yet deployed |
-
-### Supabase Connection
-- **URL**: (configured in .env)
-- **Anon Key**: (configured in .env)
-- **Service Role**: (configured in .env)
+- Kubernetes orchestration
+- multi-VPS clustering
+- exposing Redis/API ports directly to internet
+- placing OpenClaw and QuranPulse into one monolithic runtime
 
 ---
 
-## 8. Frontend Strategy
-
-### Deployment Target: Vercel
-- **Domain**: app.quranpulse.my
-- **Framework**: React 18 + Vite
-- **Build**: `npm run build`
-
-### Why Vercel?
-- Edge deployment (fast globally)
-- Git-based deploys
-- Preview URLs for PRs
-- Zero config for Vite
-
----
-
-## 9. Secrets Management
-
-### Environment Files
-```
-/opt/operator/openclaw/data/.openclaw/openclaw.json → OpenClaw config + secrets
-/opt/apps/quranpulse/compose/.env.api               → API secrets
-/opt/apps/quranpulse/compose/.env.agent_*            → Agent secrets
-```
-
-### Rules
-- ✅ One .env per service
-- ✅ Never commit to Git
-- ✅ Backup encrypted
-- ❌ Never expose in logs
-
----
-
-## 10. Security Requirements
-
-### SSH Hardening
-
-> [!NOTE]
-> **SSH hardening complete** (2026-02-11). Both targets have been implemented.
-
-```
-PermitRootLogin prohibit-password    ← ✅ Active
-PasswordAuthentication no            ← ✅ Active
-PubkeyAuthentication yes             ← ✅ Active
-```
-
-### fail2ban
-```
-Status: ✅ Active (confirmed 2026-02-10)
-Jails: sshd
-bantime = 3600
-findtime = 600
-maxretry = 3
-```
-
-### Nginx Security Headers
-```nginx
-X-Frame-Options: DENY              ← ✅ Active
-X-Content-Type-Options: nosniff    ← ✅ Active
-X-XSS-Protection: 1; mode=block   ← ✅ Active
-```
-
-### SSL
-- Let's Encrypt certificates ✅
-- Auto-renewal via cron (`0 3 * * * /snap/bin/certbot renew`) ✅
-- certbot.timer: masked (renewal handled by cron)
-
----
-
-## 11. Backup Strategy
-
-### Cron Schedule
-
-| Schedule | Script | Purpose |
-|----------|--------|---------|
-| `0 3 * * *` | `/opt/shared/scripts/backup.sh` | Daily backup (nginx, QP, OpenClaw) |
-| `0 2 * * *` | `/tmp/check_openclaw_updates.sh` | OpenClaw update check |
-| `*/30 * * * *` | `/opt/operator/openclaw/scripts/quota-alert.sh` | API quota monitoring |
-| `0 6 * * *` | `/opt/operator/openclaw/scripts/auto-research.sh` | Automated research |
-| `*/5 * * * *` | `/opt/operator/openclaw/scripts/watchdog.sh` | Service health watchdog |
-| `0 3 * * *` | `/snap/bin/certbot renew` | SSL certificate renewal |
-
-### Backup Contents
-- Nginx configs
-- Docker volumes
-- OpenClaw data
-- Environment files (encrypted)
-
----
-
-## 12. Non-Goals
-
-- ❌ Multi-VPS clustering (single VPS only)
-- ❌ Kubernetes (overkill for this scale)
-- ❌ Container per microservice (grouped by app)
-- ❌ Self-hosted database (use Supabase)
-
----
-
-## 13. Success Metrics
+## 11. Success Metrics
 
 | Metric | Target |
-|--------|--------|
+|---|---|
 | Uptime | >99.9% |
-| Response Time | <200ms |
-| SSL Score | A+ |
-| Failed Login Ban | <30s |
+| API health endpoint | stable 200 |
+| TLS validity | always valid |
+| Incident triage time | <15 minutes for common failures |
 
 ---
 
-*Last Updated: 2026-02-11*
+## 12. Supporting Documents
+
+- Live state: `docs/VPS_STATUS.md`
+- OpenClaw specific SOP: `docs/OPENCLAW_GUIDE.md`
+- Full incident/manual guide: `docs/VPS_MANUAL_A_TO_Z.md`

@@ -85,6 +85,14 @@ const DAILY_VERSES: DailyAyat[] = [
     },
 ];
 
+const safeSetStorage = (key: string, value: string): void => {
+    try {
+        localStorage.setItem(key, value);
+    } catch {
+        // Ignore storage errors
+    }
+};
+
 const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
     onVerseClick,
     compact = false,
@@ -158,12 +166,12 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
 
         if (Notification.permission === 'granted') {
             setNotificationsEnabled(!notificationsEnabled);
-            localStorage.setItem('dailyAyatNotifications', String(!notificationsEnabled));
+            safeSetStorage('dailyAyatNotifications', String(!notificationsEnabled));
         } else if (Notification.permission !== 'denied') {
             const permission = await Notification.requestPermission();
             if (permission === 'granted') {
                 setNotificationsEnabled(true);
-                localStorage.setItem('dailyAyatNotifications', 'true');
+                safeSetStorage('dailyAyatNotifications', 'true');
 
                 // Show test notification
                 new Notification('📖 Ayat Hari Ini Aktif!', {
@@ -254,8 +262,10 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
 
                     <div className="flex items-center gap-1">
                         <button
+                            type="button"
                             onClick={handleNotificationToggle}
                             className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                            aria-label={notificationsEnabled ? 'Matikan notifikasi harian' : 'Aktifkan notifikasi harian'}
                             title={notificationsEnabled ? 'Matikan notifikasi' : 'Aktifkan notifikasi harian'}
                         >
                             {notificationsEnabled ? (
@@ -267,6 +277,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
                         <button
                             onClick={handleRefresh}
                             className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                            aria-label="Ayat lain"
                             title="Ayat lain"
                         >
                             <RefreshCw className="w-4 h-4 text-slate-400 hover:text-white transition-colors" />
@@ -306,14 +317,16 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
                             onClick={() => setIsLiked(!isLiked)}
                             className={`p-2 rounded-lg transition-all ${isLiked ? 'bg-pink-500/20 text-pink-400' : 'hover:bg-white/10 text-slate-400'
                                 }`}
+                            aria-label={isLiked ? 'Buang dari kegemaran' : 'Tambah ke kegemaran'}
                             title={isLiked ? 'Buang kegemaran' : 'Tambah kegemaran'}
                         >
                             <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
                         </button>
-
                         <button
                             onClick={handleCopy}
                             className="p-2 hover:bg-white/10 rounded-lg transition-colors text-slate-400 hover:text-white"
+                            aria-label="Salin ayat"
+                            title="Salin ayat"
                         >
                             {isCopied ? (
                                 <Check className="w-4 h-4 text-green-400" />
@@ -327,6 +340,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
                             className="p-2 bg-gradient-to-r from-cyan-500 to-purple-500 
                          rounded-lg text-white hover:shadow-lg hover:shadow-cyan-500/25 
                          transition-all"
+                            aria-label="Kongsi ayat ini"
                             title="Kongsi ayat ini"
                         >
                             <Share2 className="w-4 h-4" />

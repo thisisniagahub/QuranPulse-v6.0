@@ -1,5 +1,5 @@
 import { JAKIM_ZONES } from '../data/jakimZones';
-import { UstazOrchestrator, MCPWorshipData } from './UstazOrchestrator';
+import { UstazahOrchestrator, MCPWorshipData } from './UstazahOrchestrator';
 
 export interface JakimPrayerData {
   hijri: string;
@@ -22,8 +22,8 @@ export const JakimService = {
   async getPrayerTimes(zone: string): Promise<JakimPrayerData | null> {
     try {
       console.log(`🕌 JakimService: Redirecting request for ${zone} to MCP...`);
-      const data = await UstazOrchestrator.getWorshipData(zone);
-      
+      const data = await UstazahOrchestrator.getWorshipData(zone);
+
       if (!data) return null;
 
       // Map MCP format to JakimPrayerData format

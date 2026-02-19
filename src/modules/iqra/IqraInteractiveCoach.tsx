@@ -256,7 +256,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                             whileHover={{ scale: 1.02 }}
                                             className="relative w-64 h-80 md:w-72 md:h-96 rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.8)] border-4 border-[#00BFFF]/20 hud-border hover:scale-105 transition-transform"
                                         >
-                                            <img
+                                            <img loading="lazy"
                                                 src={`/assets/iqra/iqra-lesson-${step.id < 12 ? 1 : 2}.png`}
                                                 className="w-full h-full object-cover grayscale-[0.3] hover:grayscale-0 transition-all duration-700"
                                                 alt="Iqra Poster"
@@ -556,3 +556,4 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
 };
 
 export default IqraInteractiveCoach;
+

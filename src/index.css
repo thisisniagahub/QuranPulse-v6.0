@@ -11,16 +11,19 @@
      QURAN PULSE V7.0 "RAUDHAH" COLOR PALETTE (PREMIUM)
      ═══════════════════════════════════════════════════════════════════════════ */
 
-  --bg-raudhah: #FCFBF7;
-  /* Warm Bone / Calm Background */
-  --primary-raudhah: #2D4039;
-  /* Deep Forest Sage - Mature & Grounded */
-  --accent-raudhah: #CBA35C;
-  /* Burnished Gold - Sacred & High-End */
-  --text-main: #1A1A1A;
-  /* High Contrast Noir */
+  --bg-raudhah: #FAFAF5;
+  /* Ivory Parchment */
+  --primary-raudhah: #1B6B5A;
+  /* Deep Raudhah Teal */
+  --accent-raudhah: #C4972A;
+  /* Islamic Gold */
+  --surface-raudhah: #F5F0E8;
+  /* Warm Cream */
+  --ink-raudhah: #2D2A26;
+  /* Deep Charcoal */
+
+  --text-main: #2D2A26;
   --text-muted: #6B7280;
-  /* Subdued Grey */
 
   /* Micro-Shadow System (Anti-AI Slop) */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
@@ -30,6 +33,44 @@
   --success: #3E5F4F;
   --warning: #B8860B;
   --error: #8B0000;
+
+  /* --- ANTIGRAVITY MOTION TOKENS --- */
+  --motion-delay-unit: 0.1s;
+  --motion-stagger-1: calc(var(--motion-delay-unit) * 1);
+  --motion-stagger-2: calc(var(--motion-delay-unit) * 2);
+  --motion-stagger-3: calc(var(--motion-delay-unit) * 3);
+  --motion-stagger-4: calc(var(--motion-delay-unit) * 4);
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANTIGRAVITY ATOMS: Noise, Grain & Motion
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Grainy Noise Overlay (The Premium Secret) */
+.noise-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Character/Staggered Reveal Primitives */
+.shimmer-reveal {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background-size: 200% 100%;
+  animation: shimmer-swipe 2s infinite linear;
+}
+
+@keyframes shimmer-swipe {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -59,12 +100,39 @@
   @apply text-[var(--text-muted)] hover:text-[var(--primary-raudhah)] transition-colors duration-200 text-sm;
 }
 
-/* Glass Utility - Refined for v7.0 Raudhah */
+/* Glass Utility - Refined for v7.0 Raudhah (Premium Ink & Parchment) */
 .glass-v7 {
-  background: rgba(255, 255, 255, 0.4);
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid rgba(27, 107, 90, 0.08);
+  box-shadow:
+    0 10px 30px -10px rgba(27, 107, 90, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.border-raudhah-gradient {
+  border-image: linear-gradient(to right, #C4972A33, #1B6B5A33) 1;
+}
+
+.shadow-warm {
+  box-shadow: 0 15px 35px -5px rgba(27, 107, 90, 0.15), 0 5px 15px -5px rgba(196, 151, 42, 0.1);
+}
+
+.dynamic-bg-15 {
+  background-color: color-mix(in srgb, var(--dynamic-color) 15%, transparent);
+}
+
+.dynamic-bg-100 {
+  background-color: var(--dynamic-color);
+}
+
+.dynamic-border-30 {
+  border-color: color-mix(in srgb, var(--dynamic-color) 30%, transparent);
+}
+
+.dynamic-text {
+  color: var(--dynamic-color);
 }
 
 
@@ -83,17 +151,17 @@
   }
 }
 
-@keyframes pulse-neon {
+@keyframes pulse-soft {
 
   0%,
   100% {
     opacity: 1;
-    box-shadow: 0 0 20px var(--color-neon-glow);
+    filter: drop-shadow(0 0 10px rgba(27, 107, 90, 0.2));
   }
 
   50% {
     opacity: 0.8;
-    box-shadow: 0 0 40px var(--color-neon-glow);
+    filter: drop-shadow(0 0 20px rgba(27, 107, 90, 0.4));
   }
 }
 
@@ -137,8 +205,8 @@
   animation: float 6s ease-in-out infinite;
 }
 
-.animate-pulse-neon {
-  animation: pulse-neon 3s ease-in-out infinite;
+.animate-pulse-soft {
+  animation: pulse-soft 4s ease-in-out infinite;
 }
 
 .animate-glow {
@@ -159,39 +227,38 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 [data-theme="raudhah"] {
   /* Brands */
-  --primary: #1A237E;
-  /* Midnight Navy */
-  --primary-rgb: 26, 35, 126;
+  --primary: #1B6B5A;
+  /* Raudhah Teal */
+  --primary-rgb: 27, 107, 90;
 
-  --primary-glow: rgba(38, 198, 218, 0.3);
-  /* Turquoise Glow */
+  --primary-glow: rgba(27, 107, 90, 0.2);
+  /* Teal Glow */
 
   /* Backgrounds */
-  --bg-main: #F5F7FA;
-  /* Soft Blue Grey */
-  --bg-main-rgb: 245, 247, 250;
+  --bg-main: #FAFAF5;
+  /* Ivory Parchment */
+  --bg-main-rgb: 250, 250, 245;
 
   --surface: #FFFFFF;
   --surface-rgb: 255, 255, 255;
 
-  --card: #FFFFFF;
-  --card-rgb: 255, 255, 255;
+  --card: #F5F0E8;
+  /* Warm Cream */
+  --card-rgb: 245, 240, 232;
 
-  --sheet: #E8EAF6;
-  /* Very pale indigo */
-  --sheet-rgb: 232, 234, 246;
+  --sheet: #FFFFFF;
+  --sheet-rgb: 255, 255, 255;
 
   /* Text */
-  --text-primary: #1A237E;
-  /* Midnight Navy */
-  --text-primary-rgb: 26, 35, 126;
+  --text-primary: #2D2A26;
+  /* Deep Charcoal */
+  --text-primary-rgb: 45, 42, 38;
 
-  --text-secondary: #455A64;
-  /* Blue Grey */
-  --text-muted: #90A4AE;
+  --text-secondary: #4A4A4A;
+  --text-muted: #8E8B82;
 
   /* Accents */
-  --accent-gold: #FBC02D;
+  --accent-gold: #C4972A;
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -629,8 +696,13 @@ body::before {
 }
 
 .bg-pattern-grid {
-  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='white' stroke-width='0.5' /%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0 L40 20 L20 40 L0 20 Z' fill='none' stroke='%231B6B5A' stroke-opacity='0.1' stroke-width='0.5' /%3E%3C/svg%3E");
   background-size: 40px 40px;
+}
+
+.bg-pattern-dots-raudhah {
+  background-image: radial-gradient(circle at 1px 1px, rgba(27, 107, 90, 0.05) 1px, transparent 0);
+  background-size: 24px 24px;
 }
 
 .bg-pattern-triangle {
@@ -666,13 +738,88 @@ body::before {
   height: var(--bar-height);
 }
 
-.mesh-gradient {
-  background-color: var(--bg-main);
+/* ═══════════════════════════════════════════════════════════════════════════
+   ANTIGRAVITY ATMOSPHERE: Mesh + Grain + Weightless
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Dynamic Mesh Gradient Engine */
+.antigravity-mesh {
+  background-color: var(--bg-raudhah);
   background-image:
-    radial-gradient(at 0% 0%, rgba(var(--primary-rgb), 0.15) 0px, transparent 50%),
-    radial-gradient(at 100% 0%, rgba(var(--primary-rgb), 0.1) 0px, transparent 50%),
-    radial-gradient(at 100% 100%, rgba(var(--primary-rgb), 0.05) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(var(--primary-rgb), 0.15) 0px, transparent 50%);
+    radial-gradient(at 10vw 10vh, rgba(27, 107, 90, 0.15) 0px, transparent 40%),
+    radial-gradient(at 90vw 20vh, rgba(196, 151, 42, 0.1) 0px, transparent 40%),
+    radial-gradient(at 50vw 80vh, rgba(27, 107, 90, 0.08) 0px, transparent 50%),
+    radial-gradient(at 80vw 90vh, rgba(196, 151, 42, 0.05) 0px, transparent 40%);
+  background-attachment: fixed;
+}
+
+/* Procedural Noise Dust (The secret to 'Airy' feel) */
+.grain-texture {
+  position: fixed;
+  inset: -200%;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  animation: grain-motion 8s steps(10) infinite;
+}
+
+@keyframes grain-motion {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  10% {
+    transform: translate(-5%, -10%);
+  }
+
+  20% {
+    transform: translate(-15%, 5%);
+  }
+
+  30% {
+    transform: translate(7%, -25%);
+  }
+
+  40% {
+    transform: translate(-5%, 25%);
+  }
+
+  50% {
+    transform: translate(-15%, 10%);
+  }
+
+  60% {
+    transform: translate(15%, 0%);
+  }
+
+  70% {
+    transform: translate(0%, 15%);
+  }
+
+  80% {
+    transform: translate(3%, 35%);
+  }
+
+  90% {
+    transform: translate(-10%, 10%);
+  }
+}
+
+/* Staggered Reveal Primaries */
+.reveal-char {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(20px) scale(0.9);
+  filter: blur(10px);
+}
+
+.reveal-word {
+  display: inline-block;
+  overflow: hidden;
+  margin-right: 0.25em;
 }
 
 .neon-glow-primary {
@@ -702,10 +849,7 @@ body::before {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   LEGACY NOOR-E-CYBER UTILITIES — REMOVED (v7.0 Raudhah transition)
-   Deleted: neon-text-cyan, neon-border-cyan, neon-box-pulse, glass-premium,
-            levitate, rotate-3d-hover, animate-shimmer-fast
-   Kept: neon-glow-primary, shadow-neon (still used by Iqra + Admin components)
+   RAUDHAH V7.0 DESIGN SYSTEM UTILITIES
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ═══════════════════════════════════════════════════════════════════════════

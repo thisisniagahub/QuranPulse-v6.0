@@ -43,7 +43,11 @@ const getStoredGoals = (): ReadingGoal => {
 
 // Helper to store goals
 const storeGoals = (goals: ReadingGoal) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
+  } catch {
+    // Ignore storage errors
+  }
 };
 
 // Check if same day

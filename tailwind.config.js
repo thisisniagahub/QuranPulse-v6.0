@@ -59,12 +59,23 @@ export default {
           500: 'var(--accent-gold)', // Dynamic gold
           600: '#FFC107',
         },
+
+        // 🕌 RAUDHAH DESIGN SYSTEM (v7.0)
+        raudhah: {
+          ivory: '#FAFAF5',
+          teal: '#1B6B5A',
+          gold: '#C4972A',
+          cream: '#F5F0E8',
+          ink: '#2D2A26',
+        },
       },
       fontFamily: {
         "display": ["Inter", "sans-serif"],
+        "heading": ["Lora", "serif"],
         "arabic": ["'Noto Sans Arabic'", "Amiri", "sans-serif"],
         "sans": ['Inter', 'sans-serif'],
-        "serif": ['Amiri', 'serif'],
+        "serif": ['Lora', 'serif'],
+        "raudhah": ['Lora', 'serif'],
       },
       borderRadius: {
         "DEFAULT": "0.5rem",

@@ -1,5 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { Star } from 'lucide-react';
+import SplitText from '@/components/ui/SplitText';
 
 interface TestimonialCardProps {
   quote: string;
@@ -19,20 +21,16 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, name, role, av
   const mouseXSpring = useSpring(x, { stiffness: 300, damping: 30 });
   const mouseYSpring = useSpring(y, { stiffness: 300, damping: 30 });
 
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
     const rect = ref.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
     const mouseX = e.clientX - rect.left;
     const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
+    x.set(mouseX / rect.width - 0.5);
+    y.set(mouseY / rect.height - 0.5);
   };
 
   const handleMouseLeave = () => {
@@ -58,59 +56,58 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, name, role, av
       transition={{ duration: 0.6 }}
       className="relative group cursor-pointer"
     >
-      <div 
+      <div
         className={`
-          relative p-6 md:p-8 rounded-3xl 
-          bg-gradient-to-br from-slate-900/90 via-slate-800/80 to-slate-900/90
-          border border-white/10 hover:border-cyan-500/30
-          backdrop-blur-xl
-          shadow-2xl shadow-black/50
+          relative p-6 md:p-8 rounded-3xl
+          bg-white/80 backdrop-blur-xl
+          border border-raudhah-teal/10 hover:border-raudhah-teal/30
+          shadow-xl shadow-raudhah-teal/5
           transition-all duration-500
-          ${isHovered ? 'shadow-cyan-500/10' : ''}
+          ${isHovered ? 'shadow-raudhah-teal/15 border-raudhah-gold/20' : ''}
         `}
         style={{ transformStyle: "preserve-3d" }}
       >
-        {/* Gloss/Reflection overlay */}
-        <div 
-          className="absolute inset-0 rounded-3xl bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50 pointer-events-none"
+        {/* Gloss overlay */}
+        <div
+          className="absolute inset-0 rounded-3xl bg-gradient-to-br from-raudhah-teal/5 via-transparent to-raudhah-gold/5 opacity-50 pointer-events-none"
           style={{ transform: "translateZ(1px)" }}
         />
 
         {/* Content */}
-        <div style={{ transform: "translateZ(30px)" }}>
+        <div style={{ transform: "translateZ(20px)" }}>
           {/* Rating */}
           <div className="flex gap-1 mb-4">
             {[...Array(5)].map((_, i) => (
-              <i 
-                key={i} 
-                className={`fa-solid fa-star text-sm ${i < rating ? 'text-amber-400' : 'text-slate-600'}`}
+              <Star
+                key={i}
+                className={`w-4 h-4 ${i < rating ? 'text-raudhah-gold fill-raudhah-gold' : 'text-raudhah-ink/15'}`}
               />
             ))}
           </div>
 
           {/* Quote */}
-          <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-6 italic">
+          <p className="text-raudhah-ink/80 text-sm md:text-base leading-relaxed mb-6 italic">
             "{quote}"
           </p>
 
           {/* Author */}
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-cyan-500/30">
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-raudhah-teal/20 bg-raudhah-ivory">
               <img loading="lazy" src={avatar} alt={name} className="w-full h-full object-cover" />
             </div>
             <div>
-              <p className="font-semibold text-white text-sm">{name}</p>
-              <p className="text-cyan-400 text-xs">{role}</p>
+              <p className="font-semibold text-raudhah-ink text-sm">{name}</p>
+              <p className="text-raudhah-teal text-xs">{role}</p>
             </div>
           </div>
         </div>
 
         {/* Hover glow */}
-        <div 
+        <div
           className={`
-            absolute -inset-1 rounded-3xl 
-            bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 
-            blur-xl opacity-0 group-hover:opacity-100 
+            absolute -inset-1 rounded-3xl
+            bg-gradient-to-r from-raudhah-teal/10 via-raudhah-gold/10 to-raudhah-teal/10
+            blur-xl opacity-0 group-hover:opacity-100
             transition-opacity duration-500 -z-10
           `}
         />
@@ -122,31 +119,56 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, name, role, av
 export const PremiumTestimonials = () => {
   const testimonials = [
     {
-      quote: "QuranPulse has transformed my daily Quran recitation. The AI Ustaz feature answers my questions instantly with authentic sources.",
+      quote: "QuranPulse ubah cara saya membaca Al-Quran setiap hari. Ustaz AI jawab soalan saya serta-merta dengan rujukan sahih.",
       name: "Ahmad Razak",
       role: "Software Engineer",
       avatar: "https://i.pravatar.cc/100?img=11",
       rating: 5,
     },
     {
-      quote: "Finally, an Islamic app that feels premium and modern. The Tajweed highlighting is incredibly accurate.",
+      quote: "Akhirnya ada aplikasi Islamik yang rasa premium dan moden. Tajweed highlighting sangat tepat dan membantu.",
       name: "Fatimah Zahra",
-      role: "University Student",
+      role: "Pelajar Universiti",
       avatar: "https://i.pravatar.cc/100?img=25",
       rating: 5,
     },
     {
-      quote: "I use Iqra module to teach my children. The progress tracking and pronunciation guide are game-changers.",
+      quote: "Saya guna modul Iqra untuk ajar anak-anak. Progress tracking dan panduan sebutan memang game-changer.",
       name: "Ibrahim Hassan",
-      role: "Parent & Educator",
+      role: "Ibu Bapa & Pendidik",
       avatar: "https://i.pravatar.cc/100?img=15",
+      rating: 5,
+    },
+    {
+      quote: "Dalam 2 minggu, hafalan saya bertambah 3 surah. AI detection untuk tajwid sangat membantu perbaiki bacaan.",
+      name: "Nurul Iman",
+      role: "Hafizah",
+      avatar: "https://i.pravatar.cc/100?img=32",
+      rating: 5,
+    },
+    {
+      quote: "Halaqah Komuniti buat saya rasa connected dengan ummah. Soalan-jawab dengan ustaz AI sangat bermakna.",
+      name: "Mohd Firdaus",
+      role: "Usahawan",
+      avatar: "https://i.pravatar.cc/100?img=53",
+      rating: 5,
+    },
+    {
+      quote: "Notifikasi WhatsApp untuk solat dan zikir harian sangat berguna. Rasa macam ada sahabat yang ingatkan.",
+      name: "Siti Khadijah",
+      role: "Guru",
+      avatar: "https://i.pravatar.cc/100?img=44",
       rating: 5,
     },
   ];
 
   return (
-    <section className="relative z-10 py-20 md:py-28 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="py-24 md:py-32 bg-raudhah-ivory relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-pattern-grid bg-[size:80px_80px]" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-raudhah-teal/5 rounded-full blur-3xl" />
+
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -154,17 +176,26 @@ export const PremiumTestimonials = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-cyan-500 font-bold tracking-widest uppercase text-xs mb-2 block">Testimonials</span>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
-            Loved by the <span className="text-cyan-400">Ummah</span>
-          </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto">
-            Join millions of Muslims worldwide who trust QuranPulse for their spiritual journey.
+          <span className="inline-block px-4 py-1.5 rounded-full bg-raudhah-teal/10 text-raudhah-teal font-bold tracking-widest uppercase text-xs mb-4 border border-raudhah-teal/20">
+            Testimoni
+          </span>
+          <SplitText
+            text="Dicintai Ummah Malaysia"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold font-raudhah text-raudhah-ink tracking-tight"
+            tag="h2"
+            splitType="words"
+            duration={0.7}
+            staggerChildren={0.05}
+            from={{ opacity: 0, y: 20 }}
+            to={{ opacity: 1, y: 0 }}
+          />
+          <p className="text-raudhah-ink/50 max-w-2xl mx-auto mt-4 text-base">
+            Sertai ribuan Muslim Malaysia yang mempercayai QuranPulse untuk perjalanan rohani mereka.
           </p>
         </motion.div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 perspective-1000">
+        {/* Cards Grid — 2 rows of 3 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" style={{ perspective: '1000px' }}>
           {testimonials.map((testimonial, index) => (
             <TestimonialCard key={index} {...testimonial} />
           ))}
@@ -175,4 +206,3 @@ export const PremiumTestimonials = () => {
 };
 
 export default PremiumTestimonials;
-

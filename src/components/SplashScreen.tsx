@@ -72,7 +72,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
                         className="absolute inset-0 bg-cyan-400/20 blur-[40px] rounded-full"
                     />
-                    <img
+                    <img loading="lazy"
                         src="/logo-primary.png"
                         alt="Quran Pulse Logo"
                         className="w-full h-full object-cover scale-150 relative z-10 drop-shadow-[0_10px_30px_rgba(6,182,212,0.4)]"
@@ -125,3 +125,4 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
 };
 
 export default SplashScreen;
+

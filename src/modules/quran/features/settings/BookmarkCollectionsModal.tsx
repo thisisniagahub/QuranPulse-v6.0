@@ -39,7 +39,11 @@ const getStoredCollections = (): BookmarkCollection[] => {
 };
 
 const storeCollections = (collections: BookmarkCollection[]) => {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(collections));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(collections));
+  } catch {
+    // Ignore storage errors
+  }
 };
 
 const COLOR_OPTIONS = [

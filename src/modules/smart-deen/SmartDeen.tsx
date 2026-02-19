@@ -1,16 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { Suspense, lazy, useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { motion, AnimatePresence } from "framer-motion";
-import UstazAvatar from './UstazAvatar';
+import UstazahAvatar from './UstazahAvatar';
 import NeuralTyping from './NeuralTyping';
 import SuggestionChips from './SuggestionChips';
 import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
-import KhatamPlanner from './components/KhatamPlanner';
 import { PERSONAS, PersonaKey } from '../../constants/personas';
 import { PrayerTimesAction } from './components/PrayerTimesAction';
 import { AIWidgetRenderer, cleanAIResponse } from '../../components/ai/AIWidgetRenderer';
 import { askUstazAI } from '../../services/aiService';
 import { ChatMessage } from '../../types';
+
+const KhatamPlanner = lazy(() => import('./components/KhatamPlanner'));
 
 interface SmartDeenProps {
     userName?: string;
@@ -54,7 +55,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
 
             setMessages(prev => [...prev, aiMsg]);
         } catch (error) {
-            console.error("Ustaz AI Error:", error);
+            console.error("Ustazah AI Error:", error);
             const errorMsg: ChatMessage = {
                 id: (Date.now() + 1).toString(),
                 role: 'assistant',
@@ -105,7 +106,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                 <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[120px] opacity-40"></div>
                 <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#0A1E42] rounded-full blur-[100px] opacity-60"></div>
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
-                <div className="absolute inset-0 opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px]"></div>
+                <div className="absolute inset-0 opacity-20 bg-pattern-dots-raudhah"></div>
             </div>
 
             {/* Register Generative UI Actions */}
@@ -115,7 +116,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
             <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0c224b]/60 backdrop-blur-xl z-10 relative shadow-lg">
                 <div className="flex items-center gap-4">
                     <div className="relative">
-                        <UstazAvatar persona={selectedPersona} isThinking={isThinking} />
+                        <UstazahAvatar persona={selectedPersona} isThinking={isThinking} />
                         {isThinking && <div className="absolute inset-0 rounded-full border-2 border-cyan-400 animate-pulse"></div>}
                     </div>
                     <div>
@@ -148,7 +149,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                     <div ref={scrollRef} className={`flex-1 overflow-y-auto p-4 space-y-6 ${hasBottomNav ? 'pb-32' : 'pb-24'} scroll-smooth relative z-10`}>
                         {/* Chat Background Watermark */}
                         <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                             <img src="/assets/icons/nabdh/nav-ustaz.png" className="w-64 h-64 grayscale opacity-[0.03]" alt="" />
+                            <img loading="lazy" src="/assets/icons/nabdh/nav-ustaz.png" className="w-64 h-64 grayscale opacity-[0.03]" alt="" />
                         </div>
 
                         <div className="text-center py-4 relative z-10">
@@ -217,7 +218,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                     <div className={`absolute inset-x-0 p-4 bg-gradient-to-t from-[#020617] via-[#020617]/95 to-transparent z-20 ${hasBottomNav ? 'bottom-[80px]' : 'bottom-0'}`}>
                         {/* JAKIM Disclaimer */}
                         <div className="text-[9px] text-slate-500 text-center mb-3 italic opacity-60">
-                            "Ustaz AI adalah alat bantuan pembelajaran. Untuk hukum syarak muktamad, rujuk asatizah bertauliah."
+                            "Ustazah AI adalah alat bantuan pembelajaran. Untuk hukum syarak muktamad, rujuk asatizah bertauliah."
                         </div>
 
                         {/* Speech Error */}
@@ -258,6 +259,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                 onClick={handleSend}
                                 disabled={!input.trim() || isThinking}
                                 className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all ${input.trim() && !isThinking ? 'bg-cyan-500 text-black hover:bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)]' : 'bg-slate-800/50 text-slate-600 cursor-not-allowed'}`}
+                                title="Hantar Mesej"
                             >
                                 <i className="fa-solid fa-paper-plane transform translate-x-px translate-y-px"></i>
                             </button>
@@ -267,10 +269,21 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
             )}
 
             {/* --- OTHER TABS --- */}
-            {activeTab === 'PLANNER' && <KhatamPlanner />}
+            {activeTab === 'PLANNER' && (
+                <Suspense
+                    fallback={
+                        <div className="h-full min-h-[50vh] flex items-center justify-center">
+                            <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                        </div>
+                    }
+                >
+                    <KhatamPlanner />
+                </Suspense>
+            )}
             {activeTab === 'JAWI' && <div className="p-10 text-center text-slate-500">Modul Jawi sedang dikemaskini...</div>}
         </div>
     );
 };
 
 export default SmartDeen;
+

@@ -28,23 +28,24 @@ describe('Button', () => {
 
     it('applies variant classes', () => {
         const { rerender } = render(<Button variant="primary">Primary</Button>);
-        expect(screen.getByRole('button')).toHaveClass('bg-primary');
+        expect(screen.getByRole('button')).toHaveClass('bg-cyan-500');
 
         rerender(<Button variant="secondary">Secondary</Button>);
-        expect(screen.getByRole('button')).toHaveClass('bg-secondary');
+        expect(screen.getByRole('button')).toHaveClass('bg-slate-800');
     });
 
     it('applies size classes', () => {
         const { rerender } = render(<Button size="sm">Small</Button>);
-        expect(screen.getByRole('button')).toHaveClass('text-sm');
+        expect(screen.getByRole('button')).toHaveClass('text-xs');
 
         rerender(<Button size="lg">Large</Button>);
-        expect(screen.getByRole('button')).toHaveClass('text-lg');
+        expect(screen.getByRole('button')).toHaveClass('text-base');
     });
 
     it('shows loading state', () => {
         render(<Button isLoading>Loading</Button>);
-        expect(screen.getByRole('button')).toBeDisabled();
-        expect(screen.getByTestId('loading-spinner')).toBeInTheDocument();
+        const button = screen.getByRole('button');
+        expect(button).toBeDisabled();
+        expect(button.querySelector('.animate-spin')).toBeInTheDocument();
     });
 });

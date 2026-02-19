@@ -4,6 +4,7 @@ import { Link, useLocation, Outlet } from "react-router-dom";
 import { NavView } from "../types";
 import { useAuth } from "../contexts/AuthContext";
 import { useGamification } from "../contexts/GamificationContext";
+import { Crown, Swords, Trophy } from "lucide-react";
 import kufiSplash from "@/assets/bg/kufi-splash.jpg";
 import kufiHeader from "@/assets/bg/kufi-header.jpg";
 import kufiFooter from "@/assets/bg/kufi-footer.jpg";
@@ -22,6 +23,7 @@ const Layout: React.FC = () => {
   // Map paths to NavView for highlighting
   const getActiveView = (pathname: string): NavView => {
     if (pathname === "/") return NavView.DASHBOARD;
+    if (pathname.startsWith("/quest") || pathname.startsWith("/surah-quest")) return NavView.QURAN;
     if (pathname.startsWith("/quran")) return NavView.QURAN;
     if (pathname.startsWith("/smart-deen")) return NavView.SMART_DEEN;
     if (pathname.startsWith("/ibadah")) return NavView.IBADAH;
@@ -34,6 +36,9 @@ const Layout: React.FC = () => {
   };
 
   const currentView = getActiveView(location.pathname);
+  const isQuestRoute = location.pathname.startsWith("/quest") || location.pathname.startsWith("/surah-quest");
+  const isLeaderboardRoute = location.pathname.startsWith("/leaderboard");
+  const isSubscribeRoute = location.pathname.startsWith("/subscribe") || location.pathname.startsWith("/pro");
 
   return (
     <div className="flex h-screen w-full bg-[#f0f9ff] overflow-hidden font-sans relative justify-center">
@@ -61,7 +66,7 @@ const Layout: React.FC = () => {
             {/* Left: Brand */}
             <Link to="/" className="flex flex-col">
               <div className="flex items-center gap-2 group">
-                <img src="/logo-primary.png" alt="QuranPulse" width="32" height="32" className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+                <img loading="lazy" src="/logo-primary.png" alt="QuranPulse" width="32" height="32" className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
                 <span className="font-black text-lg tracking-tighter text-white font-[Poppins]">
                   Quran<span className="text-cyan-400">Pulse</span>
                 </span>
@@ -88,7 +93,7 @@ const Layout: React.FC = () => {
               </button>
 
               <Link to="/profile" className="w-9 h-9 rounded-full border-2 border-cyan-500/30 p-0.5 bg-[#0c224b] shadow-lg">
-                <img
+                <img loading="lazy"
                   src={user?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
                   alt="User"
                   width="36"
@@ -101,12 +106,48 @@ const Layout: React.FC = () => {
           </div>
         </header>
 
+        <div className="px-4 py-2 border-b border-white/10 bg-[#0c224b]/30 flex items-center gap-2 overflow-x-auto scrollbar-hide">
+          <Link
+            to="/quest"
+            className={`group px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-300 flex items-center gap-1.5 ${isQuestRoute
+              ? "bg-cyan-500/20 text-cyan-300 border-cyan-400/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
+              : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:-translate-y-0.5"
+              }`}
+          >
+            <Swords className={`w-3.5 h-3.5 transition-transform duration-300 ${isQuestRoute ? "text-cyan-300" : "text-slate-400 group-hover:text-cyan-300 group-hover:scale-110"}`} />
+            <span>SurahQuest</span>
+          </Link>
+          <Link
+            to="/leaderboard"
+            className={`group px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-300 flex items-center gap-1.5 ${isLeaderboardRoute
+              ? "bg-cyan-500/20 text-cyan-300 border-cyan-400/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
+              : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:-translate-y-0.5"
+              }`}
+          >
+            <Trophy className={`w-3.5 h-3.5 transition-transform duration-300 ${isLeaderboardRoute ? "text-cyan-300" : "text-slate-400 group-hover:text-amber-300 group-hover:scale-110"}`} />
+            <span>Leaderboard</span>
+          </Link>
+          <Link
+            to="/subscribe"
+            className={`group px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-300 flex items-center gap-1.5 ${isSubscribeRoute
+              ? "bg-cyan-500/20 text-cyan-300 border-cyan-400/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
+              : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:-translate-y-0.5"
+              }`}
+          >
+            <Crown className={`w-3.5 h-3.5 transition-transform duration-300 ${isSubscribeRoute ? "text-cyan-300" : "text-slate-400 group-hover:text-purple-300 group-hover:scale-110"}`} />
+            <span>Pro</span>
+            <span className="ml-0.5 px-1.5 py-0.5 rounded-full text-[9px] leading-none font-black tracking-wide text-white bg-gradient-to-r from-cyan-500 to-purple-500 shadow-[0_0_10px_rgba(139,92,246,0.4)]">
+              PRO
+            </span>
+          </Link>
+        </div>
+
         {/* --- MAIN CONTENT AREA --- */}
         <main className="flex-1 overflow-y-auto scrollbar-hide relative z-0">
           <Outlet />
         </main>
 
-        {/* --- BOTTOM NAVIGATION BAR: FLOATING CYBER DOCK --- */}
+        {/* --- BOTTOM NAVIGATION BAR: FLOATING RAUDHAH DOCK --- */}
         <div className="fixed bottom-6 inset-x-4 z-50 flex justify-center pointer-events-none">
           <nav className="w-full max-w-md h-[76px] bg-[#1e3a8a]/60 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-between px-2 relative pointer-events-auto ring-1 ring-white/10">
 
@@ -122,7 +163,7 @@ const Layout: React.FC = () => {
                 <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.DASHBOARD ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                <img src="/assets/icons/nabdh/nav-home.png" alt="Home" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
+                <img loading="lazy" src="/assets/icons/nabdh/nav-home.png" alt="Home" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
             </Link>
 
@@ -135,7 +176,7 @@ const Layout: React.FC = () => {
                 <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.QURAN ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                <img src="/assets/icons/nabdh/nav-quran.png" alt="Quran" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
+                <img loading="lazy" src="/assets/icons/nabdh/nav-quran.png" alt="Quran" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
             </Link>
 
@@ -161,7 +202,7 @@ const Layout: React.FC = () => {
                     {/* Ring Glow */}
                     <div className={`absolute inset-0 rounded-full border-2 ${currentView === NavView.SMART_DEEN ? 'border-cyan-400/50' : 'border-white/5'}`}></div>
 
-                    <img
+                    <img loading="lazy"
                       src="/assets/icons/nabdh/nav-ustaz.png"
                       alt="Ustaz AI"
                       width="40"
@@ -184,7 +225,7 @@ const Layout: React.FC = () => {
                 <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.IBADAH ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                <img src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
+                <img loading="lazy" src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
             </Link>
 
@@ -197,7 +238,7 @@ const Layout: React.FC = () => {
                 <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.IQRA ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
-                <img src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
+                <img loading="lazy" src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
               </div>
             </Link>
 
@@ -209,3 +250,4 @@ const Layout: React.FC = () => {
 };
 
 export default Layout;
+

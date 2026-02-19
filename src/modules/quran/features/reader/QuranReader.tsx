@@ -1,15 +1,14 @@
-import React, { useRef, useEffect } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useQuran } from '../../contexts/QuranContext';
 import { useAudioPlayer } from '../../../../contexts/AudioPlayerContext';
 import QuranHeader from '../../components/QuranHeader';
 import QuranVerseCard from '../verse-card/QuranVerseCard';
-import QuranPageView from './QuranPageView';
 import QuranAudioPlayer from '../audio/QuranAudioPlayer';
 import ReadingProgressBar from '../../components/ReadingProgressBar';
 import ImmersiveControls from '../../components/ImmersiveControls';
 // Tier 2 & 3 Upgrades
-import VoiceActiveReader from './VoiceActiveReader';
-import MushafView from './MushafView';
+const VoiceActiveReader = lazy(() => import('./VoiceActiveReader'));
+const MushafView = lazy(() => import('./MushafView'));
 
 
 const QuranReader: React.FC = () => {
@@ -81,18 +80,86 @@ const QuranReader: React.FC = () => {
     }, [currentTrack]);
 
     // State for Zen Mode (Immersive Reading)
-    const [isZenMode, setIsZenMode] = React.useState(false);
-    const [isVoiceMode, setIsVoiceMode] = React.useState(false);
+    const [isZenMode, setIsZenMode] = useState(false);
+    const [isVoiceMode, setIsVoiceMode] = useState(false);
+
+    // Virtual list state for long surahs
+    const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+    const verseListRef = useRef<HTMLDivElement | null>(null);
+    const [scrollTop, setScrollTop] = useState(0);
+    const [viewportHeight, setViewportHeight] = useState(0);
+    const [listOffsetTop, setListOffsetTop] = useState(0);
+    const shouldVirtualize = layoutMode === 'SCROLL' && !loadingVerses && verses.length >= 100;
+    const estimatedVerseHeight = 360;
+    const overscan = 4;
 
     // Active Verse Calculation for Voice Reader
-    const activeVerse = verses.length > 0
-        ? verses.find(v => v.verse_key === (currentTrack?.verseKey || verses[0]?.verse_key)) ?? null
-        : null;
+    const activeVerse = useMemo(() => {
+        if (verses.length === 0) return null;
+        return verses.find(v => v.verse_key === (currentTrack?.verseKey || verses[0]?.verse_key)) ?? null;
+    }, [currentTrack?.verseKey, verses]);
 
     // Also scroll nicely when entering reading view?
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [selectedChapter]);
+
+    useEffect(() => {
+        if (layoutMode !== 'SCROLL') return;
+
+        const updateMetrics = () => {
+            const container = scrollContainerRef.current;
+            const verseList = verseListRef.current;
+            if (!container || !verseList) return;
+
+            setViewportHeight(container.clientHeight);
+            const containerRect = container.getBoundingClientRect();
+            const listRect = verseList.getBoundingClientRect();
+            const offset = container.scrollTop + (listRect.top - containerRect.top);
+            setListOffsetTop(offset);
+        };
+
+        updateMetrics();
+        window.addEventListener('resize', updateMetrics);
+        return () => {
+            window.removeEventListener('resize', updateMetrics);
+        };
+    }, [layoutMode, verses.length, isZenMode, fontSize, showTranslation, showTransliteration, showWordByWord, loadingVerses]);
+
+    const handleScroll = useCallback((event: React.UIEvent<HTMLDivElement>) => {
+        if (!shouldVirtualize) return;
+        setScrollTop(event.currentTarget.scrollTop);
+    }, [shouldVirtualize]);
+
+    const virtualWindow = useMemo(() => {
+        if (!shouldVirtualize) {
+            return {
+                startIndex: 0,
+                endIndex: verses.length,
+                topSpacer: 0,
+                bottomSpacer: 0
+            };
+        }
+
+        const relativeScrollTop = Math.max(0, scrollTop - listOffsetTop);
+        const startIndex = Math.max(0, Math.floor(relativeScrollTop / estimatedVerseHeight) - overscan);
+        const endIndex = Math.min(
+            verses.length,
+            Math.ceil((relativeScrollTop + viewportHeight) / estimatedVerseHeight) + overscan
+        );
+
+        return {
+            startIndex,
+            endIndex,
+            topSpacer: startIndex * estimatedVerseHeight,
+            bottomSpacer: Math.max(0, (verses.length - endIndex) * estimatedVerseHeight)
+        };
+    }, [shouldVirtualize, verses.length, scrollTop, listOffsetTop, viewportHeight]);
+
+    const visibleVerses = useMemo(() => {
+        if (!shouldVirtualize) return verses;
+        return verses.slice(virtualWindow.startIndex, virtualWindow.endIndex);
+    }, [shouldVirtualize, verses, virtualWindow.endIndex, virtualWindow.startIndex]);
 
     if (!selectedChapter) return null;
 
@@ -100,12 +167,21 @@ const QuranReader: React.FC = () => {
     // Context has setShowTranslation(bool). Header expects onToggleTranslation().
 
     // Handlers for Immersive Controls
-    const handleToggleZen = () => setIsZenMode(!isZenMode);
-    const handlePlayPause = () => {
+    const handleToggleZen = useCallback(() => setIsZenMode(prev => !prev), []);
+    const handlePlayPause = useCallback(() => {
         if (isPlaying) stopTrack();
         else if (currentTrack?.verseKey) playVerse(currentTrack.verseKey);
         else if (verses.length > 0) playVerse(verses[0].verse_key);
-    };
+    }, [currentTrack?.verseKey, isPlaying, playVerse, stopTrack, verses]);
+    const handleToggleVoiceMode = useCallback(() => setIsVoiceMode(prev => !prev), []);
+
+    const handleGoBackToList = useCallback(() => setView('LIST'), [setView]);
+    const handleToggleTranslation = useCallback(() => setShowTranslation(!showTranslation), [setShowTranslation, showTranslation]);
+    const handleToggleTransliteration = useCallback(() => setShowTransliteration(!showTransliteration), [setShowTransliteration, showTransliteration]);
+    const handleToggleLayoutMode = useCallback(
+        () => setLayoutMode(layoutMode === 'SCROLL' ? 'PAGE' : 'SCROLL'),
+        [layoutMode, setLayoutMode]
+    );
 
     return (
         <div className="flex-1 flex flex-col overflow-hidden relative z-10 w-full h-full">
@@ -113,9 +189,7 @@ const QuranReader: React.FC = () => {
             <div className={`transition-all duration-700`}>
                 <QuranHeader
                     chapter={selectedChapter}
-                    onBack={() => {
-                        setView('LIST');
-                    }}
+                    onBack={handleGoBackToList}
                     onOpenAudioSettings={() => setShowSettings(true)}
                     onOpenSettings={() => setShowSettings(true)}
                     onOpenSurahInfo={() => setShowSurahInfo(true)}
@@ -123,15 +197,15 @@ const QuranReader: React.FC = () => {
                     readingMode={readingMode}
                     onToggleReadingMode={toggleReadingMode}
                     showTranslation={showTranslation}
-                    onToggleTranslation={() => setShowTranslation(!showTranslation)}
+                    onToggleTranslation={handleToggleTranslation}
                     showTransliteration={showTransliteration}
-                    onToggleTransliteration={() => setShowTransliteration(!showTransliteration)}
+                    onToggleTransliteration={handleToggleTransliteration}
                     selectedTranslationId={selectedTranslationId}
                     onTranslationChange={setSelectedTranslationId}
                     isAudioLoading={isAudioLoading}
                     layoutMode={layoutMode}
                     isZenMode={isZenMode} // Pass Zen Mode here
-                    onToggleLayoutMode={() => setLayoutMode(layoutMode === 'SCROLL' ? 'PAGE' : 'SCROLL')}
+                    onToggleLayoutMode={handleToggleLayoutMode}
                 />
             </div>
 
@@ -141,18 +215,30 @@ const QuranReader: React.FC = () => {
             {/* === PAGE VIEW (MUSHAF MODE) === */}
             {layoutMode === 'PAGE' && (
                 <div className="flex-1 overflow-y-auto w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-900 via-[#0a0a0f] to-black">
-                    <MushafView />
+                    <Suspense
+                        fallback={
+                            <div className="h-full min-h-[50vh] flex items-center justify-center">
+                                <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                            </div>
+                        }
+                    >
+                        <MushafView />
+                    </Suspense>
                 </div>
             )}
 
             {/* === SCROLL VIEW (LIST MODE) === */}
             {layoutMode === 'SCROLL' && (
-                <div className={`flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-hide pb-32 transition-colors duration-1000 relative min-h-full ${isZenMode
+                <div
+                    ref={scrollContainerRef}
+                    onScroll={handleScroll}
+                    className={`flex-1 overflow-y-auto px-4 py-4 space-y-6 scrollbar-hide pb-32 transition-colors duration-1000 relative min-h-full ${isZenMode
                     ? 'bg-[#020617]'
                     : theme === 'raudhah' || theme === 'light'
                         ? 'bg-[var(--bg-main)]'
                         : 'bg-transparent' // Allow parent bg-midnight-gradient to show
-                    }`}>
+                    }`}
+                >
 
                     {/* 🌠 Starlight Background (Reading Mode only) */}
                     {isZenMode && (
@@ -160,8 +246,8 @@ const QuranReader: React.FC = () => {
                             <div className="absolute inset-0 bg-gradient-to-br from-slate-900/5 to-cyan-900/5 opacity-[0.03]"></div>
                             {/* Simple Star Particles (CSS-only for performance) */}
                             <div className="absolute top-20 left-1/4 w-0.5 h-0.5 bg-white rounded-full animate-pulse"></div>
-                            <div className="absolute top-40 right-1/3 w-1 h-1 bg-cyan-400 rounded-full animate-pulse opacity-40" style={{ animationDelay: '1s' }}></div>
-                            <div className="absolute bottom-60 left-10 w-0.5 h-0.5 bg-purple-400 rounded-full animate-pulse opacity-30" style={{ animationDelay: '2s' }}></div>
+                            <div className="absolute top-40 right-1/3 w-1 h-1 bg-cyan-400 rounded-full animate-pulse opacity-40 delay-[1000ms]"></div>
+                            <div className="absolute bottom-60 left-10 w-0.5 h-0.5 bg-purple-400 rounded-full animate-pulse opacity-30 delay-[2000ms]"></div>
                         </div>
                     )}
 
@@ -173,6 +259,7 @@ const QuranReader: React.FC = () => {
                                 <img
                                     src="/assets/backgrounds/nature-surah.webp"
                                     alt="Nature Background"
+                                    loading="lazy"
                                     className="w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-1000 ease-out"
                                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                                 />
@@ -232,8 +319,15 @@ const QuranReader: React.FC = () => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="max-w-4xl mx-auto space-y-4">
-                                {verses.map((verse) => (
+                            <div ref={verseListRef} className="max-w-4xl mx-auto">
+                                {shouldVirtualize && (
+                                    <div
+                                        aria-hidden="true"
+                                        style={{ height: `${virtualWindow.topSpacer}px` }}
+                                    />
+                                )}
+                                <div className="space-y-4">
+                                    {visibleVerses.map((verse) => (
                                     <QuranVerseCard
                                         key={verse.verse_key}
                                         verse={verse}
@@ -268,7 +362,14 @@ const QuranReader: React.FC = () => {
                                         onHafazan={() => setHafazanVerse(verse)}
                                         verseRef={(el) => { verseRefs.current[verse.verse_key] = el; }}
                                     />
-                                ))}
+                                    ))}
+                                </div>
+                                {shouldVirtualize && (
+                                    <div
+                                        aria-hidden="true"
+                                        style={{ height: `${virtualWindow.bottomSpacer}px` }}
+                                    />
+                                )}
                             </div>
                         )}
                     </div>
@@ -300,14 +401,16 @@ const QuranReader: React.FC = () => {
             {/* AI Voice Navigation Engine */}
             {activeVerse && (
                 <div className="fixed bottom-24 right-4 z-50">
-                    <VoiceActiveReader
-                        verseKey={activeVerse.verse_key}
-                        arabicText={activeVerse.text_uthmani || ''}
-                        isActive={isVoiceMode}
-                        onToggle={() => setIsVoiceMode(!isVoiceMode)}
-                        onNextVerse={playNextVerse}
-                        onVerseComplete={() => { }}
-                    />
+                    <Suspense fallback={null}>
+                        <VoiceActiveReader
+                            verseKey={activeVerse.verse_key}
+                            arabicText={activeVerse.text_uthmani || ''}
+                            isActive={isVoiceMode}
+                            onToggle={handleToggleVoiceMode}
+                            onNextVerse={playNextVerse}
+                            onVerseComplete={() => { }}
+                        />
+                    </Suspense>
                 </div>
             )}
         </div>

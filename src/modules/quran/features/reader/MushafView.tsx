@@ -216,11 +216,7 @@ const MushafView: React.FC<MushafViewProps> = ({
                 <div className="absolute bottom-0 left-24 right-24 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
 
                 {/* Islamic Geometric Pattern Overlay */}
-                <div className="absolute inset-8 border border-cyan-500/10 rounded-lg"
-                    style={{
-                        backgroundImage: `radial-gradient(circle at 50% 50%, transparent 98%, rgba(6,182,212,0.03) 100%)`,
-                        backgroundSize: '20px 20px'
-                    }}
+                <div className="absolute inset-8 border border-cyan-500/10 rounded-lg bg-[image:radial-gradient(circle_at_50%_50%,transparent_98%,rgba(6,182,212,0.03)_100%)] bg-[length:20px_20px]"
                 />
             </div>
 
@@ -296,14 +292,9 @@ const MushafView: React.FC<MushafViewProps> = ({
                         {/* Page Container with Glassmorphism */}
                         <div className={`relative w-full max-w-2xl aspect-[3/4] rounded-2xl overflow-hidden
                            ${isNightMode
-                                ? 'bg-slate-900/80 border border-cyan-500/20'
-                                : 'bg-amber-50/90 border border-amber-200'
-                            } backdrop-blur-xl shadow-2xl`}
-                            style={{
-                                boxShadow: isNightMode
-                                    ? '0 0 60px rgba(6,182,212,0.1), inset 0 0 30px rgba(6,182,212,0.05)'
-                                    : '0 0 60px rgba(245,158,11,0.1)'
-                            }}
+                                ? 'bg-slate-900/80 border border-cyan-500/20 shadow-[0_0_60px_rgba(6,182,212,0.1),inset_0_0_30px_rgba(6,182,212,0.05)]'
+                                : 'bg-amber-50/90 border border-amber-200 shadow-[0_0_60px_rgba(245,158,11,0.1)]'
+                            } backdrop-blur-xl`}
                         >
                             {/* Page Inner Border */}
                             <div className={`absolute inset-3 rounded-xl border ${isNightMode ? 'border-cyan-500/10' : 'border-amber-300/30'

@@ -11,6 +11,32 @@ interface KhatamPlan {
   isOnTrack: boolean;
 }
 
+const safeLoadPlan = (): KhatamPlan | null => {
+  try {
+    const savedPlan = localStorage.getItem('khatam_plan');
+    if (!savedPlan) return null;
+    return JSON.parse(savedPlan) as KhatamPlan;
+  } catch {
+    return null;
+  }
+};
+
+const safeSetPlan = (plan: KhatamPlan): void => {
+  try {
+    localStorage.setItem('khatam_plan', JSON.stringify(plan));
+  } catch {
+    // Ignore storage errors
+  }
+};
+
+const safeRemovePlan = (): void => {
+  try {
+    localStorage.removeItem('khatam_plan');
+  } catch {
+    // Ignore storage errors
+  }
+};
+
 const KhatamPlanner: React.FC = () => {
   const [hasPlan, setHasPlan] = useState(false);
   const [plan, setPlan] = useState<KhatamPlan | null>(null);
@@ -21,9 +47,9 @@ const KhatamPlanner: React.FC = () => {
 
   // Load plan from local storage on mount
   useEffect(() => {
-    const savedPlan = localStorage.getItem('khatam_plan');
+    const savedPlan = safeLoadPlan();
     if (savedPlan) {
-      setPlan(JSON.parse(savedPlan));
+      setPlan(savedPlan);
       setHasPlan(true);
     }
   }, []);
@@ -51,7 +77,7 @@ const KhatamPlanner: React.FC = () => {
 
     setPlan(newPlan);
     setHasPlan(true);
-    localStorage.setItem('khatam_plan', JSON.stringify(newPlan));
+    safeSetPlan(newPlan);
   };
 
   const updateProgress = (pagesRead: number) => {
@@ -61,13 +87,13 @@ const KhatamPlanner: React.FC = () => {
     // Recalculate status
     const newPlan = { ...plan, currentPage: newCurrent };
     setPlan(newPlan);
-    localStorage.setItem('khatam_plan', JSON.stringify(newPlan));
+    safeSetPlan(newPlan);
   };
 
   const resetPlan = () => {
     setHasPlan(false);
     setPlan(null);
-    localStorage.removeItem('khatam_plan');
+    safeRemovePlan();
   };
 
   // --- UI RENDER ---

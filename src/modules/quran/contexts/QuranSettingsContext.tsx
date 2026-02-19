@@ -31,6 +31,22 @@ interface QuranSettingsState {
 
 const QuranSettingsContext = createContext<QuranSettingsState | undefined>(undefined);
 
+const safeGetStorage = (key: string): string | null => {
+    try {
+        return localStorage.getItem(key);
+    } catch {
+        return null;
+    }
+};
+
+const safeSetStorage = (key: string, value: string): void => {
+    try {
+        localStorage.setItem(key, value);
+    } catch {
+        // Ignore storage errors
+    }
+};
+
 export const QuranSettingsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     // Settings State
     const [fontSize, setFontSize] = useState(36); // Standard: 36px
@@ -43,7 +59,7 @@ export const QuranSettingsProvider: React.FC<{ children: ReactNode }> = ({ child
     // Theme Persistence
     const [theme, setTheme] = useState<ThemeType>(() => {
         if (typeof window !== 'undefined') {
-            const saved = localStorage.getItem('quran_theme');
+            const saved = safeGetStorage('quran_theme');
             return (saved as ThemeType) || 'safar';
         }
         return 'safar';
@@ -51,7 +67,7 @@ export const QuranSettingsProvider: React.FC<{ children: ReactNode }> = ({ child
 
     useEffect(() => {
         document.documentElement.setAttribute('data-theme', theme);
-        localStorage.setItem('quran_theme', theme);
+        safeSetStorage('quran_theme', theme);
     }, [theme]);
 
     const [repeatMode, setRepeatMode] = useState<'none' | 'ayah' | 'surah'>('none');
@@ -62,14 +78,14 @@ export const QuranSettingsProvider: React.FC<{ children: ReactNode }> = ({ child
     // Tutorial State
     const [showTutorial, setShowTutorial] = useState(() => {
         if (typeof window !== 'undefined') {
-            return !localStorage.getItem('has_seen_tutorial_v6');
+            return !safeGetStorage('has_seen_tutorial_v6');
         }
         return false;
     });
 
     const markTutorialSeen = () => {
         setShowTutorial(false);
-        localStorage.setItem('has_seen_tutorial_v6', 'true');
+        safeSetStorage('has_seen_tutorial_v6', 'true');
     };
 
     return (

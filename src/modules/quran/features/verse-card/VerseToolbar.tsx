@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { memo, useState } from 'react';
+import { motion } from 'framer-motion';
 import { QuranVerse } from '../../../../types';
 
 interface VerseToolbarProps {
@@ -15,7 +15,7 @@ interface VerseToolbarProps {
   hasNote?: boolean;
 }
 
-const VerseToolbar: React.FC<VerseToolbarProps> = ({
+const VerseToolbarComponent: React.FC<VerseToolbarProps> = ({
   verse,
   onBookmark,
   onShare,
@@ -153,4 +153,4 @@ const VerseToolbar: React.FC<VerseToolbarProps> = ({
   );
 };
 
-export default VerseToolbar;
+export default memo(VerseToolbarComponent);

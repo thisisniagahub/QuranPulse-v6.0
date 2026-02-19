@@ -84,7 +84,7 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
                 disabled={status === 'PROCESSING'}
                 className="w-full py-3 rounded-xl border border-slate-600 bg-slate-800/50 hover:bg-slate-700 flex items-center justify-center gap-3 transition-all"
               >
-                <img src="https://toyyibpay.com/assets/img/logo.png" alt="FPX" className="h-6 opacity-80 bg-white rounded px-1" />
+                <img loading="lazy" src="https://toyyibpay.com/assets/img/logo.png" alt="FPX" className="h-6 opacity-80 bg-white rounded px-1" />
                 <span className="text-sm font-bold text-white">FPX / Online Banking</span>
               </button>
 
@@ -123,3 +123,4 @@ const CheckoutModal: React.FC<CheckoutModalProps> = ({ isOpen, onClose, amount, 
 };
 
 export default CheckoutModal;
+

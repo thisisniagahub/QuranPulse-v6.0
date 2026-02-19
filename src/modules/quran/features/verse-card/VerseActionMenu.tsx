@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { memo, useEffect, useMemo, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { QuranVerse } from '../../../../types';
 
@@ -20,7 +20,7 @@ interface VerseActionMenuProps {
   hasNote?: boolean;
 }
 
-const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
+const VerseActionMenuComponent: React.FC<VerseActionMenuProps> = ({
   verse,
   isOpen,
   onClose,
@@ -51,7 +51,7 @@ const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
     };
   }, [isOpen, onClose]);
 
-  const menuItems = [
+  const menuItems = useMemo(() => [
     ...(onAskUstaz ? [{
       id: 'ask-ustaz',
       label: 'Tanya Ustaz AI',
@@ -109,7 +109,7 @@ const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
       onClick: () => { onAddToCollection(verse); onClose(); },
       color: 'text-pink-400'
     }] : []),
-  ];
+  ], [hasNote, isBookmarked, onAddToCollection, onAskUstaz, onBookmark, onClose, onCopy, onHafazan, onNotes, onShare, onTafsir, verse]);
 
   return (
     <AnimatePresence>
@@ -149,4 +149,4 @@ const VerseActionMenu: React.FC<VerseActionMenuProps> = ({
   );
 };
 
-export default VerseActionMenu;
+export default memo(VerseActionMenuComponent);

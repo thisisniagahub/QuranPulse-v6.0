@@ -211,7 +211,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
             <div className="absolute inset-0 bg-primary/20 blur-2xl rounded-full opacity-40 group-hover:opacity-60 transition-opacity duration-500"></div>
 
             {/* The Logo Image */}
-            <img
+            <img loading="lazy"
               src="/logo-primary.png"
               alt="Quran Pulse"
               className="w-full h-full object-contain drop-shadow-[0_0_15px_rgba(90,185,255,0.4)] relative z-10 transform group-hover:scale-105 transition-transform duration-500"
@@ -453,3 +453,4 @@ const Auth: React.FC<AuthProps> = ({ onLogin }) => {
 };
 
 export default Auth;
+

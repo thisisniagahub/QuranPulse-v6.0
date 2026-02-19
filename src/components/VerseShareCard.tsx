@@ -17,10 +17,10 @@ interface VerseShareCardProps {
 // Preset themes for the share card
 const themes = [
   {
-    name: 'Cyber Night',
-    bg: 'bg-gradient-to-br from-slate-900 via-cyan-950 to-slate-900',
-    accent: 'text-cyan-400',
-    border: 'border-cyan-500/30',
+    name: 'Raudhah Night',
+    bg: 'bg-gradient-to-br from-[#0c224b] via-[#031a38] to-[#0c224b]',
+    accent: 'text-raudhah-gold',
+    border: 'border-raudhah-teal/30',
   },
   {
     name: 'Golden Dawn',
@@ -153,7 +153,7 @@ export const VerseShareCard: React.FC<VerseShareCardProps> = ({
 
           {/* Branding */}
           <div className="flex items-center justify-center gap-2 pt-4 border-t border-white/10">
-            <img src="/logo-primary.png" alt="Quran Pulse" className="w-6 h-6 object-cover" />
+            <img loading="lazy" src="/logo-primary.png" alt="Quran Pulse" className="w-6 h-6 object-cover" />
             <span className={`text-xs font-bold ${theme.accent}`}>
               Quran Pulse
             </span>
@@ -187,6 +187,7 @@ export const VerseShareCard: React.FC<VerseShareCardProps> = ({
         <button
           onClick={onClose}
           className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 text-white flex items-center justify-center hover:bg-white/20 transition-colors"
+          title="Tutup"
         >
           <i className="fa-solid fa-times"></i>
         </button>
@@ -196,3 +197,4 @@ export const VerseShareCard: React.FC<VerseShareCardProps> = ({
 };
 
 export default VerseShareCard;
+

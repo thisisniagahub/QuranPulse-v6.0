@@ -101,6 +101,7 @@ supabase/
 - [VPS PRD](docs/VPS_PRD.md) - Deployment architecture & decisions
 - [VPS Status](docs/VPS_STATUS.md) - Current infrastructure state
 - [OpenClaw Guide](docs/OPENCLAW_GUIDE.md) - AI gateway configuration
+- [VPS Manual A-Z](docs/VPS_MANUAL_A_TO_Z.md) - Full manual operations and incident recovery runbook
 
 ### Features
 - [DOCS_VAULT/](DOCS_VAULT/INDEX.md) - All feature documentation

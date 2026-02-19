@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookOpen, Star, Trophy, ChevronRight, Lock, Gamepad2, Mic, GraduationCap, Sparkles } from 'lucide-react';
-import IqraDigitalReader from './IqraDigitalReader';
-import IqraGameEngine from './game/IqraGameEngine';
-import KafaDashboard from './kafa/KafaDashboard';
+
+const IqraDigitalReader = lazy(() => import('./IqraDigitalReader'));
+const IqraGameEngine = lazy(() => import('./game/IqraGameEngine'));
+const KafaDashboard = lazy(() => import('./kafa/KafaDashboard'));
 
 const IqraModule = () => {
   const [selectedVolume, setSelectedVolume] = useState<number | null>(null);
@@ -20,7 +21,17 @@ const IqraModule = () => {
   ];
 
   if (selectedVolume) {
-    return <IqraDigitalReader volume={selectedVolume} onBack={() => setSelectedVolume(null)} />;
+    return (
+      <Suspense
+        fallback={
+          <div className="h-full min-h-[50vh] flex items-center justify-center">
+            <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+          </div>
+        }
+      >
+        <IqraDigitalReader volume={selectedVolume} onBack={() => setSelectedVolume(null)} />
+      </Suspense>
+    );
   }
 
   if (mode === 'GAME') {
@@ -29,20 +40,27 @@ const IqraModule = () => {
         <div className="p-4 bg-black">
           <button onClick={() => setMode('MENU')} className="text-white">Back to Menu</button>
         </div>
-        <IqraGameEngine />
+        <Suspense
+          fallback={
+            <div className="h-full min-h-[50vh] flex items-center justify-center">
+              <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+            </div>
+          }
+        >
+          <IqraGameEngine />
+        </Suspense>
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-midnight-gradient pb-24 font-sans text-white relative">
       {/* Global Pattern Overlay */}
-      <div className="absolute inset-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px] z-0"></div>
+      <div className="absolute inset-0 pointer-events-none opacity-20 bg-pattern-dots-raudhah z-0"></div>
 
       {/* Hero Section */}
       <div className="relative h-64 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-cyan-900/20 to-[#050505] z-10" />
-        <img
+        <img loading="lazy"
           src="/assets/iqra/iqra-hero.png"
           alt="Iqra Learning"
           className="w-full h-full object-cover opacity-50"
@@ -211,7 +229,15 @@ const IqraModule = () => {
             exit={{ opacity: 0, x: 20 }}
             transition={{ duration: 0.3 }}
           >
-            <KafaDashboard onSelectSubject={() => { }} />
+            <Suspense
+              fallback={
+                <div className="h-full min-h-[50vh] flex items-center justify-center">
+                  <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                </div>
+              }
+            >
+              <KafaDashboard onSelectSubject={() => { }} />
+            </Suspense>
           </motion.div>
         )}
       </AnimatePresence>

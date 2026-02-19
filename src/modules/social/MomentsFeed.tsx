@@ -100,7 +100,7 @@ const MomentsFeed: React.FC<{ isDark: boolean }> = ({ isDark }) => {
             <div key={moment.id} className={`p-5 rounded-3xl border transition-all ${isDark ? 'bg-slate-900/40 border-slate-700' : 'bg-white border-slate-200'}`}>
                 <div className="flex items-center gap-3 mb-3">
                     <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center text-slate-300 font-bold text-sm">
-                        {moment.profiles?.avatar_url ? <img src={moment.profiles.avatar_url} alt={moment.profiles.name} className="w-full h-full rounded-full" /> : (moment.profiles?.name?.charAt(0) || '?')}
+                        {moment.profiles?.avatar_url ? <img loading="lazy" src={moment.profiles.avatar_url} alt={moment.profiles.name} className="w-full h-full rounded-full" /> : (moment.profiles?.name?.charAt(0) || '?')}
                     </div>
                     <div>
                         <h4 className={`font-bold text-sm ${isDark ? 'text-white' : 'text-slate-900'}`}>{moment.profiles?.name || 'Anonymous'}</h4>
@@ -114,7 +114,7 @@ const MomentsFeed: React.FC<{ isDark: boolean }> = ({ isDark }) => {
 
                 {moment.image_url && (
                     <div className="mb-4 rounded-2xl overflow-hidden">
-                        <img src={moment.image_url} alt="Moment" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
+                        <img loading="lazy" src={moment.image_url} alt="Moment" className="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
                     </div>
                 )}
 
@@ -141,3 +141,4 @@ const MomentsFeed: React.FC<{ isDark: boolean }> = ({ isDark }) => {
 };
 
 export default MomentsFeed;
+

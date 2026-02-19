@@ -6,13 +6,13 @@ import { usePrayerTimes } from '../../hooks/usePrayerTimes';
 import { useQibla } from '../../hooks/useQibla';
 import BentoCard from './components/BentoCard';
 import PulseHero from './components/PulseHero';
-import UstazAiWidget from './components/UstazAiWidget';
+import UstazahAiWidget from './components/UstazahAiWidget';
 import DailyHikmah from './components/DailyHikmah';
 import ContinueReadingCard from './components/ContinueReadingCard';
 import PrayerTimesStrip from './components/PrayerTimesStrip';
 import RecommendedWidget from './components/RecommendedWidget';
 import RecentActivity from './components/RecentActivity';
-import CyberQuickActions from './components/CyberQuickActions';
+import RaudhahQuickActions from './components/RaudhahQuickActions';
 
 // Import Widgets
 import QiblaCompass from '../smart-deen/components/QiblaCompass';
@@ -66,22 +66,22 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
 
     // Theme helpers passed to children
     const theme = {
-        primary: 'cyan',
-        secondary: 'slate',
+        primary: 'raudhah-teal',
+        secondary: 'raudhah-gold',
     };
 
     return (
-        <div className={`min-h-full pb-32 bg-midnight-gradient relative font-sans selection:bg-cyan-500/30`}>
+        <div className={`min-h-full pb-32 bg-raudhah-ivory relative font-sans selection:bg-raudhah-teal/10`}>
 
             {/* 🌌 Ambient Background */}
             <div className="fixed inset-0 pointer-events-none overflow-hidden">
                 {/* Dynamic Glow Orbs */}
-                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-cyan-500/10 rounded-full blur-[120px] animate-pulse-slow"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[100px] animate-pulse-slow lg:opacity-60" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-raudhah-teal/5 rounded-full blur-[120px] animate-pulse-slow"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-raudhah-gold/5 rounded-full blur-[100px] animate-pulse-slow lg:opacity-60" style={{ animationDelay: '2s' }}></div>
 
-                {/* Cyber Grid Texture */}
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.05] contrast-150"></div>
-                <div className="absolute inset-0 opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+                {/* Texture Overlay */}
+                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] contrast-150"></div>
+                <div className="absolute inset-0 opacity-10 bg-pattern-grid bg-[size:60px_60px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
             </div>
 
             {/* 📦 Main Scrollable Content */}
@@ -91,13 +91,13 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
                 <PulseHero user={user} prayerData={prayerData} />
 
                 {/* 2. QUICK ACTIONS (Horizontal Strip) */}
-                <CyberQuickActions onAction={handleQuickAction} />
+                <RaudhahQuickActions onAction={handleQuickAction} />
 
                 {/* 3. CORE GRID */}
                 <div className="grid grid-cols-2 gap-3 pb-4">
                     {/* Primary Actions - Taller Aspect Ratio */}
                     <div className="col-span-1 aspect-[4/5]">
-                        <UstazAiWidget onNavigate={onNavigate} />
+                        <UstazahAiWidget onNavigate={onNavigate} />
                     </div>
                     <div className="col-span-1 aspect-[4/5]">
                         <ContinueReadingCard onNavigate={onNavigate} theme={theme} />
@@ -114,7 +114,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
 
                 {/* 4. FOOTER (Minimal) */}
                 <div className="py-6 text-center opacity-30 pointer-events-none">
-                    <p className="text-[10px] font-mono tracking-widest text-slate-500 uppercase">v6.0 • Digital Ummah</p>
+                    <p className="text-[10px] font-mono tracking-widest text-raudhah-teal/50 uppercase">v7.0 • Raudhah Intelligence</p>
                 </div>
             </div>
 
@@ -126,7 +126,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onNavigate }) => {
                         className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
                     >
                         <div className="relative w-full max-w-md">
-                            <button onClick={() => setActiveModal('none')} className="absolute top-2 right-2 z-10 p-2 bg-slate-800 rounded-full text-white">
+                            <button onClick={() => setActiveModal('none')} className="absolute top-2 right-2 z-10 p-2 bg-slate-800 rounded-full text-white" title="Tutup">
                                 <i className="fa-solid fa-xmark"></i>
                             </button>
                             <QiblaCompass qiblaDirection={qiblaAngle || 0} />

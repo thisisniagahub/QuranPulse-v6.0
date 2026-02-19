@@ -108,7 +108,7 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
 
                     {/* Background Assets */}
                     <div className="absolute inset-0 z-0 pointer-events-none">
-                        <img className="w-full h-full object-cover opacity-20 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcIF6ckGOawn5UxGZxvu6enudnlwbhj4CPTJqUs1v86YZr5wfWqoabWOCWi750LY4gH73znwA9Btty3fme0dKk-6AIOurPKpXVIQpzo3960jBJvyJsN-z7Kel6LadMOSTOIQphBVBo-FNYbrxCYE4EasQKv6nqml7wNxNN4CVHpNJPoTBaTcyiCP_zfPSxsaIRxKn7O1a1tZ4ZYTMxEBE44FuoyE5QA2GQRg6edJQwYoTb4QEs-aqK2GAch6iSSdCn-rCQsxlOosxv" alt="Galaxy" />
+                        <img loading="lazy" className="w-full h-full object-cover opacity-20 mix-blend-overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcIF6ckGOawn5UxGZxvu6enudnlwbhj4CPTJqUs1v86YZr5wfWqoabWOCWi750LY4gH73znwA9Btty3fme0dKk-6AIOurPKpXVIQpzo3960jBJvyJsN-z7Kel6LadMOSTOIQphBVBo-FNYbrxCYE4EasQKv6nqml7wNxNN4CVHpNJPoTBaTcyiCP_zfPSxsaIRxKn7O1a1tZ4ZYTMxEBE44FuoyE5QA2GQRg6edJQwYoTb4QEs-aqK2GAch6iSSdCn-rCQsxlOosxv" alt="Galaxy" />
                         <div className="absolute inset-0 bg-gradient-to-b from-[#020617] via-[#020617]/90 to-[#020617]"></div>
                     </div>
 

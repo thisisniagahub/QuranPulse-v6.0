@@ -50,7 +50,7 @@ const IqraTutorials: React.FC<IqraTutorialsProps> = ({ onBack }) => {
                         >
                             {/* Cinematic Poster Background */}
                             <div className="absolute inset-0 z-0">
-                                <img
+                                <img loading="lazy"
                                     src={tut.poster}
                                     className="w-full h-full object-cover grayscale-[0.2] group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700"
                                     alt={tut.title}
@@ -124,3 +124,4 @@ const IqraTutorials: React.FC<IqraTutorialsProps> = ({ onBack }) => {
 };
 
 export default IqraTutorials;
+
