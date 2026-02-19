@@ -1,0 +1,383 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mic, Square, Play, BarChart3, Target, Waves, ArrowRight, CheckCircle2, AlertTriangle, Volume2 } from 'lucide-react';
+import { ProductFrame } from './ProductFrame';
+import SplitText from '../ui/SplitText';
+
+interface QwerMetric {
+    type: string;
+    label: string;
+    weight: string;
+    severity: string;
+    color: string;
+    icon: React.ReactNode;
+}
+
+const METRICS: QwerMetric[] = [
+    { type: 'makhraj', label: 'Makhraj', weight: '3.0x', severity: 'TAHAP TINGGI', color: 'var(--primary-raudhah)', icon: <Target className="w-4 h-4" /> },
+    { type: 'tajweed', label: 'Tajweed', weight: '2.5x', severity: 'PENTING', color: 'var(--accent-raudhah)', icon: <Waves className="w-4 h-4" /> },
+    { type: 'harakat', label: 'Harakat', weight: '2.0x', severity: 'SEDERHANA', color: '#1B6B5A', icon: <BarChart3 className="w-4 h-4" /> },
+    { type: 'rhythm', label: 'Rhythm', weight: '1.0x', severity: 'UMUM', color: '#2D2A26', icon: <Volume2 className="w-4 h-4" /> },
+];
+
+const QwerDemoSection: React.FC = () => {
+    const [isRecording, setIsRecording] = useState(false);
+    const [isAnalyzing, setIsAnalyzing] = useState(false);
+    const [showResult, setShowResult] = useState(false);
+    const [waveformValues, setWaveformValues] = useState<number[]>(Array(20).fill(0.2));
+    const [demoScore, setDemoScore] = useState(0);
+    const [activeMetricIndex, setActiveMetricIndex] = useState(0);
+
+    // Animated waveform during recording
+    useEffect(() => {
+        if (isRecording) {
+            const interval = setInterval(() => {
+                setWaveformValues(prev => prev.map(() => 0.2 + Math.random() * 0.8));
+            }, 100);
+            return () => clearInterval(interval);
+        } else {
+            setWaveformValues(Array(20).fill(0.2));
+        }
+    }, [isRecording]);
+
+    // Auto-rotate metrics showcase
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setActiveMetricIndex(prev => (prev + 1) % METRICS.length);
+        }, 3000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const handleRecordClick = () => {
+        if (isRecording) {
+            // Stop recording, start analysis
+            setIsRecording(false);
+            setIsAnalyzing(true);
+
+            // Simulate analysis delay
+            setTimeout(() => {
+                setIsAnalyzing(false);
+                setShowResult(true);
+                setDemoScore(18.5); // Demo score
+            }, 2000);
+        } else {
+            // Start recording
+            setShowResult(false);
+            setIsRecording(true);
+
+            // Auto-stop after 5 seconds for demo
+            setTimeout(() => {
+                setIsRecording(false);
+                setIsAnalyzing(true);
+                setTimeout(() => {
+                    setIsAnalyzing(false);
+                    setShowResult(true);
+                    setDemoScore(18.5);
+                }, 2000);
+            }, 5000);
+        }
+    };
+
+    const resetDemo = () => {
+        setShowResult(false);
+        setDemoScore(0);
+    };
+
+    return (
+        <section id="intelligence" className="py-24 bg-transparent relative overflow-hidden">
+            {/* Background Effects */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-cyan-200/20 rounded-full blur-[150px] pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+            {/* Grid Pattern */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]"></div>
+
+            <div className="max-w-7xl mx-auto px-6 relative z-10">
+                {/* Section Header */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-center mb-20"
+                >
+                    <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-raudhah-gold/10 border border-raudhah-gold/20 text-raudhah-gold text-xs font-bold tracking-widest uppercase mb-6">
+                        <BarChart3 className="w-3 h-3" />
+                        Analisis Kecerdasan Raudhah
+                    </span>
+                    <SplitText
+                        text="Q-WER Intelligence"
+                        className="text-4xl md:text-5xl lg:text-6xl font-raudhah font-bold text-raudhah-teal mb-6 tracking-tight"
+                        tag="h2"
+                        splitType="words"
+                        duration={0.8}
+                        staggerChildren={0.08}
+                        from={{ opacity: 0, y: 25, filter: 'blur(4px)' }}
+                        to={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+                    />
+                    <p className="text-raudhah-ink/70 text-lg max-w-2xl mx-auto leading-relaxed font-medium">
+                        Bukan sekadar "betul atau salah". Kami ukur <span className="text-raudhah-teal font-bold">ketepatan akustik</span> berdasarkan
+                        <span className="text-raudhah-gold font-bold"> berat teologi</span> — seperti ustaz manusia menilai.
+                    </p>
+                </motion.div>
+                <div className="grid lg:grid-cols-2 gap-12 items-center">
+
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="relative"
+                    >
+                        <ProductFrame title="Q-WER Engine" badge="LIVE DEMO" glowColor="rgba(20, 184, 166, 0.15)">
+                            <div className="p-6 sm:p-8 relative overflow-hidden">
+                                {/* Header */}
+                                <div className="flex items-center justify-between mb-6">
+                                    <div className="flex items-center gap-3">
+                                        <div className="w-10 h-10 rounded-xl bg-raudhah-teal/10 border border-raudhah-teal/20 flex items-center justify-center">
+                                            <Mic className="w-5 h-5 text-raudhah-teal" />
+                                        </div>
+                                        <div>
+                                            <h4 className="font-bold text-white text-lg">Cuba Sekarang</h4>
+                                            <p className="text-xs text-white/40 font-medium">Analisis AI bacaan anda</p>
+                                        </div>
+                                    </div>
+                                    <div className="flex items-center gap-1.5">
+                                        <span className={`w-2 h-2 rounded-full ${isRecording ? 'bg-red-500 animate-pulse' : 'bg-emerald-500'}`}></span>
+                                        <span className="text-xs text-white/40">{isRecording ? 'Recording...' : 'Ready'}</span>
+                                    </div>
+                                </div>
+
+                                {/* Reference Text Display */}
+                                <div className="bg-white/[0.05] rounded-xl p-6 mb-5 border border-white/[0.06]">
+                                    <p className="text-xs text-white/30 uppercase tracking-widest mb-3 font-bold">Reference Text</p>
+                                    <p className="text-2xl md:text-3xl font-arabic text-white text-center leading-relaxed" dir="rtl">
+                                        بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+                                    </p>
+                                </div>
+
+                                {/* Waveform Visualizer */}
+                                <div className="h-20 flex items-center justify-center gap-1 mb-6 bg-white/[0.04] rounded-xl p-4 border border-white/[0.06]">
+                                    {waveformValues.map((value, index) => (
+                                        <motion.div
+                                            key={index}
+                                            className={`w-1.5 rounded-full ${isRecording ? 'bg-raudhah-teal shadow-[0_0_10px_rgba(0,128,128,0.3)]' : 'bg-white/15'}`}
+                                            animate={{ height: `${value * 100}%` }}
+                                            transition={{ duration: 0.1 }}
+                                        />
+                                    ))}
+                                </div>
+
+                                {/* Control Buttons */}
+                                <div className="flex gap-3">
+                                    <motion.button
+                                        onClick={handleRecordClick}
+                                        disabled={isAnalyzing}
+                                        whileTap={{ scale: 0.95 }}
+                                        className={`flex-1 py-4 rounded-xl font-bold flex items-center justify-center gap-3 transition-all duration-300 ${isRecording
+                                            ? 'bg-red-500 text-white shadow-lg shadow-red-500/30'
+                                            : 'bg-raudhah-teal text-white shadow-lg shadow-raudhah-teal/20 hover:shadow-raudhah-teal/40 hover:scale-[1.02]'
+                                            } ${isAnalyzing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                    >
+                                        {isRecording ? (
+                                            <>
+                                                <Square className="w-5 h-5 fill-current" />
+                                                <span>Henti Rakaman</span>
+                                            </>
+                                        ) : isAnalyzing ? (
+                                            <>
+                                                <motion.div
+                                                    animate={{ rotate: 360 }}
+                                                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                                    className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full"
+                                                />
+                                                <span>Menganalisis...</span>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Mic className="w-5 h-5" />
+                                                <span>Mula Rakaman</span>
+                                            </>
+                                        )}
+                                    </motion.button>
+
+                                    {showResult && (
+                                        <motion.button
+                                            initial={{ opacity: 0, scale: 0.8 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            onClick={resetDemo}
+                                            className="px-6 py-4 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/50 hover:bg-white/[0.08] hover:text-white transition-colors"
+                                        >
+                                            Reset
+                                        </motion.button>
+                                    )}
+                                </div>
+
+                                {/* Result Display */}
+                                <AnimatePresence>
+                                    {showResult && (
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 20 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            exit={{ opacity: 0, y: -20 }}
+                                            className="mt-6 p-5 bg-emerald-500/10 rounded-xl border border-emerald-500/20"
+                                        >
+                                            <div className="flex items-center justify-between mb-4">
+                                                <div className="flex items-center gap-2">
+                                                    <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                                                    <span className="font-bold text-emerald-400">Jayyid (Bagus)</span>
+                                                </div>
+                                                <div className="text-right">
+                                                    <div className="text-3xl font-bold text-white">{demoScore}</div>
+                                                    <div className="text-xs text-white/30 uppercase tracking-wider font-bold">Q-WER Score</div>
+                                                </div>
+                                            </div>
+                                            <div className="grid grid-cols-4 gap-2 mt-4">
+                                                {METRICS.map((metric, i) => (
+                                                    <div key={i} className="text-center p-2 rounded-lg bg-white/[0.05] border border-white/[0.06]">
+                                                        <div className="text-[10px] text-white/30 mb-1 font-bold uppercase">{metric.label}</div>
+                                                        <div className="text-sm font-mono text-raudhah-teal font-bold">
+                                                            {[3.2, 4.1, 2.8, 1.5][i]}%
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    )}
+                                </AnimatePresence>
+                            </div>
+                        </ProductFrame>
+                    </motion.div>
+
+                    {/* Right: Metrics Explanation */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        className="space-y-6"
+                    >
+                        <div className="mb-8">
+                            <h3 className="text-2xl font-bold text-raudhah-ink mb-4 font-raudhah">
+                                Mengapa <span className="text-raudhah-teal">Q-WER</span> Berbeza?
+                            </h3>
+                            <p className="text-raudhah-ink/60 leading-relaxed font-medium">
+                                Standard ASR (Whisper, Google) optimum untuk <span className="text-red-400/50 line-through">semantic meaning</span>.
+                                Kami optimum untuk <span className="text-emerald-600 font-bold">ketepatan tajweed</span> — kerana dalam solat,
+                                sebutan yang salah boleh ubah makna.
+                            </p>
+                        </div>
+
+                        {/* Metrics Cards */}
+                        <div className="space-y-4">
+                            {METRICS.map((metric, index) => (
+                                <motion.div
+                                    key={metric.type}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ delay: index * 0.1 }}
+                                    className={`p-5 rounded-2xl border backdrop-blur-md transition-all duration-500 group cursor-pointer ${activeMetricIndex === index
+                                        ? 'bg-white border-raudhah-teal/20 shadow-lg shadow-raudhah-teal/10 scale-[1.02]'
+                                        : 'bg-white/60 border-raudhah-ink/5 hover:bg-white/80'
+                                        }`}
+                                    onClick={() => setActiveMetricIndex(index)}
+                                >
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-4">
+                                            <div
+                                                className="w-12 h-12 rounded-xl flex items-center justify-center border transition-all duration-300 group-hover:scale-110 dynamic-bg-15 dynamic-border-30 dynamic-text"
+                                                style={{ '--dynamic-color': metric.color } as React.CSSProperties}
+                                            >
+                                                {metric.icon}
+                                            </div>
+                                            <div>
+                                                <h4 className="font-bold text-raudhah-ink text-lg">{metric.label}</h4>
+                                                <p className="text-xs text-raudhah-ink/40">
+                                                    {metric.type === 'makhraj' && 'Titik artikulasi huruf'}
+                                                    {metric.type === 'tajweed' && 'Peraturan bacaan (Ghunnah, Idgham)'}
+                                                    {metric.type === 'harakat' && 'Baris dan tempoh bunyi'}
+                                                    {metric.type === 'rhythm' && 'Kelancaran dan waqaf'}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <div className="text-2xl font-mono font-bold dynamic-text" style={{ '--dynamic-color': metric.color } as React.CSSProperties}>
+                                                {metric.weight}
+                                            </div>
+                                            <div
+                                                className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full dynamic-bg-20 dynamic-text"
+                                                style={{ '--dynamic-color': metric.color } as React.CSSProperties}
+                                            >
+                                                {metric.severity}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Expanded Detail */}
+                                    <AnimatePresence>
+                                        {activeMetricIndex === index && (
+                                            <motion.div
+                                                initial={{ height: 0, opacity: 0 }}
+                                                animate={{ height: 'auto', opacity: 1 }}
+                                                exit={{ height: 0, opacity: 0 }}
+                                                className="mt-4 pt-4 border-t border-raudhah-ink/5"
+                                            >
+                                                <div className="flex items-start gap-2 text-sm text-raudhah-ink/50">
+                                                    <AlertTriangle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+                                                    <p>
+                                                        {metric.type === 'makhraj' && 'Kesalahan makhraj boleh menyebabkan Lahnan Jaliyy — berubah makna dan membatalkan solat dalam mazhab tertentu.'}
+                                                        {metric.type === 'tajweed' && 'Ghunnah yang tertinggal atau Idgham yang tidak sempurna dikira sebagai Lahnan Khafiyy — tidak membatalkan tetapi mengurangi pahala.'}
+                                                        {metric.type === 'harakat' && 'Kesalahan harakat seperti fathah menjadi dammah boleh ubah makna perkataan secara signifikan.'}
+                                                        {metric.type === 'rhythm' && 'Kelancaran bacaan mempengaruhi kekhusyukan tetapi tidak membatalkan solat.'}
+                                                    </p>
+                                                </div>
+                                            </motion.div>
+                                        )}
+                                    </AnimatePresence>
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* CTA */}
+                        <motion.a
+                            href="#pricing"
+                            initial={{ opacity: 0 }}
+                            whileInView={{ opacity: 1 }}
+                            viewport={{ once: true }}
+                            className="inline-flex items-center gap-2 text-raudhah-teal font-bold text-sm mt-6 group"
+                        >
+                            Dapatkan Akses Penuh ke AI Ustaz
+                            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        </motion.a>
+                    </motion.div>
+                </div>
+
+                {/* Comparison Banner */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="mt-24 bg-white/80 backdrop-blur-xl rounded-3xl border border-raudhah-teal/10 p-8 md:p-12 shadow-xl shadow-raudhah-teal/5"
+                >
+                    <div className="grid md:grid-cols-3 gap-8 items-center">
+                        <div className="text-center">
+                            <div className="text-5xl font-bold text-raudhah-ink mb-2 font-raudhah">18.5</div>
+                            <div className="text-sm text-raudhah-ink/40 font-medium">Average Q-WER Score</div>
+                            <div className="text-xs text-emerald-600 font-bold mt-1 tracking-widest uppercase">INTERMEDIATE LEVEL</div>
+                        </div>
+                        <div className="text-center md:border-x border-raudhah-ink/10 px-8">
+                            <div className="text-5xl font-bold text-raudhah-teal mb-2 font-raudhah">&lt; 200ms</div>
+                            <div className="text-sm text-raudhah-ink/40 font-medium">Analysis Latency</div>
+                            <div className="text-xs text-raudhah-teal font-bold mt-1 tracking-widest uppercase">REAL-TIME FEEDBACK</div>
+                        </div>
+                        <div className="text-center">
+                            <div className="text-5xl font-bold text-raudhah-gold mb-2 font-raudhah">4</div>
+                            <div className="text-sm text-raudhah-ink/40 font-medium">Error Categories</div>
+                            <div className="text-xs text-raudhah-gold font-bold mt-1 tracking-widest uppercase">THEOLOGICAL WEIGHTED</div>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+    );
+};
+
+export default QwerDemoSection;

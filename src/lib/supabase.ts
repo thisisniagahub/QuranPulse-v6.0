@@ -1,14 +1,53 @@
 import { createClient } from '@supabase/supabase-js';
+import { getEnv } from '../utils/env';
 
-// These environment variables will be provided by the user
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Environment variables for Supabase
+const supabaseUrl = getEnv('VITE_SUPABASE_URL') || 'https://placeholder.supabase.co';
+const supabaseAnonKey = getEnv('VITE_SUPABASE_ANON_KEY') || 'placeholder-key';
 
-if (!supabaseUrl || !supabaseAnonKey) {
-  console.warn('⚠️ Supabase credentials missing! Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in .env');
+// Create Supabase client with enhanced options
+export const supabase = createClient(
+  supabaseUrl,
+  supabaseAnonKey,
+  {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      storage: typeof window !== 'undefined' ? window.localStorage : undefined,
+    },
+    // Note: Custom headers removed - they caused CORS issues with Edge Functions
+    // If needed, add these headers to Edge Function CORS config first
+  }
+);
+
+// Health check for debugging - strictly internal logging
+if (getEnv('VITE_SUPABASE_URL')) {
+  supabase.from('surahs').select('count', { count: 'exact', head: true }).then(({ error }) => {
+    if (error) {
+      console.warn("⚠️ Supabase Connection Warning:", error.message);
+    }
+  });
 }
 
-export const supabase = createClient(
-  supabaseUrl || '',
-  supabaseAnonKey || ''
-);
+// Helper: Check if Supabase is connected
+export const checkSupabaseConnection = async (): Promise<boolean> => {
+  try {
+    const { error } = await supabase.from('surahs').select('number').limit(1);
+    return !error;
+  } catch {
+    return false;
+  }
+};
+
+// Helper: Get current user session
+export const getCurrentSession = async () => {
+  const { data: { session } } = await supabase.auth.getSession();
+  return session;
+};
+
+// Helper: Get current user
+export const getCurrentUser = async () => {
+  const { data: { user } } = await supabase.auth.getUser();
+  return user;
+};

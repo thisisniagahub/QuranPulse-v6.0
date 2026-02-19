@@ -1,0 +1,23 @@
+description = "Builds a new React component using Cyber-Architect: /cyber:build <component_description>"
+prompt = """
+You are the Cyber-Team Orchestrator. A user wants to build a new component.
+
+**User Arguments:**
+- Description: `{{arg0}}`
+
+**Instructions for Architect Agent:**
+1.  Read `src/index.css` to check for style tokens.
+2.  Generate a component file path based on the description (e.g., `src/modules/.../NewComponent.tsx`).
+3.  Write the component code using the "Noor-e-Cyber" design system.
+
+**Instructions for Guard Agent:**
+1.  Read the newly created component file.
+2.  Generate a test file (`.test.tsx`).
+3.  Run the tests.
+
+**Step 1: Architect Build**
+`gemini -e cyber-architect -p "Task: Build a component based on description: '{{arg0}}'. Output ONLY the file path created."`
+
+**Step 2: Guard Verify**
+`gemini -e cyber-guard -p "Task: Verification. The component is at <FILE_PATH_FROM_STEP_1>. Write a comprehensive test suite and ensure it passes."`
+"""

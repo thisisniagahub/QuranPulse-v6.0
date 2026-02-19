@@ -1,0 +1,62 @@
+Studio
+Note
+Smart Features for the Quran Pulse Umrah Experience
+(Saved responses are view only)
+Untuk menjadikan QURAN PULSE jauh lebih advanced, efisien, dan berguna berbanding aplikasi standard yang hanya memaparkan teks doa, anda perlu mengintegrasikan Teknologi Pintar (AI & GPS) dengan Fiqh Umrah.
+Berikut adalah cadangan fitur high-end yang menyelesaikan masalah sebenar jemaah (pain points) berdasarkan kompleksitas peraturan Umrah 2025-2026:
+1. Geo-Fencing Miqat Alert (Paling Kritikal untuk Jemaah Kapal Terbang)
+Masalah utama jemaah Malaysia/Indonesia yang terbang terus ke Jeddah adalah terlepas berniat di Yalamlam kerana kapal terbang bergerak laju.
+• Fitur Advanced: Gunakan GPS kapal terbang (jika ada akses) atau timer pintar berasaskan kelajuan penerbangan.
+• Cara Berfungsi:
+    ◦ Pengguna masukkan nombor penerbangan. App mengira anggaran masa melintasi Yalamlam.
+    ◦ Notifikasi Bertingkat:
+        ▪ 30 Minit Sebelum: "Bersedia mandi sunat/pakai ihram di tandas pesawat."
+        ▪ 5 Minit Sebelum: "Bersedia untuk berniat."
+        ▪ Tepat di Miqat: Audio Niat Ihram dimainkan secara automatik.
+• Kenapa Efisien: Mengelakkan jemaah terkena denda (Dam) seekor kambing kerana terlupa atau tertidur semasa melintasi miqat.
+2. Smart Tawaf Tracker (Integrasi Sensor Pedometer & Gyroscope)
+Jemaah sering hilang fokus: "Dah pusingan ke-3 atau ke-4?" sambil memegang buku doa yang tebal.
+• Fitur Advanced: Kaunter pusingan automatik atau separa-automatik yang tidak memerlukan pengguna melihat skrin.
+• Cara Berfungsi:
+    ◦ Menggunakan sensor telefon (seperti jam tangan pintar) untuk mengesan pusingan.
+    ◦ Audio Adaptif: App memainkan doa khusus untuk Pusingan 1, kemudian Pusingan 2 secara automatik. Apabila sampai di antara Rukun Yamani dan Hajar Aswad, audio automatik bertukar kepada doa "Rabbana Atina".
+    ◦ Haptic Feedback: Telefon bergetar sekali untuk pusingan 1, dua kali untuk pusingan 2, supaya jemaah tidak perlu melihat skrin dan boleh fokus pada Kaabah.
+3. Interactive Fiqh Decision Tree (Kalkulator Dam Pintar)
+Hukum Dam (denda) sangat rumit dan mempunyai banyak kategori (Tartib vs Takhyir). Jemaah sering keliru: "Saya terpotong kuku satu jari, kena bayar kambing ke?"
+• Fitur Advanced: Bot AI atau Logik "If-This-Then-That".
+• Cara Berfungsi:
+    ◦ Pengguna memilih situasi: "Terpotong Kuku" -> "Berapa jari? (1, 2, atau 3+)" -> App mengira denda serta-merta.
+    ◦ Contoh: Jika 1 kuku, denda ialah 1 mud makanan. Jika 3 kuku, pilihan denda ialah sembelih kambing ATAU puasa 3 hari ATAU beri makan 6 orang miskin.
+• Kenapa Berguna: Menghilangkan keraguan sah/batal ibadah serta-merta tanpa perlu mencari ustaz pada waktu tengah malam.
+4. Emergency "SOS" Card dalam Bahasa Arab (Offline Mode)
+Ramai jemaah (terutamanya warga emas) tersesat dan tidak pandai berbahasa Arab atau Inggeris.
+• Fitur Advanced: Kad ID Digital dengan Text-to-Speech Arab.
+• Cara Berfungsi:
+    ◦ Satu butang besar "BANTU SAYA".
+    ◦ Skrin memaparkan teks Arab besar: "Saya jemaah dari Indonesia/Malaysia. Hotel saya di [Nama Hotel]. Sila bantu tunjukkan arah."
+    ◦ Butang audio yang menyebut ayat tersebut dalam loghat Arab Saudi tempatan untuk diperdengarkan kepada polis atau pemandu teksi.
+    ◦ Menyimpan info paspor dan nombor visa (wajib untuk Nusuk) secara encrypted dalam telefon.
+5. Raudhah Slot Sniper & Peringatan Nusuk
+Masuk ke Raudhah memerlukan tempahan slot di aplikasi Nusuk, dan slot ini sangat cepat habis.
+• Fitur Advanced: Sistem peringatan pintar.
+• Cara Berfungsi:
+    ◦ Walaupun anda tidak boleh menempah terus (kerana sekatan API Nusuk), app anda boleh memberi notifikasi strategi: "Slot Raudhah untuk wanita biasanya dibuka pada jam XX:XX. Sila buka aplikasi Nusuk sekarang."
+    ◦ Menyediakan panduan visual "Step-by-Step" cara tekan butang di Nusuk dengan pantas, kerana antaramuka Nusuk kadang-kala mengelirukan pengguna baru.
+6. Augmented Reality (AR) Kiblat & Hotel Finder
+Di kawasan Masjidil Haram yang luas, Google Maps kadang-kala kurang tepat kerana banyak pintu (Gate).
+• Fitur Advanced: AR Wayfinding.
+• Cara Berfungsi:
+    ◦ Halakan kamera telefon, dan skrin menunjukkan anak panah terapung: "Pintu King Abdul Aziz (500m ke kanan)" atau "Tandas Terdekat (100m ke kiri)".
+    ◦ Juga berguna untuk mencari khemah di Mina (jika musim Haji) atau hotel selepas keluar dari masjid.
+Ringkasan Kelebihan Berbanding App Biasa:
+Ciri App Biasa
+Ciri QURAN PULSE (Advanced)
+Senarai teks doa statik
+Audio adaptif ikut lokasi/pusingan (Hands-free)
+Info "Jangan Potong Kuku"
+Kalkulator Denda jika terlanggar pantang larang
+Peta statik
+Geo-fencing alert sebelum melintas Miqat (elak denda)
+Senarai barang
+SOS Card Arab bercakap untuk kecemasan
+Dengan fitur-fitur ini, QURAN PULSE bukan sekadar "buku doa digital", tetapi menjadi "Mutawwif Pintar" yang menjaga jemaah daripada kesilapan yang mewajibkan denda (Dam) dan membatalkan Umrah.

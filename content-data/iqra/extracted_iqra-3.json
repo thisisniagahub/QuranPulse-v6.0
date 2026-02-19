@@ -1,0 +1,616 @@
+[
+    {
+        "page": 1,
+        "title": "Cover",
+        "focus": "Introductory Metadata",
+        "grid": [],
+        "teacher_notes": [
+            "Title: IQRA 3",
+            "Imprint: AL FATEH - HOME QURAN",
+            "Logo: Avengers-style 'A' symbol in red circle"
+        ]
+    },
+    {
+        "page": 2,
+        "title": "Mad Asli Introduction",
+        "focus": "Mad Asli: Bila Baris Atas Jumpa Alif (When Fatha meets Alif)",
+        "grid": [
+            {
+                "baris": "header_ex",
+                "kanan": "بَا",
+                "kiri": "بَـ",
+                "fokus": "Baca Panjang 2 Harakat (Left is short, Right is long)"
+            },
+            {
+                "baris": "1",
+                "kanan": "مَا هَا ذَا",
+                "kiri": "لَا كَا نَا رَا",
+                "fokus": "Transliteration: DZAA HAA MAA / ROO"
+            },
+            {
+                "baris": "2",
+                "kanan": "تَابَ بَاتَ",
+                "kiri": "نَارَ ثَابَ",
+                "fokus": "Transliteration: TAABA BAATA"
+            },
+            {
+                "baris": "3",
+                "kanan": "تَانَ تَنَ",
+                "kiri": "نَاتَ نَتَ",
+                "fokus": "Transliteration: TANA (Warning on short vowel)"
+            },
+            {
+                "baris": "4",
+                "kanan": "يَابَ يَبَ",
+                "kiri": "بَايَ بَىَ",
+                "fokus": "Practice: Ya and Ba variations"
+            },
+            {
+                "baris": "5",
+                "kanan": "بَايَنَ بَيَنَ",
+                "kiri": "بَايَنَا بَيَانَ",
+                "fokus": "Practice: Bayana variations"
+            },
+            {
+                "baris": "6",
+                "kanan": "عَابَدَ عَبَدَ",
+                "kiri": "عَابِدًا عَبَادَ",
+                "fokus": "Practice: 'Abada variations"
+            },
+            {
+                "baris": "7",
+                "kanan": "رَاحَمَ رَحَمَ",
+                "kiri": "رَاحِمًا رَحَامَ",
+                "fokus": "Practice: Rahama variations"
+            }
+        ],
+        "teacher_notes": [
+            "Rule: Read long (2 counts) when Fatha is followed by Alif."
+        ]
+    },
+    {
+        "page": 3,
+        "title": "Differentiation Practice",
+        "focus": "Bezakan Panjang Dan Pendek (Distinguish Long and Short)",
+        "grid": [
+            {
+                "baris": "1",
+                "kanan": "ثَابَتَ",
+                "tengah": "ثَبَاتَا",
+                "kiri": "ثَابِتَا",
+                "fokus": "Transliteration: SABAATA / SAABATA"
+            },
+            {
+                "baris": "2",
+                "kanan": "زَابِدَ",
+                "tengah": "زَبَادَا",
+                "kiri": "زَابِدَا"
+            },
+            {
+                "baris": "3",
+                "kanan": "تَاوَبَ",
+                "tengah": "تَوَابَا",
+                "kiri": "تَاوِبَا"
+            },
+            {
+                "baris": "4",
+                "kanan": "جَاهَدَ",
+                "tengah": "فَاعَلَ",
+                "kiri": "ثَاقَلَ كَاتَبَ"
+            },
+            {
+                "baris": "5",
+                "kanan": "نَاسَأَ",
+                "tengah": "طَالَبَ",
+                "kiri": "غَازَقَ عَالَمَ"
+            },
+            {
+                "baris": "6",
+                "kanan": "حَاسَدَ",
+                "tengah": "نَاعَمَ",
+                "kiri": "لَاهَبَ ضَالَلَ"
+            },
+            {
+                "baris": "7",
+                "kanan": "نَانَنَا",
+                "tengah": "نَتَانَ نَنْتَانَ",
+                "kiri": "نَنَا نِنَانَ",
+                "fokus": "Phonetic drills"
+            }
+        ]
+    },
+    {
+        "page": 4,
+        "title": "Sentence Fragments",
+        "focus": "Practice",
+        "grid": [
+            {
+                "baris": "1",
+                "kanan": "قَاتَلَ",
+                "tengah": "فَتَلَنَا",
+                "kiri": "فَقَتَلَا",
+                "fokus": "Transliteration: FAQOTALAA"
+            },
+            {
+                "baris": "2",
+                "kanan": "هَالِكَ",
+                "tengah": "هَلَكَتَا",
+                "kiri": "فَهَلَكَ"
+            },
+            {
+                "baris": "3",
+                "kanan": "ضَارَبَ",
+                "tengah": "ضَرَبَتَا",
+                "kiri": "فَضَرَبَا"
+            },
+            {
+                "baris": "4",
+                "kanan": "هَادَمَ",
+                "tengah": "هَدَمَتَا",
+                "kiri": "فَهَدَمَا"
+            },
+            {
+                "baris": "5",
+                "kanan": "صَارَعَ",
+                "tengah": "صَرَعَتَا",
+                "kiri": "فَصَرَعَا"
+            },
+            {
+                "baris": "6",
+                "kanan": "هَاجَمَ",
+                "tengah": "هَجَمَتَا",
+                "kiri": "فَهَجَمَا"
+            },
+            {
+                "baris": "7",
+                "kanan": "قَاوَمَ",
+                "tengah": "قَوَّمَتَا",
+                "kiri": "فَقَوَّمَا"
+            },
+            {
+                "baris": "8",
+                "kanan": "رَاذَلَ",
+                "tengah": "رَذَلَتَا",
+                "kiri": "فَرَذَلَا"
+            }
+        ]
+    },
+    {
+        "page": 5,
+        "title": "Alif Rules",
+        "focus": "Bila Ada Alif Panjang, Bila Tiada Alif Pendek",
+        "grid": [
+            {
+                "baris": "1",
+                "kanan": "مَفَازَهَا",
+                "tengah": "لَنَظِرَا",
+                "kiri": "وَلَالَنَا"
+            },
+            {
+                "baris": "2",
+                "kanan": "أَقَامَهَا",
+                "tengah": "تَنَازَعَا",
+                "kiri": "طَعَامَهَا"
+            },
+            {
+                "baris": "3",
+                "kanan": "فَهَلَكَ",
+                "tengah": "لَبَعَثَ",
+                "kiri": "وَهَمَشَ"
+            },
+            {
+                "baris": "4",
+                "kanan": "فَقَتَلَا",
+                "tengah": "مَلَكَتَا",
+                "kiri": "فَصَحَهَا"
+            },
+            {
+                "baris": "5",
+                "kanan": "لَأَخَذَ",
+                "tengah": "ظَهَرَهَا",
+                "kiri": "صَوَابَهَا"
+            },
+            {
+                "baris": "6",
+                "kanan": "لَحَرَامَ",
+                "tengah": "لَمَعَاشَ",
+                "kiri": "فَتَمَارَ"
+            },
+            {
+                "baris": "7",
+                "kanan": "مَاسَكَنَ",
+                "tengah": "لَاغَضَبَ",
+                "kiri": "لَأَسَعَدَ"
+            }
+        ]
+    },
+    {
+        "page": 6,
+        "title": "Vertical Fatha",
+        "focus": "Madd Badal / Vertical Fatha Equivalence",
+        "grid": [
+            {
+                "baris": "header",
+                "kanan": "هَا  هَـ",
+                "kiri": "ءَا  أَ  ءَ",
+                "fokus": "AA A A / HAA HAA"
+            },
+            {
+                "baris": "1",
+                "kanan": "ءَادَمَ",
+                "tengah": "ءَامَنَ",
+                "kiri": "وَهَذَا بَنَهَا"
+            },
+            {
+                "baris": "2",
+                "kanan": "وَذَاكَ",
+                "tengah": "نَاعَمَ",
+                "kiri": "غَسَالَ ءَايَتَ"
+            },
+            {
+                "baris": "3",
+                "kanan": "نَابَتَ",
+                "tengah": "جَاوَزَ",
+                "kiri": "كَسَبَا فَارَضَ"
+            },
+            {
+                "baris": "4",
+                "kanan": "جَامَعَ",
+                "tengah": "خَاطَبَ",
+                "kiri": "طَحَهَا بَنَهَا"
+            },
+            {
+                "baris": "5",
+                "kanan": "وَذَاتَ",
+                "tengah": "مَقَامَ",
+                "kiri": "أَثَابَ مَئَابَ"
+            },
+            {
+                "baris": "6",
+                "kanan": "يَدَانَا",
+                "tengah": "شَهَادَ",
+                "kiri": "وَكَانَا تَلَهَا"
+            },
+            {
+                "baris": "7",
+                "kanan": "سَمَوَاتَ",
+                "tengah": "وَخَطَأً",
+                "kiri": "صَلَاتَهَا"
+            }
+        ]
+    },
+    {
+        "page": 7,
+        "title": "Alif Maqsura",
+        "focus": "Sajaa (Short Alif / Alif Maqsura)",
+        "grid": [
+            {
+                "baris": "header",
+                "kanan": "سَجَىٰ",
+                "fokus": "SAJAA"
+            },
+            {
+                "baris": "1",
+                "kanan": "وَعَاتَىٰ",
+                "tengah": "فَتَاوَىٰ",
+                "kiri": "يَتَامَىٰ فَنَادَىٰ",
+                "fokus": "FA AAWAA"
+            },
+            {
+                "baris": "2",
+                "kanan": "فَهَدَىٰ",
+                "tengah": "وَعَصَىٰ",
+                "kiri": "لَعَلَىٰ فَقَضَىٰ"
+            },
+            {
+                "baris": "3",
+                "kanan": "تَمَارَىٰ",
+                "tengah": "خَطَايَا",
+                "kiri": "فَتَاوَىٰ دَحَهَا"
+            },
+            {
+                "baris": "4",
+                "kanan": "خَالَطَ",
+                "tengah": "صَوَابَ",
+                "kiri": "فَطَاوَلَ تَبَارَكَ"
+            },
+            {
+                "baris": "5",
+                "kanan": "مَكَانَ",
+                "tengah": "وَخَافَ",
+                "kiri": "غَمَامَ شَهَادَ"
+            },
+            {
+                "baris": "6",
+                "kanan": "مَالَهَا",
+                "tengah": "تَعَالَىٰ",
+                "kiri": "عَصَايَ نَصَارَىٰ"
+            },
+            {
+                "baris": "7",
+                "kanan": "أَتَهَا",
+                "tengah": "بَنَهَا",
+                "kiri": "تَلَهَا"
+            }
+        ]
+    },
+    {
+        "page": 8,
+        "title": "Lam Alif",
+        "focus": "Bila Ada Alif Mesti Panjang",
+        "grid": [
+            {
+                "baris": "header",
+                "kanan": "لَمَا = لَمَّا",
+                "fokus": "Lam Alif Rule"
+            },
+            {
+                "baris": "1",
+                "kanan": "وَمَانَهَا",
+                "tengah": "وَلَمَكَ",
+                "kiri": "فَجَزَهَا"
+            },
+            {
+                "baris": "2",
+                "kanan": "ضَرَبَتَا",
+                "tengah": "فَحَفَظَ",
+                "kiri": "جَمَعَمَا"
+            },
+            {
+                "baris": "3",
+                "kanan": "سَقَىٰ لَهَا",
+                "tengah": "وَلَمَقَ",
+                "kiri": "فَأَفَلَا"
+            },
+            {
+                "baris": "4",
+                "kanan": "فِرَاشَهَا",
+                "tengah": "وَلَمَطَ",
+                "kiri": "لَطَلَعَا"
+            },
+            {
+                "baris": "5",
+                "kanan": "تَنَازَعَا",
+                "tengah": "فَخَفَفَ",
+                "kiri": "نَذَرَكَا"
+            },
+            {
+                "baris": "6",
+                "kanan": "وَمَابَنَىٰ",
+                "tengah": "وَلَمَحَ",
+                "kiri": "ذَنَبَهَا"
+            },
+            {
+                "baris": "7",
+                "kanan": "وَثَاقَهَا",
+                "tengah": "وَشَفَقَ",
+                "kiri": "نَبَذَهَا"
+            }
+        ]
+    },
+    {
+        "page": 9,
+        "title": "Practice",
+        "focus": "General Practice",
+        "grid": [
+            {
+                "baris": "1",
+                "kanan": "يَدَهَا",
+                "tengah": "شَهَادَتَا",
+                "kiri": "فَتَعَالَىٰ"
+            },
+            {
+                "baris": "2",
+                "kanan": "لَمَاطَا",
+                "tengah": "لَفَارَغَا",
+                "kiri": "وَمَتَاعَا"
+            },
+            {
+                "baris": "3",
+                "kanan": "أَثَاتَا",
+                "tengah": "لَأُذَنَ",
+                "kiri": "فَمَقَامَا"
+            },
+            {
+                "baris": "4",
+                "kanan": "لَكَانَا",
+                "tengah": "حَيَاتَهَا",
+                "kiri": "لَأَعَاذَا"
+            },
+            {
+                "baris": "5",
+                "kanan": "لَمَاقَا",
+                "tengah": "وَءَاثَرَا",
+                "kiri": "فَصَوَابَا"
+            },
+            {
+                "baris": "6",
+                "kanan": "فَنَادَىٰ",
+                "tengah": "طَهَارَهَا",
+                "kiri": "وَكَظَامَا"
+            },
+            {
+                "baris": "7",
+                "kanan": "وَكَانَا",
+                "tengah": "زَكَّتَهَا",
+                "kiri": "لَيَدَاهَا"
+            },
+            {
+                "baris": "8",
+                "kanan": "لَخَافَا",
+                "tengah": "لَأَشَرَ",
+                "kiri": "لَضَلَالَا"
+            }
+        ]
+    },
+    {
+        "page": 10,
+        "title": "Practice",
+        "focus": "General Practice",
+        "grid": [
+            {
+                "baris": "1",
+                "kanan": "لَأَمَعَكَ",
+                "tengah": "عَجَبَا",
+                "kiri": "وَصَعَدَا"
+            },
+            {
+                "baris": "2",
+                "kanan": "لَأَصَبَرَ",
+                "tengah": "شَطَطَا",
+                "kiri": "لَغُسَلَا",
+                "fokus": "SYATHOTHOO"
+            },
+            {
+                "baris": "3",
+                "kanan": "مَا فَضَّلَا",
+                "tengah": "حَرَسَا",
+                "kiri": "فَغَدَقَا"
+            },
+            {
+                "baris": "4",
+                "kanan": "مَا حَسَنَ",
+                "tengah": "قَعَدَا",
+                "kiri": "وَأَمَدَا"
+            },
+            {
+                "baris": "5",
+                "kanan": "لَأَرَهَقَ",
+                "tengah": "رَصَدَا",
+                "kiri": "فَهَرَبَا"
+            },
+            {
+                "baris": "6",
+                "kanan": "مَا عَظَمَ",
+                "tengah": "شُهَدَا",
+                "kiri": "وَثَقُلَا"
+            },
+            {
+                "baris": "7",
+                "kanan": "لَأَمَرَضَ",
+                "tengah": "رَهَقَا",
+                "kiri": "فَهَجَرَ",
+                "fokus": "LAAMARODHO"
+            },
+            {
+                "baris": "8",
+                "kanan": "مَا غَدَقَ",
+                "tengah": "خَطَبَ",
+                "kiri": "فَسَجَدَ"
+            }
+        ]
+    },
+    {
+        "page": 11,
+        "title": "Practice",
+        "focus": "General Practice",
+        "grid": [
+            {
+                "baris": "1",
+                "kanan": "وَنَاظَرَ",
+                "tengah": "وَلَمَمَ",
+                "kiri": "وَسَقَهَا"
+            },
+            {
+                "baris": "2",
+                "kanan": "لَأَذَبَ",
+                "tengah": "فَحَدَثَ",
+                "kiri": "لَشَرَابَا"
+            },
+            {
+                "baris": "3",
+                "kanan": "بَنَانَكَ",
+                "tengah": "لَفَسَقَ",
+                "kiri": "وَضَلَالَا"
+            },
+            {
+                "baris": "4",
+                "kanan": "وَحَافَظَ",
+                "tengah": "فَحَضَرَ",
+                "kiri": "فَخَسَارَا"
+            },
+            {
+                "baris": "5",
+                "kanan": "لَذَكَرَ",
+                "tengah": "لَمَعَكَ",
+                "kiri": "وَنَصَارَا"
+            },
+            {
+                "baris": "6",
+                "kanan": "وَءَاخَرَ",
+                "tengah": "فَغَفَرَ",
+                "kiri": "فَلَزَادَ"
+            },
+            {
+                "baris": "7",
+                "kanan": "أَمَامَكَ",
+                "tengah": "وَنَبَذَ",
+                "kiri": "لَخَطَايَا"
+            },
+            {
+                "baris": "8",
+                "kanan": "يَدَارَكَ",
+                "tengah": "يَظْهَرَ",
+                "kiri": "لَأَزَاغَا"
+            }
+        ]
+    },
+    {
+        "page": 12,
+        "title": "Review",
+        "focus": "Bezakan Panjang Dan Pendek",
+        "grid": [
+            {
+                "baris": "1",
+                "kanan": "ثَابَتَ",
+                "tengah": "ءَاذَانَ صَافَحَا",
+                "kiri": "خَطَايَايَ"
+            },
+            {
+                "baris": "2",
+                "kanan": "تَوَّابَ",
+                "tengah": "هَمَزَ خَافَتَا",
+                "kiri": "لَضَلَالَا"
+            },
+            {
+                "baris": "3",
+                "kanan": "لَعَنَ",
+                "tengah": "ءَالِفَ حَكَمَا",
+                "kiri": "لَجَمَاعَ"
+            },
+            {
+                "baris": "4",
+                "kanan": "غَلَظَ",
+                "tengah": "فَتَقَىٰ نَذَارَا",
+                "kiri": "قَالَ بَلَىٰ"
+            },
+            {
+                "baris": "5",
+                "kanan": "فَطَغَىٰ",
+                "tengah": "يَتَامَىٰ لَمَكَا",
+                "kiri": "لَأَطَاعَ"
+            },
+            {
+                "baris": "6",
+                "kanan": "تَلَهَا",
+                "tengah": "فَقَضَىٰ حَوَايَا",
+                "kiri": "بَنَانَكَ"
+            },
+            {
+                "baris": "7",
+                "kanan": "مَلَأَ",
+                "tengah": "عَجَلَا أَلَلَ",
+                "kiri": "وَلَمَمَا"
+            }
+        ]
+    },
+    {
+        "page": 13,
+        "title": "Back Cover",
+        "focus": "End of Section",
+        "grid": [],
+        "teacher_notes": [
+            "Logo: Red Avengers-style symbol"
+        ]
+    }
+]

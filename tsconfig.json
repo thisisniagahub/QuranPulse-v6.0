@@ -15,10 +15,11 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["src/*"]
     },
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
-  "include": ["**/*.ts", "**/*.tsx", "vite-env.d.ts", "src/**/*", "src/jest.d.ts", "src/test.d.ts", "src/global.d.ts", "src/modules.d.ts", "src/types.d.ts"]
+  "include": ["src/**/*.ts", "src/**/*.tsx", "vite-env.d.ts", "src/jest.d.ts", "src/test.d.ts", "src/global.d.ts", "src/modules.d.ts", "src/types.d.ts"],
+  "exclude": ["node_modules", "ADMIN-DASHBOARD", "admin-dashboard-new"]
 }

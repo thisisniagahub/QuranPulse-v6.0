@@ -1,0 +1,6 @@
+{
+    "name": "cyber-guard",
+    "version": "1.0.0",
+    "contextFileName": "guard-persona.md",
+    "temperature": 0.2
+}

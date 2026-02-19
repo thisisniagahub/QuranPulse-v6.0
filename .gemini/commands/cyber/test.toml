@@ -1,0 +1,13 @@
+description = "Runs the Cyber-Guard Test Suite: /cyber:test <target_file>"
+prompt = """
+You are the QA Orchestrator.
+
+**User Arguments:**
+- Target: `{{arg0}}`
+
+**Instructions:**
+1.  Call `cyber-guard` to generate or run tests for the target.
+
+**Execution:**
+`gemini -e cyber-guard -p "Task: Run reliability tests for file: '{{arg0}}'. Fix any issues found."`
+"""

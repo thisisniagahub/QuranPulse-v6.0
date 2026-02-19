@@ -1,3 +1,13 @@
+# Environment Variables (Sensitive)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.development
+.env.test
+.env.production
+
 # Logs
 logs
 *.log
@@ -24,3 +34,14 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Gemini
+.gemini/tmp/
+
+# WhatsApp Auth
+.wwebjs_auth/
+
+# Testing
+coverage/
+.env.check
+.env.check.prod

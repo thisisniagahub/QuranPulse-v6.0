@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <!-- Left Page -->
+  <path d="M8 12 C8 10 10 8 12 8 L28 8 C30 8 32 10 32 12 L32 56 C32 54 30 52 28 52 L12 52 C10 52 8 54 8 56 Z" fill="#faf5eb" stroke="#22d3ee" stroke-width="2"/>
+  <!-- Right Page -->
+  <path d="M56 12 C56 10 54 8 52 8 L36 8 C34 8 32 10 32 12 L32 56 C32 54 34 52 36 52 L52 52 C54 52 56 54 56 56 Z" fill="#faf5eb" stroke="#22d3ee" stroke-width="2"/>
+  <!-- Spine -->
+  <rect x="30" y="8" width="4" height="48" fill="#0f766e"/>
+  <!-- Text Lines Left -->
+  <rect x="12" y="16" width="14" height="2" rx="1" fill="#fbbf24"/>
+  <rect x="12" y="22" width="12" height="2" rx="1" fill="#22d3ee" opacity="0.6"/>
+  <rect x="12" y="28" width="14" height="2" rx="1" fill="#22d3ee" opacity="0.6"/>
+  <!-- Text Lines Right -->
+  <rect x="38" y="16" width="14" height="2" rx="1" fill="#fbbf24"/>
+  <rect x="38" y="22" width="12" height="2" rx="1" fill="#22d3ee" opacity="0.6"/>
+  <rect x="38" y="28" width="14" height="2" rx="1" fill="#22d3ee" opacity="0.6"/>
+</svg>

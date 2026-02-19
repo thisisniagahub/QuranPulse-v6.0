@@ -1,0 +1,105 @@
+---
+description: Design System & UI Engineering Rules for QuranPulse v6.0
+globs: ["**/*.tsx", "**/*.ts", "**/*.css", "tailwind.config.js"]
+---
+
+# Design System Rules: Verse Studio
+
+This project follows the **Verse Studio** design system. All UI changes must adhere to the following strict guidelines.
+
+## 1. Design Tokens & Theming
+
+**Source of Truth:** `tailwind.config.js` and `src/index.css`.
+
+### Colors
+Use Tailwind utility classes or CSS variables. **Do not hardcode hex values.**
+
+| Token Name | Tailwind Class | CSS Variable | Hex Value | Usage |
+| :--- | :--- | :--- | :--- | :--- |
+| **Primary** | `text-primary` / `bg-primary` | `--primary` | `#5ab9ff` | Main actions, highlights, active states |
+| **Background Dark** | `bg-background-dark` | `--bg-dark` | `#051324` | Main application background |
+| **Surface Dark** | `bg-surface-dark` | `--surface-dark` | `#154270` | Secondary backgrounds, sidebars |
+| **Sheet** | `bg-sheet` | `--sheet` | `#0e3359` | Modals, bottom sheets, panels (often with opacity) |
+| **Card** | `bg-card` | `--card` | `#152e4d` | Content cards, data displays |
+| **Text Primary** | `text-white` | `--text-primary` | `#ffffff` | Headings, body text |
+| **Text Muted** | `text-white/60` | `--text-muted` | - | Secondary text, captions |
+
+### Typography
+Use the semantic font stacks defined in the config.
+
+| Font Stack | Tailwind Class | Family | Usage |
+| :--- | :--- | :--- | :--- |
+| **Display/Sans** | `font-sans` | Inter | UI elements, headings, English text |
+| **Arabic** | `font-arabic` | Noto Sans Arabic, Amiri | General Arabic text |
+| **Uthmani** | `font-uthmani` | Amiri Quran | **Strictly for Quranic verses** |
+| **Serif** | `font-serif` | Amiri | Quotes, poetic text |
+
+### Effects & Glassmorphism
+Use the custom utility classes for "glass" effects instead of manual opacity/blur.
+
+*   **Standard Glass:** `.glass` (Backdrop blur 20px, border, shadow) - Used for panels, overlays.
+*   **Card Glass:** `.glass-card` (Backdrop blur 12px) - Used for content cards.
+*   **Input Glass:** `.glass-input` (Backdrop blur 8px) - Used for form fields.
+
+## 2. Component Architecture
+
+### Directory Structure
+*   **Shared/Generic Atoms:** `src/components/` (e.g., `Button`, `Modal`, `Skeleton`).
+*   **Feature-Specific:** `src/modules/<feature>/components/` (e.g., `src/modules/quran/components/VerseCard.tsx`).
+
+### Component Pattern
+*   **Functional Components:** Use `React.FC` or standard function declarations with typed props.
+*   **Props Interface:** Always define a TypeScript interface for props, named `[ComponentName]Props`.
+*   **Styling:** 
+    1.  **Tailwind CSS** (Preferred for layout, spacing, typography).
+    2.  **CSS Modules** (`[Name].module.css`) for complex animations or highly specific selectors that Tailwind handles poorly.
+
+```tsx
+// Example Component Pattern
+import { motion } from 'framer-motion';
+import { IconBook } from '@/components/Icons';
+
+interface VerseCardProps {
+  verseKey: string;
+  text: string;
+}
+
+export const VerseCard = ({ verseKey, text }: VerseCardProps) => {
+  return (
+    <div className="glass-card p-4 rounded-xl hover:border-primary/50 transition-colors">
+      <div className="flex items-center gap-2 mb-2">
+        <IconBook className="w-5 h-5 text-primary" />
+        <span className="font-sans text-sm text-white/60">{verseKey}</span>
+      </div>
+      <p className="font-uthmani text-2xl text-right leading-loose">{text}</p>
+    </div>
+  );
+};
+```
+
+## 3. Icon System
+
+**Primary Source:** `lucide-react`
+**Secondary Source:** `src/components/Icons.tsx` (Custom branding/specific icons)
+
+*   **Usage Rule:** Check `src/components/Icons.tsx` first. If the icon exists there (e.g., `IconQuran`, `IconMosque`), use it to maintain branding consistency. If not, use `lucide-react`.
+*   **Styling:** Icons usually accept a `className` prop. Size them using Tailwind (e.g., `w-5 h-5`).
+
+## 4. Asset Management
+
+*   **Static Assets:** Place in `public/`. Reference as strings: `"/images/logo.png"`.
+*   **Imported Assets:** Place in `src/assets/`. Import directly: `import logo from '@/assets/branding/logo.png'`.
+*   **Video:** Use the `public/videos/` directory.
+
+## 5. Animation (Framer Motion)
+
+*   Use `framer-motion` for complex interactions (enter/exit, layout changes).
+*   Use standard Tailwind `animate-*` classes (defined in config) for simple loops (e.g., `animate-pulse-slow`, `animate-float`).
+
+## 6. Development Workflow (MCP Integration)
+
+When generating code from Figma or specs:
+1.  **Identify the Module:** Determine if the component belongs to a specific module (e.g., `quran`, `auth`) or is shared.
+2.  **Map Tokens:** Translate Figma hex codes to the nearest Verse Studio token (e.g., `#5ab9ff` -> `text-primary`).
+3.  **Use Glass Utilities:** Detect translucent backgrounds in design and apply `.glass` or `.glass-card` classes instead of raw CSS opacity.
+4.  **Check Typography:** If text is Arabic, strictly apply `font-arabic` or `font-uthmani` based on context.

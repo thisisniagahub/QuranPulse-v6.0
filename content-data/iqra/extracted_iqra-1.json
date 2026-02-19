@@ -1,0 +1,929 @@
+[
+  {
+    "page": 1,
+    "title": "Cover",
+    "focus": "Title",
+    "grid": [
+      {
+        "baris": "Title",
+        "kanan": "IQRA 1",
+        "kiri": "HOME QURAN"
+      }
+    ]
+  },
+  {
+    "page": 2,
+    "title": "HURUF HIJAIYAH",
+    "focus": "Reference Chart",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "ا ب ت ث ج",
+        "kiri": "JIM TSA TA BA ALIF"
+      },
+      {
+        "baris": "2",
+        "kanan": "ح خ د ذ ر",
+        "kiri": "RO DZAL DAL KHO HA"
+      },
+      {
+        "baris": "3",
+        "kanan": "ز س ش ص ض",
+        "kiri": "DHOD SOD SYIN SIN ZAI"
+      },
+      {
+        "baris": "4",
+        "kanan": "ط ظ ع غ ف",
+        "kiri": "FA GHOIN AIN ZHO THO"
+      },
+      {
+        "baris": "5",
+        "kanan": "ق ك ل م ن",
+        "kiri": "NUN MIM LAM KAF QOF"
+      },
+      {
+        "baris": "6",
+        "kanan": "و هـ ء ي",
+        "kiri": "YA HAMZAH LAM ALIF HA WAU"
+      }
+    ]
+  },
+  {
+    "page": 3,
+    "title": "HURUF BERBARIS",
+    "focus": "أَ (A) - بَ (BA)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "بَ",
+        "kiri": "أَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "بَ أَ بَ",
+        "kiri": "أَ بَ أَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "بَ أَ أَ",
+        "kiri": "أَ أَ بَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "بَ بَ بَ",
+        "kiri": "أَ بَ بَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "بَ أَ بَ",
+        "kiri": "أَ بَ أَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ أَ أَ",
+        "kiri": "بَ بَ بَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "أَ بَ",
+        "kiri": "أَ بَ"
+      }
+    ]
+  },
+  {
+    "page": 4,
+    "title": "FATHAH",
+    "focus": "تَ (TA) - بَ (BA)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "تَ",
+        "kiri": "بَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "أَ تَ بَ",
+        "kiri": "تَ بَ أَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "تَ أَ تَ",
+        "kiri": "أَ بَ تَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "بَ تَ أَ",
+        "kiri": "أَ تَ بَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "تَ أَ تَ",
+        "kiri": "بَ أَ تَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ تَ بَ",
+        "kiri": "أَ تَ تَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "أَ بَ تَ",
+        "kiri": "أَ بَ تَ"
+      }
+    ]
+  },
+  {
+    "page": 5,
+    "title": "FATHAH",
+    "focus": "ثَ (TSA) - تَ (TA) - بَ (BA)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "ثَ",
+        "kiri": "تَ بَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "ثَ أَ بَ",
+        "kiri": "ثَ بَ ثَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "بَ ثَ ثَ",
+        "kiri": "بَ أَ ثَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "أَ تَ بَ",
+        "kiri": "ثَ بَ ثَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "ثَ تَ ثَ",
+        "kiri": "أَ ثَ ثَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "ثَ ثَ بَ",
+        "kiri": "أَ تَ ثَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "ثَ تَ ثَ",
+        "kiri": "ثَ بَ ثَ"
+      },
+      {
+        "baris": "7",
+        "kanan": "أَ بَ تَ ثَ",
+        "kiri": "أَ بَ تَ ثَ"
+      }
+    ]
+  },
+  {
+    "page": 6,
+    "title": "FATHAH",
+    "focus": "جَ (JA) - حَ (HA) - خَ (KHO)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "جَ",
+        "kiri": "حَ خَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "جَ أَ خَ",
+        "kiri": "جَ أَ خَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "ثَ أَ خَ",
+        "kiri": "خَ تَ جَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "بَ أَ خَ",
+        "kiri": "تَ حَ ثَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "جَ أَ خَ",
+        "kiri": "بَ حَ ثَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "تَ أَ خَ",
+        "kiri": "جَ حَ ثَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "أَ خَ خَ",
+        "kiri": "جَ حَ خَ"
+      },
+      {
+        "baris": "7",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 7,
+    "title": "FATHAH",
+    "focus": "دَ (DA) - ذَ (DZA)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "دَ",
+        "kiri": "ذَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "دَ أَ ذَ",
+        "kiri": "خَ دَ ذَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "أَ حَ دَ",
+        "kiri": "جَ حَ ذَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "خَ تَ دَ",
+        "kiri": "ثَ أَ ذَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "جَ حَ خَ",
+        "kiri": "ذَ بَ حَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ خَ دَ",
+        "kiri": "حَ دَ ثَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "دَ أَ ذَ",
+        "kiri": "خَ دَ ذَ"
+      },
+      {
+        "baris": "7",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 8,
+    "title": "FATHAH",
+    "focus": "رَ (RO) - زَ (ZA)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "رَ",
+        "kiri": "زَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "رَ أَ زَ",
+        "kiri": "ذَ رَ زَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "زَ دَ رَ",
+        "kiri": "زَ خَ ذَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "زَ حَ دَ",
+        "kiri": "ثَ رَ زَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "خَ رَ جَ",
+        "kiri": "تَ زَ دَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "بَ زَ رَ",
+        "kiri": "ثَ حَ ذَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "جَ أَ خَ",
+        "kiri": "زَ أَ زَ"
+      },
+      {
+        "baris": "7",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ رَ زَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 9,
+    "title": "FATHAH",
+    "focus": "سَ (SA) - شَ (SYA)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "سَ",
+        "kiri": "شَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "سَ أَ شَ",
+        "kiri": "سَ شَ سَ شَ زَ تَ شَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "شَ ذَ ثَ",
+        "kiri": "دَ رَ سَ شَ تَ ذَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "زَ حَ ثَ",
+        "kiri": "بَ جَ رَ سَ خَ شَ بَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "سَ شَ أَ",
+        "kiri": "رَ شَ ذَ حَ سَ دَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "ذَ خَ زَ",
+        "kiri": "أَ سَ شَ شَ زَ رَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "خَ سَ دَ",
+        "kiri": "شَ زَ جَ أَ بَ تَ"
+      },
+      {
+        "baris": "7",
+        "kanan": "ثَ جَ حَ خَ دَ ذَ رَ زَ سَ شَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 10,
+    "title": "FATHAH",
+    "focus": "صَ (SO) - ضَ (DHO)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "صَ",
+        "kiri": "ضَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "صَ أَ ضَ",
+        "kiri": "حَ ضَ رَ أَ صَ ضَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "شَ أَ ضَ",
+        "kiri": "شَ خَ زَ ضَ رَ بَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "صَ حَ ثَ",
+        "kiri": "صَ دَ زَ دَ شَ ضَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "سَ حَ ذَ",
+        "kiri": "رَ صَ دَ ضَ تَ ذَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "ثَ خَ زَ",
+        "kiri": "ضَ جَ ذَ سَ أَ شَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "صَ رَ ضَ",
+        "kiri": "أَ بَ تَ ثَ جَ حَ خَ"
+      },
+      {
+        "baris": "7",
+        "kanan": "دَ ذَ رَ زَ سَ شَ صَ ضَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 11,
+    "title": "FATHAH",
+    "focus": "طَ (THO) - ظَ (ZHO)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "طَ",
+        "kiri": "ظَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "ظَ أَ طَ",
+        "kiri": "بَ طَ ظَ ظَ حَ ذَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "سَ ضَ ظَ",
+        "kiri": "دَ صَ دَ طَ حَ ذَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "شَ أَ ظَ",
+        "kiri": "سَ رَ صَ زَ خَ طَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "ثَ رَ ضَ",
+        "kiri": "زَ خَ ضَ تَ ضَ ظَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "صَ دَ شَ",
+        "kiri": "جَ طَ ضَ شَ طَ ظَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "رَ زَ سَ شَ صَ ضَ طَ ظَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 12,
+    "title": "FATHAH",
+    "focus": "عَ (A'IN) - غَ (GHOIN)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "عَ",
+        "kiri": "غَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "غَ أَ عَ",
+        "kiri": "دَ غَ ظَ عَ طَ غَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "ثَ عَ ظَ",
+        "kiri": "جَ غَ ظَ سَ طَ عَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "حَ رَ ظَ",
+        "kiri": "شَ غَ ظَ صَ رَ عَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "زَ خَ ظَ",
+        "kiri": "ضَ عَ ذَ تَ غَ ضَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "شَ رَ ظَ",
+        "kiri": "طَ عَ ظَ بَ غَ صَ"
+      },
+      {
+        "baris": "6",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ رَ زَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "سَ شَ صَ ضَ طَ ظَ عَ غَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 13,
+    "title": "FATHAH",
+    "focus": "فَ (FA) - قَ (QOF)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "فَ",
+        "kiri": "قَ"
+      },
+      {
+        "baris": "1",
+        "kanan": "قَ بَ ضَ",
+        "kiri": "قَ طَ فَ فِ رَ قَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "ثَ غَ ظَ",
+        "kiri": "فَ قَ فَ سَ عَ فَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "حَ ذَ خَ",
+        "kiri": "قَ فَ صَ عَ قَ دَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "ضَ غَ طَ",
+        "kiri": "شَ فَ عَ زَ قَ قَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "رَ زَ سَ شَ صَ ضَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "طَ ظَ عَ غَ فَ قَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 14,
+    "title": "FATHAH",
+    "focus": "كَ (KAF)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "كَ",
+        "kiri": ""
+      },
+      {
+        "baris": "1",
+        "kanan": "كَ دَ قَ",
+        "kiri": "كَ قَ كَ ضَ حَ كَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "جَ كَ تَ",
+        "kiri": "عَ طَ فَ شَ كَ رَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "صَ دَ ثَ",
+        "kiri": "قَ كَ فَ ذَ غَ سَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "غَ فَ كَ",
+        "kiri": "زَ كَ طَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "رَ زَ سَ شَ صَ ضَ طَ ظَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "عَ غَ فَ قَ كَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 15,
+    "title": "FATHAH",
+    "focus": "لَ (LAM)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "لَ",
+        "kiri": ""
+      },
+      {
+        "baris": "1",
+        "kanan": "قَ بَ لَ",
+        "kiri": "جَ عَ لَ خَ لَ طَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "دَ كَ رَ",
+        "kiri": "غَ لَ ظَ قَ فَ صَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "حَ لَ فَ",
+        "kiri": "دَ غَ سَ شَ كَ لَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "ضَ رَ عَ",
+        "kiri": "زَ تَ ظَ كَ لَ لَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "رَ زَ سَ شَ صَ ضَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "طَ ظَ عَ غَ فَ قَ كَ لَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 16,
+    "title": "FATHAH",
+    "focus": "مَ (MIM)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "مَ",
+        "kiri": ""
+      },
+      {
+        "baris": "1",
+        "kanan": "غَ مَ ضَ",
+        "kiri": "لَ مَ سَ جَ مَ عَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "فَ رَ ضَ",
+        "kiri": "كَ رَ مَ خَ لَ طَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "صَ دَ مَ",
+        "kiri": "ظَ تَ ذَ مَ زَ قَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "شَ مَ لَ",
+        "kiri": "فَ كَ حَ غَ مَ مَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "رَ زَ سَ شَ صَ ضَ طَ ظَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "عَ غَ فَ قَ كَ لَ مَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 17,
+    "title": "FATHAH",
+    "focus": "نَ (NUN)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "نَ",
+        "kiri": ""
+      },
+      {
+        "baris": "1",
+        "kanan": "نَ ظَ فَ",
+        "kiri": "نَ غَ شَ طَ عَ نَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "صَ مَ ضَ",
+        "kiri": "قَ رَ نَ خَ لَ قَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "زَ مَ نَ",
+        "kiri": "كَ ذَ بَ جَ نَ دَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "كَ نَ سَ",
+        "kiri": "لَ حَ ظَ مَ نَ نَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "رَ زَ سَ شَ صَ ضَ طَ ظَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "عَ غَ فَ قَ كَ لَ مَ نَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 18,
+    "title": "FATHAH",
+    "focus": "وَ (WAU)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "وَ",
+        "kiri": ""
+      },
+      {
+        "baris": "1",
+        "kanan": "وَ زَ رَ",
+        "kiri": "وَ لَ غَ دَ وَ مَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "فَ طَ نَ",
+        "kiri": "قَ وَ مَ ظَ جَ عَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "كَ وَ نَ",
+        "kiri": "سَ كَ تَ خَ وَ صَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "شَ وَ لَ",
+        "kiri": "ذَ حَ ضَ وَ نَ وَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "رَ زَ سَ شَ صَ ضَ طَ ظَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "عَ غَ فَ قَ كَ لَ مَ نَ وَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 19,
+    "title": "FATHAH",
+    "focus": "هَ (HA)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "هَ",
+        "kiri": ""
+      },
+      {
+        "baris": "1",
+        "kanan": "هَ مَ شَ",
+        "kiri": "جَ هَ دَ دَ وَ هَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "فَ خَ عَ",
+        "kiri": "طَ هَ رَ وَ ضَ حَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "وَ هَ ظَ",
+        "kiri": "كَ مَ نَ زَ هَ قَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "سَ هَ لَ",
+        "kiri": "ذَ غَ صَ جَ هَ هَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "رَ زَ سَ شَ صَ ضَ طَ ظَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "عَ غَ فَ قَ كَ لَ مَ نَ وَ هَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 20,
+    "title": "FATHAH",
+    "focus": "يَ (YA)",
+    "grid": [
+      {
+        "baris": "Header",
+        "kanan": "يَ",
+        "kiri": ""
+      },
+      {
+        "baris": "1",
+        "kanan": "ضَ يَ رَ",
+        "kiri": "ضَ حَ يَ زَ يَ نَ"
+      },
+      {
+        "baris": "2",
+        "kanan": "سَ يَ غَ",
+        "kiri": "وَ كَ لَ هَ يَ خَ"
+      },
+      {
+        "baris": "3",
+        "kanan": "طَ هَ ظَ",
+        "kiri": "شَ يَ عَ وَ قَ فَ"
+      },
+      {
+        "baris": "4",
+        "kanan": "هَ يَ مَ",
+        "kiri": "جَ ذَ ثَ يَ دَ يَ"
+      },
+      {
+        "baris": "5",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "دَ ذَ رَ زَ سَ شَ صَ",
+        "kiri": ""
+      },
+      {
+        "baris": "7",
+        "kanan": "ضَ طَ ظَ عَ غَ فَ قَ",
+        "kiri": ""
+      },
+      {
+        "baris": "8",
+        "kanan": "كَ لَ مَ نَ وَ هَ يَ",
+        "kiri": ""
+      }
+    ]
+  },
+  {
+    "page": 21,
+    "title": "HURUF HIJAIYAH BERBARIS",
+    "focus": "Complete Review",
+    "grid": [
+      {
+        "baris": "1",
+        "kanan": "أَ بَ تَ ثَ جَ حَ خَ دَ ذَ رَ زَ",
+        "kiri": ""
+      },
+      {
+        "baris": "2",
+        "kanan": "سَ شَ صَ ضَ طَ ظَ عَ غَ",
+        "kiri": ""
+      },
+      {
+        "baris": "3",
+        "kanan": "فَ قَ كَ لَ مَ نَ وَ هَ ء أ ي",
+        "kiri": ""
+      },
+      {
+        "baris": "4",
+        "kanan": "يَ ء هَ وَ نَ مَ لَ كَ قَ فَ",
+        "kiri": ""
+      },
+      {
+        "baris": "5",
+        "kanan": "غَ عَ ظَ طَ ضَ صَ شَ سَ",
+        "kiri": ""
+      },
+      {
+        "baris": "6",
+        "kanan": "زَ رَ ذَ دَ خَ حَ جَ ثَ تَ بَ أَ",
+        "kiri": ""
+      }
+    ]
+  }
+]

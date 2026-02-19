@@ -1,0 +1,11 @@
+{
+  "model_type": "whisper",
+  "original_model": "small",
+  "quantization": "int8_float16",
+  "device": "cuda",
+  "compute_type": "int8",
+  "beam_size": 5,
+  "patience": 1.0,
+  "threads": 4,
+  "notes": "Use 'int8_float16' for best trade-off between accuracy and speed on T4/V100 GPUs. Use 'int8' for CPU edge deployment."
+}

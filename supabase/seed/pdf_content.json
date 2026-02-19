@@ -1,0 +1,243 @@
+{
+    "social_media_adab": [
+        {
+            "adab_id": "adab_01",
+            "title_ar": "التقوى",
+            "title_ms": "Bertaqwa",
+            "title_en": "God-Consciousness",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 1,
+            "description_ms": "Bertaqwalah kepada Allah dalam setiap interaksi media sosial.",
+            "description_en": "Be conscious of Allah in every social media interaction.",
+            "practical_tips": [
+                "Baca Bismillah sebelum post",
+                "Fikir: Adakah Allah redha?",
+                "Jangan post ketika marah"
+            ],
+            "priority": 1
+        },
+        {
+            "adab_id": "adab_02",
+            "title_ar": "لَا تُقَدِّمُوا",
+            "title_ms": "Jangan Memandai-mandai",
+            "title_en": "Do Not Presume",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 1,
+            "description_ms": "Jangan terburu-buru mendahului orang yang lebih berautoriti dalam hal agama.",
+            "description_en": "Do not rush ahead of those with more authority in religious matters.",
+            "practical_tips": [
+                "Verify sumber sebelum share",
+                "Tag ulama untuk pengesahan",
+                "Jangan jadi ustaz keyboard"
+            ],
+            "priority": 2
+        },
+        {
+            "adab_id": "adab_03",
+            "title_ar": "لَا تَرْفَعُوا أَصْوَاتَكُمْ",
+            "title_ms": "Jangan Tinggi Suara",
+            "title_en": "Do Not Raise Your Voice",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 2,
+            "description_ms": "Jangan meninggikan suara melebihi suara Nabi atau ulama. Elakkan ALL CAPS.",
+            "description_en": "Do not raise your voice above the Prophet or scholars. Avoid ALL CAPS.",
+            "practical_tips": [
+                "Elakkan CAPS LOCK",
+                "Guna bahasa sopan",
+                "Hormati pendapat berbeza"
+            ],
+            "priority": 3
+        },
+        {
+            "adab_id": "adab_04",
+            "title_ar": "لَا تَجْهَرُوا",
+            "title_ms": "Jangan Menyaring Suara",
+            "title_en": "Do Not Be Loud",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 2,
+            "description_ms": "Jangan berkata dengan suara keras.",
+            "description_en": "Do not speak loudly.",
+            "practical_tips": [
+                "Kurangkan emoji berlebihan",
+                "Jangan spam komen",
+                "Quality over quantity"
+            ],
+            "priority": 4
+        },
+        {
+            "adab_id": "adab_05",
+            "title_ar": "صَبَرُوا",
+            "title_ms": "Bersabar",
+            "title_en": "Be Patient",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 5,
+            "description_ms": "Sabar dalam berinteraksi di media sosial. Jangan mengikut emosi.",
+            "description_en": "Be patient in social media interactions. Do not follow emotions.",
+            "practical_tips": [
+                "Tunggu 24 jam sebelum reply",
+                "Tarik nafas, baca semula",
+                "Jangan engage trolls"
+            ],
+            "priority": 5
+        },
+        {
+            "adab_id": "adab_06",
+            "title_ar": "فَتَبَيَّنُوا",
+            "title_ms": "Selidik (Tabayyun)",
+            "title_en": "Verify Information",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 6,
+            "description_ms": "PALING PENTING: Selidik dahulu sebelum menyebarkan berita.",
+            "description_en": "MOST IMPORTANT: Verify before spreading news.",
+            "practical_tips": [
+                "Check sumber asal",
+                "Guna fact-checker",
+                "Jangan forward tanpa baca",
+                "Minta bukti"
+            ],
+            "priority": 1
+        },
+        {
+            "adab_id": "adab_07",
+            "title_ar": "فَأَصْلِحُوا",
+            "title_ms": "Damaikan",
+            "title_en": "Reconcile",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 9,
+            "description_ms": "Damaikan perselisihan. Jadi peacemaker.",
+            "description_en": "Reconcile conflicts. Be a peacemaker.",
+            "practical_tips": [
+                "Private message untuk nasihat",
+                "Jangan fan flames",
+                "Fokus pada common ground"
+            ],
+            "priority": 6
+        },
+        {
+            "adab_id": "adab_08",
+            "title_ar": "أَقْسِطُوا",
+            "title_ms": "Berlaku Adil",
+            "title_en": "Be Just",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 9,
+            "description_ms": "Bertindak dengan adil setiap kali ada perselisihan.",
+            "description_en": "Act justly in every dispute.",
+            "practical_tips": [
+                "Dengar kedua-dua pihak",
+                "Jangan bias",
+                "Akui kesilapan sendiri"
+            ],
+            "priority": 7
+        },
+        {
+            "adab_id": "adab_09",
+            "title_ar": "لَا يَسْخَرْ",
+            "title_ms": "Jangan Mencemuh",
+            "title_en": "Do Not Mock",
+            "surah_reference": "Al-Hujurat",
+            "ayat_number": 11,
+            "description_ms": "Jangan mempersenda atau merendah-rendahkan orang lain.",
+            "description_en": "Do not mock or belittle others.",
+            "practical_tips": [
+                "Elakkan meme menghina",
+                "Jangan body-shame",
+                "Hormati semua golongan"
+            ],
+            "priority": 8
+        }
+    ],
+    "maqasid_syariah": [
+        {
+            "maqasid_id": "hifz_din",
+            "name_ar": "حِفْظ الدِّين",
+            "name_ms": "Penjagaan Agama",
+            "name_en": "Preservation of Religion",
+            "level": 1,
+            "description_ms": "Menjaga agama Islam melalui pengurusan yang menepati syariat.",
+            "description_en": "Preserving Islam through Shariah-compliant management.",
+            "digital_application": "Aplikasi solat, reminder zikir, Ustaz AI"
+        },
+        {
+            "maqasid_id": "hifz_nafs",
+            "name_ar": "حِفْظ النَّفْس",
+            "name_ms": "Penjagaan Nyawa",
+            "name_en": "Preservation of Life",
+            "level": 1,
+            "description_ms": "Menjaga nyawa melalui keselamatan dan kesihatan.",
+            "description_en": "Preserving life through safety and health.",
+            "digital_application": "Health tracking, emergency features, halal scanner"
+        },
+        {
+            "maqasid_id": "hifz_aql",
+            "name_ar": "حِفْظ العَقْل",
+            "name_ms": "Penjagaan Akal",
+            "name_en": "Preservation of Intellect",
+            "level": 1,
+            "description_ms": "Memelihara akal melalui ilmu dan pemikiran sihat.",
+            "description_en": "Preserving intellect through knowledge and healthy thinking.",
+            "digital_application": "Tapis fake news, Tabayyun tools, educational content"
+        },
+        {
+            "maqasid_id": "hifz_nasl",
+            "name_ar": "حِفْظ النَّسْل",
+            "name_ms": "Penjagaan Keturunan",
+            "name_en": "Preservation of Lineage",
+            "level": 1,
+            "description_ms": "Memelihara keturunan melalui institusi keluarga.",
+            "description_en": "Preserving lineage through family institution.",
+            "digital_application": "Family features, parental controls, safe content"
+        },
+        {
+            "maqasid_id": "hifz_mal",
+            "name_ar": "حِفْظ المَال",
+            "name_ms": "Penjagaan Harta",
+            "name_en": "Preservation of Wealth",
+            "level": 1,
+            "description_ms": "Menjaga harta melalui pengurusan kewangan syariah.",
+            "description_en": "Preserving wealth through Shariah-compliant finance.",
+            "digital_application": "Zakat calculator, halal investment tracker"
+        }
+    ],
+    "kafa_curriculum": [
+        {
+            "subject_id": "kafa_quran",
+            "name_ms": "Al-Quran",
+            "name_en": "Quran Studies"
+        },
+        {
+            "subject_id": "kafa_akidah",
+            "name_ms": "Akidah",
+            "name_en": "Islamic Creed"
+        },
+        {
+            "subject_id": "kafa_ibadah",
+            "name_ms": "Ibadah",
+            "name_en": "Worship"
+        },
+        {
+            "subject_id": "kafa_sirah",
+            "name_ms": "Sirah",
+            "name_en": "Prophetic Biography"
+        },
+        {
+            "subject_id": "kafa_adab",
+            "name_ms": "Adab",
+            "name_en": "Islamic Etiquette"
+        },
+        {
+            "subject_id": "kafa_arabic",
+            "name_ms": "Bahasa Arab",
+            "name_en": "Arabic Language"
+        },
+        {
+            "subject_id": "kafa_jawi",
+            "name_ms": "Jawi dan Khat",
+            "name_en": "Jawi Script and Calligraphy"
+        },
+        {
+            "subject_id": "kafa_tahfiz",
+            "name_ms": "Tahfiz Al-Quran",
+            "name_en": "Quran Memorization"
+        }
+    ]
+}

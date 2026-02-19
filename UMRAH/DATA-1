@@ -1,0 +1,46 @@
+Note
+Digital Evolution: Future-Proofing the Quran Pulse Umrah Companion
+(Saved responses are view only)
+Berdasarkan sumber-sumber terkini mengenai lanskap Umrah 2025-2026, berikut adalah cadangan fitur (features) yang sangat relevan dan bernilai tinggi untuk ditambah ke dalam aplikasi QURAN PULSE.
+Mengingat tren "Umrah Mandiri" yang semakin berkembang dan penggunaan teknologi kerajaan Arab Saudi (Nusuk), aplikasi anda boleh menjadi companion app yang moden.
+Berikut adalah 5 cadangan fitur utama:
+1. Mutawwif Digital (Audio & Teks Doa)
+Ramai jemaah, terutamanya yang pergi secara mandiri atau pertama kali, sering terlupa doa atau tidak hafal bacaan khusus.
+• Apa yang perlu ada:
+    ◦ Audio Doa Tawaf: Sediakan audio dan teks doa untuk setiap pusingan (Pusingan 1 hingga 7) seperti yang digariskan dalam sumber. Contohnya, doa "Sapu Jagat" di antara Rukun Yamani dan Hajar Aswad.
+    ◦ Panduan Sa'i: Teks dan audio doa ketika mendaki Bukit Safa dan Marwah serta doa di antara dua pilar hijau.
+    ◦ Mod "Offline": Pastikan audio ini boleh dimuat turun kerana internet di Tanah Suci kadang-kala tidak stabil atau jemaah ingin menjimatkan data.
+2. Panduan & Tutorial Aplikasi "Nusuk"
+Sistem Umrah 2025-2026 sangat bergantung pada aplikasi Nusuk milik kerajaan Arab Saudi. Ramai jemaah (terutamanya warga emas) mungkin keliru cara menggunakannya.
+• Apa yang perlu ada:
+    ◦ Tutorial Langkah Demi Langkah: Cara mendaftar akaun, cara menempah slot untuk masuk ke Raudhah (Taman Syurga di Masjid Nabawi), dan cara menyemak permit Umrah.
+    ◦ Info Penting: Masukkan peringatan bahawa tanpa QR Code dari Nusuk, jemaah tidak dibenarkan masuk ke Raudhah. Ini adalah info kritikal untuk pengguna aplikasi anda.
+3. "Checker" Larangan Ihram & Kalkulator Dam
+Ini adalah fitur unik yang jarang ada tetapi sangat diperlukan untuk mengelakkan keraguan tentang sah atau batalnya ibadah.
+• Apa yang perlu ada:
+    ◦ Senarai Semak Larangan: Senaraikan 10 larangan utama ihram (seperti wangi-wangian, memotong kuku, menutup kepala bagi lelaki).
+    ◦ Kalkulator Dam (Denda): Jika pengguna terlanggar pantang larang, mereka boleh klik pada larangan tersebut dan aplikasi memberitahu jenis denda yang perlu dibayar.
+        ▪ Contoh: Jika memakai wangi-wangian, denda adalah Dam Takhyir (pilihan: sembelih seekor kambing, puasa 3 hari, atau beri makan 6 orang miskin).
+        ▪ Contoh: Jika tertinggal Miqat, denda adalah seekor kambing.
+4. Senarai Semak (Checklist) Pintar: Persiapan & Logistik
+Persiapan untuk 2026 memerlukan dokumen kesihatan dan pentadbiran yang ketat.
+• Apa yang perlu ada:
+    ◦ Dokumen Wajib: Peringatan untuk paspor (sah 6 bulan), Visa, dan Sijil Vaksin Meningitis (wajib valid 10 hari sebelum tiba).
+    ◦ Senarai Barang: Senarai interaktif (boleh tick) untuk barang lelaki dan wanita.
+        ▪ Lelaki: Kain ihram (2 pasang), tali pinggang, selipar yang menampakkan jari/tumit.
+        ▪ Wanita: Pakaian tidak jarang, stoking tebal, gunting kecil untuk tahallul.
+        ▪ Umum: Ubat-ubatan peribadi, pelembap bibir (untuk cuaca kering), dan botol spray wuduk.
+5. Peta Miqat & Notifikasi Lokasi
+Bagi jemaah yang menaiki kapal terbang (terutamanya 'Umrah Mandiri' atau yang terus ke Jeddah), mengetahui bila perlu berniat adalah kritikal.
+• Apa yang perlu ada:
+    ◦ Info Lokasi Miqat: Terangkan lokasi seperti Yalamlam (untuk jemaah dari Asia Tenggara/Malaysia yang menaiki pesawat) atau Bir Ali (untuk yang dari Madinah).
+    ◦ Peringatan: Jika boleh, buat notifikasi untuk mengingatkan pengguna agar mandi sunat dan memakai ihram sebelum kapal terbang melintasi garisan Miqat (Yalamlam).
+Adakah Perlu Masukkan "Pakej Umrah"?
+Berdasarkan sumber, undang-undang baru (UU No. 14 Tahun 2025) membenarkan Umrah Mandiri.
+• Saranan: Daripada menjual pakej secara langsung (yang mungkin memerlukan lesen pelancongan), anda boleh membuat seksyen "Tips Memilih Pakej & Elak Penipuan".
+• Kandungan: Senaraikan ciri-ciri ejen sah (PPIU) dan amaran tentang "Pakej Murah Tak Masuk Akal". Atau, jika anda mahu bekerjasama dengan travel agensi, pastikan mereka berdaftar dengan MOTAC/Kemenag kerana isu penipuan umrah sangat serius.
+Ringkasan untuk UI/UX Quran Pulse:
+1. Tab Ibadah: Audio Tawaf/Sa'i & Niat.
+2. Tab Persiapan: Checklist Barang & Info Vaksin.
+3. Tab Fiqh: Larangan Ihram & Info Dam.
+4. Tab Info Semasa: Tutorial App Nusuk & Info Raudhah.

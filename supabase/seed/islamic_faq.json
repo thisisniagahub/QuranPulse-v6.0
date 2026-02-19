@@ -1,0 +1,272 @@
+[
+    {
+        "faq_id": "solat_01",
+        "question_ms": "Berapa rakaat solat fardu sehari?",
+        "question_en": "How many rakaat are in the daily obligatory prayers?",
+        "answer_ms": "Solat fardu sehari berjumlah 17 rakaat:\n• Subuh: 2 rakaat\n• Zohor: 4 rakaat\n• Asar: 4 rakaat\n• Maghrib: 3 rakaat\n• Isyak: 4 rakaat",
+        "answer_en": "Daily obligatory prayers total 17 rakaat:\n• Fajr: 2 rakaat\n• Dhuhr: 4 rakaat\n• Asr: 4 rakaat\n• Maghrib: 3 rakaat\n• Isha: 4 rakaat",
+        "category": "solat",
+        "source": "Ijma' Ulama",
+        "keywords": [
+            "solat",
+            "fardu",
+            "rakaat",
+            "wajib",
+            "prayer"
+        ]
+    },
+    {
+        "faq_id": "solat_02",
+        "question_ms": "Apakah rukun solat?",
+        "question_en": "What are the pillars of prayer?",
+        "answer_ms": "Rukun solat ada 13:\n1. Niat\n2. Berdiri (bagi yang mampu)\n3. Takbiratul ihram\n4. Membaca Al-Fatihah\n5. Rukuk dengan tuma'ninah\n6. I'tidal dengan tuma'ninah\n7. Sujud dua kali dengan tuma'ninah\n8. Duduk antara dua sujud\n9. Duduk tahiyyat akhir\n10. Membaca tahiyyat akhir\n11. Selawat ke atas Nabi\n12. Salam pertama\n13. Tertib",
+        "answer_en": "There are 13 pillars of prayer:\n1. Intention\n2. Standing (if able)\n3. Opening Takbir\n4. Reciting Al-Fatihah\n5. Bowing with calmness\n6. Rising from bowing with calmness\n7. Prostrating twice with calmness\n8. Sitting between two prostrations\n9. Final sitting\n10. Reciting final Tashahhud\n11. Salutations upon the Prophet\n12. First Salam\n13. Proper order",
+        "category": "solat",
+        "source": "Mazhab Syafi'i",
+        "keywords": [
+            "rukun",
+            "solat",
+            "pillar",
+            "prayer"
+        ]
+    },
+    {
+        "faq_id": "solat_03",
+        "question_ms": "Bolehkah solat tanpa wudhu?",
+        "question_en": "Can I pray without wudhu?",
+        "answer_ms": "Tidak boleh. Wudhu adalah syarat sah solat. Allah berfirman dalam Surah Al-Ma'idah ayat 6: \"Wahai orang yang beriman, apabila kamu hendak mengerjakan solat, maka basuhlah muka kamu...\" Tanpa wudhu, solat tidak sah dan perlu diulangi.",
+        "answer_en": "No. Wudhu is a condition for valid prayer. Allah says in Surah Al-Ma'idah verse 6: \"O you who believe, when you rise for prayer, wash your faces...\" Without wudhu, prayer is invalid and must be repeated.",
+        "category": "solat",
+        "source": "Al-Quran, Al-Ma'idah: 6",
+        "keywords": [
+            "wudhu",
+            "solat",
+            "ablution",
+            "syarat"
+        ]
+    },
+    {
+        "faq_id": "puasa_01",
+        "question_ms": "Apa yang membatalkan puasa?",
+        "question_en": "What breaks the fast?",
+        "answer_ms": "Perkara yang membatalkan puasa:\n1. Makan dan minum dengan sengaja\n2. Muntah dengan sengaja\n3. Hubungan suami isteri\n4. Haid dan nifas\n5. Gila\n6. Keluar air mani dengan sengaja\n7. Berniat untuk berbuka\n8. Murtad",
+        "answer_en": "Things that break the fast:\n1. Eating and drinking intentionally\n2. Vomiting intentionally\n3. Sexual intercourse\n4. Menstruation and postnatal bleeding\n5. Insanity\n6. Intentional ejaculation\n7. Intending to break fast\n8. Apostasy",
+        "category": "puasa",
+        "source": "Fiqh Syafi'i",
+        "keywords": [
+            "puasa",
+            "batal",
+            "fasting",
+            "break"
+        ]
+    },
+    {
+        "faq_id": "puasa_02",
+        "question_ms": "Berapa hari wajib puasa Ramadan?",
+        "question_en": "How many days is Ramadan fasting obligatory?",
+        "answer_ms": "Bulan Ramadan boleh 29 atau 30 hari bergantung kepada penglihatan anak bulan. Puasa wajib sepanjang bulan Ramadan bagi setiap Muslim yang baligh, berakal, dan mampu.",
+        "answer_en": "Ramadan can be 29 or 30 days depending on moon sighting. Fasting is obligatory throughout Ramadan for every Muslim who is mature, sane, and able.",
+        "category": "puasa",
+        "source": "Ijma' Ulama",
+        "keywords": [
+            "ramadan",
+            "puasa",
+            "hari",
+            "fasting"
+        ]
+    },
+    {
+        "faq_id": "zakat_01",
+        "question_ms": "Siapa yang wajib bayar zakat?",
+        "question_en": "Who is obligated to pay zakat?",
+        "answer_ms": "Zakat wajib bagi:\n1. Muslim\n2. Merdeka\n3. Memiliki harta yang cukup nisab\n4. Harta yang dimiliki selama setahun (haul)\n5. Harta yang berkembang (nama')\n\nNisab emas: 85 gram\nNisab perak: 595 gram\nKadar zakat: 2.5%",
+        "answer_en": "Zakat is obligatory for:\n1. Muslims\n2. Free persons\n3. Possessing wealth reaching nisab\n4. Wealth owned for one lunar year (haul)\n5. Growing wealth\n\nNisab for gold: 85 grams\nNisab for silver: 595 grams\nZakat rate: 2.5%",
+        "category": "zakat",
+        "source": "Al-Quran & Hadith",
+        "keywords": [
+            "zakat",
+            "nisab",
+            "wajib",
+            "bayar"
+        ]
+    },
+    {
+        "faq_id": "zakat_02",
+        "question_ms": "Siapa yang berhak menerima zakat?",
+        "question_en": "Who can receive zakat?",
+        "answer_ms": "Lapan golongan asnaf (penerima zakat):\n1. Fakir - Tiada harta dan pendapatan\n2. Miskin - Ada pendapatan tapi tidak cukup\n3. Amil - Pengurus zakat\n4. Muallaf - Baru memeluk Islam\n5. Riqab - Memerdekakan hamba\n6. Gharimin - Berhutang\n7. Fisabilillah - Berjuang di jalan Allah\n8. Ibnu Sabil - Musafir yang kehabisan wang",
+        "answer_en": "Eight categories of zakat recipients (asnaf):\n1. Fakir - No wealth or income\n2. Poor - Some income but insufficient\n3. Amil - Zakat administrators\n4. Muallaf - New converts\n5. Riqab - Freeing slaves\n6. Gharimin - Those in debt\n7. Fisabilillah - Those striving in Allah's cause\n8. Ibnu Sabil - Stranded travelers",
+        "category": "zakat",
+        "source": "Surah At-Taubah: 60",
+        "keywords": [
+            "asnaf",
+            "penerima",
+            "zakat",
+            "recipient"
+        ]
+    },
+    {
+        "faq_id": "haji_01",
+        "question_ms": "Apa rukun haji?",
+        "question_en": "What are the pillars of Hajj?",
+        "answer_ms": "Rukun haji ada 5:\n1. Ihram - Berniat mengerjakan haji\n2. Wukuf di Arafah - Berada di Arafah pada 9 Zulhijjah\n3. Tawaf Ifadhah - Mengelilingi Kaabah 7 kali\n4. Sa'ie - Berjalan antara Safa dan Marwah 7 kali\n5. Bercukur/bergunting rambut - Tahallul",
+        "answer_en": "Hajj has 5 pillars:\n1. Ihram - Intention to perform Hajj\n2. Wuquf at Arafah - Being at Arafah on 9th Dhul Hijjah\n3. Tawaf Ifadhah - Circling Kaabah 7 times\n4. Sa'ie - Walking between Safa and Marwah 7 times\n5. Shaving/cutting hair - Tahallul",
+        "category": "haji",
+        "source": "Fiqh Syafi'i",
+        "keywords": [
+            "haji",
+            "rukun",
+            "pillar",
+            "hajj"
+        ]
+    },
+    {
+        "faq_id": "general_01",
+        "question_ms": "Apa itu rukun Islam?",
+        "question_en": "What are the pillars of Islam?",
+        "answer_ms": "Lima rukun Islam:\n1. Syahadah - Mengucap dua kalimah syahadah\n2. Solat - Mendirikan solat lima waktu\n3. Zakat - Mengeluarkan zakat\n4. Puasa - Berpuasa di bulan Ramadan\n5. Haji - Mengerjakan haji jika mampu",
+        "answer_en": "Five pillars of Islam:\n1. Shahada - Declaration of faith\n2. Salah - Five daily prayers\n3. Zakat - Obligatory charity\n4. Sawm - Fasting in Ramadan\n5. Hajj - Pilgrimage if able",
+        "category": "general",
+        "source": "Hadith Jibril",
+        "keywords": [
+            "rukun",
+            "islam",
+            "pillar"
+        ]
+    },
+    {
+        "faq_id": "general_02",
+        "question_ms": "Apa itu rukun iman?",
+        "question_en": "What are the pillars of faith?",
+        "answer_ms": "Enam rukun iman:\n1. Beriman kepada Allah\n2. Beriman kepada Malaikat\n3. Beriman kepada Kitab\n4. Beriman kepada Rasul\n5. Beriman kepada Hari Akhirat\n6. Beriman kepada Qada' dan Qadar",
+        "answer_en": "Six pillars of faith:\n1. Belief in Allah\n2. Belief in Angels\n3. Belief in Divine Books\n4. Belief in Prophets\n5. Belief in the Day of Judgment\n6. Belief in Divine Decree",
+        "category": "general",
+        "source": "Hadith Jibril",
+        "keywords": [
+            "rukun",
+            "iman",
+            "faith",
+            "pillar"
+        ]
+    },
+    {
+        "faq_id": "halal_01",
+        "question_ms": "Adakah gelatin halal?",
+        "question_en": "Is gelatin halal?",
+        "answer_ms": "Gelatin bergantung kepada sumbernya:\n• Gelatin dari lembu/kambing yang disembelih secara Islam: HALAL\n• Gelatin dari babi: HARAM\n• Gelatin dari ikan: HALAL\n• Gelatin sintetik/tumbuhan: HALAL\n\nSentiasa semak label dan logo halal.",
+        "answer_en": "Gelatin depends on its source:\n• Gelatin from Islamically slaughtered cattle/sheep: HALAL\n• Gelatin from pork: HARAM\n• Gelatin from fish: HALAL\n• Synthetic/plant gelatin: HALAL\n\nAlways check labels and halal certification.",
+        "category": "halal",
+        "source": "JAKIM",
+        "keywords": [
+            "gelatin",
+            "halal",
+            "haram",
+            "makanan"
+        ]
+    },
+    {
+        "faq_id": "halal_02",
+        "question_ms": "Adakah boleh makan di restoran bukan Islam?",
+        "question_en": "Can I eat at non-Muslim restaurants?",
+        "answer_ms": "Boleh dengan syarat:\n1. Makanan yang dipesan adalah halal\n2. Tiada pencemaran silang dengan bahan haram\n3. Peralatan masak tidak bercampur dengan masakan haram\n\nLebih selamat memilih restoran berlogo halal yang diiktiraf.",
+        "answer_en": "Yes, with conditions:\n1. Ordered food is halal\n2. No cross-contamination with haram ingredients\n3. Cooking utensils not mixed with haram cooking\n\nSafer to choose certified halal restaurants.",
+        "category": "halal",
+        "source": "Fatwa JAKIM",
+        "keywords": [
+            "restoran",
+            "halal",
+            "makan",
+            "restaurant"
+        ]
+    },
+    {
+        "faq_id": "wanita_01",
+        "question_ms": "Bolehkah wanita haid membaca Al-Quran?",
+        "question_en": "Can menstruating women recite Quran?",
+        "answer_ms": "Terdapat perbezaan pendapat ulama:\n\n**Mazhab Syafi'i/Hanbali:** Tidak boleh membaca Al-Quran\n\n**Mazhab Maliki/Hanafi:** Boleh membaca tanpa menyentuh mushaf (dari hafalan atau lihat dari jauh)\n\nPendapat yang membolehkan adalah untuk tujuan pembelajaran, zikir, atau takut lupa hafalan. Wallahu a'lam.",
+        "answer_en": "Scholars differ on this:\n\n**Shafi'i/Hanbali view:** Cannot recite Quran\n\n**Maliki/Hanafi view:** Can recite without touching mushaf (from memory or viewing from distance)\n\nThe permitting view is for learning, dhikr, or fear of forgetting memorization. Allah knows best.",
+        "category": "wanita",
+        "source": "Perbezaan Mazhab",
+        "keywords": [
+            "haid",
+            "quran",
+            "wanita",
+            "menstruation"
+        ]
+    },
+    {
+        "faq_id": "quran_01",
+        "question_ms": "Berapa surah dalam Al-Quran?",
+        "question_en": "How many surahs are in the Quran?",
+        "answer_ms": "Al-Quran mengandungi 114 surah, bermula dengan Surah Al-Fatihah dan berakhir dengan Surah An-Nas.\n\n• Surah Makkiyyah: 86 surah\n• Surah Madaniyyah: 28 surah\n• Jumlah ayat: 6,236 ayat\n• Jumlah juzuk: 30 juzuk",
+        "answer_en": "The Quran contains 114 surahs, starting with Al-Fatihah and ending with An-Nas.\n\n• Makkan Surahs: 86 surahs\n• Madinan Surahs: 28 surahs\n• Total verses: 6,236 verses\n• Total parts: 30 juz",
+        "category": "quran",
+        "source": "Al-Quran",
+        "keywords": [
+            "surah",
+            "quran",
+            "ayat",
+            "juzuk"
+        ]
+    },
+    {
+        "faq_id": "quran_02",
+        "question_ms": "Apakah kelebihan membaca Al-Quran?",
+        "question_en": "What are the virtues of reciting Quran?",
+        "answer_ms": "Kelebihan membaca Al-Quran:\n1. Setiap huruf mendapat 10 pahala (Hadith Tirmidzi)\n2. Al-Quran akan menjadi syafaat di hari akhirat\n3. Pembaca Al-Quran bersama malaikat yang mulia\n4. Hati menjadi tenang dan tenteram\n5. Mendapat petunjuk dan hidayah\n6. Keluarga diberkati",
+        "answer_en": "Virtues of reciting Quran:\n1. Every letter earns 10 rewards (Hadith Tirmidhi)\n2. Quran will intercede on Judgment Day\n3. Reciters are with noble angels\n4. Hearts find peace and tranquility\n5. Guidance and blessing\n6. Family is blessed",
+        "category": "quran",
+        "source": "Hadith Tirmidzi",
+        "keywords": [
+            "quran",
+            "kelebihan",
+            "pahala",
+            "virtue"
+        ]
+    },
+    {
+        "faq_id": "nabi_01",
+        "question_ms": "Siapakah para Ulul Azmi?",
+        "question_en": "Who are the Ulul Azmi prophets?",
+        "answer_ms": "Ulul Azmi adalah 5 nabi yang memiliki keteguhan dan kesabaran luar biasa:\n1. Nabi Nuh AS\n2. Nabi Ibrahim AS\n3. Nabi Musa AS\n4. Nabi Isa AS\n5. Nabi Muhammad SAW\n\nMereka disebut dalam Surah Al-Ahzab: 7 dan Surah Asy-Syura: 13.",
+        "answer_en": "Ulul Azmi are 5 prophets of great determination and patience:\n1. Prophet Nuh (Noah)\n2. Prophet Ibrahim (Abraham)\n3. Prophet Musa (Moses)\n4. Prophet Isa (Jesus)\n5. Prophet Muhammad\n\nMentioned in Surah Al-Ahzab: 7 and Surah Ash-Shura: 13.",
+        "category": "nabi",
+        "source": "Al-Quran",
+        "keywords": [
+            "ulul azmi",
+            "nabi",
+            "rasul",
+            "prophet"
+        ]
+    },
+    {
+        "faq_id": "akhirat_01",
+        "question_ms": "Apakah tanda-tanda kiamat kecil?",
+        "question_en": "What are the minor signs of the Day of Judgment?",
+        "answer_ms": "Antara tanda kiamat kecil:\n1. Diutuskan Nabi Muhammad SAW\n2. Banyak fitnah dan pembunuhan\n3. Ilmu agama diangkat, kejahilan merata\n4. Perzinaan berleluasa\n5. Arak diminum secara terbuka\n6. Bangunan tinggi berlumba-lumba dibina\n7. Hamba melahirkan tuannya\n8. Kepercayaan diberikan kepada yang tidak layak",
+        "answer_en": "Among the minor signs:\n1. Sending of Prophet Muhammad\n2. Much trials and killing\n3. Religious knowledge lifted, ignorance spreads\n4. Widespread adultery\n5. Alcohol consumed openly\n6. Competition in building tall buildings\n7. Slave gives birth to her master\n8. Trust given to the unqualified",
+        "category": "akhirat",
+        "source": "Hadith Bukhari & Muslim",
+        "keywords": [
+            "kiamat",
+            "tanda",
+            "akhirat",
+            "judgment"
+        ]
+    },
+    {
+        "faq_id": "akhlak_01",
+        "question_ms": "Bagaimana cara berbakti kepada ibu bapa?",
+        "question_en": "How to be dutiful to parents?",
+        "answer_ms": "Cara berbakti kepada ibu bapa:\n1. Berkata lemah lembut, jangan berkata 'uff'\n2. Mentaati perintah yang tidak melanggar syariat\n3. Mendoakan kebaikan untuk mereka\n4. Membantu dari segi kewangan\n5. Meluangkan masa bersama mereka\n6. Memelihara nama baik keluarga\n7. Menziarahi kubur dan bersedekah atas nama mereka (jika sudah meninggal)",
+        "answer_en": "Ways to be dutiful to parents:\n1. Speak gently, don't say 'uff'\n2. Obey commands that don't violate Islamic law\n3. Pray for their wellbeing\n4. Help financially\n5. Spend quality time with them\n6. Maintain family honor\n7. Visit graves and give charity in their name (if deceased)",
+        "category": "akhlak",
+        "source": "Surah Al-Isra: 23-24",
+        "keywords": [
+            "ibu bapa",
+            "berbakti",
+            "parent",
+            "duty"
+        ]
+    }
+]

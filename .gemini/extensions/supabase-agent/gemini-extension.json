@@ -1,0 +1,6 @@
+{
+    "name": "supabase-agent",
+    "version": "2.0.0",
+    "contextFileName": "supabase-persona.md",
+    "temperature": 0.1
+}
