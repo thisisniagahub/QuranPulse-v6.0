@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Rocket, ArrowRight } from 'lucide-react';
 import { AppStoreButton, GooglePlayButton } from '@/components/DownloadButtons';
+import { Magnet } from '../ui/Magnet';
 
 interface FinalCtaProps {
     onGetStarted?: () => void;
@@ -9,11 +10,11 @@ interface FinalCtaProps {
 
 const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
     return (
-        <section className="py-24 bg-transparent relative overflow-hidden">
+        <section className="py-24 bg-raudhah-ivory relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-cyan-500/5 via-transparent to-transparent opacity-50"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[150px] pointer-events-none"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-raudhah-teal/5 via-transparent to-transparent opacity-50"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-raudhah-teal/10 rounded-full blur-[150px] pointer-events-none"></div>
             </div>
 
             {/* Grid pattern */}
@@ -26,52 +27,56 @@ const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
                     viewport={{ once: true }}
                 >
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#22d3ee]/10 border border-[#22d3ee]/20 text-[#22d3ee] text-xs font-bold tracking-widest uppercase mb-8">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-raudhah-teal/5 border border-raudhah-teal/10 text-raudhah-teal text-[10px] font-bold tracking-widest uppercase mb-8 font-mono">
                         <Rocket className="w-3 h-3" />
                         Mula Sekarang
                     </div>
 
                     {/* Headline */}
-                    <h2 className="text-4xl md:text-6xl font-[Poppins] font-bold text-white mb-6 tracking-tight leading-tight">
+                    <h2 className="text-5xl md:text-7xl font-raudhah font-bold text-raudhah-ink mb-8 tracking-tighter leading-[0.95]">
                         Mula Perjalanan Quran<br />
-                        <span className="text-cyan-400">
+                        <span className="text-raudhah-teal">
                             Anda Hari Ini
                         </span>
                     </h2>
 
                     {/* Subheadline */}
-                    <p className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed font-medium">
-                        Percuma untuk bermula. Tiada kad kredit diperlukan.
-                        <span className="text-cyan-400 font-bold"> Batal bila-bila masa.</span>
+                    <p className="text-xl text-raudhah-ink/60 mb-12 max-w-2xl mx-auto leading-relaxed font-normal">
+                        Percuma untuk bermula. Sertai 1,000 ummah pertama untuk akses PRO selamanya.
+                        <span className="text-raudhah-gold font-bold"> Jaminan Tanpa Iklan.</span>
                     </p>
 
                     {/* CTA Buttons */}
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-                        <AppStoreButton dark />
-                        <GooglePlayButton dark />
+                        <Magnet strength={0.3}>
+                            <AppStoreButton dark />
+                        </Magnet>
+                        <Magnet strength={0.3}>
+                            <GooglePlayButton dark />
+                        </Magnet>
                     </div>
 
                     {/* Web App Link */}
                     <button
                         onClick={onGetStarted}
-                        className="inline-flex items-center gap-2 text-cyan-400 font-bold text-sm hover:gap-3 transition-all group"
+                        className="inline-flex items-center gap-2 text-raudhah-teal font-bold text-sm hover:gap-3 transition-all group"
                     >
-                        Atau akses Web App sekarang
+                        Atau akses terus di pelayar
                         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                     </button>
 
                     {/* Trust indicators */}
-                    <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-slate-500 text-sm">
+                    <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-raudhah-ink/30 text-[10px] font-mono uppercase tracking-widest">
                         <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-emerald-500"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-raudhah-teal"></div>
                             <span>Patuh JAKIM</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-[#22d3ee]"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-raudhah-teal"></div>
                             <span>Privacy-First</span>
                         </div>
                         <div className="flex items-center gap-2">
-                            <div className="w-2 h-2 rounded-full bg-amber-500"></div>
+                            <div className="w-1.5 h-1.5 rounded-full bg-raudhah-gold"></div>
                             <span>Made in Malaysia 🇲🇾</span>
                         </div>
                     </div>

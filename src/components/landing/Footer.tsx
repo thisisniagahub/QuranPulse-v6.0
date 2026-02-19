@@ -33,9 +33,9 @@ const SOCIAL_LINKS = [
 
 const Footer: React.FC = () => {
     return (
-        <footer className="bg-[#020617]/90 backdrop-blur-xl pt-24 pb-8 border-t border-white/5 relative overflow-hidden">
+        <footer className="bg-white pt-24 pb-8 border-t border-raudhah-teal/5 relative overflow-hidden">
             {/* Background subtle */}
-            <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-cyan-500/5 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 right-0 h-[500px] bg-gradient-to-t from-raudhah-teal/5 to-transparent pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 {/* Main Footer Grid */}
@@ -44,21 +44,21 @@ const Footer: React.FC = () => {
                     {/* Brand Column */}
                     <div className="lg:col-span-2">
                         <div className="flex items-center gap-3 mb-6">
-                            <img
+                            <img loading="lazy"
                                 src="/logo-primary.png"
                                 alt="QuranPulse Logo"
                                 className="w-12 h-12 object-contain"
                             />
-                            <span className="font-bold text-2xl font-[Poppins] text-white">
-                                Quran<span className="text-cyan-400">Pulse</span>
+                            <span className="font-bold text-2xl font-raudhah text-raudhah-ink">
+                                Quran<span className="text-raudhah-teal">Pulse</span>
                             </span>
                         </div>
 
-                        <p className="text-slate-400 text-sm leading-relaxed mb-6 max-w-sm font-medium">
-                            Menghubungkan hikmat ilahi abadi dengan teknologi moden. Membina masa depan digital Ummah dengan Ihsan.
+                        <p className="text-raudhah-ink/50 text-sm leading-relaxed mb-6 max-w-sm font-normal">
+                            Menghubungkan hikmah ilahi abadi dengan teknologi moden. Membina masa depan digital Ummah dengan kualiti & ketenangan.
                         </p>
 
-                        <div className="text-xs font-bold text-cyan-400 tracking-widest uppercase mb-8">
+                        <div className="text-xs font-bold text-raudhah-teal tracking-widest uppercase mb-8 font-mono">
                             Teknologi untuk Taqwa
                         </div>
 
@@ -71,13 +71,13 @@ const Footer: React.FC = () => {
 
                     {/* Produk Column */}
                     <div>
-                        <h4 className="font-bold text-white mb-6">Produk</h4>
+                        <h4 className="font-bold text-raudhah-ink mb-6 font-raudhah">Produk</h4>
                         <ul className="space-y-4">
                             {FOOTER_LINKS.produk.map((link) => (
                                 <li key={link.label}>
                                     <a
                                         href={link.href}
-                                        className="text-slate-400 hover:text-[#22d3ee] transition-colors text-sm"
+                                        className="text-raudhah-ink/50 hover:text-raudhah-teal transition-colors text-sm"
                                     >
                                         {link.label}
                                     </a>
@@ -88,13 +88,13 @@ const Footer: React.FC = () => {
 
                     {/* Syarikat Column */}
                     <div>
-                        <h4 className="font-bold text-white mb-6">Syarikat</h4>
+                        <h4 className="font-bold text-raudhah-ink mb-6 font-raudhah">Syarikat</h4>
                         <ul className="space-y-4">
                             {FOOTER_LINKS.syarikat.map((link) => (
                                 <li key={link.label}>
                                     <a
                                         href={link.href}
-                                        className="text-slate-400 hover:text-cyan-400 transition-colors text-sm flex items-center gap-1 font-medium"
+                                        className="text-raudhah-ink/50 hover:text-raudhah-teal transition-colors text-sm flex items-center gap-1 font-normal"
                                     >
                                         {link.label}
                                     </a>
@@ -105,13 +105,13 @@ const Footer: React.FC = () => {
 
                     {/* Undang-undang Column */}
                     <div>
-                        <h4 className="font-bold text-white mb-6">Undang-undang</h4>
+                        <h4 className="font-bold text-raudhah-ink mb-6 font-raudhah">Undang-undang</h4>
                         <ul className="space-y-4">
                             {FOOTER_LINKS.undangUndang.map((link) => (
                                 <li key={link.label}>
                                     <a
                                         href={link.href}
-                                        className="text-slate-400 hover:text-[#22d3ee] transition-colors text-sm"
+                                        className="text-raudhah-ink/50 hover:text-raudhah-teal transition-colors text-sm"
                                     >
                                         {link.label}
                                     </a>
@@ -120,12 +120,12 @@ const Footer: React.FC = () => {
                         </ul>
 
                         {/* JAKIM Badge */}
-                        <div className="mt-8 p-4 bg-emerald-500/10 border border-emerald-500/20 rounded-xl">
+                        <div className="mt-8 p-4 bg-raudhah-teal/5 border border-raudhah-teal/10 rounded-xl">
                             <div className="flex items-center gap-3">
-                                <Shield className="w-8 h-8 text-emerald-400" />
+                                <Shield className="w-8 h-8 text-raudhah-teal opacity-50" />
                                 <div>
-                                    <div className="text-xs font-bold text-emerald-400">Patuh JAKIM</div>
-                                    <div className="text-[10px] text-slate-500">Kandungan Disahkan</div>
+                                    <div className="text-xs font-bold text-raudhah-teal">Patuh JAKIM</div>
+                                    <div className="text-[10px] text-raudhah-ink/30">Kandungan Disahkan</div>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@ const Footer: React.FC = () => {
                             href={social.href}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className={`w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:scale-110 transition-all ${social.bg} shadow-sm group`}
+                            className={`w-12 h-12 rounded-xl bg-raudhah-ink/5 border border-raudhah-ink/10 flex items-center justify-center hover:scale-110 transition-all ${social.bg} shadow-sm group`}
                             aria-label={social.label}
                         >
                             <social.Icon />
@@ -149,20 +149,20 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* Divider */}
-                <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-8"></div>
+                <div className="h-px bg-gradient-to-r from-transparent via-raudhah-ink/10 to-transparent mb-8"></div>
 
                 {/* Bottom Bar */}
                 <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-                    <div className="text-slate-500 text-xs font-mono">
+                    <div className="text-raudhah-ink/20 text-[10px] font-mono uppercase tracking-widest">
                         © {new Date().getFullYear()} QuranPulse. Hak Cipta Terpelihara.
                     </div>
 
-                    <div className="flex items-center gap-2 text-slate-500 text-xs">
+                    <div className="flex items-center gap-2 text-raudhah-ink/20 text-[10px] font-mono uppercase tracking-widest">
                         <MapPin className="w-3 h-3" />
-                        <span>Dibina dengan ❤️ di Kuala Lumpur, Malaysia</span>
+                        <span>Dibina di Malaysia 🇲🇾</span>
                     </div>
 
-                    <div className="text-cyan-400 text-xs font-bold">
+                    <div className="text-raudhah-gold text-[10px] font-bold uppercase tracking-widest font-mono">
                         Teknologi untuk Taqwa
                     </div>
                 </div>
@@ -172,3 +172,4 @@ const Footer: React.FC = () => {
 };
 
 export default Footer;
+

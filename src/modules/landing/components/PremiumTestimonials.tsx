@@ -96,7 +96,7 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, name, role, av
           {/* Author */}
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-cyan-500/30">
-              <img src={avatar} alt={name} className="w-full h-full object-cover" />
+              <img loading="lazy" src={avatar} alt={name} className="w-full h-full object-cover" />
             </div>
             <div>
               <p className="font-semibold text-white text-sm">{name}</p>
@@ -175,3 +175,4 @@ export const PremiumTestimonials = () => {
 };
 
 export default PremiumTestimonials;
+

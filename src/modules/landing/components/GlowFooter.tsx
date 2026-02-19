@@ -50,7 +50,7 @@ export const GlowFooter = () => {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-12 h-12 relative flex items-center justify-center group">
                 <div className="absolute inset-0 bg-primary blur-xl opacity-30 group-hover:opacity-50 transition-opacity"></div>
-                <img src="/logo-primary.png" alt="Quran Pulse" className="w-full h-full object-cover scale-150 relative z-10 drop-shadow-[0_0_10px_rgba(90,185,255,0.5)]" />
+                <img loading="lazy" src="/logo-primary.png" alt="Quran Pulse" className="w-full h-full object-cover scale-150 relative z-10 drop-shadow-[0_0_10px_rgba(90,185,255,0.5)]" />
               </div>
               <span className="font-black text-xl">
                 <span className="text-white">Quran</span> <span className="text-primary">Pulse</span>
@@ -170,3 +170,4 @@ export const GlowFooter = () => {
 };
 
 export default GlowFooter;
+

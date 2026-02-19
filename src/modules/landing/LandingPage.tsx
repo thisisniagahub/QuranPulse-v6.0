@@ -9,22 +9,21 @@ import {
   Smartphone, Globe, Palette, Zap, Cpu, Heart,
   BrainCircuit, ShieldCheck, Layers, BookOpen, Menu, X
 } from 'lucide-react';
-import { AppStoreButton, GooglePlayButton } from '@/components/DownloadButtons';
 import QwerDemoSection from '@/components/landing/QwerDemoSection';
-import TrustBar from '@/components/landing/TrustBar';
-import FeaturesBento from '@/components/landing/FeaturesBento';
+import FeatureQuickGrid from '../../components/landing/FeatureQuickGrid';
+import FeatureShowcase from '../../components/landing/FeatureShowcase';
+import PainTransformation from '../../components/landing/PainTransformation';
+import FeaturesBento from '../../components/landing/FeaturesBento';
 import Testimonials from '@/components/landing/Testimonials';
 import PricingTable from '@/components/landing/PricingTable';
 import FinalCta from '@/components/landing/FinalCta';
 import Footer from '@/components/landing/Footer';
 import ParticlesBackground from '@/components/landing/ParticlesBackground';
-import { NumberCounter } from '@/components/landing/TextAnimations';
-import { ShimmerButton } from '@/components/landing/PremiumEffects';
 import { HeroSection } from './components/HeroSection';
-import { ProblemSection } from './components/ProblemSection';
 import { ComparisonSection } from './components/ComparisonSection';
 import { FAQSection } from './components/FAQSection';
 import { WhatsAppButton } from './components/WhatsAppButton';
+import { OpenClawShowcase } from './components/OpenClawShowcase';
 
 interface LandingPageProps {
   onGetStarted: () => void;
@@ -43,31 +42,34 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   }, []);
 
   return (
-    <div className={`min-h-screen bg-midnight-gradient text-white font-sans overflow-x-hidden selection:bg-cyan-500/30 selection:text-cyan-200 relative`}>
-      {/* Global Background Pattern Mask */}
-      <div className="absolute inset-0 z-0 pointer-events-none opacity-20 bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-[size:60px_60px]"></div>
+    <div className={`min-h-screen antigravity-mesh text-raudhah-ink font-sans overflow-x-hidden selection:bg-raudhah-teal/10 selection:text-raudhah-teal relative`}>
+      {/* Global Grain Texture Overlay (The Antigravity Secret) */}
+      <div className="grain-texture"></div>
+
+      {/* Static Pattern Overlay (Reduced Opacity for Airiness) */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.03] bg-pattern-grid bg-[size:100px_100px]"></div>
 
       {/* 1. NAVBAR */}
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-[#0c224b]/80 backdrop-blur-xl border-b border-white/5 py-3' : 'bg-transparent py-5'}`}>
+      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-2xl border-b border-raudhah-teal/10 py-3 shadow-xl shadow-raudhah-teal/5' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
           <div className="flex items-center gap-3 cursor-pointer group" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <div className="relative">
-              <div className="absolute inset-0 bg-cyan-400/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <img src="/logo-primary.png" alt="Logo" className="w-14 h-14 object-contain scale-110 relative z-10" />
+              <div className="absolute inset-0 bg-raudhah-teal/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <img loading="lazy" src="/logo-primary.png" alt="Logo" className="w-14 h-14 object-contain scale-110 relative z-10" />
             </div>
-            <span className="font-bold text-xl tracking-tight hidden sm:block font-[Poppins] text-white">Quran<span className="text-cyan-400">Pulse</span></span>
+            <span className="font-bold text-xl tracking-tight hidden sm:block font-raudhah text-raudhah-teal">Quran<span className="text-raudhah-gold">Pulse</span></span>
           </div>
-          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-slate-400">
+          <div className="hidden md:flex items-center gap-8 text-sm font-semibold text-raudhah-ink/60">
             {[
-              { label: 'Ekosistem', href: 'features' },
-              { label: 'AI Ustaz', href: 'intelligence' },
-              { label: 'Testimoni', href: 'testimonials' },
-              { label: 'Harga', href: 'pricing' }
+              { label: 'Home', href: 'home' },
+              { label: 'Products', href: 'features' },
+              { label: 'Pricing', href: 'pricing' },
+              { label: 'Ebhat', href: 'ebhat' }
             ].map((item) => (
               <a
                 key={item.href}
                 href={`#${item.href}`}
-                className="hover:text-cyan-400 transition-colors relative group"
+                className="hover:text-raudhah-teal transition-colors relative group"
                 onClick={(e) => {
                   e.preventDefault();
                   const element = document.getElementById(item.href);
@@ -79,23 +81,28 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                 }}
               >
                 {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-cyan-400 transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-raudhah-gold transition-all duration-300 group-hover:w-full"></span>
               </a>
             ))}
           </div>
           <div className="hidden md:flex items-center gap-3">
             <button
               onClick={onGetStarted}
-              className="relative inline-flex items-center justify-center font-bold tracking-wide rounded-xl transition-all duration-300 disabled:opacity-50 active:scale-95 overflow-hidden group bg-cyan-600 text-white px-5 py-2 text-sm shadow-lg shadow-cyan-600/20 hover:shadow-cyan-600/40 border border-cyan-500"
+              className="px-6 py-2.5 rounded-xl font-bold text-sm bg-raudhah-ivory text-raudhah-teal border border-raudhah-teal/20 transition-all hover:bg-raudhah-teal hover:text-white"
             >
-              <div className="absolute inset-0 bg-white/40 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-500 ease-out skew-x-12"></div>
-              <span className="relative z-10 flex items-center gap-2"><Zap size={14} className="fill-current" /> Launch App</span>
+              Log In
+            </button>
+            <button
+              onClick={onGetStarted}
+              className="px-6 py-2.5 rounded-xl font-bold text-sm bg-raudhah-teal text-white shadow-lg shadow-raudhah-teal/20 transition-all hover:scale-[1.05]"
+            >
+              Mula Sekarang
             </button>
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
-            className="md:hidden text-white p-2"
+            className="md:hidden text-raudhah-ink p-2"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -109,19 +116,19 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden bg-[#0c224b]/95 backdrop-blur-xl border-b border-white/10 overflow-hidden"
+              className="md:hidden bg-white/95 backdrop-blur-xl border-b border-raudhah-teal/10 overflow-hidden"
             >
               <div className="flex flex-col p-6 space-y-4">
                 {[
-                  { label: 'Ekosistem', href: 'features' },
-                  { label: 'AI Ustaz', href: 'intelligence' },
-                  { label: 'Testimoni', href: 'testimonials' },
-                  { label: 'Harga', href: 'pricing' }
+                  { label: 'Home', href: 'home' },
+                  { label: 'Products', href: 'features' },
+                  { label: 'Pricing', href: 'pricing' },
+                  { label: 'Ebhat', href: 'ebhat' }
                 ].map((item) => (
                   <a
                     key={item.href}
                     href={`#${item.href}`}
-                    className="text-lg font-medium text-slate-300 hover:text-cyan-400 py-2 border-b border-white/5"
+                    className="text-lg font-medium text-raudhah-ink/80 hover:text-raudhah-teal py-2 border-b border-raudhah-teal/5"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsMobileMenuOpen(false);
@@ -137,13 +144,16 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
                   </a>
                 ))}
                 <button
+                  type="button"
                   onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onGetStarted();
+                    const element = document.getElementById('pricing');
+                    if (element) {
+                      element.scrollIntoView({ behavior: 'smooth' });
+                    }
                   }}
-                  className="w-full mt-4 bg-cyan-600 text-white font-bold py-3 rounded-xl shadow-lg shadow-cyan-600/20"
+                  className="px-6 py-2.5 rounded-xl bg-raudhah-gold text-white font-bold shadow-lg shadow-raudhah-gold/20 hover:scale-105 transition-all"
                 >
-                  Launch App
+                  Mulai Mengaji Sekarang
                 </button>
               </div>
             </motion.div>
@@ -154,16 +164,22 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
       {/* 2. HERO SECTION */}
       <HeroSection onGetStarted={onGetStarted} spotsLeft={42} />
 
-      {/* 3. TRUST BAR - Social Proof */}
-      <TrustBar />
+      {/* 3. FEATURE QUICK GRID */}
+      <FeatureQuickGrid />
 
-      {/* 4. PROBLEM SECTION - Agitate Pain Points */}
-      <ProblemSection />
+      {/* 4. PAIN TRANSFORMATION (The "WOW" Factor Problem Solver) */}
+      <PainTransformation />
 
-      {/* 5. FEATURES BENTO GRID - The Solution */}
+      {/* 5. DETAILED FEATURE SHOWCASE (Actual Design) - Tafsir, Hafalan, Komuniti */}
+      <FeatureShowcase />
+
+      {/* 6. FEATURES BENTO GRID - The Solution */}
       <FeaturesBento />
 
-      {/* 6. Q-WER INTELLIGENCE DEMO */}
+      {/* 6B. OPENCLAW SHOWCASE - The Omnichannel WOW Factor */}
+      <OpenClawShowcase />
+
+      {/* 7. Q-WER INTELLIGENCE DEMO */}
       <QwerDemoSection />
 
       {/* 7. COMPARISON - vs Competitors */}
