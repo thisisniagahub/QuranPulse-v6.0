@@ -48,9 +48,7 @@ export const Magnet: React.FC<MagnetProps> = ({
     return (
         <motion.div
             ref={ref}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{ x, y }}
+            style={{ x: 0, y: 0 }}
             className={`relative inline-block ${className}`}
         >
             {children}

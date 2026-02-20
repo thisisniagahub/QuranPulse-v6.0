@@ -53,7 +53,7 @@ export const OpenClawShowcase: React.FC = () => {
                         Omnichannel Intelligence
                     </div>
 
-                    <h2 className="text-5xl md:text-7xl font-raudhah font-bold text-raudhah-ink leading-[0.9] tracking-tighter">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-raudhah font-bold text-raudhah-ink leading-tight tracking-tighter">
                         Ustazah AI <br />
                         <span className="text-raudhah-teal italic"> Tanpa Sempadan.</span>
                     </h2>

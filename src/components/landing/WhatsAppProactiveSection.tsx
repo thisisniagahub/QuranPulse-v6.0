@@ -74,7 +74,7 @@ const ChatBubble: React.FC<{
 
 export const WhatsAppProactiveSection: React.FC = () => {
     return (
-        <section className="relative py-24 overflow-hidden bg-gradient-to-b from-raudhah-ivory to-white">
+        <section className="relative py-12 md:py-16 overflow-hidden bg-gradient-to-b from-raudhah-ivory to-white">
             {/* Background pattern */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-pattern-dots-raudhah" />
 

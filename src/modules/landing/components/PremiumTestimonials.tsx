@@ -42,14 +42,8 @@ const TestimonialCard: React.FC<TestimonialCardProps> = ({ quote, name, role, av
   return (
     <motion.div
       ref={ref}
-      onMouseMove={handleMouseMove}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={handleMouseLeave}
-      style={{
-        rotateX,
-        rotateY,
-        transformStyle: "preserve-3d",
-      }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -163,7 +157,7 @@ export const PremiumTestimonials = () => {
   ];
 
   return (
-    <section className="py-24 md:py-32 bg-raudhah-ivory relative overflow-hidden">
+    <section className="py-12 md:py-16 bg-raudhah-ivory relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-pattern-grid bg-[size:80px_80px]" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-raudhah-teal/5 rounded-full blur-3xl" />
@@ -181,7 +175,7 @@ export const PremiumTestimonials = () => {
           </span>
           <SplitText
             text="Dicintai Ummah Malaysia"
-            className="text-3xl md:text-4xl lg:text-5xl font-bold font-raudhah text-raudhah-ink tracking-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold font-raudhah text-raudhah-ink tracking-tight"
             tag="h2"
             splitType="words"
             duration={0.7}

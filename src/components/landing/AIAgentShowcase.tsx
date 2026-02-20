@@ -108,7 +108,7 @@ const statusBadge = (status: string) => {
 
 export const AIAgentShowcase: React.FC = () => {
     return (
-        <section className="relative py-24 overflow-hidden">
+        <section className="relative py-12 md:py-16 overflow-hidden">
             {/* Subtle gradient bg */}
             <div className="absolute inset-0 bg-gradient-to-b from-white via-raudhah-ivory/50 to-white" />
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-pattern-grid" />
@@ -134,7 +134,7 @@ export const AIAgentShowcase: React.FC = () => {
 
                     <SplitText
                         text="Pasukan AI Yang Menjaga Deen Anda"
-                        className="text-4xl md:text-5xl lg:text-6xl font-bold font-raudhah text-raudhah-ink mb-6 tracking-tight"
+                        className="text-4xl md:text-5xl lg:text-6xl font-bold font-raudhah text-raudhah-ink mb-6 tracking-tight leading-[1.2]"
                         tag="h2"
                         splitType="words"
                         duration={0.8}

@@ -29,12 +29,10 @@ export const TiltCard = ({ children, className }: { children: React.ReactNode, c
     return (
         <motion.div
             style={{
-                rotateX,
-                rotateY,
+                rotateX: 0,
+                rotateY: 0,
                 transformStyle: "preserve-3d",
             }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             className={`perspective-1000 ${className}`}
         >
             <div className="h-full [transform:translateZ(20px)]">

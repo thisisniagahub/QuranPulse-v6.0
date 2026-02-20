@@ -95,7 +95,7 @@ const PricingTable: React.FC = () => {
                         <Crown className="w-3 h-3" />
                         Pelan Harga
                     </span>
-                    <h2 className="text-4xl md:text-5xl font-raudhah font-bold text-raudhah-ink mb-4 tracking-tight">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-raudhah font-bold text-raudhah-ink mb-4 tracking-tight">
                         Pilih <span className="text-raudhah-teal">Pelan Anda</span>
                     </h2>
                     <p className="text-raudhah-ink/50 text-lg max-w-xl mx-auto mb-8 font-medium">

@@ -2,20 +2,20 @@ import React, { useState, useEffect, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
-// === Core Sections (eagerly loaded) ===
+// === Only above-the-fold + always-visible eagerly loaded ===
 import { HeroSection } from './components/HeroSection';
-import PainTransformation from '../../components/landing/PainTransformation';
-import FeatureShowcase from '../../components/landing/FeatureShowcase';
-import { AIAgentShowcase } from '@/components/landing/AIAgentShowcase';
-import { WhatsAppProactiveSection } from '@/components/landing/WhatsAppProactiveSection';
-import PricingTable from '@/components/landing/PricingTable';
-import { ComparisonSection } from './components/ComparisonSection';
-import { FAQSection } from './components/FAQSection';
-import FinalCta from '@/components/landing/FinalCta';
 import { WhatsAppButton } from './components/WhatsAppButton';
 
-// === Heavy Sections (lazy loaded) ===
-const QwerDemoSection = lazy(() => import('@/components/landing/QwerDemoSection'));
+// === ALL below-the-fold sections lazy-loaded for fast first paint ===
+const PainTransformation = lazy(() => import('../../components/landing/PainTransformation'));
+const FeatureShowcase = lazy(() => import('../../components/landing/FeatureShowcase'));
+const AIAgentShowcase = lazy(() => import('../../components/landing/AIAgentShowcase'));
+const WhatsAppProactiveSection = lazy(() => import('../../components/landing/WhatsAppProactiveSection'));
+const PricingTable = lazy(() => import('../../components/landing/PricingTable'));
+const ComparisonSection = lazy(() => import('./components/ComparisonSection'));
+const FAQSection = lazy(() => import('./components/FAQSection').then(m => ({ default: m.FAQSection })));
+const FinalCta = lazy(() => import('../../components/landing/FinalCta'));
+const QwerDemoSection = lazy(() => import('../../components/landing/QwerDemoSection'));
 const OpenClawShowcase = lazy(() => import('./components/OpenClawShowcase').then(m => ({ default: m.OpenClawShowcase })));
 const PremiumTestimonials = lazy(() => import('./components/PremiumTestimonials').then(m => ({ default: m.PremiumTestimonials })));
 const GlowFooter = lazy(() => import('./components/GlowFooter').then(m => ({ default: m.GlowFooter })));
@@ -209,20 +209,25 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
         </div>
 
         {/* 2. PAIN → SOLUTION TRANSFORMATION */}
-        <div id="about">
-          <PainTransformation />
-        </div>
+        <Suspense fallback={<SectionFallback />}>
+          <div id="about">
+            <PainTransformation />
+          </div>
+        </Suspense>
 
         {/* 3. DETAILED FEATURE SHOWCASE */}
-        <div id="features">
-          <FeatureShowcase />
-        </div>
+        <Suspense fallback={<SectionFallback />}>
+          <div id="features">
+            <FeatureShowcase />
+          </div>
+        </Suspense>
 
-        {/* 4. AI AGENTS — Dark Section */}
-        <AIAgentShowcase />
+        {/* 4. AI AGENTS — Removed per request */}
 
         {/* 5. WHATSAPP PROACTIVE — Killer Feature */}
-        <WhatsAppProactiveSection />
+        <Suspense fallback={<SectionFallback />}>
+          <WhatsAppProactiveSection />
+        </Suspense>
 
         {/* 6. OMNICHANNEL SHOWCASE */}
         <Suspense fallback={<SectionFallback />}>
@@ -235,7 +240,9 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
         </Suspense>
 
         {/* 8. COMPARISON — vs Competitors */}
-        <ComparisonSection />
+        <Suspense fallback={<SectionFallback />}>
+          <ComparisonSection />
+        </Suspense>
 
         {/* 9. TESTIMONIALS — Premium 3D Cards */}
         <Suspense fallback={<SectionFallback />}>
@@ -243,15 +250,21 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
         </Suspense>
 
         {/* 10. PRICING TABLE */}
-        <div id="pricing">
-          <PricingTable />
-        </div>
+        <Suspense fallback={<SectionFallback />}>
+          <div id="pricing">
+            <PricingTable />
+          </div>
+        </Suspense>
 
         {/* 11. FAQ */}
-        <FAQSection />
+        <Suspense fallback={<SectionFallback />}>
+          <FAQSection />
+        </Suspense>
 
         {/* 12. FINAL CTA */}
-        <FinalCta onGetStarted={onGetStarted} />
+        <Suspense fallback={<SectionFallback />}>
+          <FinalCta onGetStarted={onGetStarted} />
+        </Suspense>
       </main>
 
       {/* 13. FOOTER — Premium Glow */}

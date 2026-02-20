@@ -100,16 +100,18 @@ const SplitText: React.FC<SplitTextProps> = ({
                 style={{ display: 'inline' }}
             >
                 {units.map(({ text: unitText, key, addSpace }) => (
-                    <span key={key} className="inline-block overflow-hidden">
-                        <motion.span
-                            className="inline-block"
-                            variants={itemVariants}
-                            style={{ willChange: 'transform, opacity' }}
-                        >
-                            {unitText}
-                        </motion.span>
+                    <React.Fragment key={key}>
+                        <span className="inline-block overflow-hidden pt-4 -mt-4 pb-4 -mb-4">
+                            <motion.span
+                                className="inline-block"
+                                variants={itemVariants}
+                                style={{ willChange: 'transform, opacity' }}
+                            >
+                                {unitText}
+                            </motion.span>
+                        </span>
                         {addSpace && ' '}
-                    </span>
+                    </React.Fragment>
                 ))}
             </motion.span>
         </Tag>

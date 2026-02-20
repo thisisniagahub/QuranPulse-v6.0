@@ -84,10 +84,10 @@ const QwerDemoSection: React.FC = () => {
     };
 
     return (
-        <section id="intelligence" className="py-24 bg-transparent relative overflow-hidden">
+        <section id="intelligence" className="py-12 md:py-16 bg-transparent relative overflow-hidden">
             {/* Background Effects */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-cyan-200/20 rounded-full blur-[150px] pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[900px] h-[600px] bg-raudhah-teal/5 rounded-full blur-[150px] pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-raudhah-gold/5 rounded-full blur-[120px] pointer-events-none"></div>
 
             {/* Grid Pattern */}
             <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:32px_32px]"></div>
@@ -106,7 +106,7 @@ const QwerDemoSection: React.FC = () => {
                     </span>
                     <SplitText
                         text="Q-WER Intelligence"
-                        className="text-4xl md:text-5xl lg:text-6xl font-raudhah font-bold text-raudhah-teal mb-6 tracking-tight"
+                        className="text-4xl md:text-5xl lg:text-6xl font-raudhah font-bold text-raudhah-teal mb-6 tracking-tight leading-[1.2]"
                         tag="h2"
                         splitType="words"
                         duration={0.8}

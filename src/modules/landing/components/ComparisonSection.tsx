@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { CheckCircle2, XCircle } from 'lucide-react';
 
 export const ComparisonSection = () => {
   const competitors = [
@@ -8,8 +9,11 @@ export const ComparisonSection = () => {
     { name: 'App Biasa', hasIqra: false, hasAI: false, hasTajwid: false, price: 'Percuma' },
   ];
 
+  const Check = () => <CheckCircle2 className="w-5 h-5 text-raudhah-teal mx-auto" />;
+  const Cross = () => <XCircle className="w-5 h-5 text-raudhah-ink/15 mx-auto" />;
+
   return (
-    <section className="relative z-10 py-20 md:py-28 bg-raudhah-ivory overflow-hidden">
+    <section className="relative z-10 py-12 md:py-16 bg-raudhah-ivory overflow-hidden">
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-pattern-grid"></div>
       <div className="max-w-5xl mx-auto px-6">
         {/* Header */}
@@ -19,7 +23,7 @@ export const ComparisonSection = () => {
           viewport={{ once: true }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl md:text-4xl font-bold font-raudhah text-raudhah-ink mb-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-raudhah text-raudhah-ink mb-4 tracking-tight">
             Kenapa Pilih <span className="text-raudhah-teal">QuranPulse</span>?
           </h2>
           <p className="text-raudhah-ink/60 font-medium">Bandingkan keberkatan & kualiti bimbingan kami</p>
@@ -56,12 +60,10 @@ export const ComparisonSection = () => {
               {/* Iqra 1-6 */}
               <tr className="border-b border-raudhah-teal/5">
                 <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-medium">Iqra' Digital 1-6</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5">
-                  <i className="fa-solid fa-circle-check text-raudhah-teal text-lg" />
-                </td>
+                <td className="py-4 px-4 text-center bg-raudhah-teal/5"><Check /></td>
                 {competitors.map((comp, i) => (
                   <td key={i} className="py-4 px-4 text-center">
-                    <i className={`fa-solid ${comp.hasIqra ? 'fa-circle-check text-raudhah-teal' : 'fa-circle-xmark text-raudhah-ink/10'}`} />
+                    {comp.hasIqra ? <Check /> : <Cross />}
                   </td>
                 ))}
               </tr>
@@ -69,12 +71,10 @@ export const ComparisonSection = () => {
               {/* AI Ustaz */}
               <tr className="border-b border-raudhah-teal/5">
                 <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-medium">AI Ustaz 24/7</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5">
-                  <i className="fa-solid fa-circle-check text-raudhah-teal text-lg" />
-                </td>
+                <td className="py-4 px-4 text-center bg-raudhah-teal/5"><Check /></td>
                 {competitors.map((comp, i) => (
                   <td key={i} className="py-4 px-4 text-center">
-                    <i className={`fa-solid ${comp.hasAI ? 'fa-circle-check text-green-500' : 'fa-circle-xmark text-raudhah-ink/15'}`} />
+                    {comp.hasAI ? <Check /> : <Cross />}
                   </td>
                 ))}
               </tr>
@@ -82,12 +82,10 @@ export const ComparisonSection = () => {
               {/* Tajwid Feedback */}
               <tr className="border-b border-raudhah-teal/5">
                 <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-medium">Feedback Tajwid</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5">
-                  <i className="fa-solid fa-circle-check text-raudhah-teal text-lg" />
-                </td>
+                <td className="py-4 px-4 text-center bg-raudhah-teal/5"><Check /></td>
                 {competitors.map((comp, i) => (
                   <td key={i} className="py-4 px-4 text-center">
-                    <i className={`fa-solid ${comp.hasTajwid ? 'fa-circle-check text-green-500' : 'fa-circle-xmark text-raudhah-ink/15'}`} />
+                    {comp.hasTajwid ? <Check /> : <Cross />}
                   </td>
                 ))}
               </tr>
@@ -95,13 +93,9 @@ export const ComparisonSection = () => {
               {/* Malaysia-First */}
               <tr className="border-b border-raudhah-teal/5">
                 <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-medium">JAKIM Compliant</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5">
-                  <i className="fa-solid fa-circle-check text-raudhah-teal text-lg" />
-                </td>
+                <td className="py-4 px-4 text-center bg-raudhah-teal/5"><Check /></td>
                 {competitors.map((_, i) => (
-                  <td key={i} className="py-4 px-4 text-center">
-                    <i className="fa-solid fa-circle-xmark text-raudhah-ink/15" />
-                  </td>
+                  <td key={i} className="py-4 px-4 text-center"><Cross /></td>
                 ))}
               </tr>
 

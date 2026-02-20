@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronDown } from 'lucide-react';
 
 const faqs = [
     {
@@ -24,13 +25,13 @@ export const FAQSection = () => {
     const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
     return (
-        <section className="py-24 relative z-10 bg-raudhah-ivory">
+        <section className="py-12 md:py-16 relative z-10 bg-raudhah-ivory">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-pattern-grid"></div>
 
             <div className="max-w-4xl mx-auto px-6 relative z-10">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold font-raudhah text-raudhah-ink mb-4">Soalan Lazim</h2>
+                <div className="text-center mb-12">
+                    <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-raudhah text-raudhah-ink mb-4 tracking-tight">Soalan Lazim</h2>
                     <p className="text-raudhah-ink/60 font-medium">Penjelasan telus untuk ketenangan jiwa anda.</p>
                 </div>
 
@@ -42,7 +43,7 @@ export const FAQSection = () => {
                                 className="w-full flex justify-between items-center p-6 text-left"
                             >
                                 <span className={`font-bold font-raudhah ${activeIndex === idx ? 'text-raudhah-teal' : 'text-raudhah-ink'}`}>{faq.q}</span>
-                                <i className={`fa-solid fa-chevron-down transition-transform duration-300 ${activeIndex === idx ? 'rotate-180 text-raudhah-teal' : 'text-raudhah-ink/30'}`}></i>
+                                <ChevronDown className={`w-5 h-5 shrink-0 ml-4 transition-transform duration-300 ${activeIndex === idx ? 'rotate-180 text-raudhah-teal' : 'text-raudhah-ink/30'}`} />
                             </button>
                             <AnimatePresence>
                                 {activeIndex === idx && (
@@ -65,3 +66,5 @@ export const FAQSection = () => {
         </section>
     );
 };
+
+export default FAQSection;

@@ -1,22 +1,26 @@
+
 # 🌌 QuranPulse v6.0 "Noor-e-Cyber"
 
 > **"Teknologi untuk Taqwa & Syukur"**
 > The Super-Islamic App bridging spiritual depth with futuristic Cyber-Islamic design.
 
-![Status](https://img.shields.io/badge/Status-Premium_Beta-cyan?style=for-the-badge&logo=react)
-![Theme](https://img.shields.io/badge/Theme-Noor_Cyber-purple?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Production-green?style=for-the-badge&logo=react)
+![Theme](https://img.shields.io/badge/Theme-Raudhah-teal?style=for-the-badge)
+![Deploy](https://img.shields.io/badge/Vercel-Live-black?style=for-the-badge&logo=vercel)
 
 ---
 
 ## 🎯 Project Overview
 
-QuranPulse v6.0 is a **Progressive Web App (PWA)** designed to revolutionize the Islamic digital experience with AI-powered features and premium "Noor-e-Cyber" aesthetics.
+QuranPulse v6.0 is a **Progressive Web App (PWA)** designed to revolutionize the Islamic digital experience with AI-powered features and premium "Raudhah" aesthetics.
 
 ### Key Features
-- 🧠 **Smart Deen (Ustaz AI)** - Shafi'i-compliant AI chat
+- 🧠 **Smart Deen (Ustaz AI)** - Shafi'i-compliant AI chat with emotional intelligence
 - 📖 **Iqra Digital** - Interactive Quran learning with ASR
 - 🕌 **Ibadah Suite** - Prayer times, Qibla, Masjid locator
 - 💎 **Pulse Command Center** - Spiritual dashboard
+- 🤖 **AI Tadabbur Mode** - Guided Quran reflection with AI questions
+- 🏆 **Community Leaderboard** - Gamified progress tracking
 
 ---
 

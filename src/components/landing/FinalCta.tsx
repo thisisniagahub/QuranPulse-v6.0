@@ -10,7 +10,7 @@ interface FinalCtaProps {
 
 const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
     return (
-        <section className="py-24 bg-raudhah-ivory relative overflow-hidden">
+        <section className="py-12 md:py-16 bg-raudhah-ivory relative overflow-hidden">
             {/* Background Effects */}
             <div className="absolute inset-0">
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-raudhah-teal/5 via-transparent to-transparent opacity-50"></div>
@@ -33,7 +33,7 @@ const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
                     </div>
 
                     {/* Headline */}
-                    <h2 className="text-5xl md:text-7xl font-raudhah font-bold text-raudhah-ink mb-8 tracking-tighter leading-[0.95]">
+                    <h2 className="text-5xl md:text-7xl font-raudhah font-bold text-raudhah-ink mb-8 tracking-tighter leading-tight">
                         Mula Perjalanan Quran<br />
                         <span className="text-raudhah-teal">
                             Anda Hari Ini

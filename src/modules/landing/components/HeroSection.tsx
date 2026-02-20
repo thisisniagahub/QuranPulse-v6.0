@@ -16,20 +16,11 @@ interface HeroSectionProps {
 
 export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
     const containerRef = useRef<HTMLElement>(null);
-    const mouseX = useMotionValue(0.5);
-    const mouseY = useMotionValue(0.5);
-    const springX = useSpring(mouseX, { stiffness: 40, damping: 25 });
-    const springY = useSpring(mouseY, { stiffness: 40, damping: 25 });
 
-    const handleMouseMove = (e: React.MouseEvent) => {
-        mouseX.set(e.clientX / window.innerWidth);
-        mouseY.set(e.clientY / window.innerHeight);
-    };
 
     return (
         <section
             ref={containerRef}
-            onMouseMove={handleMouseMove}
             className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-16 overflow-hidden"
         >
             {/* Aurora Background — WebGL animated light */}
@@ -87,7 +78,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                 {/* Main Heading — SplitText Animation (Antigravity Style) */}
                 <SplitText
                     text="The Pulse of Digital Ummah"
-                    className="text-5xl sm:text-7xl md:text-[7rem] lg:text-[9rem] font-bold font-raudhah leading-[0.85] tracking-tighter mb-10 text-raudhah-ink break-words"
+                    className="text-5xl sm:text-7xl md:text-[7rem] lg:text-[9rem] font-bold font-raudhah leading-[1.1] tracking-tighter mb-10 text-raudhah-ink break-words"
                     tag="h1"
                     splitType="words"
                     duration={1}
@@ -189,7 +180,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                                     <div className="text-3xl font-bold text-white mb-1">Asar</div>
                                     <div className="text-sm text-white/40">15:45 · 2j 13m lagi</div>
                                     <div className="mt-3 h-1 rounded-full bg-white/5">
-                                        <div className="h-full w-[65%] rounded-full bg-gradient-to-r from-raudhah-teal to-cyan-400" />
+                                        <div className="h-full w-[65%] rounded-full bg-gradient-to-r from-raudhah-teal to-raudhah-gold" />
                                     </div>
                                 </div>
 
@@ -250,7 +241,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
                                         <div
                                             key={i}
                                             className={`flex-1 h-2 rounded-sm ${i < 12
-                                                ? 'bg-gradient-to-r from-raudhah-teal to-cyan-400'
+                                                ? 'bg-gradient-to-r from-raudhah-teal to-raudhah-gold'
                                                 : i === 12
                                                     ? 'bg-raudhah-teal/30 animate-pulse'
                                                     : 'bg-white/[0.06]'

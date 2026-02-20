@@ -3,6 +3,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap");
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   TAILWIND V4 THEME — Raudhah Design System Tokens
+   Registers colors so utility classes (text-*, bg-*, fill-*, border-*) work
+   ═══════════════════════════════════════════════════════════════════════════ */
+@theme {
+  --color-raudhah-teal: #1B6B5A;
+  --color-raudhah-gold: #C4972A;
+  --color-raudhah-ink: #2D2A26;
+  --color-raudhah-ivory: #FAFAF5;
+  --color-raudhah-cream: #F5F0E8;
+
+  --font-family-raudhah: 'Lora', 'Noto Sans Arabic', serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    VERSE STUDIO DESIGN SYSTEM - Global CSS
    ═══════════════════════════════════════════════════════════════════════════ */
 

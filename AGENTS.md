@@ -32,7 +32,7 @@
 | Database | Supabase | Managed |
 | VPN | Tailscale | 100.100.205.64 |
 
-### AI Model Configuration (Actual — 2026-02-10)
+### AI Model Configuration (Actual — 2026-02-19)
 ```json5
 {
   agents: {
@@ -45,6 +45,11 @@
   }
 }
 ```
+
+### Recent Development (Feb 2026)
+- **2026-02-19**: Premium landing page polish + Vercel deploy verified ✅
+- **2026-02-18**: AI Tadabbur Mode, Ustaz AI EQ, Leaderboard demo data
+- **2026-02-10**: VPS infrastructure fix + doc alignment
 
 See [docs/VPS_PRD.md](docs/VPS_PRD.md) for deployment architecture.
 
