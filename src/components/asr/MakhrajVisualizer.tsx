@@ -267,7 +267,7 @@ export const MakhrajVisualizer: React.FC<MakhrajVisualizerProps> = ({
                         return (
                             <>
                                 <div className="flex justify-between items-center mb-1">
-                                    <span className="text-cyan-400 font-amiri text-lg">{point.nameAr}</span>
+                                    <span className="text-raudhah-teal font-amiri text-lg">{point.nameAr}</span>
                                     <span className="text-slate-400">{point.nameMs}</span>
                                 </div>
                                 <p className="text-slate-300 text-xs">{point.description}</p>
@@ -276,7 +276,7 @@ export const MakhrajVisualizer: React.FC<MakhrajVisualizerProps> = ({
                                         <span
                                             key={letter}
                                             className={`px-2 py-1 rounded font-amiri text-lg ${letter === activeLetter
-                                                    ? 'bg-cyan-500/30 text-cyan-300'
+                                                    ? 'bg-raudhah-teal/30 text-raudhah-teal'
                                                     : 'bg-slate-700 text-slate-300'
                                                 }`}
                                         >

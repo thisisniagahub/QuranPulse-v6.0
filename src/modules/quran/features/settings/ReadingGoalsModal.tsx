@@ -172,7 +172,7 @@ const ReadingGoalsModal: React.FC<ReadingGoalsModalProps> = ({ isOpen, onClose }
                         strokeWidth="6"
                         fill="none"
                         strokeDasharray={`${progress * 1.76} 176`}
-                        className={goalMet ? 'text-emerald-400' : 'text-cyan-400'}
+                        className={goalMet ? 'text-emerald-400' : 'text-raudhah-teal'}
                       />
                     </svg>
                     <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-white">
@@ -215,12 +215,12 @@ const ReadingGoalsModal: React.FC<ReadingGoalsModalProps> = ({ isOpen, onClose }
                             day.count >= goals.dailyVerses 
                               ? 'bg-emerald-500' 
                               : day.count > 0 
-                                ? 'bg-cyan-500/50' 
+                                ? 'bg-raudhah-teal/50' 
                                 : 'bg-slate-700'
-                          } ${day.isToday ? 'ring-2 ring-cyan-400' : ''}`}
+                          } ${day.isToday ? 'ring-2 ring-raudhah-teal' : ''}`}
                           style={{ height: `${height}%` }}
                         />
-                        <span className={`text-[8px] ${day.isToday ? 'text-cyan-400 font-bold' : 'text-slate-500'}`}>
+                        <span className={`text-[8px] ${day.isToday ? 'text-raudhah-teal font-bold' : 'text-slate-500'}`}>
                           {day.day}
                         </span>
                       </div>

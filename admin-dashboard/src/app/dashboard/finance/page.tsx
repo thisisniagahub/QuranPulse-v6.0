@@ -195,11 +195,11 @@ export default function FinancePage() {
                     {revenueData.map((data, i) => (
                         <div key={i} className="flex-1 flex flex-col items-center gap-2">
                             <div
-                                className="w-full bg-gradient-to-t from-cyan-500/50 to-cyan-400/80 rounded-t relative group transition-all hover:from-cyan-400/60 hover:to-cyan-300/90 min-h-[8px]"
+                                className="w-full bg-gradient-to-t from-raudhah-teal/50 to-cyan-400/80 rounded-t relative group transition-all hover:from-raudhah-teal/60 hover:to-cyan-300/90 min-h-[8px]"
                                 data-height={`${(data.revenue / maxRevenue) * 100}%`}
                                 style={{ height: `${(data.revenue / maxRevenue) * 100}%` }}
                             >
-                                <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-cyan-400 whitespace-nowrap">
+                                <div className="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity text-xs text-raudhah-teal whitespace-nowrap">
                                     RM {data.revenue.toLocaleString()}
                                 </div>
                             </div>

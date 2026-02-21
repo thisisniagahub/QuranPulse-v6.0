@@ -20,7 +20,7 @@ const TermsOfService: React.FC = () => {
                     </button>
                     <div>
                         <h1 className="text-xl font-bold flex items-center gap-2">
-                            <FileText className="text-cyan-400" size={20} />
+                            <FileText className="text-raudhah-teal" size={20} />
                             Terma & Polisi Privasi
                         </h1>
                         <p className="text-xs text-slate-400">Dikemaskini: Januari 2026</p>
@@ -54,7 +54,7 @@ const TermsOfService: React.FC = () => {
                 {/* Definitions */}
                 <section>
                     <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                        <Scale className="text-cyan-400" size={24} />
+                        <Scale className="text-raudhah-teal" size={24} />
                         Definisi dan Terma Utama
                     </h2>
                     <div className="space-y-4">
@@ -68,7 +68,7 @@ const TermsOfService: React.FC = () => {
                             { term: 'Cookie', definition: 'Sejumlah kecil data yang dijana oleh laman web dan disimpan oleh pelayar web anda. Ia digunakan untuk mengenal pasti pelayar anda dan menyediakan analitik.' },
                         ].map((item, i) => (
                             <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4">
-                                <h3 className="font-bold text-cyan-400 mb-2">{item.term}</h3>
+                                <h3 className="font-bold text-raudhah-teal mb-2">{item.term}</h3>
                                 <p className="text-sm text-slate-300">{item.definition}</p>
                             </div>
                         ))}
@@ -78,7 +78,7 @@ const TermsOfService: React.FC = () => {
                 {/* Information Collection */}
                 <section>
                     <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                        <Shield className="text-cyan-400" size={24} />
+                        <Shield className="text-raudhah-teal" size={24} />
                         Maklumat Yang Kami Kumpul
                     </h2>
                     <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
@@ -90,7 +90,7 @@ const TermsOfService: React.FC = () => {
                         <div className="grid md:grid-cols-2 gap-4">
                             {['Nama / Nama Pengguna', 'Nombor Telefon', 'Alamat E-mel', 'Alamat Pengebilan', 'Kata Laluan'].map((item, i) => (
                                 <div key={i} className="flex items-center gap-2 text-sm">
-                                    <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
+                                    <div className="w-2 h-2 rounded-full bg-raudhah-teal"></div>
                                     <span className="text-slate-300">{item}</span>
                                 </div>
                             ))}
@@ -133,7 +133,7 @@ const TermsOfService: React.FC = () => {
                             'Untuk mentadbir peraduan atau tinjauan',
                         ].map((item, i) => (
                             <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4 flex items-center gap-3">
-                                <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-sm font-bold">
+                                <div className="w-8 h-8 rounded-lg bg-raudhah-teal/10 flex items-center justify-center text-raudhah-teal text-sm font-bold">
                                     {i + 1}
                                 </div>
                                 <span className="text-sm text-slate-300">{item}</span>
@@ -186,7 +186,7 @@ const TermsOfService: React.FC = () => {
                 {/* PDPA Malaysia */}
                 <section>
                     <h2 className="text-2xl font-bold text-white mb-6">Akta Perlindungan Data Peribadi (PDPA) Malaysia</h2>
-                    <div className="bg-gradient-to-br from-cyan-900/30 to-transparent border border-cyan-500/20 rounded-2xl p-6">
+                    <div className="bg-gradient-to-br from-cyan-900/30 to-transparent border border-raudhah-teal/20 rounded-2xl p-6">
                         <p className="text-slate-300 leading-relaxed mb-4">
                             Sebagai syarikat yang berpangkalan di Malaysia, kami mematuhi Akta Perlindungan Data
                             Peribadi 2010 (PDPA). Anda mempunyai hak untuk:
@@ -199,8 +199,8 @@ const TermsOfService: React.FC = () => {
                                 'Membuat aduan kepada Pesuruhjaya Perlindungan Data Peribadi',
                             ].map((item, i) => (
                                 <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
-                                    <div className="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
-                                        <span className="text-cyan-400 text-xs">✓</span>
+                                    <div className="w-5 h-5 rounded-full bg-raudhah-teal/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                        <span className="text-raudhah-teal text-xs">✓</span>
                                     </div>
                                     {item}
                                 </li>

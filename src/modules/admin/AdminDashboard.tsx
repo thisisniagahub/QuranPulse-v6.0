@@ -15,7 +15,7 @@ const AdminDashboard: React.FC = () => {
     const navigate = useNavigate();
 
     const NAV_ITEMS = [
-        { id: 'OVERVIEW', label: 'Command Center', icon: 'fa-chart-radar', color: 'text-cyan-400' },
+        { id: 'OVERVIEW', label: 'Command Center', icon: 'fa-chart-radar', color: 'text-raudhah-teal' },
         { id: 'AI_STUDIO', label: 'AI Content Studio', icon: 'fa-wand-magic-sparkles', color: 'text-purple-400' },
         { id: 'BROADCAST', label: 'Broadcasts', icon: 'fa-bullhorn', color: 'text-red-400' },
         { id: 'KNOWLEDGE', label: 'Knowledge Base', icon: 'fa-database', color: 'text-orange-400' },
@@ -34,7 +34,7 @@ const AdminDashboard: React.FC = () => {
                 className="w-64 bg-slate-900/50 backdrop-blur-xl border-r border-white/5 flex flex-col z-20"
             >
                 <div className="p-6 border-b border-white/5 flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center shadow-neon">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-raudhah-teal to-emerald-700 flex items-center justify-center shadow-warm">
                         <i className="fa-solid fa-cube text-white text-sm"></i>
                     </div>
                     <div>

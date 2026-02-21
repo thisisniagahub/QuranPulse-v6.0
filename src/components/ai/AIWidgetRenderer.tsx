@@ -70,7 +70,7 @@ export const AIWidgetRenderer: React.FC<AIWidgetRendererProps> = ({ content }) =
           return (
               <button 
                 onClick={() => navigate('/iqra')}
-                className="w-full my-2 py-3 bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 rounded-xl font-bold text-sm hover:bg-cyan-500/20 transition-all flex items-center justify-center gap-2"
+                className="w-full my-2 py-3 bg-raudhah-teal/10 border border-raudhah-teal/20 text-raudhah-teal rounded-xl font-bold text-sm hover:bg-raudhah-teal/10 transition-all flex items-center justify-center gap-2"
               >
                   <i className="fa-solid fa-book-quran"></i>
                   Mula Kelas Iqra Digital

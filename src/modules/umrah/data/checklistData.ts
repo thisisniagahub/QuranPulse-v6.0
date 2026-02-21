@@ -246,7 +246,7 @@ export const CHECKLIST_ITEMS: ChecklistItem[] = [
 ];
 
 export const CHECKLIST_CATEGORIES = {
-    dokumen: { name: 'Dokumen Wajib', icon: '📄', color: 'text-cyan-400' },
+    dokumen: { name: 'Dokumen Wajib', icon: '📄', color: 'text-raudhah-teal' },
     pakaian_lelaki: { name: 'Pakaian Lelaki', icon: '👔', color: 'text-blue-400' },
     pakaian_wanita: { name: 'Pakaian Wanita', icon: '👗', color: 'text-pink-400' },
     umum: { name: 'Barang Umum', icon: '🎒', color: 'text-green-400' },

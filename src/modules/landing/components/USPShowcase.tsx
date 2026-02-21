@@ -17,7 +17,7 @@ export const USPShowcase = () => {
       title: 'Iqra 1-6 Lengkap',
       subtitle: 'Satu-satunya app dengan kurikulum penuh',
       description: 'Belajar mengaji dari A hingga Z',
-      gradient: 'from-cyan-500 to-blue-600',
+      gradient: 'from-raudhah-teal to-emerald-700',
       glow: 'shadow-cyan-500/30',
       badge: 'EKSKLUSIF',
     },
@@ -44,7 +44,7 @@ export const USPShowcase = () => {
   return (
     <section className="relative z-10 py-20 md:py-28 overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-radial from-cyan-500/10 to-transparent blur-3xl" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gradient-radial from-raudhah-teal/10 to-transparent blur-3xl" />
       
       <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
@@ -62,7 +62,7 @@ export const USPShowcase = () => {
           </span>
           
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
-            Bukan Sekadar App <span className="text-cyan-400">Mengaji</span>
+            Bukan Sekadar App <span className="text-raudhah-teal">Mengaji</span>
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto text-lg">
             Ini adalah <span className="text-white font-semibold">Islamic Super App</span> — 
@@ -111,7 +111,7 @@ export const USPShowcase = () => {
 
                 {/* Content */}
                 <h3 className="text-xl font-bold text-white mb-1">{usp.title}</h3>
-                <p className="text-cyan-400 text-sm font-medium mb-3">{usp.subtitle}</p>
+                <p className="text-raudhah-teal text-sm font-medium mb-3">{usp.subtitle}</p>
                 <p className="text-slate-400 text-sm leading-relaxed">{usp.description}</p>
 
                 {/* Hover glow */}
@@ -133,7 +133,7 @@ export const USPShowcase = () => {
           className="text-center mt-16"
         >
           <p className="text-slate-400 text-sm mb-4">
-            Semua dalam satu app. <span className="text-cyan-400 font-semibold">Gratis untuk bermula.</span>
+            Semua dalam satu app. <span className="text-raudhah-teal font-semibold">Gratis untuk bermula.</span>
           </p>
         </motion.div>
       </div>

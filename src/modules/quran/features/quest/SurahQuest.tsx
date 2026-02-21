@@ -148,14 +148,14 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
             <motion.div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-cyan-500/30 text-center"
+                className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-raudhah-teal/20 text-center"
             >
                 <div className="text-6xl mb-4">{progress.lives > 0 ? '🏆' : '💔'}</div>
                 <h2 className="text-2xl font-bold text-white mb-2">
                     {progress.lives > 0 ? 'Tahniah! Quest Selesai!' : 'Quest Tamat'}
                 </h2>
                 <p className="text-slate-400 mb-6">
-                    Skor: <span className="text-cyan-400 font-bold">{progress.score}</span> XP
+                    Skor: <span className="text-raudhah-teal font-bold">{progress.score}</span> XP
                     {' • '}
                     {progress.completedWords.size}/{progress.totalWords} perkataan betul
                 </p>
@@ -163,7 +163,7 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
                 <div className="flex gap-4 justify-center">
                     <button
                         onClick={resetQuest}
-                        className="px-6 py-3 bg-cyan-500 hover:bg-cyan-400 rounded-xl text-white font-medium flex items-center gap-2 transition-colors"
+                        className="px-6 py-3 bg-raudhah-teal hover:bg-raudhah-teal rounded-xl text-white font-medium flex items-center gap-2 transition-colors"
                     >
                         <RotateCcw className="w-4 h-4" />
                         Cuba Lagi
@@ -176,11 +176,11 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
     if (!currentWord) return null;
 
     return (
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-cyan-500/20">
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-raudhah-teal/20">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                    <Swords className="w-5 h-5 text-cyan-400" />
+                    <Swords className="w-5 h-5 text-raudhah-teal" />
                     <span className="text-white font-semibold">SurahQuest: {surahName}</span>
                 </div>
                 <div className="flex items-center gap-4">
@@ -200,7 +200,7 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
                         </div>
                     )}
                     {/* Score */}
-                    <div className="flex items-center gap-1 text-cyan-400">
+                    <div className="flex items-center gap-1 text-raudhah-teal">
                         <Star className="w-4 h-4 fill-cyan-400" />
                         <span className="text-sm font-bold">{progress.score}</span>
                     </div>
@@ -210,7 +210,7 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
             {/* Progress Bar */}
             <div className="w-full h-2 bg-slate-700 rounded-full mb-6 overflow-hidden">
                 <motion.div
-                    className="h-full bg-gradient-to-r from-cyan-500 to-purple-500 rounded-full"
+                    className="h-full bg-gradient-to-r from-raudhah-teal to-purple-500 rounded-full"
                     animate={{ width: `${progressPercent}%` }}
                     transition={{ duration: 0.5 }}
                 />
@@ -226,7 +226,7 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
                 <p className="text-5xl font-arabic text-white mb-3 leading-relaxed">
                     {currentWord.arabic}
                 </p>
-                <p className="text-sm text-cyan-400/70">{currentWord.transliteration}</p>
+                <p className="text-sm text-raudhah-teal/70">{currentWord.transliteration}</p>
                 <p className="text-xs text-slate-500 mt-1">
                     Perkataan {progress.currentWord + 1} / {progress.totalWords}
                 </p>
@@ -251,7 +251,7 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
                             btnClass += 'bg-slate-800/50 border-slate-700 text-slate-500';
                         }
                     } else {
-                        btnClass += 'bg-slate-800/50 border-slate-700 text-white hover:border-cyan-500/50 hover:bg-cyan-500/10 cursor-pointer';
+                        btnClass += 'bg-slate-800/50 border-slate-700 text-white hover:border-raudhah-teal/50 hover:bg-raudhah-teal/10 cursor-pointer';
                     }
 
                     return (

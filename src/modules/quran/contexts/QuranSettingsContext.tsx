@@ -60,9 +60,9 @@ export const QuranSettingsProvider: React.FC<{ children: ReactNode }> = ({ child
     const [theme, setTheme] = useState<ThemeType>(() => {
         if (typeof window !== 'undefined') {
             const saved = safeGetStorage('quran_theme');
-            return (saved as ThemeType) || 'safar';
+            return (saved as ThemeType) || 'raudhah';
         }
-        return 'safar';
+        return 'raudhah';
     });
 
     useEffect(() => {

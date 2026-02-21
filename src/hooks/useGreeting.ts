@@ -43,7 +43,7 @@ export const useGreeting = (userName: string = "Hamba Allah") => {
     }
   };
 
-  const isDark = true; // Always dark mode for Deep Space theme
+  const isDark = false; // Raudhah is a light theme
 
   return {
     ...greetingData,

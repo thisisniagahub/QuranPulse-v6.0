@@ -128,7 +128,7 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                         </button>
                         <button
                             onClick={handleSave}
-                            className="p-2 rounded-lg bg-cyan-500 text-black hover:bg-cyan-400 transition-all"
+                            className="p-2 rounded-lg bg-raudhah-teal text-black hover:bg-raudhah-teal transition-all"
                             aria-label="Simpan maklumat"
                         >
                             <Check size={18} />
@@ -198,7 +198,7 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                                     value={info.hotelName}
                                     onChange={(e) => setInfo({ ...info, hotelName: e.target.value })}
                                     placeholder="cth: Hilton Makkah"
-                                    className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500"
+                                    className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal"
                                 />
                             </div>
                         </div>
@@ -209,7 +209,7 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                                 value={info.gateNumber}
                                 onChange={(e) => setInfo({ ...info, gateNumber: e.target.value })}
                                 placeholder="cth: King Abdul Aziz Gate 79"
-                                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500"
+                                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal"
                             />
                         </div>
                     </div>
@@ -224,7 +224,7 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                                     value={info.passportNumber}
                                     onChange={(e) => setInfo({ ...info, passportNumber: e.target.value })}
                                     placeholder="A12345678"
-                                    className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500"
+                                    className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal"
                                 />
                             </div>
                         </div>
@@ -235,7 +235,7 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                                 value={info.visaNumber}
                                 onChange={(e) => setInfo({ ...info, visaNumber: e.target.value })}
                                 placeholder="Visa Number"
-                                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500"
+                                className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal"
                             />
                         </div>
                     </div>
@@ -250,7 +250,7 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                                     value={info.emergencyContact}
                                     onChange={(e) => setInfo({ ...info, emergencyContact: e.target.value })}
                                     placeholder="+60123456789"
-                                    className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500"
+                                    className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal"
                                 />
                             </div>
                         </div>
@@ -261,7 +261,7 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                                 <select
                                     value={info.bloodType}
                                     onChange={(e) => setInfo({ ...info, bloodType: e.target.value })}
-                                    className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500 appearance-none"
+                                    className="w-full pl-9 pr-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal appearance-none"
                                     aria-label="Pilih jenis darah"
                                 >
                                     <option value="">Pilih</option>
@@ -285,7 +285,7 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                             onChange={(e) => setInfo({ ...info, hotelAddress: e.target.value })}
                             placeholder="Alamat penuh hotel..."
                             rows={2}
-                            className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500 resize-none"
+                            className="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal resize-none"
                         />
                     </div>
 

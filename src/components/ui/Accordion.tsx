@@ -102,7 +102,7 @@ export const AccordionTrigger: React.FC<AccordionTriggerProps> = ({
                 "flex w-full items-center justify-between p-4",
                 "text-left font-medium text-white",
                 "hover:bg-slate-800/50 transition-colors",
-                "focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:ring-inset",
+                "focus:outline-none focus:ring-2 focus:ring-raudhah-teal/50 focus:ring-inset",
                 className
             )}
             aria-expanded={isExpanded}

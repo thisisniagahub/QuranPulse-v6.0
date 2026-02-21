@@ -68,7 +68,7 @@ const ControlBtn = ({
     label,
     subtitle,
     icon,
-    colorClass = "bg-cyan-500 text-black shadow-[0_0_20px_rgba(6,182,212,0.4)]"
+    colorClass = "bg-raudhah-teal text-black shadow-[0_0_20px_rgba(6,182,212,0.4)]"
 }: {
     active: boolean;
     onClick: () => void;
@@ -106,7 +106,7 @@ const LangPill = ({ active, onClick, label, flag }: { active: boolean, onClick: 
     <button
         onClick={onClick}
         className={`flex-1 flex items-center justify-center gap-2 py-2 rounded-xl text-xs font-bold transition-all ${active
-            ? 'bg-cyan-500 text-black shadow-lg'
+            ? 'bg-raudhah-teal text-black shadow-lg'
             : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
             }`}
     >
@@ -200,7 +200,7 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                             key={tab}
                             onClick={() => setActiveTab(tab as any)}
                             className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all border ${activeTab === tab
-                                ? 'bg-cyan-500 text-black border-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
+                                ? 'bg-raudhah-teal text-black border-raudhah-teal shadow-[0_0_15px_rgba(6,182,212,0.3)]'
                                 : 'bg-slate-900 text-slate-500 border-slate-800 hover:text-slate-300'
                                 }`}
                         >
@@ -222,7 +222,7 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                             <div className="bg-slate-900/50 p-4 rounded-2xl border border-slate-800">
                                 <div className="flex justify-between mb-4">
                                     <span className="text-xs font-bold text-slate-400 uppercase">Saiz Tulisan</span>
-                                    <span className="text-xs font-mono text-cyan-400">{fontSize}px</span>
+                                    <span className="text-xs font-mono text-raudhah-teal">{fontSize}px</span>
                                 </div>
                                 <div className="h-16 flex items-center justify-center mb-4 relative">
                                     <p className="font-uthmani text-white text-center drop-shadow-md transition-all" style={{ fontSize: `${fontSize}px` }}> {/* eslint-disable-line react-dom/no-unsafe-inline-style */}
@@ -242,11 +242,11 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                 <span className="text-xs font-bold text-slate-400 uppercase px-1 mb-2 block">Elemen Ayat</span>
                                 <div className="grid grid-cols-2 gap-3">
                                     {/* 1. Translation */}
-                                    <div className={`p-3 rounded-xl border flex flex-col justify-between h-24 transition-all cursor-pointer ${showTranslation ? 'bg-cyan-900/20 border-cyan-500/50' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}
+                                    <div className={`p-3 rounded-xl border flex flex-col justify-between h-24 transition-all cursor-pointer ${showTranslation ? 'bg-cyan-900/20 border-raudhah-teal/50' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}
                                         onClick={() => setShowTranslation(!showTranslation)}>
                                         <div className="flex justify-between items-start">
                                             <div className="text-2xl">📝</div>
-                                            <div className={`w-8 h-5 rounded-full relative transition-colors ${showTranslation ? 'bg-cyan-500' : 'bg-slate-700'}`}>
+                                            <div className={`w-8 h-5 rounded-full relative transition-colors ${showTranslation ? 'bg-raudhah-teal' : 'bg-slate-700'}`}>
                                                 <div className={`absolute top-1 w-3 h-3 bg-white rounded-full shadow transition-transform ${showTranslation ? 'translate-x-4' : 'translate-x-1'}`} />
                                             </div>
                                         </div>
@@ -336,13 +336,13 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                 <div className="grid grid-cols-1 gap-3">
                                     <div className="flex items-center justify-between bg-slate-900 p-4 rounded-xl border border-slate-800">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400">📜</div>
+                                            <div className="w-8 h-8 rounded-full bg-raudhah-teal/10 flex items-center justify-center text-raudhah-teal">📜</div>
                                             <div>
                                                 <p className="text-sm font-bold text-white">Auto-Scroll</p>
                                                 <p className="text-[10px] text-slate-500">Gerak skrin ikut bacaan</p>
                                             </div>
                                         </div>
-                                        <div onClick={() => setAutoScroll?.(!autoScroll)} className={`w-10 h-6 rounded-full relative cursor-pointer transition-colors ${autoScroll ? 'bg-cyan-500' : 'bg-slate-700'}`}>
+                                        <div onClick={() => setAutoScroll?.(!autoScroll)} className={`w-10 h-6 rounded-full relative cursor-pointer transition-colors ${autoScroll ? 'bg-raudhah-teal' : 'bg-slate-700'}`}>
                                             <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-transform ${autoScroll ? 'translate-x-5' : 'translate-x-1'}`} />
                                         </div>
                                     </div>
@@ -370,16 +370,16 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                         key={reciter.id}
                                         onClick={() => setSelectedReciterId?.(reciter.id)}
                                         className={`w-full p-3 rounded-xl border flex items-center gap-3 transition-all ${selectedReciterId === reciter.id
-                                            ? 'bg-cyan-900/20 border-cyan-500/50'
+                                            ? 'bg-cyan-900/20 border-raudhah-teal/50'
                                             : 'bg-slate-900/50 border-slate-800 hover:bg-slate-900'
                                             }`}
                                     >
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${selectedReciterId === reciter.id ? 'bg-cyan-500 text-black' : 'bg-slate-800 text-slate-500'}`}>🎙️</div>
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm ${selectedReciterId === reciter.id ? 'bg-raudhah-teal text-black' : 'bg-slate-800 text-slate-500'}`}>🎙️</div>
                                         <div className="text-left flex-1">
-                                            <p className={`font-bold text-sm ${selectedReciterId === reciter.id ? 'text-cyan-400' : 'text-slate-300'}`}>{reciter.name}</p>
+                                            <p className={`font-bold text-sm ${selectedReciterId === reciter.id ? 'text-raudhah-teal' : 'text-slate-300'}`}>{reciter.name}</p>
                                             <p className="text-[10px] text-slate-500">{reciter.style}</p>
                                         </div>
-                                        {selectedReciterId === reciter.id && <i className="fa-solid fa-check text-cyan-400 text-xs"></i>}
+                                        {selectedReciterId === reciter.id && <i className="fa-solid fa-check text-raudhah-teal text-xs"></i>}
                                     </button>
                                 ))}
                             </div>
@@ -392,15 +392,15 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                             <div className="bg-slate-900/50 p-4 rounded-2xl border border-slate-800 text-center">
                                 <p className="text-slate-500 text-sm mb-4">Pilihan Tema</p>
                                 <div className="grid grid-cols-2 gap-4">
-                                    <button onClick={() => setTheme?.('light')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'light' ? 'bg-white border-cyan-500 text-black' : 'border-slate-800 text-slate-500'}`}>
+                                    <button onClick={() => setTheme?.('light')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'light' ? 'bg-white border-raudhah-teal text-black' : 'border-slate-800 text-slate-500'}`}>
                                         <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center">☀️</div>
                                         <span className="text-xs font-bold">Light</span>
                                     </button>
-                                    <button onClick={() => setTheme?.('dark')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'dark' ? 'bg-slate-900 border-cyan-500 text-white' : 'border-slate-800 text-slate-500'}`}>
+                                    <button onClick={() => setTheme?.('dark')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'dark' ? 'bg-slate-900 border-raudhah-teal text-white' : 'border-slate-800 text-slate-500'}`}>
                                         <div className="w-8 h-8 rounded-full bg-slate-900 flex items-center justify-center">🌙</div>
                                         <span className="text-xs font-bold">Dark</span>
                                     </button>
-                                    <button onClick={() => setTheme?.('raudhah')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'raudhah' ? 'bg-[#F5F7FA] border-cyan-500 text-[#1A237E]' : 'border-slate-800 text-slate-500'}`}>
+                                    <button onClick={() => setTheme?.('raudhah')} className={`p-4 rounded-xl border flex flex-col items-center gap-2 ${theme === 'raudhah' ? 'bg-[#F5F7FA] border-raudhah-teal text-[#1A237E]' : 'border-slate-800 text-slate-500'}`}>
                                         <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center">💠</div>
                                         <span className="text-xs font-bold">Raudhah</span>
                                     </button>

@@ -78,18 +78,18 @@ const TadabburMode: React.FC<TadabburModeProps> = ({
       </div>
 
       <div className="rounded-2xl border border-slate-700 bg-slate-900 p-5">
-        <p className="mb-2 text-xs font-bold uppercase tracking-wider text-cyan-300">Soalan Renungan</p>
+        <p className="mb-2 text-xs font-bold uppercase tracking-wider text-raudhah-teal">Soalan Renungan</p>
         <p className="mb-4 text-lg font-semibold text-white">{question}</p>
         <textarea
           value={answer}
           onChange={(event) => setAnswer(event.target.value)}
           placeholder="Tulis renungan anda di sini..."
-          className="mb-4 h-36 w-full rounded-xl border border-slate-700 bg-slate-800 p-4 text-sm text-white outline-none transition-colors focus:border-cyan-500"
+          className="mb-4 h-36 w-full rounded-xl border border-slate-700 bg-slate-800 p-4 text-sm text-white outline-none transition-colors focus:border-raudhah-teal"
         />
         <button
           type="button"
           onClick={saveCurrentReflection}
-          className="inline-flex items-center gap-2 rounded-xl bg-cyan-500 px-4 py-2.5 text-sm font-bold text-black transition-colors hover:bg-cyan-400"
+          className="inline-flex items-center gap-2 rounded-xl bg-raudhah-teal px-4 py-2.5 text-sm font-bold text-black transition-colors hover:bg-raudhah-teal"
         >
           <Save className="h-4 w-4" />
           Simpan Renungan
@@ -107,7 +107,7 @@ const TadabburMode: React.FC<TadabburModeProps> = ({
           <div className="space-y-3">
             {recentEntries.map((entry) => (
               <div key={entry.id} className="rounded-xl border border-slate-700 bg-slate-800/70 p-3">
-                <p className="text-xs font-bold text-cyan-300">{entry.question}</p>
+                <p className="text-xs font-bold text-raudhah-teal">{entry.question}</p>
                 <p className="mt-1 text-sm text-slate-200">{entry.answer}</p>
                 <p className="mt-2 text-[11px] text-slate-500">
                   {new Date(entry.createdAt).toLocaleString('ms-MY')}

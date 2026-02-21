@@ -1,8 +1,8 @@
 # 📊 QuranPulse v6.0 - Project Status
 
-> **Last Updated**: 2026-02-19T16:00:00+08:00
+> **Last Updated**: 2026-02-21T12:30:00+08:00
 > **Current Phase**: PRODUCTION (Active Development)
-> **Sprint**: Premium Landing Page Polish + AI Integration
+> **Sprint**: Landing Page Review Fixes + Ramadan Prep
 
 ---
 
@@ -28,6 +28,8 @@
 | Supabase        | *.supabase.co         | 🟢 Live |
 | Edge Functions  | 8 deployed            | 🟢 Live |
 
+**Deploy Method**: `vercel --prod` (CLI) — auto-deploy from GitHub webhook not reliable for unverified commits.
+
 ---
 
 ## 📦 Module Completion Status
@@ -38,25 +40,30 @@
 | ------------------- | ----------- | --------------------- |
 | Dashboard           | ✅ Complete | Pulse Command Center  |
 | Quran Reader        | ✅ Complete | 9 Tier features       |
-| Smart Deen          | ✅ Complete | Gemini 1.5 Flash      |
+| Smart Deen          | ✅ Complete | Gemini 3 Flash        |
 | Iqra Digital        | ✅ Complete | Interactive learning  |
 | Ibadah (Prayer)     | ✅ Complete | Prayer times + Qibla  |
 | Profile             | ✅ Complete | User management       |
 | Admin               | ✅ Complete | CRM + Content CMS     |
+| Landing Page        | ✅ Complete | Raudhah theme, 13 sections, reviewed & polished |
 
-### Quran Module Features (9 Features)
+### Landing Page Components (13 Sections)
 
-| Feature             | Tier | Status                   |
-| ------------------- | ---- | ------------------------ |
-| Semantic Search     | T1   | ✅ Deployed              |
-| Daily Ayat Widget   | T1   | ✅ Complete              |
-| Khatam Tracker      | T1   | ✅ Complete              |
-| Tadabbur AI Mode    | T2   | ✅ Complete              |
-| Voice-Active Reader | T2   | ✅ ASR Integrated        |
-| Word Root Explorer  | T2   | ✅ Complete              |
-| Digital Mushaf      | T3   | ✅ Complete              |
-| Iqra Graduation     | T3   | ✅ Complete              |
-| Smart Deen Crossover| T3   | ✅ Complete              |
+| Section             | Status      | Notes                 |
+| ------------------- | ----------- | --------------------- |
+| HeroSection         | ✅ Polished | useMemo particles, 20 dots |
+| PainTransformation  | ✅ Complete | Before/after showcase |
+| FeatureShowcase     | ✅ Polished | Standardized spacing + aria-label |
+| AIAgentShowcase     | ✅ Complete | Dark theme            |
+| WhatsAppProactive   | ✅ Complete | Proactive reminders   |
+| OpenClawShowcase    | ✅ Polished | Standardized spacing + default export |
+| QwerDemoSection     | ✅ Complete | Audio waveform demo   |
+| ComparisonSection   | ✅ Rewritten| Honest nuanced comparison + disclaimer |
+| PremiumTestimonials | ✅ Polished | Local SVG avatars (no external deps) |
+| PricingTable        | ✅ Polished | Standardized spacing  |
+| FAQSection          | ✅ Complete | Accordion FAQ         |
+| FinalCta            | ✅ Complete | Bottom CTA            |
+| GlowFooter          | ✅ Complete | Newsletter + socials  |
 
 ### Edge Functions (8 Deployed)
 
@@ -83,6 +90,7 @@
 | #4  | HIGH     | SSH: PasswordAuth still `yes`      | ⚠️ Open    |
 | #5  | MEDIUM   | Qdrant exposed on 0.0.0.0         | ⚠️ Open    |
 | #6  | LOW      | UFW port 18789 redundant           | ⚠️ Open    |
+| #7  | LOW      | Vercel auto-deploy not triggering  | ⚠️ Known   |
 
 ---
 
@@ -90,13 +98,12 @@
 
 | Date       | Commit    | Description                                      |
 | ---------- | --------- | ------------------------------------------------ |
+| 2026-02-21 | 355e1fd   | Landing page review fixes (10 issues) + Vercel CLI deploy ✅ |
 | 2026-02-19 | 2726604   | Premium landing page polish + Vercel deploy ✅   |
 | 2026-02-18 | latest    | AI Tadabbur + Ustaz AI EQ + Leaderboard demo     |
 | 2026-02-18 | latest    | Landing page push to GitHub via MCP               |
 | 2026-02-10 | latest    | VPS service conflict fix + doc alignment          |
-| 2026-02-09 | latest    | Competitor analysis deep dive                     |
 | 2026-02-08 | latest    | Fix loading & build issues, CORS fix              |
-| 2026-02-07 | latest    | Fix TypeScript/CSS import, Vercel deploy          |
 
 ---
 
@@ -105,18 +112,22 @@
 ### Active Tasks
 
 - [x] Premium Landing Page Polish (RM2M Standard)
+- [x] Landing Page Review Audit (10/11 items fixed)
 - [x] AI Tadabbur Mode integration
 - [x] Ustaz AI Emotional Intelligence
-- [x] Vercel deployment verification
-- [ ] Documentation alignment (in progress)
+- [x] Vercel deployment via CLI
+- [x] Documentation alignment
 
 ### Completed This Sprint
 
-- [x] Landing page premium components (PremiumTestimonials, GlowFooter)
-- [x] Hero text overflow fix
-- [x] Lazy loading for heavy sections
-- [x] Leaderboard demo data seeding
-- [x] Vercel auto-deploy confirmed LIVE
+- [x] Spacing standardization (3 sections)
+- [x] Particle flicker fix + count reduction
+- [x] Section IDs for all 13 sections
+- [x] Mobile menu click-outside + Escape key
+- [x] External avatar URLs → local SVG
+- [x] Honest competitor comparison rewrite
+- [x] Export standardization (all default exports)
+- [x] Vercel CLI production deploy confirmed
 
 ---
 
@@ -125,6 +136,7 @@
 | Metric           | Value           | Target      |
 | ---------------- | --------------- | ----------- |
 | Build Status     | ✅ Passing      | ✅ Passing  |
+| TypeScript       | 0 errors        | 0 errors    |
 | Test Coverage    | ~65%            | 80%         |
 | Edge Functions   | 8/8 deployed    | 8/8         |
 | Production       | 99.9%           | 99.9%       |
@@ -133,15 +145,17 @@
 
 ## 🔜 Next Milestones
 
-1. **v6.1** - Community Features (Leaderboards — demo data seeded)
-2. **v6.2** - Digital Mushaf Enhancement (Interactive Tajweed)
-3. **v6.3** - AI Tadabbur v2 + Voice-AI Integration
+1. **Ramadan Soft Launch** (28 Feb 2026) — Final polish + community testing
+2. **v6.1** - Community Features (Leaderboards — demo data seeded)
+3. **v6.2** - Digital Mushaf Enhancement (Interactive Tajweed)
 4. **v7.0** - Native Mobile Apps
 
 ---
 
 **For Agent Reference**:
-- Project is stable and actively deployed on Vercel.
-- Landing page premium polish complete (2026-02-19).
+- Project is stable and deployed on Vercel via CLI (`vercel --prod`).
+- Landing page audit complete — 10/11 issues fixed (2026-02-21).
+- Auto-deploy from GitHub not reliable — always use `vercel --prod` CLI.
 - AI features integrated (Tadabbur, EQ Ustaz AI).
-- Focus on testing coverage and mobile responsiveness.
+- Design system: "Raudhah" theme (teal, gold, ink, ivory).
+- Focus: Ramadan soft launch readiness.

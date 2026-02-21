@@ -76,7 +76,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                     </div>
                     <h2 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Lesson Complete!</h2>
                     <p className="text-slate-500 mb-8">You've mastered {activeLesson.words.length} new words.</p>
-                    <button onClick={closeLesson} className="w-full py-3 bg-cyan-500 hover:bg-cyan-400 text-white rounded-xl font-bold transition-all shadow-lg shadow-cyan-500/30">
+                    <button onClick={closeLesson} className="w-full py-3 bg-raudhah-teal hover:bg-raudhah-teal text-white rounded-xl font-bold transition-all shadow-lg shadow-cyan-500/30">
                         Continue
                     </button>
                 </div>
@@ -84,7 +84,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                 <>
                     {/* Progress Bar */}
                     <div className="w-full h-1.5 bg-slate-700/30 rounded-full mb-8 overflow-hidden">
-                        <div className="h-full bg-cyan-500 transition-all duration-300 w-[var(--progress-width)]" 
+                        <div className="h-full bg-raudhah-teal transition-all duration-300 w-[var(--progress-width)]" 
                         // eslint-disable-next-line
                         style={{ '--progress-width': `${progress}%` } as React.CSSProperties}></div>
                     </div>
@@ -94,7 +94,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                         <h3 className={`text-5xl font-arabic mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>{word.arabic}</h3>
                         
                         <div className={`transition-all duration-300 ${showTranslation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                            <p className="text-xl text-cyan-400 font-bold mb-2">{word.transliteration}</p>
+                            <p className="text-xl text-raudhah-teal font-bold mb-2">{word.transliteration}</p>
                             <p className="text-lg text-slate-500">{word.translation}</p>
                         </div>
                         
@@ -113,7 +113,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                             disabled={!showTranslation}
                             className={`flex-1 py-3 rounded-xl font-bold transition-all ${
                                 showTranslation 
-                                ? 'bg-cyan-500 text-white hover:bg-cyan-400 shadow-lg shadow-cyan-500/30' 
+                                ? 'bg-raudhah-teal text-white hover:bg-raudhah-teal shadow-lg shadow-cyan-500/30' 
                                 : 'bg-slate-700/50 text-slate-500 cursor-not-allowed'
                             }`}
                         >
@@ -139,7 +139,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Vocab Builder</h2>
-        <span className="text-xs text-cyan-400 font-bold uppercase tracking-wider">ThinkQuran Style</span>
+        <span className="text-xs text-raudhah-teal font-bold uppercase tracking-wider">ThinkQuran Style</span>
       </div>
 
       <div className="grid gap-4">
@@ -149,8 +149,8 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                 onClick={() => startLesson(lesson)}
                 className={`p-4 rounded-2xl border cursor-pointer transition-all hover:scale-[1.02] ${
                     isDark 
-                    ? 'bg-slate-900/40 border-slate-700 hover:border-cyan-500/50' 
-                    : 'bg-white border-slate-200 hover:border-cyan-500/50'
+                    ? 'bg-slate-900/40 border-slate-700 hover:border-raudhah-teal/50' 
+                    : 'bg-white border-slate-200 hover:border-raudhah-teal/50'
                 }`}
             >
                 <div className="flex items-center gap-4">
@@ -166,7 +166,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                         <p className="text-xs text-slate-500">{lesson.words.length} words • {lesson.difficulty}</p>
                     </div>
                     <div className="ml-auto">
-                        <i className="fa-solid fa-play-circle text-2xl text-cyan-500 opacity-50 group-hover:opacity-100"></i>
+                        <i className="fa-solid fa-play-circle text-2xl text-raudhah-teal opacity-50 group-hover:opacity-100"></i>
                     </div>
                 </div>
             </div>

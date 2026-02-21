@@ -42,7 +42,7 @@ export const InfaqModal: React.FC<InfaqModalProps> = ({ isOpen, onClose }) => {
                         {/* Header */}
                         <div className="p-6 border-b border-white/5 flex justify-between items-center bg-white/5">
                             <h3 className="text-xl font-bold text-white flex items-center gap-2">
-                                <span className="text-cyan-400">Support</span> & Collaborate
+                                <span className="text-raudhah-teal">Support</span> & Collaborate
                             </h3>
                             <button
                                 onClick={onClose}
@@ -58,7 +58,7 @@ export const InfaqModal: React.FC<InfaqModalProps> = ({ isOpen, onClose }) => {
                         <div className="flex p-2 gap-2 bg-black/20">
                             <button
                                 onClick={() => setActiveTab('infaq')}
-                                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${activeTab === 'infaq' ? 'bg-cyan-600/20 text-cyan-400 ring-1 ring-cyan-500/50' : 'text-slate-500 hover:text-slate-300'}`}
+                                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${activeTab === 'infaq' ? 'bg-cyan-600/20 text-raudhah-teal ring-1 ring-raudhah-teal/50' : 'text-slate-500 hover:text-slate-300'}`}
                             >
                                 <Heart size={16} /> Infaq & Sedekah
                             </button>
@@ -74,13 +74,13 @@ export const InfaqModal: React.FC<InfaqModalProps> = ({ isOpen, onClose }) => {
                         <div className="p-6 overflow-y-auto custom-scrollbar">
                             {activeTab === 'infaq' ? (
                                 <div className="space-y-6 text-center">
-                                    <div className="w-16 h-16 mx-auto bg-cyan-500/10 rounded-full flex items-center justify-center text-cyan-400 mb-4 animate-pulse">
+                                    <div className="w-16 h-16 mx-auto bg-raudhah-teal/10 rounded-full flex items-center justify-center text-raudhah-teal mb-4 animate-pulse">
                                         <Heart size={32} fill="currentColor" />
                                     </div>
                                     <h4 className="text-2xl font-bold text-white">Power the Ummah's Technology</h4>
                                     <p className="text-slate-400 text-sm">
                                         Your contribution helps sustain our AI servers, content creation, and keeps core features free for everyone.
-                                        Be part of this <span className="text-cyan-400 font-bold">Jariyah</span>.
+                                        Be part of this <span className="text-raudhah-teal font-bold">Jariyah</span>.
                                     </p>
 
                                     <div className="bg-white/5 p-6 rounded-2xl border border-white/10 mt-6">
@@ -99,9 +99,9 @@ export const InfaqModal: React.FC<InfaqModalProps> = ({ isOpen, onClose }) => {
                                     </div>
 
                                     <div className="grid grid-cols-3 gap-2 mt-4 text-xs text-cyan-200/50">
-                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-cyan-500/10">Server Costs</div>
-                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-cyan-500/10">AI Tokens</div>
-                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-cyan-500/10">R&D</div>
+                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-raudhah-teal/10">Server Costs</div>
+                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-raudhah-teal/10">AI Tokens</div>
+                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-raudhah-teal/10">R&D</div>
                                     </div>
                                 </div>
                             ) : (

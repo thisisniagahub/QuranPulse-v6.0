@@ -42,7 +42,7 @@ const NavLottieIcon: React.FC<NavLottieIconProps> = ({
     return (
       <div
         className={`flex items-center justify-center transition-all duration-300 ${
-          isActive ? 'text-cyan-400' : 'text-slate-500'
+          isActive ? 'text-raudhah-teal' : 'text-slate-500'
         }`}
         style={{ width: size, height: size }}
       >
@@ -61,7 +61,7 @@ const NavLottieIcon: React.FC<NavLottieIconProps> = ({
       {/* Glow Effect when Active */}
       {isActive && (
         <div
-          className="absolute inset-0 rounded-full bg-cyan-400/30 blur-xl animate-pulse pointer-events-none"
+          className="absolute inset-0 rounded-full bg-raudhah-teal/30 blur-xl animate-pulse pointer-events-none"
           style={{ transform: 'scale(1.5)' }}
         />
       )}

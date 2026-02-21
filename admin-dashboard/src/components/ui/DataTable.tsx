@@ -80,7 +80,7 @@ export function DataTable<T extends { id: string }>({
                 const initials = (row as any).full_name?.split(' ').map((n: string) => n[0]).join('').slice(0, 2) || '??'
                 return (
                     <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-xs">
+                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-raudhah-teal to-emerald-700 flex items-center justify-center text-white font-bold text-xs">
                             {initials.toUpperCase()}
                         </div>
                         <div>
@@ -124,7 +124,7 @@ export function DataTable<T extends { id: string }>({
             <div className="relative overflow-x-auto">
                 {loading && (
                     <div className="absolute inset-0 bg-slate-900/50 backdrop-blur-sm flex items-center justify-center z-10">
-                        <div className="animate-spin h-8 w-8 border-2 border-cyan-500 border-t-transparent rounded-full"></div>
+                        <div className="animate-spin h-8 w-8 border-2 border-raudhah-teal border-t-transparent rounded-full"></div>
                     </div>
                 )}
                 <table className="data-table">
@@ -172,7 +172,7 @@ export function DataTable<T extends { id: string }>({
                                                 {onEdit && (
                                                     <button
                                                         onClick={(e) => { e.stopPropagation(); onEdit(row); }}
-                                                        className="p-2 rounded-lg text-slate-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors"
+                                                        className="p-2 rounded-lg text-slate-400 hover:text-raudhah-teal hover:bg-raudhah-teal/10 transition-colors"
                                                     >
                                                         Edit
                                                     </button>

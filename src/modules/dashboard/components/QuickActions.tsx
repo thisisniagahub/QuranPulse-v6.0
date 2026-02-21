@@ -10,11 +10,11 @@ const quickActions = [
   { id: 'events', label: 'Acara', icon: 'fa-ticket', color: 'blue' }
 ];
 
-interface CyberQuickActionsProps {
+interface QuickActionsProps {
     onAction: (id: string) => void;
 }
 
-const CyberQuickActions: React.FC<CyberQuickActionsProps> = ({ onAction }) => {
+const QuickActions: React.FC<QuickActionsProps> = ({ onAction }) => {
   return (
     <div className="flex gap-4 overflow-x-auto pb-4 pt-2 px-1 no-scrollbar -mx-4 md:mx-0 px-4 md:px-0 scroll-smooth">
       {quickActions.map((action, index) => (
@@ -45,4 +45,4 @@ const CyberQuickActions: React.FC<CyberQuickActionsProps> = ({ onAction }) => {
   );
 };
 
-export default CyberQuickActions;
+export default QuickActions;

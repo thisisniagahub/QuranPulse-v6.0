@@ -152,13 +152,13 @@ const Ibadah: React.FC = () => {
                 <div className="absolute inset-0 bg-pattern-dots-raudhah opacity-5 pointer-events-none"></div>
 
                 {/* Center Dot */}
-                <div className="absolute w-6 h-6 bg-cyan-500 rounded-full shadow-inner shadow-white/50" />
+                <div className="absolute w-6 h-6 bg-raudhah-teal rounded-full shadow-inner shadow-white/50" />
             </motion.div>
 
             {/* Qibla Angle Display */}
             {qiblaAngle !== null && (
                 <div className="absolute bottom-10 flex flex-col items-center">
-                    <div className="text-cyan-400 font-mono text-xl font-bold tracking-widest">
+                    <div className="text-raudhah-teal font-mono text-xl font-bold tracking-widest">
                         {Math.round(qiblaAngle)}°
                     </div>
                     {/* Waktu dalam Qiblat */}
@@ -256,7 +256,7 @@ const Ibadah: React.FC = () => {
 
                     <div className="flex gap-4">
                         <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
-                            <i className="fa-solid fa-map-location-dot mr-2 text-cyan-400"></i>NAVIGASI
+                            <i className="fa-solid fa-map-location-dot mr-2 text-raudhah-teal"></i>NAVIGASI
                         </button>
                         <button className="flex-1 py-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-[10px] font-bold transition-all">
                             <i className="fa-brands fa-whatsapp mr-2 text-emerald-400"></i>AJK MASJID
@@ -326,7 +326,7 @@ const Ibadah: React.FC = () => {
             <div className="bg-[#0c224b]/60 backdrop-blur-xl p-1.5 rounded-2xl flex flex-wrap justify-center gap-2 mb-6 border border-white/10 relative z-10 shrink-0 shadow-lg mx-auto max-w-full">
                 <button
                     onClick={() => setViewMode('QIBLA')}
-                    className={`px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all border ${viewMode === 'QIBLA' ? 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.2)]' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all border ${viewMode === 'QIBLA' ? 'bg-raudhah-teal/10 text-raudhah-teal border-raudhah-teal/20 shadow-[0_0_15px_rgba(34,211,238,0.2)]' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
                 >
                     <i className="fa-solid fa-compass mr-2"></i>Kiblat
                 </button>
@@ -366,7 +366,7 @@ const Ibadah: React.FC = () => {
                                     <motion.div
                                         animate={{ rotate: 360 }}
                                         transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                                        className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full mb-4"
+                                        className="w-16 h-16 border-4 border-raudhah-teal border-t-transparent rounded-full mb-4"
                                     />
                                     <p className="text-slate-400">Mencari lokasi anda...</p>
                                 </div>
@@ -378,7 +378,7 @@ const Ibadah: React.FC = () => {
                                     <p className="text-slate-300 mb-4">Gagal mengesan lokasi secara automatik.</p>
                                     <button
                                         onClick={() => window.location.reload()}
-                                        className="px-6 py-2 bg-cyan-500 text-black rounded-full font-bold hover:bg-cyan-400 transition-colors"
+                                        className="px-6 py-2 bg-raudhah-teal text-black rounded-full font-bold hover:bg-raudhah-teal transition-colors"
                                     >
                                         Cuba Lagi
                                     </button>
@@ -395,7 +395,7 @@ const Ibadah: React.FC = () => {
                                     {isDeviceOrientationSupported && (
                                         <button
                                             onClick={requestDeviceOrientationPermission}
-                                            className="px-6 py-3 bg-cyan-500 text-black font-bold rounded-lg shadow-md hover:bg-cyan-400 transition-colors"
+                                            className="px-6 py-3 bg-raudhah-teal text-black font-bold rounded-lg shadow-md hover:bg-raudhah-teal transition-colors"
                                         >
                                             Benarkan Sensor Gerakan
                                         </button>
@@ -408,7 +408,7 @@ const Ibadah: React.FC = () => {
                                     {renderCompass()}
                                     <div className="text-center mt-8">
                                         <p className="text-slate-300 text-lg">
-                                            Arah Kiblat: <span className="text-cyan-400 font-bold">{qiblaAngle?.toFixed(1) || '--'}°</span>
+                                            Arah Kiblat: <span className="text-raudhah-teal font-bold">{qiblaAngle?.toFixed(1) || '--'}°</span>
                                         </p>
                                         <p className="text-slate-500 text-sm">
                                             Heading Anda: <span className="font-mono">{deviceHeading?.toFixed(1) || '--'}°</span>
@@ -490,13 +490,13 @@ const Ibadah: React.FC = () => {
                                             setSelectedZone(zone.code);
                                             setShowZoneModal(false);
                                         }}
-                                        className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${selectedZone === zone.code ? 'bg-cyan-500/20 border border-cyan-500/50' : 'hover:bg-slate-800 border border-transparent'}`}
+                                        className={`w-full text-left p-3 rounded-lg mb-1 transition-colors ${selectedZone === zone.code ? 'bg-raudhah-teal/10 border border-raudhah-teal/50' : 'hover:bg-slate-800 border border-transparent'}`}
                                     >
                                         <div className="flex justify-between items-center">
-                                            <span className={`font-bold ${selectedZone === zone.code ? 'text-cyan-400' : 'text-slate-200'}`}>
+                                            <span className={`font-bold ${selectedZone === zone.code ? 'text-raudhah-teal' : 'text-slate-200'}`}>
                                                 {zone.code} - {zone.state}
                                             </span>
-                                            {selectedZone === zone.code && <i className="fa-solid fa-check text-cyan-400"></i>}
+                                            {selectedZone === zone.code && <i className="fa-solid fa-check text-raudhah-teal"></i>}
                                         </div>
                                         <p className="text-xs text-slate-500 mt-1 line-clamp-1">{zone.description}</p>
                                     </button>

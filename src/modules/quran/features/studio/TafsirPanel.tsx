@@ -88,13 +88,13 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-950/90 backdrop-blur-xl z-[71] flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.5)] border-l border-cyan-500/20"
+            className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-950/90 backdrop-blur-xl z-[71] flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.5)] border-l border-raudhah-teal/20"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-purple-900/40 to-cyan-900/40 p-5 border-b border-cyan-500/20 backdrop-blur-md sticky top-0 z-10">
+            <div className="bg-gradient-to-r from-purple-900/40 to-cyan-900/40 p-5 border-b border-raudhah-teal/20 backdrop-blur-md sticky top-0 z-10">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
+                  <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-purple-400 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
                     <span>📖</span>
                     Tafsir & Huraian
                   </h3>
@@ -120,7 +120,7 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
 
             {/* Tafsir Source Selector */}
             <div className="p-4 border-b border-white/5 bg-black/20">
-              <p className="text-[10px] text-cyan-500 uppercase tracking-widest mb-3 font-bold">
+              <p className="text-[10px] text-raudhah-teal uppercase tracking-widest mb-3 font-bold">
                 PILIH SUMBER
               </p>
               <div className="flex gap-2 overflow-x-auto pb-2 no-scrollbar">
@@ -129,7 +129,7 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
                     key={source.id}
                     onClick={() => setSelectedTafsir(source)}
                     className={`px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition-all border ${selectedTafsir.id === source.id
-                        ? 'bg-cyan-500/20 text-cyan-300 border-cyan-500/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
+                        ? 'bg-raudhah-teal/10 text-raudhah-teal border-raudhah-teal/50 shadow-[0_0_15px_rgba(6,182,212,0.2)]'
                         : 'bg-slate-800/50 text-slate-400 border-transparent hover:bg-slate-700/50'
                       }`}
                   >
@@ -172,10 +172,10 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
             </div>
 
             {/* Footer */}
-            <div className="p-4 border-t border-cyan-500/20 bg-black/40 backdrop-blur-xl">
+            <div className="p-4 border-t border-raudhah-teal/20 bg-black/40 backdrop-blur-xl">
               <button
                 onClick={onClose}
-                className="w-full py-3 bg-slate-800/50 text-slate-300 font-bold rounded-xl hover:bg-cyan-900/50 hover:text-cyan-400 hover:border hover:border-cyan-500/50 transition-all"
+                className="w-full py-3 bg-slate-800/50 text-slate-300 font-bold rounded-xl hover:bg-cyan-900/50 hover:text-raudhah-teal hover:border hover:border-raudhah-teal/50 transition-all"
               >
                 Tutup Panel
               </button>

@@ -48,7 +48,7 @@ const MutawwifAudio: React.FC = () => {
                 <button
                     onClick={() => handleModeSwitch('tawaf')}
                     className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${mode === 'tawaf'
-                        ? 'bg-cyan-500 text-black'
+                        ? 'bg-raudhah-teal text-black'
                         : 'text-slate-400 hover:text-white'
                         }`}
                 >
@@ -57,7 +57,7 @@ const MutawwifAudio: React.FC = () => {
                 <button
                     onClick={() => handleModeSwitch('sai')}
                     className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${mode === 'sai'
-                        ? 'bg-cyan-500 text-black'
+                        ? 'bg-raudhah-teal text-black'
                         : 'text-slate-400 hover:text-white'
                         }`}
                 >
@@ -99,7 +99,7 @@ const MutawwifAudio: React.FC = () => {
                         onClick={() => setCurrentRound(i + 1)}
                         aria-label={`Pergi ke pusingan ${i + 1}`}
                         className={`flex-1 h-2 rounded-full transition-all ${i + 1 === currentRound
-                            ? 'bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]'
+                            ? 'bg-raudhah-teal shadow-[0_0_10px_rgba(34,211,238,0.5)]'
                             : i + 1 < currentRound
                                 ? 'bg-cyan-600'
                                 : 'bg-slate-700'
@@ -110,7 +110,7 @@ const MutawwifAudio: React.FC = () => {
 
             {/* Current Round Display */}
             <div className="text-center">
-                <span className="text-5xl font-bold text-cyan-400">{currentRound}</span>
+                <span className="text-5xl font-bold text-raudhah-teal">{currentRound}</span>
                 <span className="text-2xl text-slate-400">/{totalRounds}</span>
                 <p className="text-sm text-slate-400 mt-1">
                     {mode === 'tawaf' ? 'Pusingan' : `Dari ${SAI_DOA[currentRound - 1]?.from?.toUpperCase()} ke ${SAI_DOA[currentRound - 1]?.to?.toUpperCase()}`}
@@ -173,7 +173,7 @@ const MutawwifAudio: React.FC = () => {
 
                 <button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="p-4 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-black shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all"
+                    className="p-4 rounded-full bg-gradient-to-r from-raudhah-teal to-blue-500 text-black shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all"
                 >
                     {isPlaying ? <Pause size={28} /> : <Play size={28} className="ml-1" />}
                 </button>
@@ -199,7 +199,7 @@ const MutawwifAudio: React.FC = () => {
             {/* Hands-Free Mode Hint */}
             <div className="text-center py-3 bg-slate-800/30 rounded-lg">
                 <p className="text-xs text-slate-500">
-                    💡 <span className="text-cyan-400">Mod Hands-Free:</span> Pakai earphone, simpan telefon dalam poket, dan fokus pada Kaabah
+                    💡 <span className="text-raudhah-teal">Mod Hands-Free:</span> Pakai earphone, simpan telefon dalam poket, dan fokus pada Kaabah
                 </p>
             </div>
         </div>

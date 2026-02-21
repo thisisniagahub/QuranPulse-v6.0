@@ -108,7 +108,7 @@ export const ErrorFallback: React.FC<ErrorFallbackProps> = ({
                 {onRetry && (
                     <button
                         onClick={onRetry}
-                        className="flex items-center gap-2 px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-medium rounded-lg transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 bg-raudhah-teal hover:bg-raudhah-teal text-slate-900 font-medium rounded-lg transition-colors"
                     >
                         <RefreshCw className="w-4 h-4" aria-hidden="true" />
                         Try Again

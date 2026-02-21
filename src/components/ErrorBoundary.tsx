@@ -138,10 +138,10 @@ class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="min-h-screen w-full bg-[#031a38] relative overflow-hidden flex items-center justify-center px-4 py-8">
           <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_20%_20%,rgba(34,211,238,0.18),transparent_45%),radial-gradient(circle_at_80%_85%,rgba(139,92,246,0.14),transparent_40%)]" />
-          <div className="relative w-full max-w-md rounded-2xl border border-cyan-400/20 bg-[#0c224b]/70 backdrop-blur-xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.45)] text-center">
+          <div className="relative w-full max-w-md rounded-2xl border border-raudhah-teal/20 bg-[#0c224b]/70 backdrop-blur-xl p-6 sm:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.45)] text-center">
             <div className="inline-flex items-center gap-3 rounded-full border border-white/10 bg-black/20 px-4 py-2 mb-5">
               <img loading="lazy" src="/logo-primary.png" alt="QuranPulse" className="h-8 w-8 object-contain" />
-              <span className="text-sm font-bold tracking-wide text-cyan-300">QuranPulse</span>
+              <span className="text-sm font-bold tracking-wide text-raudhah-teal">QuranPulse</span>
             </div>
 
             <h2 className="text-xl sm:text-2xl font-extrabold text-white">
@@ -161,7 +161,7 @@ class ErrorBoundary extends Component<Props, State> {
             <button
               type="button"
               onClick={this.resetBoundary}
-              className="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-bold text-slate-950 bg-gradient-to-r from-cyan-400 to-cyan-300 hover:from-cyan-300 hover:to-cyan-200 transition-all shadow-[0_0_24px_rgba(34,211,238,0.35)]"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-bold text-slate-950 bg-gradient-to-r from-raudhah-teal to-cyan-300 hover:from-cyan-300 hover:to-cyan-200 transition-all shadow-[0_0_24px_rgba(34,211,238,0.35)]"
             >
               Cuba Lagi
             </button>

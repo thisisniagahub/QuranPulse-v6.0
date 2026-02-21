@@ -107,7 +107,7 @@ const RealtimeChatDemo: React.FC<RealtimeChatDemoProps> = ({
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-white/10 bg-slate-800/50">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-raudhah-teal to-emerald-700 flex items-center justify-center">
                         <MessageCircle size={20} className="text-white" />
                     </div>
                     <div>
@@ -151,7 +151,7 @@ const RealtimeChatDemo: React.FC<RealtimeChatDemoProps> = ({
                             >
                                 <div
                                     className={`max-w-[80%] px-4 py-2 rounded-2xl ${msg.message_type === 'outgoing'
-                                        ? 'bg-gradient-to-br from-cyan-500 to-blue-600 text-white rounded-br-md'
+                                        ? 'bg-gradient-to-br from-raudhah-teal to-emerald-700 text-white rounded-br-md'
                                         : 'bg-slate-800 text-slate-100 rounded-bl-md'
                                         }`}
                                 >
@@ -185,12 +185,12 @@ const RealtimeChatDemo: React.FC<RealtimeChatDemoProps> = ({
                         onKeyPress={handleKeyPress}
                         placeholder="Type a message..."
                         disabled={status !== 'connected'}
-                        className="flex-1 bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition-colors disabled:opacity-50"
+                        className="flex-1 bg-slate-800 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-raudhah-teal transition-colors disabled:opacity-50"
                     />
                     <button
                         onClick={handleSend}
                         disabled={status !== 'connected' || !inputValue.trim()}
-                        className="p-3 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="p-3 bg-gradient-to-br from-raudhah-teal to-emerald-700 rounded-xl text-white hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <Send size={18} />
                     </button>

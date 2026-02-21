@@ -117,8 +117,8 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
                         {/* Handle & Close */}
                         <div className="flex items-center justify-between mb-4">
                             <div className="flex items-center gap-2">
-                                <div className="h-2 w-2 rounded-full bg-cyan-500 animate-pulse"></div>
-                                <span className="text-xs font-bold text-cyan-500 tracking-[0.2em] uppercase">Verse Studio</span>
+                                <div className="h-2 w-2 rounded-full bg-raudhah-teal animate-pulse"></div>
+                                <span className="text-xs font-bold text-raudhah-teal tracking-[0.2em] uppercase">Verse Studio</span>
                             </div>
                             <button
                                 onClick={onClose}
@@ -160,8 +160,8 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
 
                         {tab === 'ANALYSIS' && (
                             <div className="space-y-6 animate-fade-in">
-                                <div className="p-4 rounded-xl bg-slate-900 border border-cyan-500/20 flex items-start gap-3 mb-6">
-                                    <i className="fa-solid fa-circle-info text-cyan-500 mt-1"></i>
+                                <div className="p-4 rounded-xl bg-slate-900 border border-raudhah-teal/20 flex items-start gap-3 mb-6">
+                                    <i className="fa-solid fa-circle-info text-raudhah-teal mt-1"></i>
                                     <p className="text-slate-300 text-xs leading-relaxed">
                                         Word Root Explorer analyzes the triliteral roots of words in this verse to reveal deeper semantic connections across the Quran.
                                     </p>
@@ -229,7 +229,7 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
 
                                 <div className="relative w-full pt-2">
                                     <input
-                                        className="w-full h-12 rounded-full bg-slate-900 border border-white/10 pl-5 pr-12 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-cyan-500/50 transition-all"
+                                        className="w-full h-12 rounded-full bg-slate-900 border border-white/10 pl-5 pr-12 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-raudhah-teal/50 transition-all"
                                         placeholder="Type your question..."
                                         type="text"
                                         value={input}
@@ -240,7 +240,7 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
                                     <button
                                         onClick={handleSend}
                                         disabled={isLoading || !input.trim()}
-                                        className="absolute right-1.5 top-3.5 h-9 w-9 rounded-full bg-cyan-500/10 flex items-center justify-center text-cyan-500 hover:bg-cyan-500 hover:text-black transition-colors disabled:opacity-50"
+                                        className="absolute right-1.5 top-3.5 h-9 w-9 rounded-full bg-raudhah-teal/10 flex items-center justify-center text-raudhah-teal hover:bg-raudhah-teal hover:text-black transition-colors disabled:opacity-50"
                                     >
                                         {isLoading ? (
                                             <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>

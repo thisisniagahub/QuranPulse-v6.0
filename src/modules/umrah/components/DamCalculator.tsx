@@ -59,7 +59,7 @@ const DamCalculator: React.FC = () => {
                 <button
                   key={violation.id}
                   onClick={() => handleSelect(violation)}
-                  className="w-full flex items-center justify-between p-3 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-cyan-500/50 hover:bg-slate-800 transition-all group"
+                  className="w-full flex items-center justify-between p-3 rounded-lg bg-slate-800/50 border border-slate-700 hover:border-raudhah-teal/50 hover:bg-slate-800 transition-all group"
                 >
                   <div className="flex items-center gap-3">
                     <span className={`px-2 py-0.5 rounded text-xs font-medium ${
@@ -74,7 +74,7 @@ const DamCalculator: React.FC = () => {
                       <p className="text-xs text-slate-500">{violation.nameAr}</p>
                     </div>
                   </div>
-                  <ChevronRight className="text-slate-500 group-hover:text-cyan-400 transition-colors" size={18} />
+                  <ChevronRight className="text-slate-500 group-hover:text-raudhah-teal transition-colors" size={18} />
                 </button>
               ))}
             </div>
@@ -90,7 +90,7 @@ const DamCalculator: React.FC = () => {
             {/* Back Button */}
             <button
               onClick={handleBack}
-              className="flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-300 transition-colors"
+              className="flex items-center gap-2 text-sm text-raudhah-teal hover:text-raudhah-teal transition-colors"
             >
               <ChevronRight className="rotate-180" size={16} />
               Kembali ke senarai
@@ -140,7 +140,7 @@ const DamCalculator: React.FC = () => {
                 >
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold ${
                     selectedViolation.category === 'takhyir'
-                      ? 'bg-cyan-500/20 text-cyan-400'
+                      ? 'bg-raudhah-teal/10 text-raudhah-teal'
                       : 'bg-amber-500/20 text-amber-400'
                   }`}>
                     {selectedViolation.category === 'tartib' ? index + 1 : '○'}
@@ -174,7 +174,7 @@ const DamCalculator: React.FC = () => {
                 Kira Semula
               </button>
               <button
-                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
+                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-raudhah-teal to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
               >
                 Tanya Ustaz AI
               </button>

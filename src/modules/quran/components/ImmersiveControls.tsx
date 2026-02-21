@@ -88,7 +88,7 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
                                         key={i}
                                         animate={isPlaying || isVoiceSearchActive ? { height: [4, Math.random() * 24 + 4, 4] } : { height: 4 }}
                                         transition={{ repeat: Infinity, duration: 0.8, delay: i * 0.05 }}
-                                        className={`w-1 ${isVoiceSearchActive ? 'bg-rose-500' : 'bg-cyan-400'} rounded-full`}
+                                        className={`w-1 ${isVoiceSearchActive ? 'bg-rose-500' : 'bg-raudhah-teal'} rounded-full`}
                                     ></motion.div>
                                 ))}
                             </div>
@@ -113,7 +113,7 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
                                     {/* Play/Pause */}
                                     <button
                                         onClick={onPlayPause}
-                                        className="w-16 h-16 rounded-full bg-cyan-500 text-black flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] group active:scale-95 transition-all"
+                                        className="w-16 h-16 rounded-full bg-raudhah-teal text-black flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.4)] group active:scale-95 transition-all"
                                     >
                                         <i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'} text-xl`}></i>
                                     </button>
@@ -134,7 +134,7 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
                             </div>
 
                             {/* Glow Shine */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-cyan-500/5 to-transparent pointer-events-none"></div>
+                            <div className="absolute inset-0 bg-gradient-to-tr from-raudhah-teal/5 to-transparent pointer-events-none"></div>
                         </div>
 
                         {/* Return to Normal Button */}
@@ -157,7 +157,7 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
                     className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3"
                 >
                     <div className="bg-slate-900/90 backdrop-blur-xl border border-white/10 rounded-full px-6 py-3 flex items-center gap-6 shadow-2xl">
-                        <button onClick={toggleZenMode} className="text-slate-400 hover:text-cyan-400 transition-colors">
+                        <button onClick={toggleZenMode} className="text-slate-400 hover:text-raudhah-teal transition-colors">
                             <i className="fa-solid fa-expand"></i>
                         </button>
                         <div className="w-px h-6 bg-white/10"></div>
@@ -171,7 +171,7 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
                                 <i className="fa-solid fa-microphone"></i>
                             </button>
 
-                            <button onClick={onPlayPause} className="w-10 h-10 rounded-full bg-cyan-500 text-black flex items-center justify-center shadow-lg"><i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i></button>
+                            <button onClick={onPlayPause} className="w-10 h-10 rounded-full bg-raudhah-teal text-black flex items-center justify-center shadow-lg"><i className={`fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}`}></i></button>
                             <button onClick={onNext} className="text-slate-400 hover:text-white"><i className="fa-solid fa-forward-step"></i></button>
                         </div>
                     </div>
@@ -186,7 +186,7 @@ const SidebarItem = ({ icon, label, active, onClick }: { icon: string, label: st
         whileHover={{ scale: 1.1, x: -5 }}
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
-        className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-1 transition-all ${active ? 'bg-cyan-500 text-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:bg-white/10 hover:text-white'
+        className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-1 transition-all ${active ? 'bg-raudhah-teal text-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:bg-white/10 hover:text-white'
             }`}
     >
         <i className={`fa-solid ${icon} text-lg`}></i>

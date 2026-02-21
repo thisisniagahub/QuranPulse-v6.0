@@ -83,11 +83,11 @@ const QuranTutorial: React.FC<QuranTutorialProps> = ({ isOpen, onClose }) => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -20, scale: 0.95 }}
                 transition={{ duration: 0.3 }}
-                className="relative z-10 w-full max-w-sm bg-slate-900 border border-cyan-500/30 rounded-2xl shadow-[0_0_50px_rgba(6,182,212,0.2)] overflow-hidden"
+                className="relative z-10 w-full max-w-sm bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-[0_0_50px_rgba(6,182,212,0.2)] overflow-hidden"
             >
                 {/* Decorative Elements */}
                 <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
-                <div className="absolute -top-20 -right-20 w-40 h-40 bg-cyan-500/20 blur-3xl rounded-full pointer-events-none" />
+                <div className="absolute -top-20 -right-20 w-40 h-40 bg-raudhah-teal/10 blur-3xl rounded-full pointer-events-none" />
 
                 <div className="p-6 text-center">
                     {/* Icon/Image */}
@@ -106,7 +106,7 @@ const QuranTutorial: React.FC<QuranTutorialProps> = ({ isOpen, onClose }) => {
                         {TUTORIAL_STEPS.map((_, idx) => (
                             <div
                                 key={idx}
-                                className={`w-1.5 h-1.5 rounded-full transition-all ${idx === stepIndex ? 'bg-cyan-500 w-5' : 'bg-slate-700'}`}
+                                className={`w-1.5 h-1.5 rounded-full transition-all ${idx === stepIndex ? 'bg-raudhah-teal w-5' : 'bg-slate-700'}`}
                             />
                         ))}
                     </div>
@@ -123,7 +123,7 @@ const QuranTutorial: React.FC<QuranTutorialProps> = ({ isOpen, onClose }) => {
                         )}
                         <button
                             onClick={handleNext}
-                            className={`flex-1 py-2.5 rounded-lg bg-cyan-500 text-black text-xs font-bold hover:bg-cyan-400 transition-all shadow-[0_0_20px_rgba(6,182,212,0.4)]`}
+                            className={`flex-1 py-2.5 rounded-lg bg-raudhah-teal text-black text-xs font-bold hover:bg-raudhah-teal transition-all shadow-[0_0_20px_rgba(6,182,212,0.4)]`}
                         >
                             {isLast ? "Mula Membaca 🚀" : "Seterusnya"}
                         </button>

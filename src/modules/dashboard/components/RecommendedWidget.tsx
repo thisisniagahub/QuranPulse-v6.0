@@ -11,12 +11,12 @@ const RecommendedWidget: React.FC = () => {
   return (
     <div className="space-y-5">
       <div className="flex justify-between items-center group/title">
-        <h3 className="text-sm font-black text-white uppercase tracking-[0.2em]">Discovery <span className="text-cyan-400 group-hover:animate-pulse">Pulse</span></h3>
+        <h3 className="text-sm font-black text-white uppercase tracking-[0.2em]">Discovery <span className="text-raudhah-teal group-hover:animate-pulse">Pulse</span></h3>
         <div className="flex gap-2">
-          <button aria-label="Previous" className="w-8 h-8 rounded-xl bg-slate-800/40 border border-white/5 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all backdrop-blur-md">
+          <button aria-label="Previous" className="w-8 h-8 rounded-xl bg-slate-800/40 border border-white/5 flex items-center justify-center text-slate-400 hover:text-raudhah-teal hover:border-raudhah-teal/20 transition-all backdrop-blur-md">
             <i className="fa-solid fa-chevron-left text-[10px]"></i>
           </button>
-          <button aria-label="Next" className="w-8 h-8 rounded-xl bg-slate-800/40 border border-white/5 flex items-center justify-center text-slate-400 hover:text-cyan-400 hover:border-cyan-500/30 transition-all backdrop-blur-md">
+          <button aria-label="Next" className="w-8 h-8 rounded-xl bg-slate-800/40 border border-white/5 flex items-center justify-center text-slate-400 hover:text-raudhah-teal hover:border-raudhah-teal/20 transition-all backdrop-blur-md">
             <i className="fa-solid fa-chevron-right text-[10px]"></i>
           </button>
         </div>
@@ -38,13 +38,13 @@ const RecommendedWidget: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
             <div className="absolute top-3 left-3 px-2 py-0.5 bg-black/40 backdrop-blur-md border border-white/10 rounded-lg text-[9px] font-black text-white uppercase tracking-widest">
-              <span className={`w-1.5 h-1.5 inline-block rounded-full mr-1 ${item.color === 'cyan' ? 'bg-cyan-400' : item.color === 'purple' ? 'bg-purple-400' : 'bg-emerald-400'}`}></span>
+              <span className={`w-1.5 h-1.5 inline-block rounded-full mr-1 ${item.color === 'cyan' ? 'bg-raudhah-teal' : item.color === 'purple' ? 'bg-purple-400' : 'bg-emerald-400'}`}></span>
               {item.tag}
             </div>
 
             <div className="absolute bottom-4 left-4 right-4">
-              <h4 className="text-xs font-bold text-white leading-tight group-hover:text-cyan-400 transition-colors drop-shadow-md">{item.title}</h4>
-              <div className="mt-2 h-0.5 w-0 group-hover:w-1/3 bg-cyan-500/50 transition-all duration-500"></div>
+              <h4 className="text-xs font-bold text-white leading-tight group-hover:text-raudhah-teal transition-colors drop-shadow-md">{item.title}</h4>
+              <div className="mt-2 h-0.5 w-0 group-hover:w-1/3 bg-raudhah-teal/50 transition-all duration-500"></div>
             </div>
           </motion.div>
         ))}

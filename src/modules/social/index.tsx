@@ -9,7 +9,7 @@ const Community: React.FC = () => {
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
         <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black to-transparent">
             <h1 className="text-3xl font-bold text-white mb-1">Social Qalb</h1>
-            <p className="text-cyan-400 text-sm font-bold uppercase tracking-wider">Connect with the Ummah</p>
+            <p className="text-raudhah-teal text-sm font-bold uppercase tracking-wider">Connect with the Ummah</p>
         </div>
       </div>
 

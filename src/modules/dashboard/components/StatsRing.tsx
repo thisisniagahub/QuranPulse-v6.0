@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface CyberStatsRingProps {
+interface StatsRingProps {
   recitationProgress: number;
   memorizationProgress: number;
 }
 
-const CyberStatsRing: React.FC<CyberStatsRingProps> = ({ recitationProgress, memorizationProgress }) => {
+const StatsRing: React.FC<StatsRingProps> = ({ recitationProgress, memorizationProgress }) => {
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
   const recitationOffset = circumference - (recitationProgress / 100) * circumference;
@@ -14,7 +14,7 @@ const CyberStatsRing: React.FC<CyberStatsRingProps> = ({ recitationProgress, mem
   return (
     <div className="relative w-48 h-48 flex items-center justify-center">
       {/* Outer Glow */}
-      <div className="absolute inset-0 bg-cyan-500/10 blur-3xl rounded-full"></div>
+      <div className="absolute inset-0 bg-raudhah-teal/10 blur-3xl rounded-full"></div>
 
       {/* SVG Rings */}
       <svg className="w-full h-full transform -rotate-90 drop-shadow-[0_0_10px_rgba(6,182,212,0.5)]">
@@ -64,15 +64,15 @@ const CyberStatsRing: React.FC<CyberStatsRingProps> = ({ recitationProgress, mem
         <div className="w-12 h-[1px] bg-slate-700 my-1 mx-auto"></div>
         <div className="flex flex-col items-center">
           <span className="text-[10px] text-slate-400 uppercase tracking-wider">Memorization</span>
-          <span className="text-lg font-bold text-cyan-400 drop-shadow-md">{memorizationProgress}%</span>
+          <span className="text-lg font-bold text-raudhah-teal drop-shadow-md">{memorizationProgress}%</span>
         </div>
       </div>
       
       {/* Decorative Particles */}
-      <div className="absolute top-0 right-0 w-2 h-2 bg-cyan-400 rounded-full animate-ping"></div>
+      <div className="absolute top-0 right-0 w-2 h-2 bg-raudhah-teal rounded-full animate-ping"></div>
       <div className="absolute bottom-4 left-4 w-1 h-1 bg-gold-400 rounded-full animate-pulse"></div>
     </div>
   );
 };
 
-export default CyberStatsRing;
+export default StatsRing;

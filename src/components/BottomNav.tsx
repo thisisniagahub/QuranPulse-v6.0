@@ -37,14 +37,14 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
             path: "/",
             icon: "solar:home-angle-bold-duotone",
             label: "Home",
-            color: "from-cyan-400 to-blue-500",
+            color: "from-raudhah-teal to-blue-500",
         },
         {
             id: NavView.QURAN,
             path: "/quran",
             icon: "solar:book-bookmark-bold-duotone",
             label: "Al-Quran",
-            color: "from-cyan-400 to-blue-500",
+            color: "from-raudhah-teal to-blue-500",
         },
         {
             id: NavView.SMART_DEEN,
@@ -52,7 +52,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
             icon: "/ustaz-ai-icon.png", // New Public Image source
             label: "Ustaz AI",
             isCenter: true,
-            color: "from-cyan-400 to-amber-400",
+            color: "from-raudhah-teal to-amber-400",
         },
         {
             id: NavView.IBADAH,
@@ -66,7 +66,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
             path: "/iqra",
             icon: "solar:square-academic-cap-bold-duotone",
             label: "Iqra",
-            color: "from-cyan-400 to-blue-500",
+            color: "from-raudhah-teal to-blue-500",
         },
     ];
 

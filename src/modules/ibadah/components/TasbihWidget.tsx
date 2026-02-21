@@ -52,13 +52,13 @@ const TasbihWidget: React.FC<TasbihWidgetProps> = ({ onClose }) => {
             className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
             onClick={(e) => e.target === e.currentTarget && onClose()}
         >
-            <div className="relative w-full max-w-sm bg-slate-900 border border-cyan-500/30 rounded-3xl p-6 shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden">
+            <div className="relative w-full max-w-sm bg-slate-900 border border-raudhah-teal/20 rounded-3xl p-6 shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden">
 
                 {/* Header */}
                 <div className="flex items-center justify-between mb-8 z-10 relative">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-cyan-500/20 flex items-center justify-center">
-                            <i className="fa-solid fa-fingerprint text-cyan-400"></i>
+                        <div className="w-8 h-8 rounded-full bg-raudhah-teal/10 flex items-center justify-center">
+                            <i className="fa-solid fa-fingerprint text-raudhah-teal"></i>
                         </div>
                         <h2 className="text-xl font-bold text-white">Digital Tasbih</h2>
                     </div>
@@ -76,7 +76,7 @@ const TasbihWidget: React.FC<TasbihWidgetProps> = ({ onClose }) => {
                         transition-colors duration-500
                         ${isComplete
                                 ? 'bg-emerald-500/10 border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]'
-                                : 'bg-cyan-900/10 border-cyan-500 shadow-[0_0_30px_rgba(6,182,212,0.2)]'
+                                : 'bg-cyan-900/10 border-raudhah-teal shadow-[0_0_30px_rgba(6,182,212,0.2)]'
                             }`}
                     >
                         {/* Progress Ring */}
@@ -127,7 +127,7 @@ const TasbihWidget: React.FC<TasbihWidgetProps> = ({ onClose }) => {
 
                 {/* Background Decoration */}
                 <div className="absolute inset-0 bg-pattern-dots-raudhah opacity-5 pointer-events-none"></div>
-                <div className={`absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[80px] transition-colors duration-500 ${isComplete ? 'bg-emerald-500/20' : 'bg-cyan-500/20'}`}></div>
+                <div className={`absolute -bottom-20 -right-20 w-64 h-64 rounded-full blur-[80px] transition-colors duration-500 ${isComplete ? 'bg-emerald-500/20' : 'bg-raudhah-teal/10'}`}></div>
             </div>
         </motion.div>
     );

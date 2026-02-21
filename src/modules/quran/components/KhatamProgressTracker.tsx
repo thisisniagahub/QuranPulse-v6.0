@@ -216,7 +216,7 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
                         >
                             <Trophy className="w-16 h-16 text-yellow-400 mx-auto mb-2" />
                             <p className="text-2xl font-bold text-white">Tahniah!</p>
-                            <p className="text-cyan-400">Juz {progress.juzCompleted} Selesai!</p>
+                            <p className="text-raudhah-teal">Juz {progress.juzCompleted} Selesai!</p>
                         </motion.div>
                     </motion.div>
                 )}
@@ -309,7 +309,7 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
                     </div>
 
                     <div className="bg-slate-800/50 rounded-lg p-3 text-center">
-                        <Clock className="w-5 h-5 text-cyan-400 mx-auto mb-1" />
+                        <Clock className="w-5 h-5 text-raudhah-teal mx-auto mb-1" />
                         <p className="text-lg font-bold text-white">{stats.dailyNeeded}</p>
                         <p className="text-xs text-slate-400">Ayat/Hari</p>
                     </div>

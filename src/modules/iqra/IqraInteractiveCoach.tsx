@@ -45,7 +45,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
     // Handle initial loading
     if (dataLoading) {
         return (
-            <div className="h-full flex items-center justify-center bg-background-dark text-cyan-400">
+            <div className="h-full flex items-center justify-center bg-background-dark text-raudhah-teal">
                 <Loader2 className="animate-spin mr-2" /> Initializing Neural Curriculum...
             </div>
         );
@@ -135,10 +135,10 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                 <motion.div
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="text-center space-y-8 max-w-sm glass-hud p-10 rounded-[3rem] hud-border"
+                    className="text-center space-y-8 max-w-sm glass-v7 p-10 rounded-[3rem] hud-border"
                 >
                     <div className="flex justify-center">
-                        <div className="bg-amber-400 p-8 rounded-full shadow-[0_0_40px_rgba(251,191,36,0.6)] animate-bounce neon-glow-primary">
+                        <div className="bg-amber-400 p-8 rounded-full shadow-[0_0_40px_rgba(251,191,36,0.6)] animate-bounce glow-primary">
                             <Star size={64} className="text-white fill-white" />
                         </div>
                     </div>
@@ -169,7 +169,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
 
             {/* Header / HUD Top Bar */}
             <header className="flex-none px-6 pt-6 pb-2 z-10 relative">
-                <div className="max-w-4xl mx-auto glass-hud p-4 rounded-3xl flex items-center justify-between border-white/5 hud-border">
+                <div className="max-w-4xl mx-auto glass-v7 p-4 rounded-3xl flex items-center justify-between border-white/5 hud-border">
                     <div className="flex items-center gap-4">
                         <button
                             onClick={onClose}
@@ -179,7 +179,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                             <ArrowLeft size={22} />
                         </button>
                         <div className="flex flex-col">
-                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary neon-glow-primary">Protocol: IQRA_MASTER</span>
+                            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary glow-primary">Protocol: IQRA_MASTER</span>
                             <span className="text-sm font-black text-white glow-text">SESSION_V{currentStep + 1}</span>
                         </div>
                     </div>
@@ -239,7 +239,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                             >
                                 <div className="flex justify-between items-end">
                                     <div className="space-y-1">
-                                        <p className="text-primary font-black uppercase tracking-[0.4em] text-[10px] neon-glow-primary">Protocol.ACTIVE_TASK</p>
+                                        <p className="text-primary font-black uppercase tracking-[0.4em] text-[10px] glow-primary">Protocol.ACTIVE_TASK</p>
                                         <h2 className="text-2xl md:text-3xl font-black text-white glow-text uppercase leading-tight">{step.instruction || step.name}</h2>
                                     </div>
                                     <button
@@ -279,11 +279,11 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
 
                                 {step.type === 'insight' && (
                                     <div className="flex flex-col items-center justify-center py-10 md:py-20 space-y-6 md:space-y-10">
-                                        <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 neon-glow-primary">
+                                        <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 glow-primary">
                                             <Sparkles size={40} className="text-primary" />
                                         </div>
-                                        <div className="glass-hud p-10 rounded-[3rem] hud-border w-full max-w-lg text-center space-y-6">
-                                            <h4 className="text-primary font-black uppercase tracking-[0.3em] text-xs neon-glow-primary">Diagnostic Insight</h4>
+                                        <div className="glass-v7 p-10 rounded-[3rem] hud-border w-full max-w-lg text-center space-y-6">
+                                            <h4 className="text-primary font-black uppercase tracking-[0.3em] text-xs glow-primary">Diagnostic Insight</h4>
                                             <h3 className="text-2xl font-black text-white leading-relaxed">{step.title}</h3>
                                             <p className="text-slate-400 leading-relaxed font-medium">{step.text}</p>
                                         </div>
@@ -296,13 +296,13 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                             whileHover={{ scale: 1.05, rotateY: 10 }}
                                             whileTap={{ scale: 0.95 }}
                                             onClick={() => speak(step.letter || '')}
-                                            className="relative w-full max-w-[16rem] h-64 md:w-64 md:h-80 rounded-[2.5rem] md:rounded-[3rem] glass-hud border border-white/10 flex flex-col items-center justify-center gap-6 shadow-[0_40px_100px_rgba(0,0,0,0.6)] group preserve-3d perspective-1000 hud-border"
+                                            className="relative w-full max-w-[16rem] h-64 md:w-64 md:h-80 rounded-[2.5rem] md:rounded-[3rem] glass-v7 border border-white/10 flex flex-col items-center justify-center gap-6 shadow-[0_40px_100px_rgba(0,0,0,0.6)] group preserve-3d perspective-1000 hud-border"
                                         >
                                             <div className="absolute inset-0 bg-pattern opacity-[0.05]"></div>
                                             <div className="absolute inset-0 bg-pattern opacity-[0.05]"></div>
                                             <span className="text-8xl md:text-[10rem] font-arabic text-white glow-text transition-all group-hover:scale-110 drop-shadow-[0_0_20px_rgba(var(--primary-rgb),0.5)]">{step.letter}</span>
                                             <div className="flex flex-col items-center gap-1">
-                                                <span className="uppercase font-black text-primary tracking-[0.4em] text-xs neon-glow-primary">{step.sound}</span>
+                                                <span className="uppercase font-black text-primary tracking-[0.4em] text-xs glow-primary">{step.sound}</span>
                                                 <Volume2 size={24} className="text-white/20 group-hover:text-primary transition-colors" />
                                             </div>
                                         </motion.button>
@@ -329,7 +329,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                                             <div className="absolute top-0 right-0 p-4 opacity-10">
                                                                 <BrainCircuit size={40} className="text-primary" />
                                                             </div>
-                                                            <h4 className="text-[10px] font-black uppercase text-primary mb-3 flex items-center gap-2 tracking-[0.2em] neon-glow-primary">
+                                                            <h4 className="text-[10px] font-black uppercase text-primary mb-3 flex items-center gap-2 tracking-[0.2em] glow-primary">
                                                                 <Star size={12} fill="currentColor" /> {aiContent.title}
                                                             </h4>
                                                             <p className="text-md font-medium text-slate-200 leading-relaxed italic z-10 relative">
@@ -351,13 +351,13 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                                     key={i}
                                                     whileHover={{ y: -5, scale: 1.05 }}
                                                     onClick={() => speak(l)}
-                                                    className="w-full h-32 md:h-44 rounded-[2rem] md:rounded-full glass-hud border-2 border-primary/20 flex items-center justify-center text-6xl md:text-8xl font-arabic transition-all shadow-[0_10px_30px_rgba(0,0,0,0.4)] text-white hover:border-primary hover:shadow-[0_0_30px_rgba(0,191,255,0.4)] group bg-black/20"
+                                                    className="w-full h-32 md:h-44 rounded-[2rem] md:rounded-full glass-v7 border-2 border-primary/20 flex items-center justify-center text-6xl md:text-8xl font-arabic transition-all shadow-[0_10px_30px_rgba(0,0,0,0.4)] text-white hover:border-primary hover:shadow-[0_0_30px_rgba(0,191,255,0.4)] group bg-black/20"
                                                 >
-                                                    <span className="group-hover:neon-glow-primary transition-all drop-shadow-[0_0_10px_rgba(0,191,255,0.5)]">{l}</span>
+                                                    <span className="group-hover:glow-primary transition-all drop-shadow-[0_0_10px_rgba(27,107,90,0.3)]">{l}</span>
                                                 </motion.button>
                                             ))}
                                         </div>
-                                        <div className="glass-hud p-6 rounded-[2rem] text-center border-white/5 max-w-sm mx-auto">
+                                        <div className="glass-v7 p-6 rounded-[2rem] text-center border-white/5 max-w-sm mx-auto">
                                             <p className="text-primary/60 text-[10px] font-black uppercase tracking-[0.3em] mb-2">Protocol: READ_RTL</p>
                                             <p className="text-white font-bold text-sm glow-text">Analisis bunyi dari kanan ke kiri.</p>
                                         </div>
@@ -370,7 +370,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                             <button
                                                 key={i}
                                                 onClick={() => { if (isCorrect === null) { setSelectedOption(opt); speak(opt); } }}
-                                                className={`p-8 md:p-14 rounded-[2rem] md:rounded-[3rem] border-2 text-7xl md:text-9xl font-arabic flex items-center justify-center transition-all shadow-[0_30px_60px_rgba(0,0,0,0.6)] ${selectedOption === opt ? 'border-primary bg-primary/20 text-white neon-glow-primary shadow-primary/20' : 'glass-hud border-white/5 text-slate-500 hover:border-white/20 active:scale-95'}`}
+                                                className={`p-8 md:p-14 rounded-[2rem] md:rounded-[3rem] border-2 text-7xl md:text-9xl font-arabic flex items-center justify-center transition-all shadow-[0_30px_60px_rgba(0,0,0,0.6)] ${selectedOption === opt ? 'border-primary bg-primary/20 text-white glow-primary shadow-primary/20' : 'glass-v7 border-white/5 text-slate-500 hover:border-white/20 active:scale-95'}`}
                                             >
                                                 {opt}
                                             </button>
@@ -386,14 +386,14 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                             >
                                 <div className="text-center space-y-4">
                                     <h2 className="text-4xl font-black text-white uppercase tracking-[0.3em] glow-text">INDEX_HIJAIYAH</h2>
-                                    <p className="text-primary text-xs font-black tracking-widest uppercase neon-glow-primary">Spectral Character Map</p>
+                                    <p className="text-primary text-xs font-black tracking-widest uppercase glow-primary">Spectral Character Map</p>
                                 </div>
                                 <div className="grid grid-cols-4 sm:grid-cols-6 gap-4" dir="rtl">
                                     {uniqueLetters.map((item, idx) => (
                                         <button
                                             key={idx}
                                             onClick={() => speak(item)}
-                                            className="aspect-square flex flex-col items-center justify-center rounded-full glass-hud border border-primary/20 hover:border-primary transition-all active:scale-90 group relative overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_25px_rgba(0,191,255,0.4)]"
+                                            className="aspect-square flex flex-col items-center justify-center rounded-full glass-v7 border border-primary/20 hover:border-primary transition-all active:scale-90 group relative overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.3)] hover:shadow-[0_0_25px_rgba(0,191,255,0.4)]"
                                         >
                                             <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors rounded-full"></div>
                                             <span className="text-4xl font-arabic mb-1 group-hover:text-white transition-all group-hover:scale-110 drop-shadow-[0_0_5px_rgba(0,191,255,0.8)]">{item}</span>
@@ -413,11 +413,11 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                 exit={{ y: 200, opacity: 0 }}
                                 className="fixed inset-x-0 bottom-28 p-8 z-50 pointer-events-none"
                             >
-                                <div className="max-w-2xl mx-auto glass-hud border-2 border-primary rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,1)] p-8 pointer-events-auto relative overflow-hidden hud-border">
+                                <div className="max-w-2xl mx-auto glass-v7 border-2 border-primary rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,1)] p-8 pointer-events-auto relative overflow-hidden hud-border">
                                     <div className="absolute inset-0 bg-pattern opacity-[0.05] pointer-events-none"></div>
                                     <div className="flex justify-between items-center mb-8 relative z-10">
                                         <div className="flex items-center gap-3">
-                                            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center neon-glow-primary">
+                                            <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center glow-primary">
                                                 <BrainCircuit size={20} className="text-primary" />
                                             </div>
                                             <h3 className="font-black text-white uppercase tracking-[0.3em] text-xs glow-text">
@@ -479,7 +479,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                     <motion.div
                                         initial={{ scale: 0.95, opacity: 0 }}
                                         animate={{ scale: 1, opacity: 1 }}
-                                        className={`p-8 rounded-[3rem] border-l-[16px] glass-hud flex flex-col gap-6 shadow-[0_40px_80px_rgba(0,0,0,0.6)] ${isCorrect ? 'border-emerald-500' : 'border-red-500'} hud-border`}
+                                        className={`p-8 rounded-[3rem] border-l-[16px] glass-v7 flex flex-col gap-6 shadow-[0_40px_80px_rgba(0,0,0,0.6)] ${isCorrect ? 'border-emerald-500' : 'border-red-500'} hud-border`}
                                     >
                                         <div className="flex items-center gap-6">
                                             <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl ${isCorrect ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
@@ -544,7 +544,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                     {view === 'chart' && (
                         <button
                             onClick={() => setView('lesson')}
-                            className="w-full py-6 glass-hud text-white rounded-[2rem] font-black uppercase tracking-[0.4em] text-md shadow-2xl flex items-center justify-center gap-4 active:translate-y-1 border border-primary/30 transition-all hover:bg-primary/10"
+                            className="w-full py-6 glass-v7 text-white rounded-[2rem] font-black uppercase tracking-[0.4em] text-md shadow-2xl flex items-center justify-center gap-4 active:translate-y-1 border border-primary/30 transition-all hover:bg-primary/10"
                         >
                             <ArrowLeft size={24} /> RETURN_TO_STREAM
                         </button>

@@ -21,17 +21,17 @@ export const AdvancedTools = () => (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {/* Tool 1: Legacy Guardian */}
                 <TiltCard>
-                    <div className="bg-gradient-to-b from-slate-900 to-black border border-white/10 rounded-3xl p-8 h-full relative overflow-hidden group hover:border-cyan-500/50 transition-all duration-500">
-                        <div className="absolute top-0 right-0 w-40 h-40 bg-cyan-500/5 rounded-full blur-3xl group-hover:bg-cyan-500/10 transition-all"></div>
-                        <div className="w-14 h-14 rounded-2xl bg-cyan-900/20 border border-cyan-500/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
-                            <i className="fa-solid fa-file-contract text-2xl text-cyan-400"></i>
+                    <div className="bg-gradient-to-b from-slate-900 to-black border border-white/10 rounded-3xl p-8 h-full relative overflow-hidden group hover:border-raudhah-teal/50 transition-all duration-500">
+                        <div className="absolute top-0 right-0 w-40 h-40 bg-raudhah-teal/5 rounded-full blur-3xl group-hover:bg-raudhah-teal/10 transition-all"></div>
+                        <div className="w-14 h-14 rounded-2xl bg-cyan-900/20 border border-raudhah-teal/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                            <i className="fa-solid fa-file-contract text-2xl text-raudhah-teal"></i>
                         </div>
-                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">Legacy Guardian</h3>
+                        <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-raudhah-teal transition-colors">Legacy Guardian</h3>
                         <p className="text-slate-400 text-sm mb-6 leading-relaxed">
                             Algorithmic inheritance distribution using Smart Contracts. Secure your Wasiat & Hibah on the blockchain.
                         </p>
                         <div className="flex items-center gap-3 pt-6 border-t border-white/5">
-                            <div className="px-2 py-1 rounded bg-cyan-950/50 border border-cyan-500/20 text-[10px] text-cyan-400 font-mono">PROTO-01</div>
+                            <div className="px-2 py-1 rounded bg-cyan-950/50 border border-raudhah-teal/20 text-[10px] text-raudhah-teal font-mono">PROTO-01</div>
                             <span className="text-[10px] text-slate-500 uppercase tracking-wider">Engineering Phase</span>
                         </div>
                     </div>

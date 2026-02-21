@@ -29,8 +29,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                             "flex h-11 w-full rounded-xl border bg-slate-900/50 px-4 py-2 text-sm text-white",
                             "transition-all duration-300 outline-none",
                             // Border styles
-                            "border-slate-700 hover:border-cyan-500/50",
-                            "focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/20",
+                            "border-slate-700 hover:border-raudhah-teal/50",
+                            "focus:border-raudhah-teal focus:ring-2 focus:ring-raudhah-teal/20",
                             "focus:shadow-[0_0_15px_rgba(6,182,212,0.2)]",
                             // Placeholder
                             "placeholder:text-slate-500",

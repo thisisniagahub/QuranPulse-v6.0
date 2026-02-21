@@ -33,7 +33,7 @@ const PrayerTimesStrip: React.FC<PrayerTimesStripProps> = ({ data, loading }) =>
     if (loading) {
         return (
             <div className="col-span-2 py-6 flex items-center justify-center gap-3 text-white/30 animate-pulse text-[10px] uppercase tracking-[0.3em] font-black">
-                <div className="w-1.5 h-1.5 rounded-full bg-cyan-500/50"></div>
+                <div className="w-1.5 h-1.5 rounded-full bg-raudhah-teal/50"></div>
                 Menyegerakan Waktu Solat
             </div>
         );
@@ -46,11 +46,11 @@ const PrayerTimesStrip: React.FC<PrayerTimesStripProps> = ({ data, loading }) =>
                     <div
                         key={p.name}
                         className={`flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-full transition-all duration-500 ${p.active
-                            ? 'bg-cyan-500/20 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
+                            ? 'bg-raudhah-teal/10 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
                             : 'opacity-40 hover:opacity-100 hover:bg-white/5'
                             }`}
                     >
-                        <span className={`text-[8px] font-black uppercase tracking-widest block mb-0.5 ${p.active ? 'text-cyan-400' : 'text-slate-500'}`}>
+                        <span className={`text-[8px] font-black uppercase tracking-widest block mb-0.5 ${p.active ? 'text-raudhah-teal' : 'text-slate-500'}`}>
                             {p.name}
                         </span>
                         <span className={`text-xs md:text-sm font-black tracking-tighter block ${p.active ? 'text-white' : 'text-slate-400'}`}>

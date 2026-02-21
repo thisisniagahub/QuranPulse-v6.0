@@ -113,10 +113,10 @@ const RaudhahGuide: React.FC = () => {
             {/* Nusuk Tutorial Toggle */}
             <button
                 onClick={() => setShowTutorial(!showTutorial)}
-                className="w-full flex items-center justify-between p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-cyan-500/50 transition-all"
+                className="w-full flex items-center justify-between p-3 bg-slate-800/50 rounded-lg border border-slate-700 hover:border-raudhah-teal/50 transition-all"
             >
                 <div className="flex items-center gap-2">
-                    <Smartphone className="text-cyan-400" size={18} />
+                    <Smartphone className="text-raudhah-teal" size={18} />
                     <span className="text-white font-medium">Tutorial Aplikasi Nusuk</span>
                 </div>
                 {showTutorial ? <ChevronUp className="text-slate-400" size={18} /> : <ChevronDown className="text-slate-400" size={18} />}
@@ -144,12 +144,12 @@ const RaudhahGuide: React.FC = () => {
                                     className="w-full flex items-center gap-3 p-3 text-left hover:bg-slate-800/80 transition-all"
                                 >
                                     <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${expandedStep === step.step
-                                            ? 'bg-cyan-500 text-black'
+                                            ? 'bg-raudhah-teal text-black'
                                             : 'bg-slate-700 text-slate-400'
                                         }`}>
                                         {step.step}
                                     </div>
-                                    <span className={`flex-1 ${expandedStep === step.step ? 'text-cyan-400' : 'text-white'}`}>
+                                    <span className={`flex-1 ${expandedStep === step.step ? 'text-raudhah-teal' : 'text-white'}`}>
                                         {step.title}
                                     </span>
                                     {expandedStep === step.step ? (
@@ -193,7 +193,7 @@ const RaudhahGuide: React.FC = () => {
             {/* Slot Timing Prediction */}
             <div className="p-4 bg-slate-800/50 rounded-xl border border-slate-700">
                 <div className="flex items-center gap-2 mb-3">
-                    <Clock className="text-cyan-400" size={18} />
+                    <Clock className="text-raudhah-teal" size={18} />
                     <p className="text-white font-medium">Anggaran Slot Dibuka</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3">

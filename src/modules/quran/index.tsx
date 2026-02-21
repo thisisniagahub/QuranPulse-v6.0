@@ -43,14 +43,14 @@ const QuranContent: React.FC = () => {
     return (
         <div className="h-full flex flex-col bg-midnight-gradient overflow-hidden relative">
             {/* Background Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-raudhah-teal/5 blur-3xl rounded-full pointer-events-none" />
 
             {/* === LIST VIEW === */}
             {view === 'LIST' && (
                 <div className="flex-1 overflow-y-auto relative z-10 w-full">
                     {loadingChapters ? (
                         <div className="flex items-center justify-center h-64">
-                            <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                            <div className="animate-spin w-8 h-8 border-2 border-raudhah-teal border-t-transparent rounded-full" />
                         </div>
                     ) : (
                         <QuranList
@@ -77,7 +77,7 @@ const QuranContent: React.FC = () => {
                 <React.Suspense
                     fallback={
                         <div className="flex items-center justify-center h-64">
-                            <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                            <div className="animate-spin w-8 h-8 border-2 border-raudhah-teal border-t-transparent rounded-full" />
                         </div>
                     }
                 >

@@ -44,7 +44,7 @@ const WordScrambleGame: React.FC<WordScrambleProps> = ({ data, onComplete }) => 
                         value={word}
                         className={`p-4 rounded-2xl border-2 cursor-grab active:cursor-grabbing transition-all flex items-center justify-between ${isCorrect
                                 ? 'bg-green-500/20 border-green-500 text-green-400'
-                                : 'bg-black/60 border-white/10 text-white hover:border-cyan-500/30'
+                                : 'bg-black/60 border-white/10 text-white hover:border-raudhah-teal/20'
                             }`}
                         whileDrag={{ scale: 1.05, boxShadow: "0 0 20px rgba(34,211,238,0.2)" }}
                     >

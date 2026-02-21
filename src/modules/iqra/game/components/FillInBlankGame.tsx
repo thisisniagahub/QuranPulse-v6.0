@@ -45,7 +45,7 @@ const FillInBlankGame: React.FC<FillInBlankProps> = ({ data, onComplete }) => {
                 <motion.div
                     animate={isWrong ? { x: [-5, 5, -5, 5, 0] } : {}}
                     className={`min-w-[120px] h-14 border-b-4 flex items-center justify-center transition-colors ${isSuccess ? 'border-green-500 text-green-400' :
-                            isWrong ? 'border-red-500 text-red-400' : 'border-cyan-500/50 text-cyan-400'
+                            isWrong ? 'border-red-500 text-red-400' : 'border-raudhah-teal/50 text-raudhah-teal'
                         }`}
                 >
                     {selected || '...'}
@@ -65,7 +65,7 @@ const FillInBlankGame: React.FC<FillInBlankProps> = ({ data, onComplete }) => {
                                 ? 'bg-green-500/20 border-green-500 text-green-100'
                                 : selected === option && isWrong
                                     ? 'bg-red-500/20 border-red-500 text-red-100'
-                                    : 'bg-black/60 border-white/10 text-slate-300 hover:border-cyan-500/50 hover:text-white'
+                                    : 'bg-black/60 border-white/10 text-slate-300 hover:border-raudhah-teal/50 hover:text-white'
                             }`}
                     >
                         {option}

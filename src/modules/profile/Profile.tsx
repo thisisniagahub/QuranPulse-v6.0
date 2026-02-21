@@ -75,7 +75,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onUpdatePassword,
                         className="grid grid-rows-3 gap-3"
                     >
                         {/* Total XP */}
-                        <div className="bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/5 p-4 flex items-center justify-between group hover:border-cyan-500/30 transition-colors">
+                        <div className="bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/5 p-4 flex items-center justify-between group hover:border-raudhah-teal/20 transition-colors">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
                                     <i className="fa-solid fa-bolt"></i>
@@ -88,7 +88,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onUpdatePassword,
                         </div>
 
                         {/* Surah Read */}
-                        <div className="bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/5 p-4 flex items-center justify-between group hover:border-cyan-500/30 transition-colors">
+                        <div className="bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/5 p-4 flex items-center justify-between group hover:border-raudhah-teal/20 transition-colors">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center text-emerald-400">
                                     <i className="fa-solid fa-book-open"></i>
@@ -101,7 +101,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onUpdatePassword,
                         </div>
 
                         {/* Streak */}
-                        <div className="bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/5 p-4 flex items-center justify-between group hover:border-cyan-500/30 transition-colors">
+                        <div className="bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/5 p-4 flex items-center justify-between group hover:border-raudhah-teal/20 transition-colors">
                             <div className="flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center text-orange-400">
                                     <i className="fa-solid fa-fire"></i>

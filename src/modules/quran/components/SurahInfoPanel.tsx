@@ -56,7 +56,7 @@ const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClos
             transition={{ type: "spring", damping: 25 }}
             className="fixed bottom-0 left-0 right-0 z-[61] max-w-md mx-auto"
           >
-            <div className="bg-slate-900 border-t border-cyan-500/30 rounded-t-3xl shadow-2xl overflow-hidden">
+            <div className="bg-slate-900 border-t border-raudhah-teal/20 rounded-t-3xl shadow-2xl overflow-hidden">
               {/* Handle */}
               <div className="w-12 h-1.5 bg-slate-700 rounded-full mx-auto mt-3" />
 
@@ -65,7 +65,7 @@ const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClos
                 <h2 className="font-uthmani text-4xl text-white mb-2">
                   {chapter.name_arabic}
                 </h2>
-                <p className="text-cyan-400 font-bold text-lg">
+                <p className="text-raudhah-teal font-bold text-lg">
                   {chapter.name_simple}
                 </p>
                 <p className="text-slate-400 text-sm">
@@ -80,7 +80,7 @@ const SurahInfoPanel: React.FC<SurahInfoPanelProps> = ({ chapter, isOpen, onClos
                   <p className="text-[10px] text-slate-400 uppercase tracking-wider">Ayat</p>
                 </div>
                 <div className="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700">
-                  <p className="text-2xl font-bold text-cyan-400">{juz}</p>
+                  <p className="text-2xl font-bold text-raudhah-teal">{juz}</p>
                   <p className="text-[10px] text-slate-400 uppercase tracking-wider">Juz'</p>
                 </div>
                 <div className="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700">

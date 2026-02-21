@@ -46,7 +46,7 @@ const LessonFeedback: React.FC<LessonFeedbackProps> = ({ isOpen, onClose, lesson
           >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-cyan-400"
+              className="absolute top-4 right-4 text-slate-400 hover:text-white p-1 rounded-full focus:outline-none focus:ring-2 focus:ring-raudhah-teal"
               aria-label="Tutup"
             >
               <X className="w-5 h-5" />
@@ -69,7 +69,7 @@ const LessonFeedback: React.FC<LessonFeedbackProps> = ({ isOpen, onClose, lesson
                       key={star}
                       type="button"
                       onClick={() => setRating(star)}
-                      className={`p-2 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-cyan-400 rounded-full ${
+                      className={`p-2 transition-transform hover:scale-110 focus:outline-none focus:ring-2 focus:ring-raudhah-teal rounded-full ${
                         rating >= star ? 'text-amber-400' : 'text-slate-600'
                       }`}
                       aria-label={`Beri ${star} bintang`}
@@ -90,14 +90,14 @@ const LessonFeedback: React.FC<LessonFeedbackProps> = ({ isOpen, onClose, lesson
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     placeholder="Adakah arahan jelas? Suara jelas?"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors"
+                    className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white text-sm focus:outline-none focus:border-raudhah-teal focus:ring-1 focus:ring-raudhah-teal transition-colors"
                   />
                 </div>
 
                 <button
                   type="submit"
                   disabled={rating === 0}
-                  className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 focus:ring-offset-black"
+                  className="w-full py-3 bg-cyan-600 hover:bg-raudhah-teal disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-raudhah-teal focus:ring-offset-black"
                 >
                   <Send className="w-4 h-4" />
                   Hantar Maklum Balas

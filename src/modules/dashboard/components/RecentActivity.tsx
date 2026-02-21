@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import BentoCard from './BentoCard';
 
 const activities = [
-  { id: 1, type: 'read', title: 'Completed Surah Al-Mulk', time: '4 mins ago', icon: 'fa-book-open', color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
+  { id: 1, type: 'read', title: 'Completed Surah Al-Mulk', time: '4 mins ago', icon: 'fa-book-open', color: 'text-raudhah-teal', bg: 'bg-raudhah-teal/10' },
   { id: 2, type: 'learn', title: 'Lesson: Noon Sakinah', time: '2 hours ago', icon: 'fa-graduation-cap', color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
   { id: 3, type: 'achievement', title: 'Achievement: Early Bird', time: '3 hours ago', icon: 'fa-trophy', color: 'text-amber-400', bg: 'bg-amber-500/10' },
 ];
@@ -16,7 +16,7 @@ const RecentActivity: React.FC = () => {
     >
       <div className="flex justify-between items-center mb-6 relative z-10">
         <h3 className="text-sm font-black text-white uppercase tracking-wider drop-shadow-md">Recent Activity</h3>
-        <i className="fa-solid fa-clock-rotate-left text-cyan-400 text-xs"></i>
+        <i className="fa-solid fa-clock-rotate-left text-raudhah-teal text-xs"></i>
       </div>
 
       <div className="space-y-5 relative z-10">
@@ -32,7 +32,7 @@ const RecentActivity: React.FC = () => {
               <i className={`fa-solid ${activity.icon} text-sm`}></i>
             </div>
             <div className="flex-1 border-b border-white/5 pb-2 last:border-0">
-              <h4 className="text-xs font-bold text-white group-hover:text-cyan-400 transition-colors drop-shadow-sm">{activity.title}</h4>
+              <h4 className="text-xs font-bold text-white group-hover:text-raudhah-teal transition-colors drop-shadow-sm">{activity.title}</h4>
               <p className="text-[10px] text-slate-300 font-medium mt-0.5">{activity.time}</p>
             </div>
           </motion.div>

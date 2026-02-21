@@ -74,9 +74,9 @@ export const TabsTrigger = React.forwardRef<HTMLButtonElement, TabsTriggerProps>
                 onClick={() => context.setValue(triggerValue)}
                 className={cn(
                     "inline-flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-500/50",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-raudhah-teal/50",
                     isActive
-                        ? "bg-cyan-500 text-black shadow-[0_0_15px_rgba(6,182,212,0.3)]"
+                        ? "bg-raudhah-teal text-black shadow-[0_0_15px_rgba(6,182,212,0.3)]"
                         : "text-slate-400 hover:text-white hover:bg-slate-700/50",
                     className
                 )}

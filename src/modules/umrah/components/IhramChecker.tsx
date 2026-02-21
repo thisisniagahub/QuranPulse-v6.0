@@ -35,7 +35,7 @@ const IhramChecker: React.FC = () => {
                 <button
                     onClick={() => setGenderFilter('semua')}
                     className={`flex-1 flex items-center justify-center gap-1 py-2 px-3 rounded-md text-sm transition-all ${genderFilter === 'semua'
-                            ? 'bg-cyan-500 text-black font-medium'
+                            ? 'bg-raudhah-teal text-black font-medium'
                             : 'text-slate-400 hover:text-white'
                         }`}
                 >
@@ -142,7 +142,7 @@ const IhramChecker: React.FC = () => {
                                         </div>
 
                                         {/* Action Button */}
-                                        <button className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-cyan-500/20 text-cyan-400 hover:bg-cyan-500/30 transition-all text-sm">
+                                        <button className="w-full flex items-center justify-center gap-2 py-2 rounded-lg bg-raudhah-teal/10 text-raudhah-teal hover:bg-raudhah-teal/30 transition-all text-sm">
                                             <Calculator size={16} />
                                             Kira Dam di Kalkulator
                                         </button>

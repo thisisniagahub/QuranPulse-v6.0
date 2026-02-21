@@ -193,7 +193,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
 
     if (isLoading) {
         return (
-            <div className={`bg-gradient-to-br from-cyan-500/10 to-purple-500/10 
+            <div className={`bg-gradient-to-br from-raudhah-teal/10 to-purple-500/10 
                        rounded-2xl p-6 animate-pulse ${className}`}>
                 <div className="h-6 w-32 bg-slate-700 rounded mb-4" />
                 <div className="h-16 bg-slate-700 rounded mb-4" />
@@ -209,22 +209,22 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`bg-gradient-to-r from-cyan-500/20 to-purple-500/20 
+                className={`bg-gradient-to-r from-raudhah-teal/20 to-purple-500/20 
                     rounded-xl p-4 cursor-pointer group ${className}`}
                 onClick={() => onVerseClick?.(ayat.surahNumber, ayat.verseNumber)}
             >
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-purple-500 
+                        <div className="w-10 h-10 bg-gradient-to-br from-raudhah-teal to-purple-500 
                            rounded-full flex items-center justify-center">
                             <BookOpen className="w-5 h-5 text-white" />
                         </div>
                         <div>
-                            <p className="text-xs text-cyan-400">Ayat Hari Ini</p>
+                            <p className="text-xs text-raudhah-teal">Ayat Hari Ini</p>
                             <p className="text-sm text-white font-medium">{ayat.surahName}</p>
                         </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                    <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-raudhah-teal transition-colors" />
                 </div>
             </motion.div>
         );
@@ -238,24 +238,24 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
         >
             {/* Background Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-            <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-500/10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-raudhah-teal/10 via-transparent to-purple-500/10" />
 
             {/* Decorative Elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-cyan-500/10 blur-3xl rounded-full" />
+            <div className="absolute top-0 right-0 w-32 h-32 bg-raudhah-teal/10 blur-3xl rounded-full" />
             <div className="absolute bottom-0 left-0 w-24 h-24 bg-purple-500/10 blur-2xl rounded-full" />
 
             <div className="relative p-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-purple-500 
+                        <div className="w-8 h-8 bg-gradient-to-br from-raudhah-teal to-purple-500 
                            rounded-lg flex items-center justify-center">
                             <BookOpen className="w-4 h-4 text-white" />
                         </div>
                         <div>
                             <h3 className="text-sm font-semibold text-white">Ayat Hari Ini</h3>
                             {ayat.theme && (
-                                <p className="text-xs text-cyan-400">{ayat.theme}</p>
+                                <p className="text-xs text-raudhah-teal">{ayat.theme}</p>
                             )}
                         </div>
                     </div>
@@ -269,7 +269,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
                             title={notificationsEnabled ? 'Matikan notifikasi' : 'Aktifkan notifikasi harian'}
                         >
                             {notificationsEnabled ? (
-                                <Bell className="w-4 h-4 text-cyan-400" />
+                                <Bell className="w-4 h-4 text-raudhah-teal" />
                             ) : (
                                 <BellOff className="w-4 h-4 text-slate-400" />
                             )}
@@ -306,7 +306,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
                 <div className="flex items-center justify-between pt-4 border-t border-white/10">
                     <button
                         onClick={() => onVerseClick?.(ayat.surahNumber, ayat.verseNumber)}
-                        className="text-xs text-cyan-400 hover:text-cyan-300 transition-colors"
+                        className="text-xs text-raudhah-teal hover:text-raudhah-teal transition-colors"
                     >
                         {ayat.surahName} ({ayat.surahNameAr}) • {ayat.surahNumber}:{ayat.verseNumber}
                     </button>
@@ -337,7 +337,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
 
                         <button
                             onClick={handleShare}
-                            className="p-2 bg-gradient-to-r from-cyan-500 to-purple-500 
+                            className="p-2 bg-gradient-to-r from-raudhah-teal to-purple-500 
                          rounded-lg text-white hover:shadow-lg hover:shadow-cyan-500/25 
                          transition-all"
                             aria-label="Kongsi ayat ini"

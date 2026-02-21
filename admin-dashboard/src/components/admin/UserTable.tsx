@@ -56,13 +56,13 @@ export function UserTable() {
                     />
                 </div>
                 <div className="flex items-center gap-2">
-                    <select aria-label="Filter by Role" className="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-cyan-500/50">
+                    <select aria-label="Filter by Role" className="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-raudhah-teal/50">
                         <option>All Roles</option>
                         <option>Admin</option>
                         <option>Moderator</option>
                         <option>User</option>
                     </select>
-                    <select aria-label="Filter by Plan" className="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-cyan-500/50">
+                    <select aria-label="Filter by Plan" className="bg-slate-800/50 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-300 focus:outline-none focus:border-raudhah-teal/50">
                         <option>All Plans</option>
                         <option>Family</option>
                         <option>Pro</option>
@@ -95,7 +95,7 @@ export function UserTable() {
                                 </td>
                                 <td>
                                     <div className="flex items-center gap-3">
-                                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-xs">
+                                        <div className="w-9 h-9 rounded-full bg-gradient-to-br from-raudhah-teal to-emerald-700 flex items-center justify-center text-white font-bold text-xs">
                                             {user.avatar}
                                         </div>
                                         <div>
@@ -129,7 +129,7 @@ export function UserTable() {
                                     <div className="flex items-center justify-end gap-1">
                                         <button
                                             onClick={() => handleImpersonate(user.id)}
-                                            className="p-2 rounded-lg text-slate-400 hover:text-cyan-400 hover:bg-cyan-500/10 transition-colors"
+                                            className="p-2 rounded-lg text-slate-400 hover:text-raudhah-teal hover:bg-raudhah-teal/10 transition-colors"
                                             title="Impersonate"
                                         >
                                             <Eye className="h-4 w-4" />

@@ -62,7 +62,7 @@ const AnnouncementManager: React.FC = () => {
                 </div>
                 <button
                     onClick={() => setIsCreating(true)}
-                    className="px-6 py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl shadow-lg shadow-cyan-600/20 transition-all flex items-center gap-2"
+                    className="px-6 py-3 bg-cyan-600 hover:bg-raudhah-teal text-white font-bold rounded-xl shadow-lg shadow-cyan-600/20 transition-all flex items-center gap-2"
                 >
                     <i className="fa-solid fa-plus"></i> New Broadcast
                 </button>
@@ -75,7 +75,7 @@ const AnnouncementManager: React.FC = () => {
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
-                        className="bg-slate-900/80 border border-cyan-500/30 rounded-2xl p-6 overflow-hidden"
+                        className="bg-slate-900/80 border border-raudhah-teal/20 rounded-2xl p-6 overflow-hidden"
                     >
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-2 gap-4">
@@ -84,7 +84,7 @@ const AnnouncementManager: React.FC = () => {
                                     <input
                                         value={title}
                                         onChange={(e) => setTitle(e.target.value)}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-cyan-500 outline-none"
+                                        className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-raudhah-teal outline-none"
                                         placeholder="e.g. Server Maintenance"
                                     />
                                 </div>
@@ -93,7 +93,7 @@ const AnnouncementManager: React.FC = () => {
                                     <select
                                         value={priority}
                                         onChange={(e) => setPriority(e.target.value as any)}
-                                        className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-cyan-500 outline-none"
+                                        className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-raudhah-teal outline-none"
                                     >
                                         <option value="normal">Normal (Info)</option>
                                         <option value="high">High (Alert)</option>
@@ -105,7 +105,7 @@ const AnnouncementManager: React.FC = () => {
                                 <textarea
                                     value={content}
                                     onChange={(e) => setContent(e.target.value)}
-                                    className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-cyan-500 outline-none min-h-[100px]"
+                                    className="w-full bg-black/40 border border-white/10 rounded-lg p-3 text-white focus:border-raudhah-teal outline-none min-h-[100px]"
                                     placeholder="Details of the announcement..."
                                 />
                             </div>
@@ -119,7 +119,7 @@ const AnnouncementManager: React.FC = () => {
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-lg"
+                                    className="px-6 py-2 bg-cyan-600 hover:bg-raudhah-teal text-white font-bold rounded-lg"
                                 >
                                     Publish Now
                                 </button>
@@ -151,7 +151,7 @@ const AnnouncementManager: React.FC = () => {
                             <div className="flex gap-4">
                                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl shadow-lg ${ann.priority === 'high'
                                     ? 'bg-red-500 text-white shadow-red-500/20'
-                                    : 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
+                                    : 'bg-raudhah-teal/10 text-raudhah-teal border border-raudhah-teal/20'
                                     }`}>
                                     <i className={`fa-solid ${ann.priority === 'high' ? 'fa-triangle-exclamation' : 'fa-bullhorn'}`}></i>
                                 </div>

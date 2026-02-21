@@ -57,10 +57,10 @@ const StatItem: React.FC<StatItemProps> = ({ value, suffix, label, duration = 2 
         <span className="text-5xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-200 to-white">
           {value >= 1000000 ? formatNumber(count) : count}
         </span>
-        <span className="text-3xl md:text-4xl font-bold text-cyan-400 ml-1">{suffix}</span>
+        <span className="text-3xl md:text-4xl font-bold text-raudhah-teal ml-1">{suffix}</span>
         
         {/* Glow effect */}
-        <div className="absolute -inset-4 bg-cyan-500/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute -inset-4 bg-raudhah-teal/10 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
       </div>
       <p className="text-slate-400 text-sm md:text-base mt-2 uppercase tracking-widest font-medium">{label}</p>
     </motion.div>
@@ -85,9 +85,9 @@ export const AnimatedStats = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-cyan-500 font-bold tracking-widest uppercase text-xs mb-2 block">Trusted Worldwide</span>
+          <span className="text-raudhah-teal font-bold tracking-widest uppercase text-xs mb-2 block">Trusted Worldwide</span>
           <h2 className="text-3xl md:text-4xl font-bold font-serif text-white">
-            Powered by the <span className="text-cyan-400">Ummah</span>
+            Powered by the <span className="text-raudhah-teal">Ummah</span>
           </h2>
         </motion.div>
 

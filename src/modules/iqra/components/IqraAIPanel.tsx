@@ -72,14 +72,14 @@ export const IqraAIPanel: React.FC<IqraAIPanelProps> = ({
                     exit={{ y: 200, opacity: 0 }}
                     className="fixed inset-x-0 bottom-28 p-8 z-50 pointer-events-none"
                 >
-                    <div className="max-w-2xl mx-auto glass-hud border-2 border-primary rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,1)] p-8 pointer-events-auto relative overflow-hidden hud-border">
+                    <div className="max-w-2xl mx-auto glass-v7 border-2 border-primary rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,1)] p-8 pointer-events-auto relative overflow-hidden hud-border">
                         {/* Background Pattern */}
                         <div className="absolute inset-0 bg-pattern opacity-[0.05] pointer-events-none" />
 
                         {/* Header */}
                         <div className="flex justify-between items-center mb-8 relative z-10">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center neon-glow-primary">
+                                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center glow-primary">
                                     <BrainCircuit size={20} className="text-primary" />
                                 </div>
                                 <h3 className="font-black text-white uppercase tracking-[0.3em] text-xs glow-text">

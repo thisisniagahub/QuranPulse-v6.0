@@ -128,7 +128,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
             <motion.button
                 onClick={() => setIsOpen(true)}
                 className="fixed bottom-24 right-4 z-40 w-14 h-14 
-                   bg-gradient-to-br from-cyan-500 to-purple-500 
+                   bg-gradient-to-br from-raudhah-teal to-purple-500 
                    rounded-full shadow-lg shadow-cyan-500/25
                    flex items-center justify-center
                    hover:scale-110 transition-transform"
@@ -142,7 +142,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
 
                 {/* Pulse Animation */}
                 <motion.div
-                    className="absolute inset-0 rounded-full border-2 border-cyan-400"
+                    className="absolute inset-0 rounded-full border-2 border-raudhah-teal"
                     animate={{
                         scale: [1, 1.3, 1],
                         opacity: [0.5, 0, 0.5],
@@ -175,7 +175,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                             {/* Header */}
                             <div className="p-4 border-b border-slate-800 flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-purple-500 
+                                    <div className="w-10 h-10 bg-gradient-to-br from-raudhah-teal to-purple-500 
                                  rounded-xl flex items-center justify-center">
                                         <Sparkles className="w-5 h-5 text-white" />
                                     </div>
@@ -195,7 +195,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
 
                             {/* Verse Context */}
                             <div className="p-4 bg-slate-800/50">
-                                <p className="text-xs text-cyan-400 mb-1">{surahName} • Ayat {verseNumber}</p>
+                                <p className="text-xs text-raudhah-teal mb-1">{surahName} • Ayat {verseNumber}</p>
                                 <p className="text-right text-lg font-arabic text-white leading-loose mb-2" dir="rtl">
                                     {arabicText.substring(0, 80)}{arabicText.length > 80 && '...'}
                                 </p>
@@ -217,7 +217,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                                text-left transition-colors disabled:opacity-50
                                flex items-center gap-2"
                                         >
-                                            <div className="text-cyan-400">{prompt.icon}</div>
+                                            <div className="text-raudhah-teal">{prompt.icon}</div>
                                             <span className="text-sm text-white">{prompt.label}</span>
                                         </button>
                                     ))}
@@ -233,13 +233,13 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                                         placeholder="Tanya soalan anda sendiri..."
                                         className="w-full py-3 px-4 pr-12 bg-slate-800 border border-slate-700 
                              rounded-xl text-white placeholder-slate-500
-                             focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500"
+                             focus:outline-none focus:ring-2 focus:ring-raudhah-teal/50 focus:border-raudhah-teal"
                                     />
                                     <button
                                         onClick={handleCustomQuestion}
                                         disabled={!customQuestion.trim() || isLoading}
                                         className="absolute right-2 top-1/2 -translate-y-1/2 p-2 
-                             bg-gradient-to-r from-cyan-500 to-purple-500 
+                             bg-gradient-to-r from-raudhah-teal to-purple-500 
                              rounded-lg text-white disabled:opacity-50"
                                         title="Hantar soalan"
                                     >
@@ -255,7 +255,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                                     className="w-full py-3 bg-slate-800 hover:bg-slate-700 rounded-xl 
                            text-white flex items-center justify-center gap-2 transition-colors"
                                 >
-                                    <MessageCircle className="w-4 h-4 text-cyan-400" />
+                                    <MessageCircle className="w-4 h-4 text-raudhah-teal" />
                                     <span>Buka Smart Deen Chat</span>
                                     <ChevronRight className="w-4 h-4 text-slate-400" />
                                 </button>
@@ -272,7 +272,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                              flex items-center justify-center"
                                     >
                                         <div className="text-center">
-                                            <div className="w-12 h-12 border-3 border-cyan-500 border-t-transparent 
+                                            <div className="w-12 h-12 border-3 border-raudhah-teal border-t-transparent 
                                      rounded-full animate-spin mx-auto mb-3" />
                                             <p className="text-sm text-slate-400">Menghubungi Ustaz AI...</p>
                                         </div>

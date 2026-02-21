@@ -25,7 +25,7 @@ const IqraModule = () => {
       <Suspense
         fallback={
           <div className="h-full min-h-[50vh] flex items-center justify-center">
-            <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+            <div className="animate-spin w-8 h-8 border-2 border-raudhah-teal border-t-transparent rounded-full" />
           </div>
         }
       >
@@ -43,7 +43,7 @@ const IqraModule = () => {
         <Suspense
           fallback={
             <div className="h-full min-h-[50vh] flex items-center justify-center">
-              <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+              <div className="animate-spin w-8 h-8 border-2 border-raudhah-teal border-t-transparent rounded-full" />
             </div>
           }
         >
@@ -73,7 +73,7 @@ const IqraModule = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <span className="text-cyan-400 font-mono text-xs tracking-widest uppercase mb-2 block flex items-center gap-2">
+            <span className="text-raudhah-teal font-mono text-xs tracking-widest uppercase mb-2 block flex items-center gap-2">
               <Sparkles className="w-3 h-3" />
               Pusat Pembelajaran
             </span>
@@ -104,7 +104,7 @@ const IqraModule = () => {
           </div>
           <div className="h-8 w-px bg-white/10" />
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-cyan-500/20 flex items-center justify-center text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-cyan-500/30">
+            <div className="w-10 h-10 rounded-full bg-raudhah-teal/10 flex items-center justify-center text-raudhah-teal shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-raudhah-teal/20">
               <Star className="w-5 h-5" />
             </div>
             <div>
@@ -155,7 +155,7 @@ const IqraModule = () => {
             className="px-6"
           >
             <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-cyan-400" />
+              <BookOpen className="w-5 h-5 text-raudhah-teal" />
               Pilih Jilid
             </h2>
 
@@ -232,7 +232,7 @@ const IqraModule = () => {
             <Suspense
               fallback={
                 <div className="h-full min-h-[50vh] flex items-center justify-center">
-                  <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                  <div className="animate-spin w-8 h-8 border-2 border-raudhah-teal border-t-transparent rounded-full" />
                 </div>
               }
             >

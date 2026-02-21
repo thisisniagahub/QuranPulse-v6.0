@@ -25,11 +25,11 @@ export const Button: React.FC<ButtonProps> = ({
     const baseStyles = "relative inline-flex items-center justify-center font-bold tracking-wide rounded-xl transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none active:scale-95 overflow-hidden group";
 
     const variants = {
-        primary: "bg-cyan-500 hover:bg-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-cyan-400/50",
-        secondary: "bg-slate-800 hover:bg-slate-700 text-cyan-400 border border-slate-700 hover:border-cyan-500/50 shadow-lg",
+        primary: "bg-raudhah-teal hover:bg-raudhah-teal text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-raudhah-teal/50",
+        secondary: "bg-slate-800 hover:bg-slate-700 text-raudhah-teal border border-slate-700 hover:border-raudhah-teal/50 shadow-lg",
         ghost: "bg-transparent hover:bg-white/5 text-slate-400 hover:text-white",
-        glow: "bg-gradient-to-r from-cyan-600 to-blue-600 text-white shadow-[0_0_25px_rgba(8,145,178,0.5)] border border-white/10 hover:shadow-[0_0_40px_rgba(8,145,178,0.7)]",
-        outline: "bg-transparent border border-cyan-500/30 text-cyan-400 hover:bg-cyan-950/30 hover:border-cyan-400"
+        glow: "bg-gradient-to-r from-cyan-600 to-emerald-700 text-white shadow-[0_0_25px_rgba(8,145,178,0.5)] border border-white/10 hover:shadow-[0_0_40px_rgba(8,145,178,0.7)]",
+        outline: "bg-transparent border border-raudhah-teal/20 text-raudhah-teal hover:bg-cyan-950/30 hover:border-raudhah-teal"
     };
 
     const sizes = {

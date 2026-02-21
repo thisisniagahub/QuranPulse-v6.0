@@ -34,11 +34,11 @@ export function AdminSidebar() {
             {/* Logo Section */}
             <div className="flex h-16 items-center border-b border-slate-800/50 px-6">
                 <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-cyan-400 to-cyan-600 flex items-center justify-center">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-raudhah-teal to-cyan-600 flex items-center justify-center">
                         <Activity className="w-5 h-5 text-slate-900" />
                     </div>
                     <div>
-                        <h1 className="text-sm font-bold tracking-tight text-cyan-400 neon-text">
+                        <h1 className="text-sm font-bold tracking-tight text-raudhah-teal neon-text">
                             Mission Control
                         </h1>
                         <p className="text-[10px] text-slate-500 uppercase tracking-wider">QuranPulse v6.0</p>
@@ -74,15 +74,15 @@ export function AdminSidebar() {
                                     flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200
                                     animate-fade-in stagger-${Math.min(index + 1, 4)}
                                     ${isActive
-                                        ? 'bg-cyan-500/10 text-cyan-400 shadow-[inset_3px_0_0_var(--neon-cyan)]'
+                                        ? 'bg-raudhah-teal/10 text-raudhah-teal shadow-[inset_3px_0_0_var(--neon-cyan)]'
                                         : 'text-slate-400 hover:bg-slate-800/50 hover:text-slate-100'
                                     }
                                 `}
                             >
-                                <item.icon className={`h-5 w-5 transition-colors ${isActive ? 'text-cyan-400' : ''}`} />
+                                <item.icon className={`h-5 w-5 transition-colors ${isActive ? 'text-raudhah-teal' : ''}`} />
                                 {item.name}
                                 {isActive && (
-                                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-cyan-400 glow-pulse"></span>
+                                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-raudhah-teal glow-pulse"></span>
                                 )}
                             </Link>
                         )

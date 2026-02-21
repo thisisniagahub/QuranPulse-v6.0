@@ -64,7 +64,7 @@ const UmrahDashboard: React.FC = () => {
 
     const getColorClass = (color: string) => {
         const colors: Record<string, { bg: string; border: string; text: string }> = {
-            cyan: { bg: 'bg-cyan-500/20', border: 'border-cyan-500/50', text: 'text-cyan-400' },
+            cyan: { bg: 'bg-raudhah-teal/10', border: 'border-raudhah-teal/50', text: 'text-raudhah-teal' },
             blue: { bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400' },
             red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400' },
             green: { bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400' },
@@ -96,7 +96,7 @@ const UmrahDashboard: React.FC = () => {
                         <div>
                             <h1 className="text-xl font-bold flex items-center gap-2">
                                 <span className="text-2xl">🕋</span>
-                                <span>Umrah<span className="text-cyan-400">Pulse</span></span>
+                                <span>Umrah<span className="text-raudhah-teal">Pulse</span></span>
                             </h1>
                             <p className="text-xs text-slate-500">Pembantu Pintar Jemaah</p>
                         </div>
@@ -136,7 +136,7 @@ const UmrahDashboard: React.FC = () => {
                                     🕋
                                 </motion.div>
                                 <h2 className="text-2xl font-bold text-white mb-2">
-                                    Selamat Datang ke <span className="text-cyan-400">UmrahPulse</span>
+                                    Selamat Datang ke <span className="text-raudhah-teal">UmrahPulse</span>
                                 </h2>
                                 <p className="text-slate-400 text-sm max-w-sm mx-auto">
                                     Pembantu digital pintar untuk jemaah Umrah. Dari persiapan hingga selesai ibadah.
@@ -146,7 +146,7 @@ const UmrahDashboard: React.FC = () => {
                             {/* Quick Stats */}
                             <div className="grid grid-cols-3 gap-2">
                                 <div className="p-3 bg-slate-800/50 rounded-xl text-center">
-                                    <p className="text-2xl font-bold text-cyan-400">7</p>
+                                    <p className="text-2xl font-bold text-raudhah-teal">7</p>
                                     <p className="text-xs text-slate-500">Pusingan Tawaf</p>
                                 </div>
                                 <div className="p-3 bg-slate-800/50 rounded-xl text-center">

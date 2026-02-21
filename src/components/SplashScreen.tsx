@@ -42,7 +42,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                             delay: i * 0.4
                         }}
                         style={{ width: size, height: size }}
-                        className="absolute border border-cyan-400/10 rounded-full"
+                        className="absolute border border-raudhah-teal/10 rounded-full"
                     />
                 ))}
             </div>
@@ -70,7 +70,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                             opacity: [0.3, 0.6, 0.3],
                         }}
                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                        className="absolute inset-0 bg-cyan-400/20 blur-[40px] rounded-full"
+                        className="absolute inset-0 bg-raudhah-teal/20 blur-[40px] rounded-full"
                     />
                     <img loading="lazy"
                         src="/logo-primary.png"
@@ -87,7 +87,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                         transition={{ delay: 0.6, duration: 1 }}
                         className="text-4xl font-[Poppins] font-[900] text-white tracking-tight"
                     >
-                        QURAN <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">PULSE</span>
+                        QURAN <span className="text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-blue-500">PULSE</span>
                     </motion.h1>
 
                     <motion.div

@@ -160,7 +160,7 @@ const DigitalTasbih: React.FC = () => {
         <div className="mt-6 grid grid-cols-2 gap-3 text-center text-xs">
           <div className="rounded-xl border border-slate-700 bg-slate-800/80 p-3">
             <p className="text-slate-400">Set Selesai</p>
-            <p className="mt-1 text-lg font-black text-cyan-300">{completedSets}</p>
+            <p className="mt-1 text-lg font-black text-raudhah-teal">{completedSets}</p>
           </div>
           <div className="rounded-xl border border-slate-700 bg-slate-800/80 p-3">
             <p className="text-slate-400">Set Hari Ini</p>

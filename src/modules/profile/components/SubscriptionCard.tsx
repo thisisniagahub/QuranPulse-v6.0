@@ -35,18 +35,18 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
     return (
         <div className="bg-[#0c224b]/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 relative overflow-hidden shadow-2xl">
             {/* Background Decorative Orbs */}
-            <div className="absolute -top-24 -right-24 w-48 h-48 bg-cyan-500/10 rounded-full blur-[80px]"></div>
+            <div className="absolute -top-24 -right-24 w-48 h-48 bg-raudhah-teal/10 rounded-full blur-[80px]"></div>
             <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/10 rounded-full blur-[80px]"></div>
 
             <div className="absolute top-6 right-6">
-                <div className="bg-cyan-500/20 text-cyan-400 text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
+                <div className="bg-raudhah-teal/10 text-raudhah-teal text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border border-raudhah-teal/20 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
                     Genesis Tier
                 </div>
             </div>
 
             <div className="relative z-10">
                 <h3 className="text-2xl font-black text-white mb-2 uppercase tracking-tight flex items-center gap-3">
-                    <span className="w-2 h-8 bg-cyan-500 rounded-full animate-pulse"></span>
+                    <span className="w-2 h-8 bg-raudhah-teal rounded-full animate-pulse"></span>
                     Upgrade Keahlian
                 </h3>
                 <p className="text-slate-400 text-sm mb-8 font-medium">Buka potensi penuh rohani digital anda.</p>
@@ -75,7 +75,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
 
                 {/* Plan Details (HUD Style) */}
                 <div className="bg-white/5 rounded-3xl p-6 border border-white/5 mb-8 backdrop-blur-sm relative group overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute inset-0 bg-gradient-to-br from-raudhah-teal/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
                     <div className="flex items-baseline gap-2 mb-6">
                         <span className="text-4xl font-black text-white tracking-tighter drop-shadow-[0_0_10px_rgba(255,255,255,0.2)]">RM {selectedPlan.price.toFixed(2)}</span>
@@ -91,8 +91,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
                                 transition={{ delay: i * 0.1 }}
                                 className="flex items-center gap-3 text-xs text-slate-300"
                             >
-                                <div className="w-5 h-5 rounded-full bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
-                                    <i className="fa-solid fa-check text-[10px] text-cyan-400"></i>
+                                <div className="w-5 h-5 rounded-full bg-raudhah-teal/10 flex items-center justify-center border border-raudhah-teal/20">
+                                    <i className="fa-solid fa-check text-[10px] text-raudhah-teal"></i>
                                 </div>
                                 <span className="font-medium">{f}</span>
                             </motion.div>
@@ -105,7 +105,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setShowGateways(true)}
-                        className="w-full py-5 bg-cyan-600 hover:bg-cyan-500 text-white font-black uppercase tracking-[0.2em] text-sm rounded-2xl shadow-xl shadow-cyan-600/20 border border-cyan-400 transition-all flex items-center justify-center gap-3"
+                        className="w-full py-5 bg-cyan-600 hover:bg-raudhah-teal text-white font-black uppercase tracking-[0.2em] text-sm rounded-2xl shadow-xl shadow-cyan-600/20 border border-raudhah-teal transition-all flex items-center justify-center gap-3"
                     >
                         AKTIFKAN SEKARANG
                         <ChevronRight size={18} />
@@ -156,10 +156,10 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
             {isProcessing && (
                 <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-8 text-center">
                     <div className="relative w-20 h-20 mb-8">
-                        <div className="absolute inset-0 border-4 border-cyan-500/20 rounded-full"></div>
+                        <div className="absolute inset-0 border-4 border-raudhah-teal/20 rounded-full"></div>
                         <div className="absolute inset-0 border-4 border-t-cyan-500 rounded-full animate-spin"></div>
-                        <div className="absolute inset-4 bg-cyan-500/10 rounded-full flex items-center justify-center">
-                            <i className="fa-solid fa-shield-halved text-cyan-400 text-xl animate-pulse"></i>
+                        <div className="absolute inset-4 bg-raudhah-teal/10 rounded-full flex items-center justify-center">
+                            <i className="fa-solid fa-shield-halved text-raudhah-teal text-xl animate-pulse"></i>
                         </div>
                     </div>
                     <h4 className="text-white font-black uppercase tracking-[0.3em] mb-2">Mengamankan Sambungan</h4>

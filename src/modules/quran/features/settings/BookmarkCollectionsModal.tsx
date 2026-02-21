@@ -49,7 +49,7 @@ const storeCollections = (collections: BookmarkCollection[]) => {
 const COLOR_OPTIONS = [
   { id: 'amber', bg: 'bg-amber-500/20', border: 'border-amber-500/50', text: 'text-amber-400' },
   { id: 'purple', bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400' },
-  { id: 'cyan', bg: 'bg-cyan-500/20', border: 'border-cyan-500/50', text: 'text-cyan-400' },
+  { id: 'cyan', bg: 'bg-raudhah-teal/10', border: 'border-raudhah-teal/50', text: 'text-raudhah-teal' },
   { id: 'emerald', bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400' },
   { id: 'rose', bg: 'bg-rose-500/20', border: 'border-rose-500/50', text: 'text-rose-400' },
   { id: 'blue', bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400' },
@@ -158,9 +158,9 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[71] w-full max-w-md mx-4 max-h-[80vh] overflow-hidden"
           >
-            <div className="bg-slate-900 border border-cyan-500/30 rounded-2xl shadow-2xl flex flex-col max-h-[80vh]">
+            <div className="bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-2xl flex flex-col max-h-[80vh]">
               {/* Header */}
-              <div className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 p-4 border-b border-slate-700">
+              <div className="bg-gradient-to-r from-raudhah-teal/20 to-purple-500/20 p-4 border-b border-slate-700">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-bold text-white flex items-center gap-2">
                     <span>🔖</span>
@@ -219,7 +219,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                         value={newName}
                         onChange={(e) => setNewName(e.target.value)}
                         placeholder="Contoh: Ayat Ketenangan"
-                        className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:border-cyan-500 focus:outline-none"
+                        className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white focus:border-raudhah-teal focus:outline-none"
                         autoFocus
                       />
                     </div>
@@ -234,7 +234,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                             key={icon}
                             onClick={() => setNewIcon(icon)}
                             className={`w-10 h-10 rounded-lg text-xl flex items-center justify-center transition-all ${newIcon === icon
-                                ? 'bg-cyan-500/20 border-2 border-cyan-500'
+                                ? 'bg-raudhah-teal/10 border-2 border-raudhah-teal'
                                 : 'bg-slate-800 border border-slate-700 hover:bg-slate-700'
                               }`}
                           >
@@ -272,7 +272,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                       <button
                         onClick={handleCreateCollection}
                         disabled={!newName.trim()}
-                        className="flex-1 py-3 bg-cyan-500 text-black rounded-xl font-bold disabled:opacity-50"
+                        className="flex-1 py-3 bg-raudhah-teal text-black rounded-xl font-bold disabled:opacity-50"
                       >
                         Cipta
                       </button>
@@ -322,7 +322,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
                     {/* Create New Button */}
                     <button
                       onClick={() => setIsCreating(true)}
-                      className="w-full p-4 rounded-xl border-2 border-dashed border-slate-700 text-slate-400 hover:border-cyan-500/50 hover:text-cyan-400 transition-all flex items-center justify-center gap-2"
+                      className="w-full p-4 rounded-xl border-2 border-dashed border-slate-700 text-slate-400 hover:border-raudhah-teal/50 hover:text-raudhah-teal transition-all flex items-center justify-center gap-2"
                     >
                       <span>+</span>
                       <span>Cipta Koleksi Baru</span>

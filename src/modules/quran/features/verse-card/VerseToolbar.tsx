@@ -88,7 +88,7 @@ const VerseToolbarComponent: React.FC<VerseToolbarProps> = ({
       ),
       label: 'Koleksi',
       onClick: () => onAddToCollection(verse),
-      color: 'text-cyan-400 hover:bg-cyan-500/20',
+      color: 'text-raudhah-teal hover:bg-raudhah-teal/10',
     }] : []),
     {
       id: 'copy',
@@ -104,7 +104,7 @@ const VerseToolbarComponent: React.FC<VerseToolbarProps> = ({
       ),
       label: showCopied ? 'Disalin!' : 'Salin',
       onClick: handleCopy,
-      color: showCopied ? 'text-green-400 bg-green-500/20' : 'text-cyan-400 hover:bg-cyan-500/20',
+      color: showCopied ? 'text-green-400 bg-green-500/20' : 'text-raudhah-teal hover:bg-raudhah-teal/10',
     },
     ...(onTafsir ? [{
       id: 'tafsir',

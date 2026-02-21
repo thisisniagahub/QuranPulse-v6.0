@@ -372,7 +372,7 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 [data-theme="safar"] {
   --primary: #3b82f6;
-  /* Bright Blue (Neon) */
+  /* Bright Blue */
   --primary-rgb: 59, 130, 246;
   --primary-glow: rgba(59, 130, 246, 0.4);
 
@@ -414,7 +414,7 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 [data-theme="nabdh"] {
   --primary: #00BFFF;
-  /* Electric Cyan */
+  /* Electric Blue */
   --primary-rgb: 0, 191, 255;
   --primary-glow: rgba(0, 191, 255, 0.5);
 
@@ -443,7 +443,7 @@
 
   /* Accents */
   --accent-gold: #00d2ff;
-  /* Cyan is the new Gold */
+  /* Blue accent */
 
   /* Theme-specific effects */
   --pattern-opacity: 0.1;
@@ -644,9 +644,9 @@ body::before {
 }
 
 /* Neon progress bar */
-.progress-neon {
+.progress-raudhah {
   background: var(--primary);
-  box-shadow: 0 0 10px rgba(90, 185, 255, 0.8);
+  box-shadow: 0 0 10px rgba(27, 107, 90, 0.8);
   border-radius: 9999px;
 }
 
@@ -836,8 +836,8 @@ body::before {
   margin-right: 0.25em;
 }
 
-.neon-glow-primary {
-  filter: drop-shadow(0 0 8px var(--primary-glow));
+.glow-primary {
+  filter: drop-shadow(0 0 8px rgba(27, 107, 90, 0.4));
 }
 
 .text-gold-gradient {

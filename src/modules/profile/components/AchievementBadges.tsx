@@ -2,11 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Achievement } from '../../../contexts/GamificationContext';
 
-interface CyberBadgesProps {
+interface AchievementBadgesProps {
     badges: Achievement[];
 }
 
-const CyberBadges: React.FC<CyberBadgesProps> = ({ badges }) => {
+const AchievementBadges: React.FC<AchievementBadgesProps> = ({ badges }) => {
     return (
         <div className="grid grid-cols-4 sm:grid-cols-5 gap-4">
             {badges.map((badge, index) => {
@@ -23,13 +23,13 @@ const CyberBadges: React.FC<CyberBadgesProps> = ({ badges }) => {
                         <div className={`
                             absolute inset-0 clip-path-hexagon flex flex-col items-center justify-center p-2 transition-all duration-300
                             ${isUnlocked
-                                ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-[1px] border-cyan-500/30 group-hover:border-cyan-400 group-hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]'
+                                ? 'bg-gradient-to-br from-slate-800 to-slate-900 border-[1px] border-raudhah-teal/20 group-hover:border-raudhah-teal group-hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]'
                                 : 'bg-slate-900 border border-slate-800'
                             }
                         `}>
                             {/* Inner Glow for Unlocked */}
                             {isUnlocked && (
-                                <div className="absolute inset-0 bg-cyan-500/10 animate-pulse pointer-events-none"></div>
+                                <div className="absolute inset-0 bg-raudhah-teal/10 animate-pulse pointer-events-none"></div>
                             )}
 
                             <span className="text-2xl mb-1 drop-shadow-lg transform group-hover:scale-110 transition-transform duration-300">
@@ -56,4 +56,4 @@ const CyberBadges: React.FC<CyberBadgesProps> = ({ badges }) => {
     );
 };
 
-export default CyberBadges;
+export default AchievementBadges;

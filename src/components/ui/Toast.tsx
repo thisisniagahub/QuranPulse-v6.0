@@ -100,7 +100,7 @@ const ToastItem: React.FC<{ toast: Toast; onDismiss: () => void }> = ({ toast, o
         },
         info: {
             bg: 'bg-cyan-900/80 border-cyan-700/50 shadow-[0_0_20px_rgba(6,182,212,0.15)]',
-            icon: <Info className="h-5 w-5 text-cyan-400" />,
+            icon: <Info className="h-5 w-5 text-raudhah-teal" />,
         },
     };
 

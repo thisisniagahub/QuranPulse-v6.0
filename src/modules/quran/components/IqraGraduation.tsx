@@ -225,16 +225,16 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.9 }}
-                                        className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 
-                             border border-cyan-500/30 rounded-xl p-4 mb-6"
+                                        className="bg-gradient-to-r from-raudhah-teal/20 to-purple-500/20 
+                             border border-raudhah-teal/20 rounded-xl p-4 mb-6"
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-purple-500 
+                                            <div className="w-12 h-12 bg-gradient-to-br from-raudhah-teal to-purple-500 
                                      rounded-xl flex items-center justify-center">
                                                 <BookOpen className="w-6 h-6 text-white" />
                                             </div>
                                             <div className="text-left">
-                                                <p className="text-xs text-cyan-400 uppercase tracking-wider">Unlocked</p>
+                                                <p className="text-xs text-raudhah-teal uppercase tracking-wider">Unlocked</p>
                                                 <p className="text-white font-semibold">Al-Quran Full Access</p>
                                                 <p className="text-xs text-slate-400">114 Surah • 604 Pages</p>
                                             </div>
@@ -248,7 +248,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 1.1 }}
                                         onClick={() => setShowCeremony(false)}
-                                        className="w-full py-4 bg-gradient-to-r from-cyan-500 to-purple-500 
+                                        className="w-full py-4 bg-gradient-to-r from-raudhah-teal to-purple-500 
                              rounded-xl text-white font-semibold text-lg
                              hover:shadow-lg hover:shadow-cyan-500/25 transition-all
                              flex items-center justify-center gap-2"
@@ -275,7 +275,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
 
                                     {/* Recommended Surahs */}
                                     <div className="mb-6">
-                                        <h3 className="text-sm font-semibold text-cyan-400 mb-3 flex items-center gap-2">
+                                        <h3 className="text-sm font-semibold text-raudhah-teal mb-3 flex items-center gap-2">
                                             <Target className="w-4 h-4" />
                                             Surah Dicadangkan
                                         </h3>
@@ -292,7 +292,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                                             {surah.nameAr}
                                                         </span>
                                                         <ChevronRight className="w-4 h-4 text-slate-500 
-                                                    group-hover:text-cyan-400 transition-colors" />
+                                                    group-hover:text-raudhah-teal transition-colors" />
                                                     </div>
                                                     <p className="text-xs text-slate-400">{surah.name} • {surah.verses} ayat</p>
                                                 </button>
@@ -322,7 +322,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                                             <p className="text-xs text-slate-400">{readingPlans[plan].description}</p>
                                                         </div>
                                                         <div className="text-right">
-                                                            <p className="text-sm text-cyan-400">~{readingPlans[plan].days} hari</p>
+                                                            <p className="text-sm text-raudhah-teal">~{readingPlans[plan].days} hari</p>
                                                             <p className="text-xs text-slate-500">untuk khatam</p>
                                                         </div>
                                                     </div>
@@ -342,7 +342,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                         </button>
                                         <button
                                             onClick={onStartQuran}
-                                            className="flex-1 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 
+                                            className="flex-1 py-3 bg-gradient-to-r from-raudhah-teal to-purple-500 
                                rounded-xl text-white font-semibold
                                hover:shadow-lg hover:shadow-cyan-500/25 transition-all
                                flex items-center justify-center gap-2"

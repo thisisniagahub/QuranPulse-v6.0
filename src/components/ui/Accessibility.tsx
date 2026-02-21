@@ -47,8 +47,8 @@ export const FocusRing: React.FC<FocusRingProps> = ({
     ...props
 }) => {
     const variants = {
-        default: "focus-within:ring-2 focus-within:ring-cyan-500 focus-within:ring-offset-2 focus-within:ring-offset-slate-900",
-        neon: "focus-within:ring-2 focus-within:ring-cyan-400 focus-within:shadow-[0_0_15px_rgba(34,211,238,0.5)]",
+        default: "focus-within:ring-2 focus-within:ring-raudhah-teal focus-within:ring-offset-2 focus-within:ring-offset-slate-900",
+        neon: "focus-within:ring-2 focus-within:ring-raudhah-teal focus-within:shadow-[0_0_15px_rgba(27,107,90,0.3)]",
     };
 
     return (

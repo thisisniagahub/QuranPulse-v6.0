@@ -5,7 +5,7 @@ import { Wand2, Download, Image as ImageIcon, Sparkles, Loader2, Palette } from 
 
 // Themes
 const THEMES = [
-  { id: 'neon', name: 'Cyber Deen', bg: 'bg-gradient-to-br from-slate-900 via-slate-900 to-[#0c4a6e]', text: 'text-cyan-400', accent: 'border-cyan-500/50', font: 'font-sans' },
+  { id: 'neon', name: 'Raudhah', bg: 'bg-gradient-to-br from-raudhah-ivory via-raudhah-cream to-raudhah-ivory', text: 'text-raudhah-teal', accent: 'border-raudhah-teal/30', font: 'font-sans' },
   { id: 'islamic', name: 'Royal Gold', bg: 'bg-[#0f172a]', text: 'text-amber-200', accent: 'border-amber-500/50', font: 'font-serif' },
   { id: 'minimal', name: 'Clean White', bg: 'bg-white', text: 'text-slate-900', accent: 'border-black', font: 'font-mono' },
   { id: 'sunset', name: 'Maghrib Vibe', bg: 'bg-gradient-to-tr from-orange-900 to-purple-900', text: 'text-white', accent: 'border-white/20', font: 'font-sans' },
@@ -110,12 +110,12 @@ const PosterGenerator: React.FC = () => {
                     <textarea 
                         value={text} 
                         onChange={(e) => setText(e.target.value)}
-                        className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-sm text-white focus:border-cyan-500 outline-none min-h-[100px] mb-3"
+                        className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-sm text-white focus:border-raudhah-teal outline-none min-h-[100px] mb-3"
                     />
                     <input 
                         value={source} 
                         onChange={(e) => setSource(e.target.value)}
-                        className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-sm text-white focus:border-cyan-500 outline-none"
+                        className="w-full bg-black/30 border border-white/10 rounded-xl p-3 text-sm text-white focus:border-raudhah-teal outline-none"
                     />
                 </div>
             </div>
@@ -124,7 +124,7 @@ const PosterGenerator: React.FC = () => {
         {/* Theme Selector */}
         <div className="bg-slate-900/40 backdrop-blur-xl border border-white/5 p-6 rounded-2xl">
             <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-widest">
-                <Palette className="w-4 h-4 text-cyan-400" />
+                <Palette className="w-4 h-4 text-raudhah-teal" />
                 Visual Theme
             </h3>
             <div className="grid grid-cols-2 gap-3">
@@ -132,7 +132,7 @@ const PosterGenerator: React.FC = () => {
                     <button
                         key={t.id}
                         onClick={() => setTheme(t)}
-                        className={`relative h-16 rounded-xl border-2 transition-all overflow-hidden group ${theme.id === t.id ? 'border-cyan-500 ring-2 ring-cyan-500/20' : 'border-transparent opacity-60 hover:opacity-100 hover:scale-[1.02]'}`}
+                        className={`relative h-16 rounded-xl border-2 transition-all overflow-hidden group ${theme.id === t.id ? 'border-raudhah-teal ring-2 ring-raudhah-teal/20' : 'border-transparent opacity-60 hover:opacity-100 hover:scale-[1.02]'}`}
                     >
                         <div className={`absolute inset-0 ${t.bg}`}></div>
                         <span className={`relative z-10 text-xs font-bold ${t.text}`}>{t.name}</span>

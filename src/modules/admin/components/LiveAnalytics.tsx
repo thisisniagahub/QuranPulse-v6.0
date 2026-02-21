@@ -33,8 +33,8 @@ const LiveAnalytics: React.FC = () => {
       label: 'Total Ummah', 
       value: stats?.totalUsers || 0, 
       icon: Users, 
-      color: 'text-cyan-400', 
-      bg: 'bg-cyan-500/10',
+      color: 'text-raudhah-teal', 
+      bg: 'bg-raudhah-teal/10',
       trend: '+12% vs last month'
     },
     { 
@@ -83,7 +83,7 @@ const LiveAnalytics: React.FC = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: idx * 0.1 }}
-            className="group relative p-6 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-white/5 hover:border-cyan-500/30 transition-all hover:shadow-[0_0_30px_rgba(6,182,212,0.1)]"
+            className="group relative p-6 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-white/5 hover:border-raudhah-teal/20 transition-all hover:shadow-[0_0_30px_rgba(6,182,212,0.1)]"
           >
             <div className="flex justify-between items-start mb-4">
               <div className={`p-3 rounded-xl ${kpi.bg}`}>
@@ -106,7 +106,7 @@ const LiveAnalytics: React.FC = () => {
             </p>
 
             {/* Subtle Pulse Decoration */}
-            <div className="absolute -bottom-1 -right-1 w-16 h-16 bg-gradient-to-br from-cyan-500/10 to-transparent blur-2xl group-hover:bg-cyan-500/20 transition-all"></div>
+            <div className="absolute -bottom-1 -right-1 w-16 h-16 bg-gradient-to-br from-raudhah-teal/10 to-transparent blur-2xl group-hover:bg-raudhah-teal/10 transition-all"></div>
           </motion.div>
         ))}
       </div>
@@ -117,19 +117,19 @@ const LiveAnalytics: React.FC = () => {
         <div className="lg:col-span-2 rounded-2xl bg-slate-900/40 backdrop-blur-xl border border-white/5 p-6 h-[400px] flex flex-col">
           <div className="flex items-center justify-between mb-6">
             <h3 className="text-white font-bold flex items-center gap-2">
-              <Activity className="w-5 h-5 text-cyan-400" />
+              <Activity className="w-5 h-5 text-raudhah-teal" />
               Pulse Activity Stream
             </h3>
-            <span className="text-[10px] text-cyan-400 animate-pulse font-mono font-black">● LIVE</span>
+            <span className="text-[10px] text-raudhah-teal animate-pulse font-mono font-black">● LIVE</span>
           </div>
           
           <div className="flex-1 space-y-4 overflow-y-auto pr-2 custom-scrollbar">
             {[1, 2, 3, 4, 5].map((i) => (
               <div key={i} className="flex items-center gap-4 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
-                <div className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
+                <div className="w-2 h-2 rounded-full bg-raudhah-teal shadow-[0_0_10px_rgba(34,211,238,0.5)]"></div>
                 <div className="flex-1">
                   <p className="text-sm text-white">
-                    <span className="font-bold text-cyan-400">User @ahmad</span> just completed Iqra 1 Page 5
+                    <span className="font-bold text-raudhah-teal">User @ahmad</span> just completed Iqra 1 Page 5
                   </p>
                   <p className="text-[10px] text-slate-500">2 minutes ago • Selangor, MY</p>
                 </div>
@@ -159,15 +159,15 @@ const LiveAnalytics: React.FC = () => {
             </div>
           </div>
 
-          <div className="rounded-2xl bg-gradient-to-br from-cyan-600/20 to-blue-600/20 border border-cyan-500/20 p-6 relative overflow-hidden group">
+          <div className="rounded-2xl bg-gradient-to-br from-cyan-600/20 to-emerald-700/20 border border-raudhah-teal/20 p-6 relative overflow-hidden group">
              <div className="relative z-10">
                 <h3 className="text-white font-bold mb-2">Broadcast Alert</h3>
                 <p className="text-xs text-slate-300 mb-4">Send an emergency message to all active users across Malaysia.</p>
-                <button className="w-full py-2 bg-cyan-500 text-white rounded-lg text-xs font-bold hover:bg-cyan-400 transition-colors shadow-lg shadow-cyan-500/20">
+                <button className="w-full py-2 bg-raudhah-teal text-white rounded-lg text-xs font-bold hover:bg-raudhah-teal transition-colors shadow-lg shadow-cyan-500/20">
                   Compose Alert
                 </button>
              </div>
-             <i className="fa-solid fa-bullhorn absolute -bottom-4 -right-4 text-6xl text-cyan-500/10 -rotate-12 group-hover:rotate-0 transition-transform duration-500"></i>
+             <i className="fa-solid fa-bullhorn absolute -bottom-4 -right-4 text-6xl text-raudhah-teal/10 -rotate-12 group-hover:rotate-0 transition-transform duration-500"></i>
           </div>
         </div>
       </div>

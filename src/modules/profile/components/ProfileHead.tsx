@@ -53,7 +53,7 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
 
                 {/* ID Header */}
                 <div className="flex justify-between items-start mb-6 relative z-10 transform translate-z-10">
-                    <div className="flex items-center gap-2 text-cyan-400">
+                    <div className="flex items-center gap-2 text-raudhah-teal">
                         <i className="fa-solid fa-fingerprint text-xl"></i>
                         <span className="text-[10px] font-mono tracking-[0.2em]">ISLAMIC.ID</span>
                     </div>
@@ -66,8 +66,8 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
                 <div className="flex items-center gap-6 relative z-10">
                     {/* Hexagon Avatar Container */}
                     <div className="relative w-24 h-24 shrink-0">
-                        <div className="absolute inset-0 bg-cyan-500 clip-path-hexagon animate-pulse opacity-20"></div>
-                        <div className="absolute inset-[2px] bg-slate-900 clip-path-hexagon flex items-center justify-center overflow-hidden border-2 border-cyan-500/30">
+                        <div className="absolute inset-0 bg-raudhah-teal clip-path-hexagon animate-pulse opacity-20"></div>
+                        <div className="absolute inset-[2px] bg-slate-900 clip-path-hexagon flex items-center justify-center overflow-hidden border-2 border-raudhah-teal/20">
                             {user.avatar_url ? (
                                 <img loading="lazy" src={user.avatar_url} alt="Profile" className="w-full h-full object-cover" />
                             ) : (
@@ -83,11 +83,11 @@ const ProfileHead: React.FC<ProfileHeadProps> = ({ user, level, userTitle, onEdi
                     <div className="flex-1 min-w-0">
                         <h2 className="text-2xl font-bold text-white tracking-tight mb-1 truncate flex items-center gap-2">
                             {user.name}
-                            <button onClick={onEdit} className="text-xs text-slate-500 hover:text-cyan-400 transition-colors">
+                            <button onClick={onEdit} className="text-xs text-slate-500 hover:text-raudhah-teal transition-colors">
                                 <i className="fa-solid fa-pen"></i>
                             </button>
                         </h2>
-                        <p className="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-2">{userTitle}</p>
+                        <p className="text-raudhah-teal text-xs font-bold uppercase tracking-widest mb-2">{userTitle}</p>
 
                         {/* Micro Stats in Card */}
                         <div className="flex gap-4 mt-3">

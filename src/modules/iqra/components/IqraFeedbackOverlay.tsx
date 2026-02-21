@@ -30,7 +30,7 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
         <motion.div
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className={`p-8 rounded-[3rem] border-l-[16px] glass-hud flex flex-col gap-6 shadow-[0_40px_80px_rgba(0,0,0,0.6)] ${isCorrect ? 'border-emerald-500' : 'border-red-500'
+            className={`p-8 rounded-[3rem] border-l-[16px] glass-v7 flex flex-col gap-6 shadow-[0_40px_80px_rgba(0,0,0,0.6)] ${isCorrect ? 'border-emerald-500' : 'border-red-500'
                 } hud-border`}
         >
             {/* Status Header */}

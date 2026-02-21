@@ -50,7 +50,7 @@ DOCS_VAULT/           # Documentation repository
 | AI | Gemini 2.5 Flash (primary), Groq, OpenAI Whisper |
 | Testing | Jest, React Testing Library |
 | Routing | React Router 7 |
-| Deployment | Vercel (frontend), Docker (API + Qdrant) |
+| Deployment | Vercel via CLI `vercel --prod`, Docker (API + Qdrant) |
 
 ---
 
@@ -76,9 +76,13 @@ DOCS_VAULT/           # Documentation repository
 ### Key Features
 - **Pulse Command Center** — Global dashboard with Bento Grid layout
 - **Ustaz AI 2.0** — Hybrid Fatwa Engine with Shafi'i compliance
-- **Landing Page** — Premium "Noor-e-Cyber" design (shipped)
+- **Landing Page** — "Raudhah" design, reviewed & polished (10 fixes shipped 21 Feb)
 - **Iqra Digital** — 3D Interactive Library
 - **Khatam Tracker** — Visual 30-juz progress
+
+### Deploy Method
+- **Production**: `vercel --prod` CLI (auto-deploy from GitHub unreliable for unverified commits)
+- **Verification**: `npx tsc --noEmit` before every deploy
 
 ### Quran Module Tiers
 
@@ -109,14 +113,14 @@ npm run dev          # http://localhost:3000
 
 ---
 
-## 🎨 Design System: "Noor-e-Cyber"
+## 🎨 Design System: "Raudhah"
 
 | Theme | Colors |
 |-------|--------|
-| **Deep Space** (Default) | Midnight Navy + Neon Cyan |
-| **Noor** (Light) | Celestial Blue + White Gold |
+| **Raudhah** (Default) | Teal (#1B6B5A) + Gold (#D4AF37) on Ivory |
+| **Dark/Ink** | Deep Ink (#2D2A26) accents |
 
-**Core Elements**: Glass-Premium, 3D Levitation, Neon Pulsing animations
+**Core Elements**: Premium glass cards, gradient headlines, generous whitespace, Framer Motion animations
 
 ---
 

@@ -233,7 +233,7 @@ export default function ContentPage() {
                         key={tab.id}
                         onClick={() => setActiveTab(tab.id as any)}
                         className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${activeTab === tab.id
-                                ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/30'
+                                ? 'bg-raudhah-teal/10 text-raudhah-teal border border-raudhah-teal/20'
                                 : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
                             }`}
                     >
@@ -276,7 +276,7 @@ export default function ContentPage() {
                                 </div>
                                 <div className="flex items-center justify-between text-sm">
                                     <span className="text-slate-400">Records</span>
-                                    <span className="text-cyan-400 font-mono">{source.records.toLocaleString()}</span>
+                                    <span className="text-raudhah-teal font-mono">{source.records.toLocaleString()}</span>
                                 </div>
                             </div>
                         ))}

@@ -54,8 +54,8 @@ const MatchingGame: React.FC<MatchingGameProps> = ({ data, onComplete }) => {
                             className={`w-full py-6 rounded-2xl text-4xl font-arabic border-2 transition-all ${matches.has(item)
                                     ? 'bg-green-500/20 border-green-500 text-green-400 opacity-50 cursor-default'
                                     : selectedLeft === item
-                                        ? 'bg-cyan-500/20 border-cyan-400 text-white shadow-[0_0_20px_rgba(34,211,238,0.3)]'
-                                        : 'bg-black/40 border-white/10 text-slate-300 hover:border-cyan-500/50'
+                                        ? 'bg-raudhah-teal/10 border-raudhah-teal text-white shadow-[0_0_20px_rgba(34,211,238,0.3)]'
+                                        : 'bg-black/40 border-white/10 text-slate-300 hover:border-raudhah-teal/50'
                                 } ${errors.has(item) ? 'bg-red-500/20 border-red-500 animate-shake' : ''}`}
                         >
                             {item}

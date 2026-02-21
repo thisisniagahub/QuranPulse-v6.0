@@ -24,7 +24,7 @@ const KafaDashboard: React.FC<KafaDashboardProps> = ({ onSelectSubject }) => {
   return (
     <div className="px-6 pb-24">
       <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-        <span className="text-cyan-400">🏫</span>
+        <span className="text-raudhah-teal">🏫</span>
         Pilih Subjek KAFA
       </h2>
       
@@ -47,7 +47,7 @@ const KafaDashboard: React.FC<KafaDashboardProps> = ({ onSelectSubject }) => {
                 <div className="flex items-center gap-2 mb-1">
                     <h3 className="text-2xl font-bold text-white">{subject.title}</h3>
                 </div>
-                <p className="text-cyan-400 font-arabic text-lg mb-1">{subject.arabicTitle}</p>
+                <p className="text-raudhah-teal font-arabic text-lg mb-1">{subject.arabicTitle}</p>
                 <p className="text-slate-400 text-sm line-clamp-2">{subject.description}</p>
               </div>
               

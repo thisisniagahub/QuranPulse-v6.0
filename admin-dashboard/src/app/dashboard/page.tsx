@@ -91,7 +91,7 @@ export default function DashboardPage() {
         { label: 'User Management', icon: Users, href: '/dashboard/users', color: 'text-blue-400' },
         { label: 'Content Ops', icon: BookOpen, href: '/dashboard/content', color: 'text-emerald-400' },
         { label: 'Finance', icon: DollarSign, href: '/dashboard/finance', color: 'text-purple-400' },
-        { label: 'AI Oversight', icon: Brain, href: '/dashboard/ai-oversight', color: 'text-cyan-400' },
+        { label: 'AI Oversight', icon: Brain, href: '/dashboard/ai-oversight', color: 'text-raudhah-teal' },
         { label: 'Iqra Digital', icon: BookOpen, href: '/dashboard/iqra', color: 'text-pink-400' },
         { label: 'System Tools', icon: Activity, href: '/dashboard/tools', color: 'text-amber-400' },
     ]
@@ -146,7 +146,7 @@ export default function DashboardPage() {
                             <Link
                                 key={i}
                                 href={action.href}
-                                className="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50 hover:border-cyan-500/30 hover:bg-slate-800/50 transition-all group"
+                                className="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50 hover:border-raudhah-teal/20 hover:bg-slate-800/50 transition-all group"
                             >
                                 <action.icon className={`h-6 w-6 ${action.color} mb-2 group-hover:scale-110 transition-transform`} />
                                 <p className="text-sm font-medium text-slate-300 group-hover:text-white">{action.label}</p>
@@ -158,7 +158,7 @@ export default function DashboardPage() {
                 {/* Recent Activity */}
                 <div className="glass-card rounded-xl p-6 animate-fade-in">
                     <h3 className="text-lg font-semibold text-slate-200 mb-4 flex items-center gap-2">
-                        <Activity className="h-5 w-5 text-cyan-400" />
+                        <Activity className="h-5 w-5 text-raudhah-teal" />
                         Recent Activity
                     </h3>
                     <div className="space-y-4">
@@ -184,7 +184,7 @@ export default function DashboardPage() {
             {/* Bot Control Center */}
             <div className="animate-fade-in">
                 <h3 className="text-lg font-semibold text-slate-200 mb-4 flex items-center gap-2">
-                    <i className="fa-solid fa-robot text-cyan-400"></i>
+                    <i className="fa-solid fa-robot text-raudhah-teal"></i>
                     Neural Bot Network
                 </h3>
                 <BotControlCenter />

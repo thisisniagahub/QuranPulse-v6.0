@@ -6,7 +6,7 @@ export const TrustSection: React.FC = () => {
     return (
         <section className="py-20 bg-slate-950 border-y border-white/5 relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 text-center mb-12">
-                <p className="text-sm font-mono text-cyan-400 tracking-widest uppercase mb-2">Powered By Next-Gen Tech</p>
+                <p className="text-sm font-mono text-raudhah-teal tracking-widest uppercase mb-2">Powered By Next-Gen Tech</p>
                 <h3 className="text-2xl font-bold text-white">Built for Speed, Privacy & Intelligence</h3>
             </div>
 
@@ -59,7 +59,7 @@ export const TrustSection: React.FC = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.2 }}
                         key={i}
-                        className="bg-white/5 p-6 rounded-2xl border border-white/5 hover:border-cyan-500/30 transition-colors"
+                        className="bg-white/5 p-6 rounded-2xl border border-white/5 hover:border-raudhah-teal/20 transition-colors"
                     >
                         <div className="flex text-amber-500 text-xs mb-4 gap-1">
                             <i className="fa-solid fa-star"></i>
@@ -70,7 +70,7 @@ export const TrustSection: React.FC = () => {
                         </div>
                         <p className="text-slate-300 italic mb-6">"{t.text}"</p>
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-cyan-400">
+                            <div className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center font-bold text-raudhah-teal">
                                 {t.name.charAt(0)}
                             </div>
                             <div>

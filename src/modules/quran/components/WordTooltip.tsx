@@ -39,7 +39,7 @@ const WordTooltip: React.FC<WordTooltipProps> = ({ word, isOpen, onClose, positi
             initial={{ opacity: 0, scale: 0.9, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            className="fixed z-[81] w-72 bg-slate-900 border border-cyan-500/30 rounded-2xl shadow-2xl shadow-cyan-500/10 overflow-hidden"
+            className="fixed z-[81] w-72 bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-2xl shadow-cyan-500/10 overflow-hidden"
             style={{
               left: position ? Math.min(position.x - 144, window.innerWidth - 300) : '50%',
               top: position ? Math.min(position.y + 20, window.innerHeight - 350) : '50%',
@@ -55,10 +55,10 @@ const WordTooltip: React.FC<WordTooltipProps> = ({ word, isOpen, onClose, positi
                   <button
                     onClick={playWordAudio}
                     disabled={isPlaying}
-                    className="w-10 h-10 rounded-full bg-cyan-500/20 text-cyan-400 flex items-center justify-center hover:bg-cyan-500/30 transition-colors"
+                    className="w-10 h-10 rounded-full bg-raudhah-teal/10 text-raudhah-teal flex items-center justify-center hover:bg-raudhah-teal/30 transition-colors"
                   >
                     {isPlaying ? (
-                      <span className="w-4 h-4 border-2 border-cyan-400 border-t-transparent rounded-full animate-spin" />
+                      <span className="w-4 h-4 border-2 border-raudhah-teal border-t-transparent rounded-full animate-spin" />
                     ) : (
                       <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 ml-0.5">
                         <path d="M8 5v14l11-7z" />

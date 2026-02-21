@@ -6,10 +6,10 @@ const PrivacyPolicy: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-[#050505] text-slate-300 font-sans selection:bg-cyan-500/30 selection:text-cyan-200 overflow-x-hidden">
+        <div className="min-h-screen bg-[#050505] text-slate-300 font-sans selection:bg-raudhah-teal/30 selection:text-cyan-200 overflow-x-hidden">
             {/* Ambient Background */}
             <div className="fixed inset-0 z-0">
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-cyan-500/10 blur-[120px] rounded-full" />
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-raudhah-teal/10 blur-[120px] rounded-full" />
                 <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full" />
                 <div className="absolute inset-0 bg-maze opacity-[0.03]" />
             </div>
@@ -21,17 +21,17 @@ const PrivacyPolicy: React.FC = () => {
                         onClick={() => navigate('/')}
                         className="flex items-center gap-3 group"
                     >
-                        <div className="w-10 h-10 bg-cyan-500/10 border border-cyan-500/20 rounded-xl flex items-center justify-center group-hover:border-cyan-500/40 transition-all">
-                            <i className="fa-solid fa-arrow-left text-cyan-400"></i>
+                        <div className="w-10 h-10 bg-raudhah-teal/10 border border-raudhah-teal/20 rounded-xl flex items-center justify-center group-hover:border-raudhah-teal/40 transition-all">
+                            <i className="fa-solid fa-arrow-left text-raudhah-teal"></i>
                         </div>
                         <span className="font-bold text-lg text-white tracking-tight">Kembali ke Utama</span>
                     </button>
 
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center border border-cyan-500/30">
-                            <i className="fa-solid fa-shield-halved text-cyan-400 text-sm"></i>
+                        <div className="w-8 h-8 rounded-lg bg-raudhah-teal/10 flex items-center justify-center border border-raudhah-teal/20">
+                            <i className="fa-solid fa-shield-halved text-raudhah-teal text-sm"></i>
                         </div>
-                        <span className="text-xs font-mono uppercase tracking-widest text-cyan-500/80">Compliance Verified</span>
+                        <span className="text-xs font-mono uppercase tracking-widest text-raudhah-teal/80">Compliance Verified</span>
                     </div>
                 </div>
             </header>
@@ -47,7 +47,7 @@ const PrivacyPolicy: React.FC = () => {
                     {/* Hero Section */}
                     <div className="text-center space-y-4">
                         <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
-                            Polisi <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-400">Privasi</span>
+                            Polisi <span className="text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-purple-400">Privasi</span>
                         </h1>
                         <p className="text-slate-500 font-mono text-sm uppercase tracking-[0.2em]">
                             Last Updated: 21 Disember 2025
@@ -56,9 +56,9 @@ const PrivacyPolicy: React.FC = () => {
 
                     {/* Content Glass Cards */}
                     <div className="space-y-8 text-lg leading-relaxed">
-                        <section className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-md hover:border-cyan-500/20 transition-colors">
+                        <section className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-md hover:border-raudhah-teal/20 transition-colors">
                             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-sm">01</span>
+                                <span className="w-8 h-8 rounded-lg bg-raudhah-teal/10 flex items-center justify-center text-raudhah-teal text-sm">01</span>
                                 Mukadimah
                             </h2>
                             <p>
@@ -70,10 +70,10 @@ const PrivacyPolicy: React.FC = () => {
                             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md">
                                 <h3 className="text-xl font-bold text-white mb-4">Maklumat yang Kami Kumpul</h3>
                                 <ul className="space-y-3 text-sm text-slate-400">
-                                    <li className="flex gap-3"><i className="fa-solid fa-check text-cyan-500 mt-1"></i> Akaun & Profil (Emel/Telefon)</li>
-                                    <li className="flex gap-3"><i className="fa-solid fa-check text-cyan-500 mt-1"></i> Telegram ID & WhatsApp ID</li>
-                                    <li className="flex gap-3"><i className="fa-solid fa-check text-cyan-500 mt-1"></i> Kemajuan Ibadah (Quran/Iqra/Solat)</li>
-                                    <li className="flex gap-3"><i className="fa-solid fa-check text-cyan-500 mt-1"></i> Sejarah Perbualan Ustazah AI</li>
+                                    <li className="flex gap-3"><i className="fa-solid fa-check text-raudhah-teal mt-1"></i> Akaun & Profil (Emel/Telefon)</li>
+                                    <li className="flex gap-3"><i className="fa-solid fa-check text-raudhah-teal mt-1"></i> Telegram ID & WhatsApp ID</li>
+                                    <li className="flex gap-3"><i className="fa-solid fa-check text-raudhah-teal mt-1"></i> Kemajuan Ibadah (Quran/Iqra/Solat)</li>
+                                    <li className="flex gap-3"><i className="fa-solid fa-check text-raudhah-teal mt-1"></i> Sejarah Perbualan Ustazah AI</li>
                                 </ul>
                             </div>
                             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md">
@@ -89,7 +89,7 @@ const PrivacyPolicy: React.FC = () => {
 
                         <section className="bg-white/5 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-md">
                             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-lg bg-cyan-500/20 flex items-center justify-center text-cyan-400 text-sm">02</span>
+                                <span className="w-8 h-8 rounded-lg bg-raudhah-teal/10 flex items-center justify-center text-raudhah-teal text-sm">02</span>
                                 Kongsian Pihak Ketiga
                             </h2>
                             <p className="mb-6">
@@ -97,7 +97,7 @@ const PrivacyPolicy: React.FC = () => {
                             </p>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                                 <div className="p-4 bg-black/40 border border-white/5 rounded-2xl text-center">
-                                    <div className="text-cyan-400 font-bold mb-1">Supabase</div>
+                                    <div className="text-raudhah-teal font-bold mb-1">Supabase</div>
                                     <div className="text-[10px] uppercase tracking-wider opacity-50 text-white">Cloud Database</div>
                                 </div>
                                 <div className="p-4 bg-black/40 border border-white/5 rounded-2xl text-center">
@@ -111,7 +111,7 @@ const PrivacyPolicy: React.FC = () => {
                             </div>
                         </section>
 
-                        <section className="bg-gradient-to-br from-cyan-500/10 to-purple-500/10 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-md">
+                        <section className="bg-gradient-to-br from-raudhah-teal/10 to-purple-500/10 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-md">
                             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                                 <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white text-sm">03</span>
                                 Adab & Amanah Data
@@ -127,7 +127,7 @@ const PrivacyPolicy: React.FC = () => {
                                 href="mailto:support@quranpulse.my"
                                 className="inline-flex items-center gap-2 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-full text-white transition-all hover:scale-105"
                             >
-                                <i className="fa-solid fa-envelope text-cyan-400"></i>
+                                <i className="fa-solid fa-envelope text-raudhah-teal"></i>
                                 support@quranpulse.my
                             </a>
                         </div>

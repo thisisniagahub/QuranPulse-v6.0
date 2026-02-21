@@ -47,7 +47,7 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
   return (
     <div className={`sticky top-0 z-[60] transition-all duration-700 ${isZenMode
       ? 'bg-transparent border-none'
-      : 'bg-slate-950/95 backdrop-blur-md border-b border-cyan-500/20 shadow-lg shadow-cyan-500/5'
+      : 'bg-slate-950/95 backdrop-blur-md border-b border-raudhah-teal/20 shadow-lg shadow-cyan-500/5'
       }`}>
       <div className={`px-4 py-4 flex justify-between items-center ${isZenMode ? 'max-w-4xl mx-auto' : ''}`}>
         {/* Left: Back + Title */}
@@ -57,7 +57,7 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
             aria-label="Kembali"
             className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${isZenMode
               ? 'bg-white/5 text-slate-400 hover:text-white border border-white/10'
-              : 'bg-slate-800/80 text-slate-300 hover:bg-cyan-500/20 hover:text-cyan-400 border border-slate-700'
+              : 'bg-slate-800/80 text-slate-300 hover:bg-raudhah-teal/10 hover:text-raudhah-teal border border-slate-700'
               }`}
           >
             <i className="fa-solid fa-chevron-left text-sm"></i>
@@ -75,9 +75,9 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
               Surah {chapter.name_simple}
             </h2>
             <div className="flex items-center justify-center gap-2 -mt-1 opacity-40">
-              <span className="w-1 h-1 rounded-full bg-cyan-400"></span>
+              <span className="w-1 h-1 rounded-full bg-raudhah-teal"></span>
               <span className="text-[8px] font-black uppercase tracking-[0.2em] text-white">Fokus Bacaan</span>
-              <span className="w-1 h-1 rounded-full bg-cyan-400"></span>
+              <span className="w-1 h-1 rounded-full bg-raudhah-teal"></span>
             </div>
           </motion.div>
         )}
@@ -93,7 +93,7 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
             )}
             {/* 2. Reading Mode */}
             {onToggleReadingMode && (
-              <button onClick={onToggleReadingMode} className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${readingMode ? 'text-cyan-400 bg-cyan-500/10' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
+              <button onClick={onToggleReadingMode} className={`w-9 h-9 rounded-full flex items-center justify-center transition-all ${readingMode ? 'text-raudhah-teal bg-raudhah-teal/10' : 'text-slate-400 hover:text-white hover:bg-white/5'}`}>
                 <i className={`fa-solid ${readingMode ? 'fa-book-open' : 'fa-language'} text-sm`}></i>
               </button>
             )}
@@ -122,7 +122,7 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
       {/* Audio Loading Bar */}
       {isAudioLoading && (
         <div className="h-0.5 bg-slate-800 overflow-hidden">
-          <div className="h-full bg-cyan-500 animate-pulse w-full shadow-[0_0_10px_#22d3ee]"></div>
+          <div className="h-full bg-raudhah-teal animate-pulse w-full shadow-[0_0_10px_#22d3ee]"></div>
         </div>
       )}
     </div>

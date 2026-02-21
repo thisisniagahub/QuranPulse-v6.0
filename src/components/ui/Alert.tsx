@@ -30,7 +30,7 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
             },
             info: {
                 container: 'bg-cyan-900/30 border-cyan-700/50 text-cyan-200 shadow-[0_0_15px_rgba(6,182,212,0.1)]',
-                icon: <Info className="h-5 w-5 text-cyan-400" />,
+                icon: <Info className="h-5 w-5 text-raudhah-teal" />,
             },
         };
 

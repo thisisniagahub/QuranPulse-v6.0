@@ -102,7 +102,7 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                 {/* Header: Greeting & Date */}
                 <div className="flex justify-between items-start w-full opacity-80">
                     <div>
-                        <p className="text-[10px] font-medium text-cyan-300 uppercase tracking-widest mb-0.5">Assalamualaikum</p>
+                        <p className="text-[10px] font-medium text-raudhah-teal uppercase tracking-widest mb-0.5">Assalamualaikum</p>
                         <h2 className="text-sm font-bold text-white tracking-wide truncate max-w-[150px]">{user.name.split(' ')[0]}</h2>
                     </div>
                     <div className="text-right">
@@ -140,7 +140,7 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                         <div className="flex flex-col items-center">
                             <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">SETERUSNYA</p>
                             <h1 className="text-3xl font-black text-white tracking-tighter drop-shadow-lg">{nextPrayerGroup}</h1>
-                            <p className="text-sm font-mono font-medium text-cyan-300 mt-1 bg-cyan-950/50 px-2 py-0.5 rounded border border-cyan-500/20">{timeLeft}</p>
+                            <p className="text-sm font-mono font-medium text-raudhah-teal mt-1 bg-cyan-950/50 px-2 py-0.5 rounded border border-raudhah-teal/20">{timeLeft}</p>
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                 {/* Footer: Location & Masjid - Simplified */}
                 <div className="flex items-center justify-center gap-3 text-[10px] font-medium uppercase tracking-wider text-slate-300">
                     <div className="flex items-center gap-1.5 opacity-80">
-                        <i className="fa-solid fa-location-dot text-cyan-400 text-xs"></i>
+                        <i className="fa-solid fa-location-dot text-raudhah-teal text-xs"></i>
                         <span>{prayerData?.locationName || 'Kuala Lumpur'}</span>
                     </div>
                     <span className="text-slate-600">•</span>

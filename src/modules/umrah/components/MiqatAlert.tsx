@@ -127,7 +127,7 @@ const MiqatAlert: React.FC = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     className={`p-4 rounded-xl border ${alertPhase === 'miqat'
-                        ? 'bg-cyan-500/20 border-cyan-500 animate-pulse'
+                        ? 'bg-raudhah-teal/10 border-raudhah-teal animate-pulse'
                         : alertPhase === '5min'
                             ? 'bg-red-500/20 border-red-500'
                             : alertPhase === '30min'
@@ -138,7 +138,7 @@ const MiqatAlert: React.FC = () => {
                     <div className="flex items-center gap-3">
                         <span className="text-4xl">{alertInfo.icon}</span>
                         <div>
-                            <p className={`font-bold text-lg ${alertPhase === 'miqat' ? 'text-cyan-400' :
+                            <p className={`font-bold text-lg ${alertPhase === 'miqat' ? 'text-raudhah-teal' :
                                 alertPhase === '5min' ? 'text-red-400' :
                                     alertPhase === '30min' ? 'text-orange-400' :
                                         'text-amber-400'
@@ -158,11 +158,11 @@ const MiqatAlert: React.FC = () => {
                             key={miqat.name}
                             onClick={() => setSelectedMiqat(miqat)}
                             className={`p-3 rounded-lg border text-left transition-all ${selectedMiqat.name === miqat.name
-                                ? 'bg-cyan-500/20 border-cyan-500'
+                                ? 'bg-raudhah-teal/10 border-raudhah-teal'
                                 : 'bg-slate-800/50 border-slate-700 hover:border-slate-600'
                                 }`}
                         >
-                            <p className={`font-medium ${selectedMiqat.name === miqat.name ? 'text-cyan-400' : 'text-white'}`}>
+                            <p className={`font-medium ${selectedMiqat.name === miqat.name ? 'text-raudhah-teal' : 'text-white'}`}>
                                 {miqat.name}
                             </p>
                             <p className="text-xs text-amber-400 font-arabic">{miqat.nameAr}</p>
@@ -183,7 +183,7 @@ const MiqatAlert: React.FC = () => {
                             value={flightNumber}
                             onChange={(e) => setFlightNumber(e.target.value.toUpperCase())}
                             placeholder="MH0066"
-                            className="w-full pl-9 pr-3 py-2.5 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500 uppercase"
+                            className="w-full pl-9 pr-3 py-2.5 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal uppercase"
                         />
                     </div>
                 </div>
@@ -193,7 +193,7 @@ const MiqatAlert: React.FC = () => {
                         type="datetime-local"
                         value={departureTime}
                         onChange={(e) => setDepartureTime(e.target.value)}
-                        className="w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500"
+                        className="w-full px-3 py-2.5 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal"
                         aria-label="Masa berlepas penerbangan"
                     />
                 </div>
@@ -205,7 +205,7 @@ const MiqatAlert: React.FC = () => {
                     <button
                         onClick={calculateMiqatTime}
                         disabled={!departureTime}
-                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-black font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-gradient-to-r from-raudhah-teal to-blue-500 text-black font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
                     >
                         <Bell size={18} />
                         Aktifkan Alert
@@ -236,17 +236,17 @@ const MiqatAlert: React.FC = () => {
                     <p className="text-sm text-slate-400 mb-2">Anggaran masa ke Miqat {selectedMiqat.name}</p>
                     <div className="flex items-center justify-center gap-2">
                         <div className="bg-slate-900 rounded-lg p-3 min-w-[60px]">
-                            <p className="text-3xl font-bold text-cyan-400">{String(countdown.hours).padStart(2, '0')}</p>
+                            <p className="text-3xl font-bold text-raudhah-teal">{String(countdown.hours).padStart(2, '0')}</p>
                             <p className="text-xs text-slate-500">Jam</p>
                         </div>
-                        <span className="text-2xl text-cyan-400">:</span>
+                        <span className="text-2xl text-raudhah-teal">:</span>
                         <div className="bg-slate-900 rounded-lg p-3 min-w-[60px]">
-                            <p className="text-3xl font-bold text-cyan-400">{String(countdown.minutes).padStart(2, '0')}</p>
+                            <p className="text-3xl font-bold text-raudhah-teal">{String(countdown.minutes).padStart(2, '0')}</p>
                             <p className="text-xs text-slate-500">Minit</p>
                         </div>
-                        <span className="text-2xl text-cyan-400">:</span>
+                        <span className="text-2xl text-raudhah-teal">:</span>
                         <div className="bg-slate-900 rounded-lg p-3 min-w-[60px]">
-                            <p className="text-3xl font-bold text-cyan-400">{String(countdown.seconds).padStart(2, '0')}</p>
+                            <p className="text-3xl font-bold text-raudhah-teal">{String(countdown.seconds).padStart(2, '0')}</p>
                             <p className="text-xs text-slate-500">Saat</p>
                         </div>
                     </div>
@@ -262,9 +262,9 @@ const MiqatAlert: React.FC = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-gradient-to-br from-cyan-500/20 to-blue-500/10 border border-cyan-500/50 rounded-xl"
+                    className="p-4 bg-gradient-to-br from-raudhah-teal/20 to-blue-500/10 border border-raudhah-teal/50 rounded-xl"
                 >
-                    <h4 className="text-cyan-400 font-semibold mb-2">📿 Niat Ihram Umrah</h4>
+                    <h4 className="text-raudhah-teal font-semibold mb-2">📿 Niat Ihram Umrah</h4>
                     <p className="text-xl text-white font-arabic text-right leading-relaxed mb-2">
                         لَبَّيْكَ اللَّهُمَّ عُمْرَةً
                     </p>

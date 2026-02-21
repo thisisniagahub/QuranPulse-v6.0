@@ -54,7 +54,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
         <div className={`relative ${className}`}>
             {/* Search Input */}
             <div className="relative flex items-center">
-                <div className="absolute left-3 text-cyan-400">
+                <div className="absolute left-3 text-raudhah-teal">
                     <Sparkles className="w-5 h-5" />
                 </div>
 
@@ -64,9 +64,9 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                     onChange={(e) => setQuery(e.target.value)}
                     onKeyDown={handleKeyDown}
                     placeholder="Cari ayat berdasarkan makna... (cth: ayat tentang sabar)"
-                    className="w-full pl-10 pr-20 py-3 bg-slate-800/60 border border-cyan-500/30 
+                    className="w-full pl-10 pr-20 py-3 bg-slate-800/60 border border-raudhah-teal/20 
                      rounded-xl text-white placeholder-slate-400
-                     focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-cyan-500
+                     focus:outline-none focus:ring-2 focus:ring-raudhah-teal/50 focus:border-raudhah-teal
                      transition-all duration-300"
                 />
 
@@ -83,7 +83,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                     <button
                         onClick={handleSearch}
                         disabled={query.trim().length < 3 || isSearching}
-                        className="px-3 py-1.5 bg-gradient-to-r from-cyan-500 to-purple-500 
+                        className="px-3 py-1.5 bg-gradient-to-r from-raudhah-teal to-purple-500 
                        rounded-lg text-white text-sm font-medium
                        disabled:opacity-50 disabled:cursor-not-allowed
                        hover:shadow-lg hover:shadow-cyan-500/25 transition-all"
@@ -111,7 +111,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
                         className="absolute top-full left-0 right-0 mt-2 z-50
-                       bg-slate-900/95 backdrop-blur-xl border border-cyan-500/30 
+                       bg-slate-900/95 backdrop-blur-xl border border-raudhah-teal/20 
                        rounded-xl shadow-2xl shadow-cyan-500/10 overflow-hidden"
                     >
                         {error ? (
@@ -126,7 +126,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                                     </span>
                                     <button
                                         onClick={() => setIsOpen(false)}
-                                        className="text-xs text-cyan-400 hover:text-cyan-300"
+                                        className="text-xs text-raudhah-teal hover:text-raudhah-teal"
                                     >
                                         Tutup
                                     </button>
@@ -140,15 +140,15 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                                             animate={{ opacity: 1, x: 0 }}
                                             transition={{ delay: index * 0.05 }}
                                             onClick={() => handleResultClick(result)}
-                                            className="w-full p-4 text-left hover:bg-cyan-500/10 
+                                            className="w-full p-4 text-left hover:bg-raudhah-teal/10 
                                  border-b border-slate-800 last:border-0
                                  transition-colors group"
                                         >
                                             {/* Header */}
                                             <div className="flex items-center justify-between mb-2">
                                                 <div className="flex items-center gap-2">
-                                                    <BookOpen className="w-4 h-4 text-cyan-400" />
-                                                    <span className="text-cyan-400 font-medium">
+                                                    <BookOpen className="w-4 h-4 text-raudhah-teal" />
+                                                    <span className="text-raudhah-teal font-medium">
                                                         {result.surahName} ({result.surahNumber}:{result.verseNumber})
                                                     </span>
                                                 </div>

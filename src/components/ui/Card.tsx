@@ -11,7 +11,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
         const variants = {
             default: "bg-slate-900/80 border-slate-700/50",
             glass: "bg-white/5 backdrop-blur-xl border-white/10",
-            neon: "bg-slate-900/90 border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.15)]",
+            neon: "bg-white/90 border-raudhah-teal/20 shadow-[0_0_15px_rgba(27,107,90,0.1)]",
             elevated: "bg-gradient-to-br from-slate-800 to-slate-900 border-slate-600/50 shadow-xl",
         };
 
@@ -21,7 +21,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
                 className={cn(
                     "rounded-2xl border p-6 transition-all duration-300",
                     variants[variant],
-                    hover && "hover:scale-[1.02] hover:shadow-lg hover:border-cyan-500/50 cursor-pointer",
+                    hover && "hover:scale-[1.02] hover:shadow-lg hover:border-raudhah-teal/50 cursor-pointer",
                     className
                 )}
                 {...props}

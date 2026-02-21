@@ -100,8 +100,8 @@ const TawafTracker: React.FC = () => {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20">
-                        <Target className="text-cyan-400" size={24} />
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-raudhah-teal/20 to-blue-500/20">
+                        <Target className="text-raudhah-teal" size={24} />
                     </div>
                     <div>
                         <h3 className="text-lg font-semibold text-white">Tawaf Tracker</h3>
@@ -111,7 +111,7 @@ const TawafTracker: React.FC = () => {
                 <button
                     onClick={() => setHapticEnabled(!hapticEnabled)}
                     className={`p-2 rounded-lg transition-all ${hapticEnabled
-                        ? 'bg-cyan-500/20 text-cyan-400'
+                        ? 'bg-raudhah-teal/10 text-raudhah-teal'
                         : 'bg-slate-800 text-slate-500'
                         }`}
                     title={hapticEnabled ? 'Haptic On' : 'Haptic Off'}
@@ -129,9 +129,9 @@ const TawafTracker: React.FC = () => {
                         <motion.div
                             key={i}
                             className={`absolute inset-0 rounded-full border-2 ${i < currentRound
-                                ? 'border-cyan-500'
+                                ? 'border-raudhah-teal'
                                 : i === currentRound
-                                    ? 'border-cyan-400'
+                                    ? 'border-raudhah-teal'
                                     : 'border-slate-700'
                                 }`}
                             style={{
@@ -152,7 +152,7 @@ const TawafTracker: React.FC = () => {
                     {/* Moving Dot (Pilgrim Position) */}
                     {isTracking && currentRound < 7 && (
                         <motion.div
-                            className="absolute w-4 h-4 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"
+                            className="absolute w-4 h-4 bg-raudhah-teal rounded-full shadow-lg shadow-cyan-400/50"
                             style={{
                                 top: '50%',
                                 left: '50%',
@@ -167,7 +167,7 @@ const TawafTracker: React.FC = () => {
                             }}
                         >
                             <div className="absolute -top-6 -left-6 w-16 h-16 flex items-center justify-center">
-                                <div className="w-3 h-3 bg-cyan-400 rounded-full" />
+                                <div className="w-3 h-3 bg-raudhah-teal rounded-full" />
                             </div>
                         </motion.div>
                     )}
@@ -179,9 +179,9 @@ const TawafTracker: React.FC = () => {
                         <div
                             key={i}
                             className={`w-3 h-3 rounded-full transition-all ${i < currentRound
-                                ? 'bg-cyan-500'
+                                ? 'bg-raudhah-teal'
                                 : i === currentRound
-                                    ? 'bg-cyan-400 animate-pulse'
+                                    ? 'bg-raudhah-teal animate-pulse'
                                     : 'bg-slate-700'
                                 }`}
                         />
@@ -192,7 +192,7 @@ const TawafTracker: React.FC = () => {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-2">
                 <div className="p-3 bg-slate-800/50 rounded-lg text-center">
-                    <p className="text-3xl font-bold text-cyan-400">{currentRound}</p>
+                    <p className="text-3xl font-bold text-raudhah-teal">{currentRound}</p>
                     <p className="text-xs text-slate-500">Pusingan</p>
                 </div>
                 <div className="p-3 bg-slate-800/50 rounded-lg text-center">
@@ -210,11 +210,11 @@ const TawafTracker: React.FC = () => {
                 <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                         <span className="text-slate-400">Pusingan {currentRound + 1}</span>
-                        <span className="text-cyan-400">{stepCount}/{STEPS_PER_ROUND} langkah</span>
+                        <span className="text-raudhah-teal">{stepCount}/{STEPS_PER_ROUND} langkah</span>
                     </div>
                     <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                         <motion.div
-                            className="h-full bg-gradient-to-r from-cyan-500 to-blue-500"
+                            className="h-full bg-gradient-to-r from-raudhah-teal to-blue-500"
                             initial={{ width: 0 }}
                             animate={{ width: `${progress}%` }}
                         />
@@ -243,7 +243,7 @@ const TawafTracker: React.FC = () => {
             {/* Current Doa */}
             {isTracking && currentRound < 7 && !isNearRukunYamani && TAWAF_DOA[currentRound] && (
                 <div className="p-4 bg-slate-800/50 rounded-xl border border-slate-700">
-                    <p className="text-xs text-cyan-400 mb-2">Doa Pusingan {currentRound + 1}:</p>
+                    <p className="text-xs text-raudhah-teal mb-2">Doa Pusingan {currentRound + 1}:</p>
                     <p className="text-lg text-white font-arabic text-right leading-relaxed">
                         {TAWAF_DOA[currentRound].doaAr}
                     </p>
@@ -256,7 +256,7 @@ const TawafTracker: React.FC = () => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="p-6 bg-gradient-to-br from-cyan-500/20 to-green-500/10 border border-green-500/50 rounded-xl text-center"
+                    className="p-6 bg-gradient-to-br from-raudhah-teal/20 to-green-500/10 border border-green-500/50 rounded-xl text-center"
                 >
                     <span className="text-5xl">🎉</span>
                     <h4 className="text-xl font-bold text-green-400 mt-2">Tawaf Selesai!</h4>
@@ -271,7 +271,7 @@ const TawafTracker: React.FC = () => {
                     disabled={currentRound >= 7}
                     className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-semibold transition-all ${isTracking
                         ? 'bg-amber-500 text-black'
-                        : 'bg-gradient-to-r from-cyan-500 to-blue-500 text-black'
+                        : 'bg-gradient-to-r from-raudhah-teal to-blue-500 text-black'
                         } disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                     {isTracking ? (

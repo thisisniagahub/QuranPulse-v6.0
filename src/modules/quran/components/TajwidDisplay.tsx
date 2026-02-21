@@ -131,8 +131,8 @@ const TajwidDisplay: React.FC<TajwidDisplayProps> = ({
                 className={`
                   cursor-pointer transition-all duration-200 inline-block
                   ${isActive
-                    ? 'text-cyan-400 scale-110 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]'
-                    : 'hover:text-cyan-300 hover:scale-105'
+                    ? 'text-raudhah-teal scale-110 drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]'
+                    : 'hover:text-raudhah-teal hover:scale-105'
                   }
                 `}
               >

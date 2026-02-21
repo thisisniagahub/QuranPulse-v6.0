@@ -67,7 +67,7 @@ export const QuranModalsManager: React.FC = () => {
     const { addXP } = useGamification();
 
     // Loading Fallback
-    const Fallback = () => <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm"><div className="w-8 h-8 border-2 border-cyan-500 rounded-full animate-spin border-t-transparent"></div></div>;
+    const Fallback = () => <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm"><div className="w-8 h-8 border-2 border-raudhah-teal rounded-full animate-spin border-t-transparent"></div></div>;
 
     return (
         <Suspense fallback={<Fallback />}>

@@ -57,14 +57,14 @@ const VerseActionMenuComponent: React.FC<VerseActionMenuProps> = ({
       label: 'Tanya Ustaz AI',
       icon: 'fa-robot',
       onClick: () => { onAskUstaz(verse); onClose(); },
-      color: 'text-cyan-400'
+      color: 'text-raudhah-teal'
     }] : []),
     {
       id: 'copy',
       label: 'Salin Ayat',
       icon: 'fa-copy',
       onClick: () => { onCopy(verse); onClose(); },
-      color: 'text-cyan-400'
+      color: 'text-raudhah-teal'
     },
     {
       id: 'share',
@@ -120,12 +120,12 @@ const VerseActionMenuComponent: React.FC<VerseActionMenuProps> = ({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: -10 }}
           transition={{ duration: 0.2 }}
-          className="absolute right-0 top-12 z-50 w-64 bg-slate-950/80 backdrop-blur-xl border border-cyan-500/30 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden ring-1 ring-cyan-500/20"
+          className="absolute right-0 top-12 z-50 w-64 bg-slate-950/80 backdrop-blur-xl border border-raudhah-teal/20 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.5)] overflow-hidden ring-1 ring-raudhah-teal/20"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="py-1">
-            <div className="px-4 py-3 border-b border-cyan-500/20 bg-cyan-950/30">
-              <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-widest flex items-center justify-between">
+            <div className="px-4 py-3 border-b border-raudhah-teal/20 bg-cyan-950/30">
+              <span className="text-[10px] uppercase font-bold text-raudhah-teal tracking-widest flex items-center justify-between">
                 <span>SYSTEM MENU</span>
                 <span>{verse.verse_key}</span>
               </span>
@@ -134,10 +134,10 @@ const VerseActionMenuComponent: React.FC<VerseActionMenuProps> = ({
               <button
                 key={item.id}
                 onClick={item.onClick}
-                className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-cyan-500/10 hover:text-cyan-100 flex items-center gap-3 transition-all group border-l-2 border-transparent hover:border-cyan-400"
+                className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-raudhah-teal/10 hover:text-cyan-100 flex items-center gap-3 transition-all group border-l-2 border-transparent hover:border-raudhah-teal"
               >
-                <div className={`w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center group-hover:bg-cyan-500/20 group-hover:shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all ${item.color}`}>
-                  <i className={`${item.solid ? 'fa-solid' : 'fa-regular'} ${item.icon} group-hover:text-cyan-300 transition-colors`}></i>
+                <div className={`w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center group-hover:bg-raudhah-teal/10 group-hover:shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all ${item.color}`}>
+                  <i className={`${item.solid ? 'fa-solid' : 'fa-regular'} ${item.icon} group-hover:text-raudhah-teal transition-colors`}></i>
                 </div>
                 <span className="font-medium">{item.label}</span>
               </button>

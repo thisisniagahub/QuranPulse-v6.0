@@ -103,7 +103,7 @@ const Leaderboard: React.FC = () => {
     };
 
     const getRankBg = (rank: number, isCurrentUser: boolean) => {
-        if (isCurrentUser) return 'bg-cyan-500/10 border-cyan-500/30';
+        if (isCurrentUser) return 'bg-raudhah-teal/10 border-raudhah-teal/20';
         switch (rank) {
             case 1: return 'bg-yellow-500/5 border-yellow-500/20';
             case 2: return 'bg-slate-400/5 border-slate-400/20';
@@ -113,7 +113,7 @@ const Leaderboard: React.FC = () => {
     };
 
     return (
-        <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-cyan-500/20">
+        <div className="p-6 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-800 border border-raudhah-teal/20">
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
@@ -122,7 +122,7 @@ const Leaderboard: React.FC = () => {
                 </div>
                 <div className="flex items-center gap-2 text-xs">
                     <span className="text-slate-400">Level {gamification.level}</span>
-                    <span className="text-cyan-400 font-bold">{gamification.xp} XP</span>
+                    <span className="text-raudhah-teal font-bold">{gamification.xp} XP</span>
                 </div>
             </div>
 
@@ -136,7 +136,7 @@ const Leaderboard: React.FC = () => {
                             key={s}
                             onClick={() => setScope(s)}
                             className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all ${scope === s
-                                ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30'
+                                ? 'bg-raudhah-teal/10 text-raudhah-teal border border-raudhah-teal/20'
                                 : 'text-slate-400 hover:text-white hover:bg-slate-800'
                                 }`}
                         >
@@ -167,7 +167,7 @@ const Leaderboard: React.FC = () => {
             <div className="space-y-2">
                 {isLoading ? (
                     <div className="text-center py-8 text-slate-400">
-                        <div className="animate-spin w-6 h-6 border-2 border-cyan-400 border-t-transparent rounded-full mx-auto mb-2" />
+                        <div className="animate-spin w-6 h-6 border-2 border-raudhah-teal border-t-transparent rounded-full mx-auto mb-2" />
                         Memuatkan...
                     </div>
                 ) : (
@@ -184,21 +184,21 @@ const Leaderboard: React.FC = () => {
                                     {getRankIcon(entry.rank)}
 
                                     {/* Avatar */}
-                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold">
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-raudhah-teal to-purple-500 flex items-center justify-center text-white text-xs font-bold">
                                         {entry.displayName.charAt(0)}
                                     </div>
 
                                     <div>
-                                        <p className={`text-sm font-medium ${entry.isCurrentUser ? 'text-cyan-400' : 'text-white'}`}>
+                                        <p className={`text-sm font-medium ${entry.isCurrentUser ? 'text-raudhah-teal' : 'text-white'}`}>
                                             {entry.displayName}
-                                            {entry.isCurrentUser && <span className="text-xs text-cyan-400/60 ml-2">(Anda)</span>}
+                                            {entry.isCurrentUser && <span className="text-xs text-raudhah-teal/60 ml-2">(Anda)</span>}
                                         </p>
                                         <p className="text-xs text-slate-500">Level {entry.level} • 🔥 {entry.streak} hari</p>
                                     </div>
                                 </div>
 
                                 <div className="text-right">
-                                    <p className="text-sm font-bold text-cyan-400">{entry.xp.toLocaleString()}</p>
+                                    <p className="text-sm font-bold text-raudhah-teal">{entry.xp.toLocaleString()}</p>
                                     <p className="text-xs text-slate-500">XP</p>
                                 </div>
                             </motion.div>

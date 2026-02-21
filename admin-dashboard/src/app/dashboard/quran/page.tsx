@@ -106,7 +106,7 @@ export default function QuranAnalyticsPage() {
         { label: 'Total Readers', value: stats.totalReaders.toLocaleString(), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10', trend: '+12%' },
         { label: 'Active Today', value: stats.activeToday.toLocaleString(), icon: Activity, color: 'text-emerald-400', bg: 'bg-emerald-500/10', trend: '+5%' },
         { label: 'Verses Read', value: stats.versesRead.toLocaleString(), icon: BookOpen, color: 'text-purple-400', bg: 'bg-purple-500/10', trend: '+18%' },
-        { label: 'Avg Reading (min)', value: stats.avgReadingTime, icon: Clock, color: 'text-cyan-400', bg: 'bg-cyan-500/10', trend: '+3%' },
+        { label: 'Avg Reading (min)', value: stats.avgReadingTime, icon: Clock, color: 'text-raudhah-teal', bg: 'bg-raudhah-teal/10', trend: '+3%' },
         { label: 'Khatam Completed', value: stats.completions, icon: Award, color: 'text-amber-400', bg: 'bg-amber-500/10', trend: '+8%' },
         { label: 'Most Read', value: stats.mostReadSurah, icon: Target, color: 'text-pink-400', bg: 'bg-pink-500/10', trend: '' },
     ]
@@ -127,7 +127,7 @@ export default function QuranAnalyticsPage() {
                                 key={p}
                                 onClick={() => setPeriod(p)}
                                 className={`px-3 py-1.5 text-sm rounded-md transition-colors ${period === p
-                                        ? 'bg-cyan-500/20 text-cyan-400'
+                                        ? 'bg-raudhah-teal/10 text-raudhah-teal'
                                         : 'text-slate-400 hover:text-white'
                                     }`}
                             >
@@ -143,7 +143,7 @@ export default function QuranAnalyticsPage() {
                         <RefreshCw className={`h-4 w-4 text-slate-400 ${loading ? 'animate-spin' : ''}`} />
                     </button>
                     <button
-                        className="flex items-center gap-2 px-3 py-2 bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 rounded-lg hover:bg-cyan-500/20 transition-colors"
+                        className="flex items-center gap-2 px-3 py-2 bg-raudhah-teal/10 text-raudhah-teal border border-raudhah-teal/20 rounded-lg hover:bg-raudhah-teal/10 transition-colors"
                         title="Export report"
                     >
                         <Download className="h-4 w-4" />
@@ -201,7 +201,7 @@ export default function QuranAnalyticsPage() {
                                     <p className="text-xs text-slate-400">Avg reading: {surah.avgTime}</p>
                                 </div>
                                 <div className="text-right">
-                                    <p className="text-lg font-semibold text-cyan-400">{surah.reads.toLocaleString()}</p>
+                                    <p className="text-lg font-semibold text-raudhah-teal">{surah.reads.toLocaleString()}</p>
                                     <p className="text-xs text-slate-500">reads</p>
                                 </div>
                             </div>
@@ -212,7 +212,7 @@ export default function QuranAnalyticsPage() {
                 {/* Feature Usage */}
                 <div className="glass-card rounded-xl p-6 animate-fade-in">
                     <h3 className="text-lg font-semibold text-slate-200 mb-4 flex items-center gap-2">
-                        <PieChart className="h-5 w-5 text-cyan-400" />
+                        <PieChart className="h-5 w-5 text-raudhah-teal" />
                         Feature Usage
                     </h3>
                     <div className="space-y-3">
@@ -238,7 +238,7 @@ export default function QuranAnalyticsPage() {
                         <Activity className="h-5 w-5 text-emerald-400" />
                         Recent Reading Sessions
                     </h3>
-                    <button className="text-sm text-cyan-400 hover:text-cyan-300 flex items-center gap-1">
+                    <button className="text-sm text-raudhah-teal hover:text-raudhah-teal flex items-center gap-1">
                         View all <ChevronRight className="h-4 w-4" />
                     </button>
                 </div>
@@ -258,14 +258,14 @@ export default function QuranAnalyticsPage() {
                                 <tr key={i} className="hover:bg-slate-800/30">
                                     <td className="py-3">
                                         <div className="flex items-center gap-2">
-                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-500 to-purple-500 flex items-center justify-center text-white text-xs font-bold">
+                                            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-raudhah-teal to-purple-500 flex items-center justify-center text-white text-xs font-bold">
                                                 {session.userName.charAt(0)}
                                             </div>
                                             <span className="text-sm text-white">{session.userName}</span>
                                         </div>
                                     </td>
                                     <td className="py-3 text-sm text-slate-300">{session.surahName}</td>
-                                    <td className="py-3 text-sm text-cyan-400">{session.duration}</td>
+                                    <td className="py-3 text-sm text-raudhah-teal">{session.duration}</td>
                                     <td className="py-3 text-sm text-purple-400">{session.verses} ayat</td>
                                     <td className="py-3 text-sm text-slate-500">{session.timestamp}</td>
                                 </tr>

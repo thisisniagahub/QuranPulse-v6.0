@@ -103,7 +103,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
         <div className="flex flex-col h-full relative bg-midnight-gradient overflow-hidden">
             {/* Ambient Background (Deep Navy) */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-cyan-500/10 rounded-full blur-[120px] opacity-40"></div>
+                <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-raudhah-teal/10 rounded-full blur-[120px] opacity-40"></div>
                 <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#0A1E42] rounded-full blur-[100px] opacity-60"></div>
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
                 <div className="absolute inset-0 opacity-20 bg-pattern-dots-raudhah"></div>
@@ -117,7 +117,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                 <div className="flex items-center gap-4">
                     <div className="relative">
                         <UstazahAvatar persona={selectedPersona} isThinking={isThinking} />
-                        {isThinking && <div className="absolute inset-0 rounded-full border-2 border-cyan-400 animate-pulse"></div>}
+                        {isThinking && <div className="absolute inset-0 rounded-full border-2 border-raudhah-teal animate-pulse"></div>}
                     </div>
                     <div>
                         <h2 className="text-white font-bold text-sm tracking-wide drop-shadow-md">{PERSONAS[selectedPersona].name}</h2>
@@ -135,7 +135,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                         <button
                             key={p}
                             onClick={() => switchPersona(p)}
-                            className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm transition-all ${selectedPersona === p ? 'bg-cyan-500/20 text-cyan-400 shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-cyan-500/30' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
+                            className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm transition-all ${selectedPersona === p ? 'bg-raudhah-teal/10 text-raudhah-teal shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-raudhah-teal/20' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
                         >
                             {p === 'AZHAR' ? '👳🏻‍♂️' : p === 'AISHAH' ? '🧕🏻' : '🧢'}
                         </button>
@@ -169,7 +169,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                             {msg.role === 'user' ? <i className="fa-solid fa-user"></i> : (msg.role === 'assistant' && selectedPersona === 'AZHAR' ? '👳🏻‍♂️' : selectedPersona === 'AISHAH' ? '🧕🏻' : '🧢')}
                                         </div>
                                         <div className={`rounded-2xl p-4 text-sm leading-relaxed shadow-md backdrop-blur-md border ${msg.role === 'user'
-                                            ? 'bg-gradient-to-br from-cyan-600/90 to-blue-700/90 text-white rounded-br-sm border-cyan-400/20'
+                                            ? 'bg-gradient-to-br from-cyan-600/90 to-blue-700/90 text-white rounded-br-sm border-raudhah-teal/20'
                                             : 'bg-[#1e293b]/90 text-slate-200 rounded-bl-sm border-white/10'
                                             }`}>
                                             {/* Render Clean Text */}
@@ -203,7 +203,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                         {isThinking && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
                                 <div className="w-8 h-8 rounded-full bg-[#0f1e38] border border-white/10 flex items-center justify-center text-xs animate-spin-slow">⏳</div>
-                                <div className="bg-[#0f1e38]/80 p-3 rounded-2xl rounded-bl-none border border-cyan-500/20">
+                                <div className="bg-[#0f1e38]/80 p-3 rounded-2xl rounded-bl-none border border-raudhah-teal/20">
                                     <NeuralTyping />
                                 </div>
                             </motion.div>
@@ -230,7 +230,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                         )}
 
                         {/* Input Area */}
-                        <div className={`flex gap-2 items-end bg-[#0f1e38]/90 p-2 rounded-2xl border transition-all backdrop-blur-xl shadow-2xl ${isThinking ? 'border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.1)]' : 'border-cyan-500/30 shadow-[0_0_20px_rgba(6,182,212,0.1)]'}`}>
+                        <div className={`flex gap-2 items-end bg-[#0f1e38]/90 p-2 rounded-2xl border transition-all backdrop-blur-xl shadow-2xl ${isThinking ? 'border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.1)]' : 'border-raudhah-teal/20 shadow-[0_0_20px_rgba(6,182,212,0.1)]'}`}>
                             <button
                                 onClick={isListening ? stopListening : startListening}
                                 disabled={!isSupported}
@@ -239,7 +239,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                     ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
                                     : isListening
                                         ? 'bg-red-500/80 animate-pulse text-white shadow-[0_0_15px_rgba(239,68,68,0.5)]'
-                                        : 'hover:bg-cyan-900/30 text-cyan-400 hover:text-cyan-300'
+                                        : 'hover:bg-cyan-900/30 text-raudhah-teal hover:text-raudhah-teal'
                                     }`}
                             >
                                 <i className={`fa-solid ${isListening ? 'fa-microphone-slash' : 'fa-microphone'}`}></i>
@@ -258,7 +258,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                             <button
                                 onClick={handleSend}
                                 disabled={!input.trim() || isThinking}
-                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all ${input.trim() && !isThinking ? 'bg-cyan-500 text-black hover:bg-cyan-400 shadow-[0_0_15px_rgba(6,182,212,0.5)]' : 'bg-slate-800/50 text-slate-600 cursor-not-allowed'}`}
+                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all ${input.trim() && !isThinking ? 'bg-raudhah-teal text-black hover:bg-raudhah-teal shadow-[0_0_15px_rgba(6,182,212,0.5)]' : 'bg-slate-800/50 text-slate-600 cursor-not-allowed'}`}
                                 title="Hantar Mesej"
                             >
                                 <i className="fa-solid fa-paper-plane transform translate-x-px translate-y-px"></i>
@@ -273,7 +273,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                 <Suspense
                     fallback={
                         <div className="h-full min-h-[50vh] flex items-center justify-center">
-                            <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                            <div className="animate-spin w-8 h-8 border-2 border-raudhah-teal border-t-transparent rounded-full" />
                         </div>
                     }
                 >

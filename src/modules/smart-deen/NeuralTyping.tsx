@@ -7,7 +7,7 @@ const NeuralTyping: React.FC = () => {
             {[1, 2, 3, 4, 5].map((i) => (
                 <motion.div
                     key={i}
-                    className="w-1 bg-cyan-500 rounded-full"
+                    className="w-1 bg-raudhah-teal rounded-full"
                     initial={{ height: 4 }}
                     animate={{ height: [4, 16, 4] }}
                     transition={{

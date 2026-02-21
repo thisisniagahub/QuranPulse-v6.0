@@ -87,11 +87,11 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
             ? 'bg-red-500 shadow-[0_0_30px_rgba(239,68,68,0.5)]' 
             : isProcessing
               ? 'bg-cyan-900 cursor-wait'
-              : 'bg-cyan-500 hover:bg-cyan-400 text-black shadow-[0_0_20px_rgba(6,182,212,0.4)]'
+              : 'bg-raudhah-teal hover:bg-raudhah-teal text-black shadow-[0_0_20px_rgba(6,182,212,0.4)]'
         }`}
       >
         {isProcessing ? (
-          <RefreshCw className="w-8 h-8 text-cyan-400 animate-spin" />
+          <RefreshCw className="w-8 h-8 text-raudhah-teal animate-spin" />
         ) : (
           <Mic className={`w-8 h-8 ${isRecording ? 'text-white' : 'text-black'}`} />
         )}
@@ -124,7 +124,7 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
                     initial={{ opacity: 0, y: 5 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0 }}
-                    className="text-cyan-400 text-xs font-mono uppercase tracking-widest"
+                    className="text-raudhah-teal text-xs font-mono uppercase tracking-widest"
                 >
                     Menyemak Suara...
                 </motion.div>

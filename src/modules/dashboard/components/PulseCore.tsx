@@ -6,7 +6,7 @@ const PulseCore: React.FC = () => {
     <div className="relative w-64 h-64 flex items-center justify-center">
       {/* 1. Base Glow (Breathing) */}
       <motion.div 
-        className="absolute inset-0 bg-cyan-500/20 rounded-full blur-3xl"
+        className="absolute inset-0 bg-raudhah-teal/10 rounded-full blur-3xl"
         animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
@@ -15,11 +15,11 @@ const PulseCore: React.FC = () => {
       <div className="absolute inset-0 flex items-center justify-center">
         {/* Outer Ring - Cyan */}
         <motion.div 
-          className="absolute w-56 h-56 border border-cyan-500/30 rounded-full"
+          className="absolute w-56 h-56 border border-raudhah-teal/20 rounded-full"
           animate={{ rotate: 360 }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
         >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,0.8)]"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1 w-2 h-2 bg-raudhah-teal rounded-full shadow-[0_0_10px_rgba(34,211,238,0.8)]"></div>
         </motion.div>
 
         {/* Inner Ring - Amber (Counter-rotating) */}
@@ -69,7 +69,7 @@ const PulseCore: React.FC = () => {
                 transition={{ duration: 1.5, repeat: Infinity, delay: 0.2 }}
              />
              <motion.div 
-                className="absolute w-1 h-1 bg-cyan-400 rounded-full"
+                className="absolute w-1 h-1 bg-raudhah-teal rounded-full"
                 animate={{ y: [-20, -35], x: [10, 20], opacity: [1, 0] }}
                 transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
              />
@@ -82,7 +82,7 @@ const PulseCore: React.FC = () => {
       </div>
       
       {/* 4. Stats Labels (Floating) */}
-      <div className="absolute top-0 w-full flex justify-between px-2 text-[10px] uppercase font-bold tracking-widest text-cyan-500/50">
+      <div className="absolute top-0 w-full flex justify-between px-2 text-[10px] uppercase font-bold tracking-widest text-raudhah-teal/50">
           <span>Faith</span>
           <span>Shield</span>
       </div>

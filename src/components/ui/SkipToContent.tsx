@@ -21,7 +21,7 @@ export const SkipToContent: React.FC<SkipToContentProps> = ({
             className="
                 sr-only focus:not-sr-only
                 fixed top-0 left-0 z-[9999]
-                bg-cyan-500 text-slate-900
+                bg-raudhah-teal text-slate-900
                 px-4 py-3 font-semibold
                 focus:outline-none focus:ring-2 focus:ring-cyan-300
                 transform -translate-y-full focus:translate-y-0

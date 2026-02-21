@@ -81,7 +81,7 @@ export function FormField({
                     name={name}
                     defaultChecked={defaultValue}
                     disabled={disabled}
-                    className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-cyan-500 focus:ring-cyan-500/50"
+                    className="w-4 h-4 rounded border-slate-700 bg-slate-800 text-raudhah-teal focus:ring-raudhah-teal/50"
                 />
                 <label htmlFor={name} className="text-sm font-medium text-slate-300">
                     {label}

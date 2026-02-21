@@ -117,7 +117,7 @@ const PWAInstallPrompt: React.FC = () => {
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-cyan-100 dark:border-cyan-900/30 p-4 w-full max-w-md pointer-events-auto flex items-center gap-4 relative overflow-hidden">
 
           {/* Background Glow */}
-          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-cyan-500/10 rounded-full blur-2xl"></div>
+          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-raudhah-teal/10 rounded-full blur-2xl"></div>
 
           {/* Icon */}
           <div className="flex-shrink-0 w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center text-2xl shadow-sm border border-cyan-100">

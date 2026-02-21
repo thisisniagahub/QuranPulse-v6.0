@@ -74,7 +74,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
   return (
     <div className="min-h-screen bg-[#0a0a0a] text-white flex flex-col font-sans">
       {/* Accessibility Skip Link */}
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-cyan-500 text-black p-2 rounded z-[100]">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 bg-raudhah-teal text-black p-2 rounded z-[100]">
         Langkau ke kandungan utama
       </a>
 
@@ -83,14 +83,14 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
         <div className="flex items-center gap-4">
           <button 
             onClick={onBack}
-            className="p-2 hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            className="p-2 hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-raudhah-teal"
             aria-label="Kembali ke Menu Utama"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
           <div>
             <h1 className="font-bold text-lg">{currentLesson.unitTitle}</h1>
-            <div className="text-xs text-cyan-400 flex items-center gap-2">
+            <div className="text-xs text-raudhah-teal flex items-center gap-2">
               <span className="bg-cyan-900/50 px-2 py-0.5 rounded text-[10px] border border-cyan-800" aria-label={`Iqra Jilid ${volume}`}>
                 IQRA {volume}
               </span>
@@ -102,7 +102,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
         <div className="flex items-center gap-2">
            <button 
             onClick={toggleTips}
-            className={`p-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-400 ${showTips ? 'bg-amber-500/20 text-amber-400' : 'hover:bg-white/10 text-slate-400'}`}
+            className={`p-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-raudhah-teal ${showTips ? 'bg-amber-500/20 text-amber-400' : 'hover:bg-white/10 text-slate-400'}`}
             aria-label={showTips ? "Sembunyikan Tips" : "Lihat Tips Pengajar"}
             aria-pressed={showTips}
           >
@@ -138,7 +138,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
             >
               <div className="max-w-md w-full space-y-8">
                 <div className="text-center space-y-2">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 shadow-lg shadow-cyan-500/20 mb-4">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-raudhah-teal to-emerald-700 shadow-lg shadow-cyan-500/20 mb-4">
                     <BookOpen className="w-8 h-8 text-white" aria-hidden="true" />
                   </div>
                   <h2 id="lesson-start-title" className="text-3xl font-bold">{currentLesson.title}</h2>
@@ -146,14 +146,14 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
                 </div>
 
                 <div className="bg-white/5 border border-white/10 rounded-2xl p-6 backdrop-blur-sm">
-                  <h3 className="text-sm font-semibold text-cyan-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                  <h3 className="text-sm font-semibold text-raudhah-teal uppercase tracking-wider mb-4 flex items-center gap-2">
                     <Award className="w-4 h-4" aria-hidden="true" />
                     Objektif Pembelajaran
                   </h3>
                   <ul className="space-y-3">
                     {currentLesson.objectives.map((obj) => (
                       <li key={obj.id} className="flex gap-3 text-sm text-slate-200">
-                        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 mt-2 shrink-0" aria-hidden="true" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-raudhah-teal mt-2 shrink-0" aria-hidden="true" />
                         <span>{obj.description}</span>
                       </li>
                     ))}
@@ -162,7 +162,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
 
                 <button 
                   onClick={startLesson}
-                  className="w-full py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold rounded-xl transition-all transform active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-cyan-500/50 animate-pulse touch-manipulation"
+                  className="w-full py-4 bg-raudhah-teal hover:bg-raudhah-teal text-black font-bold rounded-xl transition-all transform active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-raudhah-teal/50 animate-pulse touch-manipulation"
                   autoFocus
                 >
                   <Play className="w-5 h-5" fill="currentColor" aria-hidden="true" />
@@ -264,28 +264,28 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
                 {/* Kanan */}
                 <button 
                   onClick={() => playRef(row.kanan)}
-                  className="bg-white/5 hover:bg-white/10 border border-white/5 hover:border-cyan-500/50 active:bg-white/20 transition-all rounded-2xl p-4 md:p-6 flex items-center justify-center aspect-[2.5/1] cursor-pointer group relative focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/10 touch-manipulation"
+                  className="bg-white/5 hover:bg-white/10 border border-white/5 hover:border-raudhah-teal/50 active:bg-white/20 transition-all rounded-2xl p-4 md:p-6 flex items-center justify-center aspect-[2.5/1] cursor-pointer group relative focus:outline-none focus:ring-2 focus:ring-raudhah-teal focus:bg-white/10 touch-manipulation"
                   aria-label={`Bacaan Kanan: ${row.kanan}. Tekan untuk dengar.`}
                 >
                    <span className="text-3xl md:text-4xl font-arabic select-none pointer-events-none">{row.kanan}</span>
-                   <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity" />
+                   <div className="absolute inset-0 bg-raudhah-teal/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity" />
                    {/* Audio Indicator */}
                    <div className="absolute top-2 right-2 opacity-30 group-hover:opacity-100 transition-opacity">
-                      <Volume2 className="w-4 h-4 text-cyan-400" />
+                      <Volume2 className="w-4 h-4 text-raudhah-teal" />
                    </div>
                 </button>
                 
                 {/* Kiri */}
                 <button 
                   onClick={() => playRef(row.kiri)}
-                  className="bg-white/5 hover:bg-white/10 border border-white/5 hover:border-cyan-500/50 active:bg-white/20 transition-all rounded-2xl p-4 md:p-6 flex items-center justify-center aspect-[2.5/1] cursor-pointer group relative focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:bg-white/10 touch-manipulation"
+                  className="bg-white/5 hover:bg-white/10 border border-white/5 hover:border-raudhah-teal/50 active:bg-white/20 transition-all rounded-2xl p-4 md:p-6 flex items-center justify-center aspect-[2.5/1] cursor-pointer group relative focus:outline-none focus:ring-2 focus:ring-raudhah-teal focus:bg-white/10 touch-manipulation"
                   aria-label={`Bacaan Kiri: ${row.kiri}. Tekan untuk dengar.`}
                 >
                    <span className="text-3xl md:text-4xl font-arabic select-none pointer-events-none">{row.kiri}</span>
-                   <div className="absolute inset-0 bg-cyan-500/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity" />
+                   <div className="absolute inset-0 bg-raudhah-teal/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity" />
                    {/* Audio Indicator */}
                    <div className="absolute top-2 right-2 opacity-30 group-hover:opacity-100 transition-opacity">
-                      <Volume2 className="w-4 h-4 text-cyan-400" />
+                      <Volume2 className="w-4 h-4 text-raudhah-teal" />
                    </div>
                 </button>
               </div>
@@ -318,7 +318,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
         <button 
           onClick={nextLesson}
           disabled={isLastLesson}
-          className="flex flex-col items-center justify-center w-16 h-full gap-1 text-cyan-400 hover:text-cyan-300 disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none active:scale-95"
+          className="flex flex-col items-center justify-center w-16 h-full gap-1 text-raudhah-teal hover:text-raudhah-teal disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none active:scale-95"
           aria-label="Pelajaran Seterusnya"
         >
           <ChevronRight className="w-6 h-6" />

@@ -18,7 +18,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, gra
     transition={{ duration: 0.6, delay }}
   >
     <TiltCard>
-      <div className="relative p-6 md:p-8 rounded-3xl bg-gradient-to-br from-slate-900/80 to-slate-800/50 border border-white/10 hover:border-cyan-500/30 transition-all duration-500 group h-full overflow-hidden">
+      <div className="relative p-6 md:p-8 rounded-3xl bg-gradient-to-br from-slate-900/80 to-slate-800/50 border border-white/10 hover:border-raudhah-teal/20 transition-all duration-500 group h-full overflow-hidden">
         {/* Background glow */}
         <div className={`absolute top-0 right-0 w-32 h-32 ${gradient} rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition-opacity`} />
         
@@ -28,7 +28,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, gra
         </div>
 
         {/* Content */}
-        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">
+        <h3 className="text-xl font-bold text-white mb-3 group-hover:text-raudhah-teal transition-colors">
           {title}
         </h3>
         <p className="text-slate-400 text-sm leading-relaxed">
@@ -41,7 +41,7 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description, gra
           whileHover={{ opacity: 1, x: 0 }}
           className="absolute bottom-6 right-6 opacity-0 group-hover:opacity-100 transition-opacity"
         >
-          <i className="fa-solid fa-arrow-right text-cyan-400" />
+          <i className="fa-solid fa-arrow-right text-raudhah-teal" />
         </motion.div>
       </div>
     </TiltCard>
@@ -60,7 +60,7 @@ export const FeaturesShowcase = () => {
       icon: 'fa-solid fa-book-quran',
       title: 'Premium Quran',
       description: 'Beautiful recitation with word-by-word translation, Tajweed rules, and multiple Qari options.',
-      gradient: 'bg-gradient-to-br from-cyan-500 to-blue-600',
+      gradient: 'bg-gradient-to-br from-raudhah-teal to-emerald-700',
     },
     {
       icon: 'fa-solid fa-mosque',
@@ -86,9 +86,9 @@ export const FeaturesShowcase = () => {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <span className="text-cyan-500 font-bold tracking-widest uppercase text-xs mb-2 block">Core Features</span>
+          <span className="text-raudhah-teal font-bold tracking-widest uppercase text-xs mb-2 block">Core Features</span>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold font-serif text-white mb-4">
-            Everything You Need for Your <span className="text-cyan-400">Deen</span>
+            Everything You Need for Your <span className="text-raudhah-teal">Deen</span>
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto">
             A complete spiritual toolkit designed with modern Muslims in mind. Premium features, zero compromise.

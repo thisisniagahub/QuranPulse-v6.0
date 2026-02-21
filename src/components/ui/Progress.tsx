@@ -14,9 +14,9 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
         const percentage = Math.min(Math.max((value / max) * 100, 0), 100);
 
         const variants = {
-            default: "bg-cyan-500",
-            neon: "bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.5)]",
-            gradient: "bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500",
+            default: "bg-raudhah-teal",
+            neon: "bg-raudhah-teal shadow-[0_0_15px_rgba(27,107,90,0.3)]",
+            gradient: "bg-gradient-to-r from-raudhah-teal via-blue-500 to-purple-500",
         };
 
         const sizes = {
@@ -101,7 +101,7 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
                     strokeDasharray={circumference}
                     strokeDashoffset={offset}
                     strokeLinecap="round"
-                    className="text-cyan-500 transition-all duration-500 ease-out"
+                    className="text-raudhah-teal transition-all duration-500 ease-out"
                     style={{ filter: 'drop-shadow(0 0 6px rgba(6, 182, 212, 0.5))' }}
                 />
             </svg>

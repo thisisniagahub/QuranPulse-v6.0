@@ -15,22 +15,22 @@ interface ThemeSettingsModalProps {
 
 const THEMES: { id: ThemeType; name: string; icon: string; preview: { bg: string; text: string; accent: string } }[] = [
   {
+    id: 'raudhah',
+    name: 'Raudhah',
+    icon: '💠',
+    preview: { bg: 'bg-[#F5F7FA]', text: 'text-[#1A237E]', accent: 'bg-[#FBC02D]' }
+  },
+  {
     id: 'dark',
     name: 'Gelap',
     icon: '🌙',
-    preview: { bg: 'bg-slate-900', text: 'text-white', accent: 'bg-cyan-500' }
+    preview: { bg: 'bg-slate-900', text: 'text-white', accent: 'bg-raudhah-teal' }
   },
   {
     id: 'light',
     name: 'Cerah',
     icon: '☀️',
     preview: { bg: 'bg-white', text: 'text-gray-900', accent: 'bg-blue-500' }
-  },
-  {
-    id: 'raudhah',
-    name: 'Raudhah',
-    icon: '💠',
-    preview: { bg: 'bg-[#F5F7FA]', text: 'text-[#1A237E]', accent: 'bg-[#FBC02D]' }
   },
   {
     id: 'sepia',

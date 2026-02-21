@@ -118,7 +118,7 @@ export default function AIOversightPage() {
     }
 
     const statCards = [
-        { label: 'Total Queries', value: stats.totalQueries.toLocaleString(), icon: Brain, color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
+        { label: 'Total Queries', value: stats.totalQueries.toLocaleString(), icon: Brain, color: 'text-raudhah-teal', bg: 'bg-raudhah-teal/10' },
         { label: 'Pending Review', value: stats.pending, icon: Clock, color: 'text-amber-400', bg: 'bg-amber-500/10' },
         { label: 'Approved', value: stats.approved, icon: CheckCircle2, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
         { label: 'Added to Training', value: stats.trained, icon: GraduationCap, color: 'text-purple-400', bg: 'bg-purple-500/10' },
@@ -169,7 +169,7 @@ export default function AIOversightPage() {
 
                     {loading ? (
                         <div className="flex items-center justify-center py-12">
-                            <div className="animate-spin h-8 w-8 border-2 border-cyan-500 border-t-transparent rounded-full"></div>
+                            <div className="animate-spin h-8 w-8 border-2 border-raudhah-teal border-t-transparent rounded-full"></div>
                         </div>
                     ) : flagged.length === 0 ? (
                         <div className="text-center py-12 text-slate-500">
@@ -227,7 +227,7 @@ export default function AIOversightPage() {
                 {/* Prompt Tester */}
                 <div className="glass-card rounded-xl p-6 animate-fade-in">
                     <h3 className="text-lg font-semibold text-slate-200 mb-4 flex items-center gap-2">
-                        <Zap className="h-5 w-5 text-cyan-400" />
+                        <Zap className="h-5 w-5 text-raudhah-teal" />
                         Prompt Monitor (Test)
                     </h3>
 

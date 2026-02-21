@@ -20,7 +20,7 @@ const RefundPolicy: React.FC = () => {
                     </button>
                     <div>
                         <h1 className="text-xl font-bold flex items-center gap-2">
-                            <RotateCcw className="text-cyan-400" size={20} />
+                            <RotateCcw className="text-raudhah-teal" size={20} />
                             Polisi Pemulangan & Bayaran Balik
                         </h1>
                         <p className="text-xs text-slate-400">Dikemaskini: Januari 2026</p>
@@ -54,7 +54,7 @@ const RefundPolicy: React.FC = () => {
                             { term: 'Anda', definition: 'Individu atau entiti yang berdaftar dengan QuranPulse untuk menggunakan Perkhidmatan.' },
                         ].map((item, i) => (
                             <div key={i} className="bg-white/5 border border-white/10 rounded-xl p-4">
-                                <h3 className="font-bold text-cyan-400 mb-1">{item.term}</h3>
+                                <h3 className="font-bold text-raudhah-teal mb-1">{item.term}</h3>
                                 <p className="text-sm text-slate-300">{item.definition}</p>
                             </div>
                         ))}
@@ -94,10 +94,10 @@ const RefundPolicy: React.FC = () => {
                                 key={i}
                                 className={`flex items-start gap-3 p-4 rounded-xl border ${item.type === 'warning'
                                         ? 'bg-amber-900/20 border-amber-500/20'
-                                        : 'bg-cyan-900/20 border-cyan-500/20'
+                                        : 'bg-cyan-900/20 border-raudhah-teal/20'
                                     }`}
                             >
-                                <AlertTriangle className={`flex-shrink-0 ${item.type === 'warning' ? 'text-amber-400' : 'text-cyan-400'
+                                <AlertTriangle className={`flex-shrink-0 ${item.type === 'warning' ? 'text-amber-400' : 'text-raudhah-teal'
                                     }`} size={20} />
                                 <p className="text-sm text-slate-300">{item.text}</p>
                             </div>
@@ -140,15 +140,15 @@ const RefundPolicy: React.FC = () => {
                         </p>
                         <ul className="space-y-2 text-sm text-slate-300">
                             <li className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
+                                <div className="w-2 h-2 rounded-full bg-raudhah-teal"></div>
                                 Anda masih boleh menggunakan ciri Premium sehingga akhir tempoh langganan semasa
                             </li>
                             <li className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
+                                <div className="w-2 h-2 rounded-full bg-raudhah-teal"></div>
                                 Langganan tidak akan diperbaharui secara automatik
                             </li>
                             <li className="flex items-center gap-2">
-                                <div className="w-2 h-2 rounded-full bg-cyan-400"></div>
+                                <div className="w-2 h-2 rounded-full bg-raudhah-teal"></div>
                                 Data anda akan disimpan dan boleh diakses semula jika melanggan kembali
                             </li>
                         </ul>
@@ -173,11 +173,11 @@ const RefundPolicy: React.FC = () => {
                         permohonan bayaran balik, sila hubungi kami:
                     </p>
                     <div className="space-y-3">
-                        <a href="mailto:support@quranpulse.my" className="flex items-center gap-3 text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <a href="mailto:support@quranpulse.my" className="flex items-center gap-3 text-raudhah-teal hover:text-raudhah-teal transition-colors">
                             <Mail size={18} />
                             <span>support@quranpulse.my</span>
                         </a>
-                        <a href="tel:+60321234567" className="flex items-center gap-3 text-cyan-400 hover:text-cyan-300 transition-colors">
+                        <a href="tel:+60321234567" className="flex items-center gap-3 text-raudhah-teal hover:text-raudhah-teal transition-colors">
                             <Phone size={18} />
                             <span>+603 2123 4567</span>
                         </a>

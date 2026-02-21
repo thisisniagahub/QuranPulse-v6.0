@@ -132,7 +132,7 @@ const PrepChecklist: React.FC = () => {
                             </linearGradient>
                         </defs>
                     </svg>
-                    <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-cyan-400">
+                    <span className="absolute inset-0 flex items-center justify-center text-sm font-bold text-raudhah-teal">
                         {Math.round(progress)}%
                     </span>
                 </div>
@@ -169,7 +169,7 @@ const PrepChecklist: React.FC = () => {
                         placeholder="Cari item..."
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
-                        className="w-full pl-9 pr-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-cyan-500"
+                        className="w-full pl-9 pr-3 py-2 bg-slate-800/50 border border-slate-700 rounded-lg text-white text-sm focus:outline-none focus:border-raudhah-teal"
                     />
                 </div>
                 <button
@@ -186,7 +186,7 @@ const PrepChecklist: React.FC = () => {
                 <button
                     onClick={() => setFilter('all')}
                     className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${filter === 'all'
-                            ? 'bg-cyan-500 text-black'
+                            ? 'bg-raudhah-teal text-black'
                             : 'bg-slate-800 text-slate-400 hover:text-white'
                         }`}
                 >
@@ -202,7 +202,7 @@ const PrepChecklist: React.FC = () => {
                             key={key}
                             onClick={() => setFilter(key)}
                             className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${filter === key
-                                    ? 'bg-cyan-500 text-black'
+                                    ? 'bg-raudhah-teal text-black'
                                     : 'bg-slate-800 text-slate-400 hover:text-white'
                                 }`}
                         >
@@ -230,19 +230,19 @@ const PrepChecklist: React.FC = () => {
                                         key={item.id}
                                         onClick={() => toggleItem(item.id)}
                                         className={`w-full flex items-center gap-3 p-3 rounded-lg transition-all ${item.checked
-                                                ? 'bg-cyan-500/10 border border-cyan-500/30'
+                                                ? 'bg-raudhah-teal/10 border border-raudhah-teal/20'
                                                 : 'bg-slate-800/50 border border-slate-700 hover:border-slate-600'
                                             }`}
                                         whileTap={{ scale: 0.98 }}
                                     >
                                         <div className={`w-5 h-5 rounded-full flex items-center justify-center ${item.checked
-                                                ? 'bg-cyan-500 text-black'
+                                                ? 'bg-raudhah-teal text-black'
                                                 : 'border-2 border-slate-600'
                                             }`}>
                                             {item.checked && <CheckCircle size={14} />}
                                         </div>
                                         <div className="flex-1 text-left">
-                                            <p className={`text-sm ${item.checked ? 'text-cyan-400 line-through' : 'text-white'}`}>
+                                            <p className={`text-sm ${item.checked ? 'text-raudhah-teal line-through' : 'text-white'}`}>
                                                 {item.name}
                                                 {item.required && <span className="text-red-400 ml-1">*</span>}
                                             </p>

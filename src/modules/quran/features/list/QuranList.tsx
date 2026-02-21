@@ -155,10 +155,10 @@ const QuranList: React.FC<QuranListProps> = ({
                         AL-QURAN
                     </h1>
                     <h1 className="text-3xl md:text-5xl font-black text-white mb-2 relative z-10 drop-shadow-[0_0_25px_rgba(255,255,255,0.2)] tracking-tight">
-                        The Celestial <span className="text-cyan-400">Library</span>
+                        The Celestial <span className="text-raudhah-teal">Library</span>
                     </h1>
                 </motion.div>
-                <div className="w-px h-12 bg-gradient-to-b from-cyan-500/50 to-transparent mx-auto mt-6 relative z-10"></div>
+                <div className="w-px h-12 bg-gradient-to-b from-raudhah-teal/50 to-transparent mx-auto mt-6 relative z-10"></div>
             </div>
 
             <div className="px-4 max-w-6xl mx-auto space-y-8 relative z-10">
@@ -188,7 +188,7 @@ const QuranList: React.FC<QuranListProps> = ({
                                             key={tab}
                                             onClick={() => setActiveTab(tab)}
                                             className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest transition-all duration-300 ${activeTab === tab
-                                                ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 shadow-[0_0_15px_rgba(34,211,238,0.2)]'
+                                                ? 'bg-raudhah-teal/10 text-raudhah-teal border border-raudhah-teal/20 shadow-[0_0_15px_rgba(34,211,238,0.2)]'
                                                 : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
                                                 }`}
                                         >

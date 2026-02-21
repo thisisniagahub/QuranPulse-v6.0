@@ -47,12 +47,6 @@ export default {
         "background-dark": "var(--bg-main)",  // Was #051324
         "surface-dark": "var(--surface)",     // Was #154270
 
-        space: {
-          dark: '#051324',
-          light: '#0e3359',
-          accent: '#154270',
-        },
-
         // Gold Accent (for badges, achievements)
         gold: {
           400: '#FFE57F',
@@ -86,8 +80,8 @@ export default {
         "full": "9999px"
       },
       boxShadow: {
-        'neon': '0 0 20px -5px rgba(90, 185, 255, 0.5)',
-        'neon-sm': '0 0 10px -2px rgba(90, 185, 255, 0.4)',
+        'neon': '0 0 20px -5px rgba(27, 107, 90, 0.3)',
+        'neon-sm': '0 0 10px -2px rgba(27, 107, 90, 0.2)',
         'sheet': '0 -10px 40px rgba(0, 0, 0, 0.5)',
       },
       animation: {
@@ -114,8 +108,8 @@ export default {
           '100%': { left: '200%' }
         },
         'pulse-glow': {
-          '0%, 100%': { transform: 'scale(1)', opacity: '1', filter: 'drop-shadow(0 0 10px rgba(90, 185, 255, 0.3))' },
-          '50%': { transform: 'scale(1.05)', opacity: '0.9', filter: 'drop-shadow(0 0 25px rgba(90, 185, 255, 0.6))' }
+          '0%, 100%': { transform: 'scale(1)', opacity: '1', filter: 'drop-shadow(0 0 10px rgba(27, 107, 90, 0.3))' },
+          '50%': { transform: 'scale(1.05)', opacity: '0.9', filter: 'drop-shadow(0 0 25px rgba(27, 107, 90, 0.6))' }
         },
         float: {
           '0%, 100%': { transform: 'translateY(0)' },

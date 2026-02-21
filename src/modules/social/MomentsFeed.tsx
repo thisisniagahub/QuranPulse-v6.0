@@ -63,13 +63,13 @@ const MomentsFeed: React.FC<{ isDark: boolean }> = ({ isDark }) => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Community Moments</h2>
-        <button className="text-sm text-cyan-400 font-bold hover:underline">View All</button>
+        <button className="text-sm text-raudhah-teal font-bold hover:underline">View All</button>
       </div>
 
       {/* Create Post Input */}
       <div className={`p-4 rounded-2xl border ${isDark ? 'bg-slate-900/40 border-slate-700' : 'bg-white border-slate-200'}`}>
         <div className="flex gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-raudhah-teal to-blue-500 flex items-center justify-center text-white font-bold">
                 ME
             </div>
             <input 
@@ -81,13 +81,13 @@ const MomentsFeed: React.FC<{ isDark: boolean }> = ({ isDark }) => {
             />
         </div>
         <div className="flex justify-end mt-3 gap-2">
-            <button className="text-slate-500 hover:text-cyan-400 transition-colors" aria-label="Upload Image">
+            <button className="text-slate-500 hover:text-raudhah-teal transition-colors" aria-label="Upload Image">
                 <i className="fa-solid fa-image"></i>
             </button>
             <button 
               onClick={handlePost}
               disabled={createMomentMutation.isPending}
-              className="bg-cyan-500 hover:bg-cyan-400 text-white px-4 py-1.5 rounded-full text-sm font-bold transition-all disabled:opacity-50"
+              className="bg-raudhah-teal hover:bg-raudhah-teal text-white px-4 py-1.5 rounded-full text-sm font-bold transition-all disabled:opacity-50"
             >
                 {createMomentMutation.isPending ? 'Posting...' : 'Post'}
             </button>
@@ -125,7 +125,7 @@ const MomentsFeed: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                         <i className={`fa-regular fa-heart`}></i>
                         <span>{moment.likes_count}</span>
                     </button>
-                    <button className="flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                    <button className="flex items-center gap-2 hover:text-raudhah-teal transition-colors">
                         <i className="fa-regular fa-comment"></i>
                         <span>Comment</span>
                     </button>

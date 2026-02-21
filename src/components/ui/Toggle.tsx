@@ -13,7 +13,7 @@ export const Toggle: React.FC<ToggleProps> = ({ checked, onChange, label, size =
 
     return (
         <div className="flex items-center gap-3 cursor-pointer" onClick={() => onChange(!checked)}>
-            <div className={`relative ${dimensions.w} ${dimensions.h} rounded-full transition-colors duration-300 ${checked ? 'bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.5)]' : 'bg-slate-700 border border-slate-600'}`}>
+            <div className={`relative ${dimensions.w} ${dimensions.h} rounded-full transition-colors duration-300 ${checked ? 'bg-raudhah-teal shadow-[0_0_15px_rgba(6,182,212,0.5)]' : 'bg-slate-700 border border-slate-600'}`}>
                 <motion.div
                     className="absolute top-1 bottom-1 bg-white rounded-full shadow-md aspect-square"
                     initial={false}
@@ -25,7 +25,7 @@ export const Toggle: React.FC<ToggleProps> = ({ checked, onChange, label, size =
             </div>
             {/* Text Label with Neon Glow when active */}
             {label && (
-                <span className={`font-semibold tracking-wide transition-colors duration-300 ${checked ? 'text-cyan-400 drop-shadow-[0_0_5px_rgba(6,182,212,0.5)]' : 'text-slate-400'}`}>
+                <span className={`font-semibold tracking-wide transition-colors duration-300 ${checked ? 'text-raudhah-teal drop-shadow-[0_0_5px_rgba(6,182,212,0.5)]' : 'text-slate-400'}`}>
                     {label}
                 </span>
             )}

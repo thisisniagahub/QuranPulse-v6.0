@@ -9,7 +9,7 @@ const KnowledgeBaseManager: React.FC = () => {
         <div className="grid grid-cols-3 gap-4">
             <div className="bg-slate-900/50 border border-white/5 p-5 rounded-2xl">
                 <p className="text-xs text-slate-500 uppercase font-bold">Vector Count</p>
-                <h3 className="text-3xl font-black text-cyan-400 mt-1">14,502</h3>
+                <h3 className="text-3xl font-black text-raudhah-teal mt-1">14,502</h3>
                 <p className="text-[10px] text-slate-400 mt-2">Kitab Turath & Fatwa</p>
             </div>
             <div className="bg-slate-900/50 border border-white/5 p-5 rounded-2xl">
@@ -25,8 +25,8 @@ const KnowledgeBaseManager: React.FC = () => {
         </div>
 
         {/* 2. INGESTION ZONE */}
-        <div className="bg-slate-900/30 border-2 border-dashed border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center hover:border-cyan-500/30 hover:bg-slate-900/50 transition-all cursor-pointer group">
-            <div className="w-16 h-16 bg-cyan-500/10 rounded-full flex items-center justify-center text-cyan-400 mb-4 group-hover:scale-110 transition-transform">
+        <div className="bg-slate-900/30 border-2 border-dashed border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center hover:border-raudhah-teal/20 hover:bg-slate-900/50 transition-all cursor-pointer group">
+            <div className="w-16 h-16 bg-raudhah-teal/10 rounded-full flex items-center justify-center text-raudhah-teal mb-4 group-hover:scale-110 transition-transform">
                 <i className="fa-solid fa-cloud-arrow-up text-2xl"></i>
             </div>
             <h3 className="text-lg font-bold text-white">Upload Knowledge Source</h3>
@@ -37,7 +37,7 @@ const KnowledgeBaseManager: React.FC = () => {
         <div className="flex-1 bg-slate-900/50 border border-white/5 rounded-2xl overflow-hidden flex flex-col">
             <div className="p-4 border-b border-white/5 bg-slate-900/80 flex justify-between items-center">
                 <h3 className="font-bold text-white text-sm">Recent Queries</h3>
-                <button className="text-xs text-cyan-400 hover:text-white transition-colors">View All</button>
+                <button className="text-xs text-raudhah-teal hover:text-white transition-colors">View All</button>
             </div>
             <div className="flex-1 overflow-y-auto">
                 <table className="w-full text-left text-sm">

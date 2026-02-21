@@ -203,7 +203,7 @@ export default function IqraOpsPage() {
                         <button
                             key={vol.volume}
                             onClick={() => setSelectedVolume(isSelected ? undefined : vol.volume)}
-                            className={`glass-card rounded-xl p-4 text-left transition-all ${isSelected ? 'border-cyan-500/50 bg-cyan-500/5' : ''
+                            className={`glass-card rounded-xl p-4 text-left transition-all ${isSelected ? 'border-raudhah-teal/50 bg-raudhah-teal/5' : ''
                                 }`}
                         >
                             <div className="flex items-center justify-between mb-2">
@@ -212,7 +212,7 @@ export default function IqraOpsPage() {
                             </div>
                             <div className="h-2 bg-slate-800 rounded-full overflow-hidden mb-2">
                                 <div
-                                    className="h-full bg-gradient-to-r from-cyan-500 to-emerald-500 transition-all"
+                                    className="h-full bg-gradient-to-r from-raudhah-teal to-emerald-500 transition-all"
                                     style={{ width: `${progress}%` }}
                                 />
                             </div>

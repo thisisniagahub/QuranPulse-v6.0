@@ -15,12 +15,12 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
         const variants = {
             default: cn(
                 "border border-slate-700/50 bg-slate-900/80",
-                "focus:border-cyan-500/50 focus:ring-2 focus:ring-cyan-500/20",
+                "focus:border-raudhah-teal/50 focus:ring-2 focus:ring-raudhah-teal/20",
                 error && "border-red-500/50 focus:border-red-500/50 focus:ring-red-500/20"
             ),
             ghost: cn(
                 "border-transparent bg-slate-800/50",
-                "focus:bg-slate-800 focus:ring-2 focus:ring-cyan-500/20"
+                "focus:bg-slate-800 focus:ring-2 focus:ring-raudhah-teal/20"
             )
         };
 

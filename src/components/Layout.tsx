@@ -68,7 +68,7 @@ const Layout: React.FC = () => {
               <div className="flex items-center gap-2 group">
                 <img loading="lazy" src="/logo-primary.png" alt="QuranPulse" width="32" height="32" className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
                 <span className="font-black text-lg tracking-tighter text-white font-[Poppins]">
-                  Quran<span className="text-cyan-400">Pulse</span>
+                  Quran<span className="text-raudhah-teal">Pulse</span>
                 </span>
               </div>
             </Link>
@@ -81,18 +81,18 @@ const Layout: React.FC = () => {
               </div>
               <div className="w-px h-3 bg-white/10 mx-0.5"></div>
               <div className="flex items-center gap-1">
-                <span className="text-[10px] font-black text-cyan-400 uppercase tracking-tighter">LV.{game.level}</span>
+                <span className="text-[10px] font-black text-raudhah-teal uppercase tracking-tighter">LV.{game.level}</span>
               </div>
             </div>
 
             {/* Right: Actions */}
             <div className="flex items-center gap-3">
-              <button aria-label="Notifications" className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#1e3a8a] to-[#0c224b] border border-white/10 flex items-center justify-center text-cyan-400 shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] hover:scale-105 transition-all group">
+              <button aria-label="Notifications" className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#1e3a8a] to-[#0c224b] border border-white/10 flex items-center justify-center text-raudhah-teal shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] hover:scale-105 transition-all group">
                 <i className="fa-regular fa-bell text-sm group-hover:animate-swing"></i>
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0c224b] animate-pulse"></span>
               </button>
 
-              <Link to="/profile" className="w-9 h-9 rounded-full border-2 border-cyan-500/30 p-0.5 bg-[#0c224b] shadow-lg">
+              <Link to="/profile" className="w-9 h-9 rounded-full border-2 border-raudhah-teal/20 p-0.5 bg-[#0c224b] shadow-lg">
                 <img loading="lazy"
                   src={user?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
                   alt="User"
@@ -110,33 +110,33 @@ const Layout: React.FC = () => {
           <Link
             to="/quest"
             className={`group px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-300 flex items-center gap-1.5 ${isQuestRoute
-              ? "bg-cyan-500/20 text-cyan-300 border-cyan-400/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
+              ? "bg-raudhah-teal/10 text-raudhah-teal border-raudhah-teal/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
               : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:-translate-y-0.5"
               }`}
           >
-            <Swords className={`w-3.5 h-3.5 transition-transform duration-300 ${isQuestRoute ? "text-cyan-300" : "text-slate-400 group-hover:text-cyan-300 group-hover:scale-110"}`} />
+            <Swords className={`w-3.5 h-3.5 transition-transform duration-300 ${isQuestRoute ? "text-raudhah-teal" : "text-slate-400 group-hover:text-raudhah-teal group-hover:scale-110"}`} />
             <span>SurahQuest</span>
           </Link>
           <Link
             to="/leaderboard"
             className={`group px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-300 flex items-center gap-1.5 ${isLeaderboardRoute
-              ? "bg-cyan-500/20 text-cyan-300 border-cyan-400/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
+              ? "bg-raudhah-teal/10 text-raudhah-teal border-raudhah-teal/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
               : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:-translate-y-0.5"
               }`}
           >
-            <Trophy className={`w-3.5 h-3.5 transition-transform duration-300 ${isLeaderboardRoute ? "text-cyan-300" : "text-slate-400 group-hover:text-amber-300 group-hover:scale-110"}`} />
+            <Trophy className={`w-3.5 h-3.5 transition-transform duration-300 ${isLeaderboardRoute ? "text-raudhah-teal" : "text-slate-400 group-hover:text-amber-300 group-hover:scale-110"}`} />
             <span>Leaderboard</span>
           </Link>
           <Link
             to="/subscribe"
             className={`group px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-300 flex items-center gap-1.5 ${isSubscribeRoute
-              ? "bg-cyan-500/20 text-cyan-300 border-cyan-400/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
+              ? "bg-raudhah-teal/10 text-raudhah-teal border-raudhah-teal/40 shadow-[0_0_16px_rgba(34,211,238,0.2)]"
               : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:-translate-y-0.5"
               }`}
           >
-            <Crown className={`w-3.5 h-3.5 transition-transform duration-300 ${isSubscribeRoute ? "text-cyan-300" : "text-slate-400 group-hover:text-purple-300 group-hover:scale-110"}`} />
+            <Crown className={`w-3.5 h-3.5 transition-transform duration-300 ${isSubscribeRoute ? "text-raudhah-teal" : "text-slate-400 group-hover:text-purple-300 group-hover:scale-110"}`} />
             <span>Pro</span>
-            <span className="ml-0.5 px-1.5 py-0.5 rounded-full text-[9px] leading-none font-black tracking-wide text-white bg-gradient-to-r from-cyan-500 to-purple-500 shadow-[0_0_10px_rgba(139,92,246,0.4)]">
+            <span className="ml-0.5 px-1.5 py-0.5 rounded-full text-[9px] leading-none font-black tracking-wide text-white bg-gradient-to-r from-raudhah-teal to-purple-500 shadow-[0_0_10px_rgba(139,92,246,0.4)]">
               PRO
             </span>
           </Link>
@@ -160,7 +160,7 @@ const Layout: React.FC = () => {
               className="relative flex flex-col items-center justify-center w-16 h-full group"
             >
               {currentView === NavView.DASHBOARD && (
-                <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
+                <div className="absolute -top-[1px] w-8 h-1 bg-raudhah-teal blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.DASHBOARD ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
                 <img loading="lazy" src="/assets/icons/nabdh/nav-home.png" alt="Home" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
@@ -173,7 +173,7 @@ const Layout: React.FC = () => {
               className="relative flex flex-col items-center justify-center w-16 h-full group"
             >
               {currentView === NavView.QURAN && (
-                <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
+                <div className="absolute -top-[1px] w-8 h-1 bg-raudhah-teal blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.QURAN ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
                 <img loading="lazy" src="/assets/icons/nabdh/nav-quran.png" alt="Quran" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
@@ -200,7 +200,7 @@ const Layout: React.FC = () => {
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
 
                     {/* Ring Glow */}
-                    <div className={`absolute inset-0 rounded-full border-2 ${currentView === NavView.SMART_DEEN ? 'border-cyan-400/50' : 'border-white/5'}`}></div>
+                    <div className={`absolute inset-0 rounded-full border-2 ${currentView === NavView.SMART_DEEN ? 'border-raudhah-teal/50' : 'border-white/5'}`}></div>
 
                     <img loading="lazy"
                       src="/assets/icons/nabdh/nav-ustaz.png"
@@ -222,7 +222,7 @@ const Layout: React.FC = () => {
               className="relative flex flex-col items-center justify-center w-16 h-full group"
             >
               {currentView === NavView.IBADAH && (
-                <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
+                <div className="absolute -top-[1px] w-8 h-1 bg-raudhah-teal blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.IBADAH ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
                 <img loading="lazy" src="/assets/icons/nabdh/nav-qiblat.png" alt="Qiblat" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />
@@ -235,7 +235,7 @@ const Layout: React.FC = () => {
               className="relative flex flex-col items-center justify-center w-16 h-full group"
             >
               {currentView === NavView.IQRA && (
-                <div className="absolute -top-[1px] w-8 h-1 bg-cyan-400 blur-sm rounded-b-full"></div>
+                <div className="absolute -top-[1px] w-8 h-1 bg-raudhah-teal blur-sm rounded-b-full"></div>
               )}
               <div className={`w-12 h-12 transition-all duration-300 ${currentView === NavView.IQRA ? '-translate-y-1 scale-110' : 'opacity-60 group-hover:opacity-100'}`}>
                 <img loading="lazy" src="/assets/icons/nabdh/nav-iqra.png" alt="Iqra" width="48" height="48" className="w-full h-full object-contain filter drop-shadow-lg" />

@@ -6,6 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [2026-02-21]
+
+### Fixed - Landing Page Review Audit (10 Issues)
+- [AGENT:Antigravity] **Spacing Standardization** — Normalized `py-32` → `py-12 md:py-16` in FeatureShowcase, OpenClawShowcase, PricingTable
+- [AGENT:Antigravity] **Particle Flicker** — Fixed `Math.random()` re-render in HeroSection with `useMemo` deterministic positions
+- [AGENT:Antigravity] **Particle Count** — Reduced 40 → 20 animated particles for mobile performance
+- [AGENT:Antigravity] **Section IDs** — Added `id` attributes to all 13 landing page sections for deep-linking & accessibility
+- [AGENT:Antigravity] **Accessibility** — Added `aria-label` to FeatureShowcase audio button
+- [AGENT:Antigravity] **Mobile Menu UX** — Added click-outside-to-close + Escape key handler
+- [AGENT:Antigravity] **External Dependencies** — Replaced 6 pravatar.cc URLs with local SVG initials avatars
+- [AGENT:Antigravity] **Competitor Comparison** — Rewrote ComparisonSection with honest nuanced labels + disclaimer
+- [AGENT:Antigravity] **Export Standardization** — Added `export default` to OpenClawShowcase, removed `.then()` wrappers from 3 lazy imports
+
+### Deployment
+- ✅ Build: 0 TypeScript errors (`tsc --noEmit`)
+- ✅ Vercel: Deployed via `vercel --prod` CLI to [quranpulse.my](https://quranpulse.my)
+- Commits: `2a5caff` (fixes) + `355e1fd` (refactor exports)
+
+---
+
 ## [2026-02-19]
 
 ### Fixed - Landing Page Premium Polish (RM2M Standard)

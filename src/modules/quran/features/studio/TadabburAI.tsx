@@ -221,7 +221,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                             {questions.map((_, i) => (
                                 <div
                                     key={i}
-                                    className={`h-1 flex-1 rounded-full transition-colors ${i <= currentQuestionIndex ? 'bg-cyan-500' : 'bg-slate-700'
+                                    className={`h-1 flex-1 rounded-full transition-colors ${i <= currentQuestionIndex ? 'bg-raudhah-teal' : 'bg-slate-700'
                                         }`}
                                 />
                             ))}
@@ -269,16 +269,16 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
-                                    className="mt-4 p-4 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 
-                            border border-cyan-500/20 rounded-xl"
+                                    className="mt-4 p-4 bg-gradient-to-r from-raudhah-teal/10 to-purple-500/10 
+                            border border-raudhah-teal/20 rounded-xl"
                                 >
                                     <div className="flex items-start gap-3">
-                                        <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-purple-500 
+                                        <div className="w-8 h-8 bg-gradient-to-br from-raudhah-teal to-purple-500 
                                    rounded-full flex items-center justify-center flex-shrink-0">
                                             <Sparkles className="w-4 h-4 text-white" />
                                         </div>
                                         <div>
-                                            <span className="text-xs text-cyan-400 mb-1 block">Ustaz AI</span>
+                                            <span className="text-xs text-raudhah-teal mb-1 block">Ustaz AI</span>
                                             <p className="text-slate-300 text-sm">{aiFollowUp}</p>
                                         </div>
                                     </div>

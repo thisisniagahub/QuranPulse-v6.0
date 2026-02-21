@@ -303,7 +303,7 @@ const WordRootExplorer: React.FC<WordRootExplorerProps> = ({
                                 {/* Related Verses */}
                                 <div>
                                     <h4 className="text-sm font-semibold text-white mb-3 flex items-center gap-2">
-                                        <BookOpen className="w-4 h-4 text-cyan-400" />
+                                        <BookOpen className="w-4 h-4 text-raudhah-teal" />
                                         Related Verses ({rootData.relatedVerses.length})
                                     </h4>
 
@@ -316,10 +316,10 @@ const WordRootExplorer: React.FC<WordRootExplorerProps> = ({
                                    text-left transition-colors group"
                                             >
                                                 <div className="flex items-center justify-between mb-2">
-                                                    <span className="text-sm text-cyan-400">
+                                                    <span className="text-sm text-raudhah-teal">
                                                         {verse.surahName} {verse.surahNumber}:{verse.verseNumber}
                                                     </span>
-                                                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                                                    <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-raudhah-teal transition-colors" />
                                                 </div>
                                                 <p className="text-lg font-arabic text-right text-slate-300" dir="rtl">
                                                     {verse.arabicSnippet.split(verse.highlightWord).map((part, j, arr) => (

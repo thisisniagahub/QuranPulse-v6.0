@@ -18,7 +18,7 @@ const HoloSurahCardComponent: React.FC<HoloSurahCardProps> = ({ chapter, onClick
             onClick={onClick}
             className="group relative h-28 cursor-pointer perspective-1000"
         >
-            <div className="absolute inset-0 bg-sheet/40 backdrop-blur-md rounded-2xl border border-white transition-all duration-300 group-hover:border-primary/50 group-hover:bg-surface-dark/60 group-hover:shadow-neon overflow-hidden">
+            <div className="absolute inset-0 bg-sheet/40 backdrop-blur-md rounded-2xl border border-white transition-all duration-300 group-hover:border-primary/50 group-hover:bg-surface-dark/60 group-hover:shadow-warm overflow-hidden">
                 
                 {/* Offline Ready Badge */}
                 {isOfflineReady && (

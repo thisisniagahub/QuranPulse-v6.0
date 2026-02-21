@@ -59,9 +59,9 @@ const GoToVerseModal: React.FC<GoToVerseModalProps> = ({
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[71] w-full max-w-sm"
           >
-            <div className="bg-slate-900 border border-cyan-500/30 rounded-2xl shadow-2xl mx-4 overflow-hidden">
+            <div className="bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-2xl mx-4 overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 p-4 border-b border-slate-700">
+              <div className="bg-gradient-to-r from-raudhah-teal/20 to-purple-500/20 p-4 border-b border-slate-700">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
                   <span>🔍</span>
                   Pergi ke Ayat
@@ -88,7 +88,7 @@ const GoToVerseModal: React.FC<GoToVerseModalProps> = ({
                       setError('');
                     }}
                     placeholder={`1 - ${totalVerses}`}
-                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white text-center text-xl font-bold focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all"
+                    className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white text-center text-xl font-bold focus:border-raudhah-teal focus:outline-none focus:ring-2 focus:ring-raudhah-teal/20 transition-all"
                     autoFocus
                   />
                   {error && (
@@ -109,7 +109,7 @@ const GoToVerseModal: React.FC<GoToVerseModalProps> = ({
                           key={num}
                           type="button"
                           onClick={() => handleQuickJump(num)}
-                          className="py-2 px-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm font-bold hover:bg-cyan-500/20 hover:border-cyan-500/50 hover:text-cyan-400 transition-all"
+                          className="py-2 px-3 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 text-sm font-bold hover:bg-raudhah-teal/10 hover:border-raudhah-teal/50 hover:text-raudhah-teal transition-all"
                         >
                           {num}
                         </button>
@@ -128,7 +128,7 @@ const GoToVerseModal: React.FC<GoToVerseModalProps> = ({
                   </button>
                   <button
                     type="submit"
-                    className="flex-1 py-3 bg-cyan-500 text-black font-bold rounded-xl hover:bg-cyan-400 transition-all"
+                    className="flex-1 py-3 bg-raudhah-teal text-black font-bold rounded-xl hover:bg-raudhah-teal transition-all"
                   >
                     Pergi →
                   </button>

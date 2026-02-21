@@ -92,9 +92,9 @@ export default function AdvancedToolsPage() {
                             Innovation Modules
                         </h3>
                         <div className="grid gap-4 md:grid-cols-2">
-                            <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50 hover:border-cyan-500/30 transition-colors">
+                            <div className="p-4 rounded-xl bg-slate-800/30 border border-slate-700/50 hover:border-raudhah-teal/20 transition-colors">
                                 <div className="flex items-center gap-2 mb-2">
-                                    <Globe className="h-5 w-5 text-cyan-400" />
+                                    <Globe className="h-5 w-5 text-raudhah-teal" />
                                     <span className="font-medium text-slate-200">Digital Masjid Scraper</span>
                                 </div>
                                 <p className="text-xs text-slate-500 mb-4">

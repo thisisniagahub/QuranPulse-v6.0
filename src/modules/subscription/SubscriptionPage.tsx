@@ -42,7 +42,7 @@ const SubscriptionPage: React.FC = () => {
 
     const getPlanGradient = (planId: string) => {
         switch (planId) {
-            case 'pro_monthly': return 'from-cyan-500 to-blue-600';
+            case 'pro_monthly': return 'from-raudhah-teal to-emerald-700';
             case 'pro_yearly': return 'from-purple-500 to-pink-600';
             case 'family_monthly': return 'from-emerald-500 to-teal-600';
             default: return 'from-slate-500 to-slate-600';
@@ -56,7 +56,7 @@ const SubscriptionPage: React.FC = () => {
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/30 px-4 py-2 rounded-full text-cyan-400 text-sm mb-4"
+                    className="inline-flex items-center gap-2 bg-raudhah-teal/10 border border-raudhah-teal/20 px-4 py-2 rounded-full text-raudhah-teal text-sm mb-4"
                 >
                     <Sparkles className="w-4 h-4" />
                     Premium
@@ -69,7 +69,7 @@ const SubscriptionPage: React.FC = () => {
                     className="text-4xl font-bold text-white mb-4"
                 >
                     Tingkatkan Pengalaman{' '}
-                    <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-raudhah-teal to-purple-400 bg-clip-text text-transparent">
                         QuranPulse
                     </span>
                 </motion.h1>
@@ -99,7 +99,7 @@ const SubscriptionPage: React.FC = () => {
                             transition={{ delay: 0.1 * index }}
                             className={`relative rounded-2xl border p-6 transition-all ${isPopular
                                     ? 'bg-gradient-to-b from-purple-500/10 to-slate-900 border-purple-500/50 scale-105 shadow-xl shadow-purple-500/10'
-                                    : 'bg-slate-900/80 border-slate-700/50 hover:border-cyan-500/30'
+                                    : 'bg-slate-900/80 border-slate-700/50 hover:border-raudhah-teal/20'
                                 }`}
                         >
                             {/* Popular Badge */}
@@ -142,7 +142,7 @@ const SubscriptionPage: React.FC = () => {
                                 disabled={isProcessing && selectedPlan?.id === plan.id}
                                 className={`w-full py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-all ${isPopular
                                         ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:shadow-lg hover:shadow-purple-500/25'
-                                        : 'bg-cyan-500 text-white hover:bg-cyan-400 hover:shadow-lg hover:shadow-cyan-500/25'
+                                        : 'bg-raudhah-teal text-white hover:bg-raudhah-teal hover:shadow-lg hover:shadow-cyan-500/25'
                                     } disabled:opacity-50`}
                             >
                                 {isProcessing && selectedPlan?.id === plan.id ? (

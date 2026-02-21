@@ -23,7 +23,7 @@ const AnalyticsTab: React.FC = () => {
         {events.map((e, i) => (
           <div key={i} className="bg-slate-900 border border-slate-800 p-3 rounded-lg flex justify-between items-center text-sm">
             <div>
-              <span className="text-cyan-400 font-mono mr-2">[{e.name}]</span>
+              <span className="text-raudhah-teal font-mono mr-2">[{e.name}]</span>
               <span className="text-slate-400 text-xs">{JSON.stringify(e.properties)}</span>
             </div>
             <span className="text-slate-600 text-xs">{new Date(e.timestamp).toLocaleTimeString()}</span>
