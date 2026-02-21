@@ -2,122 +2,82 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, XCircle } from 'lucide-react';
 
-export const ComparisonSection = () => {
-  const competitors = [
-    { name: 'Muslim Pro', hasIqra: false, hasAI: false, hasTajwid: false, price: 'RM 19.90/bln' },
-    { name: 'Qara\'a', hasIqra: false, hasAI: false, hasTajwid: true, price: 'RM 14.90/bln' },
-    { name: 'App Biasa', hasIqra: false, hasAI: false, hasTajwid: false, price: 'Percuma' },
+const ComparisonSection = () => {
+  const features = [
+    { name: "Quran Reader", qp: "Premium", mp: "Basic", mc: "Basic", ab: "Basic" },
+    { name: "Iqra' 1-6 Module", qp: "Full AI", mp: "—", mc: "—", ab: "—" },
+    { name: "AI Ustaz / Chatbot", qp: "Full AI", mp: "—", mc: "—", ab: "—" },
+    { name: "Tajweed Feedback", qp: "Real-time AI", mp: "Color-coded", mc: "Basic", ab: "—" },
+    { name: "Hafazan Tracker", qp: "Smart AI", mp: "Basic", mc: "—", ab: "Basic" },
+    { name: "JAKIM Tauliah", qp: "✓", mp: "✓", mc: "—", ab: "—" },
+    { name: "Proactive Reminders", qp: "WhatsApp AI", mp: "Push Notif", mc: "Push Notif", ab: "—" },
+    { name: "Ad-Free", qp: "✓", mp: "Paid Only", mc: "—", ab: "—" },
   ];
 
-  const Check = () => <CheckCircle2 className="w-5 h-5 text-raudhah-teal mx-auto" />;
-  const Cross = () => <XCircle className="w-5 h-5 text-raudhah-ink/15 mx-auto" />;
+  const getStatusIcon = (value: string) => {
+    if (value === "—") return <XCircle className="w-4 h-4 text-raudhah-ink/15 mx-auto" />;
+    if (value === "✓") return <CheckCircle2 className="w-4 h-4 text-raudhah-teal mx-auto" />;
+    return <span className="text-xs font-medium text-raudhah-ink/60">{value}</span>;
+  };
+
+  const getQPStatus = (value: string) => {
+    if (value === "✓") return <CheckCircle2 className="w-4 h-4 text-raudhah-teal mx-auto" />;
+    return <span className="text-xs font-bold text-raudhah-teal">{value}</span>;
+  };
 
   return (
-    <section className="relative z-10 py-12 md:py-16 bg-raudhah-ivory overflow-hidden">
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-pattern-grid"></div>
-      <div className="max-w-5xl mx-auto px-6">
-        {/* Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold font-raudhah text-raudhah-ink mb-4 tracking-tight">
-            Kenapa Pilih <span className="text-raudhah-teal">QuranPulse</span>?
-          </h2>
-          <p className="text-raudhah-ink/60 font-medium">Bandingkan keberkatan & kualiti bimbingan kami</p>
-        </motion.div>
-
-        {/* Comparison Table */}
+    <section className="py-12 md:py-16 bg-raudhah-ivory relative overflow-hidden">
+      <div className="max-w-5xl mx-auto px-6 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="overflow-x-auto"
+          className="text-center mb-12"
         >
-          <table className="w-full">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-raudhah-teal/10 text-raudhah-teal font-bold tracking-widest uppercase text-xs mb-4 border border-raudhah-teal/20">
+            Perbandingan
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold font-raudhah text-raudhah-ink tracking-tight">
+            Kenapa QuranPulse <span className="text-raudhah-teal">Berbeza</span>?
+          </h2>
+        </motion.div>
+
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-raudhah-teal/5">
-                <th className="py-4 px-4 text-left text-raudhah-ink/40 text-[10px] font-bold uppercase tracking-wider">Features</th>
-                {/* QuranPulse Column - Highlighted */}
-                <th className="py-4 px-4 text-center relative min-w-[150px]">
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                    <span className="px-3 py-1 bg-raudhah-gold text-white text-[9px] font-bold uppercase tracking-widest rounded-full shadow-sm">
-                      Terbaik
-                    </span>
-                  </div>
-                  <div className="bg-white border border-raudhah-teal/10 rounded-t-2xl pt-6 pb-4 shadow-sm">
-                    <span className="text-raudhah-teal font-bold text-lg font-raudhah">QuranPulse</span>
-                  </div>
+              <tr className="border-b-2 border-raudhah-teal/20">
+                <th className="text-left py-4 pr-4 font-bold text-raudhah-ink/70">Ciri-ciri</th>
+                <th className="py-4 px-3 text-center">
+                  <div className="font-bold text-raudhah-teal">QuranPulse</div>
+                  <div className="text-[10px] text-raudhah-teal/60 uppercase tracking-wider">AI-Powered</div>
                 </th>
-                {competitors.map((comp, i) => (
-                  <th key={i} className="py-4 px-4 text-center text-raudhah-ink/40 text-xs font-medium">{comp.name}</th>
-                ))}
+                <th className="py-4 px-3 text-center">
+                  <div className="font-medium text-raudhah-ink/50">Muslim Pro</div>
+                </th>
+                <th className="py-4 px-3 text-center hidden sm:table-cell">
+                  <div className="font-medium text-raudhah-ink/50">Muslim Companion</div>
+                </th>
+                <th className="py-4 px-3 text-center hidden md:table-cell">
+                  <div className="font-medium text-raudhah-ink/50">App Biasa</div>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {/* Iqra 1-6 */}
-              <tr className="border-b border-raudhah-teal/5">
-                <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-medium">Iqra' Digital 1-6</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5"><Check /></td>
-                {competitors.map((comp, i) => (
-                  <td key={i} className="py-4 px-4 text-center">
-                    {comp.hasIqra ? <Check /> : <Cross />}
-                  </td>
-                ))}
-              </tr>
-
-              {/* AI Ustaz */}
-              <tr className="border-b border-raudhah-teal/5">
-                <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-medium">AI Ustaz 24/7</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5"><Check /></td>
-                {competitors.map((comp, i) => (
-                  <td key={i} className="py-4 px-4 text-center">
-                    {comp.hasAI ? <Check /> : <Cross />}
-                  </td>
-                ))}
-              </tr>
-
-              {/* Tajwid Feedback */}
-              <tr className="border-b border-raudhah-teal/5">
-                <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-medium">Feedback Tajwid</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5"><Check /></td>
-                {competitors.map((comp, i) => (
-                  <td key={i} className="py-4 px-4 text-center">
-                    {comp.hasTajwid ? <Check /> : <Cross />}
-                  </td>
-                ))}
-              </tr>
-
-              {/* Malaysia-First */}
-              <tr className="border-b border-raudhah-teal/5">
-                <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-medium">JAKIM Compliant</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5"><Check /></td>
-                {competitors.map((_, i) => (
-                  <td key={i} className="py-4 px-4 text-center"><Cross /></td>
-                ))}
-              </tr>
-
-              {/* Price Row */}
-              <tr>
-                <td className="py-4 px-4 text-raudhah-ink/70 text-sm font-bold">Infaq / Harga</td>
-                <td className="py-4 px-4 text-center bg-raudhah-teal/5">
-                  <div className="text-raudhah-teal font-bold">
-                    <span className="text-[10px] text-raudhah-ink/30 line-through block">RM 9.90/bulan</span>
-                    <span className="text-raudhah-gold">PERCUMA*</span>
-                  </div>
-                </td>
-                {competitors.map((comp, i) => (
-                  <td key={i} className="py-4 px-4 text-center text-raudhah-ink/40 text-xs font-medium">{comp.price}</td>
-                ))}
-              </tr>
+              {features.map((feature, index) => (
+                <tr key={index} className="border-b border-raudhah-ink/5 hover:bg-raudhah-teal/[0.02] transition-colors">
+                  <td className="py-3 pr-4 font-medium text-raudhah-ink/80">{feature.name}</td>
+                  <td className="py-3 px-3 text-center bg-raudhah-teal/[0.03]">{getQPStatus(feature.qp)}</td>
+                  <td className="py-3 px-3 text-center">{getStatusIcon(feature.mp)}</td>
+                  <td className="py-3 px-3 text-center hidden sm:table-cell">{getStatusIcon(feature.mc)}</td>
+                  <td className="py-3 px-3 text-center hidden md:table-cell">{getStatusIcon(feature.ab)}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
-        </motion.div>
+        </div>
 
-        <p className="text-center text-raudhah-ink/30 text-[10px] mt-6 font-mono uppercase tracking-widest">
-          *Genesis Batch mendapat akses PRO percuma selamanya
+        <p className="text-xs text-raudhah-ink/30 mt-4 text-center italic">
+          * Perbandingan berdasarkan ciri-ciri yang tersedia secara umum pada Feb 2026. Setiap app mempunyai kekuatan tersendiri.
         </p>
       </div>
     </section>

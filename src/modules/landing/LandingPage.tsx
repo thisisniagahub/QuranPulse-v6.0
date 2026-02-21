@@ -1,4 +1,4 @@
-import React, { useState, useEffect, lazy, Suspense } from 'react';
+import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { AnimatePresence, motion, useScroll, useSpring } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 
@@ -69,12 +69,34 @@ interface LandingPageProps {
 const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu on outside click or Escape key
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (navRef.current && !navRef.current.contains(e.target as Node)) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [isMobileMenuOpen]);
 
   return (
     <div className="min-h-screen antigravity-mesh text-raudhah-ink font-sans overflow-x-hidden selection:bg-raudhah-teal/10 selection:text-raudhah-teal relative">
@@ -91,6 +113,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
           1. NAVBAR
       ═══════════════════════════════════════════════════ */}
       <nav
+        ref={navRef}
         className={`fixed top-[3px] left-0 right-0 z-50 transition-all duration-500 ${scrolled
           ? 'bg-white/90 backdrop-blur-2xl border-b border-raudhah-teal/10 py-3 shadow-xl shadow-raudhah-teal/5'
           : 'bg-transparent py-6'
@@ -226,27 +249,37 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
         {/* 5. WHATSAPP PROACTIVE — Killer Feature */}
         <Suspense fallback={<SectionFallback />}>
-          <WhatsAppProactiveSection />
+          <div id="whatsapp">
+            <WhatsAppProactiveSection />
+          </div>
         </Suspense>
 
         {/* 6. OMNICHANNEL SHOWCASE */}
         <Suspense fallback={<SectionFallback />}>
-          <OpenClawShowcase />
+          <div id="omnichannel">
+            <OpenClawShowcase />
+          </div>
         </Suspense>
 
         {/* 7. Q-WER INTELLIGENCE DEMO */}
         <Suspense fallback={<SectionFallback />}>
-          <QwerDemoSection />
+          <div id="intelligence">
+            <QwerDemoSection />
+          </div>
         </Suspense>
 
         {/* 8. COMPARISON — vs Competitors */}
         <Suspense fallback={<SectionFallback />}>
-          <ComparisonSection />
+          <div id="comparison">
+            <ComparisonSection />
+          </div>
         </Suspense>
 
         {/* 9. TESTIMONIALS — Premium 3D Cards */}
         <Suspense fallback={<SectionFallback />}>
-          <PremiumTestimonials />
+          <div id="testimonials">
+            <PremiumTestimonials />
+          </div>
         </Suspense>
 
         {/* 10. PRICING TABLE */}
@@ -258,18 +291,24 @@ const LandingPage: React.FC<LandingPageProps> = ({ onGetStarted }) => {
 
         {/* 11. FAQ */}
         <Suspense fallback={<SectionFallback />}>
-          <FAQSection />
+          <div id="faq">
+            <FAQSection />
+          </div>
         </Suspense>
 
         {/* 12. FINAL CTA */}
         <Suspense fallback={<SectionFallback />}>
-          <FinalCta onGetStarted={onGetStarted} />
+          <div id="cta">
+            <FinalCta onGetStarted={onGetStarted} />
+          </div>
         </Suspense>
       </main>
 
       {/* 13. FOOTER — Premium Glow */}
       <Suspense fallback={<SectionFallback />}>
-        <GlowFooter />
+        <div id="footer">
+          <GlowFooter />
+        </div>
       </Suspense>
 
       {/* FLOATING WHATSAPP */}

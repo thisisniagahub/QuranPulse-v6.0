@@ -22,7 +22,7 @@ import ShinyText from '../ui/ShinyText';
  */
 const FeatureShowcase: React.FC = () => {
     return (
-        <section className="py-32 lg:py-40 bg-raudhah-ivory relative overflow-hidden">
+        <section className="py-12 md:py-16 bg-raudhah-ivory relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 relative z-10">
 
                 {/* Section Label */}
@@ -168,7 +168,7 @@ const FeatureShowcase: React.FC = () => {
                             {/* Audio Waveform */}
                             <div className="bg-white/[0.04] rounded-xl p-4 mb-4 border border-white/[0.06]">
                                 <div className="flex items-center gap-3">
-                                    <button className="w-10 h-10 rounded-full bg-raudhah-gold flex items-center justify-center flex-shrink-0">
+                                    <button aria-label="Play recitation audio" className="w-10 h-10 rounded-full bg-raudhah-gold flex items-center justify-center flex-shrink-0">
                                         <Mic className="w-4 h-4 text-raudhah-ink" />
                                     </button>
                                     <div className="flex-1 flex items-end gap-[2px] h-8">

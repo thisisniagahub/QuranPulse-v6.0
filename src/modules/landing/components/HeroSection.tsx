@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { Button } from '@/components/ui/Button';
 import { ArrowRight, Play, Users, BookOpen, Sparkles } from 'lucide-react';
@@ -17,6 +17,16 @@ interface HeroSectionProps {
 export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
     const containerRef = useRef<HTMLElement>(null);
 
+    // Memoize particle positions to prevent flicker on re-renders
+    const particles = useMemo(() =>
+        Array.from({ length: 20 }, (_, i) => ({
+            id: i,
+            left: `${(i * 5.26 + 7.3) % 100}%`,
+            top: `${(i * 7.89 + 3.1) % 100}%`,
+            duration: 4 + (i % 7),
+            delay: (i * 0.7) % 5,
+        })), []
+    );
 
     return (
         <section
@@ -33,23 +43,23 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
 
             {/* Subtle particle dots */}
             <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-                {/* Floating particles */}
-                {Array.from({ length: 40 }, (_, i) => (
+                {/* Floating particles — memoized positions for stable renders */}
+                {particles.map((p) => (
                     <motion.div
-                        key={i}
+                        key={p.id}
                         className="absolute w-1 h-1 rounded-full bg-raudhah-teal/20"
                         style={{
-                            left: `${Math.random() * 100}%`,
-                            top: `${Math.random() * 100}%`,
+                            left: p.left,
+                            top: p.top,
                         }}
                         animate={{
                             y: [0, -30, 0],
                             opacity: [0.1, 0.4, 0.1],
                         }}
                         transition={{
-                            duration: 4 + Math.random() * 6,
+                            duration: p.duration,
                             repeat: Infinity,
-                            delay: Math.random() * 5,
+                            delay: p.delay,
                             ease: 'easeInOut',
                         }}
                     />

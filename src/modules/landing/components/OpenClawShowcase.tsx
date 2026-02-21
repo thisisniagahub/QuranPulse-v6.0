@@ -35,7 +35,7 @@ const OrbitNode = ({ icon: Icon, delay = 0, radius = 150, duration = 20, color =
 
 export const OpenClawShowcase: React.FC = () => {
     return (
-        <section className="py-32 relative overflow-hidden">
+        <section className="py-12 md:py-16 relative overflow-hidden">
             {/* Environmental Layer */}
             <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-raudhah-teal/[0.02] to-transparent"></div>
 

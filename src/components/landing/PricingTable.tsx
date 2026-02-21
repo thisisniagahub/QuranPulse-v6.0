@@ -79,7 +79,7 @@ const PricingTable: React.FC = () => {
     const [period, setPeriod] = useState<PricingPeriod>('monthly');
 
     return (
-        <section className="py-32 relative overflow-hidden">
+        <section className="py-12 md:py-16 relative overflow-hidden">
             {/* Subtle background glow */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-raudhah-teal/5 rounded-full blur-[150px] pointer-events-none"></div>
 
