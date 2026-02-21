@@ -141,3 +141,5 @@ export const OpenClawShowcase: React.FC = () => {
         </section>
     );
 };
+
+export default OpenClawShowcase;

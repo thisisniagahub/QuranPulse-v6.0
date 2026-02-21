@@ -13,12 +13,12 @@ const AIAgentShowcase = lazy(() => import('../../components/landing/AIAgentShowc
 const WhatsAppProactiveSection = lazy(() => import('../../components/landing/WhatsAppProactiveSection'));
 const PricingTable = lazy(() => import('../../components/landing/PricingTable'));
 const ComparisonSection = lazy(() => import('./components/ComparisonSection'));
-const FAQSection = lazy(() => import('./components/FAQSection').then(m => ({ default: m.FAQSection })));
+const FAQSection = lazy(() => import('./components/FAQSection'));
 const FinalCta = lazy(() => import('../../components/landing/FinalCta'));
 const QwerDemoSection = lazy(() => import('../../components/landing/QwerDemoSection'));
-const OpenClawShowcase = lazy(() => import('./components/OpenClawShowcase').then(m => ({ default: m.OpenClawShowcase })));
-const PremiumTestimonials = lazy(() => import('./components/PremiumTestimonials').then(m => ({ default: m.PremiumTestimonials })));
-const GlowFooter = lazy(() => import('./components/GlowFooter').then(m => ({ default: m.GlowFooter })));
+const OpenClawShowcase = lazy(() => import('./components/OpenClawShowcase'));
+const PremiumTestimonials = lazy(() => import('./components/PremiumTestimonials'));
+const GlowFooter = lazy(() => import('./components/GlowFooter'));
 
 // === Nav Links (DRY — used for both desktop & mobile) ===
 const NAV_LINKS = [
