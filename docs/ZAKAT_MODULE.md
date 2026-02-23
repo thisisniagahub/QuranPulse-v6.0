@@ -1,8 +1,12 @@
-# 💰 ZAKAT HUB: Intelligent Tithe Management
+# ⚖️ Zakat Module — Calculation & Distribution
 
-> **Vision:** A comprehensive tool to help users calculate, track, and pay their Zakat (Income & Business) with confidence and precision.
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Smart Deen / Zakat
 
 ---
+
+> **Vision:** A comprehensive tool to help users calculate, track, and pay their Zakat (Income & Business) with confidence and precision.
 
 ## 1. Zakat Pendapatan (Income Zakat)
 
@@ -84,3 +88,4 @@ Stores the history of calculations and payments.
 *   `calculateIncomeZakat(income, deductions)`
 *   `calculateBusinessZakat(assets, liabilities)`
 *   `checkNisabStatus(netWealth, stateCode)`
+

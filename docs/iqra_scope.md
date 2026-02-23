@@ -1,4 +1,10 @@
-# Scope of Work: Iqra Al-Baghdadi (AI-Powered)
+# 📖 Iqra Digital — Scope & Overview
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 ## 1. Included Scope (In-Scope)
 We are building a **Progressive Web Application (PWA)** module that teaches the "Iqra" method (Books 1-6) using Voice Recognition.
@@ -25,3 +31,4 @@ We are building a **Progressive Web Application (PWA)** module that teaches the 
 * **Accuracy:** MVP accepts "close enough" pronunciation (80% confidence).
 * **Latency:** Feedback must appear under 1.5 seconds.
 * **Retention:** 50% of users who start Iqra 1 finish Page 5.
+

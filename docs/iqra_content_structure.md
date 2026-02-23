@@ -1,4 +1,10 @@
-# Iqra Content Data Structure Specification
+# 📚 Iqra Digital — Content Structure
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 This document defines the schema for the digital Iqa books. We avoid "hardcoded components" and use a **Data-Driven** approach.
 
@@ -13,7 +19,7 @@ interface IqraPage {
   pageNumber: number;
   title: string;          // e.g., "Huruf Hijaiyah Berbaris"
   instruction: string;    // e.g., "Baca dengan pendek, jangan dipanjangkan."
-  
+
   // The Grid Content
   rows: IqraRow[];
 }
@@ -28,7 +34,7 @@ interface IqraSegment {
   text: string;           // The Arabic display text (e.g., "بَ")
   transliteration: string;// Phonetic guide (hidden by default) e.g., "ba"
   audioSrc?: string;      // Reference audio file (optional)
-  
+
   // Validation Rules
   expectedPhonemes: string[]; // e.g., ["b", "ae"]
   difficulty: number;      // 1-10 scale
@@ -53,3 +59,4 @@ interface IqraSegment {
 ## 3. Asset Requirements
 * **Font:** Must use `LPMQ Isep Misbah` or equivalent widely accepted Uthmani-like font for SEA region.
 * **Audio:** Native Malay/Indonesian reciter (neutral accent) for reference audio.
+

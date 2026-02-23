@@ -1,4 +1,10 @@
-# MADANI INSIGHTS: Strategic Framework for QuranPulse v6.0
+# 📈 Madani Insights — Data Analytics Engine
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Analytics / Madani
+
+---
 
 **Source Analysis:** [Laporan Konvensyen Madani 2024](/CONTENT_DATA/LAPORAN_KONVENSYEN_MADANI_2024_KE_ARAH_PENGAHAYATAN_DAN_PEMBUDAYAAN_NILAI_DALAM_ERA_DIGITAL.pdf)
 
@@ -49,7 +55,7 @@ We will gamify positive community contribution through the **3R Badge System**:
 
 ## 3. Advanced Tools & "Next Level" Features
 
-### 🚀 Tool 1: The "Madani Compass" (AI Advisor)
+### 🧭 Tool 1: The "Madani Compass" (AI Advisor)
 *Addressing the "BANI" world (Brittle, Anxious, Nonlinear, Incomprehensible).*
 
 *   **Concept:** An AI companion that acts as "Heartware" (Perkakasan Hati).

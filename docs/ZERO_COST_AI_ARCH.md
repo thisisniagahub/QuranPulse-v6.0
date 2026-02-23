@@ -1,8 +1,12 @@
-# 🧠 The "Frugal Architect" AI Strategy (Zero Cost, High Power)
+# 💰 Zero-Cost AI Architecture — Budget Optimization
 
-> **Philosophy:** We mimic Enterprise AI capabilities (Agents, Generative UI, Memory) using purely free-tier and open-source patterns. No monthly subscriptions.
+> **Last Updated**: 21 Feb 2026
+> **Status**: Draft
+> **Module**: Core AI Platform
 
 ---
+
+> **Philosophy:** We mimic Enterprise AI capabilities (Agents, Generative UI, Memory) using purely free-tier and open-source patterns. No monthly subscriptions.
 
 ## 1. Generative UI (The "Magic" Interface)
 Instead of paying for A2UI/CopilotKit, we define our own **JSON Protocol**.
@@ -55,3 +59,4 @@ Ensure every AI call injects the user's `name`, `state` (for prayer times), and 
 ---
 
 **Verdict:** This architecture gives you 90% of the power of a RM500/month AI stack for **RM0**.
+

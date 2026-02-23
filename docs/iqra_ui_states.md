@@ -1,4 +1,10 @@
-# Iqra UI State Definitions
+# 🖼️ Iqra Digital — UI States
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 The visual language for the "Mission Control" HUD during an Iqra session.
 
@@ -35,3 +41,4 @@ The visual language for the "Mission Control" HUD during an Iqra session.
 * **Locked Page:** Padlock icon overlaid. Greyscale thumbnail.
 * **Unlocked Page:** Full color.
 * **Mastered Page:** Gold badge/Star overlaid.
+

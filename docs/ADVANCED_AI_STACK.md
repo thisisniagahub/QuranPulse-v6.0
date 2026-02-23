@@ -1,9 +1,13 @@
-# 🚀 The "Unicorn" AI Stack: Advanced Tools for QuranPulse
+# 🧠 Advanced AI Stack — Model Architecture
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Draft
+> **Module**: Core AI Platform
+
+---
 
 > **Status:** Proposal for Phase 2 Implementation
 > **Goal:** Move beyond "Basic Chatbot" to "Autonomous System" using industry-leading (often Open Source) tools.
-
----
 
 ## 1. Orchestration & Optimization (The Brain)
 
@@ -67,3 +71,4 @@
 
 **Priority 3 (Future Proofing):**
 *   Explore **DSPy** jika prompt `aiService.ts` menjadi terlalu panjang dan rumit.
+

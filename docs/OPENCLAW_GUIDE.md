@@ -1,9 +1,13 @@
-# OpenClaw Gateway Guide
+# 🤖 OpenClaw — NiagaBot Operations Guide
 
-> Scope: operate and troubleshoot OpenClaw gateway on VPS  
-> Verified against live server: **2026-02-19**
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Operator / OpenClaw
 
 ---
+
+> Scope: operate and troubleshoot OpenClaw gateway on VPS
+> Verified against live server: **2026-02-19**
 
 ## 1. Service Identity
 
@@ -175,3 +179,4 @@ journalctl --user -u openclaw-gateway.service --since "30 min ago" | tail -n 120
 - `docs/VPS_STATUS.md`
 - `docs/VPS_PRD.md`
 - `docs/VPS_MANUAL_A_TO_Z.md`
+

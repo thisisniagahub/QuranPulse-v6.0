@@ -1,11 +1,15 @@
-# 🐳 Docker-Based MCP Strategy for QuranPulse
+# 🐳 Docker MCP — Container Strategy
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Draft
+> **Module**: Infrastructure / MCP
+
+---
 
 > **Status:** Recommended Upgrade
 > **Goal:** Stability, Security, and "Zero-Dependency" Environment.
 
 This document outlines how to run your MCP Servers (AI Tools) using **Docker**. This eliminates issues with `npx`, `node` versions, or Windows/Linux compatibility.
-
----
 
 ## 1. Prerequisites
 *   **Docker Desktop:** Must be installed and running. [Download Here](https://www.docker.com/products/docker-desktop/).
@@ -111,3 +115,4 @@ Selepas kemaskini `settings.json` dan restart Gemini CLI, cuba prompt ini:
 Kebanyakan developer install tools ini di laptop mereka.
 *   **Masalah:** "It works on my machine".
 *   **Solusi Docker:** Ia berfungsi di MANA-MANA mesin (Windows, Mac, Linux) dengan cara yang SAMA. Anda sedang membina infrastruktur taraf **Enterprise**.
+

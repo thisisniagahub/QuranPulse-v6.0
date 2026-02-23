@@ -1,4 +1,10 @@
-# Pronunciation Validation Rules (AI Logic)
+# 🗣️ Iqra Digital — Pronunciation Rules (Makhraj)
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 How we decide if "Ba" is "Ba".
 
@@ -41,3 +47,4 @@ Since we are dealing with non-native Arabic speakers (Malay accents), we must al
 * **Strictness:** HIGH.
 * **Rule:** Must detect elongation (Mad).
 * **Measurement:** Duration of vowel > 0.4s for Mad 2 harakat vs < 0.2s for short vowel.
+

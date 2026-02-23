@@ -1,4 +1,10 @@
-# Iqra 1–6: The Strategic Acquisition Engine for QuranPulse
+# 🎯 QuranPulse — Market Positioning
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Product Strategy
+
+---
 
 ## 1. Why Included? (The Strategic "Why")
 
@@ -29,3 +35,4 @@ Most Quran apps (Tarteel, Quran.com) assume the user **can already read**. They 
 * ❌ **PDF Dump:** Just displaying scanned pages is useless.
 * ❌ **Passive Audio:** Clicking "Play" and listening is not learning.
 * ❌ **Strict Tajweed First:** We do not punish advanced rules (Idgham, Ikhfa) in Iqra 1. Focus is on **Identification** and **Basic Pronunciation**.
+

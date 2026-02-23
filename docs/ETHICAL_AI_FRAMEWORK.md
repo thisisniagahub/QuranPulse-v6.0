@@ -1,9 +1,13 @@
-# 🛡️ QuranPulse Ethical AI Framework (Teknologi Hikmah)
+# 🛡️ Ethical AI Framework — Islamic AI Guidelines
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: AI Governance
+
+---
 
 > **Source:** Based on "Social Media & ICT dalam Islam" by Prof. Dato Dr. Mohamad Fauzan Noordin.
 > **Vision:** Moving beyond "Information Technology" to **"Wisdom Technology"** using the 17 Guidelines of Surah Al-Hujurat.
-
----
 
 ## 1. The Philosophy: From Data to Wisdom (Hikmah)
 
@@ -67,3 +71,4 @@ We propose 3 new AI Engines designed to enforce Islamic Ethics (Adab) automatica
 
 **Conclusion:**
 Technology is a tool (`Al-Qalam`). It is neutral. We must infuse it with **Values (Akhlaq)** to prevent it from becoming a weapon of mass distraction (`The Social Dilemma`).
+

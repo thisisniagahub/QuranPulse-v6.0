@@ -1,8 +1,12 @@
-# 🕌 MASJID 2.0: The Digital Kariah Ecosystem
+# 🕌 Masjid Ecosystem — Community Mosque Network
 
-> **Visi:** Mengubah masjid daripada "Bangunan Fizikal" kepada "Hub Komuniti Digital" yang sentiasa terhubung dengan jemaah.
+> **Last Updated**: 21 Feb 2026
+> **Status**: Draft
+> **Module**: Smart Deen / Community
 
 ---
+
+> **Visi:** Mengubah masjid daripada "Bangunan Fizikal" kepada "Hub Komuniti Digital" yang sentiasa terhubung dengan jemaah.
 
 ## 1. 📢 Info & Identiti (The Profile)
 Bukan sekadar alamat. Ini adalah "CV" Masjid.
@@ -35,7 +39,7 @@ Pendermaan yang spesifik dan telus.
 *   **Lapor Kerosakan:** User tangkap gambar paip bocor -> Hantar dalam app -> AJK terima notifikasi.
 *   **Tempahan Fasiliti:** Booking dewan nikah atau van jenazah dalam app.
 
-## 6. 🚀 Ciri "LUAR KOTAK" (The X-Factor)
+## 6. 🧩 Ciri "LUAR KOTAK" (The X-Factor)
 *   **Gerobok Rezeki Tracker:** Sensor/Laporan manual status "Gerobok Rezeki". (User tahu bila perlu top-up beras).
 *   **Crowd-Parking:** Waze untuk masjid. User lapor "Parking Penuh" waktu Jumaat/Raya.
 *   **Ride-to-Masjid:** Carpool sesama jemaah untuk ke masjid (pahala berganda).
@@ -58,3 +62,4 @@ Kita akan guna konsep **"Payment Aggregator Adapter"**. App tak perlu tahu user 
 3.  Pilih Gateway (FPX / Card / TNG).
 4.  Redirect ke Bank/App.
 5.  Berjaya -> Update Database -> User dapat "Resit Digital" & "Pahala Points" (Gamification).
+

@@ -1,4 +1,10 @@
-# Iqra UX: The Learning Loop
+# 🪜 Iqra Digital — Learning Flow
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 The interaction model follows a strict **"Listen-Verify-Reward"** loop.
 
@@ -41,3 +47,4 @@ The interaction model follows a strict **"Listen-Verify-Reward"** loop.
 ## 3. Parent/Teacher Mode (The "Ustaz" View)
 * Parents can view a heat map of errors.
 * Example: "Your child struggles with 'Ha' vs 'Kho'."
+

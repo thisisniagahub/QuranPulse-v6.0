@@ -1,17 +1,21 @@
-# NIAGAHUB 1-VPS Deployment PRD
+# 🖥️ VPS — Production Runtime Design
 
-> Scope: production runtime design for QuranPulse + OpenClaw on one VPS  
-> Revision: **2026-02-19** (aligned with live server verification)
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Infrastructure / Architecture
 
 ---
+
+> Scope: production runtime design for QuranPulse + OpenClaw on one VPS
+> Revision: **2026-02-19** (aligned with live server verification)
 
 ## 1. Executive Summary
 
 Single VPS, two operational domains:
 
-1. **Operator Domain (OpenClaw)**  
+1. **Operator Domain (OpenClaw)**
    Internal operator gateway, managed as root user `systemd --user` service.
-2. **Application Domain (QuranPulse API Stack)**  
+2. **Application Domain (QuranPulse API Stack)**
    Queue ingress API + workers + Redis via Docker Compose.
 
 Design objective:
@@ -235,3 +239,4 @@ journalctl --user -u openclaw-gateway.service --since "1 hour ago"
 - Live state: `docs/VPS_STATUS.md`
 - OpenClaw specific SOP: `docs/OPENCLAW_GUIDE.md`
 - Full incident/manual guide: `docs/VPS_MANUAL_A_TO_Z.md`
+

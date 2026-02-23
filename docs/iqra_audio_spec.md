@@ -1,4 +1,10 @@
-# Audio Pipeline Specifications
+# 🔊 Iqra Digital — Audio Specification
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 Technical requirements for the "Ears" of the system.
 
@@ -26,3 +32,4 @@ Technical requirements for the "Ears" of the system.
 * **Network:** 0.3s (Edge Function).
 * **Inference:** 0.5s (Groq/FastAPI).
 * **Total RT:** ~1.3s (Acceptable for educational app).
+

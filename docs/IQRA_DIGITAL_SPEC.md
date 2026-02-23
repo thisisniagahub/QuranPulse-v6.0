@@ -1,4 +1,10 @@
-# Iqra Digital Specification & Status
+# 📖 Iqra Digital — Full Technical Spec
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 **Status**: Completed (Dec 2025)
 **Module**: `src/modules/iqra`
@@ -36,3 +42,4 @@ The Iqra Digital module has been fully refactored to provide a high-performance,
 ## Future Enhancements (Backlog)
 -   [ ] **Progress Persistence**: Save checked checklist items to Supabase/Local Storage.
 -   [ ] **Voice Analysis**: Connect `InteractiveSegment` to `IqraVoiceCoach` for real-time feedback.
+

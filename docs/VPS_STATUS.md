@@ -1,11 +1,15 @@
-# NIAGAHUB VPS Infrastructure Status
+# 📡 VPS — Infrastructure Status
 
-> Server: `srv1322432`  
-> Public IP: `76.13.176.142`  
-> Tailscale IP: `100.100.205.64`  
-> Last Verified: **2026-02-19 (UTC+8)**
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Infrastructure / Operations
 
 ---
+
+> Server: `srv1322432`
+> Public IP: `76.13.176.142`
+> Tailscale IP: `100.100.205.64`
+> Last Verified: **2026-02-19 (UTC+8)**
 
 ## 1. Live Architecture Snapshot
 
@@ -152,3 +156,4 @@ journalctl --user -u openclaw-gateway.service --since "30 min ago"
 - Deployment design: `docs/VPS_PRD.md`
 - OpenClaw operations: `docs/OPENCLAW_GUIDE.md`
 - Full manual runbook: `docs/VPS_MANUAL_A_TO_Z.md`
+

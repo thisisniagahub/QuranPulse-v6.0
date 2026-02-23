@@ -1,4 +1,10 @@
-# Iqra Error Taxonomy
+# ⚠️ Iqra Digital — Error Types & Handling
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 Defining the types of mistakes users make to give better feedback.
 
@@ -27,3 +33,4 @@ Defining the types of mistakes users make to give better feedback.
 | `ERR_VOW` | Vowel Mismatch | Consonant matches, Vowel differs (e.g., /a/ vs /i/). |
 | `ERR_SIL` | Silence | No audio detected > 3 seconds. |
 | `ERR_NOI` | Noise | SNR (Signal-to-Noise Ratio) too low. |
+

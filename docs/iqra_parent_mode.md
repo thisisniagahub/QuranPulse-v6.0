@@ -1,4 +1,10 @@
-# Parent Mode (Supervisor View)
+# 👨‍👧 Iqra Digital — Parent Mode
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 Since Iqra is mostly for kids/beginners, the "Account Owner" (Parent) needs control.
 
@@ -14,3 +20,4 @@ Since Iqra is mostly for kids/beginners, the "Account Owner" (Parent) needs cont
 ## 3. Remote Control (Future)
 * Parent can set "Homework" (e.g., "Finish page 4 before playing games").
 * Notifications sent to Parent's WhatsApp when Child completes a session.
+

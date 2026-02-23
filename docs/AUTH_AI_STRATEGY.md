@@ -1,9 +1,13 @@
-# 🔐 Authentication & AI Strategy: "The Hybrid Model"
+# 🔐 Auth & AI Strategy — Security Framework
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Draft
+> **Module**: Security & AI Access
+
+---
 
 > **Context:** Answering the feasibility of "User uses their own Token" vs "Admin OAuth".
 > **Verdict:** The Admin idea is **LOGICAL**. The User Auto-Login idea requires adjustment to be practical.
-
----
 
 ## 1. The "Logik Tak?" Analysis
 
@@ -79,3 +83,4 @@
 | **Rate Limits** | Strict (via Caching) | Uncapped (for batch jobs) |
 
 **Conclusion:** Idea anda tentang "User guna token sendiri" adalah bernas, tetapi cara pelaksanaannya adalah melalui **API Key Input (BYOK)**, bukan OAuth Token (kerana isu billing Google Cloud user).
+

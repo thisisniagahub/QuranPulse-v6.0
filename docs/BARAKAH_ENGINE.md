@@ -1,8 +1,12 @@
-# 💸 BARAKAH ENGINE: Sistem Ekonomi Islam Digital
+# 📿 Barakah Engine — Spiritual Progress System
 
-> **Visi:** Mewujudkan kitaran ekonomi yang telus, pantas, dan bermaruah antara penyumbang dan penerima (Asnaf) dalam ekosistem QuranPulse.
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Smart Deen / Barakah
 
 ---
+
+> **Visi:** Mewujudkan kitaran ekonomi yang telus, pantas, dan bermaruah antara penyumbang dan penerima (Asnaf) dalam ekosistem QuranPulse.
 
 ## 1. Konsep Teras
 Sistem ini bukan sekadar tabung derma. Ia adalah **Enjin Pengagihan Automatik** yang menghubungkan 3 entiti:
@@ -56,3 +60,4 @@ Penerima **TIDAK** perlu keluar duit tunai (elak salah guna). Mereka guna kredit
 1.  **Fasa 1:** Tabung Masjid & Asnaf (Manual Withdrawal).
 2.  **Fasa 2:** Integrasi Souq (Beli barang guna kredit Infaq).
 3.  **Fasa 3:** Wakaf Token AI (Crowdsourced Intelligence).
+

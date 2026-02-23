@@ -1,10 +1,14 @@
-# VPS Manual A-Z (QuranPulse + OpenClaw)
+# 📘 VPS — Operations Manual (A to Z)
 
-> Purpose: full manual runbook for operations, troubleshooting, and recovery  
-> Server target: `srv1322432`  
-> Last verified: **2026-02-19**
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Infrastructure / Operations
 
 ---
+
+> Purpose: full manual runbook for operations, troubleshooting, and recovery
+> Server target: `srv1322432`
+> Last verified: **2026-02-19**
 
 ## A. Access and Authentication
 
@@ -414,25 +418,25 @@ apt update && apt upgrade -y
 
 ## T. Top 10 Common Problems and Fixes
 
-1. `502 Bad Gateway` on API domain  
+1. `502 Bad Gateway` on API domain
    Fix: check `quranpulse-api` container and port bind.
-2. `502` on operator domain  
+2. `502` on operator domain
    Fix: check OpenClaw service + socket `127.0.0.1:18789`.
-3. Enqueue works but no processing  
+3. Enqueue works but no processing
    Fix: check worker logs and Redis connectivity.
-4. Worker alive but no queue consumption  
+4. Worker alive but no queue consumption
    Fix: verify queue name in `.env.agent_*`.
-5. TLS expired warning  
+5. TLS expired warning
    Fix: run `certbot renew` and reload nginx.
-6. SSH brute-force noise  
+6. SSH brute-force noise
    Fix: verify fail2ban jail active.
-7. sudden restart loops  
+7. sudden restart loops
    Fix: `journalctl` root cause first, then rollback.
-8. domain up, local down  
+8. domain up, local down
    Fix: service internal crash, not DNS issue.
-9. local up, domain down  
+9. local up, domain down
    Fix: Nginx routing/cert problem.
-10. performance degradation  
+10. performance degradation
    Fix: inspect container resource usage and logs.
 
 ---
@@ -530,3 +534,4 @@ echo "== time ==" && date \
 && curl -s -o /dev/null -w "api=%{http_code}\n" https://api.gangniaga.my/health \
 && curl -s -o /dev/null -w "operator=%{http_code}\n" https://operator.gangniaga.my/health
 ```
+

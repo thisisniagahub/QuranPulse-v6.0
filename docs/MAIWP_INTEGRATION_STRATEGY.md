@@ -1,8 +1,12 @@
-# 🏙️ MAIWP Integration Strategy (Barakah Engine 2.0)
+# 🏛️ MAIWP Integration — Wilayah Persekutuan Strategy
 
-> **Vision:** Expanding "Barakah Hub" from just *Giving* (Infaq/Zakat) to *Cleansing* (Kafarah) and *Receiving* (Bantuan).
+> **Last Updated**: 21 Feb 2026
+> **Status**: Draft
+> **Module**: Integrations / MAIWP
 
 ---
+
+> **Vision:** Expanding "Barakah Hub" from just *Giving* (Infaq/Zakat) to *Cleansing* (Kafarah) and *Receiving* (Bantuan).
 
 ## 1. Data Source Analysis
 
@@ -62,3 +66,4 @@ CREATE TABLE kafarah_types (
 
 ### Phase 3: The "Aid Matcher"
 *   Build a rule engine in `aiService.ts` to match User Profile vs Aid Criteria.
+

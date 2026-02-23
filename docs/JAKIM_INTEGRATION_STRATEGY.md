@@ -1,8 +1,12 @@
-# 🇲🇾 JAKIM Data Integration Strategy (QuranPulse v6.0)
+# 🏛️ JAKIM Integration — Official Islamic Authority API
 
-> **Vision:** Integrating Official Malaysian Islamic Data to provide "Hyper-Localized" and "Authority-Compliant" features.
+> **Last Updated**: 21 Feb 2026
+> **Status**: Draft
+> **Module**: Integrations / JAKIM
 
 ---
+
+> **Vision:** Integrating Official Malaysian Islamic Data to provide "Hyper-Localized" and "Authority-Compliant" features.
 
 ## 1. Data Source Analysis
 
@@ -67,3 +71,4 @@
 ### Phase 3: The "Features"
 *   Deploy **Halal Vision** in `Souq` module.
 *   Deploy **Smart Khutbah** in `SmartDeen` module.
+

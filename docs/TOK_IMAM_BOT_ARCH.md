@@ -1,9 +1,13 @@
-# 👳 TOK IMAM & 🧕 USTAZAH AI: Multi-Channel Bot Architecture
+# 🤖 Tok Imam Bot — AI Architecture
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Tok Imam Bot
+
+---
 
 > **Mission:** To provide a compliant, accessible, and intelligent Islamic companion on the platforms people use most (WhatsApp & Telegram).
 > **Scale:** 5,000 - 10,000 Concurrent Users.
-
----
 
 ## 1. Architecture Overview (The "Cluster" Model)
 
@@ -13,14 +17,14 @@ We use a unified backend to control multiple bot personas across different platf
 graph TD
     UserWA[WhatsApp User] -->|Message| WA[Tok Imam Worker (Puppeteer)]
     UserTG[Telegram User] -->|Message| TG[Ustazah AI Worker (Telegraf)]
-    
+
     WA -->|Unified Logic| Brain[AI Service (Node.js)]
     TG -->|Unified Logic| Brain
-    
+
     Brain -->|Query| Cache[Supabase Vector Cache]
     Brain -->|Fast Inference| Groq[Groq LPU]
     Brain -->|Deep Reasoning| Gemini[Gemini Flash]
-    
+
     Brain -->|Reply JSON| UI[Widget/Link Generator]
     UI -->|Response| WA
     UI -->|Response| TG
@@ -124,3 +128,4 @@ Instead of text, reply with Audio.
 1.  Run `scripts/start_tok_imam.ts` locally to scan QR.
 2.  Test with a small group (10-20 friends).
 3.  Setup Redis for the queue system.
+

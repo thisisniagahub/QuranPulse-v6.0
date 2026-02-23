@@ -1,4 +1,10 @@
-# Meaningful Metrics: Tracking Iqra Progress
+# 📊 Iqra Digital — Progress Metrics
+
+> **Last Updated**: 21 Feb 2026
+> **Status**: Active
+> **Module**: Iqra Digital
+
+---
 
 How we measure success and keep users addicted (in a good way).
 
@@ -8,7 +14,7 @@ How we measure success and keep users addicted (in a good way).
 * **Iqra 1:** 0-100%
 * **Definition:** % of pages completed with 3-stars.
 
-### 🔥 Streak (Istiqamah)
+### 📅 Streak (Istiqamah)
 * **Definition:** Consecutive days with at least 5 minutes of practice.
 * **Reward:** Unlock special themes or avatars (e.g., "Neon Quran").
 
@@ -25,3 +31,4 @@ How we measure success and keep users addicted (in a good way).
 ### ⏱️ Time-to-Mastery
 * Average time to finish Iqra 1.
 * **Goal:** Reduce this over time with better AI prompts.
+

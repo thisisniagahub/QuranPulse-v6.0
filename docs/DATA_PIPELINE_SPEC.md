@@ -1,8 +1,12 @@
-# 🧠 The "Neural Ingestor" Pipeline (Islamweb Integration)
+# 🗄️ Data Pipeline — ETL Specification
 
-> **Goal:** Transform QuranPulse from a static app to a "Living Knowledge Base" by automatically ingesting verified Islamic content from global sources like *Islamweb.net*.
+> **Last Updated**: 21 Feb 2026
+> **Status**: Draft
+> **Module**: Data Platform
 
 ---
+
+> **Goal:** Transform QuranPulse from a static app to a "Living Knowledge Base" by automatically ingesting verified Islamic content from global sources like *Islamweb.net*.
 
 ## 1. The Strategy: "Scrape, Translate, Vectorize"
 
@@ -57,18 +61,19 @@ CREATE TABLE external_knowledge (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     source_url TEXT UNIQUE,
     source_domain TEXT DEFAULT 'islamweb',
-    
+
     original_title TEXT, -- Arabic
     translated_title TEXT, -- Malay
-    
+
     content_ar TEXT,
     content_ms TEXT, -- The AI-translated version
-    
+
     category TEXT, -- 'fiqh', 'aqidah'
     embedding VECTOR(1536), -- For Semantic Search
-    
+
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 ```
 
 **Next Step:** Build the `ingest_islamweb.ts` script to prove this concept.
+
