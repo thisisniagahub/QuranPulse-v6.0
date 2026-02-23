@@ -10,9 +10,9 @@ interface IqraHubProps {
 
 const VOLUMES = [
     { id: 1, title: "Iqra' 1", subtitle: "Huruf Tunggal", color: "from-emerald-500 to-teal-500", shadow: "shadow-emerald-500/20", icon: "1", totalPages: 21 },
-    { id: 2, title: "Iqra' 2", subtitle: "Huruf Bersambung", color: "from-blue-500 to-cyan-500", shadow: "shadow-blue-500/20", icon: "2", totalPages: 10 },
-    { id: 3, title: "Iqra' 3", subtitle: "Mad Asli", color: "from-indigo-500 to-violet-500", shadow: "shadow-indigo-500/20", icon: "3", totalPages: 12 },
-    { id: 4, title: "Iqra' 4", subtitle: "Baris Tanwin", color: "from-purple-500 to-fuchsia-500", shadow: "shadow-purple-500/20", icon: "4", totalPages: 11 },
+    { id: 2, title: "Iqra' 2", subtitle: "Huruf Bersambung", color: "from-blue-500 to-teal-500", shadow: "shadow-blue-500/20", icon: "2", totalPages: 10 },
+    { id: 3, title: "Iqra' 3", subtitle: "Mad Asli", color: "from-teal-500 to-emerald-500", shadow: "shadow-teal-500/20", icon: "3", totalPages: 12 },
+    { id: 4, title: "Iqra' 4", subtitle: "Baris Tanwin", color: "from-emerald-500 to-amber-500", shadow: "shadow-emerald-500/20", icon: "4", totalPages: 11 },
     { id: 5, title: "Iqra' 5", subtitle: "Waqaf & Tajwid", color: "from-pink-500 to-rose-500", shadow: "shadow-pink-500/20", icon: "5", totalPages: 11 },
     { id: 6, title: "Iqra' 6", subtitle: "Latihan & Nun Sabdu", color: "from-orange-500 to-amber-500", shadow: "shadow-orange-500/20", icon: "6", totalPages: 13 }
 ];
@@ -97,7 +97,7 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage }) => {
                         {/* VOLUMES CAROUSEL */}
                         <div className="mb-8 flex items-center justify-between">
                             <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-cyan-400">
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400">
                                     Your Bookshelf
                                 </span>
                             </h2>

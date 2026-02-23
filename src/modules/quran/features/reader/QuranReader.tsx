@@ -218,7 +218,7 @@ const QuranReader: React.FC = () => {
                     <Suspense
                         fallback={
                             <div className="h-full min-h-[50vh] flex items-center justify-center">
-                                <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                                <div className="animate-spin w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full" />
                             </div>
                         }
                     >
@@ -243,11 +243,11 @@ const QuranReader: React.FC = () => {
                     {/* 🌠 Starlight Background (Reading Mode only) */}
                     {isZenMode && (
                         <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/5 to-cyan-900/5 opacity-[0.03]"></div>
+                            <div className="absolute inset-0 bg-gradient-to-br from-slate-900/5 to-teal-900/5 opacity-[0.03]"></div>
                             {/* Simple Star Particles (CSS-only for performance) */}
                             <div className="absolute top-20 left-1/4 w-0.5 h-0.5 bg-white rounded-full animate-pulse"></div>
-                            <div className="absolute top-40 right-1/3 w-1 h-1 bg-cyan-400 rounded-full animate-pulse opacity-40 delay-[1000ms]"></div>
-                            <div className="absolute bottom-60 left-10 w-0.5 h-0.5 bg-purple-400 rounded-full animate-pulse opacity-30 delay-[2000ms]"></div>
+                            <div className="absolute top-40 right-1/3 w-1 h-1 bg-teal-400 rounded-full animate-pulse opacity-40 delay-[1000ms]"></div>
+                            <div className="absolute bottom-60 left-10 w-0.5 h-0.5 bg-emerald-400 rounded-full animate-pulse opacity-30 delay-[2000ms]"></div>
                         </div>
                     )}
 
@@ -264,7 +264,7 @@ const QuranReader: React.FC = () => {
                                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                                 />
                                 <div className={`absolute inset-0 bg-gradient-to-t ${theme === 'raudhah' || theme === 'light' ? 'from-[var(--bg-main)] via-[var(--bg-main)]/40 to-transparent' : 'from-slate-900 via-slate-900/40 to-slate-900/80'}`} />
-                                <div className={`absolute inset-0 bg-gradient-to-br from-emerald-900/10 via-transparent to-cyan-900/10 ${theme === 'raudhah' ? 'opacity-30' : 'opacity-20 mix-blend-overlay'}`}></div>
+                                <div className={`absolute inset-0 bg-gradient-to-br from-emerald-900/10 via-transparent to-teal-900/10 ${theme === 'raudhah' ? 'opacity-30' : 'opacity-20 mix-blend-overlay'}`}></div>
                             </div>
 
                             {/* Content */}
@@ -283,7 +283,7 @@ const QuranReader: React.FC = () => {
                                     <h2 className={`text-2xl md:text-3xl font-bold tracking-tight ${theme === 'raudhah' || theme === 'light' ? 'text-[var(--text-primary)]' : 'text-white'}`}>
                                         {selectedChapter.name_simple}
                                     </h2>
-                                    <p className="text-cyan-400/80 text-sm font-medium tracking-wide">
+                                    <p className="text-teal-400/80 text-sm font-medium tracking-wide">
                                         {selectedChapter.translated_name.name}
                                     </p>
                                 </div>

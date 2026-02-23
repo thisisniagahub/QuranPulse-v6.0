@@ -329,7 +329,7 @@ const VoiceActiveReader: React.FC<VoiceActiveReaderProps> = ({
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                     <div className={`w-2 h-2 rounded-full ${status === 'listening' ? 'bg-green-500 animate-pulse' :
-                        status === 'success' ? 'bg-cyan-500' :
+                        status === 'success' ? 'bg-teal-500' :
                             status === 'error' ? 'bg-red-500' :
                              status === 'processing' ? 'bg-yellow-500 animate-pulse' :
                                 'bg-slate-500'
@@ -358,7 +358,7 @@ const VoiceActiveReader: React.FC<VoiceActiveReaderProps> = ({
                         <span
                             key={index}
                             className={`inline-block mx-1 px-1 rounded transition-colors ${index <= highlightedWordIndex
-                                ? 'text-cyan-400 bg-cyan-500/20'
+                                ? 'text-teal-400 bg-teal-500/20'
                                 : 'text-white'
                                 }`}
                         >
@@ -459,11 +459,11 @@ const VoiceActiveReader: React.FC<VoiceActiveReaderProps> = ({
                         exit={{ scale: 0 }}
                         className="flex flex-col items-center justify-center py-4"
                     >
-                        <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-green-500 
+                        <div className="w-16 h-16 bg-gradient-to-br from-teal-500 to-green-500 
                            rounded-full flex items-center justify-center mb-2">
                             <Check className="w-8 h-8 text-white" />
                         </div>
-                        <p className="text-cyan-400 font-medium">Bacaan Tepat!</p>
+                        <p className="text-teal-400 font-medium">Bacaan Tepat!</p>
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -477,7 +477,7 @@ const VoiceActiveReader: React.FC<VoiceActiveReaderProps> = ({
                             ? 'bg-red-500 hover:bg-red-600 animate-pulse'
                             : status === 'processing' 
                                 ? 'bg-yellow-500 animate-spin'
-                                : 'bg-gradient-to-br from-cyan-500 to-purple-500 hover:shadow-lg hover:shadow-cyan-500/25'
+                                : 'bg-gradient-to-br from-teal-500 to-emerald-500 hover:shadow-lg hover:shadow-teal-500/25'
                         }`}
                     disabled={status === 'processing'}
                 >

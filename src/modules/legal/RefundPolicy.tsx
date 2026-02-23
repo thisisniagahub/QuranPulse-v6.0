@@ -35,7 +35,7 @@ const RefundPolicy: React.FC = () => {
                 className="max-w-4xl mx-auto px-6 py-12 space-y-12"
             >
                 {/* Introduction */}
-                <section className="prose prose-invert prose-cyan max-w-none">
+                <section className="prose prose-invert prose-teal max-w-none">
                     <p className="text-lg text-slate-300 leading-relaxed">
                         Terima kasih kerana melanggan QuranPulse. Kami menghargai kepercayaan anda dalam
                         menggunakan perkhidmatan kami. Kami juga ingin memastikan anda mempunyai pengalaman
@@ -94,7 +94,7 @@ const RefundPolicy: React.FC = () => {
                                 key={i}
                                 className={`flex items-start gap-3 p-4 rounded-xl border ${item.type === 'warning'
                                         ? 'bg-amber-900/20 border-amber-500/20'
-                                        : 'bg-cyan-900/20 border-raudhah-teal/20'
+                                        : 'bg-teal-900/20 border-raudhah-teal/20'
                                     }`}
                             >
                                 <AlertTriangle className={`flex-shrink-0 ${item.type === 'warning' ? 'text-amber-400' : 'text-raudhah-teal'

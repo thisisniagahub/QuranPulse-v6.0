@@ -33,8 +33,8 @@ export const AIWidgetRenderer: React.FC<AIWidgetRendererProps> = ({ content }) =
   switch (widgetData.id) {
       case 'ZAKAT_CALC':
           return (
-              <div className="my-4 p-4 bg-slate-900/50 rounded-2xl border border-indigo-500/30">
-                  <p className="text-xs text-indigo-400 font-bold mb-2 uppercase">AI Tool: Kalkulator Zakat</p>
+              <div className="my-4 p-4 bg-slate-900/50 rounded-2xl border border-teal-500/30">
+                  <p className="text-xs text-teal-400 font-bold mb-2 uppercase">AI Tool: Kalkulator Zakat</p>
                   <ZakatCalculator />
               </div>
           );

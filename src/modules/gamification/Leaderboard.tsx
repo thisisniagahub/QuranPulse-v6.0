@@ -154,7 +154,7 @@ const Leaderboard: React.FC = () => {
                         key={t}
                         onClick={() => setTimeFilter(t)}
                         className={`px-3 py-1 rounded-full text-xs transition-all ${timeFilter === t
-                            ? 'bg-purple-500/20 text-purple-400'
+                            ? 'bg-emerald-500/20 text-emerald-400'
                             : 'text-slate-500 hover:text-slate-300'
                             }`}
                     >
@@ -184,7 +184,7 @@ const Leaderboard: React.FC = () => {
                                     {getRankIcon(entry.rank)}
 
                                     {/* Avatar */}
-                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-raudhah-teal to-purple-500 flex items-center justify-center text-white text-xs font-bold">
+                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-raudhah-teal to-emerald-500 flex items-center justify-center text-white text-xs font-bold">
                                         {entry.displayName.charAt(0)}
                                     </div>
 

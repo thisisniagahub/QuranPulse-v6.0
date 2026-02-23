@@ -83,10 +83,10 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                     <button
                         onClick={handleSearch}
                         disabled={query.trim().length < 3 || isSearching}
-                        className="px-3 py-1.5 bg-gradient-to-r from-raudhah-teal to-purple-500 
+                        className="px-3 py-1.5 bg-gradient-to-r from-raudhah-teal to-emerald-500 
                        rounded-lg text-white text-sm font-medium
                        disabled:opacity-50 disabled:cursor-not-allowed
-                       hover:shadow-lg hover:shadow-cyan-500/25 transition-all"
+                       hover:shadow-lg hover:shadow-teal-500/25 transition-all"
                     >
                         {isSearching ? (
                             <Loader2 className="w-4 h-4 animate-spin" />
@@ -99,7 +99,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
 
             {/* AI Badge */}
             <div className="mt-2 flex items-center gap-2 text-xs text-slate-400">
-                <Sparkles className="w-3 h-3 text-purple-400" />
+                <Sparkles className="w-3 h-3 text-emerald-400" />
                 <span>AI Semantic Search - Cari berdasarkan makna, bukan teks sahaja</span>
             </div>
 
@@ -112,7 +112,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                         exit={{ opacity: 0, y: -10 }}
                         className="absolute top-full left-0 right-0 mt-2 z-50
                        bg-slate-900/95 backdrop-blur-xl border border-raudhah-teal/20 
-                       rounded-xl shadow-2xl shadow-cyan-500/10 overflow-hidden"
+                       rounded-xl shadow-2xl shadow-teal-500/10 overflow-hidden"
                     >
                         {error ? (
                             <div className="p-4 text-center text-red-400">
@@ -152,7 +152,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                                                         {result.surahName} ({result.surahNumber}:{result.verseNumber})
                                                     </span>
                                                 </div>
-                                                <span className="text-xs text-purple-400 bg-purple-500/20 px-2 py-0.5 rounded-full">
+                                                <span className="text-xs text-emerald-400 bg-emerald-500/20 px-2 py-0.5 rounded-full">
                                                     {Math.round(result.similarity * 100)}% match
                                                 </span>
                                             </div>

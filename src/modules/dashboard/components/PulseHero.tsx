@@ -140,7 +140,7 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                         <div className="flex flex-col items-center">
                             <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">SETERUSNYA</p>
                             <h1 className="text-3xl font-black text-white tracking-tighter drop-shadow-lg">{nextPrayerGroup}</h1>
-                            <p className="text-sm font-mono font-medium text-raudhah-teal mt-1 bg-cyan-950/50 px-2 py-0.5 rounded border border-raudhah-teal/20">{timeLeft}</p>
+                            <p className="text-sm font-mono font-medium text-raudhah-teal mt-1 bg-teal-950/50 px-2 py-0.5 rounded border border-raudhah-teal/20">{timeLeft}</p>
                         </div>
                     </div>
                 </div>

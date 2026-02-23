@@ -36,7 +36,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
         <div className="bg-[#0c224b]/40 backdrop-blur-xl border border-white/10 rounded-[2.5rem] p-8 relative overflow-hidden shadow-2xl">
             {/* Background Decorative Orbs */}
             <div className="absolute -top-24 -right-24 w-48 h-48 bg-raudhah-teal/10 rounded-full blur-[80px]"></div>
-            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-purple-500/10 rounded-full blur-[80px]"></div>
+            <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-emerald-500/10 rounded-full blur-[80px]"></div>
 
             <div className="absolute top-6 right-6">
                 <div className="bg-raudhah-teal/10 text-raudhah-teal text-[9px] font-black uppercase tracking-[0.2em] px-3 py-1 rounded-full border border-raudhah-teal/20 shadow-[0_0_15px_rgba(34,211,238,0.2)]">
@@ -54,7 +54,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
                 {/* Plan Switcher (Cyber Capsule) */}
                 <div className="flex bg-black/40 p-1.5 rounded-2xl mb-8 border border-white/5 relative">
                     <motion.div
-                        className="absolute top-1.5 bottom-1.5 bg-cyan-600 rounded-xl shadow-[0_0_20px_rgba(8,145,178,0.4)] z-0"
+                        className="absolute top-1.5 bottom-1.5 bg-teal-600 rounded-xl shadow-[0_0_20px_rgba(8,145,178,0.4)] z-0"
                         initial={false}
                         animate={{
                             left: selectedPlan.id === 'plan_pro' ? '6px' : '50%',
@@ -105,7 +105,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setShowGateways(true)}
-                        className="w-full py-5 bg-cyan-600 hover:bg-raudhah-teal text-white font-black uppercase tracking-[0.2em] text-sm rounded-2xl shadow-xl shadow-cyan-600/20 border border-raudhah-teal transition-all flex items-center justify-center gap-3"
+                        className="w-full py-5 bg-teal-600 hover:bg-raudhah-teal text-white font-black uppercase tracking-[0.2em] text-sm rounded-2xl shadow-xl shadow-teal-600/20 border border-raudhah-teal transition-all flex items-center justify-center gap-3"
                     >
                         AKTIFKAN SEKARANG
                         <ChevronRight size={18} />
@@ -136,10 +136,10 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
                             <button
                                 disabled={isProcessing}
                                 onClick={() => handleSubscribe('stripe')}
-                                className="w-full py-4 bg-white/5 hover:bg-purple-500/20 border border-white/10 hover:border-purple-500/50 rounded-2xl flex items-center justify-between px-6 transition-all group"
+                                className="w-full py-4 bg-white/5 hover:bg-emerald-500/20 border border-white/10 hover:border-emerald-500/50 rounded-2xl flex items-center justify-between px-6 transition-all group"
                             >
                                 <span className="text-sm font-bold text-slate-300 group-hover:text-white">Kad Kredit/Debit</span>
-                                <i className="fa-brands fa-stripe text-purple-400 text-2xl"></i>
+                                <i className="fa-brands fa-stripe text-emerald-400 text-2xl"></i>
                             </button>
                         </div>
 
@@ -157,7 +157,7 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({ userId, onSuccess }
                 <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center z-50 p-8 text-center">
                     <div className="relative w-20 h-20 mb-8">
                         <div className="absolute inset-0 border-4 border-raudhah-teal/20 rounded-full"></div>
-                        <div className="absolute inset-0 border-4 border-t-cyan-500 rounded-full animate-spin"></div>
+                        <div className="absolute inset-0 border-4 border-t-teal-500 rounded-full animate-spin"></div>
                         <div className="absolute inset-4 bg-raudhah-teal/10 rounded-full flex items-center justify-center">
                             <i className="fa-solid fa-shield-halved text-raudhah-teal text-xl animate-pulse"></i>
                         </div>

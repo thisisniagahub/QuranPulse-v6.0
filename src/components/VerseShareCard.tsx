@@ -30,9 +30,9 @@ const themes = [
   },
   {
     name: 'Royal Purple',
-    bg: 'bg-gradient-to-br from-purple-950 via-indigo-900 to-purple-950',
-    accent: 'text-purple-300',
-    border: 'border-purple-500/30',
+    bg: 'bg-gradient-to-br from-emerald-950 via-teal-900 to-emerald-950',
+    accent: 'text-emerald-300',
+    border: 'border-emerald-500/30',
   },
   {
     name: 'Forest Green',

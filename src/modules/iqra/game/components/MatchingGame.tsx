@@ -80,8 +80,8 @@ const MatchingGame: React.FC<MatchingGameProps> = ({ data, onComplete }) => {
                             className={`w-full py-6 rounded-2xl text-xl font-bold border-2 transition-all ${matches.has(item)
                                     ? 'bg-green-500/20 border-green-500 text-green-400 opacity-50 cursor-default'
                                     : selectedRight === item || (selectedLeft && data.right[data.left.indexOf(selectedLeft)] === item && selectedRight)
-                                        ? 'bg-purple-500/20 border-purple-400 text-white'
-                                        : 'bg-black/40 border-white/10 text-slate-300 hover:border-purple-500/50'
+                                        ? 'bg-emerald-500/20 border-emerald-400 text-white'
+                                        : 'bg-black/40 border-white/10 text-slate-300 hover:border-emerald-500/50'
                                 } ${errors.has(item) ? 'bg-red-500/20 border-red-500 animate-shake' : ''}`}
                         >
                             {item}

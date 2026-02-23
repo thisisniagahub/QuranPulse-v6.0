@@ -43,7 +43,7 @@ const SubscriptionPage: React.FC = () => {
     const getPlanGradient = (planId: string) => {
         switch (planId) {
             case 'pro_monthly': return 'from-raudhah-teal to-emerald-700';
-            case 'pro_yearly': return 'from-purple-500 to-pink-600';
+            case 'pro_yearly': return 'from-emerald-500 to-pink-600';
             case 'family_monthly': return 'from-emerald-500 to-teal-600';
             default: return 'from-slate-500 to-slate-600';
         }
@@ -69,7 +69,7 @@ const SubscriptionPage: React.FC = () => {
                     className="text-4xl font-bold text-white mb-4"
                 >
                     Tingkatkan Pengalaman{' '}
-                    <span className="bg-gradient-to-r from-raudhah-teal to-purple-400 bg-clip-text text-transparent">
+                    <span className="bg-gradient-to-r from-raudhah-teal to-emerald-400 bg-clip-text text-transparent">
                         QuranPulse
                     </span>
                 </motion.h1>
@@ -98,13 +98,13 @@ const SubscriptionPage: React.FC = () => {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 * index }}
                             className={`relative rounded-2xl border p-6 transition-all ${isPopular
-                                    ? 'bg-gradient-to-b from-purple-500/10 to-slate-900 border-purple-500/50 scale-105 shadow-xl shadow-purple-500/10'
+                                    ? 'bg-gradient-to-b from-emerald-500/10 to-slate-900 border-emerald-500/50 scale-105 shadow-xl shadow-emerald-500/10'
                                     : 'bg-slate-900/80 border-slate-700/50 hover:border-raudhah-teal/20'
                                 }`}
                         >
                             {/* Popular Badge */}
                             {isPopular && (
-                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-pink-500 px-4 py-1 rounded-full text-xs font-bold text-white">
+                                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-to-r from-emerald-500 to-pink-500 px-4 py-1 rounded-full text-xs font-bold text-white">
                                     PALING JIMAT
                                 </div>
                             )}
@@ -141,8 +141,8 @@ const SubscriptionPage: React.FC = () => {
                                 onClick={() => handleSubscribe(plan)}
                                 disabled={isProcessing && selectedPlan?.id === plan.id}
                                 className={`w-full py-3 rounded-xl font-medium flex items-center justify-center gap-2 transition-all ${isPopular
-                                        ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:shadow-lg hover:shadow-purple-500/25'
-                                        : 'bg-raudhah-teal text-white hover:bg-raudhah-teal hover:shadow-lg hover:shadow-cyan-500/25'
+                                        ? 'bg-gradient-to-r from-emerald-500 to-pink-500 text-white hover:shadow-lg hover:shadow-emerald-500/25'
+                                        : 'bg-raudhah-teal text-white hover:bg-raudhah-teal hover:shadow-lg hover:shadow-teal-500/25'
                                     } disabled:opacity-50`}
                             >
                                 {isProcessing && selectedPlan?.id === plan.id ? (

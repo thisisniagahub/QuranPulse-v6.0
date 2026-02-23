@@ -152,7 +152,7 @@ const TawafTracker: React.FC = () => {
                     {/* Moving Dot (Pilgrim Position) */}
                     {isTracking && currentRound < 7 && (
                         <motion.div
-                            className="absolute w-4 h-4 bg-raudhah-teal rounded-full shadow-lg shadow-cyan-400/50"
+                            className="absolute w-4 h-4 bg-raudhah-teal rounded-full shadow-lg shadow-teal-400/50"
                             style={{
                                 top: '50%',
                                 left: '50%',
@@ -227,11 +227,11 @@ const TawafTracker: React.FC = () => {
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="p-4 bg-gradient-to-br from-purple-500/20 to-pink-500/10 border border-purple-500/50 rounded-xl"
+                    className="p-4 bg-gradient-to-br from-emerald-500/20 to-pink-500/10 border border-emerald-500/50 rounded-xl"
                 >
                     <div className="flex items-center gap-2 mb-2">
-                        <ArrowRight className="text-purple-400" size={18} />
-                        <p className="text-purple-400 font-semibold">Hampir di Rukun Yamani!</p>
+                        <ArrowRight className="text-emerald-400" size={18} />
+                        <p className="text-emerald-400 font-semibold">Hampir di Rukun Yamani!</p>
                     </div>
                     <p className="text-lg text-white font-arabic text-right">
                         {DOA_RABBANA_ATINA.arabic}

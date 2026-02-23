@@ -130,7 +130,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                 className="relative rounded-3xl overflow-hidden"
                             >
                                 {/* Background */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900/30 to-slate-900" />
+                                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-emerald-900/30 to-slate-900" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent" />
 
                                 {/* Decorative Stars */}
@@ -186,7 +186,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         transition={{ delay: 0.5 }}
-                                        className="text-lg text-purple-300 mb-6"
+                                        className="text-lg text-emerald-300 mb-6"
                                     >
                                         Anda telah menamatkan Iqra' Level {iqraLevel}
                                     </motion.p>
@@ -225,11 +225,11 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                         initial={{ opacity: 0, x: -20 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.9 }}
-                                        className="bg-gradient-to-r from-raudhah-teal/20 to-purple-500/20 
+                                        className="bg-gradient-to-r from-raudhah-teal/20 to-emerald-500/20 
                              border border-raudhah-teal/20 rounded-xl p-4 mb-6"
                                     >
                                         <div className="flex items-center gap-3">
-                                            <div className="w-12 h-12 bg-gradient-to-br from-raudhah-teal to-purple-500 
+                                            <div className="w-12 h-12 bg-gradient-to-br from-raudhah-teal to-emerald-500 
                                      rounded-xl flex items-center justify-center">
                                                 <BookOpen className="w-6 h-6 text-white" />
                                             </div>
@@ -248,9 +248,9 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 1.1 }}
                                         onClick={() => setShowCeremony(false)}
-                                        className="w-full py-4 bg-gradient-to-r from-raudhah-teal to-purple-500 
+                                        className="w-full py-4 bg-gradient-to-r from-raudhah-teal to-emerald-500 
                              rounded-xl text-white font-semibold text-lg
-                             hover:shadow-lg hover:shadow-cyan-500/25 transition-all
+                             hover:shadow-lg hover:shadow-teal-500/25 transition-all
                              flex items-center justify-center gap-2"
                                     >
                                         Mulakan Perjalanan Al-Quran
@@ -302,7 +302,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
 
                                     {/* Reading Plan */}
                                     <div className="mb-6">
-                                        <h3 className="text-sm font-semibold text-purple-400 mb-3 flex items-center gap-2">
+                                        <h3 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center gap-2">
                                             <Calendar className="w-4 h-4" />
                                             Pilih Pelan Bacaan
                                         </h3>
@@ -312,7 +312,7 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                                     key={plan}
                                                     onClick={() => setSelectedPlan(plan)}
                                                     className={`w-full p-4 rounded-xl text-left transition-all ${selectedPlan === plan
-                                                            ? 'bg-gradient-to-r from-purple-500/20 to-cyan-500/20 border border-purple-500/50'
+                                                            ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/50'
                                                             : 'bg-slate-800 hover:bg-slate-700 border border-transparent'
                                                         }`}
                                                 >
@@ -342,9 +342,9 @@ const IqraGraduation: React.FC<IqraGraduationProps> = ({
                                         </button>
                                         <button
                                             onClick={onStartQuran}
-                                            className="flex-1 py-3 bg-gradient-to-r from-raudhah-teal to-purple-500 
+                                            className="flex-1 py-3 bg-gradient-to-r from-raudhah-teal to-emerald-500 
                                rounded-xl text-white font-semibold
-                               hover:shadow-lg hover:shadow-cyan-500/25 transition-all
+                               hover:shadow-lg hover:shadow-teal-500/25 transition-all
                                flex items-center justify-center gap-2"
                                         >
                                             <Play className="w-4 h-4" />

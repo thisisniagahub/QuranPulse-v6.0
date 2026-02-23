@@ -76,7 +76,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                     </div>
                     <h2 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Lesson Complete!</h2>
                     <p className="text-slate-500 mb-8">You've mastered {activeLesson.words.length} new words.</p>
-                    <button onClick={closeLesson} className="w-full py-3 bg-raudhah-teal hover:bg-raudhah-teal text-white rounded-xl font-bold transition-all shadow-lg shadow-cyan-500/30">
+                    <button onClick={closeLesson} className="w-full py-3 bg-raudhah-teal hover:bg-raudhah-teal text-white rounded-xl font-bold transition-all shadow-lg shadow-teal-500/30">
                         Continue
                     </button>
                 </div>
@@ -113,7 +113,7 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
                             disabled={!showTranslation}
                             className={`flex-1 py-3 rounded-xl font-bold transition-all ${
                                 showTranslation 
-                                ? 'bg-raudhah-teal text-white hover:bg-raudhah-teal shadow-lg shadow-cyan-500/30' 
+                                ? 'bg-raudhah-teal text-white hover:bg-raudhah-teal shadow-lg shadow-teal-500/30' 
                                 : 'bg-slate-700/50 text-slate-500 cursor-not-allowed'
                             }`}
                         >

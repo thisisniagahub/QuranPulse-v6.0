@@ -86,7 +86,7 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
           isRecording 
             ? 'bg-red-500 shadow-[0_0_30px_rgba(239,68,68,0.5)]' 
             : isProcessing
-              ? 'bg-cyan-900 cursor-wait'
+              ? 'bg-teal-900 cursor-wait'
               : 'bg-raudhah-teal hover:bg-raudhah-teal text-black shadow-[0_0_20px_rgba(6,182,212,0.4)]'
         }`}
       >

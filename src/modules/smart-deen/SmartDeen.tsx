@@ -165,11 +165,11 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                     className={`flex flex-col gap-2 relative z-10 ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                                 >
                                     <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 shadow-lg border border-white/10 ${msg.role === 'user' ? 'bg-cyan-900/50 text-cyan-200' : 'bg-[#0f1e38] text-slate-300'}`}>
+                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 shadow-lg border border-white/10 ${msg.role === 'user' ? 'bg-teal-900/50 text-teal-200' : 'bg-[#0f1e38] text-slate-300'}`}>
                                             {msg.role === 'user' ? <i className="fa-solid fa-user"></i> : (msg.role === 'assistant' && selectedPersona === 'AZHAR' ? '👳🏻‍♂️' : selectedPersona === 'AISHAH' ? '🧕🏻' : '🧢')}
                                         </div>
                                         <div className={`rounded-2xl p-4 text-sm leading-relaxed shadow-md backdrop-blur-md border ${msg.role === 'user'
-                                            ? 'bg-gradient-to-br from-cyan-600/90 to-blue-700/90 text-white rounded-br-sm border-raudhah-teal/20'
+                                            ? 'bg-gradient-to-br from-teal-600/90 to-blue-700/90 text-white rounded-br-sm border-raudhah-teal/20'
                                             : 'bg-[#1e293b]/90 text-slate-200 rounded-bl-sm border-white/10'
                                             }`}>
                                             {/* Render Clean Text */}
@@ -239,7 +239,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                     ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
                                     : isListening
                                         ? 'bg-red-500/80 animate-pulse text-white shadow-[0_0_15px_rgba(239,68,68,0.5)]'
-                                        : 'hover:bg-cyan-900/30 text-raudhah-teal hover:text-raudhah-teal'
+                                        : 'hover:bg-teal-900/30 text-raudhah-teal hover:text-raudhah-teal'
                                     }`}
                             >
                                 <i className={`fa-solid ${isListening ? 'fa-microphone-slash' : 'fa-microphone'}`}></i>

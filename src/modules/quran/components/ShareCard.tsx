@@ -24,7 +24,7 @@ const ShareCard: React.FC<ShareCardProps> = ({ verse, surahName, onClose }) => {
       decoration: (
         <div className="absolute inset-0 overflow-hidden rounded-3xl pointer-events-none">
           <div className="absolute top-0 right-0 w-64 h-64 bg-raudhah-teal/10 blur-[80px] rounded-full"></div>
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-purple-500/10 blur-[60px] rounded-full"></div>
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-emerald-500/10 blur-[60px] rounded-full"></div>
           <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
         </div>
       )
@@ -173,7 +173,7 @@ const ShareCard: React.FC<ShareCardProps> = ({ verse, surahName, onClose }) => {
             </button>
             <button
               onClick={handleShare}
-              className="flex-1 py-3.5 rounded-xl bg-raudhah-teal text-black font-bold text-sm flex items-center justify-center gap-2 hover:bg-raudhah-teal transition-all shadow-lg shadow-cyan-500/20"
+              className="flex-1 py-3.5 rounded-xl bg-raudhah-teal text-black font-bold text-sm flex items-center justify-center gap-2 hover:bg-raudhah-teal transition-all shadow-lg shadow-teal-500/20"
             >
               <i className="fa-solid fa-share-nodes"></i>
               Kongsi

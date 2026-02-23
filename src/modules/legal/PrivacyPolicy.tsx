@@ -6,11 +6,11 @@ const PrivacyPolicy: React.FC = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="min-h-screen bg-[#050505] text-slate-300 font-sans selection:bg-raudhah-teal/30 selection:text-cyan-200 overflow-x-hidden">
+        <div className="min-h-screen bg-[#050505] text-slate-300 font-sans selection:bg-raudhah-teal/30 selection:text-teal-200 overflow-x-hidden">
             {/* Ambient Background */}
             <div className="fixed inset-0 z-0">
                 <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-raudhah-teal/10 blur-[120px] rounded-full" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/10 blur-[120px] rounded-full" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-500/10 blur-[120px] rounded-full" />
                 <div className="absolute inset-0 bg-maze opacity-[0.03]" />
             </div>
 
@@ -47,7 +47,7 @@ const PrivacyPolicy: React.FC = () => {
                     {/* Hero Section */}
                     <div className="text-center space-y-4">
                         <h1 className="text-4xl md:text-6xl font-black text-white tracking-tighter">
-                            Polisi <span className="text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-purple-400">Privasi</span>
+                            Polisi <span className="text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-emerald-400">Privasi</span>
                         </h1>
                         <p className="text-slate-500 font-mono text-sm uppercase tracking-[0.2em]">
                             Last Updated: 21 Disember 2025
@@ -79,10 +79,10 @@ const PrivacyPolicy: React.FC = () => {
                             <div className="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-md">
                                 <h3 className="text-xl font-bold text-white mb-4">Tujuan Penggunaan</h3>
                                 <ul className="space-y-3 text-sm text-slate-400">
-                                    <li className="flex gap-3"><i className="fa-solid fa-check text-purple-500 mt-1"></i> Penyatuan Ekosistem Web & Bot</li>
-                                    <li className="flex gap-3"><i className="fa-solid fa-check text-purple-500 mt-1"></i> Personalisasi Bimbingan Agama</li>
-                                    <li className="flex gap-3"><i className="fa-solid fa-check text-purple-500 mt-1"></i> Notifikasi Waktu Solat & Streak</li>
-                                    <li className="flex gap-3"><i className="fa-solid fa-check text-purple-500 mt-1"></i> Keselamatan Akaun (OTP)</li>
+                                    <li className="flex gap-3"><i className="fa-solid fa-check text-emerald-500 mt-1"></i> Penyatuan Ekosistem Web & Bot</li>
+                                    <li className="flex gap-3"><i className="fa-solid fa-check text-emerald-500 mt-1"></i> Personalisasi Bimbingan Agama</li>
+                                    <li className="flex gap-3"><i className="fa-solid fa-check text-emerald-500 mt-1"></i> Notifikasi Waktu Solat & Streak</li>
+                                    <li className="flex gap-3"><i className="fa-solid fa-check text-emerald-500 mt-1"></i> Keselamatan Akaun (OTP)</li>
                                 </ul>
                             </div>
                         </section>
@@ -101,7 +101,7 @@ const PrivacyPolicy: React.FC = () => {
                                     <div className="text-[10px] uppercase tracking-wider opacity-50 text-white">Cloud Database</div>
                                 </div>
                                 <div className="p-4 bg-black/40 border border-white/5 rounded-2xl text-center">
-                                    <div className="text-purple-400 font-bold mb-1">Gemini / Groq</div>
+                                    <div className="text-emerald-400 font-bold mb-1">Gemini / Groq</div>
                                     <div className="text-[10px] uppercase tracking-wider opacity-50 text-white">AI Engine</div>
                                 </div>
                                 <div className="p-4 bg-black/40 border border-white/5 rounded-2xl text-center">
@@ -111,7 +111,7 @@ const PrivacyPolicy: React.FC = () => {
                             </div>
                         </section>
 
-                        <section className="bg-gradient-to-br from-raudhah-teal/10 to-purple-500/10 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-md">
+                        <section className="bg-gradient-to-br from-raudhah-teal/10 to-emerald-500/10 border border-white/10 rounded-3xl p-8 md:p-10 backdrop-blur-md">
                             <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                                 <span className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white text-sm">03</span>
                                 Adab & Amanah Data

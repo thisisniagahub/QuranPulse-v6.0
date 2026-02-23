@@ -15,7 +15,7 @@ const WorkflowEditor: React.FC = () => {
   const [nodes, setNodes] = useState<Node[]>([
     { id: '1', type: 'TRIGGER', label: 'Every Friday (12:00 PM)', icon: 'fa-clock', color: 'bg-amber-500', x: 50, y: 50 },
     { id: '2', type: 'ACTION', label: 'Scrape JAKIM Khutbah', icon: 'fa-globe', color: 'bg-blue-500', x: 50, y: 180 },
-    { id: '3', type: 'ACTION', label: 'Summarize with AI', icon: 'fa-wand-magic-sparkles', color: 'bg-purple-500', x: 50, y: 310 },
+    { id: '3', type: 'ACTION', label: 'Summarize with AI', icon: 'fa-wand-magic-sparkles', color: 'bg-emerald-500', x: 50, y: 310 },
     { id: '4', type: 'ACTION', label: 'Blast WhatsApp', icon: 'fa-whatsapp', color: 'bg-emerald-500', x: 50, y: 440 },
   ]);
 
@@ -40,8 +40,8 @@ const WorkflowEditor: React.FC = () => {
               </div>
           </div>
 
-          <div className="p-3 bg-purple-500/10 border border-purple-500/30 rounded-xl cursor-grab active:cursor-grabbing hover:bg-purple-500/20 transition-colors">
-              <div className="flex items-center gap-3 text-purple-400">
+          <div className="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl cursor-grab active:cursor-grabbing hover:bg-emerald-500/20 transition-colors">
+              <div className="flex items-center gap-3 text-emerald-400">
                   <i className="fa-solid fa-robot"></i>
                   <span className="text-xs font-bold uppercase">AI Agent</span>
               </div>

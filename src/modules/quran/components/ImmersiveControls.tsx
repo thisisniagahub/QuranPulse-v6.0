@@ -186,7 +186,7 @@ const SidebarItem = ({ icon, label, active, onClick }: { icon: string, label: st
         whileHover={{ scale: 1.1, x: -5 }}
         whileTap={{ scale: 0.95 }}
         onClick={onClick}
-        className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-1 transition-all ${active ? 'bg-raudhah-teal text-black shadow-lg shadow-cyan-500/20' : 'text-slate-400 hover:bg-white/10 hover:text-white'
+        className={`w-12 h-12 rounded-xl flex flex-col items-center justify-center gap-1 transition-all ${active ? 'bg-raudhah-teal text-black shadow-lg shadow-teal-500/20' : 'text-slate-400 hover:bg-white/10 hover:text-white'
             }`}
     >
         <i className={`fa-solid ${icon} text-lg`}></i>

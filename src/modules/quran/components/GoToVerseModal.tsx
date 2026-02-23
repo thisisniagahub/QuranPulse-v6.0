@@ -61,7 +61,7 @@ const GoToVerseModal: React.FC<GoToVerseModalProps> = ({
           >
             <div className="bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-2xl mx-4 overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-raudhah-teal/20 to-purple-500/20 p-4 border-b border-slate-700">
+              <div className="bg-gradient-to-r from-raudhah-teal/20 to-emerald-500/20 p-4 border-b border-slate-700">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
                   <span>🔍</span>
                   Pergi ke Ayat

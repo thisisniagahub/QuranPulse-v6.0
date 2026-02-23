@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 
 const quickActions = [
   { id: 'qibla', label: 'Qiblat', icon: 'fa-kaaba', color: 'emerald' },
-  { id: 'tasbih', label: 'Tasbih', icon: 'fa-fingerprint', color: 'cyan' },
+  { id: 'tasbih', label: 'Tasbih', icon: 'fa-fingerprint', color: 'teal' },
   { id: 'infaq', label: 'Infaq', icon: 'fa-hand-holding-heart', color: 'rose' },
   { id: 'takwim', label: 'Takwim', icon: 'fa-calendar-days', color: 'amber' },
-  { id: 'masjid', label: 'Masjid', icon: 'fa-mosque', color: 'purple' },
+  { id: 'masjid', label: 'Masjid', icon: 'fa-mosque', color: 'emerald' },
   { id: 'events', label: 'Acara', icon: 'fa-ticket', color: 'blue' }
 ];
 

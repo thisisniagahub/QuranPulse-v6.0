@@ -94,7 +94,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                         initial={{ scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ delay: 1, duration: 1, ease: "circOut" }}
-                        className="h-1.5 w-48 bg-gradient-to-r from-transparent via-cyan-500 to-transparent mx-auto mt-4 rounded-full"
+                        className="h-1.5 w-48 bg-gradient-to-r from-transparent via-teal-500 to-transparent mx-auto mt-4 rounded-full"
                     />
                 </div>
             </motion.div>

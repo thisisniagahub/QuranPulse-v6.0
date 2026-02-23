@@ -76,7 +76,7 @@ const TasbihWidget: React.FC<TasbihWidgetProps> = ({ onClose }) => {
                         transition-colors duration-500
                         ${isComplete
                                 ? 'bg-emerald-500/10 border-emerald-500 shadow-[0_0_30px_rgba(16,185,129,0.3)]'
-                                : 'bg-cyan-900/10 border-raudhah-teal shadow-[0_0_30px_rgba(6,182,212,0.2)]'
+                                : 'bg-teal-900/10 border-raudhah-teal shadow-[0_0_30px_rgba(6,182,212,0.2)]'
                             }`}
                     >
                         {/* Progress Ring */}

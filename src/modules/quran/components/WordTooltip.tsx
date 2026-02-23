@@ -39,7 +39,7 @@ const WordTooltip: React.FC<WordTooltipProps> = ({ word, isOpen, onClose, positi
             initial={{ opacity: 0, scale: 0.9, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 10 }}
-            className="fixed z-[81] w-72 bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-2xl shadow-cyan-500/10 overflow-hidden"
+            className="fixed z-[81] w-72 bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-2xl shadow-teal-500/10 overflow-hidden"
             style={{
               left: position ? Math.min(position.x - 144, window.innerWidth - 300) : '50%',
               top: position ? Math.min(position.y + 20, window.innerHeight - 350) : '50%',

@@ -73,9 +73,9 @@ const RangeRepeatModal: React.FC<RangeRepeatModalProps> = ({
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[71] w-full max-w-md mx-4"
           >
-            <div className="bg-slate-900 border border-purple-500/30 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl shadow-2xl overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-purple-500/20 to-cyan-500/20 p-4 border-b border-slate-700">
+              <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 p-4 border-b border-slate-700">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
                   <span>🔄</span>
                   Ulangan Hafazan
@@ -97,7 +97,7 @@ const RangeRepeatModal: React.FC<RangeRepeatModalProps> = ({
                     <select
                       value={startVerse}
                       onChange={(e) => handleStartVerse(parseInt(e.target.value))}
-                      className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white text-center font-bold focus:border-purple-500 focus:outline-none"
+                      className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white text-center font-bold focus:border-emerald-500 focus:outline-none"
                     >
                       {Array.from({ length: totalVerses }, (_, i) => i + 1).map(n => (
                         <option key={n} value={n}>{n}</option>
@@ -113,7 +113,7 @@ const RangeRepeatModal: React.FC<RangeRepeatModalProps> = ({
                     <select
                       value={endVerse}
                       onChange={(e) => setEndVerse(parseInt(e.target.value))}
-                      className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white text-center font-bold focus:border-purple-500 focus:outline-none"
+                      className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white text-center font-bold focus:border-emerald-500 focus:outline-none"
                     >
                       {Array.from({ length: totalVerses - startVerse + 1 }, (_, i) => startVerse + i).map(n => (
                         <option key={n} value={n}>{n}</option>
@@ -125,11 +125,11 @@ const RangeRepeatModal: React.FC<RangeRepeatModalProps> = ({
                 {/* Preview */}
                 <div className="bg-slate-800/50 rounded-xl p-3 text-center border border-slate-700">
                   <p className="text-slate-400 text-sm">
-                    Ulang ayat <span className="text-purple-400 font-bold">{currentChapter}:{startVerse}</span>
+                    Ulang ayat <span className="text-emerald-400 font-bold">{currentChapter}:{startVerse}</span>
                     {' '}hingga{' '}
-                    <span className="text-purple-400 font-bold">{currentChapter}:{endVerse}</span>
+                    <span className="text-emerald-400 font-bold">{currentChapter}:{endVerse}</span>
                   </p>
-                  <p className="text-cyan-400 font-bold mt-1">
+                  <p className="text-teal-400 font-bold mt-1">
                     {endVerse - startVerse + 1} ayat
                   </p>
                 </div>
@@ -145,7 +145,7 @@ const RangeRepeatModal: React.FC<RangeRepeatModalProps> = ({
                         key={count}
                         onClick={() => setRepeatCount(count)}
                         className={`py-2 rounded-lg font-bold text-sm transition-all ${repeatCount === count
-                            ? 'bg-purple-500 text-white'
+                            ? 'bg-emerald-500 text-white'
                             : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
                           }`}
                       >
@@ -172,7 +172,7 @@ const RangeRepeatModal: React.FC<RangeRepeatModalProps> = ({
                   </button>
                   <button
                     onClick={handleSubmit}
-                    className="flex-1 py-3 bg-gradient-to-r from-purple-500 to-cyan-500 text-white font-bold rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-2"
+                    className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-xl hover:opacity-90 transition-all flex items-center justify-center gap-2"
                   >
                     <span>🔄</span>
                     Mula Ulangan

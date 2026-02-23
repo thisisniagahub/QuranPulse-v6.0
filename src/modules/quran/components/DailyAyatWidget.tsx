@@ -193,7 +193,7 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
 
     if (isLoading) {
         return (
-            <div className={`bg-gradient-to-br from-raudhah-teal/10 to-purple-500/10 
+            <div className={`bg-gradient-to-br from-raudhah-teal/10 to-emerald-500/10 
                        rounded-2xl p-6 animate-pulse ${className}`}>
                 <div className="h-6 w-32 bg-slate-700 rounded mb-4" />
                 <div className="h-16 bg-slate-700 rounded mb-4" />
@@ -209,13 +209,13 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`bg-gradient-to-r from-raudhah-teal/20 to-purple-500/20 
+                className={`bg-gradient-to-r from-raudhah-teal/20 to-emerald-500/20 
                     rounded-xl p-4 cursor-pointer group ${className}`}
                 onClick={() => onVerseClick?.(ayat.surahNumber, ayat.verseNumber)}
             >
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 bg-gradient-to-br from-raudhah-teal to-purple-500 
+                        <div className="w-10 h-10 bg-gradient-to-br from-raudhah-teal to-emerald-500 
                            rounded-full flex items-center justify-center">
                             <BookOpen className="w-5 h-5 text-white" />
                         </div>
@@ -238,17 +238,17 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
         >
             {/* Background Gradient */}
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-            <div className="absolute inset-0 bg-gradient-to-br from-raudhah-teal/10 via-transparent to-purple-500/10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-raudhah-teal/10 via-transparent to-emerald-500/10" />
 
             {/* Decorative Elements */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-raudhah-teal/10 blur-3xl rounded-full" />
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-purple-500/10 blur-2xl rounded-full" />
+            <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-500/10 blur-2xl rounded-full" />
 
             <div className="relative p-6">
                 {/* Header */}
                 <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-raudhah-teal to-purple-500 
+                        <div className="w-8 h-8 bg-gradient-to-br from-raudhah-teal to-emerald-500 
                            rounded-lg flex items-center justify-center">
                             <BookOpen className="w-4 h-4 text-white" />
                         </div>
@@ -337,8 +337,8 @@ const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({
 
                         <button
                             onClick={handleShare}
-                            className="p-2 bg-gradient-to-r from-raudhah-teal to-purple-500 
-                         rounded-lg text-white hover:shadow-lg hover:shadow-cyan-500/25 
+                            className="p-2 bg-gradient-to-r from-raudhah-teal to-emerald-500 
+                         rounded-lg text-white hover:shadow-lg hover:shadow-teal-500/25 
                          transition-all"
                             aria-label="Kongsi ayat ini"
                             title="Kongsi ayat ini"

@@ -10,7 +10,7 @@ const IqraVoiceCoach: React.FC<IqraVoiceCoachProps> = ({ onBack }) => {
     return (
         <div className="h-full flex flex-col items-center justify-center animate-fade-in p-6 relative overflow-hidden bg-background-dark">
             {/* Background Ambience from Original */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-indigo-900/20 via-[#020617] to-black -z-10"></div>
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-teal-900/20 via-[#020617] to-black -z-10"></div>
 
             {/* Simple Back Button if needed, or rely on Parent Navigation */}
             {onBack && (

@@ -233,7 +233,7 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                     type="range" min="20" max="60" value={fontSize}
                                     onChange={(e) => setFontSize(parseInt(e.target.value))}
                                     aria-label="Saiz tulisan Arab"
-                                    className="w-full accent-cyan-500 h-2 bg-slate-800 rounded-full appearance-none cursor-pointer"
+                                    className="w-full accent-teal-500 h-2 bg-slate-800 rounded-full appearance-none cursor-pointer"
                                 />
                             </div>
 
@@ -242,7 +242,7 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                 <span className="text-xs font-bold text-slate-400 uppercase px-1 mb-2 block">Elemen Ayat</span>
                                 <div className="grid grid-cols-2 gap-3">
                                     {/* 1. Translation */}
-                                    <div className={`p-3 rounded-xl border flex flex-col justify-between h-24 transition-all cursor-pointer ${showTranslation ? 'bg-cyan-900/20 border-raudhah-teal/50' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}
+                                    <div className={`p-3 rounded-xl border flex flex-col justify-between h-24 transition-all cursor-pointer ${showTranslation ? 'bg-teal-900/20 border-raudhah-teal/50' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}
                                         onClick={() => setShowTranslation(!showTranslation)}>
                                         <div className="flex justify-between items-start">
                                             <div className="text-2xl">📝</div>
@@ -272,11 +272,11 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                     </div>
 
                                     {/* 3. Tajwid (Moved from Theme) */}
-                                    <div className={`p-3 rounded-xl border flex flex-col justify-between h-24 transition-all cursor-pointer ${showTajwid ? 'bg-purple-900/20 border-purple-500/50' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}
+                                    <div className={`p-3 rounded-xl border flex flex-col justify-between h-24 transition-all cursor-pointer ${showTajwid ? 'bg-emerald-900/20 border-emerald-500/50' : 'bg-slate-900 border-slate-800 hover:border-slate-700'}`}
                                         onClick={() => setShowTajwid?.(!showTajwid)}>
                                         <div className="flex justify-between items-start">
                                             <div className="text-2xl">🎨</div>
-                                            <div className={`w-8 h-5 rounded-full relative transition-colors ${showTajwid ? 'bg-purple-500' : 'bg-slate-700'}`}>
+                                            <div className={`w-8 h-5 rounded-full relative transition-colors ${showTajwid ? 'bg-emerald-500' : 'bg-slate-700'}`}>
                                                 <div className={`absolute top-1 w-3 h-3 bg-white rounded-full shadow transition-transform ${showTajwid ? 'translate-x-4' : 'translate-x-1'}`} />
                                             </div>
                                         </div>
@@ -370,7 +370,7 @@ const QuranDisplaySettings: React.FC<QuranDisplaySettingsProps> = ({
                                         key={reciter.id}
                                         onClick={() => setSelectedReciterId?.(reciter.id)}
                                         className={`w-full p-3 rounded-xl border flex items-center gap-3 transition-all ${selectedReciterId === reciter.id
-                                            ? 'bg-cyan-900/20 border-raudhah-teal/50'
+                                            ? 'bg-teal-900/20 border-raudhah-teal/50'
                                             : 'bg-slate-900/50 border-slate-800 hover:bg-slate-900'
                                             }`}
                                     >

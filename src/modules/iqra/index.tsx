@@ -13,8 +13,8 @@ const IqraModule = () => {
 
   const iqraBooks = [
     { id: 1, title: 'Iqra 1', subtitle: 'Pengenalan Huruf', color: 'from-emerald-500 to-teal-600', locked: false },
-    { id: 2, title: 'Iqra 2', subtitle: 'Sambungan Huruf', color: 'from-blue-500 to-cyan-600', locked: false },
-    { id: 3, title: 'Iqra 3', subtitle: 'Bacaan Mad', color: 'from-indigo-500 to-purple-600', locked: false },
+    { id: 2, title: 'Iqra 2', subtitle: 'Sambungan Huruf', color: 'from-blue-500 to-teal-600', locked: false },
+    { id: 3, title: 'Iqra 3', subtitle: 'Bacaan Mad', color: 'from-teal-500 to-emerald-600', locked: false },
     { id: 4, title: 'Iqra 4', subtitle: 'Baris & Tanwin', color: 'from-pink-500 to-rose-600', locked: false },
     { id: 5, title: 'Iqra 5', subtitle: 'Qalqalah & Waqaf', color: 'from-orange-500 to-amber-600', locked: false },
     { id: 6, title: 'Iqra 6', subtitle: 'Tajwid Lanjutan', color: 'from-red-500 to-crimson-600', locked: false },
@@ -59,7 +59,7 @@ const IqraModule = () => {
 
       {/* Hero Section */}
       <div className="relative h-64 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-cyan-900/20 to-[#050505] z-10" />
+        <div className="absolute inset-0 bg-gradient-to-b from-teal-900/20 to-[#050505] z-10" />
         <img loading="lazy"
           src="/assets/iqra/iqra-hero.png"
           alt="Iqra Learning"
@@ -117,7 +117,7 @@ const IqraModule = () => {
         {/* Tab Switcher (Floating Capsule) */}
         <div className="bg-[#031a38]/80 p-1.5 rounded-2xl border border-white/10 flex relative shadow-md backdrop-blur-sm">
           <motion.div
-            className="absolute top-1.5 bottom-1.5 bg-cyan-600 rounded-xl shadow-[0_0_15px_rgba(8,145,178,0.4)] z-0"
+            className="absolute top-1.5 bottom-1.5 bg-teal-600 rounded-xl shadow-[0_0_15px_rgba(8,145,178,0.4)] z-0"
             initial={false}
             animate={{
               left: activeTab === 'iqra' ? '6px' : '50%',
@@ -210,7 +210,7 @@ const IqraModule = () => {
                   onClick={() => setMode('GAME')}
                   className="bg-[#111] border border-white/10 p-4 rounded-xl flex items-center gap-3 hover:bg-white/5 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-full bg-purple-500/20 flex items-center justify-center text-purple-400">
+                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
                     <Gamepad2 className="w-5 h-5" />
                   </div>
                   <div className="text-left">

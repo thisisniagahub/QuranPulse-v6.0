@@ -70,7 +70,7 @@ const IqraGameEngine: React.FC = () => {
             <p className="text-raudhah-teal font-bold text-xl mb-6">+{xpGained} XP EARNED</p>
             <button
                 onClick={() => window.location.reload()}
-                className="px-8 py-3 bg-cyan-600 hover:bg-cyan-50 text-white font-bold rounded-xl transition-all hover:scale-105"
+                className="px-8 py-3 bg-teal-600 hover:bg-teal-50 text-white font-bold rounded-xl transition-all hover:scale-105"
             >
                 Teruskan Belajar
             </button>
@@ -86,7 +86,7 @@ const IqraGameEngine: React.FC = () => {
                 <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${((currentIndex + 1) / exercises.length) * 100}%` }}
-                    className="h-full bg-gradient-to-r from-raudhah-teal to-purple-500"
+                    className="h-full bg-gradient-to-r from-raudhah-teal to-emerald-500"
                 />
             </div>
 

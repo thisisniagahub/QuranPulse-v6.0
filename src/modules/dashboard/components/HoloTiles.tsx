@@ -2,10 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const tiles = [
-    { id: 'quran', label: 'Al-Quran', icon: 'fa-book-quran', color: 'cyan', path: '/quran' },
+    { id: 'quran', label: 'Al-Quran', icon: 'fa-book-quran', color: 'teal', path: '/quran' },
     { id: 'ustaz', label: 'Ustaz AI', icon: 'fa-user-astronaut', color: 'amber', path: '/smart-deen' },
     { id: 'qiblat', label: 'Qiblat', icon: 'fa-compass', color: 'emerald', path: '/ibadah' },
-    { id: 'iqra', label: 'Iqra', icon: 'fa-tablet-screen-button', color: 'purple', path: '/iqra' },
+    { id: 'iqra', label: 'Iqra', icon: 'fa-tablet-screen-button', color: 'emerald', path: '/iqra' },
 ];
 
 interface HoloTilesProps {

@@ -161,7 +161,7 @@ class ErrorBoundary extends Component<Props, State> {
             <button
               type="button"
               onClick={this.resetBoundary}
-              className="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-bold text-slate-950 bg-gradient-to-r from-raudhah-teal to-cyan-300 hover:from-cyan-300 hover:to-cyan-200 transition-all shadow-[0_0_24px_rgba(34,211,238,0.35)]"
+              className="mt-6 inline-flex w-full items-center justify-center rounded-xl px-4 py-3 text-sm font-bold text-slate-950 bg-gradient-to-r from-raudhah-teal to-teal-300 hover:from-teal-300 hover:to-teal-200 transition-all shadow-[0_0_24px_rgba(34,211,238,0.35)]"
             >
               Cuba Lagi
             </button>

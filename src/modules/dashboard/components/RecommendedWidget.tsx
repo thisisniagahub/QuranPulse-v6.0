@@ -2,8 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const recommendations = [
-  { id: 1, title: 'Surah Al-Kahf: The Cave of Wonders', image: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=2070&auto=format&fit=crop', tag: 'New', color: 'cyan' },
-  { id: 2, title: 'Practice Tajweed: Mastery of Idgham', image: 'https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=80&w=1994&auto=format&fit=crop', tag: 'Popular', color: 'purple' },
+  { id: 1, title: 'Surah Al-Kahf: The Cave of Wonders', image: 'https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=2070&auto=format&fit=crop', tag: 'New', color: 'teal' },
+  { id: 2, title: 'Practice Tajweed: Mastery of Idgham', image: 'https://images.unsplash.com/photo-1584286595398-a59f21d313f5?q=80&w=1994&auto=format&fit=crop', tag: 'Popular', color: 'emerald' },
   { id: 3, title: 'Join Live Session: Tafsir al-Qurtubi', image: 'https://images.unsplash.com/photo-1564121211835-e88c852648ab?q=80&w=2070&auto=format&fit=crop', tag: 'Live', color: 'emerald' },
 ];
 
@@ -38,7 +38,7 @@ const RecommendedWidget: React.FC = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
             <div className="absolute top-3 left-3 px-2 py-0.5 bg-black/40 backdrop-blur-md border border-white/10 rounded-lg text-[9px] font-black text-white uppercase tracking-widest">
-              <span className={`w-1.5 h-1.5 inline-block rounded-full mr-1 ${item.color === 'cyan' ? 'bg-raudhah-teal' : item.color === 'purple' ? 'bg-purple-400' : 'bg-emerald-400'}`}></span>
+              <span className={`w-1.5 h-1.5 inline-block rounded-full mr-1 ${item.color === 'teal' ? 'bg-raudhah-teal' : item.color === 'emerald' ? 'bg-emerald-400' : 'bg-emerald-400'}`}></span>
               {item.tag}
             </div>
 

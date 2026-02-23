@@ -69,8 +69,8 @@ const TadabburMode: React.FC<TadabburModeProps> = ({
 
   return (
     <div className="mx-auto w-full max-w-3xl p-6">
-      <div className="mb-6 rounded-2xl border border-purple-500/30 bg-slate-900/80 p-5 text-white">
-        <div className="mb-3 flex items-center gap-2 text-purple-300">
+      <div className="mb-6 rounded-2xl border border-emerald-500/30 bg-slate-900/80 p-5 text-white">
+        <div className="mb-3 flex items-center gap-2 text-emerald-300">
           <Brain className="h-5 w-5" />
           <p className="text-sm font-bold uppercase tracking-wider">{title}</p>
         </div>

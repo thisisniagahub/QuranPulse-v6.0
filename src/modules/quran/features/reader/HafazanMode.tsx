@@ -51,7 +51,7 @@ const HafazanMode: React.FC<HafazanModeProps> = ({ verse, fontSize, onComplete }
       {/* Header */}
       <div className="p-4 border-b border-slate-800 flex items-center justify-between">
         <div>
-          <p className="text-[10px] text-purple-400 uppercase font-bold tracking-wider">Mod Hafazan</p>
+          <p className="text-[10px] text-emerald-400 uppercase font-bold tracking-wider">Mod Hafazan</p>
           <h3 className="text-white font-bold">Surah {verse.verse_key}</h3>
         </div>
         <button
@@ -92,7 +92,7 @@ const HafazanMode: React.FC<HafazanModeProps> = ({ verse, fontSize, onComplete }
             {[0, 1, 2, 3, 4].map((level) => (
               <div
                 key={level}
-                className={`w-3 h-3 rounded-full transition-all ${revealLevel >= level ? 'bg-purple-500' : 'bg-slate-700'
+                className={`w-3 h-3 rounded-full transition-all ${revealLevel >= level ? 'bg-emerald-500' : 'bg-slate-700'
                   }`}
               />
             ))}
@@ -101,7 +101,7 @@ const HafazanMode: React.FC<HafazanModeProps> = ({ verse, fontSize, onComplete }
           {/* Stats */}
           <div className="flex items-center justify-center gap-6 mb-8 text-sm">
             <div className="text-center">
-              <p className="text-2xl font-bold text-purple-400">{visibleCount}</p>
+              <p className="text-2xl font-bold text-emerald-400">{visibleCount}</p>
               <p className="text-slate-500 text-xs">/ {totalWords} perkataan</p>
             </div>
             <div className="w-px h-8 bg-slate-700" />
@@ -117,7 +117,7 @@ const HafazanMode: React.FC<HafazanModeProps> = ({ verse, fontSize, onComplete }
               <motion.button
                 whileTap={{ scale: 0.95 }}
                 onClick={handleReveal}
-                className="px-8 py-4 rounded-2xl bg-gradient-to-r from-purple-500 to-purple-600 text-white font-bold text-lg shadow-lg shadow-purple-500/30"
+                className="px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold text-lg shadow-lg shadow-emerald-500/30"
               >
                 <span className="flex items-center gap-2">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="w-6 h-6">

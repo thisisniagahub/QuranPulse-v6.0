@@ -23,7 +23,7 @@ export const KAFA_SUBJECTS: KafaSubject[] = [
     title: 'Bahasa Arab', 
     arabicTitle: 'اللغة العربية', 
     description: 'Kosa kata dan komunikasi asas.', 
-    color: 'from-blue-500 to-cyan-600',
+    color: 'from-blue-500 to-teal-600',
     icon: 'Languages',
     locked: false 
   },
@@ -32,7 +32,7 @@ export const KAFA_SUBJECTS: KafaSubject[] = [
     title: 'Amali Solat', 
     arabicTitle: 'عملي صلاة', 
     description: 'Bacaan dan perlakuan solat sempurna.', 
-    color: 'from-indigo-500 to-purple-600',
+    color: 'from-teal-500 to-emerald-600',
     icon: 'Users', // Using Users to represent Jamaah
     locked: false 
   },

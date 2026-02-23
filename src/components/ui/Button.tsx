@@ -28,8 +28,8 @@ export const Button: React.FC<ButtonProps> = ({
         primary: "bg-raudhah-teal hover:bg-raudhah-teal text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-raudhah-teal/50",
         secondary: "bg-slate-800 hover:bg-slate-700 text-raudhah-teal border border-slate-700 hover:border-raudhah-teal/50 shadow-lg",
         ghost: "bg-transparent hover:bg-white/5 text-slate-400 hover:text-white",
-        glow: "bg-gradient-to-r from-cyan-600 to-emerald-700 text-white shadow-[0_0_25px_rgba(8,145,178,0.5)] border border-white/10 hover:shadow-[0_0_40px_rgba(8,145,178,0.7)]",
-        outline: "bg-transparent border border-raudhah-teal/20 text-raudhah-teal hover:bg-cyan-950/30 hover:border-raudhah-teal"
+        glow: "bg-gradient-to-r from-teal-600 to-emerald-700 text-white shadow-[0_0_25px_rgba(8,145,178,0.5)] border border-white/10 hover:shadow-[0_0_40px_rgba(8,145,178,0.7)]",
+        outline: "bg-transparent border border-raudhah-teal/20 text-raudhah-teal hover:bg-teal-950/30 hover:border-raudhah-teal"
     };
 
     const sizes = {

@@ -93,7 +93,7 @@ const VerseActionMenuComponent: React.FC<VerseActionMenuProps> = ({
       label: 'Masuk Mod Hafazan',
       icon: 'fa-brain',
       onClick: () => { onHafazan(verse); onClose(); },
-      color: 'text-purple-400'
+      color: 'text-emerald-400'
     }] : []),
     ...(onNotes ? [{
       id: 'notes',
@@ -124,7 +124,7 @@ const VerseActionMenuComponent: React.FC<VerseActionMenuProps> = ({
           onClick={(e) => e.stopPropagation()}
         >
           <div className="py-1">
-            <div className="px-4 py-3 border-b border-raudhah-teal/20 bg-cyan-950/30">
+            <div className="px-4 py-3 border-b border-raudhah-teal/20 bg-teal-950/30">
               <span className="text-[10px] uppercase font-bold text-raudhah-teal tracking-widest flex items-center justify-between">
                 <span>SYSTEM MENU</span>
                 <span>{verse.verse_key}</span>
@@ -134,7 +134,7 @@ const VerseActionMenuComponent: React.FC<VerseActionMenuProps> = ({
               <button
                 key={item.id}
                 onClick={item.onClick}
-                className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-raudhah-teal/10 hover:text-cyan-100 flex items-center gap-3 transition-all group border-l-2 border-transparent hover:border-raudhah-teal"
+                className="w-full text-left px-4 py-3 text-sm text-slate-300 hover:bg-raudhah-teal/10 hover:text-teal-100 flex items-center gap-3 transition-all group border-l-2 border-transparent hover:border-raudhah-teal"
               >
                 <div className={`w-8 h-8 rounded-lg bg-slate-800/50 flex items-center justify-center group-hover:bg-raudhah-teal/10 group-hover:shadow-[0_0_10px_rgba(6,182,212,0.4)] transition-all ${item.color}`}>
                   <i className={`${item.solid ? 'fa-solid' : 'fa-regular'} ${item.icon} group-hover:text-raudhah-teal transition-colors`}></i>

@@ -7,9 +7,9 @@
 export type TajwidRule = 
   | 'izhar'      // Clear pronunciation (green)
   | 'idgham'     // Merging (blue)
-  | 'iqlab'      // Conversion (purple)
+  | 'iqlab'      // Conversion (emerald)
   | 'ikhfa'      // Hiding (yellow)
-  | 'ghunnah'    // Nasal sound (cyan)
+  | 'ghunnah'    // Nasal sound (teal)
   | 'qalqalah'   // Echo (orange)
   | 'madd'       // Lengthening (pink)
   | 'normal';    // No special rule

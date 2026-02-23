@@ -23,9 +23,9 @@ const DailyQuote: React.FC<DailyQuoteProps> = ({ isDark }) => {
   };
 
   return (
-    <div className="relative p-[1px] rounded-3xl bg-gradient-to-r from-teal-500/30 via-purple-500/30 to-amber-500/30 shadow-lg">
+    <div className="relative p-[1px] rounded-3xl bg-gradient-to-r from-teal-500/30 via-emerald-500/30 to-amber-500/30 shadow-lg">
       <div className={`rounded-[23px] p-6 relative overflow-hidden text-center ${isDark ? 'bg-slate-900' : 'bg-white'}`}>
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-purple-500 to-amber-500 opacity-50"></div>
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500 via-emerald-500 to-amber-500 opacity-50"></div>
         <i className="fa-solid fa-quote-left text-3xl opacity-5 absolute top-6 left-6"></i>
 
         <div className={`font-arabic text-2xl mb-4 leading-loose drop-shadow-md ${isDark ? 'text-slate-100' : 'text-slate-800'}`} dir="rtl">

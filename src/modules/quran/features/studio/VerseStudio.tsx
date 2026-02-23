@@ -145,7 +145,7 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
                                     key={t}
                                     onClick={() => setTab(t)}
                                     className={`flex-1 py-2 text-[10px] sm:text-xs font-bold tracking-wider rounded-lg transition-all ${tab === t
-                                        ? 'bg-cyan-600 text-white shadow-lg shadow-cyan-500/20'
+                                        ? 'bg-teal-600 text-white shadow-lg shadow-teal-500/20'
                                         : 'text-slate-400 hover:text-white hover:bg-white/5'
                                         }`}
                                 >
@@ -216,7 +216,7 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
                                         messages.map((msg, i) => (
                                             <div key={i} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                                                 <div className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${msg.role === 'user'
-                                                    ? 'bg-cyan-600 text-white rounded-tr-sm'
+                                                    ? 'bg-teal-600 text-white rounded-tr-sm'
                                                     : 'bg-slate-800 text-slate-200 rounded-tl-sm border border-white/5'
                                                     }`}>
                                                     <ReactMarkdown>{msg.content}</ReactMarkdown>

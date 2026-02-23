@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const FocusStream: React.FC = () => {
     const cards = [
-        { id: 1, type: 'continue', title: 'Resume Recitation', subtitle: 'Surah Al-Mulk: 3', icon: 'fa-play', bg: 'from-cyan-900 to-blue-900', accent: 'cyan' },
+        { id: 1, type: 'continue', title: 'Resume Recitation', subtitle: 'Surah Al-Mulk: 3', icon: 'fa-play', bg: 'from-teal-900 to-blue-900', accent: 'teal' },
         { id: 2, type: 'daily', title: 'Daily Quiz', subtitle: 'Tajweed: Idgham', icon: 'fa-brain', bg: 'from-amber-900 to-orange-900', accent: 'amber' },
         { id: 3, type: 'sunnah', title: 'Friday Sunnah', subtitle: 'Read Al-Kahf', icon: 'fa-moon', bg: 'from-emerald-900 to-green-900', accent: 'emerald' },
     ];

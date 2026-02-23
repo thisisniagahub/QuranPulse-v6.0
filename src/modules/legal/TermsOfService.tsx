@@ -35,7 +35,7 @@ const TermsOfService: React.FC = () => {
                 className="max-w-4xl mx-auto px-6 py-12 space-y-12"
             >
                 {/* Introduction */}
-                <section className="prose prose-invert prose-cyan max-w-none">
+                <section className="prose prose-invert prose-teal max-w-none">
                     <p className="text-lg text-slate-300 leading-relaxed">
                         QuranPulse ("kami," "kita," atau "syarikat") komited untuk melindungi privasi anda.
                         Polisi Privasi ini menjelaskan bagaimana maklumat peribadi anda dikumpul, digunakan,
@@ -186,7 +186,7 @@ const TermsOfService: React.FC = () => {
                 {/* PDPA Malaysia */}
                 <section>
                     <h2 className="text-2xl font-bold text-white mb-6">Akta Perlindungan Data Peribadi (PDPA) Malaysia</h2>
-                    <div className="bg-gradient-to-br from-cyan-900/30 to-transparent border border-raudhah-teal/20 rounded-2xl p-6">
+                    <div className="bg-gradient-to-br from-teal-900/30 to-transparent border border-raudhah-teal/20 rounded-2xl p-6">
                         <p className="text-slate-300 leading-relaxed mb-4">
                             Sebagai syarikat yang berpangkalan di Malaysia, kami mematuhi Akta Perlindungan Data
                             Peribadi 2010 (PDPA). Anda mempunyai hak untuk:

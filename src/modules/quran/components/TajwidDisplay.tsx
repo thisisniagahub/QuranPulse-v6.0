@@ -11,7 +11,7 @@ export const TAJWID_RULES = {
   },
   idgham_bighunnah: {
     name: 'Idgham Bi Ghunnah',
-    color: '#A78BFA', // purple
+    color: '#A78BFA', // emerald
     description: 'Gabungkan huruf nun mati atau tanwin dengan dengung 2 harakat.',
     letters: ['ي', 'ن', 'م', 'و'],
   },
@@ -41,13 +41,13 @@ export const TAJWID_RULES = {
   },
   mad_asli: {
     name: 'Mad Asli',
-    color: '#38BDF8', // cyan
+    color: '#38BDF8', // teal
     description: 'Panjangkan bacaan 2 harakat.',
     markers: ['ٰ', 'ا', 'ى', 'و', 'ي'],
   },
   mad_wajib: {
     name: 'Mad Wajib Muttasil',
-    color: '#818CF8', // indigo
+    color: '#818CF8', // teal
     description: 'Panjangkan bacaan 4-5 harakat.',
   },
   ghunnah: {

@@ -186,7 +186,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                     {/* Header */}
                     <div className="p-4 border-b border-slate-800 flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-cyan-500 
+                            <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-500 
                              rounded-xl flex items-center justify-center">
                                 <Brain className="w-5 h-5 text-white" />
                             </div>
@@ -236,11 +236,11 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                 className="mb-4"
                             >
                                 <div className="flex items-start gap-3">
-                                    <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center flex-shrink-0">
-                                        <Lightbulb className="w-4 h-4 text-purple-400" />
+                                    <div className="w-8 h-8 bg-emerald-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                                        <Lightbulb className="w-4 h-4 text-emerald-400" />
                                     </div>
                                     <div>
-                                        <span className="text-xs text-purple-400 mb-1 block">{currentQuestion.theme}</span>
+                                        <span className="text-xs text-emerald-400 mb-1 block">{currentQuestion.theme}</span>
                                         <p className="text-white font-medium">{currentQuestion.question}</p>
                                     </div>
                                 </div>
@@ -255,7 +255,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                 placeholder="Tulis renungan anda di sini..."
                                 className="w-full h-32 bg-slate-800 border border-slate-700 rounded-xl p-4
                           text-white placeholder-slate-500 resize-none
-                          focus:outline-none focus:ring-2 focus:ring-purple-500/50 focus:border-purple-500"
+                          focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-500"
                             />
                             <div className="absolute bottom-3 right-3 flex items-center gap-2">
                                 <span className="text-xs text-slate-500">{userResponse.length}/500</span>
@@ -269,11 +269,11 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
-                                    className="mt-4 p-4 bg-gradient-to-r from-raudhah-teal/10 to-purple-500/10 
+                                    className="mt-4 p-4 bg-gradient-to-r from-raudhah-teal/10 to-emerald-500/10 
                             border border-raudhah-teal/20 rounded-xl"
                                 >
                                     <div className="flex items-start gap-3">
-                                        <div className="w-8 h-8 bg-gradient-to-br from-raudhah-teal to-purple-500 
+                                        <div className="w-8 h-8 bg-gradient-to-br from-raudhah-teal to-emerald-500 
                                    rounded-full flex items-center justify-center flex-shrink-0">
                                             <Sparkles className="w-4 h-4 text-white" />
                                         </div>
@@ -313,11 +313,11 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                                 setShowAllQuestions(false);
                                             }}
                                             className={`w-full text-left p-3 rounded-lg transition-colors ${i === currentQuestionIndex
-                                                ? 'bg-purple-500/20 border border-purple-500/30'
+                                                ? 'bg-emerald-500/20 border border-emerald-500/30'
                                                 : 'bg-slate-800 hover:bg-slate-700'
                                                 }`}
                                         >
-                                            <span className="text-xs text-purple-400">{q.theme}</span>
+                                            <span className="text-xs text-emerald-400">{q.theme}</span>
                                             <p className="text-sm text-slate-300">{q.question}</p>
                                         </button>
                                     ))}
@@ -333,7 +333,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                 <button
                                     onClick={handleSubmitReflection}
                                     disabled={!userResponse.trim() || isGeneratingAI}
-                                    className="flex-1 py-3 bg-gradient-to-r from-purple-500 to-cyan-500 
+                                    className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 
                             rounded-xl text-white font-medium
                             disabled:opacity-50 disabled:cursor-not-allowed
                             flex items-center justify-center gap-2"
@@ -364,7 +364,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                 {currentQuestionIndex < questions.length - 1 && (
                                     <button
                                         onClick={handleNextQuestion}
-                                        className="flex-1 py-3 bg-gradient-to-r from-purple-500 to-cyan-500 
+                                        className="flex-1 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 
                               rounded-xl text-white font-medium"
                                     >
                                         Soalan Seterusnya

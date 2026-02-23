@@ -39,7 +39,7 @@ export const useGreeting = (userName: string = "Hamba Allah") => {
     switch (greetingData.timeOfDay) {
       case 'MORNING': return 'bg-gradient-to-br from-space-dark via-teal-950 to-space-light text-white';
       case 'DAY': return 'bg-gradient-to-br from-space-dark via-slate-900 to-space-light text-white';
-      case 'NIGHT': return 'bg-gradient-to-br from-space-dark via-indigo-950 to-black text-white';
+      case 'NIGHT': return 'bg-gradient-to-br from-space-dark via-teal-950 to-black text-white';
     }
   };
 

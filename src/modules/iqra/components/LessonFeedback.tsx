@@ -97,7 +97,7 @@ const LessonFeedback: React.FC<LessonFeedbackProps> = ({ isOpen, onClose, lesson
                 <button
                   type="submit"
                   disabled={rating === 0}
-                  className="w-full py-3 bg-cyan-600 hover:bg-raudhah-teal disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-raudhah-teal focus:ring-offset-black"
+                  className="w-full py-3 bg-teal-600 hover:bg-raudhah-teal disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold rounded-xl flex items-center justify-center gap-2 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-raudhah-teal focus:ring-offset-black"
                 >
                   <Send className="w-4 h-4" />
                   Hantar Maklum Balas

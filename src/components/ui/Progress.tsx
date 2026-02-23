@@ -16,7 +16,7 @@ export const Progress = React.forwardRef<HTMLDivElement, ProgressProps>(
         const variants = {
             default: "bg-raudhah-teal",
             neon: "bg-raudhah-teal shadow-[0_0_15px_rgba(27,107,90,0.3)]",
-            gradient: "bg-gradient-to-r from-raudhah-teal via-blue-500 to-purple-500",
+            gradient: "bg-gradient-to-r from-raudhah-teal via-blue-500 to-emerald-500",
         };
 
         const sizes = {

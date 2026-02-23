@@ -58,13 +58,13 @@ export const InfaqModal: React.FC<InfaqModalProps> = ({ isOpen, onClose }) => {
                         <div className="flex p-2 gap-2 bg-black/20">
                             <button
                                 onClick={() => setActiveTab('infaq')}
-                                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${activeTab === 'infaq' ? 'bg-cyan-600/20 text-raudhah-teal ring-1 ring-raudhah-teal/50' : 'text-slate-500 hover:text-slate-300'}`}
+                                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${activeTab === 'infaq' ? 'bg-teal-600/20 text-raudhah-teal ring-1 ring-raudhah-teal/50' : 'text-slate-500 hover:text-slate-300'}`}
                             >
                                 <Heart size={16} /> Infaq & Sedekah
                             </button>
                             <button
                                 onClick={() => setActiveTab('collab')}
-                                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${activeTab === 'collab' ? 'bg-purple-600/20 text-purple-400 ring-1 ring-purple-500/50' : 'text-slate-500 hover:text-slate-300'}`}
+                                className={`flex-1 py-3 rounded-xl text-sm font-bold flex items-center justify-center gap-2 transition-all ${activeTab === 'collab' ? 'bg-emerald-600/20 text-emerald-400 ring-1 ring-emerald-500/50' : 'text-slate-500 hover:text-slate-300'}`}
                             >
                                 <Handshake size={16} /> Collaboration
                             </button>
@@ -98,16 +98,16 @@ export const InfaqModal: React.FC<InfaqModalProps> = ({ isOpen, onClose }) => {
                                         <div className="mt-4 text-xs text-slate-500">Holder: QuranPulse Tech Solutions</div>
                                     </div>
 
-                                    <div className="grid grid-cols-3 gap-2 mt-4 text-xs text-cyan-200/50">
-                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-raudhah-teal/10">Server Costs</div>
-                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-raudhah-teal/10">AI Tokens</div>
-                                        <div className="bg-cyan-900/10 p-2 rounded-lg border border-raudhah-teal/10">R&D</div>
+                                    <div className="grid grid-cols-3 gap-2 mt-4 text-xs text-teal-200/50">
+                                        <div className="bg-teal-900/10 p-2 rounded-lg border border-raudhah-teal/10">Server Costs</div>
+                                        <div className="bg-teal-900/10 p-2 rounded-lg border border-raudhah-teal/10">AI Tokens</div>
+                                        <div className="bg-teal-900/10 p-2 rounded-lg border border-raudhah-teal/10">R&D</div>
                                     </div>
                                 </div>
                             ) : (
                                 <div className="space-y-4">
                                     <div className="text-center mb-6">
-                                        <div className="w-16 h-16 mx-auto bg-purple-500/10 rounded-full flex items-center justify-center text-purple-400 mb-4">
+                                        <div className="w-16 h-16 mx-auto bg-emerald-500/10 rounded-full flex items-center justify-center text-emerald-400 mb-4">
                                             <Handshake size={32} />
                                         </div>
                                         <h4 className="text-xl font-bold text-white">Let's Build Together</h4>
@@ -119,17 +119,17 @@ export const InfaqModal: React.FC<InfaqModalProps> = ({ isOpen, onClose }) => {
                                     <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                                         <div>
                                             <label className="block text-xs font-bold text-slate-400 uppercase mb-1">Name / Organization</label>
-                                            <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors" placeholder="e.g. Kedai Buku Ali" />
+                                            <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="e.g. Kedai Buku Ali" />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold text-slate-400 uppercase mb-1">Email</label>
-                                            <input type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors" placeholder="hello@example.com" />
+                                            <input type="email" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors" placeholder="hello@example.com" />
                                         </div>
                                         <div>
                                             <label className="block text-xs font-bold text-slate-400 uppercase mb-1">Message</label>
-                                            <textarea className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors h-24 resize-none" placeholder="We have an API that..." />
+                                            <textarea className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-emerald-500 transition-colors h-24 resize-none" placeholder="We have an API that..." />
                                         </div>
-                                        <button className="w-full py-3 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-xl font-bold text-white shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 transition-all active:scale-95 flex items-center justify-center gap-2">
+                                        <button className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl font-bold text-white shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/40 transition-all active:scale-95 flex items-center justify-center gap-2">
                                             <Send size={16} /> Send Proposal
                                         </button>
                                     </form>

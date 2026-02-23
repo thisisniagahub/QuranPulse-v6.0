@@ -54,7 +54,7 @@ export const FeaturesShowcase = () => {
       icon: 'fa-solid fa-robot',
       title: 'Smart Deen AI',
       description: 'Ask any Islamic question and get instant, authentic answers with Quran and Hadith references.',
-      gradient: 'bg-gradient-to-br from-purple-500 to-purple-700',
+      gradient: 'bg-gradient-to-br from-emerald-500 to-emerald-700',
     },
     {
       icon: 'fa-solid fa-book-quran',

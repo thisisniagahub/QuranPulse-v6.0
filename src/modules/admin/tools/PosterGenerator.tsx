@@ -8,7 +8,7 @@ const THEMES = [
   { id: 'neon', name: 'Raudhah', bg: 'bg-gradient-to-br from-raudhah-ivory via-raudhah-cream to-raudhah-ivory', text: 'text-raudhah-teal', accent: 'border-raudhah-teal/30', font: 'font-sans' },
   { id: 'islamic', name: 'Royal Gold', bg: 'bg-[#0f172a]', text: 'text-amber-200', accent: 'border-amber-500/50', font: 'font-serif' },
   { id: 'minimal', name: 'Clean White', bg: 'bg-white', text: 'text-slate-900', accent: 'border-black', font: 'font-mono' },
-  { id: 'sunset', name: 'Maghrib Vibe', bg: 'bg-gradient-to-tr from-orange-900 to-purple-900', text: 'text-white', accent: 'border-white/20', font: 'font-sans' },
+  { id: 'sunset', name: 'Maghrib Vibe', bg: 'bg-gradient-to-tr from-orange-900 to-emerald-900', text: 'text-white', accent: 'border-white/20', font: 'font-sans' },
 ];
 
 const PosterGenerator: React.FC = () => {
@@ -80,7 +80,7 @@ const PosterGenerator: React.FC = () => {
         {/* Generator Panel */}
         <div className="bg-slate-900/40 backdrop-blur-xl border border-white/5 p-6 rounded-2xl shadow-xl">
             <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2 uppercase tracking-widest">
-                <Sparkles className="w-4 h-4 text-purple-400" /> 
+                <Sparkles className="w-4 h-4 text-emerald-400" /> 
                 AI Content Studio
             </h3>
             
@@ -92,13 +92,13 @@ const PosterGenerator: React.FC = () => {
                             value={topic} 
                             onChange={(e) => setTopic(e.target.value)}
                             placeholder="e.g. Sabar, Rezeki, Ujian..."
-                            className="flex-1 bg-black/30 border border-white/10 rounded-xl p-3 text-sm text-white focus:border-purple-500 outline-none placeholder:text-slate-600"
+                            className="flex-1 bg-black/30 border border-white/10 rounded-xl p-3 text-sm text-white focus:border-emerald-500 outline-none placeholder:text-slate-600"
                             onKeyDown={(e) => e.key === 'Enter' && handleAiGenerate()}
                         />
                         <button 
                             onClick={handleAiGenerate}
                             disabled={isGenerating || !topic}
-                            className="px-4 bg-purple-600 hover:bg-purple-500 text-white rounded-xl flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(147,51,234,0.3)]"
+                            className="px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(147,51,234,0.3)]"
                         >
                             {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Wand2 className="w-5 h-5" />}
                         </button>

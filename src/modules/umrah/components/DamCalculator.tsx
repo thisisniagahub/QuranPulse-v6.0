@@ -174,7 +174,7 @@ const DamCalculator: React.FC = () => {
                 Kira Semula
               </button>
               <button
-                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-raudhah-teal to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
+                className="flex-1 py-3 rounded-lg bg-gradient-to-r from-raudhah-teal to-blue-500 text-black font-semibold hover:shadow-lg hover:shadow-teal-500/30 transition-all"
               >
                 Tanya Ustaz AI
               </button>

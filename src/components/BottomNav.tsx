@@ -59,7 +59,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
             path: "/ibadah",
             icon: "solar:compass-bold-duotone",
             label: "Kiblat",
-            color: "from-amber-400 to-cyan-500",
+            color: "from-amber-400 to-teal-500",
         },
         {
             id: NavView.IQRA,
@@ -101,7 +101,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
                                     relative rounded-full flex items-center justify-center transition-all duration-300 border
                                     ${isCenter ? "w-16 h-16 -mt-8" : "w-11 h-11"} 
                                     ${isActive && !isCenter
-                                        ? `bg-gradient-to-br ${item.color} border-white/20 shadow-lg shadow-cyan-500/20 scale-110`
+                                        ? `bg-gradient-to-br ${item.color} border-white/20 shadow-lg shadow-teal-500/20 scale-110`
                                         : isActive && isCenter
                                             ? "bg-transparent border-transparent scale-110"
                                             : "bg-transparent border-transparent text-slate-500 group-hover:bg-white/5 group-hover:text-slate-300"

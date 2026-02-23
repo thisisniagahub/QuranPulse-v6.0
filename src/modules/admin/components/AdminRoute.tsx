@@ -76,7 +76,7 @@ const AdminRoute: React.FC<AdminRouteProps> = ({ children }) => {
   if (isLoading || isAuthorized === null) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-black text-raudhah-teal font-mono gap-4">
-        <div className="w-12 h-12 border-4 border-raudhah-teal/20 border-t-cyan-500 rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-raudhah-teal/20 border-t-teal-500 rounded-full animate-spin"></div>
         <p className="animate-pulse tracking-widest text-xs">VERIFYING CLEARANCE LEVEL 5...</p>
       </div>
     );

@@ -86,7 +86,7 @@ const QuranTutorial: React.FC<QuranTutorialProps> = ({ isOpen, onClose }) => {
                 className="relative z-10 w-full max-w-sm bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-[0_0_50px_rgba(6,182,212,0.2)] overflow-hidden"
             >
                 {/* Decorative Elements */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-500 to-transparent" />
+                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-teal-500 to-transparent" />
                 <div className="absolute -top-20 -right-20 w-40 h-40 bg-raudhah-teal/10 blur-3xl rounded-full pointer-events-none" />
 
                 <div className="p-6 text-center">

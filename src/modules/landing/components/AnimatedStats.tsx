@@ -54,7 +54,7 @@ const StatItem: React.FC<StatItemProps> = ({ value, suffix, label, duration = 2 
       className="text-center group"
     >
       <div className="relative">
-        <span className="text-5xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-cyan-200 to-white">
+        <span className="text-5xl md:text-6xl lg:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-teal-200 to-white">
           {value >= 1000000 ? formatNumber(count) : count}
         </span>
         <span className="text-3xl md:text-4xl font-bold text-raudhah-teal ml-1">{suffix}</span>
@@ -110,7 +110,7 @@ export const AnimatedStats = () => {
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="mt-16 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent"
+          className="mt-16 h-px bg-gradient-to-r from-transparent via-teal-500/50 to-transparent"
         />
       </div>
     </section>

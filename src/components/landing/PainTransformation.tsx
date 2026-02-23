@@ -199,7 +199,7 @@ const PainTransformation: React.FC = () => {
                                                     { label: "Quran", color: "bg-emerald-500/20 text-emerald-400", pos: "top-0 right-0" },
                                                     { label: "Qibla", color: "bg-red-500/20 text-red-400", pos: "bottom-0 left-0" },
                                                     { label: "Hijri", color: "bg-orange-500/20 text-orange-400", pos: "bottom-0 right-0" },
-                                                    { label: "Chat", color: "bg-purple-500/20 text-purple-400", pos: "top-1/4 left-1/4" }
+                                                    { label: "Chat", color: "bg-emerald-500/20 text-emerald-400", pos: "top-1/4 left-1/4" }
                                                 ].map((app, i) => (
                                                     <motion.div
                                                         key={i}

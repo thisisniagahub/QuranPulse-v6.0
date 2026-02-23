@@ -8,8 +8,8 @@ export const USPShowcase = () => {
       title: 'AI Ustaz 24/7',
       subtitle: 'Tanya apa sahaja tentang Islam',
       description: 'Jawapan tepat dengan dalil Quran & Hadith',
-      gradient: 'from-purple-500 to-purple-700',
-      glow: 'shadow-purple-500/30',
+      gradient: 'from-emerald-500 to-emerald-700',
+      glow: 'shadow-emerald-500/30',
       badge: 'POWERED BY AI',
     },
     {
@@ -18,7 +18,7 @@ export const USPShowcase = () => {
       subtitle: 'Satu-satunya app dengan kurikulum penuh',
       description: 'Belajar mengaji dari A hingga Z',
       gradient: 'from-raudhah-teal to-emerald-700',
-      glow: 'shadow-cyan-500/30',
+      glow: 'shadow-teal-500/30',
       badge: 'EKSKLUSIF',
     },
     {

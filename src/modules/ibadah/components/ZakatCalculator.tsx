@@ -32,10 +32,10 @@ const ZakatCalculator: React.FC = () => {
     <div className="w-full max-w-md mx-auto space-y-6 animate-in fade-in slide-in-from-bottom-4 pb-24">
 
       {/* Header Card */}
-      <div className="bg-gradient-to-br from-indigo-900/50 to-slate-900 border border-indigo-500/30 rounded-3xl p-6 relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
+      <div className="bg-gradient-to-br from-teal-900/50 to-slate-900 border border-teal-500/30 rounded-3xl p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500/10 rounded-full blur-3xl -mr-10 -mt-10"></div>
         <div className="relative z-10 text-center">
-          <p className="text-xs text-indigo-300 font-bold uppercase tracking-widest mb-1">Zakat {activeTab === 'INCOME' ? 'Pendapatan' : 'Perniagaan'}</p>
+          <p className="text-xs text-teal-300 font-bold uppercase tracking-widest mb-1">Zakat {activeTab === 'INCOME' ? 'Pendapatan' : 'Perniagaan'}</p>
           <h2 className="text-4xl font-black text-white mb-1">
             <span className="text-sm align-top opacity-50 mr-1">RM</span>
             {result?.amount.toLocaleString('en-MY', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -52,7 +52,7 @@ const ZakatCalculator: React.FC = () => {
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === tab ? 'bg-indigo-500 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
+            className={`flex-1 py-2 text-xs font-bold rounded-lg transition-all ${activeTab === tab ? 'bg-teal-500 text-white shadow-lg' : 'text-slate-400 hover:text-white'}`}
           >
             {tab === 'INCOME' ? 'Pendapatan' : 'Perniagaan'}
           </button>
@@ -94,7 +94,7 @@ const ZakatCalculator: React.FC = () => {
       {result?.eligible && (
         <button
           onClick={() => alert("Membuka Payment Gateway ke Pusat Zakat...")}
-          className="w-full py-4 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-900/20 flex items-center justify-center gap-2 transition-all"
+          className="w-full py-4 bg-teal-600 hover:bg-teal-500 text-white font-bold rounded-xl shadow-lg shadow-teal-900/20 flex items-center justify-center gap-2 transition-all"
         >
           <i className="fa-solid fa-credit-card"></i>
           Bayar Zakat Sekarang
@@ -107,7 +107,7 @@ const ZakatCalculator: React.FC = () => {
 
 // Helper Input Component
 const InputGroup: React.FC<{ label: string, value: number, onChange?: (val: number) => void, readOnly?: boolean }> = ({ label, value, onChange, readOnly }) => (
-  <div className="flex justify-between items-center bg-black/20 p-3 rounded-lg border border-white/5 focus-within:border-indigo-500/50 transition-colors">
+  <div className="flex justify-between items-center bg-black/20 p-3 rounded-lg border border-white/5 focus-within:border-teal-500/50 transition-colors">
     <label className="text-xs text-slate-400">{label}</label>
     <div className="flex items-center gap-1">
       <span className="text-xs text-slate-500">RM</span>

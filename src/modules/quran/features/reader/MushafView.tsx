@@ -210,13 +210,13 @@ const MushafView: React.FC<MushafViewProps> = ({
                 </div>
 
                 {/* Side Borders with Glow */}
-                <div className="absolute left-0 top-24 bottom-24 w-px bg-gradient-to-b from-transparent via-cyan-500/50 to-transparent" />
-                <div className="absolute right-0 top-24 bottom-24 w-px bg-gradient-to-b from-transparent via-purple-500/50 to-transparent" />
-                <div className="absolute top-0 left-24 right-24 h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
-                <div className="absolute bottom-0 left-24 right-24 h-px bg-gradient-to-r from-transparent via-purple-500/50 to-transparent" />
+                <div className="absolute left-0 top-24 bottom-24 w-px bg-gradient-to-b from-transparent via-teal-500/50 to-transparent" />
+                <div className="absolute right-0 top-24 bottom-24 w-px bg-gradient-to-b from-transparent via-emerald-500/50 to-transparent" />
+                <div className="absolute top-0 left-24 right-24 h-px bg-gradient-to-r from-transparent via-teal-500/50 to-transparent" />
+                <div className="absolute bottom-0 left-24 right-24 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent" />
 
                 {/* Islamic Geometric Pattern Overlay */}
-                <div className="absolute inset-8 border border-cyan-500/10 rounded-lg bg-[image:radial-gradient(circle_at_50%_50%,transparent_98%,rgba(6,182,212,0.03)_100%)] bg-[length:20px_20px]"
+                <div className="absolute inset-8 border border-teal-500/10 rounded-lg bg-[image:radial-gradient(circle_at_50%_50%,transparent_98%,rgba(6,182,212,0.03)_100%)] bg-[length:20px_20px]"
                 />
             </div>
 
@@ -231,10 +231,10 @@ const MushafView: React.FC<MushafViewProps> = ({
                        bg-gradient-to-b from-slate-900/90 to-transparent"
                     >
                         <div className="flex items-center gap-3">
-                            <div className="w-10 h-10 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 
-                             backdrop-blur-sm border border-cyan-500/30 rounded-xl 
+                            <div className="w-10 h-10 bg-gradient-to-br from-teal-500/20 to-emerald-500/20 
+                             backdrop-blur-sm border border-teal-500/30 rounded-xl 
                              flex items-center justify-center">
-                                <BookOpen className="w-5 h-5 text-cyan-400" />
+                                <BookOpen className="w-5 h-5 text-teal-400" />
                             </div>
                             <div>
                                 <h2 className="text-lg font-semibold text-white">Digital Mushaf</h2>
@@ -252,7 +252,7 @@ const MushafView: React.FC<MushafViewProps> = ({
                                 className="p-2 bg-slate-800/50 hover:bg-slate-700/50 rounded-lg transition-colors"
                             >
                                 {isNightMode ? (
-                                    <Moon className="w-4 h-4 text-cyan-400" />
+                                    <Moon className="w-4 h-4 text-teal-400" />
                                 ) : (
                                     <Sun className="w-4 h-4 text-amber-400" />
                                 )}
@@ -292,19 +292,19 @@ const MushafView: React.FC<MushafViewProps> = ({
                         {/* Page Container with Glassmorphism */}
                         <div className={`relative w-full max-w-2xl aspect-[3/4] rounded-2xl overflow-hidden
                            ${isNightMode
-                                ? 'bg-slate-900/80 border border-cyan-500/20 shadow-[0_0_60px_rgba(6,182,212,0.1),inset_0_0_30px_rgba(6,182,212,0.05)]'
+                                ? 'bg-slate-900/80 border border-teal-500/20 shadow-[0_0_60px_rgba(6,182,212,0.1),inset_0_0_30px_rgba(6,182,212,0.05)]'
                                 : 'bg-amber-50/90 border border-amber-200 shadow-[0_0_60px_rgba(245,158,11,0.1)]'
                             } backdrop-blur-xl`}
                         >
                             {/* Page Inner Border */}
-                            <div className={`absolute inset-3 rounded-xl border ${isNightMode ? 'border-cyan-500/10' : 'border-amber-300/30'
+                            <div className={`absolute inset-3 rounded-xl border ${isNightMode ? 'border-teal-500/10' : 'border-amber-300/30'
                                 }`} />
 
                             {/* Verses Content */}
                             <div className="px-6 py-4 h-full overflow-y-auto no-scrollbar">
                                 {isLoading ? (
                                     <div className="flex items-center justify-center h-full">
-                                        <div className="animate-spin w-8 h-8 border-2 border-cyan-500 border-t-transparent rounded-full" />
+                                        <div className="animate-spin w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full" />
                                     </div>
                                 ) : (
                                     <div className="text-center leading-[3] text-right pt-4" dir="rtl">
@@ -314,17 +314,17 @@ const MushafView: React.FC<MushafViewProps> = ({
                                                 {verse.verseNumber === 1 && (
                                                     <div className="pt-6 pb-2 text-center w-full clear-both">
                                                         <div className={`inline-block px-8 py-2 rounded-full mb-4 ${isNightMode
-                                                            ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-500/30'
+                                                            ? 'bg-gradient-to-r from-teal-500/20 to-emerald-500/20 border border-teal-500/30'
                                                             : 'bg-gradient-to-r from-amber-200/50 to-amber-300/50 border border-amber-400/30'
                                                             }`}>
-                                                            <span className={`text-2xl font-arabic ${isNightMode ? 'text-cyan-300' : 'text-amber-800'
+                                                            <span className={`text-2xl font-arabic ${isNightMode ? 'text-teal-300' : 'text-amber-800'
                                                                 }`}>
                                                                 سورة {verse.surahName}
                                                             </span>
                                                         </div>
                                                         {verse.surahNumber !== 1 && verse.surahNumber !== 9 && (
                                                             <div className="text-center py-2 mb-2">
-                                                                <span className={`text-2xl font-arabic ${isNightMode ? 'text-purple-300' : 'text-amber-700'
+                                                                <span className={`text-2xl font-arabic ${isNightMode ? 'text-emerald-300' : 'text-amber-700'
                                                                     }`}>
                                                                     بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
                                                                 </span>
@@ -335,7 +335,7 @@ const MushafView: React.FC<MushafViewProps> = ({
 
                                                 <span
                                                     className={`text-2xl md:text-3xl font-arabic cursor-pointer
-                                     hover:text-cyan-400 transition-colors ${isNightMode ? 'text-white' : 'text-slate-800'
+                                     hover:text-teal-400 transition-colors ${isNightMode ? 'text-white' : 'text-slate-800'
                                                         }`}
                                                     onClick={() => onVerseClick?.(verse.surahNumber, verse.verseNumber)}
                                                 >
@@ -344,7 +344,7 @@ const MushafView: React.FC<MushafViewProps> = ({
                                                 {/* Verse Number Marker */}
                                                 <span className={`inline-flex items-center justify-center 
                                          w-8 h-8 mx-1 text-sm rounded-full ${isNightMode
-                                                        ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                                                        ? 'bg-teal-500/20 text-teal-300 border border-teal-500/30'
                                                         : 'bg-amber-500/20 text-amber-700 border border-amber-500/30'
                                                     }`}>
                                                     {verse.verseNumber}
@@ -382,12 +382,12 @@ const MushafView: React.FC<MushafViewProps> = ({
                                     onClick={prevPage}
                                     className="absolute right-4 top-1/2 -translate-y-1/2 
                             w-12 h-12 bg-slate-800/80 backdrop-blur-sm
-                            border border-cyan-500/30 rounded-full
+                            border border-teal-500/30 rounded-full
                             flex items-center justify-center
-                            hover:bg-cyan-500/20 hover:border-cyan-500/50
-                            transition-all shadow-lg shadow-cyan-500/10"
+                            hover:bg-teal-500/20 hover:border-teal-500/50
+                            transition-all shadow-lg shadow-teal-500/10"
                                 >
-                                    <ChevronRight className="w-6 h-6 text-cyan-400" />
+                                    <ChevronRight className="w-6 h-6 text-teal-400" />
                                 </motion.button>
                             )}
 
@@ -400,12 +400,12 @@ const MushafView: React.FC<MushafViewProps> = ({
                                     onClick={nextPage}
                                     className="absolute left-4 top-1/2 -translate-y-1/2 
                             w-12 h-12 bg-slate-800/80 backdrop-blur-sm
-                            border border-purple-500/30 rounded-full
+                            border border-emerald-500/30 rounded-full
                             flex items-center justify-center
-                            hover:bg-purple-500/20 hover:border-purple-500/50
-                            transition-all shadow-lg shadow-purple-500/10"
+                            hover:bg-emerald-500/20 hover:border-emerald-500/50
+                            transition-all shadow-lg shadow-emerald-500/10"
                                 >
-                                    <ChevronLeft className="w-6 h-6 text-purple-400" />
+                                    <ChevronLeft className="w-6 h-6 text-emerald-400" />
                                 </motion.button>
                             )}
                         </>
@@ -438,8 +438,8 @@ const MushafView: React.FC<MushafViewProps> = ({
                           [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4
                           [&::-webkit-slider-thumb]:rounded-full
                           [&::-webkit-slider-thumb]:bg-gradient-to-r
-                          [&::-webkit-slider-thumb]:from-cyan-500 [&::-webkit-slider-thumb]:to-purple-500
-                          [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-cyan-500/25"
+                          [&::-webkit-slider-thumb]:from-teal-500 [&::-webkit-slider-thumb]:to-emerald-500
+                          [&::-webkit-slider-thumb]:shadow-lg [&::-webkit-slider-thumb]:shadow-teal-500/25"
                             />
                             <div className="flex justify-between text-xs text-slate-500 mt-1">
                                 <span>1</span>
@@ -462,8 +462,8 @@ const MushafView: React.FC<MushafViewProps> = ({
             </AnimatePresence>
 
             {/* Glow Effects */}
-            <div className="absolute top-1/4 left-0 w-64 h-64 bg-cyan-500/5 blur-3xl rounded-full pointer-events-none" />
-            <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-purple-500/5 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute top-1/4 left-0 w-64 h-64 bg-teal-500/5 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute bottom-1/4 right-0 w-64 h-64 bg-emerald-500/5 blur-3xl rounded-full pointer-events-none" />
         </div>
     );
 };

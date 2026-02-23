@@ -25,7 +25,7 @@ interface TabItem {
 }
 
 const TABS: TabItem[] = [
-    { id: 'mutawwif', label: 'Mutawwif', icon: <Music size={20} />, color: 'cyan', description: 'Audio Doa Tawaf/Sa\'i' },
+    { id: 'mutawwif', label: 'Mutawwif', icon: <Music size={20} />, color: 'teal', description: 'Audio Doa Tawaf/Sa\'i' },
     { id: 'tawaf', label: 'Tawaf Tracker', icon: <Target size={20} />, color: 'blue', description: 'Kira pusingan automatik' },
     { id: 'dam', label: 'Kalkulator Dam', icon: <Calculator size={20} />, color: 'red', description: 'Kira denda pelanggaran' },
     { id: 'checklist', label: 'Checklist', icon: <CheckSquare size={20} />, color: 'green', description: 'Senarai persiapan' },
@@ -64,7 +64,7 @@ const UmrahDashboard: React.FC = () => {
 
     const getColorClass = (color: string) => {
         const colors: Record<string, { bg: string; border: string; text: string }> = {
-            cyan: { bg: 'bg-raudhah-teal/10', border: 'border-raudhah-teal/50', text: 'text-raudhah-teal' },
+            teal: { bg: 'bg-raudhah-teal/10', border: 'border-raudhah-teal/50', text: 'text-raudhah-teal' },
             blue: { bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400' },
             red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400' },
             green: { bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400' },
@@ -72,7 +72,7 @@ const UmrahDashboard: React.FC = () => {
             sky: { bg: 'bg-sky-500/20', border: 'border-sky-500/50', text: 'text-sky-400' },
             emerald: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400' },
         };
-        return colors[color] || colors.cyan;
+        return colors[color] || colors.teal;
     };
 
     return (

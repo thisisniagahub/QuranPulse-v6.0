@@ -60,7 +60,7 @@ const THEMES: { id: ThemeType; name: string; icon: string; preview: { bg: string
     id: 'auto',
     name: 'Auto',
     icon: '🔄',
-    preview: { bg: 'bg-gradient-to-r from-slate-900 to-white', text: 'text-white', accent: 'bg-purple-500' }
+    preview: { bg: 'bg-gradient-to-r from-slate-900 to-white', text: 'text-white', accent: 'bg-emerald-500' }
   },
 ];
 
@@ -118,9 +118,9 @@ const ThemeSettingsModal: React.FC<ThemeSettingsModalProps> = ({
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-[71] w-full max-w-md mx-4"
           >
-            <div className="bg-slate-900 border border-purple-500/30 rounded-2xl shadow-2xl overflow-hidden">
+            <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl shadow-2xl overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 p-4 border-b border-slate-700">
+              <div className="bg-gradient-to-r from-emerald-500/20 to-pink-500/20 p-4 border-b border-slate-700">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
                   <span>🎨</span>
                   Tema & Font
@@ -137,7 +137,7 @@ const ThemeSettingsModal: React.FC<ThemeSettingsModalProps> = ({
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id as any)}
                     className={`flex-1 py-3 text-sm font-bold flex items-center justify-center gap-2 transition-all border-b-2 ${activeTab === tab.id
-                      ? 'text-purple-400 border-purple-500 bg-purple-500/5'
+                      ? 'text-emerald-400 border-emerald-500 bg-emerald-500/5'
                       : 'text-slate-500 border-transparent hover:text-slate-300'
                       }`}
                   >
@@ -156,7 +156,7 @@ const ThemeSettingsModal: React.FC<ThemeSettingsModalProps> = ({
                         key={theme.id}
                         onClick={() => onThemeChange(theme.id)}
                         className={`p-4 rounded-xl border-2 transition-all ${currentTheme === theme.id
-                          ? 'border-purple-500 bg-purple-500/10'
+                          ? 'border-emerald-500 bg-emerald-500/10'
                           : 'border-slate-700 hover:border-slate-600'
                           }`}
                       >
@@ -178,14 +178,14 @@ const ThemeSettingsModal: React.FC<ThemeSettingsModalProps> = ({
 
                         <div className="flex items-center justify-center gap-2">
                           <span className="text-xl">{theme.icon}</span>
-                          <span className={`font-bold ${currentTheme === theme.id ? 'text-purple-400' : 'text-white'}`}>
+                          <span className={`font-bold ${currentTheme === theme.id ? 'text-emerald-400' : 'text-white'}`}>
                             {theme.name}
                           </span>
                         </div>
 
                         {currentTheme === theme.id && (
                           <div className="mt-2 text-center">
-                            <span className="text-xs text-purple-400">✓ Aktif</span>
+                            <span className="text-xs text-emerald-400">✓ Aktif</span>
                           </div>
                         )}
                       </button>
@@ -200,13 +200,13 @@ const ThemeSettingsModal: React.FC<ThemeSettingsModalProps> = ({
                         key={font.id}
                         onClick={() => onFontChange(font.id)}
                         className={`w-full p-4 rounded-xl border-2 transition-all text-left ${currentFont === font.id
-                          ? 'border-purple-500 bg-purple-500/10'
+                          ? 'border-emerald-500 bg-emerald-500/10'
                           : 'border-slate-700 hover:border-slate-600'
                           }`}
                       >
                         <div className="flex items-start justify-between">
                           <div>
-                            <p className={`font-bold ${currentFont === font.id ? 'text-purple-400' : 'text-white'}`}>
+                            <p className={`font-bold ${currentFont === font.id ? 'text-emerald-400' : 'text-white'}`}>
                               {font.name}
                             </p>
                             <p className="text-slate-400 text-xs mt-1">{font.description}</p>
@@ -217,7 +217,7 @@ const ThemeSettingsModal: React.FC<ThemeSettingsModalProps> = ({
                               {font.sample}
                             </p>
                             {currentFont === font.id && (
-                              <span className="text-xs text-purple-400">✓ Aktif</span>
+                              <span className="text-xs text-emerald-400">✓ Aktif</span>
                             )}
                           </div>
                         </div>
@@ -234,7 +234,7 @@ const ThemeSettingsModal: React.FC<ThemeSettingsModalProps> = ({
 
                     {/* Info */}
                     <div className="bg-slate-800/50 rounded-xl p-3 border border-slate-700">
-                      <p className="text-purple-400 font-bold text-xs mb-1">💡 Info</p>
+                      <p className="text-emerald-400 font-bold text-xs mb-1">💡 Info</p>
                       <p className="text-slate-400 text-xs">
                         Font Tajweed akan memaparkan warna berbeza mengikut hukum tajwid untuk memudahkan bacaan.
                       </p>

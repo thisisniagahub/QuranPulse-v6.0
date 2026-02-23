@@ -201,7 +201,7 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
                     )}
                     {/* Score */}
                     <div className="flex items-center gap-1 text-raudhah-teal">
-                        <Star className="w-4 h-4 fill-cyan-400" />
+                        <Star className="w-4 h-4 fill-teal-400" />
                         <span className="text-sm font-bold">{progress.score}</span>
                     </div>
                 </div>
@@ -210,7 +210,7 @@ const SurahQuest: React.FC<SurahQuestProps> = ({
             {/* Progress Bar */}
             <div className="w-full h-2 bg-slate-700 rounded-full mb-6 overflow-hidden">
                 <motion.div
-                    className="h-full bg-gradient-to-r from-raudhah-teal to-purple-500 rounded-full"
+                    className="h-full bg-gradient-to-r from-raudhah-teal to-emerald-500 rounded-full"
                     animate={{ width: `${progressPercent}%` }}
                     transition={{ duration: 0.5 }}
                 />

@@ -23,7 +23,7 @@ export const SkipToContent: React.FC<SkipToContentProps> = ({
                 fixed top-0 left-0 z-[9999]
                 bg-raudhah-teal text-slate-900
                 px-4 py-3 font-semibold
-                focus:outline-none focus:ring-2 focus:ring-cyan-300
+                focus:outline-none focus:ring-2 focus:ring-teal-300
                 transform -translate-y-full focus:translate-y-0
                 transition-transform duration-200
             "

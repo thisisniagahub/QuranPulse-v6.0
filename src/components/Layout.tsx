@@ -134,9 +134,9 @@ const Layout: React.FC = () => {
               : "bg-white/5 text-slate-300 border-white/10 hover:bg-white/10 hover:text-white hover:-translate-y-0.5"
               }`}
           >
-            <Crown className={`w-3.5 h-3.5 transition-transform duration-300 ${isSubscribeRoute ? "text-raudhah-teal" : "text-slate-400 group-hover:text-purple-300 group-hover:scale-110"}`} />
+            <Crown className={`w-3.5 h-3.5 transition-transform duration-300 ${isSubscribeRoute ? "text-raudhah-teal" : "text-slate-400 group-hover:text-emerald-300 group-hover:scale-110"}`} />
             <span>Pro</span>
-            <span className="ml-0.5 px-1.5 py-0.5 rounded-full text-[9px] leading-none font-black tracking-wide text-white bg-gradient-to-r from-raudhah-teal to-purple-500 shadow-[0_0_10px_rgba(139,92,246,0.4)]">
+            <span className="ml-0.5 px-1.5 py-0.5 rounded-full text-[9px] leading-none font-black tracking-wide text-white bg-gradient-to-r from-raudhah-teal to-emerald-500 shadow-[0_0_10px_rgba(139,92,246,0.4)]">
               PRO
             </span>
           </Link>

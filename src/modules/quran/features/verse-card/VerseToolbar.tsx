@@ -62,7 +62,7 @@ const VerseToolbarComponent: React.FC<VerseToolbarProps> = ({
       ),
       label: 'Hafazan',
       onClick: () => onHafazan(verse),
-      color: 'text-purple-400 hover:bg-purple-500/20',
+      color: 'text-emerald-400 hover:bg-emerald-500/20',
     },
     {
       id: 'bookmark',

@@ -84,7 +84,7 @@ const Halaqah: React.FC = () => {
                 aria-label={joined ? `Tinggalkan halaqah ${room.title}` : `Sertai halaqah ${room.title}`}
                 className={`w-full py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${joined
                     ? 'bg-slate-800 text-slate-300 border border-slate-700'
-                    : 'bg-raudhah-teal text-black shadow-lg shadow-cyan-500/20 hover:bg-raudhah-teal'
+                    : 'bg-raudhah-teal text-black shadow-lg shadow-teal-500/20 hover:bg-raudhah-teal'
                   }`}
               >
                 {joined ? 'Sudah Sertai' : 'Sertai Halaqah'}

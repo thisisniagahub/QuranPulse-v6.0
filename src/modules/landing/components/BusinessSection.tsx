@@ -23,7 +23,7 @@ export const BusinessSection = () => (
                 </div>
                 <div className="w-full md:w-1/3">
                     <TiltCard>
-                        <div className="aspect-[4/5] bg-gradient-to-br from-raudhah-teal/20 to-purple-500/20 rounded-2xl border border-white/10 flex items-center justify-center relative overflow-hidden">
+                        <div className="aspect-[4/5] bg-gradient-to-br from-raudhah-teal/20 to-emerald-500/20 rounded-2xl border border-white/10 flex items-center justify-center relative overflow-hidden">
                             <div className="absolute inset-0 bg-grid-white/[0.05] [mask-image:linear-gradient(0deg,white,transparent)]"></div>
                             <i className="fa-solid fa-handshake text-6xl text-white/50"></i>
                             <div className="absolute bottom-4 left-4 right-4 bg-black/60 backdrop-blur-md p-3 rounded-lg border border-white/10">

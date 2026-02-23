@@ -91,14 +91,14 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
             className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-slate-950/90 backdrop-blur-xl z-[71] flex flex-col shadow-[-20px_0_50px_rgba(0,0,0,0.5)] border-l border-raudhah-teal/20"
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-purple-900/40 to-cyan-900/40 p-5 border-b border-raudhah-teal/20 backdrop-blur-md sticky top-0 z-10">
+            <div className="bg-gradient-to-r from-emerald-900/40 to-teal-900/40 p-5 border-b border-raudhah-teal/20 backdrop-blur-md sticky top-0 z-10">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-purple-400 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
+                  <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-emerald-400 flex items-center gap-2 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
                     <span>📖</span>
                     Tafsir & Huraian
                   </h3>
-                  <p className="text-cyan-200/70 text-sm mt-1 font-mono tracking-wide">
+                  <p className="text-teal-200/70 text-sm mt-1 font-mono tracking-wide">
                     Surah {verse.verse_key.split(':')[0]} : Ayat {verse.verse_key.split(':')[1]}
                   </p>
                 </div>
@@ -143,7 +143,7 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
             <div className="flex-1 overflow-y-auto p-4">
               {isLoading ? (
                 <div className="flex flex-col items-center justify-center h-40 gap-3">
-                  <div className="w-8 h-8 border-3 border-purple-500 border-t-transparent rounded-full animate-spin" />
+                  <div className="w-8 h-8 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin" />
                   <p className="text-slate-400 text-sm">Memuatkan tafsir...</p>
                 </div>
               ) : error ? (
@@ -175,7 +175,7 @@ const TafsirPanel: React.FC<TafsirPanelProps> = ({ verse, isOpen, onClose }) => 
             <div className="p-4 border-t border-raudhah-teal/20 bg-black/40 backdrop-blur-xl">
               <button
                 onClick={onClose}
-                className="w-full py-3 bg-slate-800/50 text-slate-300 font-bold rounded-xl hover:bg-cyan-900/50 hover:text-raudhah-teal hover:border hover:border-raudhah-teal/50 transition-all"
+                className="w-full py-3 bg-slate-800/50 text-slate-300 font-bold rounded-xl hover:bg-teal-900/50 hover:text-raudhah-teal hover:border hover:border-raudhah-teal/50 transition-all"
               >
                 Tutup Panel
               </button>

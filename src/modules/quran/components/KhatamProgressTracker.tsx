@@ -155,18 +155,18 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className={`bg-gradient-to-r from-purple-500/20 to-cyan-500/20 
+                className={`bg-gradient-to-r from-emerald-500/20 to-teal-500/20 
                     rounded-xl p-4 cursor-pointer group ${className}`}
                 onClick={onSetGoal}
             >
                 <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-cyan-500 
+                        <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 
                            rounded-lg flex items-center justify-center">
                             <BookOpen className="w-4 h-4 text-white" />
                         </div>
                         <div>
-                            <p className="text-xs text-purple-400">Khatam Progress</p>
+                            <p className="text-xs text-emerald-400">Khatam Progress</p>
                             <p className="text-sm font-semibold text-white">
                                 {stats.percentage.toFixed(1)}%
                             </p>
@@ -178,7 +178,7 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
                 {/* Progress Bar */}
                 <div className="h-2 bg-slate-700 rounded-full overflow-hidden">
                     <motion.div
-                        className="h-full bg-gradient-to-r from-purple-500 to-cyan-500"
+                        className="h-full bg-gradient-to-r from-emerald-500 to-teal-500"
                         initial={{ width: 0 }}
                         animate={{ width: `${stats.percentage}%` }}
                         transition={{ duration: 1, ease: "easeOut" }}
@@ -196,7 +196,7 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
         >
             {/* Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900" />
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-cyan-500/5" />
+            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 via-transparent to-teal-500/5" />
 
             {/* Celebration Overlay */}
             <AnimatePresence>
@@ -205,7 +205,7 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="absolute inset-0 bg-gradient-to-br from-purple-500/30 to-cyan-500/30 
+                        className="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-teal-500/30 
                        flex items-center justify-center z-20"
                     >
                         <motion.div
@@ -226,7 +226,7 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
                 {/* Header */}
                 <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-cyan-500 
+                        <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 
                            rounded-xl flex items-center justify-center">
                             <BookOpen className="w-6 h-6 text-white" />
                         </div>
@@ -241,8 +241,8 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
                     {onSetGoal && (
                         <button
                             onClick={onSetGoal}
-                            className="px-3 py-1.5 bg-purple-500/20 hover:bg-purple-500/30 
-                         rounded-lg text-purple-400 text-sm transition-colors
+                            className="px-3 py-1.5 bg-emerald-500/20 hover:bg-emerald-500/30 
+                         rounded-lg text-emerald-400 text-sm transition-colors
                          flex items-center gap-1"
                         >
                             <Target className="w-4 h-4" />
@@ -276,7 +276,7 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
                                 <div
                                     key={i}
                                     className={`flex-1 border-r border-slate-700 last:border-0 ${i < stats.juzProgress
-                                            ? 'bg-gradient-to-b from-purple-500 to-cyan-500'
+                                            ? 'bg-gradient-to-b from-emerald-500 to-teal-500'
                                             : ''
                                         }`}
                                 />
@@ -285,7 +285,7 @@ const KhatamProgressTracker: React.FC<KhatamProgressTrackerProps> = ({
 
                         {/* Animated progress fill */}
                         <motion.div
-                            className="absolute inset-y-0 left-0 bg-gradient-to-r from-purple-500/50 to-cyan-500/50"
+                            className="absolute inset-y-0 left-0 bg-gradient-to-r from-emerald-500/50 to-teal-500/50"
                             initial={{ width: 0 }}
                             animate={{ width: `${stats.percentage}%` }}
                             transition={{ duration: 1.5, ease: "easeOut" }}

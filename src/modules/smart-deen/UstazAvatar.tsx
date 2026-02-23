@@ -10,15 +10,15 @@ interface UstazAvatarProps {
 
 const UstazAvatar: React.FC<UstazAvatarProps> = ({ persona, isThinking, isSpeaking }) => {
   const currentPersona = PERSONAS[persona];
-  const color = currentPersona?.color || 'cyan'; // 'cyan', 'emerald', 'pink'
+  const color = currentPersona?.color || 'teal'; // 'teal', 'emerald', 'pink'
 
   // Map color names to Tailwind classes dynamically-ish or switch
   const getColorClass = (type: 'text' | 'border' | 'bg' | 'shadow') => {
     // Simple mapping for the 3 personas
-    if (persona === 'AZHAR') return type === 'text' ? 'text-raudhah-teal' : type === 'border' ? 'border-raudhah-teal' : type === 'bg' ? 'bg-raudhah-teal/10' : 'shadow-cyan-500/20';
+    if (persona === 'AZHAR') return type === 'text' ? 'text-raudhah-teal' : type === 'border' ? 'border-raudhah-teal' : type === 'bg' ? 'bg-raudhah-teal/10' : 'shadow-teal-500/20';
     if (persona === 'AIMAN') return type === 'text' ? 'text-emerald-400' : type === 'border' ? 'border-emerald-400' : type === 'bg' ? 'bg-emerald-500/20' : 'shadow-emerald-500/20';
     if (persona === 'AISHAH') return type === 'text' ? 'text-pink-400' : type === 'border' ? 'border-pink-400' : type === 'bg' ? 'bg-pink-500/20' : 'shadow-pink-500/20';
-    return type === 'text' ? 'text-raudhah-teal' : type === 'border' ? 'border-raudhah-teal' : type === 'bg' ? 'bg-raudhah-teal/10' : 'shadow-cyan-500/20';
+    return type === 'text' ? 'text-raudhah-teal' : type === 'border' ? 'border-raudhah-teal' : type === 'bg' ? 'bg-raudhah-teal/10' : 'shadow-teal-500/20';
   };
 
   return (

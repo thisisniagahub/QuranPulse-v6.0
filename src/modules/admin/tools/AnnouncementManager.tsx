@@ -62,7 +62,7 @@ const AnnouncementManager: React.FC = () => {
                 </div>
                 <button
                     onClick={() => setIsCreating(true)}
-                    className="px-6 py-3 bg-cyan-600 hover:bg-raudhah-teal text-white font-bold rounded-xl shadow-lg shadow-cyan-600/20 transition-all flex items-center gap-2"
+                    className="px-6 py-3 bg-teal-600 hover:bg-raudhah-teal text-white font-bold rounded-xl shadow-lg shadow-teal-600/20 transition-all flex items-center gap-2"
                 >
                     <i className="fa-solid fa-plus"></i> New Broadcast
                 </button>
@@ -119,7 +119,7 @@ const AnnouncementManager: React.FC = () => {
                                 </button>
                                 <button
                                     type="submit"
-                                    className="px-6 py-2 bg-cyan-600 hover:bg-raudhah-teal text-white font-bold rounded-lg"
+                                    className="px-6 py-2 bg-teal-600 hover:bg-raudhah-teal text-white font-bold rounded-lg"
                                 >
                                     Publish Now
                                 </button>

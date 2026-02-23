@@ -16,7 +16,7 @@ const AdminDashboard: React.FC = () => {
 
     const NAV_ITEMS = [
         { id: 'OVERVIEW', label: 'Command Center', icon: 'fa-chart-radar', color: 'text-raudhah-teal' },
-        { id: 'AI_STUDIO', label: 'AI Content Studio', icon: 'fa-wand-magic-sparkles', color: 'text-purple-400' },
+        { id: 'AI_STUDIO', label: 'AI Content Studio', icon: 'fa-wand-magic-sparkles', color: 'text-emerald-400' },
         { id: 'BROADCAST', label: 'Broadcasts', icon: 'fa-bullhorn', color: 'text-red-400' },
         { id: 'KNOWLEDGE', label: 'Knowledge Base', icon: 'fa-database', color: 'text-orange-400' },
         { id: 'CRM', label: 'Ummah CRM', icon: 'fa-users-rays', color: 'text-emerald-400' },
@@ -70,7 +70,7 @@ const AdminDashboard: React.FC = () => {
             <main className="flex-1 relative overflow-hidden flex flex-col">
                 {/* Background Grid */}
                 <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
-                <div className="absolute inset-0 bg-gradient-to-tr from-cyan-900/10 via-transparent to-purple-900/10 pointer-events-none"></div>
+                <div className="absolute inset-0 bg-gradient-to-tr from-teal-900/10 via-transparent to-emerald-900/10 pointer-events-none"></div>
 
                 {/* Top Bar */}
                 <header className="h-16 border-b border-white/5 flex items-center justify-between px-8 bg-slate-900/30 backdrop-blur-sm z-10">

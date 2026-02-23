@@ -78,7 +78,7 @@ const QuranAudioPlayer: React.FC<QuranAudioPlayerProps> = ({
           <motion.button
             whileTap={{ scale: 0.95 }}
             onClick={() => setIsExpanded(true)}
-            className="w-14 h-14 rounded-full bg-raudhah-teal text-black flex items-center justify-center shadow-lg shadow-cyan-500/40 border-2 border-raudhah-teal relative"
+            className="w-14 h-14 rounded-full bg-raudhah-teal text-black flex items-center justify-center shadow-lg shadow-teal-500/40 border-2 border-raudhah-teal relative"
           >
             {/* Pulse ring when paused */}
             <div className="absolute inset-0 rounded-full bg-raudhah-teal animate-ping opacity-30" />
@@ -118,7 +118,7 @@ const QuranAudioPlayer: React.FC<QuranAudioPlayerProps> = ({
           exit={{ y: 100, opacity: 0 }}
           className="fixed bottom-24 left-4 right-4 z-40 max-w-[460px] mx-auto"
         >
-          <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl border border-raudhah-teal/20 shadow-2xl shadow-cyan-500/10 overflow-hidden">
+          <div className="bg-slate-900/95 backdrop-blur-xl rounded-2xl border border-raudhah-teal/20 shadow-2xl shadow-teal-500/10 overflow-hidden">
             {/* Close/Minimize Button */}
             <button
               onClick={() => setIsExpanded(false)}
@@ -135,11 +135,11 @@ const QuranAudioPlayer: React.FC<QuranAudioPlayerProps> = ({
               onClick={handleSeek}
             >
               <div
-                className="h-full bg-gradient-to-r from-raudhah-teal to-cyan-400 transition-all duration-100 relative"
+                className="h-full bg-gradient-to-r from-raudhah-teal to-teal-400 transition-all duration-100 relative"
                 style={{ width: `${progress}%` }}
               >
                 {/* Glow effect on progress head */}
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-raudhah-teal rounded-full shadow-lg shadow-cyan-500/50" />
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-raudhah-teal rounded-full shadow-lg shadow-teal-500/50" />
               </div>
             </div>
 
@@ -183,7 +183,7 @@ const QuranAudioPlayer: React.FC<QuranAudioPlayerProps> = ({
                 <button
                   onClick={isPlaying ? pauseTrack : resumeTrack}
                   aria-label={isPlaying ? "Pause" : "Play"}
-                  className="w-12 h-12 rounded-xl bg-raudhah-teal text-black flex items-center justify-center hover:bg-raudhah-teal transition-all shadow-lg shadow-cyan-500/30 border border-raudhah-teal"
+                  className="w-12 h-12 rounded-xl bg-raudhah-teal text-black flex items-center justify-center hover:bg-raudhah-teal transition-all shadow-lg shadow-teal-500/30 border border-raudhah-teal"
                 >
                   <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
                     {isPlaying ? (

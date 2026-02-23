@@ -59,20 +59,20 @@ const QuranPageView: React.FC = () => {
                 <button
                     onClick={handlePrevPage}
                     disabled={pages.indexOf(currentPage) === 0}
-                    className="w-10 h-10 rounded-full bg-white/5 text-slate-400 disabled:opacity-20 hover:bg-cyan-500/20 hover:text-cyan-400 transition-all flex items-center justify-center"
+                    className="w-10 h-10 rounded-full bg-white/5 text-slate-400 disabled:opacity-20 hover:bg-teal-500/20 hover:text-teal-400 transition-all flex items-center justify-center"
                 >
                     <i className="fa-solid fa-chevron-left"></i>
                 </button>
 
                 <div className="flex flex-col items-center">
                     <span className="text-amber-100/90 font-serif text-lg tracking-widest">PAGE {currentPage}</span>
-                    <span className="text-[10px] text-cyan-500/60 uppercase tracking-[0.2em]">{selectedChapter?.name_simple}</span>
+                    <span className="text-[10px] text-teal-500/60 uppercase tracking-[0.2em]">{selectedChapter?.name_simple}</span>
                 </div>
 
                 <button
                     onClick={handleNextPage}
                     disabled={pages.indexOf(currentPage) === pages.length - 1}
-                    className="w-10 h-10 rounded-full bg-white/5 text-slate-400 disabled:opacity-20 hover:bg-cyan-500/20 hover:text-cyan-400 transition-all flex items-center justify-center"
+                    className="w-10 h-10 rounded-full bg-white/5 text-slate-400 disabled:opacity-20 hover:bg-teal-500/20 hover:text-teal-400 transition-all flex items-center justify-center"
                 >
                     <i className="fa-solid fa-chevron-right"></i>
                 </button>
@@ -137,7 +137,7 @@ const QuranPageView: React.FC = () => {
 
                                                 {/* Verse Text */}
                                                 <span
-                                                    className="hover:text-cyan-300 cursor-pointer transition-colors duration-200 decoration-clone"
+                                                    className="hover:text-teal-300 cursor-pointer transition-colors duration-200 decoration-clone"
                                                     onClick={() => openVerseStudio(verse)}
                                                 >
                                                     {verse.text_uthmani}

@@ -183,17 +183,17 @@ const MediaStudio: React.FC = () => {
       {activeTab === 'LISTEN' && (
           <div className="flex-1 overflow-y-auto space-y-6 animate-slide-up">
               {/* Now Playing Banner */}
-              <div className="bg-gradient-to-r from-violet-900 to-fuchsia-900 rounded-2xl p-6 flex items-center gap-4 relative overflow-hidden">
+              <div className="bg-gradient-to-r from-emerald-900 to-amber-900 rounded-2xl p-6 flex items-center gap-4 relative overflow-hidden">
                   <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/sound-waves.png')] opacity-30"></div>
                   <div className="w-20 h-20 rounded-xl bg-black/30 shadow-lg shrink-0 flex items-center justify-center">
                       <i className="fa-solid fa-music text-3xl text-white/50"></i>
                   </div>
                   <div className="flex-1 z-10">
-                      <p className="text-[10px] font-bold text-fuchsia-300 uppercase tracking-widest mb-1">Live Station</p>
+                      <p className="text-[10px] font-bold text-amber-300 uppercase tracking-widest mb-1">Live Station</p>
                       <h3 className="text-xl font-bold text-white">Morning Adhkar</h3>
                       <p className="text-xs text-slate-300">Ustaz Don Daniyal</p>
                   </div>
-                  <button className="w-12 h-12 rounded-full bg-white text-fuchsia-900 flex items-center justify-center shadow-lg hover:scale-105 transition-transform z-10" title="Pause" aria-label="Pause">
+                  <button className="w-12 h-12 rounded-full bg-white text-amber-900 flex items-center justify-center shadow-lg hover:scale-105 transition-transform z-10" title="Pause" aria-label="Pause">
                       <i className="fa-solid fa-pause"></i>
                   </button>
               </div>

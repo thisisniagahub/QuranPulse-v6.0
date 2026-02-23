@@ -66,7 +66,7 @@ const TakwimWidget: React.FC<TakwimWidgetProps> = ({ onClose }) => {
                         {events.map((event, idx) => (
                             <div key={idx} className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
                                 <div className={`w-10 h-10 rounded-lg flex flex-col items-center justify-center border ${
-                                    event.type === 'special' ? 'bg-purple-500/20 border-purple-500/30 text-purple-300' : 'bg-slate-800 border-slate-700 text-slate-400'
+                                    event.type === 'special' ? 'bg-emerald-500/20 border-emerald-500/30 text-emerald-300' : 'bg-slate-800 border-slate-700 text-slate-400'
                                 }`}>
                                     <span className="text-xs font-bold">{event.date.split(' ')[0]}</span>
                                 </div>

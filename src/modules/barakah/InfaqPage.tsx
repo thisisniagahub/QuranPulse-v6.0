@@ -31,7 +31,7 @@ const InfaqPage: React.FC = () => {
         <button onClick={() => navigate(-1)} className="p-2 rounded-full bg-slate-800/50 hover:bg-slate-700">
           <i className="fa-solid fa-arrow-left"></i>
         </button>
-        <h1 className="text-2xl font-bold font-kufi text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">
+        <h1 className="text-2xl font-bold font-kufi text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">
           Barakah Hub
         </h1>
       </div>

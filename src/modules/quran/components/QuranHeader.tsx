@@ -47,7 +47,7 @@ const QuranHeader: React.FC<QuranHeaderProps> = ({
   return (
     <div className={`sticky top-0 z-[60] transition-all duration-700 ${isZenMode
       ? 'bg-transparent border-none'
-      : 'bg-slate-950/95 backdrop-blur-md border-b border-raudhah-teal/20 shadow-lg shadow-cyan-500/5'
+      : 'bg-slate-950/95 backdrop-blur-md border-b border-raudhah-teal/20 shadow-lg shadow-teal-500/5'
       }`}>
       <div className={`px-4 py-4 flex justify-between items-center ${isZenMode ? 'max-w-4xl mx-auto' : ''}`}>
         {/* Left: Back + Title */}

@@ -159,11 +159,11 @@ const LiveAnalytics: React.FC = () => {
             </div>
           </div>
 
-          <div className="rounded-2xl bg-gradient-to-br from-cyan-600/20 to-emerald-700/20 border border-raudhah-teal/20 p-6 relative overflow-hidden group">
+          <div className="rounded-2xl bg-gradient-to-br from-teal-600/20 to-emerald-700/20 border border-raudhah-teal/20 p-6 relative overflow-hidden group">
              <div className="relative z-10">
                 <h3 className="text-white font-bold mb-2">Broadcast Alert</h3>
                 <p className="text-xs text-slate-300 mb-4">Send an emergency message to all active users across Malaysia.</p>
-                <button className="w-full py-2 bg-raudhah-teal text-white rounded-lg text-xs font-bold hover:bg-raudhah-teal transition-colors shadow-lg shadow-cyan-500/20">
+                <button className="w-full py-2 bg-raudhah-teal text-white rounded-lg text-xs font-bold hover:bg-raudhah-teal transition-colors shadow-lg shadow-teal-500/20">
                   Compose Alert
                 </button>
              </div>

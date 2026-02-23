@@ -29,9 +29,9 @@ const PRAYER_THEMES = {
     Subuh: { gradient: 'from-[#ff8c42] to-[#ff3c5f]', glow: 'shadow-orange-500/50', icon: 'meteocons:sunrise-fill' }, // Dawn Pink/Orange
     Syuruk: { gradient: 'from-[#fdbb2d] to-[#22c1c3]', glow: 'shadow-yellow-500/50', icon: 'meteocons:horizon-fill' }, // Rising Sun
     Zohor: { gradient: 'from-[#4facfe] to-[#00f2fe]', glow: 'shadow-blue-400/50', icon: 'meteocons:clear-day-fill' }, // Noon Blue
-    Asar: { gradient: 'from-[#6a11cb] to-[#2575fc]', glow: 'shadow-purple-500/50', icon: 'meteocons:partly-cloudy-day-fill' }, // Afternoon Purple/Blue
+    Asar: { gradient: 'from-[#6a11cb] to-[#2575fc]', glow: 'shadow-emerald-500/50', icon: 'meteocons:partly-cloudy-day-fill' }, // Afternoon Purple/Blue
     Maghrib: { gradient: 'from-[#fa709a] to-[#fee140]', glow: 'shadow-pink-400/50', icon: 'meteocons:sunset-fill' }, // Dusk Pink/Yellow
-    Isyak: { gradient: 'from-[#1e3c72] to-[#2a5298]', glow: 'shadow-indigo-500/50', icon: 'meteocons:star-fill' } // Night Deep Blue
+    Isyak: { gradient: 'from-[#1e3c72] to-[#2a5298]', glow: 'shadow-teal-500/50', icon: 'meteocons:star-fill' } // Night Deep Blue
 };
 
 const Ibadah: React.FC = () => {
@@ -344,7 +344,7 @@ const Ibadah: React.FC = () => {
                 </button>
                 <button
                     onClick={() => setViewMode('ZAKAT')}
-                    className={`px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all border ${viewMode === 'ZAKAT' ? 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30 shadow-[0_0_15px_rgba(99,102,241,0.2)]' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
+                    className={`px-4 py-2.5 rounded-xl text-xs font-bold tracking-wide transition-all border ${viewMode === 'ZAKAT' ? 'bg-teal-500/20 text-teal-400 border-teal-500/30 shadow-[0_0_15px_rgba(99,102,241,0.2)]' : 'border-transparent text-slate-400 hover:text-white hover:bg-white/5'}`}
                 >
                     <i className="fa-solid fa-calculator mr-2"></i>Zakat
                 </button>

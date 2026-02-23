@@ -114,13 +114,13 @@ const PWAInstallPrompt: React.FC = () => {
         exit={{ y: 100, opacity: 0 }}
         className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 flex justify-center pointer-events-none"
       >
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-cyan-100 dark:border-cyan-900/30 p-4 w-full max-w-md pointer-events-auto flex items-center gap-4 relative overflow-hidden">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-teal-100 dark:border-teal-900/30 p-4 w-full max-w-md pointer-events-auto flex items-center gap-4 relative overflow-hidden">
 
           {/* Background Glow */}
           <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-raudhah-teal/10 rounded-full blur-2xl"></div>
 
           {/* Icon */}
-          <div className="flex-shrink-0 w-12 h-12 bg-cyan-50 rounded-xl flex items-center justify-center text-2xl shadow-sm border border-cyan-100">
+          <div className="flex-shrink-0 w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-2xl shadow-sm border border-teal-100">
             {activeContent.icon}
           </div>
 
@@ -138,7 +138,7 @@ const PWAInstallPrompt: React.FC = () => {
           <div className="flex flex-col gap-2">
             <button
               onClick={handleInstallClick}
-              className="bg-cyan-600 hover:bg-cyan-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-lg shadow-cyan-500/20 transition-all active:scale-95 whitespace-nowrap flex items-center gap-1.5"
+              className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-lg shadow-teal-500/20 transition-all active:scale-95 whitespace-nowrap flex items-center gap-1.5"
             >
               <Download size={14} strokeWidth={2.5} />
               {activeContent.cta}

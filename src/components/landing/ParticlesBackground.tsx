@@ -25,10 +25,10 @@ const COLORS = [
     '#14b8a6', // teal
     '#0d9488', // teal dark
     '#f59e0b', // gold
-    '#8b5cf6', // purple
-    '#6366f1', // indigo
+    '#8b5cf6', // emerald
+    '#6366f1', // teal
     '#ec4899', // pink
-    '#06b6d4', // cyan
+    '#06b6d4', // teal
     '#10b981', // emerald
 ];
 

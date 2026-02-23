@@ -8,11 +8,11 @@ export const AdvancedTools = () => (
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
             <div className="text-center mb-20">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-900/20 border border-purple-500/30 text-purple-400 text-[10px] font-bold uppercase tracking-widest mb-6">
-                    <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-900/20 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold uppercase tracking-widest mb-6">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                     R&D Labs
                 </div>
-                <h2 className="text-4xl md:text-6xl font-bold font-serif text-white mb-6 tracking-tight">The Next <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-cyan-400">Frontier</span></h2>
+                <h2 className="text-4xl md:text-6xl font-bold font-serif text-white mb-6 tracking-tight">The Next <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-400">Frontier</span></h2>
                 <p className="text-slate-400 max-w-2xl mx-auto text-lg font-light leading-relaxed">
                     Architecting the future of digital faith. We are building ecosystems that transcend traditional apps.
                 </p>
@@ -23,7 +23,7 @@ export const AdvancedTools = () => (
                 <TiltCard>
                     <div className="bg-gradient-to-b from-slate-900 to-black border border-white/10 rounded-3xl p-8 h-full relative overflow-hidden group hover:border-raudhah-teal/50 transition-all duration-500">
                         <div className="absolute top-0 right-0 w-40 h-40 bg-raudhah-teal/5 rounded-full blur-3xl group-hover:bg-raudhah-teal/10 transition-all"></div>
-                        <div className="w-14 h-14 rounded-2xl bg-cyan-900/20 border border-raudhah-teal/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
+                        <div className="w-14 h-14 rounded-2xl bg-teal-900/20 border border-raudhah-teal/20 flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-500">
                             <i className="fa-solid fa-file-contract text-2xl text-raudhah-teal"></i>
                         </div>
                         <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-raudhah-teal transition-colors">Legacy Guardian</h3>
@@ -31,7 +31,7 @@ export const AdvancedTools = () => (
                             Algorithmic inheritance distribution using Smart Contracts. Secure your Wasiat & Hibah on the blockchain.
                         </p>
                         <div className="flex items-center gap-3 pt-6 border-t border-white/5">
-                            <div className="px-2 py-1 rounded bg-cyan-950/50 border border-raudhah-teal/20 text-[10px] text-raudhah-teal font-mono">PROTO-01</div>
+                            <div className="px-2 py-1 rounded bg-teal-950/50 border border-raudhah-teal/20 text-[10px] text-raudhah-teal font-mono">PROTO-01</div>
                             <span className="text-[10px] text-slate-500 uppercase tracking-wider">Engineering Phase</span>
                         </div>
                     </div>

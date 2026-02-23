@@ -58,7 +58,7 @@ const ContinueReadingCard: React.FC<ContinueReadingCardProps> = ({ onNavigate })
                             <motion.div
                                 initial={{ width: 0 }}
                                 animate={{ width: `${lastRead.totalVerses ? (lastRead.ayahId / lastRead.totalVerses) * 100 : 0}%` }}
-                                className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-500 shadow-[0_0_8px_rgba(52,211,153,0.5)]"
+                                className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-teal-500 shadow-[0_0_8px_rgba(52,211,153,0.5)]"
                             />
                         </div>
                     </div>

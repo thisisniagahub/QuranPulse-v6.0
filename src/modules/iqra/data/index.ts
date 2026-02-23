@@ -47,8 +47,8 @@ export const IQRA_BOOKS_DATA: any[] = [
     { id: 'iqra-2', title: "Iqra' 2", file: '/books/buku-iqra-2 (1).pdf', color: "from-orange-500 to-amber-500", shadow: "shadow-orange-500/20", icon: "2" },
     { id: 'iqra-3', title: "Iqra' 3", file: '/books/buku-iqra-3-1 (1).pdf', color: "from-yellow-500 to-lime-500", shadow: "shadow-yellow-500/20", icon: "3" },
     { id: 'iqra-4', title: "Iqra' 4", file: '/books/buku-iqra-4 (1).pdf', color: "from-green-500 to-emerald-500", shadow: "shadow-green-500/20", icon: "4" },
-    { id: 'iqra-5', title: "Iqra' 5", file: '/books/buku-iqra-5 (1).pdf', color: "from-blue-500 to-cyan-500", shadow: "shadow-blue-500/20", icon: "5" },
-    { id: 'iqra-6', title: "Iqra' 6", file: '/books/buku-iqra-6 (1).pdf', color: "from-purple-500 to-indigo-500", shadow: "shadow-purple-500/20", icon: "6" },
+    { id: 'iqra-5', title: "Iqra' 5", file: '/books/buku-iqra-5 (1).pdf', color: "from-blue-500 to-teal-500", shadow: "shadow-blue-500/20", icon: "5" },
+    { id: 'iqra-6', title: "Iqra' 6", file: '/books/buku-iqra-6 (1).pdf', color: "from-emerald-500 to-teal-500", shadow: "shadow-emerald-500/20", icon: "6" },
 ];
 
 export const TAJWEED_TUTORIALS: TajweedTutorial[] = [
@@ -69,9 +69,9 @@ export const TAJWEED_TUTORIALS: TajweedTutorial[] = [
         description: 'Understanding the different lengths of vowels (2, 4, 6).',
         icon: 'fa-wave-square',
         poster: '/src/assets/iqra/iqra-lesson-2.png',
-        color: 'text-purple-400',
-        bgColor: 'bg-purple-500/10',
-        borderColor: 'border-purple-500/30',
+        color: 'text-emerald-400',
+        bgColor: 'bg-emerald-500/10',
+        borderColor: 'border-emerald-500/30',
         prompt: 'Visual guide to Madd (Elongation) in Quran. Animation of Arabic vowels stretching. Show wave patterns representing sound duration (2, 4, 6 harakat). Educational style.'
     },
     {

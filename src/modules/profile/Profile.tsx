@@ -33,7 +33,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onUpdatePassword,
             <div className="fixed inset-0 pointer-events-none">
                 <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
                 <div className="absolute top-[-20%] left-[-20%] w-[80vw] h-[80vw] bg-raudhah-teal/10 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] bg-indigo-900/10 rounded-full blur-[120px]"></div>
+                <div className="absolute bottom-[-20%] right-[-20%] w-[80vw] h-[80vw] bg-teal-900/10 rounded-full blur-[120px]"></div>
             </div>
 
             <div className="relative z-10 max-w-2xl mx-auto px-6 pt-6">
@@ -77,7 +77,7 @@ const Profile: React.FC<ProfileProps> = ({ user, onUpdateUser, onUpdatePassword,
                         {/* Total XP */}
                         <div className="bg-slate-900/50 backdrop-blur-md rounded-2xl border border-white/5 p-4 flex items-center justify-between group hover:border-raudhah-teal/20 transition-colors">
                             <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-xl bg-indigo-500/20 flex items-center justify-center text-indigo-400">
+                                <div className="w-10 h-10 rounded-xl bg-teal-500/20 flex items-center justify-center text-teal-400">
                                     <i className="fa-solid fa-bolt"></i>
                                 </div>
                                 <div>

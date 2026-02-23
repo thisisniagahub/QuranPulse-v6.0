@@ -20,8 +20,8 @@ interface BookmarkCollectionsModalProps {
 
 const DEFAULT_COLLECTIONS: BookmarkCollection[] = [
   { id: 'favorites', name: 'Kegemaran', icon: '⭐', color: 'amber', verses: [], createdAt: new Date().toISOString() },
-  { id: 'hafazan', name: 'Hafazan', icon: '📖', color: 'purple', verses: [], createdAt: new Date().toISOString() },
-  { id: 'study', name: 'Untuk Dikaji', icon: '📚', color: 'cyan', verses: [], createdAt: new Date().toISOString() },
+  { id: 'hafazan', name: 'Hafazan', icon: '📖', color: 'emerald', verses: [], createdAt: new Date().toISOString() },
+  { id: 'study', name: 'Untuk Dikaji', icon: '📚', color: 'teal', verses: [], createdAt: new Date().toISOString() },
 ];
 
 const STORAGE_KEY = 'quranpulse_bookmark_collections';
@@ -48,8 +48,8 @@ const storeCollections = (collections: BookmarkCollection[]) => {
 
 const COLOR_OPTIONS = [
   { id: 'amber', bg: 'bg-amber-500/20', border: 'border-amber-500/50', text: 'text-amber-400' },
-  { id: 'purple', bg: 'bg-purple-500/20', border: 'border-purple-500/50', text: 'text-purple-400' },
-  { id: 'cyan', bg: 'bg-raudhah-teal/10', border: 'border-raudhah-teal/50', text: 'text-raudhah-teal' },
+  { id: 'emerald', bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400' },
+  { id: 'teal', bg: 'bg-raudhah-teal/10', border: 'border-raudhah-teal/50', text: 'text-raudhah-teal' },
   { id: 'emerald', bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400' },
   { id: 'rose', bg: 'bg-rose-500/20', border: 'border-rose-500/50', text: 'text-rose-400' },
   { id: 'blue', bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400' },
@@ -160,7 +160,7 @@ const BookmarkCollectionsModal: React.FC<BookmarkCollectionsModalProps> = ({
           >
             <div className="bg-slate-900 border border-raudhah-teal/20 rounded-2xl shadow-2xl flex flex-col max-h-[80vh]">
               {/* Header */}
-              <div className="bg-gradient-to-r from-raudhah-teal/20 to-purple-500/20 p-4 border-b border-slate-700">
+              <div className="bg-gradient-to-r from-raudhah-teal/20 to-emerald-500/20 p-4 border-b border-slate-700">
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-bold text-white flex items-center gap-2">
                     <span>🔖</span>

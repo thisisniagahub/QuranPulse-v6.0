@@ -91,7 +91,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
           <div>
             <h1 className="font-bold text-lg">{currentLesson.unitTitle}</h1>
             <div className="text-xs text-raudhah-teal flex items-center gap-2">
-              <span className="bg-cyan-900/50 px-2 py-0.5 rounded text-[10px] border border-cyan-800" aria-label={`Iqra Jilid ${volume}`}>
+              <span className="bg-teal-900/50 px-2 py-0.5 rounded text-[10px] border border-teal-800" aria-label={`Iqra Jilid ${volume}`}>
                 IQRA {volume}
               </span>
               <span>{currentLesson.title}</span>
@@ -138,7 +138,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
             >
               <div className="max-w-md w-full space-y-8">
                 <div className="text-center space-y-2">
-                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-raudhah-teal to-emerald-700 shadow-lg shadow-cyan-500/20 mb-4">
+                  <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-raudhah-teal to-emerald-700 shadow-lg shadow-teal-500/20 mb-4">
                     <BookOpen className="w-8 h-8 text-white" aria-hidden="true" />
                   </div>
                   <h2 id="lesson-start-title" className="text-3xl font-bold">{currentLesson.title}</h2>

@@ -128,8 +128,8 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
             <motion.button
                 onClick={() => setIsOpen(true)}
                 className="fixed bottom-24 right-4 z-40 w-14 h-14 
-                   bg-gradient-to-br from-raudhah-teal to-purple-500 
-                   rounded-full shadow-lg shadow-cyan-500/25
+                   bg-gradient-to-br from-raudhah-teal to-emerald-500 
+                   rounded-full shadow-lg shadow-teal-500/25
                    flex items-center justify-center
                    hover:scale-110 transition-transform"
                 whileHover={{ scale: 1.1 }}
@@ -169,13 +169,13 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                             animate={{ y: 0, opacity: 1 }}
                             exit={{ y: 100, opacity: 0 }}
                             className="w-full max-w-md bg-slate-900 rounded-t-3xl sm:rounded-2xl 
-                         border border-slate-800 shadow-2xl shadow-cyan-500/10 
+                         border border-slate-800 shadow-2xl shadow-teal-500/10 
                          max-h-[80vh] overflow-hidden"
                         >
                             {/* Header */}
                             <div className="p-4 border-b border-slate-800 flex items-center justify-between">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-10 h-10 bg-gradient-to-br from-raudhah-teal to-purple-500 
+                                    <div className="w-10 h-10 bg-gradient-to-br from-raudhah-teal to-emerald-500 
                                  rounded-xl flex items-center justify-center">
                                         <Sparkles className="w-5 h-5 text-white" />
                                     </div>
@@ -239,7 +239,7 @@ const SmartDeenCrossover: React.FC<SmartDeenCrossoverProps> = ({
                                         onClick={handleCustomQuestion}
                                         disabled={!customQuestion.trim() || isLoading}
                                         className="absolute right-2 top-1/2 -translate-y-1/2 p-2 
-                             bg-gradient-to-r from-raudhah-teal to-purple-500 
+                             bg-gradient-to-r from-raudhah-teal to-emerald-500 
                              rounded-lg text-white disabled:opacity-50"
                                         title="Hantar soalan"
                                     >

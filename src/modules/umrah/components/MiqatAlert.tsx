@@ -100,7 +100,7 @@ const MiqatAlert: React.FC = () => {
             case '5min':
                 return { icon: '🤲', title: '5 Minit Lagi!', message: 'Bersedia untuk berniat Ihram.', color: 'red' };
             case 'miqat':
-                return { icon: '🕋', title: 'ANDA DI MIQAT!', message: 'Lafazkan Niat Ihram SEKARANG!', color: 'cyan' };
+                return { icon: '🕋', title: 'ANDA DI MIQAT!', message: 'Lafazkan Niat Ihram SEKARANG!', color: 'teal' };
             default:
                 return null;
         }
@@ -112,7 +112,7 @@ const MiqatAlert: React.FC = () => {
         <div className="space-y-4">
             {/* Header */}
             <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20">
+                <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-teal-500/20">
                     <Plane className="text-blue-400" size={24} />
                 </div>
                 <div>
@@ -205,7 +205,7 @@ const MiqatAlert: React.FC = () => {
                     <button
                         onClick={calculateMiqatTime}
                         disabled={!departureTime}
-                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-gradient-to-r from-raudhah-teal to-blue-500 text-black font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-cyan-500/30 transition-all"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-gradient-to-r from-raudhah-teal to-blue-500 text-black font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-teal-500/30 transition-all"
                     >
                         <Bell size={18} />
                         Aktifkan Alert

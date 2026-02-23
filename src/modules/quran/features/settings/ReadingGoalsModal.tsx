@@ -143,7 +143,7 @@ const ReadingGoalsModal: React.FC<ReadingGoalsModalProps> = ({ isOpen, onClose }
           >
             <div className="bg-slate-900 border border-emerald-500/30 rounded-2xl shadow-2xl overflow-hidden">
               {/* Header */}
-              <div className="bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 p-4 border-b border-slate-700">
+              <div className="bg-gradient-to-r from-emerald-500/20 to-teal-500/20 p-4 border-b border-slate-700">
                 <h3 className="text-lg font-bold text-white flex items-center gap-2">
                   <span>📊</span>
                   Progres Bacaan

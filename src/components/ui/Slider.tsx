@@ -59,7 +59,7 @@ export const Slider: React.FC<SliderProps> = ({
         },
         neon: {
             track: 'bg-slate-800',
-            fill: 'bg-gradient-to-r from-raudhah-teal to-purple-500 shadow-[0_0_10px_rgba(27,107,90,0.3)]',
+            fill: 'bg-gradient-to-r from-raudhah-teal to-emerald-500 shadow-[0_0_10px_rgba(27,107,90,0.3)]',
             thumb: 'bg-white border-2 border-raudhah-teal shadow-[0_0_15px_rgba(27,107,90,0.3)]'
         }
     };

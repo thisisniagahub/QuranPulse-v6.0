@@ -129,7 +129,7 @@ const UserTable: React.FC = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase border ${user.tier === 'FAMILY' ? 'bg-purple-500/10 border-purple-500/30 text-purple-400' :
+                                        <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase border ${user.tier === 'FAMILY' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
                                             user.tier === 'PRO' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
                                                 'bg-slate-700/30 border-slate-600 text-slate-400'
                                             }`}>

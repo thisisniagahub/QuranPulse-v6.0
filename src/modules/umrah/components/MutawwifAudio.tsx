@@ -101,7 +101,7 @@ const MutawwifAudio: React.FC = () => {
                         className={`flex-1 h-2 rounded-full transition-all ${i + 1 === currentRound
                             ? 'bg-raudhah-teal shadow-[0_0_10px_rgba(34,211,238,0.5)]'
                             : i + 1 < currentRound
-                                ? 'bg-cyan-600'
+                                ? 'bg-teal-600'
                                 : 'bg-slate-700'
                             }`}
                     />
@@ -136,8 +136,8 @@ const MutawwifAudio: React.FC = () => {
 
             {/* Special Doa - Rabbana Atina (for Tawaf) */}
             {mode === 'tawaf' && (
-                <div className="bg-gradient-to-br from-purple-500/20 to-pink-500/10 border border-purple-500/30 rounded-xl p-4">
-                    <h4 className="text-purple-400 font-semibold mb-2">
+                <div className="bg-gradient-to-br from-emerald-500/20 to-pink-500/10 border border-emerald-500/30 rounded-xl p-4">
+                    <h4 className="text-emerald-400 font-semibold mb-2">
                         🔮 Doa Antara Rukun Yamani & Hajar Aswad
                     </h4>
                     <p className="text-lg text-white font-arabic text-right leading-relaxed mb-2">
@@ -173,7 +173,7 @@ const MutawwifAudio: React.FC = () => {
 
                 <button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="p-4 rounded-full bg-gradient-to-r from-raudhah-teal to-blue-500 text-black shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all"
+                    className="p-4 rounded-full bg-gradient-to-r from-raudhah-teal to-blue-500 text-black shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 transition-all"
                 >
                     {isPlaying ? <Pause size={28} /> : <Play size={28} className="ml-1" />}
                 </button>
