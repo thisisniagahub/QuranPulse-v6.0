@@ -2,11 +2,11 @@
  * IqraFeedbackOverlay Component
  * 
  * Extracted from IqraInteractiveCoach for reusability
- * Shows success/error feedback after quiz answers
+ * Shows success/error feedback after quiz answers in Raudhah theme
  */
 
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-presence';
 import { CheckCircle2, AlertCircle, Loader2, BrainCircuit, ChevronRight } from 'lucide-react';
 
 interface IqraFeedbackOverlayProps {
@@ -28,30 +28,30 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
 
     return (
         <motion.div
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            className={`p-8 rounded-[3rem] border-l-[16px] glass-v7 flex flex-col gap-6 shadow-[0_40px_80px_rgba(0,0,0,0.6)] ${isCorrect ? 'border-emerald-500' : 'border-red-500'
-                } hud-border`}
+            initial={{ scale: 0.95, opacity: 0, y: 20 }}
+            animate={{ scale: 1, opacity: 1, y: 0 }}
+            className={`p-8 rounded-[3.5rem] border-l-[16px] bg-white flex flex-col gap-8 shadow-2xl relative overflow-hidden ${isCorrect ? 'border-raudhah-teal' : 'border-red-500'
+                }`}
         >
             {/* Status Header */}
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-8 relative z-10">
                 <div
-                    className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl ${isCorrect ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'
+                    className={`shrink-0 w-20 h-20 rounded-[2rem] flex items-center justify-center shadow-warm ${isCorrect ? 'bg-raudhah-teal text-white' : 'bg-red-500 text-white'
                         }`}
                 >
-                    {isCorrect ? <CheckCircle2 size={36} /> : <AlertCircle size={36} />}
+                    {isCorrect ? <CheckCircle2 size={42} /> : <AlertCircle size={42} />}
                 </div>
                 <div className="flex-1">
                     <h3
-                        className={`text-2xl font-black uppercase tracking-tight ${isCorrect ? 'text-emerald-400 glow-text' : 'text-red-400 glow-text'
+                        className={`text-3xl font-black uppercase tracking-tight ${isCorrect ? 'text-raudhah-teal' : 'text-red-500'
                             }`}
                     >
-                        {isCorrect ? 'SYNCHRONIZED' : 'INTERFERENCE_DETECTED'}
+                        {isCorrect ? 'Tahniah!' : 'Cuba Lagi'}
                     </h3>
-                    <p className="font-bold text-slate-300 text-md opacity-80 uppercase tracking-wider">
+                    <p className="font-bold text-raudhah-teal/60 text-lg tracking-tight capitalize leading-tight">
                         {isCorrect
-                            ? 'Character identification successful.'
-                            : 'Structural error detected in selection.'}
+                            ? 'Bacaan anda sangat tepat dan lancar.'
+                            : 'Terdapat perbezaan kecil dalam bacaan anda.'}
                     </p>
                 </div>
             </div>
@@ -61,14 +61,15 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
                 <button
                     onClick={onDiagnose}
                     disabled={diagnosing}
-                    className="w-full flex items-center justify-center gap-3 py-5 bg-white/5 rounded-2xl text-red-400 font-black text-xs uppercase tracking-[0.3em] border border-red-500/20 hover:bg-white/10 transition-all"
+                    className="w-full flex items-center justify-center gap-4 py-6 bg-raudhah-teal/5 text-raudhah-teal rounded-[2rem] font-black uppercase tracking-widest text-[10px] border border-raudhah-teal/10 hover:bg-raudhah-teal/10 transition-all shadow-sm active:scale-95 group overflow-hidden relative"
                 >
+                    <div className="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {diagnosing ? (
-                        <Loader2 className="animate-spin" size={16} />
+                        <Loader2 className="animate-spin" size={20} />
                     ) : (
-                        <BrainCircuit size={16} />
+                        <BrainCircuit size={20} className="relative z-10" />
                     )}
-                    DIAGNOSE_MISTAKE
+                    <span className="relative z-10">Analisis Kesalahan</span>
                 </button>
             )}
 
@@ -78,9 +79,9 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
-                        className="bg-black/40 p-6 rounded-3xl border border-white/5 text-sm font-medium text-slate-400 leading-relaxed italic"
+                        className="bg-raudhah-gold/5 p-8 rounded-[2.5rem] border border-raudhah-gold/10 text-lg font-medium text-raudhah-ink/80 leading-relaxed italic"
                     >
-                        {analysisText}
+                        "{analysisText}"
                     </motion.div>
                 )}
             </AnimatePresence>
@@ -88,12 +89,12 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
             {/* Continue Button */}
             <button
                 onClick={onNext}
-                className={`w-full py-6 rounded-[2rem] font-black uppercase tracking-[0.4em] text-md text-white transition-all shadow-2xl flex items-center justify-center gap-4 ${isCorrect
-                        ? 'bg-emerald-600 shadow-emerald-900/40'
-                        : 'bg-red-600 shadow-red-900/40'
-                    } hover:brightness-110 active:translate-y-1 border border-white/10`}
+                className={`w-full py-7 rounded-[2.5rem] font-black uppercase tracking-[0.4em] text-md text-white transition-all shadow-warm flex items-center justify-center gap-4 border-b-[6px] active:border-b-0 active:translate-y-1.5 ${isCorrect
+                        ? 'bg-raudhah-teal border-raudhah-ink'
+                        : 'bg-raudhah-ink border-raudhah-teal'
+                    }`}
             >
-                CONTINUE_SESSION <ChevronRight size={24} />
+                {isCorrect ? 'Seterusnya' : 'Sebut Semula'} <ChevronRight size={28} />
             </button>
         </motion.div>
     );

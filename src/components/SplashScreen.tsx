@@ -75,7 +75,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                     <img loading="lazy"
                         src="/logo-primary.png"
                         alt="Quran Pulse Logo"
-                        className="w-full h-full object-cover scale-150 relative z-10 drop-shadow-[0_10px_30px_rgba(6,182,212,0.4)]"
+                        className="w-full h-full object-cover scale-150 relative z-10 drop-shadow-[0_10px_30px_rgba(212,175,55,0.4)]"
                     />
                 </motion.div>
 

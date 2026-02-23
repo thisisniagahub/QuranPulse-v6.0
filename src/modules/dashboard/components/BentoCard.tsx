@@ -10,9 +10,9 @@ interface BentoCardProps {
     disabled?: boolean;
 }
 
-const BentoCard: React.FC<BentoCardProps> = ({ 
-    children, 
-    className = "", 
+const BentoCard: React.FC<BentoCardProps> = ({
+    children,
+    className = "",
     onClick,
     delay = 0,
     bgImage,
@@ -25,24 +25,24 @@ const BentoCard: React.FC<BentoCardProps> = ({
         whileHover={!disabled ? { scale: 1.02 } : {}}
         whileTap={!disabled ? { scale: 0.98 } : {}}
         onClick={!disabled ? onClick : undefined}
-        className={`relative overflow-hidden rounded-[2rem] backdrop-blur-2xl border border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.12)] group ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${!bgImage ? 'bg-white/5' : ''} ${className}`}
+        className={`relative overflow-hidden rounded-[2rem] border border-raudhah-teal/10 shadow-warm group ${disabled ? 'cursor-not-allowed' : 'cursor-pointer'} ${!bgImage ? 'glass-v7' : ''} ${className}`}
     >
         {/* Real Image Background Layer */}
         {bgImage && (
             <>
                 <div className="absolute inset-0">
-                    <img loading="lazy" src={bgImage} alt="bg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-50" />
+                    <img loading="lazy" src={bgImage} alt="bg" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-40 mix-blend-overlay" />
                 </div>
                 {/* Gradient Overlay for Readability */}
-                <div className="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/70 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-raudhah-ink/90 via-raudhah-ink/40 to-transparent" />
             </>
         )}
-        
-        {/* Fallback: Glass effect when no image */}
+
+        {/* Fallback pattern when no image */}
         {!bgImage && (
-            <div className="absolute inset-0 bg-sheet/50" />
+            <div className="absolute inset-0 bg-pattern-dots-raudhah opacity-20" />
         )}
-        
+
         {/* Content Layer */}
         <div className="relative z-10 h-full">
             {children}

@@ -3,17 +3,20 @@ import { motion } from 'framer-motion';
 
 const NeuralTyping: React.FC = () => {
     return (
-        <div className="flex items-center gap-1 h-6 px-2">
+        <div className="flex items-center gap-1.5 h-6 px-3">
             {[1, 2, 3, 4, 5].map((i) => (
                 <motion.div
                     key={i}
-                    className="w-1 bg-raudhah-teal rounded-full"
+                    className={`w-1.5 rounded-full ${i % 2 === 0 ? 'bg-raudhah-gold' : 'bg-raudhah-teal'}`}
                     initial={{ height: 4 }}
-                    animate={{ height: [4, 16, 4] }}
+                    animate={{
+                        height: [4, 18, 4],
+                        opacity: [0.4, 1, 0.4]
+                    }}
                     transition={{
-                        duration: 1,
+                        duration: 1.2,
                         repeat: Infinity,
-                        delay: i * 0.1,
+                        delay: i * 0.15,
                         ease: "easeInOut"
                     }}
                 />

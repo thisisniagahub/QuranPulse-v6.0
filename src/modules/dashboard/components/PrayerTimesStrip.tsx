@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { PrayerTimeData } from '../../../hooks/usePrayerTimes';
+import { Clock } from 'lucide-react';
 
 interface PrayerTimesStripProps {
     theme?: any;
@@ -32,8 +33,8 @@ const PrayerTimesStrip: React.FC<PrayerTimesStripProps> = ({ data, loading }) =>
 
     if (loading) {
         return (
-            <div className="col-span-2 py-6 flex items-center justify-center gap-3 text-white/30 animate-pulse text-[10px] uppercase tracking-[0.3em] font-black">
-                <div className="w-1.5 h-1.5 rounded-full bg-raudhah-teal/50"></div>
+            <div className="col-span-2 py-6 flex items-center justify-center gap-3 text-raudhah-teal/40 animate-pulse text-[10px] uppercase tracking-[0.4em] font-black">
+                <Clock size={16} className="animate-spin-slow" />
                 Menyegerakan Waktu Solat
             </div>
         );
@@ -41,22 +42,27 @@ const PrayerTimesStrip: React.FC<PrayerTimesStripProps> = ({ data, loading }) =>
 
     return (
         <div className="col-span-2">
-            <div className="flex justify-between items-center bg-white/5 backdrop-blur-md rounded-full p-1 border border-white/5 shadow-inner">
+            <div className="flex justify-between items-center bg-white/80 backdrop-blur-md rounded-full p-1.5 border-2 border-raudhah-teal/5 shadow-sm glass-v7">
                 {prayers.map((p, i) => (
-                    <div
+                    <motion.div
                         key={p.name}
-                        className={`flex-1 flex flex-col items-center justify-center py-2 px-1 rounded-full transition-all duration-500 ${p.active
-                            ? 'bg-raudhah-teal/10 shadow-[0_0_15px_rgba(6,182,212,0.3)]'
-                            : 'opacity-40 hover:opacity-100 hover:bg-white/5'
+                        initial={false}
+                        animate={{
+                            backgroundColor: p.active ? '#1B6B5A1A' : 'transparent',
+                            borderColor: p.active ? '#1B6B5A33' : 'transparent'
+                        }}
+                        className={`flex-1 flex flex-col items-center justify-center py-2.5 px-1 rounded-full border transition-all duration-500 ${p.active
+                                ? 'shadow-sm'
+                                : 'opacity-40 hover:opacity-100'
                             }`}
                     >
-                        <span className={`text-[8px] font-black uppercase tracking-widest block mb-0.5 ${p.active ? 'text-raudhah-teal' : 'text-slate-500'}`}>
+                        <span className={`text-[8px] font-black uppercase tracking-[0.2em] block mb-0.5 ${p.active ? 'text-raudhah-teal' : 'text-raudhah-ink/40'}`}>
                             {p.name}
                         </span>
-                        <span className={`text-xs md:text-sm font-black tracking-tighter block ${p.active ? 'text-white' : 'text-slate-400'}`}>
+                        <span className={`text-xs md:text-sm font-black tracking-tighter block ${p.active ? 'text-raudhah-ink' : 'text-raudhah-ink/60'}`}>
                             {p.time}
                         </span>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </div>

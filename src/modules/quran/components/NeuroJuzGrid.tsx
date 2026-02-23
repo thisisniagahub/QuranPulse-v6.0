@@ -20,18 +20,18 @@ const NeuroJuzGridComponent: React.FC<NeuroJuzGridProps> = ({ juzList, juzStartS
                     className="group relative aspect-square cursor-pointer"
                 >
                     {/* The Cube Container */}
-                    <div className="absolute inset-0 bg-sheet/40 backdrop-blur-md rounded-2xl border border-white transition-all duration-300 group-hover:border-gold-500/50 group-hover:bg-surface-dark flex flex-col items-center justify-center shadow-lg group-hover:shadow-[0_0_20px_rgba(245,158,11,0.2)]">
-                        
+                    <div className="absolute inset-0 glass-v7 rounded-2xl border border-raudhah-teal/10 transition-all duration-300 group-hover:border-raudhah-gold/50 group-hover:bg-raudhah-teal/5 flex flex-col items-center justify-center shadow-warm">
+
                         {/* Decorative Circuit Lines */}
-                        <svg className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-20 transition-opacity duration-500" viewBox="0 0 100 100">
-                             <circle cx="50" cy="50" r="40" fill="none" stroke="#f59e0b" strokeWidth="1" strokeDasharray="4 4" className="animate-spin-slow" />
+                        <svg className="absolute inset-0 w-full h-full opacity-0 group-hover:opacity-10 transition-opacity duration-500" viewBox="0 0 100 100">
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#C4972A" strokeWidth="1" strokeDasharray="4 4" className="animate-spin-slow" />
                         </svg>
 
-                        <span className="text-sm font-bold text-white/50 uppercase tracking-widest mb-1 group-hover:text-gold-500/80 transition-colors">JUZ</span>
-                        <span className="text-4xl font-bold text-white/80 group-hover:text-white transition-colors">{juzNum}</span>
-                        
+                        <span className="text-sm font-bold text-raudhah-teal/40 uppercase tracking-widest mb-1 group-hover:text-raudhah-gold transition-colors">JUZ</span>
+                        <span className="text-4xl font-bold text-raudhah-ink group-hover:text-raudhah-teal transition-colors">{juzNum}</span>
+
                         {/* Bottom Accent */}
-                        <div className="absolute bottom-3 w-1/3 h-0.5 bg-surface-dark group-hover:bg-gold-500 transition-colors rounded-full"></div>
+                        <div className="absolute bottom-3 w-1/3 h-0.5 bg-raudhah-teal/10 group-hover:bg-raudhah-gold transition-colors rounded-full"></div>
                     </div>
                 </motion.div>
             ))}

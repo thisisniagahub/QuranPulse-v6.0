@@ -98,17 +98,17 @@ const QuranVerseCardComponent: React.FC<QuranVerseCardProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       className={`relative p-6 rounded-2xl transition-all duration-300 ${activeWord
-        ? 'bg-teal-900/10 border-raudhah-teal/20 shadow-lg shadow-teal-500/5'
-        : 'hover:bg-slate-800/30 border-transparent hover:border-slate-700/50'
+        ? 'bg-raudhah-teal/5 border-raudhah-teal/20 shadow-warm'
+        : 'hover:bg-raudhah-teal/5 border-transparent hover:border-raudhah-teal/10'
         } border`}
     >
       {/* Header: Verse Number & Actions */}
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-slate-800/50 flex items-center justify-center font-uthmanic text-xl text-raudhah-teal border border-slate-700">
+          <div className="w-10 h-10 rounded-full bg-raudhah-teal/5 flex items-center justify-center font-uthmanic text-xl text-raudhah-teal border border-raudhah-teal/10">
             {arabicVerseNumber}
           </div>
-          <span className="text-xs font-medium text-slate-500">{chapterName} : {verseNumber}</span>
+          <span className="text-[10px] font-bold text-raudhah-teal/40 uppercase tracking-widest">{chapterName} : {verseNumber}</span>
         </div>
 
         <VerseActionMenu
@@ -130,7 +130,7 @@ const QuranVerseCardComponent: React.FC<QuranVerseCardProps> = ({
       <div className="space-y-6">
         {/* Arabic Text */}
         <div
-          className="text-right leading-[2.5] font-uthmanic text-slate-100"
+          className="text-right leading-[2.5] font-uthmanic text-raudhah-ink"
           style={{ fontSize: `${fontSize}px` }}
         >
           {showTajwid && verse.words ? (
@@ -147,7 +147,7 @@ const QuranVerseCardComponent: React.FC<QuranVerseCardProps> = ({
             {isTTSSupported && (
               <button
                 onClick={handleRumiTTS}
-                className={`flex-shrink-0 inline-flex items-center justify-center p-1.5 rounded-full bg-slate-800 hover:bg-raudhah-teal/10 transition-colors ${isTTSPlaying ? 'text-raudhah-teal animate-pulse' : 'text-slate-400'}`}
+                className={`flex-shrink-0 inline-flex items-center justify-center p-1.5 rounded-full bg-raudhah-teal/10 hover:bg-raudhah-teal/20 transition-colors ${isTTSPlaying ? 'text-raudhah-teal animate-pulse' : 'text-raudhah-teal/40'}`}
                 title="Play Rumi Audio"
               >
                 <span className="text-[10px]">🔊</span>
@@ -158,7 +158,7 @@ const QuranVerseCardComponent: React.FC<QuranVerseCardProps> = ({
 
         {/* Translation */}
         {showTranslation && (
-          <p className="text-base text-slate-300 leading-relaxed font-outfit">
+          <p className="text-base text-raudhah-ink/70 leading-relaxed font-outfit">
             {verse.translations?.[0]?.text}
           </p>
         )}

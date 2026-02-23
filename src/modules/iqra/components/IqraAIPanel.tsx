@@ -2,12 +2,12 @@
  * IqraAIPanel Component
  * 
  * Extracted from IqraInteractiveCoach for reusability
- * Provides AI-powered chat/question interface for Iqra module
+ * Provides AI-powered chat/question interface for Iqra module in Raudhah theme
  */
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Send, Loader2, BrainCircuit } from 'lucide-react';
+import { X, Send, Loader2, BrainCircuit, Sparkles } from 'lucide-react';
 import { askUstazAI } from '../../../services/aiService';
 
 interface IqraAIPanelProps {
@@ -70,28 +70,34 @@ export const IqraAIPanel: React.FC<IqraAIPanelProps> = ({
                     initial={{ y: 200, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     exit={{ y: 200, opacity: 0 }}
-                    className="fixed inset-x-0 bottom-28 p-8 z-50 pointer-events-none"
+                    className="fixed inset-x-0 bottom-28 p-4 md:p-8 z-50 pointer-events-none"
                 >
-                    <div className="max-w-2xl mx-auto glass-v7 border-2 border-primary rounded-[3rem] shadow-[0_40px_100px_rgba(0,0,0,1)] p-8 pointer-events-auto relative overflow-hidden hud-border">
-                        {/* Background Pattern */}
-                        <div className="absolute inset-0 bg-pattern opacity-[0.05] pointer-events-none" />
+                    <div className="max-w-2xl mx-auto bg-raudhah-ivory border-2 border-raudhah-teal rounded-[3.5rem] shadow-2xl p-8 md:p-10 pointer-events-auto relative overflow-hidden">
+                        {/* Status bar top */}
+                        <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-raudhah-teal via-raudhah-gold to-raudhah-teal" />
 
                         {/* Header */}
                         <div className="flex justify-between items-center mb-8 relative z-10">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center glow-primary">
-                                    <BrainCircuit size={20} className="text-primary" />
+                            <div className="flex items-center gap-4">
+                                <div className="w-12 h-12 rounded-2xl bg-raudhah-teal flex items-center justify-center shadow-warm">
+                                    <BrainCircuit size={24} className="text-white" />
                                 </div>
-                                <h3 className="font-black text-white uppercase tracking-[0.3em] text-xs glow-text">
-                                    USTAZ_AI Stream
-                                </h3>
+                                <div>
+                                    <h3 className="font-black text-raudhah-ink uppercase tracking-[0.2em] text-xs">
+                                        Ustaz AI Stream
+                                    </h3>
+                                    <div className="flex items-center gap-1.5 mt-0.5">
+                                        <div className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                                        <span className="text-[10px] font-black text-raudhah-teal/40 uppercase tracking-widest">Neural Link Active</span>
+                                    </div>
+                                </div>
                             </div>
                             <button
                                 onClick={onClose}
-                                className="w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-slate-400 hover:text-white transition-all"
+                                className="w-12 h-12 flex items-center justify-center rounded-2xl glass-v7 text-raudhah-teal hover:bg-raudhah-teal/10 transition-all border border-raudhah-teal/10"
                                 aria-label="Close Chat"
                             >
-                                <X size={20} />
+                                <X size={24} />
                             </button>
                         </div>
 
@@ -103,9 +109,12 @@ export const IqraAIPanel: React.FC<IqraAIPanelProps> = ({
                                     <motion.div
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
-                                        className="bg-white/5 p-6 rounded-3xl border border-white/10 text-md font-medium text-slate-200 leading-relaxed italic backdrop-blur-md"
+                                        className="bg-raudhah-teal/5 p-8 rounded-[2.5rem] border border-raudhah-teal/10 text-lg font-medium text-raudhah-ink leading-relaxed italic"
                                     >
-                                        {chatResponse}
+                                        <div className="flex gap-2 mb-2">
+                                            <Sparkles size={16} className="text-raudhah-gold" />
+                                        </div>
+                                        "{chatResponse}"
                                     </motion.div>
                                 )}
                             </AnimatePresence>
@@ -117,20 +126,20 @@ export const IqraAIPanel: React.FC<IqraAIPanelProps> = ({
                                     value={userQuery}
                                     onChange={(e) => setUserQuery(e.target.value)}
                                     onKeyPress={handleKeyPress}
-                                    placeholder="Query neural network..."
+                                    placeholder="Tanya ustaz sesuatu..."
                                     disabled={isLoading}
-                                    className="flex-1 bg-white/5 border border-white/10 rounded-2xl text-sm p-5 focus:ring-2 focus:ring-primary outline-none text-white tracking-wide disabled:opacity-50"
+                                    className="flex-1 bg-raudhah-teal/5 border border-raudhah-teal/10 rounded-2xl text-md p-5 focus:ring-4 focus:ring-raudhah-teal/10 outline-none text-raudhah-ink tracking-tight font-medium disabled:opacity-50"
                                 />
                                 <button
                                     onClick={handleAskUstaz}
                                     disabled={isLoading || !userQuery.trim()}
-                                    className="bg-primary text-white w-16 h-16 rounded-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all shadow-[0_0_20px_rgba(var(--primary-rgb),0.3)] disabled:opacity-50 disabled:hover:scale-100"
+                                    className="bg-raudhah-teal text-white w-20 h-20 rounded-2xl flex items-center justify-center hover:scale-[1.05] active:scale-95 transition-all shadow-warm disabled:opacity-50 group"
                                     aria-label="Send message"
                                 >
                                     {isLoading ? (
-                                        <Loader2 className="animate-spin" size={24} />
+                                        <Loader2 className="animate-spin" size={28} />
                                     ) : (
-                                        <Send size={24} />
+                                        <Send size={28} className="group-hover:translate-x-1 transition-transform" />
                                     )}
                                 </button>
                             </div>

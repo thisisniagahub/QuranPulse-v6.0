@@ -111,7 +111,7 @@ const QuranList: React.FC<QuranListProps> = ({
     const juzList = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
 
     return (
-        <div className="min-h-screen pb-32 bg-midnight-gradient relative overflow-hidden font-sans">
+        <div className="min-h-screen pb-32 bg-raudhah-ivory relative overflow-hidden font-sans">
 
             {/* 1. ATMOSPHERE BACKGROUND */}
             <div className="absolute inset-0 pointer-events-none opacity-20 bg-pattern-dots-raudhah z-0"></div>
@@ -141,9 +141,9 @@ const QuranList: React.FC<QuranListProps> = ({
                     <img loading="lazy"
                         src="https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop"
                         alt="Celestial Library Background"
-                        className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-1000 ease-in-out"
+                        className="w-full h-full object-cover opacity-10 group-hover:scale-105 transition-transform duration-1000 ease-in-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-midnight-gradient/0 via-midnight-gradient/60 to-midnight-gradient"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-raudhah-ivory/0 via-raudhah-ivory/80 to-raudhah-ivory"></div>
                 </div>
 
                 <motion.div
@@ -151,10 +151,10 @@ const QuranList: React.FC<QuranListProps> = ({
                     animate={{ opacity: 1, y: 0 }}
                     className="relative inline-block z-10"
                 >
-                    <h1 className="text-6xl md:text-8xl font-black text-white/5 tracking-tighter mb-2 absolute -top-6 left-1/2 -translate-x-1/2 w-full select-none pointer-events-none">
+                    <h1 className="text-6xl md:text-8xl font-black text-raudhah-teal/5 tracking-tighter mb-2 absolute -top-6 left-1/2 -translate-x-1/2 w-full select-none pointer-events-none">
                         AL-QURAN
                     </h1>
-                    <h1 className="text-3xl md:text-5xl font-black text-white mb-2 relative z-10 drop-shadow-[0_0_25px_rgba(255,255,255,0.2)] tracking-tight">
+                    <h1 className="text-3xl md:text-5xl font-black text-raudhah-ink mb-2 relative z-10 drop-shadow-[0_0_25px_rgba(27,107,90,0.1)] tracking-tight">
                         The Celestial <span className="text-raudhah-teal">Library</span>
                     </h1>
                 </motion.div>
@@ -182,14 +182,14 @@ const QuranList: React.FC<QuranListProps> = ({
                                 exit={{ opacity: 0, height: 0 }}
                                 className="flex justify-center mt-4"
                             >
-                                <div className="inline-flex p-1 bg-[#0c224b]/80 backdrop-blur-md rounded-full border border-white/10 shadow-lg">
+                                <div className="inline-flex p-1 bg-raudhah-teal/5 backdrop-blur-md rounded-full border border-raudhah-teal/10 shadow-warm">
                                     {(['surah', 'juz', 'revelation'] as const).map((tab) => (
                                         <button
                                             key={tab}
                                             onClick={() => setActiveTab(tab)}
                                             className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest transition-all duration-300 ${activeTab === tab
-                                                ? 'bg-raudhah-teal/10 text-raudhah-teal border border-raudhah-teal/20 shadow-[0_0_15px_rgba(34,211,238,0.2)]'
-                                                : 'text-slate-400 hover:text-white hover:bg-white/5 border border-transparent'
+                                                ? 'bg-raudhah-teal/10 text-raudhah-teal border border-raudhah-teal/20 shadow-warm'
+                                                : 'text-raudhah-teal/40 hover:text-raudhah-teal hover:bg-raudhah-teal/5 border border-transparent'
                                                 }`}
                                         >
                                             {tab === 'surah' ? 'SURAH' : tab === 'juz' ? 'JUZ GRID' : 'ORDER'}

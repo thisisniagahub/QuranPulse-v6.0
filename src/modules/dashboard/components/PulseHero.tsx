@@ -56,7 +56,7 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
 
     // Circular Progress Calculation
     const [progress, setProgress] = useState(0);
-    
+
     useEffect(() => {
         if (!nextPrayerTime) return;
         const totalDuration = 1000 * 60 * 60 * 2; // Assume 2 hour window for visualization or calc real diff
@@ -87,18 +87,18 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                         alt=""
                         className="w-full h-full object-cover opacity-60 scale-110"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-[#0c224b]/80 via-[#0c224b]/40 to-[#031a38]"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#0f3d32]/60 via-[#1B6B5A]/20 to-[#0a2e25]"></div>
                 </motion.div>
             </AnimatePresence>
 
             {/* 🌀 Rotating Geometric Halo */}
             <div className="absolute inset-0 flex items-center justify-center opacity-20 pointer-events-none">
-                 <div className="w-[400px] h-[400px] bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-center bg-no-repeat bg-contain animate-spin-slow duration-[60s]"></div>
+                <div className="w-[400px] h-[400px] bg-[url('/assets/patterns/cyber-islamic-grid.svg')] bg-center bg-no-repeat bg-contain animate-spin-slow duration-[60s]"></div>
             </div>
 
             {/* 💎 Glass Content Layer */}
             <div className="relative z-10 h-full flex flex-col justify-between p-6">
-                
+
                 {/* Header: Greeting & Date */}
                 <div className="flex justify-between items-start w-full opacity-80">
                     <div>
@@ -121,18 +121,18 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                         {/* SVG Ring */}
                         <svg className="absolute inset-0 w-full h-full -rotate-90">
                             <circle cx="50%" cy="50%" r="70" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="4" />
-                            <motion.circle 
-                                cx="50%" cy="50%" r="70" 
-                                fill="none" 
-                                stroke="#22d3ee" 
+                            <motion.circle
+                                cx="50%" cy="50%" r="70"
+                                fill="none"
+                                stroke="#1B6B5A"
                                 strokeWidth="4"
                                 strokeLinecap="round"
                                 strokeDasharray="440"
                                 strokeDashoffset={440 - (440 * progress) / 100}
                                 initial={{ strokeDashoffset: 440 }}
-                                animate={{ strokeDashoffset: 440 - (440 * progress) / 100 }}        
+                                animate={{ strokeDashoffset: 440 - (440 * progress) / 100 }}
                                 transition={{ duration: 1 }}
-                                className="drop-shadow-[0_0_8px_rgba(34,211,238,0.6)]"
+                                className="drop-shadow-[0_0_12px_rgba(27,107,90,0.4)]"
                             />
                         </svg>
 
@@ -140,7 +140,7 @@ const PulseHero: React.FC<PulseHeroProps> = ({ user, prayerData }) => {
                         <div className="flex flex-col items-center">
                             <p className="text-[9px] font-bold text-slate-400 uppercase tracking-[0.2em] mb-1">SETERUSNYA</p>
                             <h1 className="text-3xl font-black text-white tracking-tighter drop-shadow-lg">{nextPrayerGroup}</h1>
-                            <p className="text-sm font-mono font-medium text-raudhah-teal mt-1 bg-teal-950/50 px-2 py-0.5 rounded border border-raudhah-teal/20">{timeLeft}</p>
+                            <p className="text-sm font-mono font-medium text-raudhah-teal mt-1 bg-raudhah-teal/10 px-2 py-0.5 rounded border border-raudhah-teal/20 backdrop-blur-md">{timeLeft}</p>
                         </div>
                     </div>
                 </div>

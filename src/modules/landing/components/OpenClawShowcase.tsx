@@ -102,7 +102,7 @@ export const OpenClawShowcase: React.FC = () => {
                         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                         className="relative z-20 w-48 h-48 bg-white/80 backdrop-blur-[50px] rounded-[3rem] border border-raudhah-teal/10 shadow-[0_50px_100px_-20px_rgba(27,107,90,0.4)] flex items-center justify-center p-10 group"
                     >
-                        <img src="/logo-primary.png" className="w-full h-full object-contain filter drop-shadow-[0_0_30px_rgba(27,107,90,0.5)] group-hover:scale-110 transition-transform duration-700" alt="Nadi" />
+                        <img src="/logo-primary.png" className="w-full h-full object-contain filter group-hover:scale-110 transition-transform duration-700" alt="Nadi" />
                         <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-tr from-raudhah-teal/5 to-transparent opacity-30"></div>
                     </motion.div>
 

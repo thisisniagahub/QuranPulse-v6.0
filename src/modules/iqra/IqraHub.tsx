@@ -1,8 +1,23 @@
+/**
+ * 🎓 Iqra' Hub
+ * The central bookshelf for digital learning modules
+ * 
+ * Features:
+ * - Interactive Bookshelf with progress tracking
+ * - Star-based achievement system
+ * - Responsive page grid for each volume
+ * - Raudhah Premium Design Sync
+ */
+
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useIqraStore } from './store/iqraStore';
 import { IQRA_MASTER_DATA } from './data/master-index';
 import { IqraPageStrict } from './data/iqra-1-strict';
+import {
+    ChevronLeft, Play, Star, Lock, BookOpen,
+    Trophy, Gamepad, Sparkles, Book
+} from 'lucide-react';
 
 interface IqraHubProps {
     onSelectPage: (volume: number, pageIndex: number) => void;
@@ -10,31 +25,27 @@ interface IqraHubProps {
 }
 
 const VOLUMES = [
-    { id: 1, title: "Iqra' 1", subtitle: "Huruf Tunggal", color: "from-emerald-500 to-teal-500", shadow: "shadow-emerald-500/20", icon: "1", totalPages: 21 },
-    { id: 2, title: "Iqra' 2", subtitle: "Huruf Bersambung", color: "from-blue-500 to-teal-500", shadow: "shadow-blue-500/20", icon: "2", totalPages: 10 },
-    { id: 3, title: "Iqra' 3", subtitle: "Mad Asli", color: "from-teal-500 to-emerald-500", shadow: "shadow-teal-500/20", icon: "3", totalPages: 12 },
-    { id: 4, title: "Iqra' 4", subtitle: "Baris Tanwin", color: "from-emerald-500 to-amber-500", shadow: "shadow-emerald-500/20", icon: "4", totalPages: 11 },
-    { id: 5, title: "Iqra' 5", subtitle: "Waqaf & Tajwid", color: "from-pink-500 to-rose-500", shadow: "shadow-pink-500/20", icon: "5", totalPages: 11 },
-    { id: 6, title: "Iqra' 6", subtitle: "Latihan & Nun Sabdu", color: "from-orange-500 to-amber-500", shadow: "shadow-orange-500/20", icon: "6", totalPages: 13 }
+    { id: 1, title: "Iqra' 1", subtitle: "Huruf Tunggal", color: "bg-raudhah-teal", accent: "text-raudhah-gold", icon: "1", totalPages: 21 },
+    { id: 2, title: "Iqra' 2", subtitle: "Huruf Bersambung", color: "bg-emerald-600", accent: "text-raudhah-gold", icon: "2", totalPages: 10 },
+    { id: 3, title: "Iqra' 3", subtitle: "Mad Asli", color: "bg-teal-700", accent: "text-raudhah-gold", icon: "3", totalPages: 12 },
+    { id: 4, title: "Iqra' 4", subtitle: "Baris Tanwin", color: "bg-cyan-700", accent: "text-raudhah-gold", icon: "4", totalPages: 11 },
+    { id: 5, title: "Iqra' 5", subtitle: "Waqaf & Tajwid", color: "bg-indigo-700", accent: "text-raudhah-gold", icon: "5", totalPages: 11 },
+    { id: 6, title: "Iqra' 6", subtitle: "Latihan & Nun Sabdu", color: "bg-purple-700", accent: "text-raudhah-gold", icon: "6", totalPages: 13 }
 ];
 
 const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
     const [selectedVolume, setSelectedVolume] = useState<number | null>(null);
     const { unlockedPages, progress, lastRead, totalStars } = useIqraStore();
-
-    // Auto-scroll to selected volume if needed
     const containerRef = React.useRef<HTMLDivElement>(null);
 
     const currentBookData = selectedVolume ? IQRA_MASTER_DATA[selectedVolume] : [];
 
     const handleVolumeSelect = (volId: number) => {
-        // if (!volumes[volId].isUnlocked) return; // Optional locking logic
         setSelectedVolume(volId);
     };
 
     return (
-        <div className="w-full h-full overflow-y-visible px-4 pb-32 no-scrollbar">
-
+        <div className="w-full h-full min-h-screen bg-raudhah-ivory px-4 pb-32 no-scrollbar font-sans">
             <AnimatePresence mode="wait">
                 {!selectedVolume ? (
                     <motion.div
@@ -49,32 +60,40 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
                             <motion.div
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
-                                className="flex-1 bg-surface/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 relative overflow-hidden group"
+                                className="flex-1 glass-v7 rounded-3xl p-8 relative overflow-hidden group shadow-warm border border-raudhah-teal/10"
                             >
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-emerald-500/20 transition-all duration-700"></div>
+                                <div className="absolute top-0 right-0 w-64 h-64 bg-raudhah-teal/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-raudhah-teal/10 transition-all duration-700"></div>
 
-                                <h1 className="text-4xl font-black text-white mb-2">
+                                <div className="flex items-center gap-3 mb-4">
+                                    <div className="w-10 h-10 bg-raudhah-teal rounded-xl flex items-center justify-center shadow-warm">
+                                        <BookOpen className="w-5 h-5 text-white" />
+                                    </div>
+                                    <span className="text-[10px] font-black text-raudhah-teal/60 uppercase tracking-widest">Digital Iqra' Library</span>
+                                </div>
+
+                                <h1 className="text-4xl font-black text-raudhah-ink mb-2">
                                     Assalamu'alaikum!
                                 </h1>
-                                <p className="text-slate-400 mb-6 text-lg">
-                                    Ready to continue your journey?
+                                <p className="text-raudhah-teal/60 mb-8 text-lg font-medium">
+                                    Sedia untuk menyambung perjalanan anda?
                                 </p>
 
                                 {lastRead ? (
                                     <button
                                         onClick={() => onSelectPage(lastRead.volume, lastRead.page)}
-                                        className="bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-emerald-500/25 flex items-center gap-3 w-fit"
+                                        className="bg-raudhah-teal hover:bg-raudhah-ink text-white px-8 py-3.5 rounded-2xl font-black transition-all shadow-warm flex items-center gap-3 w-fit group/btn"
                                     >
-                                        <i className="fa-solid fa-play"></i>
-                                        Continue Iqra' {lastRead.volume}
+                                        <Play className="w-5 h-5 fill-current" />
+                                        Sambung Iqra' {lastRead.volume}
+                                        <ChevronLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
                                     </button>
                                 ) : (
                                     <button
                                         onClick={() => setSelectedVolume(1)}
-                                        className="bg-emerald-500 hover:bg-emerald-400 text-white px-8 py-3 rounded-xl font-bold transition-all shadow-lg shadow-emerald-500/25 flex items-center gap-3 w-fit"
+                                        className="bg-raudhah-teal hover:bg-raudhah-ink text-white px-8 py-3.5 rounded-2xl font-black transition-all shadow-warm flex items-center gap-3 w-fit"
                                     >
-                                        <i className="fa-solid fa-play"></i>
-                                        Start with Iqra' 1
+                                        <Play className="w-5 h-5 fill-current" />
+                                        Mula Iqra' 1
                                     </button>
                                 )}
                             </motion.div>
@@ -84,25 +103,27 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
                                 initial={{ y: 20, opacity: 0 }}
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: 0.1 }}
-                                className="w-full md:w-80 bg-surface/50 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col justify-center items-center relative overflow-hidden"
+                                className="w-full md:w-80 glass-v7 rounded-3xl p-8 flex flex-col justify-center items-center relative overflow-hidden shadow-warm border border-raudhah-teal/10"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent"></div>
-                                <div className="text-yellow-400 text-5xl mb-2 filter drop-shadow-glow">
-                                    <i className="fa-solid fa-star"></i>
+                                <div className="absolute inset-0 bg-gradient-to-br from-raudhah-gold/10 to-transparent"></div>
+                                <div className="text-raudhah-gold mb-3">
+                                    <Star className="w-12 h-12 fill-current filter drop-shadow-glow" />
                                 </div>
-                                <div className="text-4xl font-black text-white mb-1">{totalStars}</div>
-                                <div className="text-slate-400 font-medium">Total Stars</div>
+                                <div className="text-5xl font-black text-raudhah-ink mb-1">{totalStars}</div>
+                                <div className="text-raudhah-teal/40 font-bold uppercase tracking-widest text-xs">Jumlah Bintang</div>
                             </motion.div>
                         </div>
 
                         {/* VOLUMES CAROUSEL */}
                         <div className="mb-8 flex items-center justify-between">
-                            <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-teal-400">
-                                    Your Bookshelf
-                                </span>
+                            <h2 className="text-2xl font-black text-raudhah-ink flex items-center gap-3">
+                                <Sparkles className="w-6 h-6 text-raudhah-gold" />
+                                <span className="uppercase tracking-tight">Koleksi Buku</span>
                             </h2>
-                            <span className="text-sm text-slate-500 font-medium">Swipe to explore</span>
+                            <div className="flex items-center gap-2 text-xs font-bold text-raudhah-teal/40 uppercase tracking-widest">
+                                <span>Tatal untuk lihat</span>
+                                <div className="w-8 h-px bg-raudhah-teal/20" />
+                            </div>
                         </div>
 
                         <div
@@ -110,18 +131,15 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
                             className="flex overflow-x-auto gap-6 pb-12 snap-x snap-mandatory px-2 no-scrollbar scroll-smooth"
                         >
                             {VOLUMES.map((vol, idx) => {
-                                // Progress Calculation
                                 const volProgress = progress[vol.id] || {};
                                 const completedCount = Object.values(volProgress).filter(p => p.completed).length;
                                 const total = vol.totalPages;
                                 const percent = Math.round((completedCount / total) * 100);
 
-                                // Unlock Logic: Unlocked if it's Vol 1, or if previous volume is completed
                                 const isUnlocked = (() => {
                                     if (vol.id === 1) return true;
                                     const prevVol = VOLUMES.find(v => v.id === vol.id - 1);
                                     if (!prevVol) return true;
-
                                     const prevPrg = progress[prevVol.id] || {};
                                     const prevDone = Object.values(prevPrg).filter(p => p.completed).length;
                                     return prevDone >= prevVol.totalPages;
@@ -135,48 +153,51 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
                                         transition={{ delay: idx * 0.1 }}
                                         onClick={() => handleVolumeSelect(vol.id)}
                                         disabled={!isUnlocked}
-                                        className={`group relative flex-shrink-0 w-72 h-96 rounded-3xl snap-center text-left transition-all duration-500
-                                            ${isUnlocked ? 'hover:-translate-y-2 hover:shadow-2xl' : 'opacity-60 grayscale cursor-not-allowed'}
+                                        className={`group relative flex-shrink-0 w-72 h-96 rounded-[2.5rem] snap-center text-left transition-all duration-500
+                                            ${isUnlocked ? 'hover:-translate-y-4 shadow-warm hover:shadow-2xl' : 'opacity-40 grayscale cursor-not-allowed'}
                                         `}
                                     >
                                         {/* Background Layer */}
-                                        <div className={`absolute inset-0 rounded-3xl bg-gradient-to-br ${vol.color} opacity-10 group-hover:opacity-20 transition-all duration-500`} />
-                                        <div className="absolute inset-0 rounded-3xl border border-white/10 group-hover:border-white/30 transition-all duration-500" />
+                                        <div className={`absolute inset-0 rounded-[2.5rem] ${vol.color} opacity-5 group-hover:opacity-10 transition-all duration-500`} />
+                                        <div className="absolute inset-0 rounded-[2.5rem] border border-raudhah-teal/10 group-hover:border-raudhah-gold/50 transition-all duration-500" />
+                                        <div className="absolute inset-0 glass-v7 rounded-[2.5rem] -z-10" />
 
                                         {/* Content */}
                                         <div className="absolute inset-0 p-8 flex flex-col z-10">
                                             {/* Top Icon */}
                                             <div className="flex justify-between items-start mb-auto">
-                                                <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${vol.color} flex items-center justify-center text-white font-black text-2xl shadow-lg ring-1 ring-white/20 group-hover:scale-110 transition-transform duration-500`}>
+                                                <div className={`w-16 h-16 rounded-2xl ${vol.color} flex items-center justify-center text-white font-black text-3xl shadow-warm ring-1 ring-white/20 group-hover:scale-110 transition-transform duration-500`}>
                                                     {vol.icon}
                                                 </div>
-                                                {!isUnlocked && <i className="fa-solid fa-lock text-slate-500 text-xl"></i>}
+                                                {!isUnlocked && <Lock className="w-6 h-6 text-raudhah-teal/30" />}
+                                                {isUnlocked && percent === 100 && <Trophy className="w-6 h-6 text-raudhah-gold animate-bounce" />}
                                             </div>
 
                                             {/* Titles */}
                                             <div className="mb-6">
-                                                <h3 className="text-3xl font-black text-white mb-2 tracking-tight group-hover:tracking-normal transition-all">{vol.title}</h3>
-                                                <p className="text-slate-400 font-medium leading-tight">{vol.subtitle}</p>
+                                                <div className="text-[10px] font-black text-raudhah-gold uppercase tracking-widest mb-1 group-hover:tracking-[0.2em] transition-all">Volume {vol.id}</div>
+                                                <h3 className="text-3xl font-black text-raudhah-ink mb-1 tracking-tight">{vol.title}</h3>
+                                                <p className="text-raudhah-teal/60 font-medium text-sm leading-tight">{vol.subtitle}</p>
                                             </div>
 
                                             {/* Progress Bar */}
-                                            <div className="bg-slate-800/50 rounded-full h-3 w-full overflow-hidden backdrop-blur-sm">
+                                            <div className="bg-raudhah-teal/10 rounded-full h-2 w-full overflow-hidden mb-2">
                                                 <motion.div
-                                                    className={`h-full bg-gradient-to-r ${vol.color}`}
+                                                    className={`h-full ${vol.color} shadow-glow`}
                                                     initial={{ width: "0%" }}
                                                     animate={{ width: `${percent}%` }}
                                                     transition={{ duration: 1, ease: "easeOut" }}
                                                 />
                                             </div>
-                                            <div className="flex justify-between mt-2 text-xs font-bold text-slate-400">
-                                                <span>{percent}% Complete</span>
-                                                <span>{completedCount}/{total}</span>
+                                            <div className="flex justify-between text-[10px] font-black text-raudhah-teal/40 uppercase tracking-widest">
+                                                <span>{percent}% SELESAI</span>
+                                                <span>{completedCount}/{total} MUKA</span>
                                             </div>
 
                                             {/* Action Text */}
-                                            <div className="mt-6 flex items-center gap-2 text-sm font-bold text-white/40 group-hover:text-white transition-colors">
-                                                <span>{isUnlocked ? 'Open Book' : 'Locked'}</span>
-                                                {isUnlocked && <i className="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>}
+                                            <div className="mt-8 flex items-center gap-2 text-xs font-black text-raudhah-teal/20 group-hover:text-raudhah-teal transition-colors uppercase tracking-widest">
+                                                <span>{isUnlocked ? 'Buka Buku' : 'Terkunci'}</span>
+                                                {isUnlocked && <ChevronLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />}
                                             </div>
                                         </div>
                                     </motion.button>
@@ -186,25 +207,28 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
 
                         {/* Extra Modes (Mini Games) */}
                         {onStartGame && (
-                            <div className="mt-8">
-                                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Aktiviti Tambahan</h3>
-                                <div className="grid grid-cols-2 gap-4">
+                            <div className="mt-8 p-6 glass-v7 rounded-3xl border border-raudhah-teal/10 shadow-warm">
+                                <div className="flex items-center gap-2 mb-6">
+                                    <div className="w-1.5 h-6 bg-raudhah-gold rounded-full" />
+                                    <h3 className="text-sm font-black text-raudhah-ink uppercase tracking-widest">Latihan Pengukuhan</h3>
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                     <button
                                         onClick={onStartGame}
-                                        className="bg-[#111]/50 border border-white/10 p-4 rounded-xl flex items-center gap-3 hover:bg-white/5 transition-colors"
+                                        className="bg-raudhah-teal/5 hover:bg-raudhah-teal/10 border border-raudhah-teal/10 p-5 rounded-2xl flex items-center gap-4 transition-all group"
                                     >
-                                        <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                                            <i className="fa-solid fa-gamepad text-lg"></i>
+                                        <div className="w-12 h-12 rounded-xl bg-raudhah-teal flex items-center justify-center text-white shadow-warm group-hover:scale-110 transition-transform">
+                                            <Gamepad className="w-6 h-6" />
                                         </div>
                                         <div className="text-left">
-                                            <p className="font-bold text-sm text-white">Mini Games</p>
-                                            <p className="text-xs text-slate-500">Uji Minda</p>
+                                            <p className="font-black text-raudhah-ink uppercase tracking-tight">Iqra' Challenge</p>
+                                            <p className="text-xs text-raudhah-teal/60 font-medium">Uji kepantasan mengecam huruf</p>
                                         </div>
+                                        <ChevronLeft className="w-5 h-5 rotate-180 ml-auto text-raudhah-teal/20 group-hover:text-raudhah-teal transition-colors" />
                                     </button>
                                 </div>
                             </div>
                         )}
-
                     </motion.div>
                 ) : (
                     <motion.div
@@ -217,22 +241,22 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
                         <div className="flex items-center gap-6 mb-12">
                             <button
                                 onClick={() => setSelectedVolume(null)}
-                                title="Back to Bookshelf"
-                                aria-label="Back to Bookshelf"
-                                className="w-12 h-12 rounded-full bg-surface hover:bg-surface/80 border border-white/10 text-white flex items-center justify-center transition-all hover:scale-110 active:scale-95"
+                                className="w-14 h-14 rounded-2xl glass-v7 hover:bg-white border border-raudhah-teal/10 text-raudhah-teal flex items-center justify-center transition-all shadow-warm hover:scale-110 active:scale-95 group"
                             >
-                                <i className="fa-solid fa-arrow-left"></i>
+                                <ChevronLeft className="w-6 h-6 group-hover:-translate-x-1 transition-transform" />
                             </button>
                             <div>
-                                <h2 className="text-3xl font-black text-white">Iqra' {selectedVolume}</h2>
-                                <p className="text-slate-400">Select a page to practice</p>
+                                <div className="flex items-center gap-2 mb-1">
+                                    <Book className="w-4 h-4 text-raudhah-gold" />
+                                    <span className="text-[10px] font-black text-raudhah-teal/60 uppercase tracking-[0.2em]">Kandungan Buku</span>
+                                </div>
+                                <h2 className="text-4xl font-black text-raudhah-ink tracking-tight uppercase">Iqra' {selectedVolume}</h2>
                             </div>
                         </div>
 
                         {/* Page Path/Grid */}
-                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6">
                             {currentBookData.map((page: IqraPageStrict, index: number) => {
-                                // Status Logic from Store
                                 const pageStatus = progress[selectedVolume]?.[index];
                                 const isCompleted = pageStatus?.completed;
                                 const stars = pageStatus?.stars || 0;
@@ -246,42 +270,48 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
                                         layoutId={`pg-${selectedVolume}-${index}`}
                                         onClick={() => isUnlocked && onSelectPage(selectedVolume, index)}
                                         disabled={!isUnlocked}
-                                        initial={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: isUnlocked ? 1 : 0.5, scale: 1 }}
-                                        whileHover={isUnlocked ? { y: -5 } : {}}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: index * 0.05 }}
+                                        whileHover={isUnlocked ? { y: -8, scale: 1.02 } : {}}
                                         className={`
-                                            relative h-32 rounded-2xl border flex flex-col items-center justify-center p-4 transition-all overflow-hidden
+                                            relative h-44 rounded-3xl flex flex-col items-center justify-center p-6 transition-all overflow-hidden border
                                             ${isCurrent
-                                                ? 'bg-emerald-500/10 border-emerald-500/50 shadow-lg shadow-emerald-500/10'
+                                                ? 'bg-raudhah-teal/5 border-raudhah-gold/50 shadow-warm'
                                                 : isUnlocked
-                                                    ? 'bg-surface/30 border-white/5 hover:bg-surface/50 hover:border-white/20'
-                                                    : 'bg-surface/10 border-white/5 cursor-not-allowed opacity-50 grayscale'
+                                                    ? 'glass-v7 border-raudhah-teal/10 hover:border-raudhah-teal/30 shadow-sm'
+                                                    : 'bg-raudhah-teal/5 border-raudhah-teal/5 cursor-not-allowed opacity-30 grayscale'
                                             }
                                         `}
                                     >
-                                        <span className={`text-2xl font-black mb-1 ${isCurrent ? 'text-emerald-400' : 'text-slate-500'}`}>
-                                            {index + 1}
+                                        <div className={`absolute top-0 left-0 w-full h-1 ${isCurrent ? 'bg-raudhah-gold' : ''}`} />
+
+                                        <span className={`text-4xl font-black mb-2 font-mono ${isCurrent ? 'text-raudhah-teal' : 'text-raudhah-ink/40'}`}>
+                                            {(index + 1).toString().padStart(2, '0')}
                                         </span>
 
                                         {/* Status Indicators */}
-                                        <div className="flex gap-1 mt-2">
+                                        <div className="flex gap-1.5 mt-2 mb-4">
                                             {[1, 2, 3].map(star => (
-                                                <i key={star} className={`fa-solid fa-star text-[10px] ${star <= stars ? 'text-yellow-400' : 'text-slate-700'}`}></i>
+                                                <Star key={star} className={`w-3.5 h-3.5 ${star <= stars ? 'text-raudhah-gold fill-current' : 'text-raudhah-teal/10'}`} />
                                             ))}
                                         </div>
 
-                                        <span className="text-[10px] text-center text-slate-400 mt-3 line-clamp-1 w-full px-1 opacity-70">
+                                        <span className="text-[10px] font-black text-center text-raudhah-teal/60 uppercase tracking-widest line-clamp-1 w-full px-1">
                                             {page.focus}
                                         </span>
 
+                                        {/* Background Decorative */}
+                                        <div className="absolute -bottom-4 -right-4 w-20 h-20 bg-raudhah-gold/5 rounded-full blur-2xl group-hover:bg-raudhah-gold/10 transition-all"></div>
+
                                         {isCompleted && (
-                                            <div className="absolute top-2 right-2 text-emerald-500 text-xs bg-emerald-500/10 p-1 rounded-full">
-                                                <i className="fa-solid fa-check"></i>
+                                            <div className="absolute top-3 right-3 w-6 h-6 bg-raudhah-teal rounded-full flex items-center justify-center text-white shadow-warm">
+                                                <Trophy className="w-3 h-3" />
                                             </div>
                                         )}
                                         {!isUnlocked && (
-                                            <div className="absolute top-2 right-2 text-slate-600 text-xs">
-                                                <i className="fa-solid fa-lock"></i>
+                                            <div className="absolute top-3 right-3 text-raudhah-teal/20">
+                                                <Lock className="w-4 h-4" />
                                             </div>
                                         )}
                                     </motion.button>

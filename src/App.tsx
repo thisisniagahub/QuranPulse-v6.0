@@ -58,7 +58,7 @@ const LoadingFallback = () => (
     {/* Rings Removed */}
     <div className="relative w-32 h-32 flex items-center justify-center mb-8">
       <div className="relative z-10 w-20 h-20 bg-raudhah-teal/5 rounded-2xl flex items-center justify-center backdrop-blur-sm border border-raudhah-teal/10 animate-pulse">
-        <img src="/logo-primary.png" alt="Logo" className="w-12 h-12 object-contain opacity-80" />
+        <img src="/logo-primary.png" alt="Logo" className="w-12 h-12 object-contain" />
       </div>
     </div>
 

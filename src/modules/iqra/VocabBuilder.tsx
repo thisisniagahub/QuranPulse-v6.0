@@ -1,4 +1,12 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
+import { supabase } from '@/lib/supabase';
+import {
+  BookOpen, CheckCircle2, Volume2, ArrowRight, X,
+  Layers, PlayCircle, Star, Sparkles, ChevronRight,
+  Trophy, MessageSquare
+} from 'lucide-react';
 
 interface Word {
   arabic: string;
@@ -15,22 +23,17 @@ interface Lesson {
   words: Word[];
 }
 
-import { useQuery } from '@tanstack/react-query';
-import { supabase } from '@/lib/supabase';
-
-// ... interfaces ...
-
 const fetchLessons = async () => {
   const { data, error } = await supabase
     .from('vocab_lessons')
     .select('*')
     .order('created_at', { ascending: true });
-  
+
   if (error) throw error;
   return data as Lesson[];
 };
 
-const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
+const VocabBuilder: React.FC = () => {
   const [activeLesson, setActiveLesson] = useState<Lesson | null>(null);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [showTranslation, setShowTranslation] = useState(false);
@@ -56,120 +59,154 @@ const VocabBuilder: React.FC<{ isDark: boolean }> = ({ isDark }) => {
     setActiveLesson(null);
   };
 
-  if (activeLesson) {
-    const word = activeLesson.words[currentWordIndex];
-    const progress = ((currentWordIndex + 1) / activeLesson.words.length) * 100;
-
-    return (
-      <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${isDark ? 'bg-black/90' : 'bg-white/90'} backdrop-blur-xl`}>
-        <div className={`w-full max-w-md rounded-3xl p-8 relative overflow-hidden ${isDark ? 'bg-slate-900 border border-slate-700' : 'bg-white border border-slate-200'} shadow-2xl`}>
-            
-            {/* Close Button */}
-            <button onClick={closeLesson} className="absolute top-4 right-4 text-slate-500 hover:text-red-500 transition-colors" aria-label="Close Lesson">
-                <i className="fa-solid fa-times text-xl"></i>
-            </button>
-
-            {completed ? (
-                <div className="text-center py-10 animate-fade-in">
-                    <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-                        <i className="fa-solid fa-check text-4xl text-green-500"></i>
-                    </div>
-                    <h2 className={`text-2xl font-bold mb-2 ${isDark ? 'text-white' : 'text-slate-900'}`}>Lesson Complete!</h2>
-                    <p className="text-slate-500 mb-8">You've mastered {activeLesson.words.length} new words.</p>
-                    <button onClick={closeLesson} className="w-full py-3 bg-raudhah-teal hover:bg-raudhah-teal text-white rounded-xl font-bold transition-all shadow-lg shadow-teal-500/30">
-                        Continue
-                    </button>
-                </div>
-            ) : (
-                <>
-                    {/* Progress Bar */}
-                    <div className="w-full h-1.5 bg-slate-700/30 rounded-full mb-8 overflow-hidden">
-                        <div className="h-full bg-raudhah-teal transition-all duration-300 w-[var(--progress-width)]" 
-                        // eslint-disable-next-line
-                        style={{ '--progress-width': `${progress}%` } as React.CSSProperties}></div>
-                    </div>
-
-                    {/* Flashcard */}
-                    <div className="text-center py-6 cursor-pointer" onClick={() => setShowTranslation(!showTranslation)}>
-                        <h3 className={`text-5xl font-arabic mb-6 ${isDark ? 'text-white' : 'text-slate-900'}`}>{word.arabic}</h3>
-                        
-                        <div className={`transition-all duration-300 ${showTranslation ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-                            <p className="text-xl text-raudhah-teal font-bold mb-2">{word.transliteration}</p>
-                            <p className="text-lg text-slate-500">{word.translation}</p>
-                        </div>
-                        
-                        {!showTranslation && (
-                            <p className="text-sm text-slate-500 mt-8 animate-pulse">Tap to reveal</p>
-                        )}
-                    </div>
-
-                    {/* Controls */}
-                    <div className="mt-10 flex gap-4">
-                        <button className={`flex-1 py-3 rounded-xl font-bold border ${isDark ? 'border-slate-700 text-slate-300 hover:bg-slate-800' : 'border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
-                            <i className="fa-solid fa-volume-high mr-2"></i> Listen
-                        </button>
-                        <button 
-                            onClick={nextWord}
-                            disabled={!showTranslation}
-                            className={`flex-1 py-3 rounded-xl font-bold transition-all ${
-                                showTranslation 
-                                ? 'bg-raudhah-teal text-white hover:bg-raudhah-teal shadow-lg shadow-teal-500/30' 
-                                : 'bg-slate-700/50 text-slate-500 cursor-not-allowed'
-                            }`}
-                        >
-                            Next <i className="fa-solid fa-arrow-right ml-2"></i>
-                        </button>
-                    </div>
-                </>
-            )}
-        </div>
-      </div>
-    );
-  }
-
   const { data: lessons, isLoading, error } = useQuery({
     queryKey: ['vocab_lessons'],
     queryFn: fetchLessons
   });
 
-  if (isLoading) return <div className="text-center p-8 text-slate-500">Loading lessons...</div>;
-  if (error) return <div className="text-center p-8 text-red-500">Failed to load lessons</div>;
+  if (activeLesson) {
+    const word = activeLesson.words[currentWordIndex];
+    const progress = ((currentWordIndex + 1) / activeLesson.words.length) * 100;
+
+    return (
+      <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-raudhah-ink/40 backdrop-blur-md">
+        <motion.div
+          initial={{ scale: 0.9, y: 20, opacity: 0 }}
+          animate={{ scale: 1, y: 0, opacity: 1 }}
+          className="w-full max-w-md bg-raudhah-ivory border border-raudhah-teal/10 rounded-[3.5rem] p-10 relative overflow-hidden shadow-2xl"
+        >
+          <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-raudhah-teal via-raudhah-gold to-raudhah-teal" />
+
+          {/* Close Button */}
+          <button onClick={closeLesson} className="absolute top-8 right-8 text-raudhah-teal/40 hover:text-raudhah-red p-2 rounded-2xl hover:bg-raudhah-teal/5 transition-all" aria-label="Close Lesson">
+            <X size={24} />
+          </button>
+
+          {completed ? (
+            <div className="text-center py-10 space-y-8 animate-fade-in">
+              <div className="w-24 h-24 bg-raudhah-teal/10 rounded-full flex items-center justify-center mx-auto relative">
+                <div className="absolute inset-0 bg-raudhah-teal/5 animate-ping rounded-full" />
+                <Trophy className="w-12 h-12 text-raudhah-teal" />
+              </div>
+              <div className="space-y-2">
+                <h2 className="text-3xl font-black text-raudhah-ink tracking-tight uppercase">Misi Selesai</h2>
+                <p className="text-raudhah-teal/60 font-medium italic">Anda telah menguasai {activeLesson.words.length} kosa kata baru hari ini!</p>
+              </div>
+              <button onClick={closeLesson} className="w-full py-5 bg-raudhah-teal hover:bg-raudhah-ink text-white rounded-2xl font-black transition-all shadow-warm uppercase tracking-widest text-sm active:scale-95">
+                Teruskan
+              </button>
+            </div>
+          ) : (
+            <>
+              {/* Progress Bar */}
+              <div className="w-full h-3 bg-raudhah-teal/10 rounded-full mb-12 overflow-hidden border border-raudhah-teal/5">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  className="h-full bg-raudhah-teal shadow-glow"
+                />
+              </div>
+
+              {/* Flashcard */}
+              <div className="text-center py-8 cursor-pointer space-y-8 group" onClick={() => setShowTranslation(!showTranslation)}>
+                <h3 className="text-7xl font-arabic text-raudhah-ink tracking-normal drop-shadow-sm group-hover:scale-110 transition-transform duration-500">{word.arabic}</h3>
+
+                <div className="h-24 flex flex-col items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    {showTranslation ? (
+                      <motion.div
+                        key="translation"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        className="space-y-1"
+                      >
+                        <p className="text-2xl text-raudhah-teal font-black tracking-tight">{word.transliteration}</p>
+                        <p className="text-lg text-raudhah-teal/60 font-medium italic">{word.translation}</p>
+                      </motion.div>
+                    ) : (
+                      <motion.p
+                        key="hint"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        className="text-[10px] text-raudhah-gold font-black uppercase tracking-[0.4em] animate-pulse"
+                      >
+                        Sentuh untuk Terjemahan
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
+              </div>
+
+              {/* Controls */}
+              <div className="mt-12 flex gap-4">
+                <button className="flex-1 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] glass-v7 text-raudhah-teal border border-raudhah-teal/10 hover:bg-white transition-all shadow-sm flex items-center justify-center gap-2">
+                  <Volume2 size={18} /> Listen
+                </button>
+                <button
+                  onClick={nextWord}
+                  disabled={!showTranslation}
+                  className={`flex-1 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all flex items-center justify-center gap-2 shadow-warm ${showTranslation
+                      ? 'bg-raudhah-teal text-white hover:bg-raudhah-ink'
+                      : 'bg-raudhah-teal/5 text-raudhah-teal/20 border border-raudhah-teal/5 cursor-not-allowed'
+                    }`}
+                >
+                  Next <ChevronRight size={18} />
+                </button>
+              </div>
+            </>
+          )}
+        </motion.div>
+      </div>
+    );
+  }
+
+  if (isLoading) return (
+    <div className="text-center p-12 space-y-4">
+      <div className="w-12 h-12 border-4 border-raudhah-teal/10 border-t-raudhah-teal rounded-full animate-spin mx-auto" />
+      <p className="text-[10px] font-black text-raudhah-teal/40 uppercase tracking-widest">Memuatkan Kosa Kata...</p>
+    </div>
+  );
+
+  if (error) return <div className="text-center p-12 text-red-500 font-black uppercase tracking-widest text-xs">Gagal memuatkan data kosa kata</div>;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className={`text-xl font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>Vocab Builder</h2>
-        <span className="text-xs text-raudhah-teal font-bold uppercase tracking-wider">ThinkQuran Style</span>
+        <div className="flex items-center gap-3">
+          <div className="w-1.5 h-6 bg-raudhah-teal rounded-full" />
+          <h2 className="text-2xl font-black text-raudhah-ink tracking-tight uppercase">Kosa Kata</h2>
+        </div>
+        <span className="text-[10px] text-raudhah-gold font-black uppercase tracking-[0.2em] bg-raudhah-gold/5 px-2 py-1 rounded-md border border-raudhah-gold/10">ThinkQuran Edition</span>
       </div>
 
-      <div className="grid gap-4">
+      <div className="grid gap-6">
         {lessons?.map(lesson => (
-            <div 
-                key={lesson.id}
-                onClick={() => startLesson(lesson)}
-                className={`p-4 rounded-2xl border cursor-pointer transition-all hover:scale-[1.02] ${
-                    isDark 
-                    ? 'bg-slate-900/40 border-slate-700 hover:border-raudhah-teal/50' 
-                    : 'bg-white border-slate-200 hover:border-raudhah-teal/50'
-                }`}
-            >
-                <div className="flex items-center gap-4">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-xl ${
-                        lesson.difficulty === 'beginner' ? 'bg-green-500/20 text-green-500' :
-                        lesson.difficulty === 'intermediate' ? 'bg-yellow-500/20 text-yellow-500' :
-                        'bg-red-500/20 text-red-500'
-                    }`}>
-                        <i className="fa-solid fa-layer-group"></i>
-                    </div>
-                    <div>
-                        <h3 className={`font-bold ${isDark ? 'text-white' : 'text-slate-900'}`}>{lesson.title}</h3>
-                        <p className="text-xs text-slate-500">{lesson.words.length} words • {lesson.difficulty}</p>
-                    </div>
-                    <div className="ml-auto">
-                        <i className="fa-solid fa-play-circle text-2xl text-raudhah-teal opacity-50 group-hover:opacity-100"></i>
-                    </div>
-                </div>
+          <motion.div
+            key={lesson.id}
+            whileHover={{ scale: 1.02, y: -4 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => startLesson(lesson)}
+            className="p-6 rounded-[2.5rem] glass-v7 border border-raudhah-teal/10 cursor-pointer transition-all hover:bg-white hover:shadow-warm group"
+          >
+            <div className="flex items-center gap-6">
+              <div className={`w-16 h-16 rounded-[1.5rem] flex items-center justify-center shadow-sm ${lesson.difficulty === 'beginner' ? 'bg-emerald-500/10 text-emerald-600' :
+                  lesson.difficulty === 'intermediate' ? 'bg-raudhah-gold/10 text-raudhah-gold' :
+                    'bg-red-500/10 text-red-600'
+                }`}>
+                <Layers size={28} />
+              </div>
+              <div className="flex-1">
+                <h3 className="font-black text-raudhah-ink text-lg leading-tight group-hover:text-raudhah-teal transition-colors tracking-tight uppercase">{lesson.title}</h3>
+                <p className="text-[10px] text-raudhah-teal/40 font-black uppercase tracking-widest mt-1">
+                  {lesson.words.length} Patah Perkataan • {lesson.difficulty}
+                </p>
+              </div>
+              <div className="w-12 h-12 bg-raudhah-teal/5 rounded-2xl flex items-center justify-center text-raudhah-teal group-hover:bg-raudhah-teal group-hover:text-white transition-all">
+                <PlayCircle size={24} />
+              </div>
             </div>
+          </motion.div>
         ))}
       </div>
     </div>

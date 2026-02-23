@@ -39,16 +39,14 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
       if (!response.ok) throw new Error('Backend offline');
 
       const data = await response.json();
-      
-      // Pass the real score and feedback back to the UI
+
       onResult(expectedText, data.confidence || 0, data.feedback);
 
     } catch (err) {
       console.error("ASR Error:", err);
       setError("Backend offline. Sila jalankan server Python.");
-      // Fallback to simulation if backend fails (Optional, but good for UX)
       setTimeout(() => {
-          onResult(expectedText, 0.5, "Ralat sambungan server.");
+        onResult(expectedText, 0.5, "Ralat sambungan server.");
       }, 1000);
     } finally {
       setIsProcessing(false);
@@ -58,13 +56,12 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
   const handleRecordClick = () => {
     const now = Date.now();
     if (now - cooldownRef.current < 1000) return;
-    
+
     if (!isRecording && !isProcessing) {
       cooldownRef.current = now;
       startRecording();
-      // Auto-stop after duration from config
       setTimeout(() => {
-          stopRecording();
+        stopRecording();
       }, IQRA_CONFIG.ASR_RECORDING_DURATION);
     }
   };
@@ -76,72 +73,72 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
   };
 
   return (
-    <div className="flex flex-col items-center gap-2">
+    <div className="flex flex-col items-center gap-4">
       <motion.button
         whileTap={{ scale: 0.95 }}
         onClick={handleRecordClick}
         disabled={isProcessing}
         aria-label={getAriaLabel()}
-        className={`relative w-16 h-16 rounded-full flex items-center justify-center transition-all focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-offset-black ${
-          isRecording 
-            ? 'bg-red-500 shadow-[0_0_30px_rgba(239,68,68,0.5)]' 
+        className={`relative w-24 h-24 rounded-[2rem] flex items-center justify-center transition-all focus:outline-none focus:ring-4 focus:ring-raudhah-teal/30 shadow-warm ${isRecording
+            ? 'bg-red-500 shadow-[0_0_40px_rgba(239,68,68,0.4)]'
             : isProcessing
-              ? 'bg-teal-900 cursor-wait'
-              : 'bg-raudhah-teal hover:bg-raudhah-teal text-black shadow-[0_0_20px_rgba(6,182,212,0.4)]'
-        }`}
+              ? 'bg-raudhah-teal/20 cursor-wait'
+              : 'bg-raudhah-teal hover:bg-raudhah-ink text-white group'
+          }`}
       >
+        <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 rounded-[2rem] transition-opacity" />
         {isProcessing ? (
-          <RefreshCw className="w-8 h-8 text-raudhah-teal animate-spin" />
+          <RefreshCw className="w-10 h-10 text-raudhah-teal animate-spin" />
         ) : (
-          <Mic className={`w-8 h-8 ${isRecording ? 'text-white' : 'text-black'}`} />
+          <Mic className={`w-10 h-10 relative z-10 ${isRecording ? 'text-white' : 'text-white'}`} />
         )}
 
         {/* Real Visualizer Pulse when Recording */}
         {isRecording && visualizerData && (
           <motion.div
-            animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0.8, 0.5] }}
-            transition={{ repeat: Infinity, duration: 0.5 }}
-            className="absolute inset-0 rounded-full bg-red-500/30 -z-10"
+            animate={{ scale: [1, 1.3, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ repeat: Infinity, duration: 0.8 }}
+            className="absolute inset-0 rounded-[2rem] bg-red-500/40 -z-10"
           />
         )}
       </motion.button>
-      
+
       {/* Status Text & Error */}
       <AnimatePresence mode="wait">
-        <div aria-live="polite" className="h-5 flex flex-col items-center">
-            {isRecording ? (
-                <motion.div 
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="flex items-center gap-2 text-red-400 text-xs font-mono uppercase tracking-widest"
-                >
-                    <Activity className="w-3 h-3 animate-pulse" />
-                    Mendengar...
-                </motion.div>
-            ) : isProcessing ? (
-                <motion.div 
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    className="text-raudhah-teal text-xs font-mono uppercase tracking-widest"
-                >
-                    Menyemak Suara...
-                </motion.div>
-            ) : error ? (
-                <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    className="text-red-500 text-[10px] flex items-center gap-1"
-                >
-                    <AlertCircle className="w-3 h-3" />
-                    Backend Offline
-                </motion.div>
-            ) : (
-                <div className="text-slate-500 text-xs font-medium">
-                    Tekan & Sebut
-                </div>
-            )}
+        <div aria-live="polite" className="h-6 flex flex-col items-center">
+          {isRecording ? (
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="flex items-center gap-2 text-red-500 text-[10px] font-black uppercase tracking-[0.3em]"
+            >
+              <Activity className="w-3 h-3 animate-pulse" />
+              Mendengar...
+            </motion.div>
+          ) : isProcessing ? (
+            <motion.div
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              className="text-raudhah-teal text-[10px] font-black uppercase tracking-[0.3em]"
+            >
+              Menyemak Suara...
+            </motion.div>
+          ) : error ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-red-500 text-[9px] font-black uppercase tracking-widest flex items-center gap-1 bg-red-50 px-3 py-1 rounded-full border border-red-100"
+            >
+              <AlertCircle className="w-3 h-3" />
+              Offline
+            </motion.div>
+          ) : (
+            <div className="text-raudhah-teal/40 text-[10px] font-black uppercase tracking-[0.3em]">
+              Sentuh & Sebut
+            </div>
+          )}
         </div>
       </AnimatePresence>
     </div>

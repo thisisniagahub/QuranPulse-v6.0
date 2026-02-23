@@ -1,6 +1,23 @@
+/**
+ * 🤖 Smart Deen (Ustaz AI)
+ * The premium AI spiritual companion in Raudhah theme
+ * 
+ * Features:
+ * - Raudhah Ivory/Teal interface
+ * - Persona switching (Azhar, Aishah, Zak)
+ * - Real-time AI chat with voice support
+ * - Generative UI widget integration
+ * - Compass and khatam planner integration
+ */
+
 import React, { Suspense, lazy, useState, useRef, useEffect } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
 import { motion, AnimatePresence } from "framer-motion";
+import {
+    Send, Mic, MicOff, AlertTriangle, Flag,
+    Sparkles, BrainCircuit, User, Loader2,
+    MessageSquare, ChevronRight, Bookmark, ArrowLeft
+} from 'lucide-react';
 import UstazahAvatar from './UstazahAvatar';
 import NeuralTyping from './NeuralTyping';
 import SuggestionChips from './SuggestionChips';
@@ -16,14 +33,14 @@ const KhatamPlanner = lazy(() => import('./components/KhatamPlanner'));
 interface SmartDeenProps {
     userName?: string;
     hasBottomNav?: boolean;
+    onBack?: () => void;
 }
 
-const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false }) => {
+const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false, onBack }) => {
     const { user } = useAuth();
     const displayName = userName || user?.name || "Sahabat";
     const [activeTab, setActiveTab] = useState<'CHAT' | 'JAWI' | 'HADITH' | 'PLANNER'>('CHAT');
 
-    // Real Implementation
     const [messages, setMessages] = useState<ChatMessage[]>([]);
     const [isThinking, setIsThinking] = useState(false);
     const [selectedPersona, setSelectedPersona] = useState<PersonaKey>('AZHAR');
@@ -42,8 +59,6 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
         setIsThinking(true);
 
         try {
-            // Call Real AI Service
-            // Passing the full history ensures context is maintained
             const responseText = await askUstazAI(newHistory, undefined, selectedPersona);
 
             const aiMsg: ChatMessage = {
@@ -55,7 +70,7 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
 
             setMessages(prev => [...prev, aiMsg]);
         } catch (error) {
-            console.error("Ustazah AI Error:", error);
+            console.error("Ustaz AI Error:", error);
             const errorMsg: ChatMessage = {
                 id: (Date.now() + 1).toString(),
                 role: 'assistant',
@@ -67,19 +82,17 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
         } finally {
             setIsThinking(false);
         }
-    }; const [input, setInput] = useState('');
+    };
 
-    // Refs
+    const [input, setInput] = useState('');
     const scrollRef = useRef<HTMLDivElement>(null);
     const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-    // Audio
     const { isListening, startListening, stopListening, error: speechError, isSupported } = useSpeechRecognition({
         onResult: ({ transcript }) => setInput(transcript),
         lang: 'ms-MY'
     });
 
-    // Auto-scroll
     useEffect(() => {
         if (scrollRef.current) {
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
@@ -99,100 +112,130 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
         }
     };
 
+    const getPersonaEmoji = (p: PersonaKey) => {
+        switch (p) {
+            case 'AZHAR': return '👳🏻‍♂️';
+            case 'AISHAH': return '🧕🏻';
+            case 'ZAK': return '🧢';
+            default: return '🤖';
+        }
+    };
+
     return (
-        <div className="flex flex-col h-full relative bg-midnight-gradient overflow-hidden">
-            {/* Ambient Background (Deep Navy) */}
+        <div className="flex flex-col h-full relative bg-raudhah-ivory overflow-hidden transition-colors duration-500">
+            {/* Ambient Background */}
             <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-raudhah-teal/10 rounded-full blur-[120px] opacity-40"></div>
-                <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-[#0A1E42] rounded-full blur-[100px] opacity-60"></div>
-                <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.03]"></div>
+                <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-raudhah-teal/10 rounded-full blur-[120px] opacity-40 animate-pulse"></div>
+                <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-raudhah-gold/5 rounded-full blur-[100px] opacity-60 animate-pulse delay-1000"></div>
                 <div className="absolute inset-0 opacity-20 bg-pattern-dots-raudhah"></div>
             </div>
 
-            {/* Register Generative UI Actions */}
+            {/* Generative UI Actions */}
             <PrayerTimesAction />
 
-            {/* Header / Persona Selector (Floating Glass) */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#0c224b]/60 backdrop-blur-xl z-10 relative shadow-lg">
+            {/* Header */}
+            <header className="flex items-center justify-between px-6 py-4 border-b border-raudhah-teal/10 glass-v7 z-20 relative shadow-sm">
                 <div className="flex items-center gap-4">
+                    {onBack && (
+                        <button
+                            onClick={onBack}
+                            className="p-2 hover:bg-raudhah-teal/5 rounded-2xl transition-all"
+                        >
+                            <ArrowLeft className="w-6 h-6 text-raudhah-teal" />
+                        </button>
+                    )}
                     <div className="relative">
                         <UstazahAvatar persona={selectedPersona} isThinking={isThinking} />
-                        {isThinking && <div className="absolute inset-0 rounded-full border-2 border-raudhah-teal animate-pulse"></div>}
+                        {isThinking && <div className="absolute -inset-1 rounded-full border-2 border-raudhah-gold animate-pulse"></div>}
                     </div>
                     <div>
-                        <h2 className="text-white font-bold text-sm tracking-wide drop-shadow-md">{PERSONAS[selectedPersona].name}</h2>
-                        <div className="flex items-center gap-2 mt-1">
-                            <span className={`flex h-1.5 w-1.5 relative`}>
-                                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isThinking ? 'bg-amber-400' : 'bg-emerald-400'}`}></span>
-                                <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${isThinking ? 'bg-amber-500' : 'bg-emerald-500'}`}></span>
-                            </span>
-                            <p className="text-[10px] text-slate-300 font-mono uppercase tracking-wider">{PERSONAS[selectedPersona].role}</p>
+                        <h2 className="text-raudhah-ink font-black text-sm tracking-tight leading-none mb-1 uppercase">{PERSONAS[selectedPersona].name}</h2>
+                        <div className="flex items-center gap-2">
+                            <div className="flex items-center gap-1.5">
+                                <span className={`flex h-1.5 w-1.5 relative`}>
+                                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isThinking ? 'bg-raudhah-gold' : 'bg-emerald-500'}`}></span>
+                                    <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${isThinking ? 'bg-raudhah-gold' : 'bg-emerald-500'}`}></span>
+                                </span>
+                            </div>
+                            <p className="text-[10px] text-raudhah-teal/40 font-black uppercase tracking-widest">{PERSONAS[selectedPersona].role}</p>
                         </div>
                     </div>
                 </div>
-                <div className="flex gap-1 bg-black/20 p-1 rounded-xl border border-white/5 backdrop-blur-sm">
+
+                <div className="flex gap-2 p-1.5 glass-v7 rounded-2xl border border-raudhah-teal/10 shadow-sm">
                     {(Object.keys(PERSONAS) as PersonaKey[]).map((p) => (
                         <button
                             key={p}
                             onClick={() => switchPersona(p)}
-                            className={`w-9 h-9 rounded-lg flex items-center justify-center text-sm transition-all ${selectedPersona === p ? 'bg-raudhah-teal/10 text-raudhah-teal shadow-[0_0_10px_rgba(34,211,238,0.2)] border border-raudhah-teal/20' : 'text-slate-500 hover:text-white hover:bg-white/5'}`}
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg transition-all active:scale-95 ${selectedPersona === p ? 'bg-raudhah-teal/10 text-raudhah-teal shadow-inner border border-raudhah-teal/20' : 'text-raudhah-teal/20 hover:text-raudhah-teal hover:bg-white'}`}
+                            title={PERSONAS[p].name}
                         >
-                            {p === 'AZHAR' ? '👳🏻‍♂️' : p === 'AISHAH' ? '🧕🏻' : '🧢'}
+                            {getPersonaEmoji(p)}
                         </button>
                     ))}
                 </div>
-            </div>
+            </header>
 
             {/* --- CHAT TAB --- */}
             {activeTab === 'CHAT' && (
                 <>
-                    <div ref={scrollRef} className={`flex-1 overflow-y-auto p-4 space-y-6 ${hasBottomNav ? 'pb-32' : 'pb-24'} scroll-smooth relative z-10`}>
+                    <div ref={scrollRef} className={`flex-1 overflow-y-auto p-4 md:p-8 space-y-8 ${hasBottomNav ? 'pb-36' : 'pb-28'} scroll-smooth relative z-10 no-scrollbar`}>
                         {/* Chat Background Watermark */}
-                        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                            <img loading="lazy" src="/assets/icons/nabdh/nav-ustaz.png" className="w-64 h-64 grayscale opacity-[0.03]" alt="" />
+                        <div className="absolute inset-0 pointer-events-none z-0 flex items-center justify-center">
+                            <BrainCircuit className="w-64 h-64 text-raudhah-teal opacity-[0.03]" />
                         </div>
 
                         <div className="text-center py-4 relative z-10">
-                            <p className="text-[10px] text-slate-500 uppercase tracking-[0.2em] font-bold bg-black/20 inline-block px-3 py-1 rounded-full border border-white/5">Hari Ini</p>
+                            <span className="text-[10px] text-raudhah-teal/40 uppercase tracking-[0.4em] font-black bg-raudhah-teal/5 px-4 py-1.5 rounded-full border border-raudhah-teal/10 shadow-sm">Masej Baru</span>
                         </div>
 
-                        <AnimatePresence>
+                        <AnimatePresence initial={false}>
                             {messages.map((msg, idx) => (
                                 <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                                    key={msg.id || idx}
+                                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    className={`flex flex-col gap-2 relative z-10 ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
+                                    className={`flex flex-col gap-3 relative z-10 ${msg.role === 'user' ? 'items-end' : 'items-start'}`}
                                 >
-                                    <div className={`flex gap-3 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                                        <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs flex-shrink-0 shadow-lg border border-white/10 ${msg.role === 'user' ? 'bg-teal-900/50 text-teal-200' : 'bg-[#0f1e38] text-slate-300'}`}>
-                                            {msg.role === 'user' ? <i className="fa-solid fa-user"></i> : (msg.role === 'assistant' && selectedPersona === 'AZHAR' ? '👳🏻‍♂️' : selectedPersona === 'AISHAH' ? '🧕🏻' : '🧢')}
+                                    <div className={`flex gap-4 max-w-[85%] ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
+                                        <div className={`w-10 h-10 rounded-2xl flex items-center justify-center text-xs flex-shrink-0 shadow-sm border border-raudhah-teal/10 glass-v7 ${msg.role === 'user' ? 'bg-raudhah-teal text-white' : 'bg-white text-raudhah-ink'}`}>
+                                            {msg.role === 'user' ? <User size={18} /> : getPersonaEmoji(selectedPersona)}
                                         </div>
-                                        <div className={`rounded-2xl p-4 text-sm leading-relaxed shadow-md backdrop-blur-md border ${msg.role === 'user'
-                                            ? 'bg-gradient-to-br from-teal-600/90 to-blue-700/90 text-white rounded-br-sm border-raudhah-teal/20'
-                                            : 'bg-[#1e293b]/90 text-slate-200 rounded-bl-sm border-white/10'
+                                        <div className={`rounded-3xl p-5 text-sm md:text-base leading-relaxed shadow-sm backdrop-blur-md border transition-all ${msg.role === 'user'
+                                            ? 'bg-raudhah-teal text-white rounded-tr-none border-raudhah-ink/10'
+                                            : 'bg-white text-raudhah-ink rounded-tl-none border-raudhah-teal/10'
                                             }`}>
                                             {/* Render Clean Text */}
-                                            {cleanAIResponse(msg.content)}
+                                            <div className="font-medium">
+                                                {cleanAIResponse(msg.content)}
+                                            </div>
 
-                                            {/* Compliance: Report Button */}
+                                            {/* Action Bar */}
                                             {msg.role === 'assistant' && (
-                                                <div className="mt-3 pt-2 border-t border-white/5 flex justify-end">
+                                                <div className="mt-4 pt-3 border-t border-raudhah-teal/5 flex justify-between items-center">
+                                                    <div className="flex gap-4">
+                                                        <button className="text-[10px] text-raudhah-teal/40 hover:text-raudhah-teal flex items-center gap-1 transition-colors uppercase font-black tracking-widest">
+                                                            <Bookmark size={12} /> Simpan
+                                                        </button>
+                                                        <button className="text-[10px] text-raudhah-teal/40 hover:text-raudhah-teal flex items-center gap-1 transition-colors uppercase font-black tracking-widest">
+                                                            <Sparkles size={12} /> Kupas
+                                                        </button>
+                                                    </div>
                                                     <button
-                                                        className="text-[10px] text-slate-500 hover:text-red-400 flex items-center gap-1 transition-colors opacity-60 hover:opacity-100"
+                                                        className="text-[10px] text-raudhah-teal/20 hover:text-raudhah-red/60 flex items-center gap-1 transition-colors uppercase font-black tracking-widest"
                                                         title="Lapor jawapan tidak tepat"
-                                                        onClick={() => alert("Laporan dihantar.")}
+                                                        onClick={() => alert("Laporan telah dihantar untuk semakan compliance.")}
                                                     >
-                                                        <i className="fa-regular fa-flag"></i> Lapor
+                                                        <Flag size={10} /> Lapor
                                                     </button>
                                                 </div>
                                             )}
                                         </div>
                                     </div>
 
-                                    {/* Render Generative UI Widget (Only for assistant) */}
+                                    {/* Render Generative UI Widget */}
                                     {msg.role === 'assistant' && (
-                                        <div className="w-full max-w-[85%] pl-11">
+                                        <div className="w-full max-w-[85%] pl-14">
                                             <AIWidgetRenderer content={msg.content} />
                                         </div>
                                     )}
@@ -201,9 +244,11 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                         </AnimatePresence>
 
                         {isThinking && (
-                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-3">
-                                <div className="w-8 h-8 rounded-full bg-[#0f1e38] border border-white/10 flex items-center justify-center text-xs animate-spin-slow">⏳</div>
-                                <div className="bg-[#0f1e38]/80 p-3 rounded-2xl rounded-bl-none border border-raudhah-teal/20">
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-4">
+                                <div className="w-10 h-10 rounded-2xl bg-white border border-raudhah-teal/10 flex items-center justify-center shadow-sm">
+                                    <Loader2 className="animate-spin text-raudhah-teal" size={20} />
+                                </div>
+                                <div className="bg-white/80 p-5 rounded-3xl rounded-tl-none border border-raudhah-teal/10 shadow-sm backdrop-blur-md min-w-[120px]">
                                     <NeuralTyping />
                                 </div>
                             </motion.div>
@@ -211,38 +256,50 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
 
                         {/* Suggestion Chips */}
                         {messages.length < 3 && !isThinking && (
-                            <SuggestionChips onSelect={(text) => setInput(text)} />
+                            <div className="pt-4">
+                                <SuggestionChips onSelect={(text) => setInput(text)} />
+                            </div>
                         )}
                     </div>
 
-                    <div className={`absolute inset-x-0 p-4 bg-gradient-to-t from-[#020617] via-[#020617]/95 to-transparent z-20 ${hasBottomNav ? 'bottom-[80px]' : 'bottom-0'}`}>
-                        {/* JAKIM Disclaimer */}
-                        <div className="text-[9px] text-slate-500 text-center mb-3 italic opacity-60">
-                            "Ustazah AI adalah alat bantuan pembelajaran. Untuk hukum syarak muktamad, rujuk asatizah bertauliah."
+                    {/* Input Container */}
+                    <div className={`fixed inset-x-0 p-6 md:p-8 bg-gradient-to-t from-raudhah-ivory via-raudhah-ivory to-transparent z-30 transition-all ${hasBottomNav ? 'bottom-[80px]' : 'bottom-0'}`}>
+                        {/* JAKIM / Compliance Disclaimer */}
+                        <div className="max-w-4xl mx-auto flex items-center justify-center gap-2 mb-4 px-4 py-2 bg-raudhah-gold/5 border border-raudhah-gold/10 rounded-2xl shadow-sm">
+                            <AlertTriangle size={12} className="text-raudhah-gold" />
+                            <p className="text-[9px] text-raudhah-ink/60 text-center font-bold tracking-tight">
+                                "Ustaz AI adalah alat bantuan pembelajaran. Konsultasi hukum syarak muktamad wajib dirujuk kepada asatizah bertauliah."
+                            </p>
                         </div>
 
                         {/* Speech Error */}
-                        {speechError && (
-                            <div className="mb-2 p-2 bg-red-900/20 border border-red-500/30 rounded-lg text-red-400 text-xs text-center backdrop-blur-sm">
-                                <i className="fa-solid fa-triangle-exclamation mr-1"></i>
-                                {speechError}
-                            </div>
-                        )}
+                        <AnimatePresence>
+                            {speechError && (
+                                <motion.div
+                                    initial={{ y: 20, opacity: 0 }}
+                                    animate={{ y: 0, opacity: 1 }}
+                                    exit={{ y: 20, opacity: 0 }}
+                                    className="max-w-4xl mx-auto mb-4 p-3 bg-raudhah-red/10 border border-raudhah-red/20 rounded-2xl text-raudhah-red text-xs text-center font-bold flex items-center justify-center gap-2"
+                                >
+                                    <AlertTriangle size={14} /> {speechError}
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
 
                         {/* Input Area */}
-                        <div className={`flex gap-2 items-end bg-[#0f1e38]/90 p-2 rounded-2xl border transition-all backdrop-blur-xl shadow-2xl ${isThinking ? 'border-amber-500/30 shadow-[0_0_20px_rgba(245,158,11,0.1)]' : 'border-raudhah-teal/20 shadow-[0_0_20px_rgba(6,182,212,0.1)]'}`}>
+                        <div className={`max-w-4xl mx-auto flex gap-4 items-end bg-white p-3 rounded-[2.5rem] border-2 transition-all shadow-xl ${isThinking ? 'border-raudhah-gold shadow-raudhah-gold/5' : 'border-raudhah-teal/10 shadow-raudhah-teal/5 focus-within:border-raudhah-teal'}`}>
                             <button
                                 onClick={isListening ? stopListening : startListening}
                                 disabled={!isSupported}
-                                title={!isSupported ? 'Browser tidak menyokong pengecaman suara' : isListening ? 'Henti' : 'Tekan untuk bercakap'}
-                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all ${!isSupported
-                                    ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
+                                title={!isSupported ? 'Browser tidak menyokong ASR' : isListening ? 'Henti' : 'Tekan & Sebut'}
+                                className={`w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center transition-all ${!isSupported
+                                    ? 'bg-raudhah-teal/5 text-raudhah-teal/20 cursor-not-allowed'
                                     : isListening
-                                        ? 'bg-red-500/80 animate-pulse text-white shadow-[0_0_15px_rgba(239,68,68,0.5)]'
-                                        : 'hover:bg-teal-900/30 text-raudhah-teal hover:text-raudhah-teal'
+                                        ? 'bg-raudhah-red animate-pulse text-white shadow-lg'
+                                        : 'bg-raudhah-teal/5 hover:bg-raudhah-teal/10 text-raudhah-teal'
                                     }`}
                             >
-                                <i className={`fa-solid ${isListening ? 'fa-microphone-slash' : 'fa-microphone'}`}></i>
+                                {isListening ? <MicOff size={24} /> : <Mic size={24} />}
                             </button>
 
                             <textarea
@@ -250,40 +307,55 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false })
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={handleKeyDown}
-                                placeholder="Tanya ustaz apa sahaja..."
-                                className="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-slate-500 resize-none py-2 max-h-32 text-sm font-medium"
+                                placeholder="Tanya Ustaz apa sahaja..."
+                                className="flex-1 bg-transparent border-none focus:ring-0 text-raudhah-ink placeholder-raudhah-teal/20 resize-none py-3 max-h-32 text-base font-medium no-scrollbar"
                                 rows={1}
                             />
 
                             <button
                                 onClick={handleSend}
                                 disabled={!input.trim() || isThinking}
-                                className={`w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center transition-all ${input.trim() && !isThinking ? 'bg-raudhah-teal text-black hover:bg-raudhah-teal shadow-[0_0_15px_rgba(6,182,212,0.5)]' : 'bg-slate-800/50 text-slate-600 cursor-not-allowed'}`}
+                                className={`w-14 h-14 rounded-2xl flex-shrink-0 flex items-center justify-center transition-all shadow-warm border-b-4 active:border-b-0 active:translate-y-1 ${input.trim() && !isThinking ? 'bg-raudhah-teal text-white border-raudhah-ink' : 'bg-raudhah-teal/5 text-raudhah-teal/20 border-raudhah-teal/10 cursor-not-allowed'}`}
                                 title="Hantar Mesej"
                             >
-                                <i className="fa-solid fa-paper-plane transform translate-x-px translate-y-px"></i>
+                                <Send size={24} className={input.trim() ? 'translate-x-0.5 -translate-y-0.5' : ''} />
                             </button>
                         </div>
                     </div>
                 </>
             )}
 
-            {/* --- OTHER TABS --- */}
+            {/* --- SCANNER / JAWI / PLANNER TABS --- */}
             {activeTab === 'PLANNER' && (
-                <Suspense
-                    fallback={
-                        <div className="h-full min-h-[50vh] flex items-center justify-center">
-                            <div className="animate-spin w-8 h-8 border-2 border-raudhah-teal border-t-transparent rounded-full" />
+                <main className="flex-1 overflow-y-auto no-scrollbar p-6 relative z-10">
+                    <Suspense
+                        fallback={
+                            <div className="h-full flex flex-col items-center justify-center p-10 space-y-4">
+                                <Loader2 className="animate-spin text-raudhah-teal" size={32} />
+                                <p className="text-[10px] font-black text-raudhah-teal/40 uppercase tracking-widest text-center">Menghitung Strategi Khatam...</p>
+                            </div>
+                        }
+                    >
+                        <div className="max-w-2xl mx-auto py-8">
+                            <KhatamPlanner />
                         </div>
-                    }
-                >
-                    <KhatamPlanner />
-                </Suspense>
+                    </Suspense>
+                </main>
             )}
-            {activeTab === 'JAWI' && <div className="p-10 text-center text-slate-500">Modul Jawi sedang dikemaskini...</div>}
+
+            {activeTab === 'JAWI' && (
+                <main className="flex-1 flex flex-col items-center justify-center p-10 space-y-6 text-center animate-pulse">
+                    <div className="w-24 h-24 bg-raudhah-teal/5 rounded-[2.5rem] flex items-center justify-center border border-raudhah-teal/10">
+                        <MessageSquare className="w-12 h-12 text-raudhah-teal/20" />
+                    </div>
+                    <div className="space-y-2">
+                        <h3 className="text-2xl font-black text-raudhah-ink uppercase tracking-tight">Modul Pintar</h3>
+                        <p className="text-raudhah-teal/40 font-bold italic">Sedang dalam proses penyelarasan visual Raudhah.</p>
+                    </div>
+                </main>
+            )}
         </div>
     );
 };
 
 export default SmartDeen;
-

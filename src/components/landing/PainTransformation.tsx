@@ -224,7 +224,7 @@ const PainTransformation: React.FC = () => {
                                                         transition={{ duration: 2, repeat: Infinity }}
                                                         className="w-32 h-32 bg-raudhah-teal/20 rounded-[2rem] border border-raudhah-teal/30 flex items-center justify-center relative z-20"
                                                     >
-                                                        <img src="/logo-primary.png" className="w-20 h-20 brightness-0 invert opacity-80" alt="Raudhah" />
+                                                        <img src="/logo-primary.png" className="w-20 h-20 object-contain drop-shadow-md" alt="QuranPulse" />
                                                         <div className="absolute inset-0 border-2 border-raudhah-gold/20 rounded-[2rem] animate-ping opacity-20"></div>
                                                     </motion.div>
                                                 </div>

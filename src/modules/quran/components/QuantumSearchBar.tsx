@@ -21,19 +21,19 @@ const QuantumSearchBar: React.FC<QuantumSearchBarProps> = ({
     return (
         <div className="relative z-50 w-full max-w-3xl mx-auto mb-8">
             {/* Outer Glow & Border */}
-            <motion.div 
+            <motion.div
                 animate={{
-                    boxShadow: isSemanticMode 
-                        ? "0 0 30px rgba(245, 158, 11, 0.2)" 
-                        : "0 0 30px rgba(90, 185, 255, 0.2)",
+                    boxShadow: isSemanticMode
+                        ? "0 0 30px rgba(196, 151, 42, 0.1)"
+                        : "0 0 30px rgba(27, 107, 90, 0.05)",
                     borderColor: isSemanticMode
-                        ? "rgba(245, 158, 11, 0.3)" 
-                        : "rgba(255, 255, 255, 1)"
+                        ? "rgba(196, 151, 42, 0.3)"
+                        : "rgba(27, 107, 90, 0.1)"
                 }}
-                className="bg-sheet/60 backdrop-blur-xl rounded-2xl border border-white transition-all duration-500 overflow-hidden"
+                className="glass-v7 rounded-2xl border transition-all duration-500 overflow-hidden"
             >
                 <div className="flex items-center px-4 py-1 relative">
-                    
+
                     {/* Animated Leading Icon */}
                     <div className="w-12 h-12 flex items-center justify-center shrink-0">
                         <AnimatePresence mode="wait">
@@ -43,9 +43,9 @@ const QuantumSearchBar: React.FC<QuantumSearchBarProps> = ({
                                     initial={{ scale: 0, rotate: -180 }}
                                     animate={{ scale: 1, rotate: 0 }}
                                     exit={{ scale: 0, rotate: 180 }}
-                                    className="w-10 h-10 rounded-full bg-gold-500/10 flex items-center justify-center border border-gold-500/30"
+                                    className="w-10 h-10 rounded-full bg-raudhah-gold/10 flex items-center justify-center border border-raudhah-gold/30"
                                 >
-                                    <i className="fa-solid fa-brain text-gold-400 animate-pulse"></i>
+                                    <i className="fa-solid fa-brain text-raudhah-gold animate-pulse"></i>
                                 </motion.div>
                             ) : (
                                 <motion.div
@@ -53,16 +53,16 @@ const QuantumSearchBar: React.FC<QuantumSearchBarProps> = ({
                                     initial={{ scale: 0, rotate: 180 }}
                                     animate={{ scale: 1, rotate: 0 }}
                                     exit={{ scale: 0, rotate: -180 }}
-                                    className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center border border-white/30"
+                                    className="w-10 h-10 rounded-full bg-raudhah-teal/10 flex items-center justify-center border border-raudhah-teal/30"
                                 >
-                                    <i className="fa-solid fa-search text-primary"></i>
+                                    <i className="fa-solid fa-search text-raudhah-teal"></i>
                                 </motion.div>
                             )}
                         </AnimatePresence>
                     </div>
 
                     {/* Input Field */}
-                    <input 
+                    <input
                         type="text"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -70,17 +70,16 @@ const QuantumSearchBar: React.FC<QuantumSearchBarProps> = ({
                         onBlur={() => setIsFocused(false)}
                         onKeyDown={(e) => e.key === 'Enter' && isSemanticMode && handleSemanticSearch()}
                         placeholder={isSemanticMode ? "Ask the Quran... (e.g. 'How to be patient')" : "Search Surah (e.g. 'Kahf')"}
-                        className="flex-1 bg-transparent border-none outline-none text-white px-4 h-14 font-medium placeholder-white/50"
+                        className="flex-1 bg-transparent border-none outline-none text-raudhah-ink px-4 h-14 font-medium placeholder-raudhah-teal/40"
                     />
 
                     {/* Mode Toggle Button */}
                     <button
                         onClick={() => setIsSemanticMode(!isSemanticMode)}
-                        className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 overflow-hidden group ${
-                            isSemanticMode 
-                                ? 'bg-gold-500/10 text-gold-400 border border-gold-500/30' 
-                                : 'bg-surface-dark text-white/70 border border-white hover:text-white'
-                        }`}
+                        className={`relative px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 overflow-hidden group ${isSemanticMode
+                            ? 'bg-raudhah-gold/10 text-raudhah-gold border border-raudhah-gold/30'
+                            : 'bg-raudhah-teal/5 text-raudhah-teal/70 border border-raudhah-teal/20 hover:text-raudhah-teal'
+                            }`}
                     >
                         <span className="relative z-10 flex items-center gap-2">
                             {isSemanticMode ? 'AI MODE' : 'LIST MODE'}
@@ -89,36 +88,36 @@ const QuantumSearchBar: React.FC<QuantumSearchBarProps> = ({
                         {/* Hover Glint */}
                         <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-12"></div>
                     </button>
-                    
+
                 </div>
-                
+
                 {/* Linear Scanline Animation at bottom */}
-                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-surface-dark">
-                    <motion.div 
+                <div className="absolute bottom-0 left-0 w-full h-[1px] bg-raudhah-teal/10">
+                    <motion.div
                         initial={{ x: '-100%' }}
                         animate={{ x: isFocused || searchQuery ? '100%' : '-100%' }}
-                        transition={{ 
-                            repeat: Infinity, 
-                            duration: 1.5, 
+                        transition={{
+                            repeat: Infinity,
+                            duration: 1.5,
                             ease: "linear",
-                            repeatDelay: 0.5 
+                            repeatDelay: 0.5
                         }}
-                        className={`h-full w-1/2 bg-gradient-to-r from-transparent ${isSemanticMode ? 'via-gold-500' : 'via-primary'} to-transparent`}
+                        className={`h-full w-1/2 bg-gradient-to-r from-transparent ${isSemanticMode ? 'via-raudhah-gold' : 'via-raudhah-teal'} to-transparent`}
                     />
                 </div>
 
             </motion.div>
-            
+
             {/* Helper Text */}
-             <AnimatePresence>
+            <AnimatePresence>
                 {isSemanticMode && (
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -10 }}
-                        className="absolute -bottom-8 left-4 text-[10px] text-gold-500/80 font-mono flex items-center gap-2"
+                        className="absolute -bottom-8 left-4 text-[10px] text-raudhah-gold/80 font-mono flex items-center gap-2"
                     >
-                        <span className="w-1.5 h-1.5 bg-gold-500 rounded-full animate-ping"></span>
+                        <span className="w-1.5 h-1.5 bg-raudhah-gold rounded-full animate-ping"></span>
                         QUANTUM NEURAL SEARCH ENGINE ACTIVE
                     </motion.div>
                 )}
