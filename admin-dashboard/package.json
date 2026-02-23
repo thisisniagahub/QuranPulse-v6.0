@@ -22,7 +22,7 @@
     "engine.io-client": "^6.6.4",
     "framer-motion": "^12.23.26",
     "lucide-react": "^0.460.0",
-    "next": "^15.0.0",
+    "next": "^15.5.10",
     "prisma": "^5.22.0",
     "qrcode.react": "^4.2.0",
     "react": "^18.3.1",
