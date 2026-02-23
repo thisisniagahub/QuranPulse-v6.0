@@ -6,6 +6,7 @@ import { IqraPageStrict } from './data/iqra-1-strict';
 
 interface IqraHubProps {
     onSelectPage: (volume: number, pageIndex: number) => void;
+    onStartGame?: () => void;
 }
 
 const VOLUMES = [
@@ -17,7 +18,7 @@ const VOLUMES = [
     { id: 6, title: "Iqra' 6", subtitle: "Latihan & Nun Sabdu", color: "from-orange-500 to-amber-500", shadow: "shadow-orange-500/20", icon: "6", totalPages: 13 }
 ];
 
-const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage }) => {
+const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage, onStartGame }) => {
     const [selectedVolume, setSelectedVolume] = useState<number | null>(null);
     const { unlockedPages, progress, lastRead, totalStars } = useIqraStore();
 
@@ -32,7 +33,7 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage }) => {
     };
 
     return (
-        <div className="w-full h-full overflow-y-auto px-4 pb-32 no-scrollbar bg-gradient-to-b from-[#0f172a] to-[#020617]">
+        <div className="w-full h-full overflow-y-visible px-4 pb-32 no-scrollbar">
 
             <AnimatePresence mode="wait">
                 {!selectedVolume ? (
@@ -182,6 +183,27 @@ const IqraHub: React.FC<IqraHubProps> = ({ onSelectPage }) => {
                                 );
                             })}
                         </div>
+
+                        {/* Extra Modes (Mini Games) */}
+                        {onStartGame && (
+                            <div className="mt-8">
+                                <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Aktiviti Tambahan</h3>
+                                <div className="grid grid-cols-2 gap-4">
+                                    <button
+                                        onClick={onStartGame}
+                                        className="bg-[#111]/50 border border-white/10 p-4 rounded-xl flex items-center gap-3 hover:bg-white/5 transition-colors"
+                                    >
+                                        <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                                            <i className="fa-solid fa-gamepad text-lg"></i>
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="font-bold text-sm text-white">Mini Games</p>
+                                            <p className="text-xs text-slate-500">Uji Minda</p>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        )}
 
                     </motion.div>
                 ) : (

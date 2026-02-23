@@ -5,20 +5,15 @@ import { BookOpen, Star, Trophy, ChevronRight, Lock, Gamepad2, Mic, GraduationCa
 const IqraDigitalReader = lazy(() => import('./IqraDigitalReader'));
 const IqraGameEngine = lazy(() => import('./game/IqraGameEngine'));
 const KafaDashboard = lazy(() => import('./kafa/KafaDashboard'));
+import IqraHub from './IqraHub';
 
 const IqraModule = () => {
   const [selectedVolume, setSelectedVolume] = useState<number | null>(null);
+  const [selectedPage, setSelectedPage] = useState<number>(0);
   const [mode, setMode] = useState<'MENU' | 'GAME'>('MENU');
   const [activeTab, setActiveTab] = useState<'iqra' | 'kafa'>('iqra');
 
-  const iqraBooks = [
-    { id: 1, title: 'Iqra 1', subtitle: 'Pengenalan Huruf', color: 'from-emerald-500 to-teal-600', locked: false },
-    { id: 2, title: 'Iqra 2', subtitle: 'Sambungan Huruf', color: 'from-blue-500 to-teal-600', locked: false },
-    { id: 3, title: 'Iqra 3', subtitle: 'Bacaan Mad', color: 'from-teal-500 to-emerald-600', locked: false },
-    { id: 4, title: 'Iqra 4', subtitle: 'Baris & Tanwin', color: 'from-pink-500 to-rose-600', locked: false },
-    { id: 5, title: 'Iqra 5', subtitle: 'Qalqalah & Waqaf', color: 'from-orange-500 to-amber-600', locked: false },
-    { id: 6, title: 'Iqra 6', subtitle: 'Tajwid Lanjutan', color: 'from-red-500 to-crimson-600', locked: false },
-  ];
+
 
   if (selectedVolume) {
     return (
@@ -29,7 +24,7 @@ const IqraModule = () => {
           </div>
         }
       >
-        <IqraDigitalReader volume={selectedVolume} onBack={() => setSelectedVolume(null)} />
+        <IqraDigitalReader volume={selectedVolume} initialPage={selectedPage} onBack={() => setSelectedVolume(null)} />
       </Suspense>
     );
   }
@@ -152,74 +147,15 @@ const IqraModule = () => {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
-            className="px-6"
+            className="w-full"
           >
-            <h2 className="text-white font-bold mb-4 flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-raudhah-teal" />
-              Pilih Jilid
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {iqraBooks.map((book, index) => (
-                <motion.button
-                  key={book.id}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: index * 0.1 }}
-                  onClick={() => !book.locked && setSelectedVolume(book.id)}
-                  className={`relative overflow-hidden rounded-2xl p-6 text-left group transition-all ${book.locked ? 'opacity-50 grayscale' : 'hover:scale-[1.02]'}`}
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${book.color} opacity-10 group-hover:opacity-20 transition-opacity`} />
-                  <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
-                  <div className="absolute inset-0 border border-white/5 rounded-2xl group-hover:border-white/20 transition-colors" />
-
-                  <div className="relative z-10 flex justify-between items-start">
-                    <div>
-                      <h3 className="text-2xl font-bold text-white mb-1">{book.title}</h3>
-                      <p className="text-slate-400 text-sm">{book.subtitle}</p>
-                    </div>
-                    {book.locked ? (
-                      <Lock className="w-5 h-5 text-slate-500" />
-                    ) : (
-                      <div className={`w-8 h-8 rounded-full bg-gradient-to-br ${book.color} flex items-center justify-center shadow-lg`}>
-                        <ChevronRight className="w-5 h-5 text-white" />
-                      </div>
-                    )}
-                  </div>
-
-                  {!book.locked && (
-                    <div className="mt-6">
-                      <div className="flex justify-between text-xs text-slate-400 mb-1">
-                        <span>Progres</span>
-                        <span>0%</span>
-                      </div>
-                      <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-white w-0" />
-                      </div>
-                    </div>
-                  )}
-                </motion.button>
-              ))}
-            </div>
-
-            {/* Extra Modes (Mini Games) */}
-            <div className="mt-8">
-              <h3 className="text-sm font-bold text-slate-400 uppercase tracking-widest mb-4">Aktiviti Tambahan</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <button
-                  onClick={() => setMode('GAME')}
-                  className="bg-[#111] border border-white/10 p-4 rounded-xl flex items-center gap-3 hover:bg-white/5 transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
-                    <Gamepad2 className="w-5 h-5" />
-                  </div>
-                  <div className="text-left">
-                    <p className="font-bold text-sm text-white">Mini Games</p>
-                    <p className="text-xs text-slate-500">Uji Minda</p>
-                  </div>
-                </button>
-              </div>
-            </div>
+            <IqraHub
+              onSelectPage={(vol, page) => {
+                setSelectedVolume(vol);
+                setSelectedPage(page);
+              }}
+              onStartGame={() => setMode('GAME')}
+            />
           </motion.div>
         ) : (
           <motion.div

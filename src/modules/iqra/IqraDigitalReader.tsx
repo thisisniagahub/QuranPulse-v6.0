@@ -7,10 +7,11 @@ import LessonFeedback from './components/LessonFeedback';
 
 interface IqraDigitalReaderProps {
   volume: number;
+  initialPage?: number;
   onBack: () => void;
 }
 
-const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack }) => {
+const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, initialPage = 0, onBack }) => {
   const {
     currentLesson,
     rawPageData,
@@ -27,7 +28,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
     resetResult,
     evaluatePerformance,
     playRef
-  } = useIqraSession(volume);
+  } = useIqraSession(volume, initialPage);
 
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
 
@@ -45,7 +46,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
 
   const onTouchEnd = () => {
     if (!touchStartX.current || !touchEndX.current) return;
-    
+
     const distance = touchStartX.current - touchEndX.current;
     const isSwipeLeft = distance > 50;
     const isSwipeRight = distance < -50;
@@ -81,7 +82,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
       {/* Header */}
       <header className="h-16 border-b border-white/10 flex items-center justify-between px-4 bg-[#0a0a0a]/90 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center gap-4">
-          <button 
+          <button
             onClick={onBack}
             className="p-2 hover:bg-white/10 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-raudhah-teal"
             aria-label="Kembali ke Menu Utama"
@@ -100,7 +101,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
         </div>
 
         <div className="flex items-center gap-2">
-           <button 
+          <button
             onClick={toggleTips}
             className={`p-2 rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-raudhah-teal ${showTips ? 'bg-amber-500/20 text-amber-400' : 'hover:bg-white/10 text-slate-400'}`}
             aria-label={showTips ? "Sembunyikan Tips" : "Lihat Tips Pengajar"}
@@ -109,25 +110,25 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
             <Lightbulb className="w-5 h-5" />
           </button>
           <div className="px-3 py-1 bg-white/5 rounded-full text-xs font-mono" aria-label={`Muka Surat ${currentLesson.pageRef}`}>
-             Pg {currentLesson.pageRef}
+            Pg {currentLesson.pageRef}
           </div>
         </div>
       </header>
 
       {/* Main Content Area (With Swipe Handlers) */}
-      <main 
-        id="main-content" 
-        className="flex-1 relative overflow-y-auto overflow-x-hidden focus:outline-none scroll-smooth" 
+      <main
+        id="main-content"
+        className="flex-1 relative overflow-y-auto overflow-x-hidden focus:outline-none scroll-smooth"
         tabIndex={-1}
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        
+
         {/* LESSON START OVERLAY */}
         <AnimatePresence>
           {!lessonStarted && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, y: -20 }}
@@ -160,7 +161,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
                   </ul>
                 </div>
 
-                <button 
+                <button
                   onClick={startLesson}
                   className="w-full py-4 bg-raudhah-teal hover:bg-raudhah-teal text-black font-bold rounded-xl transition-all transform active:scale-95 shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center justify-center gap-2 focus:outline-none focus:ring-4 focus:ring-raudhah-teal/50 animate-pulse touch-manipulation"
                   autoFocus
@@ -176,7 +177,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
         {/* RESULT OVERLAY */}
         <AnimatePresence>
           {showResult && (
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
@@ -192,7 +193,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-2">Tahniah!</h3>
                     <p className="text-slate-400 mb-6">Bacaan anda menepati objektif pelajaran ini.</p>
-                    <button 
+                    <button
                       onClick={nextLesson}
                       className="w-full py-3 bg-green-600 hover:bg-green-500 rounded-lg font-bold focus:outline-none focus:ring-2 focus:ring-green-400 touch-manipulation"
                       autoFocus
@@ -207,7 +208,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
                     </div>
                     <h3 className="text-2xl font-bold text-white mb-2">Cuba Lagi</h3>
                     <p className="text-slate-400 mb-6">Sila perbaiki bacaan anda mengikut tips yang diberi.</p>
-                    <button 
+                    <button
                       onClick={resetResult}
                       className="w-full py-3 bg-white/10 hover:bg-white/20 rounded-lg font-bold focus:outline-none focus:ring-2 focus:ring-white touch-manipulation"
                       autoFocus
@@ -258,35 +259,35 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
           </div>
 
           {/* Grid Content */}
-          <div className="grid gap-4" role="list">
+          <div className="grid gap-4" role="list" dir="rtl">
             {rawPageData.grid.map((row, idx) => (
               <div key={idx} className="grid grid-cols-2 gap-4" role="listitem">
-                {/* Kanan */}
-                <button 
+                {/* Kanan (First in RTL flow = visually on the Right) */}
+                <button
                   onClick={() => playRef(row.kanan)}
                   className="bg-white/5 hover:bg-white/10 border border-white/5 hover:border-raudhah-teal/50 active:bg-white/20 transition-all rounded-2xl p-4 md:p-6 flex items-center justify-center aspect-[2.5/1] cursor-pointer group relative focus:outline-none focus:ring-2 focus:ring-raudhah-teal focus:bg-white/10 touch-manipulation"
                   aria-label={`Bacaan Kanan: ${row.kanan}. Tekan untuk dengar.`}
                 >
-                   <span className="text-3xl md:text-4xl font-arabic select-none pointer-events-none">{row.kanan}</span>
-                   <div className="absolute inset-0 bg-raudhah-teal/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity" />
-                   {/* Audio Indicator */}
-                   <div className="absolute top-2 right-2 opacity-30 group-hover:opacity-100 transition-opacity">
-                      <Volume2 className="w-4 h-4 text-raudhah-teal" />
-                   </div>
+                  <span className="text-3xl md:text-4xl font-arabic select-none pointer-events-none" dir="rtl">{row.kanan}</span>
+                  <div className="absolute inset-0 bg-raudhah-teal/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity" />
+                  {/* Audio Indicator */}
+                  <div className="absolute top-2 right-2 opacity-30 group-hover:opacity-100 transition-opacity">
+                    <Volume2 className="w-4 h-4 text-raudhah-teal" />
+                  </div>
                 </button>
-                
-                {/* Kiri */}
-                <button 
+
+                {/* Kiri (Second in RTL flow = visually on the Left) */}
+                <button
                   onClick={() => playRef(row.kiri)}
                   className="bg-white/5 hover:bg-white/10 border border-white/5 hover:border-raudhah-teal/50 active:bg-white/20 transition-all rounded-2xl p-4 md:p-6 flex items-center justify-center aspect-[2.5/1] cursor-pointer group relative focus:outline-none focus:ring-2 focus:ring-raudhah-teal focus:bg-white/10 touch-manipulation"
                   aria-label={`Bacaan Kiri: ${row.kiri}. Tekan untuk dengar.`}
                 >
-                   <span className="text-3xl md:text-4xl font-arabic select-none pointer-events-none">{row.kiri}</span>
-                   <div className="absolute inset-0 bg-raudhah-teal/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity" />
-                   {/* Audio Indicator */}
-                   <div className="absolute top-2 right-2 opacity-30 group-hover:opacity-100 transition-opacity">
-                      <Volume2 className="w-4 h-4 text-raudhah-teal" />
-                   </div>
+                  <span className="text-3xl md:text-4xl font-arabic select-none pointer-events-none" dir="rtl">{row.kiri}</span>
+                  <div className="absolute inset-0 bg-raudhah-teal/5 opacity-0 group-hover:opacity-100 rounded-2xl transition-opacity" />
+                  {/* Audio Indicator */}
+                  <div className="absolute top-2 right-2 opacity-30 group-hover:opacity-100 transition-opacity">
+                    <Volume2 className="w-4 h-4 text-raudhah-teal" />
+                  </div>
                 </button>
               </div>
             ))}
@@ -297,7 +298,7 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
 
       {/* Bottom Controls */}
       <footer className="h-24 pb-4 border-t border-white/10 bg-[#0a0a0a] flex items-center justify-between px-4 md:px-6 z-50 fixed bottom-0 left-0 right-0 backdrop-blur-lg bg-opacity-95">
-        <button 
+        <button
           onClick={prevLesson}
           disabled={isFirstLesson}
           className="flex flex-col items-center justify-center w-16 h-full gap-1 text-slate-400 hover:text-white disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none active:scale-95"
@@ -308,14 +309,14 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
         </button>
 
         <div className="flex gap-4 items-center -mt-6">
-            {/* Main Action Button (ASR) */}
-            <ASRRecorder 
-                expectedText={rawPageData.focus}
-                onResult={handleASRResult}
-            />
+          {/* Main Action Button (ASR) */}
+          <ASRRecorder
+            expectedText={rawPageData.focus}
+            onResult={handleASRResult}
+          />
         </div>
 
-        <button 
+        <button
           onClick={nextLesson}
           disabled={isLastLesson}
           className="flex flex-col items-center justify-center w-16 h-full gap-1 text-raudhah-teal hover:text-raudhah-teal disabled:opacity-30 disabled:cursor-not-allowed transition-colors focus:outline-none active:scale-95"
@@ -326,10 +327,10 @@ const IqraDigitalReader: React.FC<IqraDigitalReaderProps> = ({ volume, onBack })
         </button>
       </footer>
 
-      <LessonFeedback 
-        isOpen={isFeedbackOpen} 
-        onClose={() => setIsFeedbackOpen(false)} 
-        lessonTitle={`${currentLesson.unitTitle}: ${currentLesson.title}`} 
+      <LessonFeedback
+        isOpen={isFeedbackOpen}
+        onClose={() => setIsFeedbackOpen(false)}
+        lessonTitle={`${currentLesson.unitTitle}: ${currentLesson.title}`}
       />
     </div>
   );

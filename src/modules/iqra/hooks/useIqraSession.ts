@@ -6,7 +6,7 @@ import { IQRA_CONFIG } from '../constants';
 import { IqraService } from '../../../services/iqraService';
 import { useAudioPlayer } from '../../../contexts/AudioPlayerContext';
 
-export const useIqraSession = (volume: number) => {
+export const useIqraSession = (volume: number, initialPageIndex: number = 0) => {
   const { playTrack } = useAudioPlayer();
 
   // Load Data
@@ -14,7 +14,7 @@ export const useIqraSession = (volume: number) => {
   const lessons = curriculumData.lessons;
 
   // State
-  const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(initialPageIndex);
   const [lessonStarted, setLessonStarted] = useState(false);
   const [showTips, setShowTips] = useState(false);
   const [showResult, setShowResult] = useState<'success' | 'fail' | null>(null);
