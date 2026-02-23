@@ -1,5 +1,6 @@
 import { supabase } from '../lib/supabase';
 import { HybridResponse } from './aiService';
+import { aiOrchestrator } from './ai/AdkRunner';
 
 // --- TYPES ---
 
@@ -142,31 +143,26 @@ export const UstazahOrchestrator = {
   },
 
   async handleEducationIntent(query: string, lang: 'ms' | 'en'): Promise<HybridResponse | null> {
-    console.log("🧠 MCP: Routing to 'mcp-education'");
+    console.log("🧠 MCP: Routing to 'ADK mufassir'");
     try {
       const intent = (query.includes('tafsir') || query.includes('ayat')) ? 'tafsir' : 'hadith';
 
-      const { data, error } = await supabase.functions.invoke('mcp-education', {
-        body: { intent, query }
-      });
+      // Use ADK Routing
+      const responseText = await aiOrchestrator.ask([{ role: 'user', content: query }], { persona: 'mufassir' });
 
-      if (error) throw error;
+      if (!responseText) return null;
 
-      if (!data.results || data.results.length === 0) return null;
-
-      const items = data.results.map((item: any) =>
-        intent === 'hadith'
-          ? `📜 **${item.collection_name} #${item.hadith_number}**\n"${item.content_translation}"`
-          : `📖 **Tafsir ${item.surah}:${item.verse}**\n${item.tafsir}`
-      ).join('\n\n');
+      const summaryStr = intent === 'hadith'
+        ? `📜 **Sumber Hadith & Ilmiah**\n\n${responseText}`
+        : `📖 **Tafsir & Asbabun Nuzul**\n\n${responseText}`;
 
       return {
-        summary: `🎓 **Sumber Ilmu (${intent === 'hadith' ? 'Hadith' : 'Tafsir'})**\n\n${items}`,
+        summary: summaryStr,
         resources: []
       };
 
     } catch (e) {
-      console.error("MCP Education Error:", e);
+      console.error("ADK Education Error:", e);
       return null;
     }
   },
@@ -230,34 +226,28 @@ export const UstazahOrchestrator = {
   },
 
   async handleComplianceIntent(query: string, lang: 'ms' | 'en'): Promise<HybridResponse | null> {
-    console.log("🧠 MCP: Routing to 'mcp-compliance'");
+    console.log("🧠 MCP: Routing to 'ADK fatwa-guard'");
     try {
       const type = query.includes('halal') ? 'halal' : 'fatwa';
-      const { data, error } = await supabase.functions.invoke('mcp-compliance', {
-        body: { type, query }
-      });
 
-      if (error) throw error;
-      const res = data as MCPComplianceData;
+      // Use ADK Routing
+      const responseText = await aiOrchestrator.ask([{ role: 'user', content: query }], { persona: 'fatwa-guard' });
 
-      if (res.status !== 'found') return null;
+      if (!responseText) return null;
 
-      const title = lang === 'ms' ? 'Status Rasmi' : 'Official Status';
-      const sourceName = res.source === 'jakim_fatwa' ? 'E-SMAF (Fatwa)' : 'Halal Malaysia';
+      const title = lang === 'ms' ? 'Status Semakan Hukum' : 'Rulings Verification';
+      const sourceName = type === 'fatwa' ? 'E-SMAF (Fatwa Guidance)' : 'Halal Malaysia Guidance';
 
       const summary = `⚖️ **${title} (${type.toUpperCase()})**\n\n` +
-        `**${res.data.title || query}**\n` +
-        `${res.data.ruling}\n\n` +
-        `📌 Sumber: ${sourceName}`;
+        `${responseText}\n\n` +
+        `📌 Sumber Rujukan Pantas: ${sourceName}`;
 
       return {
         summary,
-        resources: res.data.reference_url
-          ? [{ type: 'link', title: 'Dokumen Asal', url: res.data.reference_url }]
-          : []
+        resources: []
       };
     } catch (e) {
-      console.error("MCP Compliance Error:", e);
+      console.error("ADK Compliance Error:", e);
       return null;
     }
   },

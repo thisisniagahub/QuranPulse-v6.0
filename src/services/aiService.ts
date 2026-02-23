@@ -11,6 +11,7 @@ import { mcpService } from './mcpService';
 import staticContentService, { TajweedRule, MakhrajPoint, Doa, FAQ, Hadith } from './staticContentService';
 import { checkFatwaSafety, sanitizeIslamicResponse } from './fatwaGuard';
 import { ragQuery } from './ragService';
+import { aiOrchestrator } from './ai/AdkRunner';
 
 // --- TYPES ---
 export type EmotionType = 'sad' | 'anxious' | 'happy' | 'confused' | 'angry' | 'neutral';
@@ -227,13 +228,10 @@ export const askUstazAI = async (
     console.warn("⏩ Bypassing Groq (Circuit is OPEN)");
   }
 
-  // Fallback to Gemini if Groq didn't answer
+  // Fallback to AdkRunner (Gemini) if Groq didn't answer
   if (!rawResponse && !geminiCircuit.isOpen()) {
     try {
-      const isNode = typeof process !== 'undefined' && process.versions && process.versions.node;
-      rawResponse = isNode
-        ? await callGeminiDirect(messagesWithSystem as any)
-        : await callGeminiFlashWithFailover(messagesWithSystem as any);
+      rawResponse = await aiOrchestrator.ask(messagesWithSystem, { persona: activePersona.id });
 
       if (rawResponse.includes("Proxy Error")) {
         throw new Error("Gemini Proxy Error");
@@ -482,7 +480,7 @@ export const getHadithByTopic = async (topic: string): Promise<{ arabic: string;
         content: `Topik: ${topic}`
       }];
 
-      const response = await callGeminiFlashWithFailover(prompt);
+      const response = await aiOrchestrator.ask(prompt);
       try {
         return JSON.parse(response.replace(/```json|```/g, '').trim());
       } catch {
@@ -519,7 +517,7 @@ export const getTafsirForVerse = async (key: string): Promise<{ tafsir: string; 
         content: `Ayat: ${key}`
       }];
 
-      const response = await callGeminiFlashWithFailover(prompt);
+      const response = await aiOrchestrator.ask(prompt);
       try {
         return JSON.parse(response.replace(/```json|```/g, '').trim());
       } catch {
@@ -591,8 +589,8 @@ ARAHAN:
   ];
 
   try {
-    // We use the failover client directly to ensure high availability
-    return await callGeminiFlashWithFailover(messages as any);
+    // We use the ADK Runner to ensure high availability
+    return await aiOrchestrator.ask(messages);
   } catch (error) {
     console.error("Verse Context Chat Failed:", error);
     return "Maaf, Ustaz AI sedang mengalami gangguan sambungan. Sila cuba sebentar lagi.";
