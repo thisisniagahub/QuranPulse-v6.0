@@ -1,3 +1,16 @@
+/* 
+========================================================================
+⚠️ AMARAN PENTING (DATA SEMENTARA / ALGORITHMIC PLACEHOLDER) ⚠️
+========================================================================
+Data Iqra di dalam fail ini dijana secara algoritma untuk tujuan ujilari UI/UX.
+BAIT/BARIS HURUF ARAB DAN RUMI DI SINI MUNGKIN TIDAK MENGGAMBARKAN KANDUNGAN
+SEBENAR BUKU IQRA FIZIKAL KELUARAN RASMI JAKIM SECARA 100% TEPAT. 
+
+Untuk Deployment v6.0 / v7.0 Production, pasukan Tasmik/Konten WAJIB:
+1. Membuka naskhah buku fizikal Iqra yang disahkan.
+2. Menaip semula / menyemak padanan baris Arab dan Rumi satu persatu.
+========================================================================
+*/
 import { IqraPageStrict } from './iqra-1-strict';
 
 interface Iqra4Section {
