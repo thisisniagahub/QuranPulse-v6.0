@@ -5,7 +5,7 @@ import { NavView } from "../types";
 import { useAuth } from "../contexts/AuthContext";
 import { useGamification } from "../contexts/GamificationContext";
 import { Crown, Swords, Trophy } from "lucide-react";
-import kufiSplash from "@/assets/bg/kufi-splash.jpg";
+import kufiSplash from "@/assets/bg/quranpulse-green.jpg";
 import kufiHeader from "@/assets/bg/kufi-header.jpg";
 import kufiFooter from "@/assets/bg/kufi-footer.jpg";
 import navHomeIcon from "@/assets/icons/home-3d.png";
@@ -49,7 +49,7 @@ const Layout: React.FC = () => {
       ></div>
 
       {/* --- MOBILE APP SHELL CONTAINER --- */}
-      <div className="flex flex-col h-full w-full max-w-[480px] bg-[#031a38] relative shadow-2xl md:border-x md:border-white/10">
+      <div className="flex flex-col h-full w-full max-w-[480px] bg-[#0a2e25] relative shadow-2xl md:border-x md:border-white/10">
 
         {/* Header with Maze Pattern Overlay */}
         <div
@@ -58,15 +58,15 @@ const Layout: React.FC = () => {
         ></div>
 
         {/* Global Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0c224b]/50 via-[#031a38]/90 to-[#031a38] -z-10 pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0f3d32]/50 via-[#0a2e25]/90 to-[#0a2e25] -z-10 pointer-events-none"></div>
 
         {/* --- PREMIUM HEADER ATAS SEKALI --- */}
-        <header className="h-20 bg-[#0c224b]/60 backdrop-blur-xl border-b border-white/10 flex flex-col justify-center px-4 shrink-0 z-20 relative shadow-lg">
+        <header className="h-20 bg-[#0f3d32]/60 backdrop-blur-xl border-b border-white/10 flex flex-col justify-center px-4 shrink-0 z-20 relative shadow-lg">
           <div className="flex items-center justify-between">
             {/* Left: Brand */}
             <Link to="/" className="flex flex-col">
               <div className="flex items-center gap-2 group">
-                <img loading="lazy" src="/logo-primary.png" alt="QuranPulse" width="32" height="32" className="w-8 h-8 object-contain drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]" />
+                <img loading="lazy" src="/logo-primary.png" alt="QuranPulse" width="32" height="32" className="w-8 h-8 object-contain drop-shadow-md" />
                 <span className="font-black text-lg tracking-tighter text-white font-[Poppins]">
                   Quran<span className="text-raudhah-teal">Pulse</span>
                 </span>
@@ -87,12 +87,12 @@ const Layout: React.FC = () => {
 
             {/* Right: Actions */}
             <div className="flex items-center gap-3">
-              <button aria-label="Notifications" className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#1e3a8a] to-[#0c224b] border border-white/10 flex items-center justify-center text-raudhah-teal shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] hover:scale-105 transition-all group">
+              <button aria-label="Notifications" className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-[#1a5746] to-[#0f3d32] border border-white/10 flex items-center justify-center text-raudhah-teal shadow-[0_4px_10px_rgba(0,0,0,0.3),inset_0_1px_1px_rgba(255,255,255,0.1)] hover:scale-105 transition-all group">
                 <i className="fa-regular fa-bell text-sm group-hover:animate-swing"></i>
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0c224b] animate-pulse"></span>
+                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border-2 border-[#0f3d32] animate-pulse"></span>
               </button>
 
-              <Link to="/profile" className="w-9 h-9 rounded-full border-2 border-raudhah-teal/20 p-0.5 bg-[#0c224b] shadow-lg">
+              <Link to="/profile" className="w-9 h-9 rounded-full border-2 border-raudhah-teal/20 p-0.5 bg-[#0f3d32] shadow-lg">
                 <img loading="lazy"
                   src={user?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user?.email}`}
                   alt="User"
@@ -106,7 +106,7 @@ const Layout: React.FC = () => {
           </div>
         </header>
 
-        <div className="px-4 py-2 border-b border-white/10 bg-[#0c224b]/30 flex items-center gap-2 overflow-x-auto scrollbar-hide">
+        <div className="px-4 py-2 border-b border-white/10 bg-[#0f3d32]/30 flex items-center gap-2 overflow-x-auto scrollbar-hide">
           <Link
             to="/quest"
             className={`group px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap border transition-all duration-300 flex items-center gap-1.5 ${isQuestRoute
@@ -149,7 +149,7 @@ const Layout: React.FC = () => {
 
         {/* --- BOTTOM NAVIGATION BAR: FLOATING RAUDHAH DOCK --- */}
         <div className="fixed bottom-6 inset-x-4 z-50 flex justify-center pointer-events-none">
-          <nav className="w-full max-w-md h-[76px] bg-[#1e3a8a]/60 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-between px-2 relative pointer-events-auto ring-1 ring-white/10">
+          <nav className="w-full max-w-md h-[76px] bg-[#1a5746]/60 backdrop-blur-3xl border border-white/20 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.4)] flex items-center justify-between px-2 relative pointer-events-auto ring-1 ring-white/10">
 
             {/* Glass Shine Effect */}
             <div className="absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent"></div>
@@ -188,14 +188,14 @@ const Layout: React.FC = () => {
               >
                 <div className={`w-[72px] h-[72px] rounded-full p-1 transition-all duration-300 ${currentView === NavView.SMART_DEEN ? 'scale-110' : 'hover:scale-105'}`}
                   style={{
-                    background: 'linear-gradient(135deg, #0c224b 0%, #031a38 100%)',
+                    background: 'linear-gradient(135deg, #0f3d32 0%, #0a2e25 100%)',
                     boxShadow: currentView === NavView.SMART_DEEN
                       ? '0 0 30px rgba(8,145,178,0.6), inset 0 0 20px rgba(8,145,178,0.2)'
                       : '0 10px 25px rgba(0,0,0,0.5), inset 0 0 10px rgba(255,255,255,0.05)',
                     border: '1px solid rgba(255,255,255,0.1)'
                   }}
                 >
-                  <div className="w-full h-full rounded-full bg-[#031a38] flex items-center justify-center relative overflow-hidden">
+                  <div className="w-full h-full rounded-full bg-[#0a2e25] flex items-center justify-center relative overflow-hidden">
                     {/* Inner Noise */}
                     <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20"></div>
 

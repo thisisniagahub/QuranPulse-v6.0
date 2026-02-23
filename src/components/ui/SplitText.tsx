@@ -101,7 +101,7 @@ const SplitText: React.FC<SplitTextProps> = ({
             >
                 {units.map(({ text: unitText, key, addSpace }) => (
                     <React.Fragment key={key}>
-                        <span className="inline-block overflow-hidden pt-4 -mt-4 pb-4 -mb-4">
+                        <span className="inline-block overflow-hidden pt-12 -mt-12 pb-12 -mb-12">
                             <motion.span
                                 className="inline-block"
                                 variants={itemVariants}
@@ -114,7 +114,7 @@ const SplitText: React.FC<SplitTextProps> = ({
                     </React.Fragment>
                 ))}
             </motion.span>
-        </Tag>
+        </Tag >
     );
 };
 
