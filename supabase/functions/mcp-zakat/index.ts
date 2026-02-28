@@ -20,15 +20,29 @@ interface ZakatRequest {
 }
 
 // --- CORS Headers Helper ---
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const ALLOWED_ORIGINS = [
+    'https://quranpulse.my',
+    'https://www.quranpulse.my',
+    'http://localhost:5173',
+    'http://localhost:3000',
+];
+
+function getCorsHeaders(req: Request): Record<string, string> {
+    const headers: Record<string, string> = {
+        'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    };
+    const origin = req.headers.get('origin') ?? '';
+    if (ALLOWED_ORIGINS.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin;
+    }
+    return headers;
+}
 
 serve(async (req) => {
     // Handle CORS preflight requests
     if (req.method === 'OPTIONS') {
-        return new Response('ok', { headers: corsHeaders });
+        return new Response('ok', { headers: getCorsHeaders(req) });
     }
 
     try {
@@ -106,12 +120,12 @@ serve(async (req) => {
                 currency: "MYR",
                 breakdown
             }
-        }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+        }), { headers: { ...getCorsHeaders(req), "Content-Type": "application/json" } });
 
     } catch (err) {
-        return new Response(JSON.stringify({ error: String(err) }), {
-            status: 500,
-            headers: { ...corsHeaders, "Content-Type": "application/json" }
+    return new Response(JSON.stringify({ error: String(err) }), {
+        status: 500,
+        headers: { ...getCorsHeaders(req), "Content-Type": "application/json" }
         });
     }
 });

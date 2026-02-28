@@ -71,14 +71,14 @@ describe('IqraVoiceCoach Integration', () => {
 
   test('renders correctly', () => {
     render(<IqraVoiceCoach />);
-    // ASRRecorder component shows 'Tekan & Sebut' initially
-    expect(screen.getByText('Tekan & Sebut')).toBeInTheDocument();
+    // ASRRecorder component shows 'Sentuh & Sebut' initially
+    expect(screen.getByText('Sentuh & Sebut')).toBeInTheDocument();
   });
 
   test('shows correct button state when not recording', () => {
     render(<IqraVoiceCoach />);
 
-    // Find microphone button - should show "Tekan & Sebut" initially
-    expect(screen.getByText('Tekan & Sebut')).toBeInTheDocument();
+    // Find microphone button - should show "Sentuh & Sebut" initially
+    expect(screen.getByText('Sentuh & Sebut')).toBeInTheDocument();
   });
 });

@@ -37,15 +37,29 @@ interface WorshipResponse {
 // --- CORE LOGIC ---
 
 // CORS Headers Helper
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-app-name',
-};
+const ALLOWED_ORIGINS = [
+  'https://quranpulse.my',
+  'https://www.quranpulse.my',
+  'http://localhost:5173',
+  'http://localhost:3000',
+];
+
+function getCorsHeaders(req: Request): Record<string, string> {
+  const headers: Record<string, string> = {
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-app-name',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+  };
+  const origin = req.headers.get('origin') ?? '';
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin;
+  }
+  return headers;
+}
 
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
+    return new Response('ok', { headers: getCorsHeaders(req) });
   }
 
   try {
@@ -68,98 +82,98 @@ serve(async (req) => {
     if (cachedData) {
       console.log(`✅ [Sequential Thinking] Cache HIT.`);
       return new Response(JSON.stringify({ ...cachedData.data, source: "cache" }), {
-        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
       });
     }
 
-    // 3. STATE TRANSITION: FETCH EXTERNAL (JAKIM)
-    console.log(`⚠️ [Sequential Thinking] Cache MISS. Fetching JAKIM...`);
-    console.time("⏱️ JAKIM-Fetch");
-    let result: WorshipResponse | null = null;
+// 3. STATE TRANSITION: FETCH EXTERNAL (JAKIM)
+console.log(`⚠️ [Sequential Thinking] Cache MISS. Fetching JAKIM...`);
+console.time("⏱️ JAKIM-Fetch");
+let result: WorshipResponse | null = null;
 
-    try {
-      const response = await fetch(`${JAKIM_API_URL}${zone}`);
-      const json = await response.json();
-      console.timeEnd("⏱️ JAKIM-Fetch");
+try {
+  const response = await fetch(`${JAKIM_API_URL}${zone}`);
+  const json = await response.json();
+  console.timeEnd("⏱️ JAKIM-Fetch");
 
-      if (json.status === "OK!" && json.prayerTime && json.prayerTime.length > 0) {
-        const pt = json.prayerTime[0];
-        result = {
-          source: "jakim",
-          zone: zone,
-          date: targetDate,
-          hijri: pt.hijri,
-          times: {
-            imsak: pt.imsak,
-            subuh: pt.fajr,
-            syuruk: pt.syuruk,
-            zohor: pt.dhuhr,
-            asar: pt.asr,
-            maghrib: pt.maghrib,
-            isyak: pt.isha,
-          },
-        };
-      } else {
-        throw new Error("Invalid JAKIM response");
-      }
-    } catch (err) {
-      console.error(`❌ [Sequential Thinking] JAKIM Fetch Failed:`, err);
+  if (json.status === "OK!" && json.prayerTime && json.prayerTime.length > 0) {
+    const pt = json.prayerTime[0];
+    result = {
+      source: "jakim",
+      zone: zone,
+      date: targetDate,
+      hijri: pt.hijri,
+      times: {
+        imsak: pt.imsak,
+        subuh: pt.fajr,
+        syuruk: pt.syuruk,
+        zohor: pt.dhuhr,
+        asar: pt.asr,
+        maghrib: pt.maghrib,
+        isyak: pt.isha,
+      },
+    };
+  } else {
+    throw new Error("Invalid JAKIM response");
+  }
+} catch (err) {
+  console.error(`❌ [Sequential Thinking] JAKIM Fetch Failed:`, err);
 
-      // 4. STATE TRANSITION: FAILOVER CALCULATION (Adhan.js)
-      if (lat && lng) {
-        console.log(`🔄 [Sequential Thinking] Fallback: Calculating locally using Adhan.js`);
-        const coordinates = new Coordinates(lat, lng);
-        const params = CalculationMethod.Singapore(); // Closest to JAKIM standard
-        const dateObj = new Date(targetDate);
-        const prayerTimes = new PrayerTimes(coordinates, dateObj, params);
+  // 4. STATE TRANSITION: FAILOVER CALCULATION (Adhan.js)
+  if (lat && lng) {
+    console.log(`🔄 [Sequential Thinking] Fallback: Calculating locally using Adhan.js`);
+    const coordinates = new Coordinates(lat, lng);
+    const params = CalculationMethod.Singapore(); // Closest to JAKIM standard
+    const dateObj = new Date(targetDate);
+    const prayerTimes = new PrayerTimes(coordinates, dateObj, params);
 
-        result = {
-          source: "calculation",
-          zone: zone,
-          date: targetDate,
-          times: {
-            imsak: prayerTimes.imsak.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-            subuh: prayerTimes.fajr.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-            syuruk: prayerTimes.sunrise.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-            zohor: prayerTimes.dhuhr.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-            asar: prayerTimes.asr.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-            maghrib: prayerTimes.maghrib.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-            isyak: prayerTimes.isha.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
-          },
-        };
-      } else {
-        return new Response(
-          JSON.stringify({ error: "JAKIM down and no coordinates provided for fallback" }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+    result = {
+      source: "calculation",
+      zone: zone,
+      date: targetDate,
+      times: {
+        imsak: prayerTimes.imsak.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+        subuh: prayerTimes.fajr.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+        syuruk: prayerTimes.sunrise.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+        zohor: prayerTimes.dhuhr.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+        asar: prayerTimes.asr.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+        maghrib: prayerTimes.maghrib.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+        isyak: prayerTimes.isha.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit' }),
+      },
+    };
+  } else {
+    return new Response(
+      JSON.stringify({ error: "JAKIM down and no coordinates provided for fallback" }),
+      { status: 500, headers: { ...getCorsHeaders(req), "Content-Type": "application/json" } }
         );
-      }
+}
     }
 
-    // 5. STATE TRANSITION: WRITE CACHE (Thread Safe-ish via Upsert)
-    if (result) {
-      console.log(`💾 [Sequential Thinking] Step 5: Writing to Cache...`);
-      // Expire cache at midnight next day
-      const expiresAt = new Date();
-      expiresAt.setDate(expiresAt.getDate() + 1);
-      expiresAt.setHours(0, 0, 0, 0);
+// 5. STATE TRANSITION: WRITE CACHE (Thread Safe-ish via Upsert)
+if (result) {
+  console.log(`💾 [Sequential Thinking] Step 5: Writing to Cache...`);
+  // Expire cache at midnight next day
+  const expiresAt = new Date();
+  expiresAt.setDate(expiresAt.getDate() + 1);
+  expiresAt.setHours(0, 0, 0, 0);
 
-      await supabase.from("external_api_cache").upsert({
-        key: cacheKey,
-        data: result,
-        source: result.source,
-        expires_at: expiresAt.toISOString(),
-      });
-    }
+  await supabase.from("external_api_cache").upsert({
+    key: cacheKey,
+    data: result,
+    source: result.source,
+    expires_at: expiresAt.toISOString(),
+  });
+}
 
-    // 6. FINAL RESPONSE
-    return new Response(JSON.stringify(result), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
+// 6. FINAL RESPONSE
+return new Response(JSON.stringify(result), {
+  headers: { ...getCorsHeaders(req), "Content-Type": "application/json" },
     });
 
   } catch (err) {
-    return new Response(
-      JSON.stringify({ error: String(err) }),
-      { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+  return new Response(
+    JSON.stringify({ error: String(err) }),
+    { status: 500, headers: { ...getCorsHeaders(req), "Content-Type": "application/json" } }
     );
   }
 });

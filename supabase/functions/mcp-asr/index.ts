@@ -5,10 +5,24 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const ALLOWED_ORIGINS = [
+    'https://quranpulse.my',
+    'https://www.quranpulse.my',
+    'http://localhost:5173',
+    'http://localhost:3000',
+];
+
+function getCorsHeaders(req: Request): Record<string, string> {
+    const origin = req.headers.get('origin') ?? '';
+    const headers: Record<string, string> = {
+        'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    };
+    if (ALLOWED_ORIGINS.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin;
+    }
+    return headers;
+}
 
 interface ASRRequest {
     intent: 'analyze' | 'transcribe' | 'health';
@@ -40,7 +54,7 @@ interface QWERResult {
 serve(async (req: Request) => {
     // Handle CORS
     if (req.method === 'OPTIONS') {
-        return new Response('ok', { headers: corsHeaders });
+        return new Response('ok', { headers: getCorsHeaders(req) });
     }
 
     try {
@@ -57,7 +71,7 @@ serve(async (req: Request) => {
         if (body.intent === 'health') {
             return new Response(
                 JSON.stringify({ status: 'healthy', service: 'mcp-asr' }),
-                { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+                { headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' } }
             );
         }
 
@@ -66,7 +80,7 @@ serve(async (req: Request) => {
             if (!body.audio_base64) {
                 return new Response(
                     JSON.stringify({ error: 'audio_base64 is required' }),
-                    { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+                    { status: 400, headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' } }
                 );
             }
 
@@ -76,7 +90,7 @@ serve(async (req: Request) => {
             if (body.intent === 'transcribe') {
                 return new Response(
                     JSON.stringify({ success: true, transcription }),
-                    { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+                    { headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' } }
                 );
             }
 
@@ -101,19 +115,19 @@ serve(async (req: Request) => {
             }).single();
 
             return new Response(JSON.stringify(result), {
-                headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+                headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' },
             });
         }
 
         return new Response(
             JSON.stringify({ error: 'Unknown intent' }),
-            { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            { status: 400, headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' } }
         );
     } catch (error) {
         console.error('❌ mcp-asr error:', error);
         return new Response(
             JSON.stringify({ error: (error as Error).message }),
-            { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+            { status: 500, headers: { ...getCorsHeaders(req), 'Content-Type': 'application/json' } }
         );
     }
 });
@@ -159,7 +173,7 @@ async function transcribeWithGroq(audioBase64: string, apiKey?: string): Promise
 function calculateQWER(transcription: string, expected: string) {
     // Normalize Arabic (remove simple tatweel, unify alifs) for fair comparison
     const norm = (text: string) => text.replace(/[ـ]/g, '').replace(/[أإآ]/g, 'ا');
-    
+
     const transcriptionChars = norm(transcription).replace(/\s/g, '').split('');
     const expectedChars = norm(expected).replace(/\s/g, '').split('');
 

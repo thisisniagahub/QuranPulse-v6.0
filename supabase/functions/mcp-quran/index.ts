@@ -13,15 +13,29 @@ interface RequestPayload {
 }
 
 // --- CORS Headers Helper ---
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const ALLOWED_ORIGINS = [
+  'https://quranpulse.my',
+  'https://www.quranpulse.my',
+  'http://localhost:5173',
+  'http://localhost:3000',
+];
+
+function getCorsHeaders(req: Request): Record<string, string> {
+  const headers: Record<string, string> = {
+    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+    'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+  };
+  const origin = req.headers.get('origin') ?? '';
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin;
+  }
+  return headers;
+}
 
 serve(async (req) => {
   // Handle CORS preflight requests
   if (req.method === 'OPTIONS') {
-    return new Response('ok', { headers: corsHeaders });
+    return new Response('ok', { headers: getCorsHeaders(req) });
   }
 
   try {
@@ -54,55 +68,55 @@ serve(async (req) => {
           ref: `${v.ayahs.surahs.name_simple} ${v.ayahs.surah_number}:${v.ayahs.ayah_number}`,
           text: v.text
         })) || []
-      }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+      }), { headers: { ...getCorsHeaders(req), "Content-Type": "application/json" } });
     }
 
-    // 2. INTENT: RANDOM / DAILY AYAH
-    if (intent === "random") {
-      // Get a random Ayah ID (approx max 6236)
-      const randomId = Math.floor(Math.random() * 6236) + 1;
-      const { data, error } = await supabase
-        .from('ayahs')
-        .select(`
+// 2. INTENT: RANDOM / DAILY AYAH
+if (intent === "random") {
+  // Get a random Ayah ID (approx max 6236)
+  const randomId = Math.floor(Math.random() * 6236) + 1;
+  const { data, error } = await supabase
+    .from('ayahs')
+    .select(`
             ayah_number,
             surah_number,
             text_uthmani,
             surahs (name_simple)
         `)
-        .eq('id', randomId)
-        .single();
+    .eq('id', randomId)
+    .single();
 
-      if (error) throw error;
+  if (error) throw error;
 
-      return new Response(JSON.stringify({
-        source: 'random',
-        data: {
-          ref: `${data.surahs.name_simple} ${data.surah_number}:${data.ayah_number}`,
-          arabic: data.text_uthmani
-        }
-      }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+  return new Response(JSON.stringify({
+    source: 'random',
+    data: {
+      ref: `${data.surahs.name_simple} ${data.surah_number}:${data.ayah_number}`,
+      arabic: data.text_uthmani
+    }
+  }), { headers: { ...getCorsHeaders(req), "Content-Type": "application/json" } });
     }
 
-    // 3. INTENT: TADABBUR (AI Reflection - Simulated for now)
-    if (intent === "taddabur") {
-      return new Response(JSON.stringify({
-        source: 'static_taddabur',
-        data: {
-          title: "Reflection on Time",
-          content: "Surah Al-Asr reminds us that time is our most precious capital. Are we investing it in Iman and Amal Saleh?"
-        }
-      }), { headers: { ...corsHeaders, "Content-Type": "application/json" } });
+// 3. INTENT: TADABBUR (AI Reflection - Simulated for now)
+if (intent === "taddabur") {
+  return new Response(JSON.stringify({
+    source: 'static_taddabur',
+    data: {
+      title: "Reflection on Time",
+      content: "Surah Al-Asr reminds us that time is our most precious capital. Are we investing it in Iman and Amal Saleh?"
+    }
+  }), { headers: { ...getCorsHeaders(req), "Content-Type": "application/json" } });
     }
 
-    return new Response(JSON.stringify({ error: "Invalid Intent" }), {
-      status: 400,
-      headers: { ...corsHeaders, "Content-Type": "application/json" }
+return new Response(JSON.stringify({ error: "Invalid Intent" }), {
+  status: 400,
+  headers: { ...getCorsHeaders(req), "Content-Type": "application/json" }
     });
 
   } catch (err) {
-    return new Response(JSON.stringify({ error: String(err) }), {
-      status: 500,
-      headers: { ...corsHeaders, "Content-Type": "application/json" }
+  return new Response(JSON.stringify({ error: String(err) }), {
+    status: 500,
+    headers: { ...getCorsHeaders(req), "Content-Type": "application/json" }
     });
   }
 });

@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-presence';
+import { motion, AnimatePresence } from 'framer-motion';
 import { CheckCircle2, AlertCircle, Loader2, BrainCircuit, ChevronRight } from 'lucide-react';
 
 interface IqraFeedbackOverlayProps {
@@ -90,8 +90,8 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
             <button
                 onClick={onNext}
                 className={`w-full py-7 rounded-[2.5rem] font-black uppercase tracking-[0.4em] text-md text-white transition-all shadow-warm flex items-center justify-center gap-4 border-b-[6px] active:border-b-0 active:translate-y-1.5 ${isCorrect
-                        ? 'bg-raudhah-teal border-raudhah-ink'
-                        : 'bg-raudhah-ink border-raudhah-teal'
+                    ? 'bg-raudhah-teal border-raudhah-ink'
+                    : 'bg-raudhah-ink border-raudhah-teal'
                     }`}
             >
                 {isCorrect ? 'Seterusnya' : 'Sebut Semula'} <ChevronRight size={28} />

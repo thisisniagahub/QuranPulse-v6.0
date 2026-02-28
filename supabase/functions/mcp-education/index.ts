@@ -1,21 +1,35 @@
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.7.1";
 
-export const corsHeaders = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
-};
+const ALLOWED_ORIGINS = [
+    'https://quranpulse.my',
+    'https://www.quranpulse.my',
+    'http://localhost:5173',
+    'http://localhost:3000',
+];
+
+function getCorsHeaders(req: Request): Record<string, string> {
+    const headers: Record<string, string> = {
+        'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+        'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+    };
+    const origin = req.headers.get('origin') ?? '';
+    if (ALLOWED_ORIGINS.includes(origin)) {
+        headers['Access-Control-Allow-Origin'] = origin;
+    }
+    return headers;
+}
 
 serve(async (req) => {
     if (req.method === 'OPTIONS') {
-        return new Response('ok', { headers: corsHeaders });
+        return new Response('ok', { headers: getCorsHeaders(req) });
     }
 
     try {
         const { query, lang = "ms" } = await req.json();
 
         if (!query || query.length < 3) {
-            return new Response(JSON.stringify({ error: "Query too short" }), { status: 400, headers: corsHeaders });
+            return new Response(JSON.stringify({ error: "Query too short" }), { status: 400, headers: getCorsHeaders(req) });
         }
 
         const systemInstruction = `Anta adalah Mufassir AI. Berikan tafsir ringkas dan pengajaran ayat/hadis berdasarkan sumber sahih (Tafsir Ibn Kathir, Sahih Bukhari). Jawab dalam bahasa ${lang === 'ms' ? 'Melayu' : 'Inggeris'} dengan nada mendidik dan tenang.`;
@@ -63,14 +77,14 @@ serve(async (req) => {
         };
 
         return new Response(JSON.stringify(output), {
-            headers: { ...corsHeaders, "Content-Type": "application/json" },
+            headers: { {...getCorsHeaders(req), "Content-Type": "application/json" },
         });
 
     } catch (err: any) {
         console.error("❌ [mcp-education] Error:", err.message);
         return new Response(JSON.stringify({ error: String(err.message) }), {
             status: 500,
-            headers: { ...corsHeaders, "Content-Type": "application/json" }
+            headers: { {...getCorsHeaders(req), "Content-Type": "application/json" }
         });
     }
 });
