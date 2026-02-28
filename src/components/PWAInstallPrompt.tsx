@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Download, X, Share2, Star } from 'lucide-react';
+import { Download, X, Sparkles, Zap } from 'lucide-react';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -26,34 +26,21 @@ const safeSetStorage = (key: string, value: string): void => {
 const PWAInstallPrompt: React.FC = () => {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showPrompt, setShowPrompt] = useState(false);
-  const [variant, setVariant] = useState<'A' | 'B'>('B'); // Default to B as requested, but support logic for testing
 
   useEffect(() => {
-    // 1. Capture the event
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
       setDeferredPrompt(e as BeforeInstallPromptEvent);
 
-      // Simple Client-Side A/B Testing Logic
-      // Check if user has already seen/dismissed the prompt recently?
       const hasDismissed = safeGetStorage('pwa_prompt_dismissed');
       if (!hasDismissed) {
-        // Randomize A/B (Uncomment for true 50/50 test)
-        // const isVariantB = Math.random() > 0.5;
-        // setVariant(isVariantB ? 'B' : 'A');
-
-        // For now, enforcing Variant B (Winner)
-        setVariant('B');
         setShowPrompt(true);
       }
     };
 
-    // 2. Listen for app installed to cleanup
     const handleAppInstalled = () => {
       setShowPrompt(false);
       setDeferredPrompt(null);
-      // Tracked via analytics
-      // Track conversion here (e.g., analytics.track('PWA_Installed', { variant }))
     };
 
     window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
@@ -67,92 +54,99 @@ const PWAInstallPrompt: React.FC = () => {
 
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;
-
-    // Show the native prompt
     await deferredPrompt.prompt();
-
-    // Wait for the user to respond to the prompt
-    const { outcome } = await deferredPrompt.userChoice;
-
-    // outcome: 'accepted' | 'dismissed' — tracked via analytics
-
+    await deferredPrompt.userChoice;
     setDeferredPrompt(null);
     setShowPrompt(false);
   };
 
   const handleDismiss = () => {
     setShowPrompt(false);
-    // Hide for 7 days (example logic)
     safeSetStorage('pwa_prompt_dismissed', new Date().toISOString());
   };
 
   if (!showPrompt) return null;
 
-  // VARIATION A: Generic / Standard
-  const contentA = {
-    headline: "Install QuranPulse",
-    body: "Pasang aplikasi untuk akses lebih pantas dan bacaan offline.",
-    cta: "Install App",
-    icon: "📱"
-  };
-
-  // VARIATION B: Benefit-Driven (Winner)
-  const contentB = {
-    headline: "Dapatkan Ustaz AI Personal Anda",
-    body: "Bimbingan mengaji 24/7, semakan tajwid masa nyata, dan akses offline.",
-    cta: "Dapatkan Sekarang",
-    icon: "👳‍♂️"
-  };
-
-  const activeContent = variant === 'B' ? contentB : contentA;
-
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 100, opacity: 0 }}
+        initial={{ y: 100, opacity: 0, scale: 0.95 }}
+        animate={{ y: 0, opacity: 1, scale: 1 }}
+        exit={{ y: 100, opacity: 0, scale: 0.95 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
         className="fixed bottom-0 left-0 right-0 z-50 p-4 md:p-6 flex justify-center pointer-events-none"
       >
-        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-2xl border border-teal-100 dark:border-teal-900/30 p-4 w-full max-w-md pointer-events-auto flex items-center gap-4 relative overflow-hidden">
+        <div className="relative w-full max-w-md pointer-events-auto">
+          {/* Glass Card */}
+          <div className="relative rounded-3xl overflow-hidden border border-white/20 dark:border-white/10 shadow-[0_8px_40px_rgba(27,107,90,0.15)] dark:shadow-[0_8px_40px_rgba(27,107,90,0.3)]">
 
-          {/* Background Glow */}
-          <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-raudhah-teal/10 rounded-full blur-2xl"></div>
+            {/* Gradient Background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white via-teal-50/50 to-emerald-50/80 dark:from-slate-900 dark:via-slate-800 dark:to-teal-950/50" />
 
-          {/* Icon */}
-          <div className="flex-shrink-0 w-12 h-12 bg-teal-50 rounded-xl flex items-center justify-center text-2xl shadow-sm border border-teal-100">
-            {activeContent.icon}
+            {/* Shimmer Effect */}
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent dark:via-white/5"
+              animate={{ x: ['-100%', '200%'] }}
+              transition={{ duration: 3, repeat: Infinity, repeatDelay: 4, ease: 'easeInOut' }}
+            />
+
+            {/* Content */}
+            <div className="relative p-4 md:p-5 flex items-center gap-4">
+
+              {/* App Icon */}
+              <motion.div
+                className="flex-shrink-0"
+                animate={{ rotate: [0, -3, 3, 0] }}
+                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              >
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-emerald-600 shadow-lg shadow-teal-500/30 flex items-center justify-center relative">
+                  <img
+                    src="/logo-primary.png"
+                    alt="QuranPulse"
+                    className="w-10 h-10 object-contain drop-shadow-md"
+                  />
+                  {/* Notification Badge */}
+                  <motion.div
+                    className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-br from-amber-400 to-orange-500 rounded-full flex items-center justify-center shadow-md"
+                    animate={{ scale: [1, 1.2, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
+                    <Sparkles size={10} className="text-white" />
+                  </motion.div>
+                </div>
+              </motion.div>
+
+              {/* Text Content */}
+              <div className="flex-1 min-w-0">
+                <h4 className="font-bold text-slate-800 dark:text-white text-sm md:text-base leading-tight tracking-tight">
+                  Teman Ibadah Digital Anda
+                </h4>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed line-clamp-2">
+                  Waktu solat tepat, Ustaz AI 24/7, dan zikir harian — satu app.
+                </p>
+              </div>
+
+              {/* CTA Button */}
+              <motion.button
+                onClick={handleInstallClick}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.97 }}
+                className="flex-shrink-0 bg-gradient-to-r from-teal-600 to-emerald-600 hover:from-teal-500 hover:to-emerald-500 text-white text-xs font-bold py-2.5 px-5 rounded-xl shadow-lg shadow-teal-600/25 transition-all whitespace-nowrap flex items-center gap-1.5"
+              >
+                <Zap size={13} strokeWidth={2.5} className="fill-current" />
+                Pasang
+              </motion.button>
+            </div>
           </div>
 
-          {/* Text */}
-          <div className="flex-1">
-            <h4 className="font-bold text-slate-800 dark:text-slate-100 text-sm md:text-base leading-tight">
-              {activeContent.headline}
-            </h4>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed line-clamp-2">
-              {activeContent.body}
-            </p>
-          </div>
-
-          {/* Actions */}
-          <div className="flex flex-col gap-2">
-            <button
-              onClick={handleInstallClick}
-              className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-lg shadow-teal-500/20 transition-all active:scale-95 whitespace-nowrap flex items-center gap-1.5"
-            >
-              <Download size={14} strokeWidth={2.5} />
-              {activeContent.cta}
-            </button>
-          </div>
-
-          {/* Close */}
+          {/* Close Button */}
           <button
             onClick={handleDismiss}
             title="Tutup"
             aria-label="Tutup prompt pemasangan"
-            className="absolute top-2 right-2 text-slate-300 hover:text-slate-500 transition-colors"
+            className="absolute -top-2 -right-2 w-7 h-7 bg-white dark:bg-slate-800 rounded-full shadow-md border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-all hover:scale-110"
           >
-            <X size={16} />
+            <X size={13} strokeWidth={2.5} />
           </button>
         </div>
       </motion.div>
