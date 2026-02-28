@@ -112,8 +112,8 @@ const MiqatAlert: React.FC = () => {
         <div className="space-y-4">
             {/* Header */}
             <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-teal-500/20">
-                    <Plane className="text-blue-400" size={24} />
+                <div className="p-2 rounded-lg bg-gradient-to-br from-teal-500/20 to-teal-500/20">
+                    <Plane className="text-teal-400" size={24} />
                 </div>
                 <div>
                     <h3 className="text-lg font-semibold text-white">In-Flight Miqat Alert</h3>
@@ -205,7 +205,7 @@ const MiqatAlert: React.FC = () => {
                     <button
                         onClick={calculateMiqatTime}
                         disabled={!departureTime}
-                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-gradient-to-r from-raudhah-teal to-blue-500 text-black font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-teal-500/30 transition-all"
+                        className="flex-1 flex items-center justify-center gap-2 py-3 rounded-lg bg-gradient-to-r from-raudhah-teal to-teal-500 text-black font-semibold disabled:opacity-50 disabled:cursor-not-allowed hover:shadow-lg hover:shadow-teal-500/30 transition-all"
                     >
                         <Bell size={18} />
                         Aktifkan Alert
@@ -262,7 +262,7 @@ const MiqatAlert: React.FC = () => {
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className="p-4 bg-gradient-to-br from-raudhah-teal/20 to-blue-500/10 border border-raudhah-teal/50 rounded-xl"
+                    className="p-4 bg-gradient-to-br from-raudhah-teal/20 to-teal-500/10 border border-raudhah-teal/50 rounded-xl"
                 >
                     <h4 className="text-raudhah-teal font-semibold mb-2">📿 Niat Ihram Umrah</h4>
                     <p className="text-xl text-white font-arabic text-right leading-relaxed mb-2">

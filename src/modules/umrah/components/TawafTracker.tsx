@@ -100,7 +100,7 @@ const TawafTracker: React.FC = () => {
             {/* Header */}
             <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-gradient-to-br from-raudhah-teal/20 to-blue-500/20">
+                    <div className="p-2 rounded-lg bg-gradient-to-br from-raudhah-teal/20 to-teal-500/20">
                         <Target className="text-raudhah-teal" size={24} />
                     </div>
                     <div>
@@ -214,7 +214,7 @@ const TawafTracker: React.FC = () => {
                     </div>
                     <div className="h-2 bg-slate-800 rounded-full overflow-hidden">
                         <motion.div
-                            className="h-full bg-gradient-to-r from-raudhah-teal to-blue-500"
+                            className="h-full bg-gradient-to-r from-raudhah-teal to-teal-500"
                             initial={{ width: 0 }}
                             animate={{ width: `${progress}%` }}
                         />
@@ -271,7 +271,7 @@ const TawafTracker: React.FC = () => {
                     disabled={currentRound >= 7}
                     className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-lg font-semibold transition-all ${isTracking
                         ? 'bg-amber-500 text-black'
-                        : 'bg-gradient-to-r from-raudhah-teal to-blue-500 text-black'
+                        : 'bg-gradient-to-r from-raudhah-teal to-teal-500 text-black'
                         } disabled:opacity-50 disabled:cursor-not-allowed`}
                 >
                     {isTracking ? (

@@ -325,8 +325,8 @@ Sila bantu tunjukkan arah ke hotel saya.`;
                         <p className="text-lg font-bold text-red-400">911</p>
                         <p className="text-xs text-slate-400">Polis/Kecemasan</p>
                     </div>
-                    <div className="p-2 bg-blue-500/10 rounded-lg">
-                        <p className="text-lg font-bold text-blue-400">997</p>
+                    <div className="p-2 bg-teal-500/10 rounded-lg">
+                        <p className="text-lg font-bold text-teal-400">997</p>
                         <p className="text-xs text-slate-400">Ambulans</p>
                     </div>
                     <div className="p-2 bg-green-500/10 rounded-lg">

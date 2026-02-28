@@ -153,7 +153,7 @@ const PainTransformation: React.FC = () => {
                                                     <p className="text-xs font-black">GAME JUDI ONLINE?!</p>
                                                 </motion.div>
 
-                                                <div className="absolute top-48 left-3 right-3 bg-blue-500/80 p-3 rounded-xl shadow-lg text-white z-20 transform rotate-2">
+                                                <div className="absolute top-48 left-3 right-3 bg-teal-500/80 p-3 rounded-xl shadow-lg text-white z-20 transform rotate-2">
                                                     <p className="text-xs font-black">FAST LOAN NO CREDIT?!</p>
                                                 </div>
 
@@ -195,7 +195,7 @@ const PainTransformation: React.FC = () => {
                                             <div className="w-full max-w-sm relative aspect-square">
                                                 {/* Scattered app icons */}
                                                 {[
-                                                    { label: "Solat", color: "bg-blue-500/20 text-blue-400", pos: "top-0 left-0" },
+                                                    { label: "Solat", color: "bg-teal-500/20 text-teal-400", pos: "top-0 left-0" },
                                                     { label: "Quran", color: "bg-emerald-500/20 text-emerald-400", pos: "top-0 right-0" },
                                                     { label: "Qibla", color: "bg-red-500/20 text-red-400", pos: "bottom-0 left-0" },
                                                     { label: "Hijri", color: "bg-orange-500/20 text-orange-400", pos: "bottom-0 right-0" },

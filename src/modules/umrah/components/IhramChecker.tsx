@@ -45,7 +45,7 @@ const IhramChecker: React.FC = () => {
                 <button
                     onClick={() => setGenderFilter('lelaki')}
                     className={`flex-1 flex items-center justify-center gap-1 py-2 px-3 rounded-md text-sm transition-all ${genderFilter === 'lelaki'
-                            ? 'bg-blue-500 text-white font-medium'
+                            ? 'bg-teal-500 text-white font-medium'
                             : 'text-slate-400 hover:text-white'
                         }`}
                 >
@@ -87,7 +87,7 @@ const IhramChecker: React.FC = () => {
                                     <p className="text-white font-medium">{prohibition.name}</p>
                                     {prohibition.gender !== 'semua' && (
                                         <span className={`px-2 py-0.5 rounded text-xs ${prohibition.gender === 'lelaki'
-                                                ? 'bg-blue-500/20 text-blue-400'
+                                                ? 'bg-teal-500/20 text-teal-400'
                                                 : 'bg-pink-500/20 text-pink-400'
                                             }`}>
                                             {prohibition.gender === 'lelaki' ? '♂️ Lelaki' : '♀️ Wanita'}

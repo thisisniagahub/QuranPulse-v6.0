@@ -173,7 +173,7 @@ const MutawwifAudio: React.FC = () => {
 
                 <button
                     onClick={() => setIsPlaying(!isPlaying)}
-                    className="p-4 rounded-full bg-gradient-to-r from-raudhah-teal to-blue-500 text-black shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 transition-all"
+                    className="p-4 rounded-full bg-gradient-to-r from-raudhah-teal to-teal-500 text-black shadow-lg shadow-teal-500/30 hover:shadow-teal-500/50 transition-all"
                 >
                     {isPlaying ? <Pause size={28} /> : <Play size={28} className="ml-1" />}
                 </button>

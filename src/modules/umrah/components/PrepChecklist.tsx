@@ -143,7 +143,7 @@ const PrepChecklist: React.FC = () => {
                 <button
                     onClick={() => setGender('lelaki')}
                     className={`flex-1 py-2 px-4 rounded-md text-sm font-medium transition-all ${gender === 'lelaki'
-                            ? 'bg-blue-500 text-white'
+                            ? 'bg-teal-500 text-white'
                             : 'text-slate-400 hover:text-white'
                         }`}
                 >

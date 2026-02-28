@@ -49,7 +49,7 @@ const VerseToolbarComponent: React.FC<VerseToolbarProps> = ({
       ),
       label: 'Kongsi',
       onClick: () => onShare(verse),
-      color: 'text-blue-400 hover:bg-blue-500/20',
+      color: 'text-teal-400 hover:bg-teal-500/20',
     },
     {
       id: 'hafazan',

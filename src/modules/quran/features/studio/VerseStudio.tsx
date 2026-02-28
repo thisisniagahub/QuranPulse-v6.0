@@ -178,10 +178,10 @@ const VerseStudio: React.FC<VerseStudioProps> = ({
 
                         {tab === 'TAFSIR' && (
                             <div className="space-y-4 animate-fade-in">
-                                <div className="relative w-full rounded-2xl bg-gradient-to-b from-blue-900/20 to-transparent border border-blue-500/20 p-5 backdrop-blur-sm">
+                                <div className="relative w-full rounded-2xl bg-gradient-to-b from-blue-900/20 to-transparent border border-teal-500/20 p-5 backdrop-blur-sm">
                                     <div className="flex items-center gap-2 mb-3">
-                                        <i className="fa-solid fa-sparkles text-blue-400"></i>
-                                        <h4 className="text-blue-400 text-sm font-bold">AI Insight</h4>
+                                        <i className="fa-solid fa-sparkles text-teal-400"></i>
+                                        <h4 className="text-teal-400 text-sm font-bold">AI Insight</h4>
                                     </div>
                                     <p className="text-slate-200 text-sm leading-relaxed">
                                         (AI Tafsir Integration Placeholder - Connect to aiService)

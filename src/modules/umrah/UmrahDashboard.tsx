@@ -65,11 +65,11 @@ const UmrahDashboard: React.FC = () => {
     const getColorClass = (color: string) => {
         const colors: Record<string, { bg: string; border: string; text: string }> = {
             teal: { bg: 'bg-raudhah-teal/10', border: 'border-raudhah-teal/50', text: 'text-raudhah-teal' },
-            blue: { bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400' },
+            blue: { bg: 'bg-teal-500/20', border: 'border-teal-500/50', text: 'text-teal-400' },
             red: { bg: 'bg-red-500/20', border: 'border-red-500/50', text: 'text-red-400' },
             green: { bg: 'bg-green-500/20', border: 'border-green-500/50', text: 'text-green-400' },
             orange: { bg: 'bg-orange-500/20', border: 'border-orange-500/50', text: 'text-orange-400' },
-            sky: { bg: 'bg-sky-500/20', border: 'border-sky-500/50', text: 'text-sky-400' },
+            sky: { bg: 'bg-teal-500/20', border: 'border-sky-500/50', text: 'text-teal-400' },
             emerald: { bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400' },
         };
         return colors[color] || colors.teal;

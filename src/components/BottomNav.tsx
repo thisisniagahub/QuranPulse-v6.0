@@ -37,14 +37,14 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
             path: "/",
             icon: "solar:home-angle-bold-duotone",
             label: "Home",
-            color: "from-raudhah-teal to-blue-500",
+            color: "from-raudhah-teal to-teal-500",
         },
         {
             id: NavView.QURAN,
             path: "/quran",
             icon: "solar:book-bookmark-bold-duotone",
             label: "Al-Quran",
-            color: "from-raudhah-teal to-blue-500",
+            color: "from-raudhah-teal to-teal-500",
         },
         {
             id: NavView.SMART_DEEN,
@@ -66,7 +66,7 @@ const BottomNav: React.FC<BottomNavProps> = ({ activeViewOverride, onNavigate })
             path: "/iqra",
             icon: "solar:square-academic-cap-bold-duotone",
             label: "Iqra",
-            color: "from-raudhah-teal to-blue-500",
+            color: "from-raudhah-teal to-teal-500",
         },
     ];
 

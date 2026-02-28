@@ -87,7 +87,7 @@ const SplashScreen: React.FC<SplashScreenProps> = ({ onComplete }) => {
                         transition={{ delay: 0.6, duration: 1 }}
                         className="text-4xl font-[Poppins] font-[900] text-white tracking-tight"
                     >
-                        QURAN <span className="text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-blue-500">PULSE</span>
+                        QURAN <span className="text-transparent bg-clip-text bg-gradient-to-r from-raudhah-teal to-teal-500">PULSE</span>
                     </motion.h1>
 
                     <motion.div

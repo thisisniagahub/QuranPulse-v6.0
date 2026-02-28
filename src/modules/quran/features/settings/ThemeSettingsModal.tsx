@@ -30,7 +30,7 @@ const THEMES: { id: ThemeType; name: string; icon: string; preview: { bg: string
     id: 'light',
     name: 'Cerah',
     icon: '☀️',
-    preview: { bg: 'bg-white', text: 'text-gray-900', accent: 'bg-blue-500' }
+    preview: { bg: 'bg-white', text: 'text-gray-900', accent: 'bg-teal-500' }
   },
   {
     id: 'sepia',
@@ -226,7 +226,7 @@ const ThemeSettingsModal: React.FC<ThemeSettingsModalProps> = ({
                           <div className="mt-2 flex gap-1">
                             <span className="text-[8px] px-1.5 py-0.5 rounded bg-red-500/20 text-red-400">Ghunnah</span>
                             <span className="text-[8px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400">Idgham</span>
-                            <span className="text-[8px] px-1.5 py-0.5 rounded bg-blue-500/20 text-blue-400">Ikhfa</span>
+                            <span className="text-[8px] px-1.5 py-0.5 rounded bg-teal-500/20 text-teal-400">Ikhfa</span>
                           </div>
                         )}
                       </button>

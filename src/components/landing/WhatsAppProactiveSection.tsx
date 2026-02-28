@@ -65,7 +65,7 @@ const ChatBubble: React.FC<{
                 <p className="whitespace-pre-line">{text}</p>
                 <div className={`flex items-center gap-1 mt-1 ${isBot ? 'text-raudhah-ink/30' : 'text-white/60'}`}>
                     <span className="text-[10px]">{time}</span>
-                    {!isBot && <CheckCheck className="w-3 h-3 text-blue-300" />}
+                    {!isBot && <CheckCheck className="w-3 h-3 text-teal-300" />}
                 </div>
             </div>
         </motion.div>

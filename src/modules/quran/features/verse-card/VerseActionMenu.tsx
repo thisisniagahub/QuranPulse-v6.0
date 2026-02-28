@@ -71,7 +71,7 @@ const VerseActionMenuComponent: React.FC<VerseActionMenuProps> = ({
       label: 'Kongsi Paparan',
       icon: 'fa-share-nodes',
       onClick: () => { onShare(verse); onClose(); },
-      color: 'text-blue-400'
+      color: 'text-teal-400'
     },
     {
       id: 'bookmark',

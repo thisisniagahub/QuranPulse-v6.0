@@ -52,7 +52,7 @@ const COLOR_OPTIONS = [
   { id: 'teal', bg: 'bg-raudhah-teal/10', border: 'border-raudhah-teal/50', text: 'text-raudhah-teal' },
   { id: 'emerald', bg: 'bg-emerald-500/20', border: 'border-emerald-500/50', text: 'text-emerald-400' },
   { id: 'rose', bg: 'bg-rose-500/20', border: 'border-rose-500/50', text: 'text-rose-400' },
-  { id: 'blue', bg: 'bg-blue-500/20', border: 'border-blue-500/50', text: 'text-blue-400' },
+  { id: 'blue', bg: 'bg-teal-500/20', border: 'border-teal-500/50', text: 'text-teal-400' },
 ];
 
 const ICON_OPTIONS = ['⭐', '📖', '📚', '💡', '🔖', '❤️', '🌙', '✨', '📝', '🎯'];

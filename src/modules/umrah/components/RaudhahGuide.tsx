@@ -197,9 +197,9 @@ const RaudhahGuide: React.FC = () => {
                     <p className="text-white font-medium">Anggaran Slot Dibuka</p>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                    <div className="p-3 bg-blue-500/10 rounded-lg text-center">
+                    <div className="p-3 bg-teal-500/10 rounded-lg text-center">
                         <p className="text-2xl">👨</p>
-                        <p className="text-sm font-medium text-blue-400">Lelaki</p>
+                        <p className="text-sm font-medium text-teal-400">Lelaki</p>
                         <p className="text-xs text-slate-400">Selepas Subuh - Zohor</p>
                         <p className="text-xs text-slate-500">(5:00AM - 12:00PM Saudi)</p>
                     </div>
