@@ -1,7 +1,7 @@
-import React, { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { Suspense, lazy, startTransition, useCallback, useEffect, useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QuranChapter } from '../../../../types';
-import { SemanticSearchResult } from '../../features/search/useSemanticSearch';
+import type { QuranChapter } from '../../../../types';
+import type { SemanticSearchResult } from '../../features/search/useSemanticSearch';
 import { audioCache } from '../../../../services/audioCacheService';
 
 // Premium Components
@@ -93,6 +93,14 @@ const QuranList: React.FC<QuranListProps> = ({
 
     const [activeTab, setActiveTab] = React.useState<'surah' | 'juz' | 'revelation'>('surah');
 
+    const handleSearchQueryChange = useCallback((query: string) => {
+        startTransition(() => setSearchQuery(query));
+    }, [setSearchQuery]);
+
+    const handleActiveTabChange = useCallback((tab: 'surah' | 'juz' | 'revelation') => {
+        startTransition(() => setActiveTab(tab));
+    }, []);
+
     // JUZ Logic
     const juzStartSurahMap: Record<number, number> = {
         1: 1, 2: 2, 3: 2, 4: 3, 5: 4, 6: 4, 7: 5, 8: 6, 9: 7, 10: 8,
@@ -101,11 +109,10 @@ const QuranList: React.FC<QuranListProps> = ({
     };
 
     const sortedList = useMemo(() => {
-        const sorted = [...filteredChapters];
         if (activeTab === 'revelation') {
-            sorted.sort((a, b) => a.revelation_order - b.revelation_order);
+            return [...filteredChapters].sort((a, b) => a.revelation_order - b.revelation_order);
         }
-        return sorted;
+        return filteredChapters;
     }, [activeTab, filteredChapters]);
 
     const juzList = useMemo(() => Array.from({ length: 30 }, (_, i) => i + 1), []);
@@ -167,7 +174,7 @@ const QuranList: React.FC<QuranListProps> = ({
                 <div className="sticky top-4 z-40">
                     <QuantumSearchBar
                         searchQuery={searchQuery}
-                        setSearchQuery={setSearchQuery}
+                        setSearchQuery={handleSearchQueryChange}
                         isSemanticMode={isSemanticMode}
                         setIsSemanticMode={setIsSemanticMode}
                         handleSemanticSearch={handleSemanticSearch}
@@ -186,7 +193,7 @@ const QuranList: React.FC<QuranListProps> = ({
                                     {(['surah', 'juz', 'revelation'] as const).map((tab) => (
                                         <button
                                             key={tab}
-                                            onClick={() => setActiveTab(tab)}
+                                            onClick={() => handleActiveTabChange(tab)}
                                             className={`px-6 py-2 rounded-full text-xs font-bold tracking-widest transition-all duration-300 ${activeTab === tab
                                                 ? 'bg-raudhah-teal/10 text-raudhah-teal border border-raudhah-teal/20 shadow-warm'
                                                 : 'text-raudhah-teal/40 hover:text-raudhah-teal hover:bg-raudhah-teal/5 border border-transparent'
@@ -291,13 +298,14 @@ const QuranList: React.FC<QuranListProps> = ({
                                     ) : (
                                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                             {sortedList.map((surah, index) => (
-                                                <HoloSurahCard
-                                                    key={surah.id}
-                                                    chapter={surah}
-                                                    index={index}
-                                                    isOfflineReady={cachedIds.has(surah.id)}
-                                                    onClick={() => onChapterSelect(surah)}
-                                                />
+                                                <div key={surah.id} className="surah-list-item">
+                                                    <HoloSurahCard
+                                                        chapter={surah}
+                                                        index={index}
+                                                        isOfflineReady={cachedIds.has(surah.id)}
+                                                        onClick={() => onChapterSelect(surah)}
+                                                    />
+                                                </div>
                                             ))}
                                         </div>
                                     )}

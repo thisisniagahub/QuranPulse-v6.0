@@ -44,9 +44,9 @@ const AchievementToast: React.FC<AchievementToastProps> = ({
             </div>
             <div className="min-w-0 flex-1">
               <p className="truncate text-sm font-bold text-white">{title}</p>
-              {description && (
+              {description ? (
                 <p className="mt-1 text-xs text-slate-300">{description}</p>
-              )}
+              ) : null}
               {typeof xpReward === 'number' && (
                 <p className="mt-2 text-xs font-bold text-raudhah-teal">+{xpReward} XP</p>
               )}

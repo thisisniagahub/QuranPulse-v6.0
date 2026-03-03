@@ -1,7 +1,5 @@
-
-import axios from 'axios';
-import { ChatMessage } from '../../types';
-import { groqRotator } from './MultiKeyRotator';
+import type { ChatMessage } from '../../types';
+import { openclawClient } from '../openclawClient';
 
 /**
  * GROQ HIGH-SPEED CLIENT
@@ -9,29 +7,15 @@ import { groqRotator } from './MultiKeyRotator';
  */
 export const GroqClient = {
     async callGroq(messages: ChatMessage[]): Promise<string> {
-        return groqRotator.executeWithRetry(async (apiKey) => {
-            console.log("⚡ Calling GROQ Engine (Llama 3.3 70B - Super Advanced)...");
-
-            const response = await axios.post(
-                'https://api.groq.com/openai/v1/chat/completions',
-                {
-                    model: "llama-3.3-70b-versatile",
-                    messages: messages.map(m => ({
-                        role: m.role,
-                        content: m.content
-                    })),
-                    temperature: 0.7,
-                    max_tokens: 1024
-                },
-                {
-                    headers: {
-                        'Authorization': `Bearer ${apiKey}`,
-                        'Content-Type': 'application/json'
-                    }
-                }
-            );
-
-            return response.data.choices[0].message.content;
-        });
+        return openclawClient.chatCompletion(
+            messages.map((message) => ({
+                role: message.role === 'assistant' ? 'assistant' : message.role === 'system' ? 'system' : 'user',
+                content: message.content,
+            })),
+            {
+                temperature: 0.7,
+                max_tokens: 1024
+            }
+        );
     }
 };

@@ -246,7 +246,9 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false, o
                         {isThinking && (
                             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex gap-4">
                                 <div className="w-10 h-10 rounded-2xl bg-white border border-raudhah-teal/10 flex items-center justify-center shadow-sm">
-                                    <Loader2 className="animate-spin text-raudhah-teal" size={20} />
+                                    <div className="inline-flex animate-spin">
+                                        <Loader2 className="text-raudhah-teal" size={20} />
+                                    </div>
                                 </div>
                                 <div className="bg-white/80 p-5 rounded-3xl rounded-tl-none border border-raudhah-teal/10 shadow-sm backdrop-blur-md min-w-[120px]">
                                     <NeuralTyping />
@@ -331,7 +333,9 @@ const SmartDeen: React.FC<SmartDeenProps> = ({ userName, hasBottomNav = false, o
                     <Suspense
                         fallback={
                             <div className="h-full flex flex-col items-center justify-center p-10 space-y-4">
-                                <Loader2 className="animate-spin text-raudhah-teal" size={32} />
+                                <div className="inline-flex animate-spin">
+                                    <Loader2 className="text-raudhah-teal" size={32} />
+                                </div>
                                 <p className="text-[10px] font-black text-raudhah-teal/40 uppercase tracking-widest text-center">Menghitung Strategi Khatam...</p>
                             </div>
                         }

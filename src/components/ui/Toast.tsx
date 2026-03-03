@@ -118,10 +118,10 @@ const ToastItem: React.FC<{ toast: Toast; onDismiss: () => void }> = ({ toast, o
                 variantStyle.bg
             )}
         >
-            {variantStyle.icon && <div className="flex-shrink-0 pt-0.5">{variantStyle.icon}</div>}
+            {variantStyle.icon ? <div className="flex-shrink-0 pt-0.5">{variantStyle.icon}</div> : null}
             <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium text-white">{title}</p>
-                {description && <p className="mt-1 text-sm text-slate-400">{description}</p>}
+                {description ? <p className="mt-1 text-sm text-slate-400">{description}</p> : null}
             </div>
             <button
                 onClick={onDismiss}

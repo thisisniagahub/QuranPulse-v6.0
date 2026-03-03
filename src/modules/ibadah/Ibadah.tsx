@@ -5,23 +5,16 @@ import { usePrayerTimes } from '../../hooks/usePrayerTimes';
 import { JAKIM_ZONES } from '../../data/jakimZones';
 import { JakimService } from '../../services/jakimService';
 import { AnalyticsService } from '../../services/analyticsService';
+import { storage } from '@/lib/storage';
 import ZakatCalculator from './components/ZakatCalculator';
 import PrayerCard from './components/PrayerCard';
 
 const safeGetStorage = (key: string, fallback: string): string => {
-    try {
-        return localStorage.getItem(key) || fallback;
-    } catch {
-        return fallback;
-    }
+    return storage.get<string>(key) || fallback;
 };
 
 const safeSetStorage = (key: string, value: string): void => {
-    try {
-        localStorage.setItem(key, value);
-    } catch {
-        // Ignore storage errors
-    }
+    storage.set(key, value);
 };
 
 // Color themes based on "Weather Widget" reference
@@ -391,7 +384,7 @@ const Ibadah: React.FC = () => {
                                     <p className="text-slate-300 mb-6">
                                         Untuk mengesan arah kiblat, sila benarkan akses lokasi dan sensor gerakan pada peranti anda.
                                     </p>
-                                    {error && <p className="text-sm text-red-300 mb-4">{error}</p>}
+                                    {error ? <p className="text-sm text-red-300 mb-4">{error}</p> : null}
                                     {isDeviceOrientationSupported && (
                                         <button
                                             onClick={requestDeviceOrientationPermission}

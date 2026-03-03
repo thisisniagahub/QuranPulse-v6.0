@@ -15,6 +15,7 @@ import {
   Flag, Calendar, Book, ChevronRight, Check,
   RotateCcw, Target, TrendingUp, Info
 } from 'lucide-react';
+import { storage } from '@/lib/storage';
 
 interface KhatamPlan {
   targetDate: string; // YYYY-MM-DD
@@ -27,29 +28,15 @@ interface KhatamPlan {
 }
 
 const safeLoadPlan = (): KhatamPlan | null => {
-  try {
-    const savedPlan = localStorage.getItem('khatam_plan');
-    if (!savedPlan) return null;
-    return JSON.parse(savedPlan) as KhatamPlan;
-  } catch {
-    return null;
-  }
+  return storage.get<KhatamPlan>('khatam_plan');
 };
 
 const safeSetPlan = (plan: KhatamPlan): void => {
-  try {
-    localStorage.setItem('khatam_plan', JSON.stringify(plan));
-  } catch {
-    // Ignore storage errors
-  }
+  storage.set('khatam_plan', plan);
 };
 
 const safeRemovePlan = (): void => {
-  try {
-    localStorage.removeItem('khatam_plan');
-  } catch {
-    // Ignore storage errors
-  }
+  storage.remove('khatam_plan');
 };
 
 const KhatamPlanner: React.FC = () => {

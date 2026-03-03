@@ -89,7 +89,7 @@ const TadabburAI: React.FC<TadabburAIProps> = ({
             const allQuestions = [...themeQuestions, ...REFLECTION_TEMPLATES.default];
 
             // Shuffle and limit
-            const shuffled = allQuestions.sort(() => Math.random() - 0.5).slice(0, 5);
+            const shuffled = [...allQuestions].sort(() => Math.random() - 0.5).slice(0, 5);
             setQuestions(shuffled);
             setCurrentQuestionIndex(0);
             setUserResponse('');
@@ -228,7 +228,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                         </div>
 
                         {/* Current Question */}
-                        {currentQuestion && (
+                        {currentQuestion ? (
                             <motion.div
                                 key={currentQuestion.id}
                                 initial={{ opacity: 0, x: 20 }}
@@ -245,7 +245,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                     </div>
                                 </div>
                             </motion.div>
-                        )}
+                        ) : null}
 
                         {/* User Response Area */}
                         <div className="relative">
@@ -264,7 +264,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
 
                         {/* AI Follow-up Response */}
                         <AnimatePresence>
-                            {aiFollowUp && (
+                            {aiFollowUp ? (
                                 <motion.div
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -283,7 +283,7 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                         </div>
                                     </div>
                                 </motion.div>
-                            )}
+                            ) : null}
                         </AnimatePresence>
 
                         {/* All Questions Toggle */}
@@ -340,7 +340,9 @@ Berikan respons ringkas (2-3 ayat) yang menggalakkan dan mendalam untuk menerusk
                                 >
                                     {isGeneratingAI ? (
                                         <>
-                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                            <div className="inline-flex animate-spin">
+                                                <Loader2 className="w-4 h-4" />
+                                            </div>
                                             Memproses...
                                         </>
                                     ) : (

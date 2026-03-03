@@ -203,7 +203,9 @@ export default defineConfig(({ mode }) => {
         output: {
           manualChunks: {
             'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-            'vendor-ui': ['framer-motion', 'lucide-react', 'lottie-react'],
+            'vendor-motion': ['framer-motion'],
+            'vendor-icons': ['lucide-react'],
+            'vendor-lottie': ['lottie-react'],
             'vendor-supabase': ['@supabase/supabase-js'],
             'vendor-mermaid': ['mermaid'],
             'vendor-pdf': ['react-pdf'],
@@ -222,6 +224,7 @@ export default defineConfig(({ mode }) => {
         'react-dom',
         'react-router-dom',
         'framer-motion',
+        'lucide-react',
         '@supabase/supabase-js',
         '@tanstack/react-query',
       ],

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { ThemeType } from '../../../types';
+import type { ThemeType } from '../../../types';
+import { storage } from '@/lib/storage';
 
 interface QuranSettingsState {
     fontSize: number;
@@ -32,19 +33,11 @@ interface QuranSettingsState {
 const QuranSettingsContext = createContext<QuranSettingsState | undefined>(undefined);
 
 const safeGetStorage = (key: string): string | null => {
-    try {
-        return localStorage.getItem(key);
-    } catch {
-        return null;
-    }
+    return storage.get<string>(key);
 };
 
 const safeSetStorage = (key: string, value: string): void => {
-    try {
-        localStorage.setItem(key, value);
-    } catch {
-        // Ignore storage errors
-    }
+    storage.set(key, value);
 };
 
 export const QuranSettingsProvider: React.FC<{ children: ReactNode }> = ({ children }) => {

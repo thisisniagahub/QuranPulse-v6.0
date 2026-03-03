@@ -3,7 +3,7 @@
  * Handles semantic search logic using Supabase pgvector
  */
 
-import { useState, useCallback } from 'react';
+import { startTransition, useState, useCallback } from 'react';
 import { supabase } from '../../../../lib/supabase';
 
 export interface SemanticSearchResult {
@@ -51,7 +51,7 @@ export function useSemanticSearch(): UseSemanticSearchReturn {
 
         setIsSearching(true);
         setError(null);
-        setResults([]);
+        startTransition(() => setResults([]));
 
         try {
             // Try pgvector semantic search first
@@ -62,14 +62,15 @@ export function useSemanticSearch(): UseSemanticSearchReturn {
 
             if (!vectorError && vectorResults && vectorResults.length > 0) {
                 // Vector search succeeded
-                setResults(vectorResults.map((r: any) => ({
+                const mappedResults = vectorResults.map((r: any) => ({
                     surahNumber: r.surah_number,
                     surahName: r.surah_name || `Surah ${r.surah_number}`,
                     verseNumber: r.verse_number,
                     arabicText: r.arabic_text,
                     translation: r.translation_text,
                     similarity: r.similarity || 0.9,
-                })));
+                }));
+                startTransition(() => setResults(mappedResults));
                 return;
             }
 
@@ -108,14 +109,15 @@ export function useSemanticSearch(): UseSemanticSearchReturn {
 
                 const surahMap = new Map(surahs?.map(s => [s.number, s.name_simple]) || []);
 
-                setResults(verseResults.map((v: any, index: number) => ({
+                const mappedResults = verseResults.map((v: any, index: number) => ({
                     surahNumber: v.surah_number,
                     surahName: surahMap.get(v.surah_number) || `Surah ${v.surah_number}`,
                     verseNumber: v.verse_number,
                     arabicText: '', // Would need separate query
                     translation: v.text,
                     similarity: 0.7 - (index * 0.05), // Decreasing similarity for display
-                })));
+                }));
+                startTransition(() => setResults(mappedResults));
             } else if (faqResults && faqResults.length > 0) {
                 // Show FAQ results as alternative
                 setError('Tiada ayat ditemui. Cuba carian lain atau tanya Ustaz AI.');
@@ -132,7 +134,7 @@ export function useSemanticSearch(): UseSemanticSearchReturn {
     }, []);
 
     const clearResults = useCallback(() => {
-        setResults([]);
+        startTransition(() => setResults([]));
         setError(null);
     }, []);
 

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo, useCallback } from 'react';
+import { storage } from '@/lib/storage';
 
 // --- Types ---
 export interface Achievement {
@@ -107,6 +108,22 @@ const INITIAL_STATE: UserGamificationState = {
   lastStreakDate: null
 };
 
+let didInitGamification = false;
+let cachedGamificationState: UserGamificationState | null = null;
+
+const loadGamificationState = (): UserGamificationState => {
+  const saved = storage.get<Partial<UserGamificationState>>('quranpulse_gamification');
+  if (saved && typeof saved === 'object' && !Array.isArray(saved)) {
+    return {
+      ...INITIAL_STATE,
+      ...saved,
+      achievements: Array.isArray(saved.achievements) ? saved.achievements : [],
+      weeklyChallenges: Array.isArray(saved.weeklyChallenges) ? saved.weeklyChallenges : [],
+    };
+  }
+  return INITIAL_STATE;
+};
+
 // --- Contexts ---
 const GamificationStateContext = createContext<UserGamificationState | undefined>(undefined);
 const GamificationActionsContext = createContext<GamificationActions | undefined>(undefined);
@@ -136,29 +153,30 @@ export const useGamificationActions = () => {
 
 // --- Provider ---
 export const GamificationProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [state, setState] = useState<UserGamificationState>(() => {
-    try {
-      const saved = localStorage.getItem('quranpulse_gamification');
-      if (saved) {
-        const parsed = JSON.parse(saved);
-        // Merge with defaults to ensure new fields exist from older saves
-        return {
-          ...INITIAL_STATE,
-          ...parsed,
-          achievements: Array.isArray(parsed.achievements) ? parsed.achievements : [],
-          weeklyChallenges: Array.isArray(parsed.weeklyChallenges) ? parsed.weeklyChallenges : [],
-        };
-      }
-      return INITIAL_STATE;
-    } catch {
-      console.warn('[GamificationContext] Failed to parse saved state, using defaults');
-      return INITIAL_STATE;
-    }
-  });
+  const [state, setState] = useState<UserGamificationState>(() => cachedGamificationState || INITIAL_STATE);
+  const [isHydrated, setIsHydrated] = useState(() => didInitGamification);
 
   useEffect(() => {
-    localStorage.setItem('quranpulse_gamification', JSON.stringify(state));
-  }, [state]);
+    if (didInitGamification) {
+      if (cachedGamificationState) {
+        setState(cachedGamificationState);
+      }
+      setIsHydrated(true);
+      return;
+    }
+
+    didInitGamification = true;
+    const restored = loadGamificationState();
+    cachedGamificationState = restored;
+    setState(restored);
+    setIsHydrated(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    storage.set('quranpulse_gamification', state);
+    cachedGamificationState = state;
+  }, [isHydrated, state]);
 
   const calculateLevel = useCallback((xp: number) => {
     let level = 1;

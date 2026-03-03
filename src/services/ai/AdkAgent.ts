@@ -7,11 +7,11 @@
  */
 export class AdkAgent {
   private openclawUrl: string;
-  private openclawKey: string;
+  private openclawToken: string;
 
   constructor() {
-    this.openclawUrl = import.meta.env?.VITE_OPENCLAW_URL || "https://operator.gangniaga.my/v1/chat/completions";
-    this.openclawKey = import.meta.env?.VITE_OPENCLAW_API_KEY || "dummy-key-for-local-dev";
+    this.openclawUrl = import.meta.env?.VITE_OPENCLAW_URL || 'https://operator.gangniaga.my';
+    this.openclawToken = import.meta.env?.VITE_OPENCLAW_TOKEN || import.meta.env?.VITE_OPENCLAW_API_KEY || 'dummy-key-for-local-dev';
 
     // Fallback for Node/Edge environments
     // @ts-ignore
@@ -19,7 +19,9 @@ export class AdkAgent {
       // @ts-ignore
       if (process.env.OPENCLAW_URL) this.openclawUrl = process.env.OPENCLAW_URL;
       // @ts-ignore
-      if (process.env.OPENCLAW_API_KEY) this.openclawKey = process.env.OPENCLAW_API_KEY;
+      if (process.env.OPENCLAW_TOKEN) this.openclawToken = process.env.OPENCLAW_TOKEN;
+      // @ts-ignore
+      if (process.env.OPENCLAW_API_KEY) this.openclawToken = process.env.OPENCLAW_API_KEY;
     }
   }
 
@@ -46,14 +48,14 @@ export class AdkAgent {
     try {
       console.log(`[AdkAgent] 📡 Routing request through OpenClaw Gateway: ${this.openclawUrl}`);
 
-      const response = await fetch(this.openclawUrl, {
+      const response = await fetch(`${this.openclawUrl}/v1/chat/completions`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${this.openclawKey}`
+          "Authorization": `Bearer ${this.openclawToken}`
         },
         body: JSON.stringify({
-          model: "antigravity", // OpenClaw typically routes this automatically or uses specific models
+          model: 'google-antigravity/gemini-3-flash',
           messages: formattedMessages,
           temperature: 0.3,
           max_tokens: 2048

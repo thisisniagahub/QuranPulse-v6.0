@@ -81,7 +81,7 @@ const UmrahDashboard: React.FC = () => {
             <header className="sticky top-0 z-50 bg-[#050505]/90 backdrop-blur-lg border-b border-slate-800">
                 <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        {activeTab && (
+                        {activeTab ? (
                             <button
                                 onClick={() => {
                                     setActiveTab(null);
@@ -92,7 +92,7 @@ const UmrahDashboard: React.FC = () => {
                             >
                                 <ArrowLeft size={20} />
                             </button>
-                        )}
+                        ) : null}
                         <div>
                             <h1 className="text-xl font-bold flex items-center gap-2">
                                 <span className="text-2xl">🕋</span>
@@ -101,7 +101,7 @@ const UmrahDashboard: React.FC = () => {
                             <p className="text-xs text-slate-500">Pembantu Pintar Jemaah</p>
                         </div>
                     </div>
-                    {activeTab && (
+                    {activeTab ? (
                         <button
                             onClick={() => setShowMenu(true)}
                             className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 transition-all"
@@ -109,7 +109,7 @@ const UmrahDashboard: React.FC = () => {
                         >
                             <Menu size={20} />
                         </button>
-                    )}
+                    ) : null}
                 </div>
             </header>
 
@@ -216,7 +216,7 @@ const UmrahDashboard: React.FC = () => {
             </main>
 
             {/* Bottom Navigation (when viewing content) */}
-            {activeTab && (
+            {activeTab ? (
                 <nav className="fixed bottom-0 left-0 right-0 bg-[#0a0a0a]/95 backdrop-blur-lg border-t border-slate-800 safe-area-pb">
                     <div className="max-w-2xl mx-auto px-2 py-2 flex gap-1 overflow-x-auto scrollbar-hide">
                         {TABS.map((tab) => {
@@ -238,7 +238,7 @@ const UmrahDashboard: React.FC = () => {
                         })}
                     </div>
                 </nav>
-            )}
+            ) : null}
         </div>
     );
 };

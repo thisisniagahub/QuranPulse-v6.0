@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { RotateCcw, Sparkles } from 'lucide-react';
 import { useGamification } from '../../contexts/GamificationContext';
+import { storage } from '@/lib/storage';
 
 type TasbihMode = 'subhanallah' | 'alhamdulillah' | 'allahuakbar';
 
@@ -26,20 +27,11 @@ const PRESETS: TasbihPreset[] = [
 ];
 
 const safeReadHistory = (): TasbihHistoryEntry[] => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as TasbihHistoryEntry[]) : [];
-  } catch {
-    return [];
-  }
+  return storage.get<TasbihHistoryEntry[]>(STORAGE_KEY) || [];
 };
 
 const safeWriteHistory = (history: TasbihHistoryEntry[]): void => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(history));
-  } catch {
-    // Ignore storage errors
-  }
+  storage.set(STORAGE_KEY, history);
 };
 
 const DigitalTasbih: React.FC = () => {

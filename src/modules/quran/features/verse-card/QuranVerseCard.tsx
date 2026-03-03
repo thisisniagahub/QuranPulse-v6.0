@@ -66,8 +66,8 @@ const QuranVerseCardComponent: React.FC<QuranVerseCardProps> = ({
 }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [translitMode] = useState<'academic' | 'jakim'>('jakim');
-  const verseNumber = useMemo(() => verse.verse_key.split(':')[1], [verse.verse_key]);
-  const arabicVerseNumber = useMemo(() => toArabicNumerals(verseNumber), [verseNumber]);
+  const verseNumber = verse.verse_key.split(':')[1];
+  const arabicVerseNumber = toArabicNumerals(verseNumber);
 
   const { isPlaying: isTTSPlaying, speak: speakRumi, stop: stopRumi, isSupported: isTTSSupported } = useRumiTTS();
 
@@ -97,7 +97,7 @@ const QuranVerseCardComponent: React.FC<QuranVerseCardProps> = ({
       layout={false}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`relative p-6 rounded-2xl transition-all duration-300 ${activeWord
+      className={`verse-card relative p-6 rounded-2xl transition-all duration-300 ${activeWord
         ? 'bg-raudhah-teal/5 border-raudhah-teal/20 shadow-warm'
         : 'hover:bg-raudhah-teal/5 border-transparent hover:border-raudhah-teal/10'
         } border`}

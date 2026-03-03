@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { storage } from '@/lib/storage';
 
 interface IqraAnalyticsProps {
     onBack: () => void;
@@ -12,12 +13,7 @@ interface ProgressStats {
 }
 
 const safeLoadIqraProgress = (): Partial<ProgressStats> | null => {
-    try {
-        const saved = localStorage.getItem('iqra_progress');
-        return saved ? JSON.parse(saved) : null;
-    } catch {
-        return null;
-    }
+    return storage.get<Partial<ProgressStats>>('iqra_progress');
 };
 
 const IqraAnalytics: React.FC<IqraAnalyticsProps> = ({ onBack }) => {

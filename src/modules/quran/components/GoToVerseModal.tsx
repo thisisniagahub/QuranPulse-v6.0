@@ -91,9 +91,9 @@ const GoToVerseModal: React.FC<GoToVerseModalProps> = ({
                     className="w-full px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-white text-center text-xl font-bold focus:border-raudhah-teal focus:outline-none focus:ring-2 focus:ring-raudhah-teal/20 transition-all"
                     autoFocus
                   />
-                  {error && (
+                  {error ? (
                     <p className="text-red-400 text-xs mt-2 text-center">{error}</p>
-                  )}
+                  ) : null}
                 </div>
 
                 {/* Quick Jump Buttons */}

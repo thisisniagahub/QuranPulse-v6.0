@@ -176,7 +176,7 @@ const SubscriptionPage: React.FC = () => {
             </div>
 
             {/* Error Message */}
-            {error && (
+            {error ? (
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -184,7 +184,7 @@ const SubscriptionPage: React.FC = () => {
                 >
                     {error}
                 </motion.div>
-            )}
+            ) : null}
         </div>
     );
 };

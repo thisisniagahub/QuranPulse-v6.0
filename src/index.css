@@ -643,6 +643,14 @@ body::before {
   padding-bottom: env(safe-area-inset-bottom);
 }
 
+/* Performance: Skip rendering off-screen items */
+.verse-card,
+.surah-card,
+.surah-list-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 120px;
+}
+
 /* Neon progress bar */
 .progress-raudhah {
   background: var(--primary);

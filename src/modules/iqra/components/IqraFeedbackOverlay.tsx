@@ -65,7 +65,9 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
                 >
                     <div className="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity" />
                     {diagnosing ? (
-                        <Loader2 className="animate-spin" size={20} />
+                        <div className="inline-flex animate-spin">
+                            <Loader2 size={20} />
+                        </div>
                     ) : (
                         <BrainCircuit size={20} className="relative z-10" />
                     )}
@@ -75,7 +77,7 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
 
             {/* Analysis Text */}
             <AnimatePresence>
-                {analysisText && (
+                {analysisText ? (
                     <motion.div
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
@@ -83,7 +85,7 @@ export const IqraFeedbackOverlay: React.FC<IqraFeedbackOverlayProps> = ({
                     >
                         "{analysisText}"
                     </motion.div>
-                )}
+                ) : null}
             </AnimatePresence>
 
             {/* Continue Button */}

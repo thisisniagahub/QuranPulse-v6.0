@@ -47,13 +47,13 @@ export const Alert = React.forwardRef<HTMLDivElement, AlertProps>(
                 )}
                 {...props}
             >
-                {variantStyle.icon && (
+                {variantStyle.icon ? (
                     <div className="flex-shrink-0">{variantStyle.icon}</div>
-                )}
+                ) : null}
                 <div className="flex-1 min-w-0">
-                    {title && (
+                    {title ? (
                         <h5 className="font-medium mb-1">{title}</h5>
-                    )}
+                    ) : null}
                     <div className="text-sm opacity-90">{children}</div>
                 </div>
                 {dismissible && onDismiss && (

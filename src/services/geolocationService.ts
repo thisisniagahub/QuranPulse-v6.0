@@ -2,6 +2,7 @@
  * Geolocation Service for QuranPulse
  * Provides location detection and Malaysian prayer zone mapping
  */
+import { storage } from '@/lib/storage';
 
 // Malaysian Prayer Zones by State/Region
 // Based on JAKIM e-Solat zone codes
@@ -187,29 +188,21 @@ export async function getCachedOrFetchZone(): Promise<string> {
     const CACHE_KEY = 'quranpulse_prayer_zone';
     const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // 24 hours
 
-    try {
-        const cached = localStorage.getItem(CACHE_KEY);
-        if (cached) {
-            const { zone, timestamp } = JSON.parse(cached);
-            if (Date.now() - timestamp < CACHE_EXPIRY) {
-                console.log(`📍 Using cached zone: ${zone}`);
-                return zone;
-            }
+    const cached = storage.get<{ zone: string; timestamp: number }>(CACHE_KEY);
+    if (cached) {
+        const { zone, timestamp } = cached;
+        if (Date.now() - timestamp < CACHE_EXPIRY) {
+            console.log(`📍 Using cached zone: ${zone}`);
+            return zone;
         }
-    } catch {
-        // localStorage not available
     }
 
     const location = await getCurrentLocation();
 
-    try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify({
-            zone: location.zone,
-            timestamp: Date.now()
-        }));
-    } catch {
-        // localStorage not available
-    }
+    storage.set(CACHE_KEY, {
+        zone: location.zone,
+        timestamp: Date.now()
+    });
 
     return location.zone;
 }

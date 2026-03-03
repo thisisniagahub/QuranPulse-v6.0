@@ -4,6 +4,7 @@
  */
 
 import { supabase } from '@/lib/supabase';
+import { storage } from '@/lib/storage';
 
 export interface ReadingProgress {
   surah_number: number;
@@ -41,7 +42,7 @@ export const saveReadingProgress = async (surahNumber: number, ayahNumber: numbe
   };
 
   // Always save to localStorage first (instant)
-  localStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+  storage.set(PROGRESS_KEY, progress);
 
   try {
     const { data: { user } } = await supabase.auth.getUser();
@@ -103,7 +104,7 @@ export const startReadingSession = (surahNumber: number, ayahNumber: number): vo
     ayah_number: ayahNumber,
     start_time: Date.now()
   };
-  localStorage.setItem(SESSION_START_KEY, JSON.stringify(sessionData));
+  storage.set(SESSION_START_KEY, sessionData);
 };
 
 /**
@@ -111,15 +112,13 @@ export const startReadingSession = (surahNumber: number, ayahNumber: number): vo
  */
 export const endReadingSession = async (completed: boolean = false): Promise<void> => {
   try {
-    const sessionDataStr = localStorage.getItem(SESSION_START_KEY);
-    if (!sessionDataStr) return;
-
-    const sessionData = JSON.parse(sessionDataStr);
+    const sessionData = storage.get<{ surah_number: number; ayah_number: number; start_time: number }>(SESSION_START_KEY);
+    if (!sessionData) return;
     const durationSeconds = Math.floor((Date.now() - sessionData.start_time) / 1000);
     
     // Only record if at least 30 seconds
     if (durationSeconds < 30) {
-      localStorage.removeItem(SESSION_START_KEY);
+      storage.remove(SESSION_START_KEY);
       return;
     }
 
@@ -143,7 +142,7 @@ export const endReadingSession = async (completed: boolean = false): Promise<voi
       await incrementVersesRead(estimatedVerses);
     }
 
-    localStorage.removeItem(SESSION_START_KEY);
+    storage.remove(SESSION_START_KEY);
   } catch (error) {
     console.error('Error saving reading session:', error);
   }
@@ -290,18 +289,13 @@ export const updateStreak = async (): Promise<number> => {
 // --- LOCAL STORAGE HELPERS ---
 
 const getLocalProgress = (): ReadingProgress | null => {
-  try {
-    const stored = localStorage.getItem(PROGRESS_KEY);
-    return stored ? JSON.parse(stored) : null;
-  } catch {
-    return null;
-  }
+  return storage.get<ReadingProgress>(PROGRESS_KEY);
 };
 
 /**
  * Clear all reading progress data
  */
 export const clearReadingProgress = (): void => {
-  localStorage.removeItem(PROGRESS_KEY);
-  localStorage.removeItem(SESSION_START_KEY);
+  storage.remove(PROGRESS_KEY);
+  storage.remove(SESSION_START_KEY);
 };

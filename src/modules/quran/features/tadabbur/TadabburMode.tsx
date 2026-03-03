@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { Brain, Save, Sparkles } from 'lucide-react';
+import { storage } from '@/lib/storage';
 
 interface ReflectionEntry {
   id: string;
@@ -22,20 +23,11 @@ const QUESTIONS = [
 const STORAGE_KEY = 'quranpulse_tadabbur_journal';
 
 const safeLoadEntries = (): ReflectionEntry[] => {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as ReflectionEntry[]) : [];
-  } catch {
-    return [];
-  }
+  return storage.get<ReflectionEntry[]>(STORAGE_KEY) || [];
 };
 
 const safeSaveEntries = (entries: ReflectionEntry[]): void => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
-  } catch {
-    // Ignore storage errors
-  }
+  storage.set(STORAGE_KEY, entries);
 };
 
 const TadabburMode: React.FC<TadabburModeProps> = ({

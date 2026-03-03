@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, startTransition } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuran } from '../contexts/QuranContext';
 
@@ -33,12 +33,14 @@ const ImmersiveControls: React.FC<ImmersiveControlsProps> = ({
     useEffect(() => {
         const handleScroll = () => {
             const currentScrollY = window.scrollY;
-            if (currentScrollY > lastScrollY && currentScrollY > 100) {
-                setIsVisible(false);
-            } else {
-                setIsVisible(true);
-            }
-            setLastScrollY(currentScrollY);
+            startTransition(() => {
+                if (currentScrollY > lastScrollY && currentScrollY > 100) {
+                    setIsVisible(false);
+                } else {
+                    setIsVisible(true);
+                }
+                setLastScrollY(currentScrollY);
+            });
         };
 
         window.addEventListener('scroll', handleScroll, { passive: true });

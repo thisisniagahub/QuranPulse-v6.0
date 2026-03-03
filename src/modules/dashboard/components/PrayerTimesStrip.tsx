@@ -34,7 +34,9 @@ const PrayerTimesStrip: React.FC<PrayerTimesStripProps> = ({ data, loading }) =>
     if (loading) {
         return (
             <div className="col-span-2 py-6 flex items-center justify-center gap-3 text-raudhah-teal/40 animate-pulse text-[10px] uppercase tracking-[0.4em] font-black">
-                <Clock size={16} className="animate-spin-slow" />
+                <div className="inline-flex animate-spin-slow">
+                    <Clock size={16} />
+                </div>
                 Menyegerakan Waktu Solat
             </div>
         );

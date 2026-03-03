@@ -105,7 +105,7 @@ export const IqraAIPanel: React.FC<IqraAIPanelProps> = ({
                         <div className="space-y-8 relative z-10">
                             {/* Response Display */}
                             <AnimatePresence mode="wait">
-                                {chatResponse && (
+                                {chatResponse ? (
                                     <motion.div
                                         initial={{ opacity: 0, x: -10 }}
                                         animate={{ opacity: 1, x: 0 }}
@@ -116,7 +116,7 @@ export const IqraAIPanel: React.FC<IqraAIPanelProps> = ({
                                         </div>
                                         "{chatResponse}"
                                     </motion.div>
-                                )}
+                                ) : null}
                             </AnimatePresence>
 
                             {/* Input Area */}
@@ -137,7 +137,9 @@ export const IqraAIPanel: React.FC<IqraAIPanelProps> = ({
                                     aria-label="Send message"
                                 >
                                     {isLoading ? (
-                                        <Loader2 className="animate-spin" size={28} />
+                                        <div className="inline-flex animate-spin">
+                                            <Loader2 size={28} />
+                                        </div>
                                     ) : (
                                         <Send size={28} className="group-hover:translate-x-1 transition-transform" />
                                     )}

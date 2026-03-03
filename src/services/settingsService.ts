@@ -4,6 +4,7 @@
  */
 
 import { supabase } from '@/lib/supabase';
+import { storage } from '@/lib/storage';
 
 export interface UserSettings {
   id?: string;
@@ -62,7 +63,7 @@ export const getSettings = async (): Promise<UserSettings> => {
     settingsCache = data;
 
     // Sync to localStorage as backup
-    localStorage.setItem('qp_settings', JSON.stringify(settingsCache));
+    storage.set('qp_settings', settingsCache);
 
     return settingsCache as UserSettings;
   } catch (error) {
@@ -80,7 +81,7 @@ export const updateSettings = async (updates: Partial<UserSettings>): Promise<Us
 
     // Always update local cache first
     settingsCache = { ...(settingsCache || DEFAULT_SETTINGS), ...updates };
-    localStorage.setItem('qp_settings', JSON.stringify(settingsCache));
+    storage.set('qp_settings', settingsCache);
 
     if (!user) {
       return settingsCache as UserSettings;
@@ -110,7 +111,7 @@ export const updateSettings = async (updates: Partial<UserSettings>): Promise<Us
  */
 export const resetSettings = async (): Promise<UserSettings> => {
   settingsCache = { ...DEFAULT_SETTINGS };
-  localStorage.setItem('qp_settings', JSON.stringify(settingsCache));
+  storage.set('qp_settings', settingsCache);
 
   try {
     const { data: { user } } = await supabase.auth.getUser();
@@ -186,19 +187,14 @@ export const toggleTransliteration = async (): Promise<boolean> => {
 // --- LOCAL STORAGE FALLBACK ---
 
 const getLocalSettings = (): UserSettings => {
-  try {
-    const stored = localStorage.getItem('qp_settings');
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      settingsCache = { ...DEFAULT_SETTINGS, ...parsed };
-      return settingsCache as UserSettings;
-    }
-  } catch {
-    console.warn('Failed to parse local settings');
+  const stored = storage.get<Partial<UserSettings>>('qp_settings');
+  if (stored) {
+    settingsCache = { ...DEFAULT_SETTINGS, ...stored };
+    return settingsCache as UserSettings;
   }
 
   settingsCache = { ...DEFAULT_SETTINGS };
-  localStorage.setItem('qp_settings', JSON.stringify(settingsCache));
+  storage.set('qp_settings', settingsCache);
   return settingsCache;
 };
 

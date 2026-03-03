@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { storage } from '@/lib/storage';
 
 interface ReadingGoal {
   dailyVerses: number;
@@ -30,24 +31,16 @@ const STORAGE_KEY = 'quranpulse_reading_goals';
 
 // Helper to get stored goals
 const getStoredGoals = (): ReadingGoal => {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      return { ...DEFAULT_GOAL, ...JSON.parse(stored) };
-    }
-  } catch (e) {
-    console.error('Error reading goals:', e);
+  const stored = storage.get<ReadingGoal>(STORAGE_KEY);
+  if (stored) {
+    return { ...DEFAULT_GOAL, ...stored };
   }
   return DEFAULT_GOAL;
 };
 
 // Helper to store goals
 const storeGoals = (goals: ReadingGoal) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(goals));
-  } catch {
-    // Ignore storage errors
-  }
+  storage.set(STORAGE_KEY, goals);
 };
 
 // Check if same day

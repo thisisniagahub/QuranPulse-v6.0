@@ -54,7 +54,7 @@ const PosterGenerator: React.FC = () => {
       }
     } catch (e) {
       console.error(e);
-      alert("AI Generation failed. Check API key.");
+      alert('Maaf, ada masalah sambungan AI. Sila cuba sebentar lagi.');
     } finally {
       setIsGenerating(false);
     }
@@ -100,7 +100,11 @@ const PosterGenerator: React.FC = () => {
                             disabled={isGenerating || !topic}
                             className="px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl flex items-center justify-center transition-all disabled:opacity-50 disabled:cursor-not-allowed shadow-[0_0_15px_rgba(147,51,234,0.3)]"
                         >
-                            {isGenerating ? <Loader2 className="w-5 h-5 animate-spin" /> : <Wand2 className="w-5 h-5" />}
+                            {isGenerating ? (
+                                <div className="inline-flex animate-spin">
+                                    <Loader2 className="w-5 h-5" />
+                                </div>
+                            ) : <Wand2 className="w-5 h-5" />}
                         </button>
                     </div>
                 </div>

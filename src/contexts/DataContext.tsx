@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useMemo } from 'react';
 import { Product, UserProfile, Announcement, Order, SystemLog, CartItem, AppConfigItem } from '../types';
 import { api } from '../services/apiClient';
 
@@ -10,6 +10,7 @@ interface DataContextType {
     orders: Order[];
     logs: SystemLog[];
     appConfig: AppConfigItem[];
+    loading: boolean;
 
     addProduct: (product: Product) => Promise<void>;
     updateProduct: (product: Product) => Promise<void>;
@@ -36,21 +37,40 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     const [orders, setOrders] = useState<Order[]>([]);
     const [logs, setLogs] = useState<SystemLog[]>([]);
     const [appConfig, setAppConfig] = useState<AppConfigItem[]>([]);
+    const [loading, setLoading] = useState(false);
     const [backendMode, setBackendMode] = useState<'MOCK' | 'CLOUD'>(api.getMode());
 
     useEffect(() => { refreshData(); }, []);
 
     const refreshData = async () => {
-        const loadedProducts = await api.getProducts();
-        setProducts(loadedProducts);
+        try {
+            setLoading(true);
+            const productsPromise = api.getProducts();
 
-        if (api.getMode() === 'CLOUD') {
-            const [o, l, u, c, a] = await Promise.all([
-                api.getOrders(), api.getLogs(), api.getUsers(), api.getAppConfig(), api.getAnnouncements()
-            ]);
-            setOrders(o); setLogs(l); setUsers(u); setAppConfig(c); setAnnouncements(a);
+            if (api.getMode() === 'CLOUD') {
+                const [loadedProducts, o, l, u, c, a] = await Promise.all([
+                    productsPromise,
+                    api.getOrders(),
+                    api.getLogs(),
+                    api.getUsers(),
+                    api.getAppConfig(),
+                    api.getAnnouncements()
+                ]);
+                setProducts(loadedProducts);
+                setOrders(o);
+                setLogs(l);
+                setUsers(u);
+                setAppConfig(c);
+                setAnnouncements(a);
+            } else {
+                setProducts(await productsPromise);
+            }
+            setBackendMode(api.getMode());
+        } catch (err) {
+            console.error('DataContext refresh error:', err);
+        } finally {
+            setLoading(false);
         }
-        setBackendMode(api.getMode());
     };
 
     const updateAppConfig = async (key: string, value: string) => {
@@ -101,14 +121,48 @@ export const DataProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         setBackendMode('CLOUD');
     };
 
+    const contextValue = useMemo(() => ({
+        products,
+        users,
+        announcements,
+        orders,
+        logs,
+        appConfig,
+        loading,
+        addProduct,
+        updateProduct,
+        deleteProduct,
+        addAnnouncement,
+        deleteAnnouncement,
+        updateUser,
+        placeOrder,
+        updateAppConfig,
+        refreshData,
+        backendMode,
+        connectCloud
+    }), [
+        products,
+        users,
+        announcements,
+        orders,
+        logs,
+        appConfig,
+        loading,
+        addProduct,
+        updateProduct,
+        deleteProduct,
+        addAnnouncement,
+        deleteAnnouncement,
+        updateUser,
+        placeOrder,
+        updateAppConfig,
+        refreshData,
+        backendMode,
+        connectCloud
+    ]);
+
     return (
-        <DataContext.Provider value={{
-            products, users, announcements, orders, logs, appConfig,
-            addProduct, updateProduct, deleteProduct,
-            addAnnouncement, deleteAnnouncement,
-            updateUser,
-            placeOrder, updateAppConfig, refreshData, backendMode, connectCloud
-        }}>
+        <DataContext.Provider value={contextValue}>
             {children}
         </DataContext.Provider>
     );

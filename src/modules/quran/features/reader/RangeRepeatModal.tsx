@@ -156,11 +156,11 @@ const RangeRepeatModal: React.FC<RangeRepeatModalProps> = ({
                 </div>
 
                 {/* Error Message */}
-                {error && (
+                {error ? (
                   <p className="text-red-400 text-sm text-center bg-red-500/10 rounded-lg py-2">
                     {error}
                   </p>
-                )}
+                ) : null}
 
                 {/* Buttons */}
                 <div className="flex gap-2 pt-2">

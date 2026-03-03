@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QuranVerse } from '../../../../types';
+import type { QuranVerse } from '../../../../types';
+import { storage } from '@/lib/storage';
 
 interface BookmarkCollection {
   id: string;
@@ -27,23 +28,11 @@ const DEFAULT_COLLECTIONS: BookmarkCollection[] = [
 const STORAGE_KEY = 'quranpulse_bookmark_collections';
 
 const getStoredCollections = (): BookmarkCollection[] => {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) {
-      return JSON.parse(stored);
-    }
-  } catch (e) {
-    console.error('Error reading collections:', e);
-  }
-  return DEFAULT_COLLECTIONS;
+  return storage.get<BookmarkCollection[]>(STORAGE_KEY) || DEFAULT_COLLECTIONS;
 };
 
 const storeCollections = (collections: BookmarkCollection[]) => {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(collections));
-  } catch {
-    // Ignore storage errors
-  }
+  storage.set(STORAGE_KEY, collections);
 };
 
 const COLOR_OPTIONS = [

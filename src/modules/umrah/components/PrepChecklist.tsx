@@ -1,26 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle, Circle, Filter, Search, Save, RotateCcw } from 'lucide-react';
 import { CHECKLIST_ITEMS, CHECKLIST_CATEGORIES } from '../data/checklistData';
 import { ChecklistItem } from '../types';
+import { storage } from '@/lib/storage';
 
 const STORAGE_KEY = 'quranpulse_umrah_checklist';
 
 const safeLoadChecklist = (): { items: ChecklistItem[]; gender: 'lelaki' | 'wanita' } | null => {
-    try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : null;
-    } catch {
-        return null;
-    }
+    return storage.get<{ items: ChecklistItem[]; gender: 'lelaki' | 'wanita' }>(STORAGE_KEY);
 };
 
 const safeSaveChecklist = (payload: { items: ChecklistItem[]; gender: 'lelaki' | 'wanita' }): void => {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-    } catch {
-        // Ignore storage errors
-    }
+    storage.set(STORAGE_KEY, payload);
 };
 
 const PrepChecklist: React.FC = () => {
@@ -57,20 +49,32 @@ const PrepChecklist: React.FC = () => {
         setItems(CHECKLIST_ITEMS.map(item => ({ ...item, checked: false })));
     };
 
-    // Filter items based on gender and category
-    const filteredItems = items.filter(item => {
-        // Gender filter
-        if (item.category === 'pakaian_lelaki' && gender !== 'lelaki') return false;
-        if (item.category === 'pakaian_wanita' && gender !== 'wanita') return false;
+    const { filteredItems, totalItems, checkedItems } = useMemo(() => {
+        const result: ChecklistItem[] = [];
+        let total = 0;
+        let checked = 0;
+        const normalizedSearch = searchQuery.toLowerCase();
 
-        // Category filter
-        if (filter !== 'all' && item.category !== filter) return false;
+        for (const item of items) {
+            // Gender filter (applies to both total count and display)
+            if (item.category === 'pakaian_lelaki' && gender !== 'lelaki') continue;
+            if (item.category === 'pakaian_wanita' && gender !== 'wanita') continue;
 
-        // Search filter
-        if (searchQuery && !item.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
+            // Count all gender-valid items
+            total++;
+            if (item.checked) checked++;
 
-        return true;
-    });
+            // Category filter (only for display)
+            if (filter !== 'all' && item.category !== filter) continue;
+
+            // Search filter (only for display)
+            if (normalizedSearch && !item.name.toLowerCase().includes(normalizedSearch)) continue;
+
+            result.push(item);
+        }
+
+        return { filteredItems: result, totalItems: total, checkedItems: checked };
+    }, [items, gender, filter, searchQuery]);
 
     // Group by category
     const groupedItems = filteredItems.reduce((acc, item) => {
@@ -80,17 +84,6 @@ const PrepChecklist: React.FC = () => {
         return acc;
     }, {} as Record<string, ChecklistItem[]>);
 
-    // Stats
-    const totalItems = items.filter(item => {
-        if (item.category === 'pakaian_lelaki' && gender !== 'lelaki') return false;
-        if (item.category === 'pakaian_wanita' && gender !== 'wanita') return false;
-        return true;
-    }).length;
-    const checkedItems = items.filter(item => {
-        if (item.category === 'pakaian_lelaki' && gender !== 'lelaki') return false;
-        if (item.category === 'pakaian_wanita' && gender !== 'wanita') return false;
-        return item.checked;
-    }).length;
     const progress = totalItems > 0 ? (checkedItems / totalItems) * 100 : 0;
 
     return (

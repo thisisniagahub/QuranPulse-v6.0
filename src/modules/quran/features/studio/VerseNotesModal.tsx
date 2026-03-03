@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { QuranVerse } from '../../../../types';
+import type { QuranVerse } from '../../../../types';
+import { storage } from '@/lib/storage';
 
 interface VerseNotesModalProps {
   verse: QuranVerse | null;
@@ -13,20 +14,11 @@ interface VerseNotesModalProps {
 const NOTES_KEY = 'quranpulse_verse_notes';
 
 const safeLoadNotes = (): Record<string, any> => {
-  try {
-    const raw = localStorage.getItem(NOTES_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  return storage.get<Record<string, any>>(NOTES_KEY) || {};
 };
 
 const safeSaveNotes = (notes: Record<string, any>): void => {
-  try {
-    localStorage.setItem(NOTES_KEY, JSON.stringify(notes));
-  } catch {
-    // Ignore storage errors
-  }
+  storage.set(NOTES_KEY, notes);
 };
 
 const VerseNotesModal: React.FC<VerseNotesModalProps> = ({

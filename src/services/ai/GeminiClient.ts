@@ -1,37 +1,30 @@
-
-import { supabase } from '../../lib/supabase';
-import { ChatMessage } from '../../types';
-import { geminiRotator } from './MultiKeyRotator';
-import axios from 'axios';
+import type { ChatMessage } from '../../types';
+import { openclawClient } from '../openclawClient';
 
 // Flag to indicate we are using the proxy for client-side.
-export const GEMINI_API_KEYS: string[] = ["SECURE_PROXY_ENABLED"];
+export const GEMINI_API_KEYS: string[] = ['OPENCLAW_GATEWAY'];
 
 /**
- * CLIENT-SIDE PROXY CLIENT
- * Routes requests to Supabase Edge Function 'chat-proxy'.
+ * Compatibility wrapper for legacy Gemini call sites.
+ * Now routes through OpenClaw Gateway.
  */
 export async function callGeminiFlashWithFailover(messages: ChatMessage[], onChunk?: (chunk: string) => void): Promise<string> {
-  console.log("📡 Connecting to Secure AI Proxy (Supabase Edge Function)...");
-
   try {
-    const { data, error } = await supabase.functions.invoke('chat-proxy', {
-      body: { messages }
-    });
-
-    if (error) throw new Error("Gagal menyambung ke pelayan AI (Proxy Error).");
-    if (data?.error) throw new Error(`Ralat AI: ${data.error}`);
-
-    const answer = data?.answer || "Maaf, tiada jawapan diterima.";
-
-    if (onChunk) onChunk(answer);
-    return answer;
-
+    return await openclawClient.chatCompletion(
+      messages.map((message) => ({
+        role: message.role === 'assistant' ? 'assistant' : message.role === 'system' ? 'system' : 'user',
+        content: message.content,
+      })),
+      {
+        stream: !!onChunk,
+        onChunk,
+      }
+    );
   } catch (err: any) {
-    console.warn("⚠️ AI Service Bypass: Proxy unreachable. Returning fallback message.");
+    console.warn('⚠️ OpenClaw unavailable. Returning fallback message.', err);
 
     // Fallback response so the app doesn't crash
-    const fallbackMessage = "Maaf, perkhidmatan AI sedang mengalami gangguan sambungan. Sila cuba sebentar lagi. (Ralat: Proxy Error)";
+    const fallbackMessage = 'Maaf, perkhidmatan AI sedang mengalami gangguan sambungan. Sila cuba sebentar lagi.';
 
     if (onChunk) onChunk(fallbackMessage);
     return fallbackMessage;
@@ -39,28 +32,18 @@ export async function callGeminiFlashWithFailover(messages: ChatMessage[], onChu
 }
 
 /**
- * DIRECT Gemini Client (For Bot Server)
- * Bypasses proxy for faster node-to-node communication with rotation.
+ * Compatibility wrapper for legacy direct calls.
+ * Now routes through OpenClaw Gateway.
  */
 export async function callGeminiDirect(messages: ChatMessage[]): Promise<string> {
-  return geminiRotator.executeWithRetry(async (apiKey) => {
-    console.log("📡 Calling Gemini 2.0 Flash (Advanced Free Tier)...");
-
-    const formattedContents = messages.map((m: any) => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }],
-    }));
-
-    const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-    const response = await axios.post(GEMINI_URL, {
-      contents: formattedContents,
-      generationConfig: {
-        temperature: 0.3,
-        maxOutputTokens: 2048,
-      }
-    });
-
-    return response.data.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, tiada jawapan.";
-  });
+  return openclawClient.chatCompletion(
+    messages.map((message) => ({
+      role: message.role === 'assistant' ? 'assistant' : message.role === 'system' ? 'system' : 'user',
+      content: message.content,
+    })),
+    {
+      temperature: 0.3,
+      max_tokens: 2048,
+    }
+  );
 }

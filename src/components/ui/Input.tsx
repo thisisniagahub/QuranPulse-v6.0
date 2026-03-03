@@ -11,17 +11,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     ({ className, label, error, icon, type, ...props }, ref) => {
         return (
             <div className="w-full">
-                {label && (
+                {label ? (
                     <label className="block text-sm font-medium text-slate-300 mb-2">
                         {label}
                     </label>
-                )}
+                ) : null}
                 <div className="relative">
-                    {icon && (
+                    {icon ? (
                         <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                             {icon}
                         </div>
-                    )}
+                    ) : null}
                     <input
                         type={type}
                         className={cn(
@@ -46,9 +46,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                         {...props}
                     />
                 </div>
-                {error && (
+                {error ? (
                     <p className="mt-1.5 text-sm text-red-400">{error}</p>
-                )}
+                ) : null}
             </div>
         );
     }

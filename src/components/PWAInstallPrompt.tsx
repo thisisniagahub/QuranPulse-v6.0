@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Download, X, Sparkles, Zap } from 'lucide-react';
+import { storage } from '@/lib/storage';
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -8,19 +9,11 @@ interface BeforeInstallPromptEvent extends Event {
 }
 
 const safeGetStorage = (key: string): string | null => {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
+  return storage.get<string>(key);
 };
 
 const safeSetStorage = (key: string, value: string): void => {
-  try {
-    localStorage.setItem(key, value);
-  } catch {
-    // Ignore storage errors
-  }
+  storage.set(key, value);
 };
 
 const PWAInstallPrompt: React.FC = () => {

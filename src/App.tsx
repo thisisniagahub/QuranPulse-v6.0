@@ -10,7 +10,8 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { Login } from './modules/auth/Login'; // Import Login
 import AdminRoute from './modules/admin/components/AdminRoute';
 import SplashScreen from './components/SplashScreen';
-import { SkipToContent, ToastProvider } from './components/ui';
+import { SkipToContent } from './components/ui/SkipToContent';
+import { ToastProvider } from './components/ui/Toast';
 
 // Lazy load modules
 const Dashboard = lazy(() => import('./modules/dashboard'));
@@ -36,6 +37,8 @@ const GuideViewer = lazy(() => import('./modules/iqra/components/GuideViewer'));
 
 
 import PWAInstallPrompt from './components/PWAInstallPrompt';
+
+let didInit = false;
 
 const SURAH_QUEST_WORDS = [
   { id: 1, arabic: 'ٱلْحَمْدُ', transliteration: 'Alhamdu', translation: 'Segala puji', position: 1 },
@@ -103,6 +106,11 @@ const AppContent: React.FC = () => {
   const handleSplashComplete = () => {
     setShowSplash(false);
   };
+
+  useEffect(() => {
+    if (didInit) return;
+    didInit = true;
+  }, []);
 
   if (showSplash) {
     return <SplashScreen onComplete={handleSplashComplete} />;

@@ -4,6 +4,7 @@
  */
 
 import { supabase } from '@/lib/supabase';
+import { storage } from '@/lib/storage';
 
 export interface Bookmark {
   id?: string;
@@ -43,7 +44,7 @@ export const getBookmarks = async (): Promise<Bookmark[]> => {
     cacheLoaded = true;
     
     // Sync to localStorage as backup
-    localStorage.setItem('qp_bookmarks', JSON.stringify(bookmarksCache));
+    storage.set('qp_bookmarks', bookmarksCache);
     
     return bookmarksCache;
   } catch (error) {
@@ -84,7 +85,7 @@ export const addBookmark = async (bookmark: Omit<Bookmark, 'id' | 'user_id' | 'c
 
     // Update cache
     bookmarksCache.unshift(data);
-    localStorage.setItem('qp_bookmarks', JSON.stringify(bookmarksCache));
+    storage.set('qp_bookmarks', bookmarksCache);
 
     return data;
   } catch (error) {
@@ -117,7 +118,7 @@ export const removeBookmark = async (surahNumber: number, ayahNumber: number): P
     bookmarksCache = bookmarksCache.filter(
       b => !(b.surah_number === surahNumber && b.ayah_number === ayahNumber)
     );
-    localStorage.setItem('qp_bookmarks', JSON.stringify(bookmarksCache));
+    storage.set('qp_bookmarks', bookmarksCache);
 
     return true;
   } catch (error) {
@@ -192,12 +193,7 @@ export const updateBookmarkNote = async (surahNumber: number, ayahNumber: number
 // --- LOCAL STORAGE FALLBACK ---
 
 const getLocalBookmarks = (): Bookmark[] => {
-  try {
-    const stored = localStorage.getItem('qp_bookmarks');
-    return stored ? JSON.parse(stored) : [];
-  } catch {
-    return [];
-  }
+  return storage.get<Bookmark[]>('qp_bookmarks') || [];
 };
 
 const addLocalBookmark = (bookmark: Omit<Bookmark, 'id' | 'user_id' | 'created_at'>): Bookmark => {
@@ -208,7 +204,7 @@ const addLocalBookmark = (bookmark: Omit<Bookmark, 'id' | 'user_id' | 'created_a
     created_at: new Date().toISOString()
   };
   local.unshift(newBookmark);
-  localStorage.setItem('qp_bookmarks', JSON.stringify(local));
+  storage.set('qp_bookmarks', local);
   bookmarksCache = local;
   return newBookmark;
 };
@@ -218,7 +214,7 @@ const removeLocalBookmark = (surahNumber: number, ayahNumber: number): boolean =
   const filtered = local.filter(
     b => !(b.surah_number === surahNumber && b.ayah_number === ayahNumber)
   );
-  localStorage.setItem('qp_bookmarks', JSON.stringify(filtered));
+  storage.set('qp_bookmarks', filtered);
   bookmarksCache = filtered;
   return true;
 };
@@ -251,7 +247,7 @@ export const syncLocalBookmarksToCloud = async (): Promise<number> => {
 
     // Clear local-only bookmarks after sync
     const remaining = getLocalBookmarks().filter(b => !b.id?.startsWith('local_'));
-    localStorage.setItem('qp_bookmarks', JSON.stringify(remaining));
+    storage.set('qp_bookmarks', remaining);
 
     console.log(`✅ Synced ${synced} local bookmarks to cloud`);
     return synced;

@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { storage } from '@/lib/storage';
 
 interface UseApiWithRetryResult<T> {
   data: T | null;
@@ -69,13 +70,13 @@ export const useCachedApi = <T>(
 
   const execute = useCallback(async () => {
     // Check cache first
-    const cached = localStorage.getItem(`cache_${key}`);
-    const cachedTime = localStorage.getItem(`cache_${key}_time`);
+    const cached = storage.get<T>(`cache_${key}`);
+    const cachedTime = storage.get<string>(`cache_${key}_time`);
     
-    if (cached && cachedTime) {
-      const timeDiff = Date.now() - parseInt(cachedTime);
+    if (cached !== null && cachedTime !== null) {
+      const timeDiff = Date.now() - Number(cachedTime);
       if (timeDiff < cacheTime) {
-        setData(JSON.parse(cached));
+        setData(cached);
         return;
       }
     }
@@ -91,8 +92,8 @@ export const useCachedApi = <T>(
         setData(result);
         
         // Cache the result
-        localStorage.setItem(`cache_${key}`, JSON.stringify(result));
-        localStorage.setItem(`cache_${key}_time`, Date.now().toString());
+        storage.set(`cache_${key}`, result);
+        storage.set(`cache_${key}_time`, Date.now().toString());
         
         return;
       } catch (err) {
@@ -115,8 +116,8 @@ export const useCachedApi = <T>(
     setData(null);
     setError(null);
     setLoading(false);
-    localStorage.removeItem(`cache_${key}`);
-    localStorage.removeItem(`cache_${key}_time`);
+    storage.remove(`cache_${key}`);
+    storage.remove(`cache_${key}_time`);
   }, [key]);
 
   return { data, loading, error, execute, reset };

@@ -14,6 +14,7 @@ import {
     BookOpen, Trophy, Target, Calendar, TrendingUp,
     Sparkles, Star, Clock, ChevronRight
 } from 'lucide-react';
+import { storage } from '@/lib/storage';
 
 interface KhatamProgress {
     totalVerses: number;       // 6236 total
@@ -67,13 +68,9 @@ const fireConfetti = async () => {
 };
 
 const getStoredProgress = (): KhatamProgress => {
-    try {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            return JSON.parse(stored);
-        }
-    } catch (e) {
-        console.error('Error reading khatam progress:', e);
+    const stored = storage.get<KhatamProgress>(STORAGE_KEY);
+    if (stored) {
+        return stored;
     }
 
     return {
@@ -366,11 +363,7 @@ export const updateKhatamProgress = (versesRead: number) => {
         versesRead,
         juzCompleted: Math.floor((versesRead / TOTAL_VERSES) * TOTAL_JUZ),
     };
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-    } catch {
-        // Ignore storage errors
-    }
+    storage.set(STORAGE_KEY, updated);
     return updated;
 };
 

@@ -1,28 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { generateIslamicVideo, enhanceVideoPrompt } from '../../services/aiService';
+import { storage } from '@/lib/storage';
 
 const safeGetStorage = (key: string): string | null => {
-  try {
-    return localStorage.getItem(key);
-  } catch {
-    return null;
-  }
+  return storage.get<string>(key);
 };
 
-const safeSetStorage = (key: string, value: string): void => {
-  try {
-    localStorage.setItem(key, value);
-  } catch {
-    // Ignore storage failures (quota/private mode)
-  }
+const safeSetStorage = (key: string, value: unknown): void => {
+  storage.set(key, value);
 };
 
 const safeRemoveStorage = (key: string): void => {
-  try {
-    localStorage.removeItem(key);
-  } catch {
-    // Ignore storage failures
-  }
+  storage.remove(key);
 };
 
 const MediaStudio: React.FC = () => {
@@ -270,14 +259,14 @@ const MediaStudio: React.FC = () => {
                 </div>
             </div>
 
-            {error && (
+            {error ? (
                 <div className="bg-red-900/20 border border-red-500/50 text-red-200 p-4 rounded-xl text-sm flex items-center gap-3 animate-slide-up">
                 <div className="w-8 h-8 rounded-full bg-red-500/20 flex items-center justify-center shrink-0">
                     <i className="fa-solid fa-triangle-exclamation"></i>
                 </div>
                 {error}
                 </div>
-            )}
+            ) : null}
 
             {isGenerating && (
                 <div className="text-center py-12 space-y-6 animate-fade-in">

@@ -6,7 +6,7 @@
  */
 
 import { supabase } from '../lib/supabase';
-import { callGeminiDirect } from './ai/GeminiClient';
+import { openclawClient } from './openclawClient';
 import type { ChatMessage } from '../types/app';
 
 // =====================================
@@ -183,7 +183,13 @@ export async function ragQuery(
 
     try {
         const messages: ChatMessage[] = [{ role: 'user', content: prompt, id: `rag_${Date.now()}`, timestamp: Date.now() }];
-        const answer = await callGeminiDirect(messages);
+        const answer = await openclawClient.chatCompletion(
+            messages.map((message) => ({
+                role: message.role === 'assistant' ? 'assistant' : message.role === 'system' ? 'system' : 'user',
+                content: message.content
+            })),
+            { temperature: 0.3, max_tokens: 2048 }
+        );
         return { answer, sources: allSources, confidence, language };
     } catch {
         // Fallback: just show sources without LLM synthesis

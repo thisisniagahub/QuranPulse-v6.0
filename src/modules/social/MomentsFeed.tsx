@@ -74,7 +74,9 @@ const MomentsFeed: React.FC = () => {
   if (isLoading) {
     return (
       <div className="p-20 flex flex-col items-center justify-center space-y-4">
-        <Loader2 className="animate-spin text-raudhah-teal/30" size={40} />
+        <div className="inline-flex animate-spin">
+          <Loader2 className="text-raudhah-teal/30" size={40} />
+        </div>
         <p className="text-[10px] font-black text-raudhah-teal/30 uppercase tracking-[0.4em]">Menyusun Refleksi Ummah...</p>
       </div>
     );
@@ -118,7 +120,11 @@ const MomentsFeed: React.FC = () => {
             disabled={createMomentMutation.isPending || !newContent.trim()}
             className="bg-raudhah-teal text-white px-8 py-3 rounded-2xl text-xs font-black uppercase tracking-widest transition-all disabled:opacity-20 flex items-center gap-3 border-b-4 border-raudhah-ink active:border-b-0 active:translate-y-1"
           >
-            {createMomentMutation.isPending ? <Loader2 className="animate-spin" size={16} /> : <Send size={16} />}
+            {createMomentMutation.isPending ? (
+              <div className="inline-flex animate-spin">
+                <Loader2 size={16} />
+              </div>
+            ) : <Send size={16} />}
             {createMomentMutation.isPending ? 'Mengirim...' : 'Kirim Masej'}
           </button>
         </div>

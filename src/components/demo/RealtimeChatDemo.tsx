@@ -88,7 +88,13 @@ const RealtimeChatDemo: React.FC<RealtimeChatDemoProps> = ({
 
         return (
             <div className={`flex items-center gap-2 text-xs ${config.color}`}>
-                <Icon size={14} className={status === 'connecting' ? 'animate-spin' : ''} />
+                {status === 'connecting' ? (
+                    <div className="inline-flex animate-spin">
+                        <Icon size={14} />
+                    </div>
+                ) : (
+                    <Icon size={14} />
+                )}
                 <span>{config.label}</span>
             </div>
         );
@@ -128,11 +134,11 @@ const RealtimeChatDemo: React.FC<RealtimeChatDemoProps> = ({
             </div>
 
             {/* Error Banner */}
-            {error && (
+            {error ? (
                 <div className="px-4 py-2 bg-red-500/20 border-b border-red-500/30 text-red-400 text-xs">
                     ⚠️ {error}
                 </div>
-            )}
+            ) : null}
 
             {/* Messages */}
             <div className="flex-1 overflow-y-auto p-4 space-y-3 custom-scrollbar">

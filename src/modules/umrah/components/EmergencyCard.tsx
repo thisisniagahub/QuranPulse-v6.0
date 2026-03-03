@@ -2,24 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { AlertCircle, Volume2, Save, Edit2, X, Check, Phone, Hotel, CreditCard, Droplets } from 'lucide-react';
 import { EmergencyInfo } from '../types';
+import { storage } from '@/lib/storage';
 
 const STORAGE_KEY = 'quranpulse_umrah_emergency';
 
 const safeLoadEmergencyInfo = (): EmergencyInfo | null => {
-    try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : null;
-    } catch {
-        return null;
-    }
+    return storage.get<EmergencyInfo>(STORAGE_KEY);
 };
 
 const safeSaveEmergencyInfo = (info: EmergencyInfo): void => {
-    try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(info));
-    } catch {
-        // Ignore storage errors
-    }
+    storage.set(STORAGE_KEY, info);
 };
 
 const DEFAULT_INFO: EmergencyInfo = {

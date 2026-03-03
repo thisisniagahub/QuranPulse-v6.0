@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import { storage } from '@/lib/storage';
 
 export type EventName =
   | 'APP_OPEN'
@@ -28,10 +29,10 @@ export interface AnalyticsEvent {
 // Generate or retrieve persistent anonymous ID
 const getAnonId = () => {
   if (typeof window === 'undefined') return 'server-side';
-  let anonId = localStorage.getItem('qp_anon_id');
+  let anonId = storage.get<string>('qp_anon_id');
   if (!anonId) {
     anonId = `anon_${Math.random().toString(36).substring(2, 15)}`;
-    localStorage.setItem('qp_anon_id', anonId);
+    storage.set('qp_anon_id', anonId);
   }
   return anonId;
 };

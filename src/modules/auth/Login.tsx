@@ -3,30 +3,19 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { supabase } from '@/lib/supabase';
+import { storage } from '@/lib/storage';
 import { Eye, EyeOff } from 'lucide-react';
 
 const safeGetStorage = (key: string): string | null => {
-    try {
-        return localStorage.getItem(key);
-    } catch {
-        return null;
-    }
+    return storage.get<string>(key);
 };
 
-const safeSetStorage = (key: string, value: string): void => {
-    try {
-        localStorage.setItem(key, value);
-    } catch {
-        // Ignore storage errors
-    }
+const safeSetStorage = (key: string, value: unknown): void => {
+    storage.set(key, value);
 };
 
 const safeRemoveStorage = (key: string): void => {
-    try {
-        localStorage.removeItem(key);
-    } catch {
-        // Ignore storage errors
-    }
+    storage.remove(key);
 };
 
 export const Login = () => {
@@ -123,7 +112,7 @@ export const Login = () => {
     // Temporary Bypass for Demo/Dev
     const handleDevBypass = () => {
         safeSetStorage('auth_token', 'dev-token');
-        safeSetStorage('auth_user', JSON.stringify({ name: 'Dev User', email: 'dev@qp.com', id: 'dev-user-id' }));
+        safeSetStorage('auth_user', { name: 'Dev User', email: 'dev@qp.com', id: 'dev-user-id' });
         window.location.href = '/';
     };
 
@@ -321,7 +310,7 @@ export const Login = () => {
                         </motion.div>
 
                         {/* Error Message */}
-                        {error && (
+                        {error ? (
                             <motion.div
                                 initial={{ opacity: 0, height: 0, y: -10 }}
                                 animate={{ opacity: 1, height: 'auto', y: 0 }}
@@ -330,7 +319,7 @@ export const Login = () => {
                                 <i className="fa-solid fa-triangle-exclamation text-lg"></i>
                                 <span>{error}</span>
                             </motion.div>
-                        )}
+                        ) : null}
 
                         <motion.button
                             initial={{ opacity: 0, y: 20 }}

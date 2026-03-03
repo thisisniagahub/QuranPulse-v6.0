@@ -88,7 +88,9 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
       >
         <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 rounded-[2rem] transition-opacity" />
         {isProcessing ? (
-          <RefreshCw className="w-10 h-10 text-raudhah-teal animate-spin" />
+          <div className="inline-flex animate-spin">
+            <RefreshCw className="w-10 h-10 text-raudhah-teal" />
+          </div>
         ) : (
           <Mic className={`w-10 h-10 relative z-10 ${isRecording ? 'text-white' : 'text-white'}`} />
         )}

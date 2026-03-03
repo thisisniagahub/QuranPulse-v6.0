@@ -332,7 +332,11 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                                     disabled={aiLoading}
                                                     className="w-full flex items-center justify-center gap-4 py-6 glass-v7 text-raudhah-gold rounded-[2rem] font-black uppercase tracking-widest text-[10px] border border-raudhah-gold/20 hover:bg-white transition-all shadow-sm"
                                                 >
-                                                    {aiLoading ? <Loader2 className="animate-spin" size={20} /> : <BrainCircuit size={20} />} Cari Mnemonik
+                                                    {aiLoading ? (
+                                                        <div className="inline-flex animate-spin">
+                                                            <Loader2 size={20} />
+                                                        </div>
+                                                    ) : <BrainCircuit size={20} />} Cari Mnemonik
                                                 </button>
 
                                                 <AnimatePresence>
@@ -454,7 +458,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                     <div className="space-y-8 relative z-10">
                                         <div className="max-h-60 overflow-y-auto no-scrollbar space-y-6">
                                             <AnimatePresence mode="wait">
-                                                {chatResponse && (
+                                                {chatResponse ? (
                                                     <motion.div
                                                         initial={{ opacity: 0, x: -10 }}
                                                         animate={{ opacity: 1, x: 0 }}
@@ -462,7 +466,7 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                                     >
                                                         "{chatResponse}"
                                                     </motion.div>
-                                                )}
+                                                ) : null}
                                             </AnimatePresence>
                                         </div>
 
@@ -480,7 +484,11 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                                 disabled={aiLoading}
                                                 className="bg-raudhah-teal text-white w-20 h-20 rounded-2xl flex items-center justify-center hover:scale-[1.05] active:scale-95 transition-all shadow-warm disabled:opacity-50"
                                             >
-                                                {aiLoading ? <Loader2 className="animate-spin" size={28} /> : <Send size={28} />}
+                                                {aiLoading ? (
+                                                    <div className="inline-flex animate-spin">
+                                                        <Loader2 size={28} />
+                                                    </div>
+                                                ) : <Send size={28} />}
                                             </button>
                                         </div>
                                     </div>
@@ -528,7 +536,11 @@ const IqraInteractiveCoach: React.FC<IqraInteractiveCoachProps> = ({ volume = 1,
                                                 disabled={aiLoading}
                                                 className="w-full flex items-center justify-center gap-4 py-6 glass-v7 text-red-500 border border-red-500/10 rounded-[2rem] font-black uppercase tracking-widest text-[10px] hover:bg-red-50 transition-all font-mono"
                                             >
-                                                {aiLoading ? <Loader2 className="animate-spin" size={20} /> : <BrainCircuit size={20} />} Analisis Kesalahan Visual
+                                                {aiLoading ? (
+                                                    <div className="inline-flex animate-spin">
+                                                        <Loader2 size={20} />
+                                                    </div>
+                                                ) : <BrainCircuit size={20} />} Analisis Kesalahan Visual
                                             </button>
                                         )}
 

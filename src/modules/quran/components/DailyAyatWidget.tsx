@@ -15,6 +15,7 @@ import {
     BookOpen, Share2, RefreshCw, Bell, BellOff,
     Heart, Copy, Check, ChevronRight
 } from 'lucide-react';
+import { storage } from '@/lib/storage';
 
 interface DailyAyat {
     surahNumber: number;
@@ -86,11 +87,7 @@ const DAILY_VERSES: DailyAyat[] = [
 ];
 
 const safeSetStorage = (key: string, value: string): void => {
-    try {
-        localStorage.setItem(key, value);
-    } catch {
-        // Ignore storage errors
-    }
+    storage.set(key, value);
 };
 
 const DailyAyatWidget: React.FC<DailyAyatWidgetProps> = ({

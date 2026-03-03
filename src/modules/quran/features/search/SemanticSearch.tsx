@@ -8,7 +8,7 @@
  * - Bilingual support (Malay/English)
  */
 
-import React, { useState, useCallback } from 'react';
+import React, { startTransition, useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Sparkles, BookOpen, Loader2, X } from 'lucide-react';
 import { useSemanticSearch, SemanticSearchResult } from './useSemanticSearch';
@@ -29,7 +29,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
     const handleSearch = useCallback(async () => {
         if (query.trim().length < 3) return;
         await search(query);
-        setIsOpen(true);
+        startTransition(() => setIsOpen(true));
     }, [query, search]);
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -42,12 +42,14 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
         if (onVerseSelect) {
             onVerseSelect(result.surahNumber, result.verseNumber);
         }
-        setIsOpen(false);
+        startTransition(() => setIsOpen(false));
     };
 
     const clearSearch = () => {
-        setQuery('');
-        setIsOpen(false);
+        startTransition(() => {
+            setQuery('');
+            setIsOpen(false);
+        });
     };
 
     return (
@@ -71,7 +73,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                 />
 
                 <div className="absolute right-2 flex items-center gap-2">
-                    {query && (
+                    {query ? (
                         <button
                             onClick={clearSearch}
                             className="p-1 hover:bg-slate-700 rounded-full transition-colors"
@@ -79,7 +81,7 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                         >
                             <X className="w-4 h-4 text-slate-400" />
                         </button>
-                    )}
+                    ) : null}
                     <button
                         onClick={handleSearch}
                         disabled={query.trim().length < 3 || isSearching}
@@ -89,7 +91,9 @@ const SemanticSearch: React.FC<SemanticSearchProps> = ({
                        hover:shadow-lg hover:shadow-teal-500/25 transition-all"
                     >
                         {isSearching ? (
-                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <div className="inline-flex animate-spin">
+                                <Loader2 className="w-4 h-4" />
+                            </div>
                         ) : (
                             <Search className="w-4 h-4" />
                         )}

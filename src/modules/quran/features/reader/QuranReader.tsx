@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { Suspense, lazy, useCallback, useEffect, useMemo, useRef, useState, startTransition } from 'react';
 import { useQuran } from '../../contexts/QuranContext';
 import { useAudioPlayer } from '../../../../contexts/AudioPlayerContext';
 import QuranHeader from '../../components/QuranHeader';
@@ -112,11 +112,13 @@ const QuranReader: React.FC = () => {
             const verseList = verseListRef.current;
             if (!container || !verseList) return;
 
-            setViewportHeight(container.clientHeight);
             const containerRect = container.getBoundingClientRect();
             const listRect = verseList.getBoundingClientRect();
             const offset = container.scrollTop + (listRect.top - containerRect.top);
-            setListOffsetTop(offset);
+            startTransition(() => {
+                setViewportHeight(container.clientHeight);
+                setListOffsetTop(offset);
+            });
         };
 
         updateMetrics();
@@ -128,7 +130,9 @@ const QuranReader: React.FC = () => {
 
     const handleScroll = useCallback((event: React.UIEvent<HTMLDivElement>) => {
         if (!shouldVirtualize) return;
-        setScrollTop(event.currentTarget.scrollTop);
+        startTransition(() => {
+            setScrollTop(event.currentTarget.scrollTop);
+        });
     }, [shouldVirtualize]);
 
     const virtualWindow = useMemo(() => {

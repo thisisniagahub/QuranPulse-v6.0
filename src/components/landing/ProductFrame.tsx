@@ -43,29 +43,29 @@ export const ProductFrame: React.FC<ProductFrameProps> = ({
             {/* Main container */}
             <div className="relative bg-gradient-to-b from-[#1a1a2e] to-[#16213e] rounded-2xl xl:rounded-3xl overflow-hidden border border-white/[0.08] shadow-2xl shadow-black/20">
                 {/* Header bar */}
-                {(showDots || title || badge) && (
+                {(showDots || title || badge) ? (
                     <div className="flex items-center justify-between px-4 sm:px-5 py-3 bg-white/[0.03] border-b border-white/[0.06]">
                         <div className="flex items-center gap-3">
-                            {showDots && (
+                            {showDots ? (
                                 <div className="flex gap-1.5">
                                     <div className="w-2.5 h-2.5 rounded-full bg-red-400/80" />
                                     <div className="w-2.5 h-2.5 rounded-full bg-yellow-400/80" />
                                     <div className="w-2.5 h-2.5 rounded-full bg-green-400/80" />
                                 </div>
-                            )}
-                            {title && (
+                            ) : null}
+                            {title ? (
                                 <span className="text-xs font-medium text-white/40 tracking-wide uppercase ml-1">
                                     {title}
                                 </span>
-                            )}
+                            ) : null}
                         </div>
-                        {badge && (
+                        {badge ? (
                             <span className="text-[10px] font-bold tracking-widest uppercase px-2.5 py-0.5 rounded-full bg-raudhah-teal/20 text-raudhah-teal border border-raudhah-teal/30">
                                 {badge}
                             </span>
-                        )}
+                        ) : null}
                     </div>
-                )}
+                ) : null}
 
                 {/* Content area */}
                 <div className="relative">
@@ -88,11 +88,11 @@ export const ProductScreenshot: React.FC<{
             <div className="transition-transform duration-700 group-hover:scale-[1.02]">
                 {children}
             </div>
-            {overlay && (
+            {overlay ? (
                 <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/10 transition-colors duration-500">
                     {overlay}
                 </div>
-            )}
+            ) : null}
         </div>
     );
 };

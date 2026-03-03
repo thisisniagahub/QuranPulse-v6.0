@@ -1,17 +1,15 @@
 import { supabase } from '../lib/supabase';
 import { ISLAMIC_FAQ } from '../data/islamicFAQ';
-import { GEMINI_API_KEYS, callGeminiFlashWithFailover, callGeminiDirect } from './ai/GeminiClient';
-import { GroqClient } from './ai/GroqClient';
-import { ChatMessage } from '../types';
+import type { ChatMessage } from '../types';
 
 import { PERSONAS, DEFAULT_PERSONA, Persona } from '../config/personas';
-import { analyzeImageWithGemini } from './ai/GeminiVisionClient';
 import { VoiceService } from './ai/VoiceService';
 import { mcpService } from './mcpService';
 import staticContentService, { TajweedRule, MakhrajPoint, Doa, FAQ, Hadith } from './staticContentService';
 import { checkFatwaSafety, sanitizeIslamicResponse } from './fatwaGuard';
 import { ragQuery } from './ragService';
 import { aiOrchestrator } from './ai/AdkRunner';
+import { openclawClient } from './openclawClient';
 
 // --- TYPES ---
 export type EmotionType = 'sad' | 'anxious' | 'happy' | 'confused' | 'angry' | 'neutral';
@@ -153,19 +151,25 @@ export const askUstazAI = async (
     return blocked;
   }
 
-  // 1. CHECK LOCAL HARDCODED FAQ (Fastest)
-  const localMatch = ISLAMIC_FAQ.find(item =>
-    item.keywords.some(k => lastUserMessage.toLowerCase().includes(k.toLowerCase()))
-  );
-  if (localMatch) {
-    const response = `💡 **${localMatch.question}**\n\n${localMatch.answer}`;
+  // 1/2. RUN LOCAL FAQ + STATIC LOOKUP IN PARALLEL
+  const [localFaqResult, smartLookupResult] = await Promise.allSettled([
+    Promise.resolve(
+      ISLAMIC_FAQ.find((item) =>
+        item.keywords.some((k) => lastUserMessage.toLowerCase().includes(k.toLowerCase()))
+      )
+    ),
+    staticContentService.smartLookup(lastUserMessage, 'ms')
+  ]);
+
+  // Priority: local hardcoded FAQ first
+  if (localFaqResult.status === 'fulfilled' && localFaqResult.value) {
+    const response = `💡 **${localFaqResult.value.question}**\n\n${localFaqResult.value.answer}`;
     if (onChunk) onChunk(response);
     return response;
   }
 
-  // 2. CHECK STATIC CONTENT & CACHE (Unified Smart Lookup)
-  try {
-    const smartResult = await staticContentService.smartLookup(lastUserMessage, 'ms');
+  if (smartLookupResult.status === 'fulfilled') {
+    const smartResult = smartLookupResult.value;
     if (smartResult) {
       if (smartResult.source === 'cache') {
         console.log("⚡ SMART LOOKUP: Cache Hit");
@@ -173,17 +177,17 @@ export const askUstazAI = async (
         const formatted = formatHybridResponse(cachedData);
         if (onChunk) onChunk(formatted);
         return formatted;
-      } else {
-        console.log("⚡ SMART LOOKUP: Static Content found");
-        const formatted = formatStaticContent(smartResult.data);
-        if (formatted) {
-          if (onChunk) onChunk(formatted);
-          return formatted;
-        }
+      }
+
+      console.log("⚡ SMART LOOKUP: Static Content found");
+      const formatted = formatStaticContent(smartResult.data);
+      if (formatted) {
+        if (onChunk) onChunk(formatted);
+        return formatted;
       }
     }
-  } catch (e) {
-    console.error("Smart Lookup Failed:", e);
+  } else {
+    console.error("Smart Lookup Failed:", smartLookupResult.reason);
   }
 
   // 3. CHECK MCP (REAL-TIME DATA) - Pulse-MCP Integration
@@ -199,7 +203,7 @@ export const askUstazAI = async (
     console.error("MCP Routing Failed, falling back to LLM:", e);
   }
 
-  // 4. FETCH FROM CLOUD AI (Groq First for Speed, then Gemini)
+  // 4. FETCH FROM CLOUD AI (OpenClaw Gateway)
 
   const activePersona: Persona = PERSONAS[personaId] || DEFAULT_PERSONA;
 
@@ -207,42 +211,49 @@ export const askUstazAI = async (
   const detectedEmotion = detectUserEmotion(lastUserMessage);
   const emotionalContext = getEmotionalContext(detectedEmotion);
   const emotionSystemPrompt = emotionalContext ? `\n\n${emotionalContext}` : "";
-
-  const messagesWithSystem = [
-    { role: 'system', content: activePersona.systemPrompt + emotionSystemPrompt, id: 'sys', timestamp: Date.now() },
-    ...messages
-  ];
+  const systemPrompt = activePersona.systemPrompt + emotionSystemPrompt;
 
   let rawResponse: string = "";
 
-  // Attempt Groq (Ultra Fast)
-  if (!groqCircuit.isOpen()) {
-    try {
-      rawResponse = await GroqClient.callGroq(messagesWithSystem as any);
-      groqCircuit.reset(); // Success, reset failures
-    } catch (e) {
-      console.warn("Groq failed, recording failure...");
-      groqCircuit.recordFailure();
-    }
+  // Single gateway circuit path while preserving existing breaker behavior.
+  if (groqCircuit.isOpen() || geminiCircuit.isOpen()) {
+    console.warn('⏩ Bypassing OpenClaw (Circuit is OPEN)');
   } else {
-    console.warn("⏩ Bypassing Groq (Circuit is OPEN)");
-  }
-
-  // Fallback to AdkRunner (Gemini) if Groq didn't answer
-  if (!rawResponse && !geminiCircuit.isOpen()) {
     try {
-      rawResponse = await aiOrchestrator.ask(messagesWithSystem, { persona: activePersona.id });
-
-      if (rawResponse.includes("Proxy Error")) {
-        throw new Error("Gemini Proxy Error");
-      }
+      // === CLOUD AI via OpenClaw Gateway ===
+      rawResponse = await openclawClient.chatCompletion(
+        [
+          { role: 'system', content: systemPrompt },
+          ...messages.map((m) => ({
+            role: (m.role === 'assistant' || m.role === 'system' ? m.role : 'user') as 'assistant' | 'system' | 'user',
+            content: m.content
+          })),
+        ],
+        {
+          stream: !!onChunk,
+          onChunk,
+          temperature: 0.7,
+          max_tokens: 2048,
+        }
+      );
+      groqCircuit.reset();
       geminiCircuit.reset();
     } catch (error) {
-      console.error("Gemini failed, recording failure:", error);
+      console.error('[OpenClaw] Gateway error:', error);
+      groqCircuit.recordFailure();
       geminiCircuit.recordFailure();
+
+      // Fallback to local simulation if gateway is down
+      const simResponse = getSmartSimulationResponse(lastUserMessage);
+      if (simResponse) {
+        if (onChunk) onChunk(simResponse);
+        return simResponse;
+      }
+
+      const unavailable = '🕊️ Maaf, perkhidmatan AI sedang tidak tersedia. Sila cuba sebentar lagi. Wallahu a\'lam.';
+      if (onChunk) onChunk(unavailable);
+      return unavailable;
     }
-  } else if (geminiCircuit.isOpen()) {
-    console.warn("⏩ Bypassing Gemini (Circuit is OPEN)");
   }
 
   if (rawResponse) {
@@ -432,23 +443,30 @@ const RUMI_TO_JAWI_MAP: Record<string, string> = {
   'gh': 'غ', 'th': 'ث', 'dz': 'ذ', 'ai': 'اي', 'au': 'او'
 };
 
+const JAWI_DIGRAPHS = ['ny', 'ng', 'sy', 'kh', 'gh', 'th', 'dz', 'ai', 'au'] as const;
+const JAWI_REGEX_MAP = new Map<string, RegExp>(
+  JAWI_DIGRAPHS.map((digraph) => [digraph, new RegExp(digraph, 'g')])
+);
+
 export const convertToJawi = async (text: string): Promise<string> => {
   if (!text) return '';
-
-  let result = text.toLowerCase();
-
-  // Replace digraphs first (ny, ng, sy, etc.)
-  const digraphs = ['ny', 'ng', 'sy', 'kh', 'gh', 'th', 'dz', 'ai', 'au'];
-  for (const dg of digraphs) {
-    result = result.replace(new RegExp(dg, 'g'), RUMI_TO_JAWI_MAP[dg] || dg);
+  try {
+    const response = await openclawClient.convertToJawi(text);
+    if (response && response.trim()) return response.trim();
+  } catch (error) {
+    console.error('[OpenClaw] convertToJawi fallback:', error);
   }
 
-  // Replace single characters
+  // Local fallback conversion if gateway is unavailable.
+  let result = text.toLowerCase();
+  for (const [dg, regex] of JAWI_REGEX_MAP) {
+    result = result.replace(regex, RUMI_TO_JAWI_MAP[dg] || dg);
+  }
+
   let jawi = '';
   for (const char of result) {
     jawi += RUMI_TO_JAWI_MAP[char] || char;
   }
-
   return jawi;
 };
 
@@ -471,20 +489,19 @@ export const getHadithByTopic = async (topic: string): Promise<{ arabic: string;
     });
 
     if (error || !data.results || data.results.length === 0) {
-      // Fallback to AI generation
-      const prompt: ChatMessage[] = [{
-        id: 'sys', role: 'system', timestamp: Date.now(),
-        content: 'Berikan satu hadith sahih yang berkaitan dengan topik. Format: {"arabic": "...", "translation": "...", "source": "Riwayat ..."}'
-      }, {
-        id: 'usr', role: 'user', timestamp: Date.now(),
-        content: `Topik: ${topic}`
-      }];
-
-      const response = await aiOrchestrator.ask(prompt);
+      // Fallback to OpenClaw content generation
+      const response = await openclawClient.getHadithByTopic(topic);
       try {
         return JSON.parse(response.replace(/```json|```/g, '').trim());
       } catch {
-        return { arabic: '', translation: response, source: 'AI Generated' };
+        const lines = response.split('\n').map((line) => line.trim()).filter(Boolean);
+        const sourceLine = lines.find((line) => /^sumber|^source|riwayat/i.test(line));
+        const body = lines.filter((line) => line !== sourceLine).join('\n');
+        return {
+          arabic: '',
+          translation: body || response,
+          source: sourceLine ? sourceLine.replace(/^(?:sumber|source)\s*[:\-]?\s*/i, '').trim() : 'OpenClaw'
+        };
       }
     }
 
@@ -508,20 +525,13 @@ export const getTafsirForVerse = async (key: string): Promise<{ tafsir: string; 
     });
 
     if (error || !data.results || data.results.length === 0) {
-      // Fallback to AI-generated tafsir
-      const prompt: ChatMessage[] = [{
-        id: 'sys', role: 'system', timestamp: Date.now(),
-        content: 'Anda pakar tafsir Al-Quran. Berikan tafsir ringkas dan refleksi spiritual untuk ayat ini. Format JSON: {"tafsir": "...", "reflection": "..."}'
-      }, {
-        id: 'usr', role: 'user', timestamp: Date.now(),
-        content: `Ayat: ${key}`
-      }];
-
-      const response = await aiOrchestrator.ask(prompt);
+      // Fallback to OpenClaw content generation
+      const response = await openclawClient.getTafsirForVerse(key);
       try {
         return JSON.parse(response.replace(/```json|```/g, '').trim());
       } catch {
-        return { tafsir: response, reflection: '' };
+        const [tafsir, ...reflectionParts] = response.split('\n\n');
+        return { tafsir: tafsir || response, reflection: reflectionParts.join('\n\n') };
       }
     }
 
@@ -535,21 +545,35 @@ export const getTafsirForVerse = async (key: string): Promise<{ tafsir: string; 
   }
 };
 export const generateDoaCard = async (topic: string): Promise<string> => {
-  const prompt: ChatMessage[] = [
+  const response = await openclawClient.generateDoa(topic);
+  return response;
+};
+
+const analyzeVisionWithOpenClaw = async (base64Image: string, prompt: string): Promise<string> => {
+  const imagePayload = `Analisis imej berikut (base64 JPEG): ${base64Image}`;
+  const response = await openclawClient.chatCompletion(
+    [
+      {
+        role: 'system',
+        content: 'Anda pembantu vision QuranPulse. Analisis kandungan imej berdasarkan arahan pengguna dan beri jawapan padat dalam Bahasa Melayu.'
+      },
+      {
+        role: 'user',
+        content: `${prompt}\n\n${imagePayload}`
+      }
+    ],
     {
-      id: 'sys',
-      role: 'system',
-      content: "Anda adalah pakar penulisan Doa Islamik yang puitis. Tulis satu Doa yang sangat indah dan menyentuh hati dalam Bahasa Melayu berdasarkan topik pengguna. Sertakan teks Arab (jika ada) dan maksudnya. Formatkan dengan cantik menggunakan Markdown.",
-      timestamp: Date.now()
-    },
-    { id: 'usr', role: 'user', content: `Topik Doa: ${topic}`, timestamp: Date.now() }
-  ];
-  return askUstazAI(prompt);
+      temperature: 0.4,
+      max_tokens: 1024
+    }
+  );
+
+  return response || 'Maaf, Ustazah tidak dapat mengecam gambar tersebut.';
 };
 
 
 export const analyzeImage = async (base64Image: string, prompt: string): Promise<string> => {
-  return analyzeImageWithGemini(base64Image, prompt);
+  return analyzeVisionWithOpenClaw(base64Image, prompt);
 };
 
 export const analyzeText = async () => ({});
@@ -833,7 +857,7 @@ RESPOND WITH STRICT JSON ONLY (no markdown, no prose):
   "overallAssessment": "ringkasan penilaian keseluruhan"
 }`;
 
-    const response = await analyzeImageWithGemini(audioBase64, prompt);
+    const response = await analyzeVisionWithOpenClaw(audioBase64, prompt);
     const parsed = extractJsonPayload(response);
 
     if (!parsed) {
@@ -904,7 +928,7 @@ export const analyzeTajweedPosture = async (imageBase64: string): Promise<{
 }> => {
   try {
     const prompt = `Analisis posisi mulut/lidah untuk sebutan huruf Arab. Berikan JSON: {"makhraj": "...", "sifat": ["..."], "feedback": "..."}`;
-    const response = await analyzeImageWithGemini(imageBase64, prompt);
+    const response = await analyzeVisionWithOpenClaw(imageBase64, prompt);
     return JSON.parse(response.replace(/```json|```/g, '').trim());
   } catch {
     return { makhraj: '', sifat: [], feedback: 'Analisis tidak tersedia.' };
@@ -917,15 +941,16 @@ export const getVerseConnections = async (verseKey: string): Promise<{
   theme: string;
 }> => {
   try {
-    const prompt: ChatMessage[] = [{
-      id: 'sys', role: 'system', timestamp: Date.now(),
-      content: 'Cari ayat-ayat lain yang berkaitan tema dengan ayat ini. JSON: {"related": [{"key": "surah:ayat", "reason": "..."}], "theme": "..."}'
-    }, {
-      id: 'usr', role: 'user', timestamp: Date.now(),
-      content: `Ayat: ${verseKey}`
-    }];
-
-    const response = await callGeminiFlashWithFailover(prompt);
+    const response = await openclawClient.chatCompletion([
+      {
+        role: 'system',
+        content: 'Cari ayat-ayat lain yang berkaitan tema dengan ayat ini. JSON: {"related": [{"key": "surah:ayat", "reason": "..."}], "theme": "..."}'
+      },
+      {
+        role: 'user',
+        content: `Ayat: ${verseKey}`
+      }
+    ]);
     return JSON.parse(response.replace(/```json|```/g, '').trim());
   } catch {
     return { related: [], theme: '' };
@@ -968,16 +993,17 @@ export const generateLearningPlan = async (profile: {
   estimatedCompletion: string;
 }> => {
   try {
-    const prompt: ChatMessage[] = [{
-      id: 'sys', role: 'system', timestamp: Date.now(),
-      content: `Buat pelan pembelajaran Iqra/tajwid. JSON format:
+    const response = await openclawClient.chatCompletion([
+      {
+        role: 'system',
+        content: `Buat pelan pembelajaran Iqra/tajwid. JSON format:
 {"weeklyPlan": [{"day": "Isnin", "focus": "...", "exercises": ["..."]}], "milestones": ["..."], "estimatedCompletion": "X minggu"}`
-    }, {
-      id: 'usr', role: 'user', timestamp: Date.now(),
-      content: `Profil pelajar: Tahap ${profile.currentLevel}, Kelemahan: ${profile.weakAreas.join(', ')}, Masa harian: ${profile.dailyTimeMinutes} minit`
-    }];
-
-    const response = await callGeminiFlashWithFailover(prompt);
+      },
+      {
+        role: 'user',
+        content: `Profil pelajar: Tahap ${profile.currentLevel}, Kelemahan: ${profile.weakAreas.join(', ')}, Masa harian: ${profile.dailyTimeMinutes} minit`
+      }
+    ]);
     return JSON.parse(response.replace(/```json|```/g, '').trim());
   } catch {
     return {
@@ -995,15 +1021,16 @@ export const analyzeMorphology = async (arabic: string, translation: string): Pr
   pattern: string;
 }> => {
   try {
-    const prompt: ChatMessage[] = [{
-      id: 'sys', role: 'system', timestamp: Date.now(),
-      content: 'Analisis morfologi ayat Arab ini. JSON: {"morphology": [{"word": "...", "root": "...", "pattern": "...", "meaning": "..."}], "root": "...", "pattern": "..."}'
-    }, {
-      id: 'usr', role: 'user', timestamp: Date.now(),
-      content: `Ayat: ${arabic}\nTerjemahan: ${translation}`
-    }];
-
-    const response = await callGeminiFlashWithFailover(prompt);
+    const response = await openclawClient.chatCompletion([
+      {
+        role: 'system',
+        content: 'Analisis morfologi ayat Arab ini. JSON: {"morphology": [{"word": "...", "root": "...", "pattern": "...", "meaning": "..."}], "root": "...", "pattern": "..."}'
+      },
+      {
+        role: 'user',
+        content: `Ayat: ${arabic}\nTerjemahan: ${translation}`
+      }
+    ]);
     return JSON.parse(response.replace(/```json|```/g, '').trim());
   } catch {
     return { morphology: [], root: '', pattern: '' };
