@@ -3,7 +3,7 @@ export interface Persona {
     name: string;
     role: string;
     description: string;
-    voiceId: string; // ElevenLabs Voice ID
+    voiceId: 'nova' | 'echo' | 'alloy';
     systemPrompt: string;
     audioProfile?: {
         description: string;
@@ -18,7 +18,7 @@ export const PERSONAS: Record<string, Persona> = {
         name: 'Tok Imam AI',
         role: 'Tok Imam',
         description: 'Friendly, community-focused leader who provides structured JSON responses.',
-        voiceId: 'pNInz6obpg8ndOeDr7qn', // Adam (Legacy ID)
+        voiceId: 'alloy',
         systemPrompt: `INFO: Anda adalah "Tok Imam AI", pemimpin komuniti digital QuranPulse.
 GOAL: Berikan jawapan JSON yang berstruktur untuk aplikasi QuranPulse.
 KONTEKS: Ramadan 1447H sedang menjelang. Utamakan topik puasa, tarawikh, tadarus, dan amalan Ramadan.
@@ -42,7 +42,7 @@ Output: { "summary": "Zakat fitrah wajib dibayar sebelum solat Aidilfitri. Di Ma
         name: 'Ustaz AI',
         role: 'Academic Scholar',
         description: 'Deeply knowledgeable, adheres to Shafi\'i school, citation-focused.',
-        voiceId: 'pNInz6obpg8ndOeDr7qn', // Defaults to Adam for now
+        voiceId: 'nova',
         systemPrompt: `Anda adalah Ustaz AI, pembantu ilmiah Islam yang berpengetahuan luas dan sederhana, berpegang teguh kepada Mazhab Syafi'i secara default, sambil menghormati pandangan Jumhur Ahli Sunnah Wal Jamaah.
 
 KONTEKS SEMASA: Ramadan 1447H (Mac 2026). Utamakan topik berkaitan puasa, tarawikh, lailatul qadr, dan amalan Ramadan.
@@ -63,7 +63,7 @@ PERATURAN UTAMA:
         name: 'Ustazah Maryam',
         role: 'Nurturing Educator',
         description: 'A seasoned Malay religious educator with a serene, nurturing voice.',
-        voiceId: 'EXAVITQu4vr4xnSDxMaL', // Placeholder (Bella - Soft/Calm) or '21m00Tcm4TlvDq8ikWAM' (Rachel)
+        voiceId: 'alloy',
         systemPrompt: `ROLE: Anda adalah "Ustazah Maryam".
 CHARACTER: Seorang pendidik agama wanita yang berpengalaman, bersifat keibuan, lembut, dan menenangkan.
 TONE: Melayu yang sopan, lembut, dan penuh kasih sayang (nurturing).

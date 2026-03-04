@@ -581,16 +581,36 @@ export const generateIslamicImage = async () => "";
 export const generateIslamicVideo = async (prompt: string) => "";
 export const getPersonalizedGreeting = async (n: string) => "";
 
+const PERSONA_OPENAI_VOICE_MAP: Record<string, 'nova' | 'echo' | 'alloy'> = {
+  ustaz_ai: 'nova',
+  tok_imam: 'alloy',
+  default: 'alloy',
+  content: 'alloy',
+  hafazan: 'echo',
+};
 
 export const generateSpeech = async (text: string, personaId: string = DEFAULT_PERSONA.id): Promise<string> => {
   const activePersona: Persona = PERSONAS[personaId] || DEFAULT_PERSONA;
-  const audioBuffer = await VoiceService.generateVoice(text, activePersona.voiceId);
+  const selectedVoice = PERSONA_OPENAI_VOICE_MAP[personaId] || activePersona.voiceId || 'alloy';
+  const audioResult = await VoiceService.generateVoice(text, selectedVoice);
 
-  if (!audioBuffer) return "";
+  if (!audioResult) return "";
 
-  // Convert buffer to base64 data URI for frontend playback
-  const base64 = (audioBuffer as any).toString('base64');
-  return `data:audio/mp3;base64,${base64}`;
+  if (audioResult.type === 'buffer' && audioResult.data) {
+    const bytes = new Uint8Array(audioResult.data);
+    let binary = '';
+    for (const byte of bytes) {
+      binary += String.fromCharCode(byte);
+    }
+    const base64 = btoa(binary);
+    return `data:audio/mp3;base64,${base64}`;
+  }
+
+  if (audioResult.type === 'url' && audioResult.url) {
+    return audioResult.url;
+  }
+
+  return '';
 };
 export const enhanceVideoPrompt = async (p: string) => p;
 // Direct Verse Context Chat (Bypasses general Persona logic for specificity)

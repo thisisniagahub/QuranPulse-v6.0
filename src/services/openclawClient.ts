@@ -18,6 +18,14 @@ function readEnv(key: string): string {
 const OPENCLAW_URL = readEnv('VITE_OPENCLAW_URL') || 'https://operator.gangniaga.my';
 const OPENCLAW_TOKEN = readEnv('VITE_OPENCLAW_TOKEN');
 
+function normalizeSessionKey(sessionKey: string): string {
+  const trimmed = sessionKey.trim();
+  if (!trimmed) {
+    return `web:guest:${Date.now()}`;
+  }
+  return trimmed.startsWith('web:') ? trimmed : `web:${trimmed}`;
+}
+
 interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
@@ -198,6 +206,44 @@ export const openclawClient = {
         onChunk,
       }
     );
+  },
+
+  /**
+   * Session-based chat — maintains conversation history on the server
+   */
+  async sessionChat(
+    sessionKey: string,
+    message: string,
+    options: {
+      agentId?: string;
+      onChunk?: (chunk: string) => void;
+    } = {}
+  ): Promise<string> {
+    const { agentId = 'ustaz', onChunk } = options;
+    const normalizedSessionKey = normalizeSessionKey(sessionKey);
+
+    const hookPath = agentId === 'ustaz' ? 'ai-query' : agentId;
+
+    const response = await this.hookRequest(hookPath, {
+      message,
+      agentId,
+    }, {
+      sessionKey: normalizedSessionKey,
+    });
+
+    if (response.ok && response.reply) {
+      return response.reply;
+    }
+
+    // Fallback to stateless chat completions if hooks fail
+    return this.askUstaz(message, normalizedSessionKey, onChunk);
+  },
+
+  /**
+   * Create a new session key for a user
+   */
+  createSessionKey(userId: string): string {
+    return normalizeSessionKey(`${userId}:${Date.now()}`);
   },
 
   /**

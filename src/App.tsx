@@ -37,6 +37,7 @@ const GuideViewer = lazy(() => import('./modules/iqra/components/GuideViewer'));
 
 
 import PWAInstallPrompt from './components/PWAInstallPrompt';
+import OpenClawStatus from './components/OpenClawStatus';
 
 let didInit = false;
 
@@ -196,6 +197,7 @@ const App: React.FC = () => {
                     <Suspense fallback={<LoadingFallback />}>
                       <AppContent />
                     </Suspense>
+                    <OpenClawStatus />
                     {/* MiniPlayer removed - using QuranAudioPlayer in Quran module instead */}
                     {/* PulseControlCenter removed - features moved to Admin Dashboard Settings */}
                     {/* <PulseControlCenter /> */}

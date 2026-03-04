@@ -4,7 +4,7 @@ import qrcode from 'qrcode-terminal';
 import { askUstazAI } from './aiService';
 import { VoiceService } from './ai/VoiceService';
 import { WhatsappCRM } from './whatsappCRM';
-import { ChatMessage } from '../types';
+import type { ChatMessage } from '../types';
 import { Server } from 'socket.io';
 
 // Minimal Interface for Type Safety
@@ -129,11 +129,12 @@ Bot: "Maghrib masuk jam 7:20 PM hari ni. Jangan lupa solat awal waktu ya! 🕌\n
 
             // C. OPTIONAL: Voice Note (Wow Factor)
             // We only generate voice for the text part (not the link if possible, or just the whole thing)
-            const audioBuffer = await VoiceService.generateVoice(answer);
+            const voiceResult = await VoiceService.generateVoice(answer);
 
-            if (audioBuffer) {
+            if (voiceResult && voiceResult.type === 'buffer' && voiceResult.data) {
+                const base64 = Buffer.from(voiceResult.data).toString('base64');
                 // @ts-ignore - MessageMedia constructor not fully typed in this hacky import
-                const media = new MessageMedia('audio/mp3', audioBuffer.toString('base64'), 'voice.mp3');
+                const media = new MessageMedia('audio/mp3', base64, 'voice.mp3');
                 await this.client.sendMessage(msg.from, media, { sendAudioAsVoice: true });
                 console.log(`🎙️ Sent Voice Note to ${name}`);
             }

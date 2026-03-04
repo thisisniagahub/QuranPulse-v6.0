@@ -3,6 +3,7 @@ import { useAudioPlayer } from '../../../contexts/AudioPlayerContext';
 import { useQuranData } from './QuranDataContext';
 import { useQuranSettings } from './QuranSettingsContext';
 import { audioCache } from '../../../services/audioCacheService';
+import { VoiceService } from '../../../services/ai/VoiceService';
 
 interface QuranAudioState {
     playVerse: (verseKey: string) => void;
@@ -31,13 +32,7 @@ export const QuranAudioProvider: React.FC<{ children: ReactNode }> = ({ children
     // Helper: Speak Translation
     const speakTranslation = async (text: string, lang: string = 'ms-MY') => {
         return new Promise<void>(async (resolve) => {
-            let elevenLabsKey = import.meta.env.VITE_ELEVENLABS_API_KEY;
             const cacheKey = `${lang}-${text.substring(0, 20)}`;
-
-            // ⛔ BLOCK KNOWN INVALID KEY to prevent 401 Console Errors
-            if (elevenLabsKey === 'sk_d949e8ddf89abc32fa0f722027ba5d43d9aecb48abcc0e31') {
-                elevenLabsKey = null; // Silently disable ElevenLabs
-            }
 
             // 1. Try Cache First
             if (ttsCache.current[cacheKey]) {
@@ -49,42 +44,21 @@ export const QuranAudioProvider: React.FC<{ children: ReactNode }> = ({ children
                 return;
             }
 
-            // 2. Try ElevenLabs (Only if VALID key exists)
-            if (elevenLabsKey) {
-                try {
-                    // Use 'Josh' Voice ID (Deep, Natural, Reliable)
-                    const VOICE_ID = 'TxGEqnHWrfWFTfGW9XjX';
-                    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${VOICE_ID}`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'xi-api-key': elevenLabsKey,
-                        },
-                        body: JSON.stringify({
-                            text: text,
-                            model_id: "eleven_multilingual_v2",
-                            voice_settings: { stability: 0.5, similarity_boost: 0.75 }
-                        })
-                    });
-
-                    if (!response.ok) {
-                        const errorData = await response.json();
-                        console.error("❌ ElevenLabs API Error:", errorData);
-                        // Fallthrough to next strategy
-                    } else {
-                        const blob = await response.blob();
-                        const url = URL.createObjectURL(blob);
-                        ttsCache.current[cacheKey] = url;
-                        const audio = new Audio(url);
-                        audio.onended = () => resolve();
-                        audio.onerror = () => resolve();
-                        await audio.play();
-                        return;
-                    }
-
-                } catch (err) {
-                    console.warn("⚠️ Neural TTS Failed, switching to Google TTS:", err);
+            // 2. Try OpenClaw TTS via shared VoiceService
+            try {
+                const ttsResult = await VoiceService.generateVoice(text);
+                if (ttsResult?.type === 'buffer' && ttsResult.data) {
+                    const blob = new Blob([ttsResult.data], { type: 'audio/mpeg' });
+                    const url = URL.createObjectURL(blob);
+                    ttsCache.current[cacheKey] = url;
+                    const audio = new Audio(url);
+                    audio.onended = () => resolve();
+                    audio.onerror = () => resolve();
+                    await audio.play();
+                    return;
                 }
+            } catch (err) {
+                console.warn("⚠️ OpenClaw TTS Failed, switching to Google TTS:", err);
             }
 
             // 3. Try Google Translate TTS (High Quality Free Fallback)

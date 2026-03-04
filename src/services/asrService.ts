@@ -1,6 +1,5 @@
 /**
- * ASR Service - Bridge to Python Quran ASR Server
- * Connects QuranPulse to quran-agent for acoustic analysis
+ * ASR Service - OpenClaw gateway bridge for Quran recitation analysis
  */
 
 import { supabase } from '../lib/supabase';
@@ -44,15 +43,37 @@ export interface RecitationFeedback {
 }
 
 // Config
-const ASR_SERVER_URL = 'http://localhost:8000';
+const ASR_SERVER_URL = import.meta.env.VITE_OPENCLAW_URL || 'https://operator.gangniaga.my';
+const OPENCLAW_TOKEN = import.meta.env.VITE_OPENCLAW_TOKEN || '';
 const FALLBACK_TO_EDGE = true;
+
+function calculateSimilarity(transcribed: string, expected: string): number {
+    if (!transcribed || !expected) return 0;
+
+    const a = transcribed.trim().toLowerCase();
+    const b = expected.trim().toLowerCase();
+    if (!a || !b) return 0;
+    if (a === b) return 1;
+
+    const aChars = new Set(a.split(''));
+    const bChars = new Set(b.split(''));
+    let overlap = 0;
+    for (const ch of aChars) {
+        if (bChars.has(ch)) overlap++;
+    }
+    return Math.min(1, overlap / Math.max(aChars.size, bChars.size));
+}
+
+function hasExpectedText(expectedText?: string): expectedText is string {
+    return typeof expectedText === 'string' && expectedText.trim().length > 0;
+}
 
 /**
  * ASR Service - Main interface for recitation analysis
  */
 export const asrService = {
     /**
-     * Check if Python ASR server is running
+     * Check if OpenClaw gateway is reachable
      */
     async checkHealth(): Promise<boolean> {
         try {
@@ -62,7 +83,7 @@ export const asrService = {
             });
             return response.ok;
         } catch {
-            console.warn('⚠️ ASR Server not available');
+            console.warn('⚠️ OpenClaw gateway not available');
             return false;
         }
     },
@@ -76,49 +97,99 @@ export const asrService = {
         audioBlob: Blob,
         expectedText?: string
     ): Promise<QWERResult> {
-        // Try local Python server first
-        const isServerAvailable = await this.checkHealth();
+        const normalizedExpectedText = hasExpectedText(expectedText) ? expectedText : undefined;
 
+        // Try OpenClaw first
+        const isServerAvailable = await this.checkHealth();
         if (isServerAvailable) {
-            return this.analyzeWithLocalServer(audioBlob, expectedText);
+            return this.analyzeWithGateway(audioBlob, normalizedExpectedText);
         }
 
         // Fallback to Supabase Edge Function
         if (FALLBACK_TO_EDGE) {
             console.log('📡 Falling back to mcp-asr Edge Function');
-            return this.analyzeWithEdgeFunction(audioBlob, expectedText);
+            const edgeResult = await this.analyzeWithEdgeFunction(audioBlob, normalizedExpectedText);
+            return normalizedExpectedText ? edgeResult : this.withNeutralScore(edgeResult);
         }
 
         throw new Error('ASR service unavailable');
     },
 
     /**
-     * Analyze using local Python server (quran-agent)
+     * Analyze using OpenClaw ASR endpoint
      */
-    async analyzeWithLocalServer(
+    async analyzeWithGateway(
         audioBlob: Blob,
         expectedText?: string
     ): Promise<QWERResult> {
         const formData = new FormData();
         formData.append('file', audioBlob, 'recording.wav');
-        if (expectedText) {
-            formData.append('expected_text', expectedText);
-        }
+        formData.append('model', 'gpt-4o-mini-transcribe');
+        formData.append('language', 'ar');
 
-        console.log('🎤 Sending audio to local ASR server...');
+        console.log('🎤 Sending audio to OpenClaw ASR...');
 
-        const response = await fetch(`${ASR_SERVER_URL}/analyze/audio`, {
+        const response = await fetch(`${ASR_SERVER_URL}/v1/audio/transcriptions`, {
             method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${OPENCLAW_TOKEN}`
+            },
             body: formData,
+            signal: AbortSignal.timeout(30000),
         });
 
         if (!response.ok) {
-            throw new Error(`ASR server error: ${response.statusText}`);
+            throw new Error(`ASR gateway error: ${response.statusText}`);
         }
 
         const result = await response.json();
-        console.log('✅ ASR analysis complete:', result);
-        return result;
+        const transcription = (result.text || '') as string;
+        const canScore = hasExpectedText(expectedText);
+        const similarity = canScore ? calculateSimilarity(transcription, expectedText) : 0.5;
+        const qwer = canScore ? Math.max(0, Math.round((1 - similarity) * 100)) : 50;
+        const level = canScore
+            ? qwer <= 5
+                ? 'excellent'
+                : qwer <= 15
+                    ? 'good'
+                    : qwer <= 30
+                        ? 'needs_practice'
+                        : 'beginner'
+            : 'needs_practice';
+
+        const payload: QWERResult = {
+            success: true,
+            message: canScore
+                ? 'OpenClaw ASR analysis complete'
+                : 'OpenClaw ASR transcription complete (expected text not provided, used neutral score)',
+            analysis: {
+                qwer,
+                level,
+                error_breakdown: {
+                    makhraj: canScore ? qwer : 0,
+                    tajweed: canScore ? qwer : 0,
+                    harakat: canScore ? qwer : 0,
+                    rhythm: canScore ? qwer : 0,
+                },
+                total_errors: canScore ? qwer : 0,
+                total_phonemes: 100,
+                dominant_error_types: canScore
+                    ? qwer > 30
+                        ? ['makhraj', 'tajweed']
+                        : qwer > 10
+                            ? ['tajweed']
+                            : []
+                    : [],
+                detailed_errors: [],
+            },
+            audio_info: {
+                duration: 0,
+                sample_rate: 0,
+            },
+        };
+
+        console.log('✅ ASR analysis complete:', payload);
+        return payload;
     },
 
     /**
@@ -145,6 +216,29 @@ export const asrService = {
         }
 
         return data as QWERResult;
+    },
+
+    withNeutralScore(result: QWERResult): QWERResult {
+        const neutralAnalysis = {
+            qwer: 50,
+            level: 'needs_practice',
+            error_breakdown: {
+                makhraj: 0,
+                tajweed: 0,
+                harakat: 0,
+                rhythm: 0,
+            },
+            total_errors: 0,
+            total_phonemes: 100,
+            dominant_error_types: [],
+            detailed_errors: [],
+        };
+
+        return {
+            ...result,
+            message: 'Expected text not provided, neutral QWER=50 applied',
+            analysis: result.analysis ? { ...result.analysis, ...neutralAnalysis } : neutralAnalysis,
+        };
     },
 
     /**

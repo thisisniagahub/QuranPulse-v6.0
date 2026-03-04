@@ -1,72 +1,99 @@
-import axios from 'axios';
-import { getEnv } from '../../utils/env';
-
 /**
  * Voice generation response types
  */
 export interface VoiceGenerationResult {
-    type: 'buffer' | 'browser_tts';
-    data?: Buffer;
+    type: 'buffer' | 'browser_tts' | 'url';
+    data?: ArrayBuffer;
+    url?: string;
     text?: string;
     voice?: string;
 }
 
-export class VoiceService {
-    private static readonly ELEVENLABS_API_KEY = getEnv('VITE_ELEVENLABS_API_KEY');
-    private static readonly DEFAULT_VOICE_ID = 'pNInz6obpg8ndOeDr7qn'; // Adam (Calm, mature)
+type OpenAIVoice = 'nova' | 'echo' | 'alloy';
 
+const LEGACY_VOICE_MAP: Record<string, OpenAIVoice> = {
+    pNInz6obpg8ndOeDr7qn: 'alloy',
+    EXAVITQu4vr4xnSDxMaL: 'nova',
+    TxGEqnHWrfWFTfGW9XjX: 'echo',
+};
+
+const OPENAI_VOICE_SET = new Set<OpenAIVoice>(['nova', 'echo', 'alloy']);
+
+function readEnv(key: string): string {
+    const viteValue = typeof import.meta !== 'undefined' ? import.meta.env?.[key] : undefined;
+    const nodeValue = typeof process !== 'undefined' ? process.env?.[key] : undefined;
+    return viteValue ?? nodeValue ?? '';
+}
+
+export class VoiceService {
     /**
      * Generate Audio from Text - Hybrid Approach
-     * 1. Try ElevenLabs (Premium quality)
+     * 1. Try OpenClaw Gateway TTS (OpenAI gpt-4o-mini-tts via Codex OAuth)
      * 2. Fallback to Browser Web Speech API
      */
-    static async generateVoice(text: string, voiceId?: string): Promise<VoiceGenerationResult | null> {
-        // 1. Try ElevenLabs if API key is available
-        if (this.ELEVENLABS_API_KEY) {
-            const buffer = await this.callElevenLabs(text, voiceId);
-            if (buffer) {
-                return { type: 'buffer', data: buffer };
-            }
+    static async generateVoice(text: string, voice?: string): Promise<VoiceGenerationResult | null> {
+        const trimmedText = text.trim();
+        if (!trimmedText) return null;
+
+        // 1. Try OpenClaw TTS (routes to openai/gpt-4o-mini-tts on the server)
+        try {
+            const ttsResult = await this.callOpenClawTTS(trimmedText, voice);
+            if (ttsResult) return ttsResult;
+        } catch (err) {
+            console.warn(' OpenClaw TTS failed, falling back to browser:', err);
         }
 
-        // 2. Fallback to Browser TTS
-        console.log("🔊 Using Browser TTS Fallback...");
-        return this.prepareBrowserTTS(text);
+        // 2. Browser-only fallback when speech synthesis is available
+        if (this.canUseBrowserTTS()) {
+            console.log('🔊 Using Browser TTS Fallback...');
+            return this.prepareBrowserTTS(trimmedText);
+        }
+
+        return null;
     }
 
     /**
-     * Call ElevenLabs API for premium voice
+     * Call OpenClaw Gateway for TTS
+     * The gateway routes to OpenAI gpt-4o-mini-tts via Codex OAuth.
+     * Returns audio as ArrayBuffer.
      */
-    private static async callElevenLabs(text: string, voiceId?: string): Promise<Buffer | null> {
-        const targetVoiceId = voiceId || this.DEFAULT_VOICE_ID;
+    private static async callOpenClawTTS(text: string, voice?: string): Promise<VoiceGenerationResult | null> {
+        const OPENCLAW_URL = readEnv('VITE_OPENCLAW_URL') || 'https://operator.gangniaga.my';
+        const OPENCLAW_TOKEN = readEnv('VITE_OPENCLAW_TOKEN');
+        if (!OPENCLAW_TOKEN) {
+            console.warn(' OpenClaw token missing, skipping premium TTS.');
+            return null;
+        }
+
+        const selectedVoice = this.resolveVoice(voice);
 
         try {
-            console.log(`🎙️ Generating voice [${targetVoiceId}] for: ${text.substring(0, 30)}...`);
+            console.log(`🎙 Generating TTS via OpenClaw: ${text.substring(0, 30)}...`);
 
-            const response = await axios.post(
-                `https://api.elevenlabs.io/v1/text-to-speech/${targetVoiceId}`,
-                {
-                    text: text,
-                    model_id: "eleven_multilingual_v2",
-                    voice_settings: {
-                        stability: 0.5,
-                        similarity_boost: 0.75
-                    }
+            const response = await fetch(`${OPENCLAW_URL}/v1/audio/speech`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${OPENCLAW_TOKEN}`,
                 },
-                {
-                    headers: {
-                        'xi-api-key': this.ELEVENLABS_API_KEY,
-                        'Content-Type': 'application/json'
-                    },
-                    responseType: 'arraybuffer',
-                    timeout: 15000 // 15 seconds timeout
-                }
-            );
+                body: JSON.stringify({
+                    model: 'gpt-4o-mini-tts',
+                    input: text,
+                    voice: selectedVoice,
+                    response_format: 'mp3',
+                }),
+                signal: AbortSignal.timeout(15000), // 15s timeout
+            });
 
-            return Buffer.from(response.data);
+            if (!response.ok) {
+                console.warn(`OpenClaw TTS returned ${response.status}`);
+                return null;
+            }
 
+            const audioBuffer = await response.arrayBuffer();
+            return { type: 'buffer', data: audioBuffer };
         } catch (error) {
-            console.warn("⚠️ ElevenLabs failed, will use fallback:", error);
+            console.warn(' OpenClaw TTS request failed:', error);
             return null;
         }
     }
@@ -76,19 +103,31 @@ export class VoiceService {
      * Frontend will handle actual speech synthesis
      */
     private static prepareBrowserTTS(text: string): VoiceGenerationResult {
-        // Recommend Malay or Indonesian voice for better pronunciation
         const recommendedVoices = ['ms-MY', 'id-ID', 'en-GB', 'en-US'];
-
         return {
             type: 'browser_tts',
             text: text,
-            voice: recommendedVoices[0] // Frontend will try these in order
+            voice: recommendedVoices[0],
         };
+    }
+
+    private static canUseBrowserTTS(): boolean {
+        return typeof window !== 'undefined' && !!window.speechSynthesis;
+    }
+
+    private static resolveVoice(voice?: string): OpenAIVoice {
+        if (!voice) return 'nova';
+
+        const normalized = voice.toLowerCase();
+        if (OPENAI_VOICE_SET.has(normalized as OpenAIVoice)) {
+            return normalized as OpenAIVoice;
+        }
+
+        return LEGACY_VOICE_MAP[voice] || 'nova';
     }
 
     /**
      * Client-side helper: Speak using Web Speech API
-     * Call this in frontend when VoiceGenerationResult.type === 'browser_tts'
      */
     static speakWithBrowser(text: string, lang: string = 'ms-MY'): Promise<void> {
         return new Promise((resolve, reject) => {
@@ -100,20 +139,19 @@ export class VoiceService {
             const synth = window.speechSynthesis;
             const utterance = new SpeechSynthesisUtterance(text);
 
-            // Try to find the best voice for the language
             const voices = synth.getVoices();
             const preferredVoice = voices.find(v =>
-                v.lang.startsWith('ms') || // Malay
-                v.lang.startsWith('id') || // Indonesian (similar pronunciation)
+                v.lang.startsWith('ms') ||
+                v.lang.startsWith('id') ||
                 v.name.toLowerCase().includes('malay')
-            ) || voices.find(v => v.lang.startsWith('en')); // Fallback to English
+            ) || voices.find(v => v.lang.startsWith('en'));
 
             if (preferredVoice) {
                 utterance.voice = preferredVoice;
             }
 
             utterance.lang = lang;
-            utterance.rate = 0.9; // Slightly slower for clarity
+            utterance.rate = 0.9;
             utterance.pitch = 1.0;
             utterance.volume = 1.0;
 
@@ -135,9 +173,10 @@ export class VoiceService {
     }
 
     /**
-     * Check if ElevenLabs is configured
+     * Check if premium TTS is available (OpenClaw gateway)
      */
     static isPremiumVoiceAvailable(): boolean {
-        return !!this.ELEVENLABS_API_KEY;
+        const token = readEnv('VITE_OPENCLAW_TOKEN');
+        return !!token;
     }
 }

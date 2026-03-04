@@ -9,6 +9,56 @@ interface ASRRecorderProps {
   onResult: (text: string, confidence: number, feedback?: string) => void;
 }
 
+/**
+ * Calculate text similarity (Levenshtein-based normalized score)
+ */
+function calculateSimilarity(transcribed: string, expected: string): number {
+  if (!transcribed || !expected) return 0;
+
+  const a = transcribed.trim().toLowerCase();
+  const b = expected.trim().toLowerCase();
+
+  if (a === b) return 1.0;
+
+  const maxLen = Math.max(a.length, b.length);
+  if (maxLen === 0) return 1.0;
+
+  // Simple character overlap ratio
+  const aChars = new Set(a.split(''));
+  const bChars = new Set(b.split(''));
+  let overlap = 0;
+  for (const ch of aChars) {
+    if (bChars.has(ch)) overlap++;
+  }
+
+  return Math.min(1.0, overlap / Math.max(aChars.size, bChars.size));
+}
+
+/**
+ * Generate human-readable feedback based on similarity
+ */
+function generateFeedback(transcribed: string, expected: string, confidence: number): string {
+  if (confidence >= 0.9) return '🟢 Sangat baik! Bacaan hampir sempurna.';
+  if (confidence >= 0.7) return '🟡 Bagus, ada sedikit perbezaan. Teruskan latihan!';
+  if (confidence >= 0.5) return '🟠 Perlu diperbaiki. Cuba perlahankan bacaan.';
+  return '🔴 Cuba lagi. Pastikan sebutan huruf yang tepat.';
+}
+
+function readEnv(key: string): string {
+  try {
+    const importMeta = new Function('return typeof import.meta !== "undefined" ? import.meta : undefined;')() as
+      | { env?: Record<string, string | undefined> }
+      | undefined;
+    const viteValue = importMeta?.env?.[key];
+    if (viteValue) return viteValue;
+  } catch {
+    // Ignore non-ESM environments (e.g. Jest CJS transform).
+  }
+
+  const nodeValue = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.[key];
+  return nodeValue || '';
+}
+
 const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => {
   const { isRecording, startRecording, stopRecording, audioBlob, visualizerData } = useAudioRecorder();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -26,27 +76,41 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
     setIsProcessing(true);
     setError(null);
 
-    const formData = new FormData();
-    formData.append('file', blob, 'recitation.webm');
-    formData.append('expected_text', expectedText);
-
     try {
-      const response = await fetch('http://localhost:8000/analyze', {
+      const OPENCLAW_URL = readEnv('VITE_OPENCLAW_URL') || 'https://operator.gangniaga.my';
+      const OPENCLAW_TOKEN = readEnv('VITE_OPENCLAW_TOKEN');
+
+      // Step 1: Transcribe audio via OpenClaw ASR (OpenAI gpt-4o-mini-transcribe)
+      const formData = new FormData();
+      formData.append('file', blob, 'recitation.webm');
+      formData.append('model', 'gpt-4o-mini-transcribe');
+      formData.append('language', 'ar'); // Arabic for Quran
+
+      const transcribeRes = await fetch(`${OPENCLAW_URL}/v1/audio/transcriptions`, {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENCLAW_TOKEN}`,
+        },
         body: formData,
+        signal: AbortSignal.timeout(30000), // 30s for audio processing
       });
 
-      if (!response.ok) throw new Error('Backend offline');
+      if (!transcribeRes.ok) throw new Error(`ASR error: ${transcribeRes.status}`);
 
-      const data = await response.json();
+      const transcription = await transcribeRes.json();
+      const transcribedText = transcription.text || '';
 
-      onResult(expectedText, data.confidence || 0, data.feedback);
+      // Step 2: Compare with expected text and calculate confidence
+      const confidence = calculateSimilarity(transcribedText, expectedText);
+      const feedback = generateFeedback(transcribedText, expectedText, confidence);
+
+      onResult(expectedText, confidence, feedback);
 
     } catch (err) {
-      console.error("ASR Error:", err);
-      setError("Backend offline. Sila jalankan server Python.");
+      console.error('ASR Error:', err);
+      setError('Sambungan gagal. Sila cuba lagi.');
       setTimeout(() => {
-        onResult(expectedText, 0.5, "Ralat sambungan server.");
+        onResult(expectedText, 0.5, 'Ralat sambungan server.');
       }, 1000);
     } finally {
       setIsProcessing(false);

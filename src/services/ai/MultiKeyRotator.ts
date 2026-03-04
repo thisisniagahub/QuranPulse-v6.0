@@ -63,7 +63,3 @@ export class MultiKeyRotator {
         throw lastError || new Error("All API keys exhausted or failed.");
     }
 }
-
-// Pre-configured rotators
-export const geminiRotator = new MultiKeyRotator('VITE_GEMINI_API_KEY'); // Can be comma-separated in .env
-export const groqRotator = new MultiKeyRotator('VITE_GROQ_API_KEY');

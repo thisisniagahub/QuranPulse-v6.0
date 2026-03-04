@@ -23,7 +23,25 @@ export interface ASRAnalysis {
   };
 }
 
-const ASR_API_URL = import.meta.env.VITE_ASR_API_URL || 'http://localhost:8000';
+const OPENCLAW_URL = import.meta.env.VITE_OPENCLAW_URL || 'https://operator.gangniaga.my';
+const OPENCLAW_TOKEN = import.meta.env.VITE_OPENCLAW_TOKEN || '';
+
+function calculateTextSimilarity(transcribed: string, expected: string): number {
+  if (!transcribed || !expected) return 0;
+
+  const a = transcribed.trim().toLowerCase();
+  const b = expected.trim().toLowerCase();
+  if (!a || !b) return 0;
+  if (a === b) return 1;
+
+  const aChars = new Set(a.split(''));
+  const bChars = new Set(b.split(''));
+  let overlap = 0;
+  for (const ch of aChars) {
+    if (bChars.has(ch)) overlap++;
+  }
+  return Math.min(1, overlap / Math.max(aChars.size, bChars.size));
+}
 
 export const IqraService = {
   /**
@@ -31,30 +49,45 @@ export const IqraService = {
    */
   async analyzeRecitation(audioBlob: Blob, expectedText: string = ""): Promise<ASRAnalysis | null> {
     try {
-      console.log('🎙️ Sending recitation to ASR Engine...');
+      console.log('🎙️ Sending recitation to OpenClaw ASR...');
       const formData = new FormData();
       formData.append('file', audioBlob, 'recitation.wav');
-      formData.append('expected_text', expectedText);
+      formData.append('model', 'gpt-4o-mini-transcribe');
+      formData.append('language', 'ar');
 
-      const response = await fetch(`${ASR_API_URL}/analyze/audio`, {
+      const response = await fetch(`${OPENCLAW_URL}/v1/audio/transcriptions`, {
         method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${OPENCLAW_TOKEN}`
+        },
         body: formData,
+        signal: AbortSignal.timeout(30000),
       });
 
       if (!response.ok) {
-        throw new Error(`ASR API Error: ${response.statusText}`);
+        throw new Error(`ASR API Error: ${response.status}`);
       }
 
       const data = await response.json();
-      return data.analysis ? {
-        qwer: data.analysis.qwer,
-        level: data.analysis.level,
-        error_breakdown: data.analysis.error_breakdown,
+      const transcription = (data.text || '') as string;
+      const similarity = calculateTextSimilarity(transcription, expectedText);
+      const qwer = Math.max(0, Math.round((1 - similarity) * 100));
+      const level = qwer <= 10 ? 'excellent' : qwer <= 30 ? 'good' : qwer <= 50 ? 'fair' : 'needs_practice';
+
+      return {
+        qwer,
+        level,
+        error_breakdown: {
+          makhraj: qwer,
+          tajwid: qwer,
+          harakat: qwer,
+          rhythm: qwer
+        },
         audio_info: {
-          transcription: data.audio_info.transcription,
-          duration: data.audio_info.duration
+          transcription,
+          duration: 0
         }
-      } : null;
+      };
 
     } catch (error) {
       console.error('❌ ASR Analysis failed:', error);

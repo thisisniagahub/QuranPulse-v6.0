@@ -176,7 +176,11 @@ export function useRecitationAnalysis(
 
             // Send to ASR service
             console.log('🎤 Analyzing recitation...');
-            const result = await asrService.analyzeRecitation(processedBlob, config.expectedText);
+            const normalizedExpectedText = config.expectedText?.trim();
+            const result = await asrService.analyzeRecitation(
+                processedBlob,
+                normalizedExpectedText ? normalizedExpectedText : undefined
+            );
 
             // Generate feedback
             const feedback = asrService.generateFeedback(result);

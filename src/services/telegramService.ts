@@ -1,7 +1,7 @@
 import { Telegraf, Markup } from 'telegraf';
 import { askUstazAI, analyzeImage } from './aiService';
 import axios from 'axios';
-import { ChatMessage } from '../types';
+import type { ChatMessage } from '../types';
 import { VoiceService } from './ai/VoiceService';
 import { supabase } from '../lib/supabase';
 
@@ -442,7 +442,7 @@ STRATEGI JAWAPAN:
                 if (cleanAnswer.length < 300) {
                     const result = await VoiceService.generateVoice(cleanAnswer.replace(/\[.*?\]\(.*?\)/g, ''));
                     if (result && result.type === 'buffer' && result.data) {
-                        await ctx.sendVoice({ source: result.data });
+                        await ctx.sendVoice({ source: Buffer.from(result.data) });
                         console.log(`🎙️ [TG] Sent Voice Reply to ${name}`);
                     }
                 }

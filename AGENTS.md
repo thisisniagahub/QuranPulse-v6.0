@@ -7,15 +7,17 @@
 
 ## Project Overview
 
-**QuranPulse v6.0 ("Noor-e-Cyber")** is a futuristic Islamic Progressive Web App (PWA) bridging spiritual depth with modern cyber-Islamic design.
+**QuranPulse v6.0 ("Raudhah Edition")** is a premium Islamic Progressive Web App (PWA) bridging spiritual depth with elegant modern design.
 
 | Field | Value |
 |-------|-------|
 | Phase | PRODUCTION |
 | Frontend | https://quranpulse.my |
+| AI Gateway | https://operator.gangniaga.my (OpenClaw) |
 | API | https://api.gangniaga.my |
-| Operator | https://operator.gangniaga.my |
 | Tech | React 18 + Vite + TypeScript + Supabase |
+| Design | Raudhah (Teal/Gold on Ivory) |
+| Last Updated | 5 March 2026 |
 
 ---
 
@@ -25,31 +27,41 @@
 
 | Component | Runtime | Domain |
 |-----------|---------|--------|
-| OpenClaw (GangBot) | Root user systemd | operator.gangniaga.my |
-| QuranPulse API | Docker Compose | api.gangniaga.my |
-| Qdrant | Docker (planned) | localhost:6333 (not yet deployed) |
+| OpenClaw Gateway | Systemd | operator.gangniaga.my → :18789 |
+| QuranPulse API | Docker Compose | api.gangniaga.my → :18080 |
+| Qdrant | Docker (image exists, not running) | localhost:6333 |
 | Frontend | Vercel | quranpulse.my |
 | Database | Supabase | Managed |
 | VPN | Tailscale | 100.100.205.64 |
 
-### AI Model Configuration (Actual — 2026-02-19)
+### AI Model Configuration (March 2026)
+
 ```json5
 {
   agents: {
     defaults: {
       model: {
-        primary: "google-antigravity/gemini-3-flash",   // current
-        fallbacks: ["google-antigravity/gemini-3-pro"]  // target upgrade
+        primary: "google-antigravity/gemini-3-flash",   // via OAuth
+        fallbacks: [
+          "google-gemini-cli/gemini-3-flash",           // OAuth backup
+          "openai-codex/gpt-5.3-codex",                 // OAuth fallback
+          "qwen-portal/coder-model"                     // Free tier
+        ]
       }
     }
   }
 }
 ```
 
-### Recent Development (Feb 2026)
-- **2026-02-19**: Premium landing page polish + Vercel deploy verified ✅
-- **2026-02-18**: AI Tadabbur Mode, Ustaz AI EQ, Leaderboard demo data
-- **2026-02-10**: VPS infrastructure fix + doc alignment
+> **Zero API keys** — all providers use OAuth. Frontend sends 1 bearer token to OpenClaw gateway.
+
+### Recent Development
+
+- **2026-03-03**: OpenClaw gateway integration shipped (`ffbf1de`) — 21 perf fixes + `openclawClient.ts`
+- **2026-02-28**: UI consistency audit — Raudhah conversion verified (8.5/10), nav icons + logo updated
+- **2026-02-28**: Edge Function fixes
+- **2026-02-21**: Landing page review — 10/11 issues fixed
+- **2026-02-20**: Full Raudhah theme conversion across 23+ source files
 
 See [docs/VPS_PRD.md](docs/VPS_PRD.md) for deployment architecture.
 
@@ -75,6 +87,9 @@ npx tsc --noEmit
 
 # Lint check
 npm run lint
+
+# Deploy to production
+vercel --prod
 ```
 
 ---
@@ -82,10 +97,11 @@ npm run lint
 ## Code Style
 
 - TypeScript strict mode
-- Tailwind CSS for styling (Glassmorphism + Neon aesthetics)
+- Tailwind CSS v4 for styling (Raudhah theme: Teal/Gold/Ivory)
 - Framer Motion for animations
 - Functional components with hooks
 - Zustand for global state, React Query for server state
+- AI calls via `openclawClient.ts` — NOT direct API keys in browser
 - Commit format: `[AGENT:Name] type: message`
 
 ---
@@ -110,6 +126,7 @@ Before claiming ANY task complete:
 - Never delete without explicit `/approve-delete` from user
 - Never expose API keys or secrets in code
 - Follow Supabase RLS (Row Level Security) policies
+- AI calls go through OpenClaw gateway — no API keys in frontend
 
 ---
 
@@ -117,11 +134,13 @@ Before claiming ANY task complete:
 
 ```
 src/
-├── modules/          # Feature modules (quran, iqra, smart-deen)
+├── modules/          # Feature modules (quran, iqra, smart-deen, landing)
 ├── components/       # Reusable UI components
-├── services/         # API services
+├── services/         # openclawClient.ts, aiService.ts, etc.
 ├── contexts/         # React contexts
-└── hooks/            # Custom hooks
+├── hooks/            # Custom hooks
+├── lib/              # Utility libraries
+└── types/            # TypeScript type definitions
 
 docs/
 ├── VPS_PRD.md        # Deployment architecture
@@ -130,7 +149,7 @@ docs/
 └── ...               # Feature documentation
 
 supabase/
-├── functions/        # Edge Functions
+├── functions/        # 10 Edge Functions (transitional — OpenClaw replacing)
 └── migrations/       # Database migrations
 
 .agent/
@@ -152,6 +171,8 @@ supabase/
 | `/agent-zakat` | Zakat calculations |
 | `/agent-asr` | Speech recognition |
 | `/plan-mvp` | Structured MVP planning |
+| `/vibe` | Full build flow |
+| `/ship` | Deploy pipeline |
 
 ---
 
@@ -183,7 +204,7 @@ Types:
 - `deploy` - Deployment
 - `infra` - Infrastructure
 
-Example: `[AGENT:Antigravity] infra: Update VPS security hardening`
+Example: `[AGENT:Antigravity] docs: align GEMINI.md and AGENTS.md to Raudhah + OpenClaw`
 
 ---
 

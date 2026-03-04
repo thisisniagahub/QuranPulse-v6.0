@@ -1,7 +1,12 @@
-# QuranPulse v6.0 - Gemini Context
+# QuranPulse v6.0 — Gemini Context
+
+> **Last Updated**: 5 March 2026
+> **Design System**: Raudhah (Teal/Gold on Ivory)
+> **AI Gateway**: OpenClaw (operator.gangniaga.my)
 
 ## Project Overview
-**QuranPulse v6.0 ("Noor-e-Cyber")** is a futuristic Islamic Progressive Web App (PWA) built to bridge spiritual depth with a modern, cyber-islamic design language. It features advanced modules like "Ustaz AI", "Iqra Digital" (interactive learning), and a "Pulse Command Center" for daily spiritual management.
+
+**QuranPulse v6.0 ("Raudhah Edition")** is a premium Islamic Progressive Web App (PWA) bridging spiritual depth with elegant, modern design. Features include "Ustaz AI" (Shafi'i-compliant AI assistant), "Iqra Digital" (interactive Quran learning), and a "Pulse Command Center" for daily spiritual management.
 
 ---
 
@@ -13,9 +18,27 @@
 | Styling | Tailwind CSS v4, Framer Motion |
 | State | Zustand, React Query, React Context |
 | Backend | Supabase (PostgreSQL, Auth, Edge Functions) |
-| AI | Gemini via Antigravity, Groq, OpenAI Whisper |
+| AI Gateway | OpenClaw (zero-API-key, OAuth everywhere) |
+| AI Models | Gemini 3 Flash (primary), GPT-5.3-Codex (fallback) |
+| TTS | OpenAI gpt-4o-mini-tts via Codex OAuth |
+| ASR | OpenAI gpt-4o-mini-transcribe via Codex OAuth |
 | Testing | Jest, React Testing Library |
 | Routing | React Router 7 |
+
+---
+
+## Design System: "Raudhah"
+
+| Element | Value |
+|---------|-------|
+| Primary | Teal (#1B6B5A) |
+| Accent | Gold (#D4AF37) |
+| Background | Ivory (#FFFFF0) |
+| Dark/Ink | Deep Ink (#2D2A26) |
+| Core Style | Premium glass cards, gradient headlines, generous whitespace |
+| Animations | Framer Motion (smooth, subtle) |
+
+> ⚠️ **Noor-e-Cyber theme has been fully deprecated.** All Cyan/Purple/Neon references are legacy.
 
 ---
 
@@ -25,69 +48,70 @@
 
 | Component | Runtime | Domain |
 |-----------|---------|--------|
-| OpenClaw (GangBot) | Root user systemd | operator.gangniaga.my |
-| QuranPulse API | Docker Compose | api.gangniaga.my |
-| Qdrant | Docker (in QP stack) | localhost:6333 |
+| OpenClaw Gateway | Systemd | operator.gangniaga.my → :18789 |
+| QuranPulse API | Docker Compose | api.gangniaga.my → :18080 |
+| Qdrant | Docker (image exists, not running) | localhost:6333 |
 | Frontend | Vercel | quranpulse.my |
 | Database | Supabase | Managed |
 | VPN | Tailscale | 100.100.205.64 |
 
-### AI Model Configuration (Actual — 2026-02-10)
-```json5
-{
-  agents: {
-    defaults: {
-      model: {
-        primary: "google-antigravity/gemini-3-flash",   // current active
-        fallbacks: ["google-antigravity/gemini-3-pro"]  // target upgrade
-      }
-    }
-  }
-}
-```
+### AI Architecture (March 2026)
 
-See [docs/VPS_PRD.md](docs/VPS_PRD.md) for complete deployment architecture.
+```
+Frontend (quranpulse.my)
+    │
+    ├── Bearer token only
+    ▼
+OpenClaw Gateway (operator.gangniaga.my)
+    │
+    ├── 5 AI Agents: ustaz, content, hafazan, asr, admin
+    ├── OAuth providers (ZERO API keys):
+    │   ├── Google Antigravity (primary)
+    │   ├── Gemini CLI (backup)
+    │   ├── OpenAI Codex (fallback + TTS + ASR)
+    │   └── Qwen Portal (free tier)
+    │
+    └── Supabase Edge Functions (10 deployed, transitional)
+```
 
 ---
 
 ## File Structure
+
 ```
 src/
-├── modules/          # quran, iqra, smart-deen
+├── modules/          # quran, iqra, smart-deen, landing
 ├── components/       # Reusable UI components
-├── services/         # API services
+├── services/         # API services (openclawClient.ts, aiService.ts)
 ├── contexts/         # React contexts
-└── hooks/            # Custom hooks
+├── hooks/            # Custom hooks
+├── lib/              # Utility libraries
+└── types/            # TypeScript types
 
-docs/
-├── VPS_PRD.md        # Deployment architecture
-├── VPS_STATUS.md     # Infrastructure status
-├── OPENCLAW_GUIDE.md # OpenClaw config
-└── ...               # Feature docs
-
-supabase/functions/   # Edge Functions
-admin-dashboard/      # Next.js admin app
-DOCS_VAULT/          # Documentation repository
+docs/                 # VPS, OpenClaw, architecture docs
+supabase/functions/   # 10 Edge Functions (transitional)
+ADMIN-DASHBOARD/      # Next.js admin app
+DOCS_VAULT/           # Documentation repository
 ```
 
 ---
 
-## Quran Module Features (2026-01-11)
+## Quran Module Features
 
-### Tier 1 - Quick Wins
-- **Semantic Search** - Natural language search using pgvector
-- **Daily Ayat Widget** - 7 themed verses with PWA notifications
-- **Khatam Tracker** - Visual 30-juz progress with confetti
+### Tier 1 — Quick Wins
+- **Semantic Search** — Natural language search using pgvector
+- **Daily Ayat Widget** — 7 themed verses with PWA notifications
+- **Khatam Tracker** — Visual 30-juz progress with confetti
 
-### Tier 2 - Medium Features
-- **Tadabbur AI Mode** - AI reflection questions after reading
-- **Voice-Active Reader** - ASR-powered auto-scroll
-- **Word Root Explorer** - Arabic etymology analysis
+### Tier 2 — Medium Features
+- **Tadabbur AI Mode** — AI reflection questions after reading
+- **Voice-Active Reader** — ASR-powered auto-scroll
+- **Word Root Explorer** — Arabic etymology analysis
 
-### Tier 3 - Advanced
-- **Digital Mushaf** - Noor-e-Cyber themed 604-page view
-- **Iqra Graduation** - Digital certificate ceremony
-- **Smart Deen Crossover** - Floating AI button for context questions
+### Tier 3 — Advanced
+- **Digital Mushaf** — Raudhah-themed 604-page view
+- **Iqra Graduation** — Digital certificate ceremony
+- **Smart Deen Crossover** — Floating AI button for context questions
 
 ---
 
@@ -98,23 +122,27 @@ npm install          # Install dependencies
 npm run dev          # Dev server (http://localhost:5173)
 npm run build        # Production build
 npm run test         # Run tests
-npm run test:watch   # Watch mode
+npx tsc --noEmit     # TypeScript check (WAJIB before deploy)
+vercel --prod        # Deploy to production
 ```
 
 ### Admin Dashboard
 ```bash
-cd admin-dashboard
+cd ADMIN-DASHBOARD
 npm install
-npm run dev
+npm run dev          # http://localhost:3000
 ```
 
 ---
 
 ## Conventions
-- **Styling**: Tailwind CSS + Framer Motion
-- **Components**: Functional TypeScript
+
+- **Styling**: Tailwind CSS v4 + Framer Motion (Raudhah theme)
+- **Components**: Functional TypeScript (FC)
 - **State**: Zustand (global), React Query (server)
-- **Design**: "Noor-e-Cyber" aesthetic (Cyan/Purple neon on dark)
+- **Design**: "Raudhah" aesthetic (Teal/Gold on Ivory)
+- **AI calls**: Via OpenClaw gateway (openclawClient.ts), NOT direct API keys
+- **Deploy**: `vercel --prod` CLI (auto-deploy from GitHub unreliable)
 
 ---
 
@@ -136,6 +164,8 @@ npm run dev
 | `/agent-education` | Hadith/Tafsir |
 | `/agent-zakat` | Calculations |
 | `/agent-asr` | ASR engine |
+| `/vibe` | Full build flow |
+| `/ship` | Deploy pipeline |
 
 ---
 
@@ -143,8 +173,13 @@ npm run dev
 
 | File | Purpose |
 |------|---------|
+| [AGENTS.md](AGENTS.md) | Agent rules & verification |
 | [docs/VPS_PRD.md](docs/VPS_PRD.md) | Deployment architecture |
 | [docs/VPS_STATUS.md](docs/VPS_STATUS.md) | Infrastructure status |
 | [docs/OPENCLAW_GUIDE.md](docs/OPENCLAW_GUIDE.md) | OpenClaw config |
-| [AGENTS.md](AGENTS.md) | Agent context |
 | `.agent/PROJECT_STATUS.md` | Current phase |
+| [CHANGELOG.md](CHANGELOG.md) | Version history |
+
+---
+
+> *"Kami tidak membina app. Kami membina jambatan antara ummah dan kitab Allah."*
