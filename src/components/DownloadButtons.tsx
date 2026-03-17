@@ -1,45 +1,69 @@
 import React from "react";
 
-// Colored App Store Button with Apple logo
-export const AppStoreButton = ({ dark = false }: { dark?: boolean }) => (
-    <a
-        href="#"
-        className="group flex items-center gap-3 rounded-xl px-5 py-3 transition-all hover:-translate-y-1 hover:shadow-lg bg-black text-white border border-white/20 hover:bg-gray-900"
-    >
-        <svg viewBox="0 0 384 512" fill="currentColor" className="h-8 w-8">
-            <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-11.4 69.5-34.3z" />
-        </svg>
-        <div className="flex flex-col items-start leading-none">
-            <span className="text-[10px] font-medium opacity-80">Download on the</span>
-            <span className="text-xl font-bold">App Store</span>
-        </div>
-    </a>
-);
+interface ButtonProps {
+    dark?: boolean;
+    variant?: 'teal' | 'dark' | 'glass';
+    href?: string;
+}
 
-// Colored Google Play Button with gradient
-export const GooglePlayButton = ({ dark = false }: { dark?: boolean }) => (
-    <a
-        href="#"
-        className="group flex items-center gap-3 rounded-xl px-5 py-3 transition-all hover:-translate-y-1 hover:shadow-lg bg-black text-white border border-white/20 hover:bg-gray-900"
-    >
-        {/* Google Play Triangle with colors */}
-        <svg viewBox="0 0 512 512" className="h-8 w-8">
-            <defs>
-                <linearGradient id="playGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stopColor="#4285F4" />
-                    <stop offset="25%" stopColor="#34A853" />
-                    <stop offset="50%" stopColor="#FBBC05" />
-                    <stop offset="100%" stopColor="#EA4335" />
-                </linearGradient>
-            </defs>
-            <path fill="url(#playGradient)" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z" />
-        </svg>
-        <div className="flex flex-col items-start leading-none">
-            <span className="text-[10px] font-medium opacity-80">Get it on</span>
-            <span className="text-xl font-bold">Google Play</span>
-        </div>
-    </a>
-);
+// App Store Button — Raudhah-themed
+export const AppStoreButton = ({ dark = false, variant = 'teal', href = '#' }: ButtonProps) => {
+    const styles = {
+        teal: 'bg-raudhah-teal text-white border border-raudhah-teal/20 hover:bg-raudhah-teal/90 shadow-lg shadow-raudhah-teal/20',
+        dark: 'bg-raudhah-ink text-white border border-white/10 hover:bg-raudhah-ink/80',
+        glass: 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20',
+    };
+
+    return (
+        <a
+            href={href}
+            className={`group relative flex items-center gap-3 rounded-2xl px-6 py-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl overflow-hidden ${styles[variant]}`}
+        >
+            {/* shimmer on hover */}
+            <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+            <svg viewBox="0 0 384 512" fill="currentColor" className="h-7 w-7 flex-shrink-0 relative z-10">
+                <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 52.3-11.4 69.5-34.3z" />
+            </svg>
+            <div className="flex flex-col items-start leading-none relative z-10">
+                <span className="text-[9px] font-semibold tracking-widest uppercase opacity-70">Download on the</span>
+                <span className="text-lg font-bold tracking-tight">App Store</span>
+            </div>
+        </a>
+    );
+};
+
+// Google Play Button — Raudhah-themed
+export const GooglePlayButton = ({ dark = false, variant = 'glass', href = '#' }: ButtonProps) => {
+    const styles = {
+        teal: 'bg-raudhah-teal text-white border border-raudhah-teal/20 hover:bg-raudhah-teal/90 shadow-lg shadow-raudhah-teal/20',
+        dark: 'bg-raudhah-ink text-white border border-white/10 hover:bg-raudhah-ink/80',
+        glass: 'bg-white/10 text-white backdrop-blur-md border border-white/20 hover:bg-white/20',
+    };
+
+    return (
+        <a
+            href={href}
+            className={`group relative flex items-center gap-3 rounded-2xl px-6 py-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl overflow-hidden ${styles[variant]}`}
+        >
+            <div className="absolute inset-0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent pointer-events-none" />
+            <svg viewBox="0 0 512 512" className="h-7 w-7 flex-shrink-0 relative z-10">
+                <defs>
+                    <linearGradient id="playGradientRaudhah" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stopColor="#4ade80" />
+                        <stop offset="33%" stopColor="#facc15" />
+                        <stop offset="66%" stopColor="#fb923c" />
+                        <stop offset="100%" stopColor="#f87171" />
+                    </linearGradient>
+                </defs>
+                <path fill="url(#playGradientRaudhah)" d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.3c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z" />
+            </svg>
+            <div className="flex flex-col items-start leading-none relative z-10">
+                <span className="text-[9px] font-semibold tracking-widest uppercase opacity-70">Get it on</span>
+                <span className="text-lg font-bold tracking-tight">Google Play</span>
+            </div>
+        </a>
+    );
+};
 
 // Social Media Icons with real brand colors
 export const SocialIcons = {

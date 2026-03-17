@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Rocket, ArrowRight } from 'lucide-react';
+import { ArrowRight, Shield, Star, Zap } from 'lucide-react';
 import { AppStoreButton, GooglePlayButton } from '@/components/DownloadButtons';
 import { Magnet } from '../ui/Magnet';
 
@@ -8,76 +8,83 @@ interface FinalCtaProps {
     onGetStarted?: () => void;
 }
 
+const TRUST_ITEMS = [
+    { icon: Shield, label: 'Patuh JAKIM' },
+    { icon: Star, label: 'Jaminan Tiada Iklan' },
+    { icon: Zap, label: 'Made in Malaysia 🇲🇾' },
+] as const;
+
 const FinalCta: React.FC<FinalCtaProps> = ({ onGetStarted }) => {
     return (
-        <section className="py-12 md:py-16 bg-raudhah-ivory relative overflow-hidden">
-            {/* Background Effects */}
-            <div className="absolute inset-0">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-gradient-to-b from-raudhah-teal/5 via-transparent to-transparent opacity-50"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-raudhah-teal/10 rounded-full blur-[150px] pointer-events-none"></div>
+        <section className="relative overflow-hidden bg-raudhah-ink py-24 md:py-32">
+            {/* === Background layers === */}
+            {/* Radial teal glow */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-raudhah-teal/20 rounded-full blur-[120px]" />
+                <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-raudhah-gold/10 rounded-full blur-[100px]" />
             </div>
 
-            {/* Grid pattern */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000,transparent)]"></div>
+            {/* Subtle dot grid */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.04]"
+                style={{ backgroundImage: 'radial-gradient(circle, #FAFAF5 1px, transparent 1px)', backgroundSize: '32px 32px' }}
+            />
 
-            <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
+            {/* Top border glow line */}
+            <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-raudhah-teal/50 to-transparent" />
+
+            <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
                 <motion.div
-                    initial={{ opacity: 0, y: 30 }}
+                    initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
+                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 >
                     {/* Badge */}
-                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-raudhah-teal/5 border border-raudhah-teal/10 text-raudhah-teal text-[10px] font-bold tracking-widest uppercase mb-8 font-mono">
-                        <Rocket className="w-3 h-3" />
-                        Mula Sekarang
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-raudhah-teal/15 border border-raudhah-teal/30 text-raudhah-teal text-[10px] font-bold tracking-[0.3em] uppercase mb-10 font-mono">
+                        <span className="w-1.5 h-1.5 rounded-full bg-raudhah-gold animate-pulse" />
+                        Tersedia Sekarang
                     </div>
 
                     {/* Headline */}
-                    <h2 className="text-5xl md:text-7xl font-raudhah font-bold text-raudhah-ink mb-8 tracking-tighter leading-tight">
-                        Mula Perjalanan Quran<br />
-                        <span className="text-raudhah-teal">
-                            Anda Hari Ini
+                    <h2 className="text-5xl md:text-7xl font-raudhah font-bold text-white mb-6 tracking-tight leading-[1.1]">
+                        Mula Perjalanan<br />
+                        <span className="bg-gradient-to-r from-raudhah-teal via-emerald-400 to-raudhah-gold bg-clip-text text-transparent">
+                            Quran Anda Hari Ini
                         </span>
                     </h2>
 
-                    {/* Subheadline */}
-                    <p className="text-xl text-raudhah-ink/60 mb-12 max-w-2xl mx-auto leading-relaxed font-normal">
+                    <p className="text-lg text-white/50 mb-14 max-w-xl mx-auto leading-relaxed">
                         Percuma untuk bermula. Sertai 1,000 ummah pertama untuk akses PRO selamanya.
-                        <span className="text-raudhah-gold font-bold"> Jaminan Tanpa Iklan.</span>
                     </p>
 
-                    {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-                        <Magnet strength={0.3}>
-                            <AppStoreButton dark />
+                    {/* App Buttons */}
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+                        <Magnet strength={0.25}>
+                            <AppStoreButton variant="glass" />
                         </Magnet>
-                        <Magnet strength={0.3}>
-                            <GooglePlayButton dark />
+                        <Magnet strength={0.25}>
+                            <GooglePlayButton variant="teal" />
                         </Magnet>
                     </div>
 
-                    {/* Web App Link */}
+                    {/* Web fallback */}
                     <button
                         onClick={onGetStarted}
-                        className="inline-flex items-center gap-2 text-raudhah-teal font-bold text-sm hover:gap-3 transition-all group"
+                        className="inline-flex items-center gap-2 text-white/40 hover:text-white/70 text-sm transition-colors group mt-2"
                     >
-                        Atau akses terus di pelayar
-                        <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                        Atau akses terus di pelayar web
+                        <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </button>
 
-                    {/* Trust indicators */}
-                    <div className="mt-16 flex flex-wrap items-center justify-center gap-8 text-raudhah-ink/30 text-[10px] font-mono uppercase tracking-widest">
-                        <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-raudhah-teal"></div>
-                            <span>Patuh JAKIM</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-raudhah-teal"></div>
-                            <span>Privacy-First</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <div className="w-1.5 h-1.5 rounded-full bg-raudhah-gold"></div>
-                            <span>Made in Malaysia 🇲🇾</span>
+                    {/* Divider */}
+                    <div className="mt-16 pt-10 border-t border-white/[0.06]">
+                        <div className="flex flex-wrap items-center justify-center gap-10">
+                            {TRUST_ITEMS.map(({ icon: Icon, label }) => (
+                                <div key={label} className="flex items-center gap-2.5 text-white/30 group">
+                                    <Icon className="w-3.5 h-3.5 text-raudhah-teal/60 group-hover:text-raudhah-teal transition-colors" />
+                                    <span className="text-[11px] font-mono uppercase tracking-widest group-hover:text-white/50 transition-colors">{label}</span>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 </motion.div>
