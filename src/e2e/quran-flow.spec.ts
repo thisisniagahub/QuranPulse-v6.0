@@ -18,8 +18,8 @@ test.describe('QuranPulse Core Flow', () => {
 
     // 3. Login Flow (Mocking or using test account)
     // For E2E, we usually use a dedicated test account
-    await page.fill('input[type="email"]', 'test@quranpulse.com');
-    await page.fill('input[type="password"]', 'password123');
+    await page.fill('input[type="email"]', process.env.TEST_USER_EMAIL || 'test@quranpulse.com');
+    await page.fill('input[type="password"]', process.env.TEST_USER_PW || 'password123');
     await page.click('button:has-text("Log Masuk")');
 
     // 4. Navigate to Quran
@@ -45,8 +45,8 @@ test.describe('QuranPulse Core Flow', () => {
 
   test('should open Smart Deen AI chat', async ({ page }) => {
     await page.goto('/login');
-    await page.fill('input[type="email"]', 'test@quranpulse.com');
-    await page.fill('input[type="password"]', 'password123');
+    await page.fill('input[type="email"]', process.env.TEST_USER_EMAIL || 'test@quranpulse.com');
+    await page.fill('input[type="password"]', process.env.TEST_USER_PW || 'password123');
     await page.click('button:has-text("Log Masuk")');
 
     await page.click('nav >> a[href="/smart-deen"]');

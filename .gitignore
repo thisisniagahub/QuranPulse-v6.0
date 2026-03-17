@@ -38,10 +38,38 @@ dist-ssr
 # Gemini
 .gemini/tmp/
 
-# WhatsApp Auth
+# WhatsApp Auth & Cache
 .wwebjs_auth/
+.wwebjs_cache/
+
+# AI Session Data
+.unified/sessions/
+
+# Binary & Media Artifacts
+*.mp3
+*.mp4
+*.wav
+
+# Dev Artifacts & Logs
+battle*.txt
+battle*.log
+battle*.ps1
+*-log.txt
+IDE_TEST.txt
+PENDRIVE_ACCESS.txt
+nanobanana-output/
+
+# Chat Exports
+CHATYANGLATEST.md
+Reviewing\ Chat\ Export.md
+
+# Archive
+_archive/
+_cleanup_untracked*/
 
 # Testing
 coverage/
+test-results/
+playwright-report/
 .env.check
 .env.check.prod
