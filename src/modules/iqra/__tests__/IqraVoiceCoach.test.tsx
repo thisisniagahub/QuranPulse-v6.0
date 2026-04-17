@@ -1,6 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { act } from 'react';
+import { render, screen } from '@testing-library/react';
 import IqraVoiceCoach from '../IqraVoiceCoach';
 import '@testing-library/jest-dom';
 
@@ -71,7 +70,7 @@ describe('IqraVoiceCoach Integration', () => {
 
   test('renders correctly', () => {
     render(<IqraVoiceCoach />);
-    // ASRRecorder component shows 'Sentuh & Sebut' initially
+    expect(screen.getByText('Ustaz AI')).toBeInTheDocument();
     expect(screen.getByText('Sentuh & Sebut')).toBeInTheDocument();
   });
 

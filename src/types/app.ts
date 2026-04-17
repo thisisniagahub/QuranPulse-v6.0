@@ -115,7 +115,7 @@ export interface UserProfile {
   full_name?: string; // Used by admin dashboard
   username?: string; // New
   avatar_url?: string;
-  role?: 'USER' | 'ADMIN' | 'MODERATOR';
+  role?: 'user' | 'admin' | 'moderator';
   xp_total: number;
   barakah_points: number;
   streak: number;
@@ -127,10 +127,10 @@ export interface UserProfile {
   family_members?: FamilyMember[];
   joinedDate?: string;
   created_at?: string; // Used by admin dashboard
-  status?: 'ACTIVE' | 'BANNED';
+  status?: 'active' | 'banned';
   // New fields
   subscription_tier?: 'free' | 'premium' | 'family';
-  tier?: 'FREE' | 'PRO' | 'FAMILY'; // Used by admin dashboard
+  tier?: 'FREE' | 'PRO' | 'FAMILY' | 'FAMILY_MEMBER' | 'FAMILY_OWNER' | 'TUTOR'; // Used by admin dashboard
   fiqh_preference?: 'shafii' | 'hanafi' | 'maliki' | 'hambali';
   hijri_date_preference?: 'gregorian' | 'hijri';
   current_level?: string;

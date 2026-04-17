@@ -34,6 +34,7 @@ dist-ssr
 *.sw?
 
 .vercel
+.bun-cache/
 
 # Gemini
 .gemini/tmp/
@@ -58,6 +59,15 @@ battle*.ps1
 IDE_TEST.txt
 PENDRIVE_ACCESS.txt
 nanobanana-output/
+
+# Structured artifacts
+artifacts/audio/
+artifacts/downloads/
+artifacts/generated/
+artifacts/logs/
+artifacts/playwright-report/
+artifacts/test-results/
+artifacts/button-check.js
 
 # Chat Exports
 CHATYANGLATEST.md

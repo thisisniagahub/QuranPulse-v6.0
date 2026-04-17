@@ -1,6 +1,6 @@
 /**
  * Button Component Tests
- * 
+ *
  * Example test file demonstrating testing patterns
  */
 
@@ -31,12 +31,15 @@ describe('Button', () => {
         expect(screen.getByRole('button')).toHaveClass('bg-raudhah-teal');
 
         rerender(<Button variant="secondary">Secondary</Button>);
-        expect(screen.getByRole('button')).toHaveClass('bg-slate-800');
+        expect(screen.getByRole('button')).toHaveClass('bg-raudhah-cream');
+
+        rerender(<Button variant="outline">Outline</Button>);
+        expect(screen.getByRole('button')).toHaveClass('border-raudhah-teal/20');
     });
 
     it('applies size classes', () => {
         const { rerender } = render(<Button size="sm">Small</Button>);
-        expect(screen.getByRole('button')).toHaveClass('text-xs');
+        expect(screen.getByRole('button')).toHaveClass('px-3.5');
 
         rerender(<Button size="lg">Large</Button>);
         expect(screen.getByRole('button')).toHaveClass('text-base');
@@ -47,5 +50,6 @@ describe('Button', () => {
         const button = screen.getByRole('button');
         expect(button).toBeDisabled();
         expect(button.querySelector('.animate-spin')).toBeInTheDocument();
+        expect(button).toHaveAttribute('aria-busy', 'true');
     });
 });

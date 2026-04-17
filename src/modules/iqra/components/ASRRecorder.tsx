@@ -3,6 +3,7 @@ import { Mic, Activity, RefreshCw, AlertCircle } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { IQRA_CONFIG } from '../constants';
 import { useAudioRecorder } from '../../../hooks/useAudioRecorder';
+import { openclawClient } from '../../../services/openclawClient';
 
 interface ASRRecorderProps {
   expectedText: string;
@@ -44,21 +45,6 @@ function generateFeedback(transcribed: string, expected: string, confidence: num
   return '🔴 Cuba lagi. Pastikan sebutan huruf yang tepat.';
 }
 
-function readEnv(key: string): string {
-  try {
-    const importMeta = new Function('return typeof import.meta !== "undefined" ? import.meta : undefined;')() as
-      | { env?: Record<string, string | undefined> }
-      | undefined;
-    const viteValue = importMeta?.env?.[key];
-    if (viteValue) return viteValue;
-  } catch {
-    // Ignore non-ESM environments (e.g. Jest CJS transform).
-  }
-
-  const nodeValue = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.[key];
-  return nodeValue || '';
-}
-
 const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => {
   const { isRecording, startRecording, stopRecording, audioBlob, visualizerData } = useAudioRecorder();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -77,40 +63,20 @@ const ASRRecorder: React.FC<ASRRecorderProps> = ({ expectedText, onResult }) => 
     setError(null);
 
     try {
-      const OPENCLAW_URL = readEnv('VITE_OPENCLAW_URL') || 'https://operator.gangniaga.my';
-      const OPENCLAW_TOKEN = readEnv('VITE_OPENCLAW_TOKEN');
-
-      // Step 1: Transcribe audio via OpenClaw ASR (OpenAI gpt-4o-mini-transcribe)
-      const formData = new FormData();
-      formData.append('file', blob, 'recitation.webm');
-      formData.append('model', 'gpt-4o-mini-transcribe');
-      formData.append('language', 'ar'); // Arabic for Quran
-
-      const transcribeRes = await fetch(`${OPENCLAW_URL}/v1/audio/transcriptions`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${OPENCLAW_TOKEN}`,
-        },
-        body: formData,
-        signal: AbortSignal.timeout(30000), // 30s for audio processing
-      });
-
-      if (!transcribeRes.ok) throw new Error(`ASR error: ${transcribeRes.status}`);
-
-      const transcription = await transcribeRes.json();
+      const transcription = await openclawClient.transcribeAudio(blob, 'ar');
       const transcribedText = transcription.text || '';
 
       // Step 2: Compare with expected text and calculate confidence
       const confidence = calculateSimilarity(transcribedText, expectedText);
       const feedback = generateFeedback(transcribedText, expectedText, confidence);
 
-      onResult(expectedText, confidence, feedback);
+      onResult(transcribedText, confidence, feedback);
 
     } catch (err) {
       console.error('ASR Error:', err);
       setError('Sambungan gagal. Sila cuba lagi.');
       setTimeout(() => {
-        onResult(expectedText, 0.5, 'Ralat sambungan server.');
+        onResult('', 0.5, 'Ralat sambungan server.');
       }, 1000);
     } finally {
       setIsProcessing(false);

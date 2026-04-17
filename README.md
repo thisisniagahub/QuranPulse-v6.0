@@ -59,7 +59,7 @@ See [docs/VPS_PRD.md](docs/VPS_PRD.md) for complete deployment architecture.
 
 ## 🚀 Quick Start
 
-### Frontend (Client)
+### Web App (Root App)
 ```bash
 npm install
 npm run dev
@@ -68,33 +68,39 @@ npm run dev
 
 ### Admin Dashboard
 ```bash
-cd admin-dashboard
+cd apps/admin-dashboard
 npm install
 npm run dev
 # Visit http://localhost:3000
 ```
+
+See [DESIGN.md](DESIGN.md) for the canonical repository layout and naming rules.
 
 ---
 
 ## 📂 Project Structure
 
 ```
-src/
-├── modules/          # Feature modules (quran, iqra, smart-deen)
-├── components/       # Reusable UI components
-├── services/         # API services
-├── contexts/         # React contexts
-└── hooks/            # Custom hooks
+apps/
+├── admin-dashboard/      # Next.js admin app
+└── niagahub-superapp/    # Secondary product workspace
+
+packages/
+├── iqra-content/         # Runtime Iqra JSON content
+├── iqra-hub/             # Master Iqra source pack
+├── reference-content/    # Research PDFs and extracted text
+└── umrah-content/        # Umrah reference bundle
 
 docs/
-├── VPS_PRD.md        # VPS deployment architecture
-├── VPS_STATUS.md     # Current infrastructure status
-├── OPENCLAW_GUIDE.md # OpenClaw configuration guide
-└── ...               # Feature documentation
+├── architecture/         # System and AI architecture
+├── operations/           # VPS, deployment, and runbooks
+├── product/              # Product strategy and master specs
+└── vault/                # Archived deep documentation
 
-supabase/
-├── functions/        # Edge Functions
-└── migrations/       # Database migrations
+src/                      # Main Vite app source
+public/                   # Main Vite app public assets
+server/                   # Bot/server helpers
+supabase/                 # Edge Functions and migrations
 ```
 
 ---
@@ -102,13 +108,14 @@ supabase/
 ## 📚 Documentation
 
 ### Infrastructure
-- [VPS PRD](docs/VPS_PRD.md) - Deployment architecture & decisions
-- [VPS Status](docs/VPS_STATUS.md) - Current infrastructure state
-- [OpenClaw Guide](docs/OPENCLAW_GUIDE.md) - AI gateway configuration
-- [VPS Manual A-Z](docs/VPS_MANUAL_A_TO_Z.md) - Full manual operations and incident recovery runbook
+- [VPS PRD](docs/operations/VPS_PRD.md) - Deployment architecture & decisions
+- [VPS Status](docs/operations/VPS_STATUS.md) - Current infrastructure state
+- [OpenClaw Guide](docs/operations/OPENCLAW_GUIDE.md) - AI gateway configuration
+- [VPS Manual A-Z](docs/operations/VPS_MANUAL_A_TO_Z.md) - Full manual operations and incident recovery runbook
 
 ### Features
-- [DOCS_VAULT/](DOCS_VAULT/INDEX.md) - All feature documentation
+- [Vault Index](docs/vault/INDEX.md) - Archived feature and implementation documentation
+- [Documentation Map](docs/README.md) - Curated documentation structure
 
 ---
 

@@ -50,23 +50,23 @@ export const OpenClawShowcase: React.FC = () => {
                 >
                     <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-raudhah-teal/5 border border-raudhah-teal/10 text-[10px] font-bold tracking-[0.3em] uppercase text-raudhah-teal/60">
                         <div className="w-1.5 h-1.5 rounded-full bg-raudhah-teal animate-pulse"></div>
-                        Omnichannel Intelligence
+                        Infrastruktur OpenClaw
                     </div>
 
                     <h2 className="text-4xl md:text-5xl lg:text-6xl font-raudhah font-bold text-raudhah-ink leading-tight tracking-tighter">
-                        Ustazah AI <br />
+                        Ustaz AI <br />
                         <span className="text-raudhah-teal italic"> Tanpa Sempadan.</span>
                     </h2>
 
                     <p className="text-raudhah-ink/70 text-xl md:text-2xl leading-relaxed max-w-xl font-medium">
-                        Bukan sekadar aplikasi. Integrasi rohani yang melangkaui peranti—hadir secara proaktif di <span className="text-raudhah-teal">WhatsApp, Telegram, and Discord</span> anda.
+                        Bukan sekadar aplikasi. Integrasi rohani yang melangkaui peranti, hadir secara proaktif di <span className="text-raudhah-teal">WhatsApp, Telegram, dan Discord</span> anda.
                     </p>
 
                     <div className="space-y-6">
                         {[
-                            { icon: <Bell />, title: "Proactive Heartbeats", desc: "Nudge automatik untuk zikir & bacaan Al-Quran." },
-                            { icon: <Heart />, title: "Contextual Memory", desc: "Mengingati sejarah hafalan & perjalanan anda." },
-                            { icon: <Sparkles />, title: "Visual Intelligence", desc: "Menerima bimbingan visual terus dalam chat." }
+                            { icon: <Bell />, title: "Sambungan Proaktif", desc: "Nudge automatik untuk zikir dan bacaan Al-Quran." },
+                            { icon: <Heart />, title: "Memori Kontekstual", desc: "Mengingati sejarah hafalan dan perjalanan anda." },
+                            { icon: <Sparkles />, title: "Bimbingan Visual", desc: "Menerima panduan visual terus dalam chat." }
                         ].map((item, idx) => (
                             <motion.div
                                 key={idx}
@@ -102,7 +102,7 @@ export const OpenClawShowcase: React.FC = () => {
                         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
                         className="relative z-20 w-48 h-48 bg-white/80 backdrop-blur-[50px] rounded-[3rem] border border-raudhah-teal/10 shadow-[0_50px_100px_-20px_rgba(27,107,90,0.4)] flex items-center justify-center p-10 group"
                     >
-                        <img src="/logo-primary.png" className="w-full h-full object-contain filter group-hover:scale-110 transition-transform duration-700" alt="Nadi" />
+                        <img src="/logo-primary.png" className="w-full h-full object-contain filter group-hover:scale-110 transition-transform duration-700" alt="OpenClaw Hub" />
                         <div className="absolute inset-0 rounded-[3rem] bg-gradient-to-tr from-raudhah-teal/5 to-transparent opacity-30"></div>
                     </motion.div>
 
@@ -125,7 +125,7 @@ export const OpenClawShowcase: React.FC = () => {
                     >
                         <div className="flex items-center gap-3">
                             <div className="w-2 h-2 rounded-full bg-green-500 animate-ping"></div>
-                            <span className="text-[11px] font-bold text-raudhah-ink/80 tracking-widest uppercase">Ustazah AI: Active</span>
+                            <span className="text-[11px] font-bold text-raudhah-ink/80 tracking-widest uppercase">Ustaz AI: Aktif</span>
                         </div>
                     </motion.div>
 
@@ -134,7 +134,7 @@ export const OpenClawShowcase: React.FC = () => {
                         transition={{ duration: 9, repeat: Infinity, delay: 1 }}
                         className="absolute bottom-10 left-0 p-5 rounded-2xl bg-raudhah-gold/5 backdrop-blur-2xl border border-raudhah-gold/10 shadow-2xl z-30"
                     >
-                        <p className="text-[10px] font-medium text-raudhah-gold/80 italic leading-snug">"Tadabbur session ready for Surah Al-Mulk."</p>
+                        <p className="text-[10px] font-medium text-raudhah-gold/80 italic leading-snug">"Sesi tadabbur Surah Al-Mulk sedia dihubungkan oleh OpenClaw."</p>
                     </motion.div>
                 </div>
             </div>

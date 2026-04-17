@@ -3,11 +3,19 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "scripts": {
     "dev": "vite",
+    "dev:admin": "npm --prefix apps/admin-dashboard run dev",
     "build": "vite build",
     "preview": "vite preview",
     "bot": "tsx server/bot-server.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "typecheck:admin": "tsc -p apps/admin-dashboard/tsconfig.json --noEmit",
+    "typecheck:all": "npm run typecheck && npm run typecheck:admin",
     "test": "jest --config jest.config.cjs",
     "test:watch": "jest --config jest.config.cjs --watch",
     "test:coverage": "jest --config jest.config.cjs --coverage",
@@ -17,6 +25,8 @@
     "deploy:preview": "npx vercel --yes",
     "ship": "git add -A && git commit -m \"ship: auto-deploy\" && git push origin main && npx vercel --prod --yes",
     "lint": "eslint .",
+    "lint:admin": "npm --prefix apps/admin-dashboard run lint",
+    "lint:all": "npm run lint && npm run lint:admin",
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {

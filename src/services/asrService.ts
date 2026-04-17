@@ -3,6 +3,7 @@
  */
 
 import { supabase } from '../lib/supabase';
+import { openclawClient } from './openclawClient';
 
 // Types
 export interface QWERResult {
@@ -42,9 +43,6 @@ export interface RecitationFeedback {
     nextStep: 'continue' | 'repeat' | 'drill';
 }
 
-// Config
-const ASR_SERVER_URL = import.meta.env.VITE_OPENCLAW_URL || 'https://operator.gangniaga.my';
-const OPENCLAW_TOKEN = import.meta.env.VITE_OPENCLAW_TOKEN || '';
 const FALLBACK_TO_EDGE = true;
 
 function calculateSimilarity(transcribed: string, expected: string): number {
@@ -77,13 +75,9 @@ export const asrService = {
      */
     async checkHealth(): Promise<boolean> {
         try {
-            const response = await fetch(`${ASR_SERVER_URL}/health`, {
-                method: 'GET',
-                signal: AbortSignal.timeout(3000),
-            });
-            return response.ok;
+            return await openclawClient.healthCheck();
         } catch {
-            console.warn('⚠️ OpenClaw gateway not available');
+            console.warn('⚠️ OpenClaw proxy not available');
             return false;
         }
     },
@@ -122,27 +116,9 @@ export const asrService = {
         audioBlob: Blob,
         expectedText?: string
     ): Promise<QWERResult> {
-        const formData = new FormData();
-        formData.append('file', audioBlob, 'recording.wav');
-        formData.append('model', 'gpt-4o-mini-transcribe');
-        formData.append('language', 'ar');
+        console.log('🎤 Sending audio to OpenClaw proxy ASR...');
 
-        console.log('🎤 Sending audio to OpenClaw ASR...');
-
-        const response = await fetch(`${ASR_SERVER_URL}/v1/audio/transcriptions`, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${OPENCLAW_TOKEN}`
-            },
-            body: formData,
-            signal: AbortSignal.timeout(30000),
-        });
-
-        if (!response.ok) {
-            throw new Error(`ASR gateway error: ${response.statusText}`);
-        }
-
-        const result = await response.json();
+        const result = await openclawClient.transcribeAudio(audioBlob, 'ar');
         const transcription = (result.text || '') as string;
         const canScore = hasExpectedText(expectedText);
         const similarity = canScore ? calculateSimilarity(transcription, expectedText) : 0.5;

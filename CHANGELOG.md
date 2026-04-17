@@ -144,8 +144,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - `.agent/context/HANDOFF_LOG.md` - Agent transition history
 
 ### Documentation
-- `DOCS_VAULT/DEEP_DIVE_AUDIT.md` - Comprehensive code audit report
-- `DOCS_VAULT/ARCHITECTURE_DIAGRAM.md` - 8 Mermaid architecture diagrams
+- `docs/vault/DEEP_DIVE_AUDIT.md` - Comprehensive code audit report
+- `docs/vault/ARCHITECTURE_DIAGRAM.md` - 8 Mermaid architecture diagrams
 
 ---
 
@@ -168,7 +168,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
   - Smart Deen Crossover - Floating AI button + context prompts
 
 ### Documentation
-- `DOCS_VAULT/01_FEATURES_IMPLEMENTED/QURAN_MODULE.md` - Full module docs
+- `docs/vault/01_FEATURES_IMPLEMENTED/QURAN_MODULE.md` - Full module docs
 
 ### Database
 - Added `verse_embeddings` table for semantic search

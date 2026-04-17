@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import iqra1Data from '../../../../content-data/iqra/extracted_BUKU_IQRA1_structured.json';
+import iqra1Data from '../../../../packages/iqra-content/iqra/extracted_BUKU_IQRA1_structured.json';
 
 export interface LessonStep {
     id: number;

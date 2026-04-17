@@ -1,3 +1,6 @@
+import { openclawClient } from '../openclawClient';
+import { getEnv } from '../../utils/env';
+
 /**
  * Voice generation response types
  */
@@ -18,12 +21,6 @@ const LEGACY_VOICE_MAP: Record<string, OpenAIVoice> = {
 };
 
 const OPENAI_VOICE_SET = new Set<OpenAIVoice>(['nova', 'echo', 'alloy']);
-
-function readEnv(key: string): string {
-    const viteValue = typeof import.meta !== 'undefined' ? import.meta.env?.[key] : undefined;
-    const nodeValue = typeof process !== 'undefined' ? process.env?.[key] : undefined;
-    return viteValue ?? nodeValue ?? '';
-}
 
 export class VoiceService {
     /**
@@ -54,43 +51,13 @@ export class VoiceService {
 
     /**
      * Call OpenClaw Gateway for TTS
-     * The gateway routes to OpenAI gpt-4o-mini-tts via Codex OAuth.
-     * Returns audio as ArrayBuffer.
+     * The gateway token now lives only in the server-side proxy.
      */
     private static async callOpenClawTTS(text: string, voice?: string): Promise<VoiceGenerationResult | null> {
-        const OPENCLAW_URL = readEnv('VITE_OPENCLAW_URL') || 'https://operator.gangniaga.my';
-        const OPENCLAW_TOKEN = readEnv('VITE_OPENCLAW_TOKEN');
-        if (!OPENCLAW_TOKEN) {
-            console.warn(' OpenClaw token missing, skipping premium TTS.');
-            return null;
-        }
-
         const selectedVoice = this.resolveVoice(voice);
 
         try {
-            console.log(`🎙 Generating TTS via OpenClaw: ${text.substring(0, 30)}...`);
-
-            const response = await fetch(`${OPENCLAW_URL}/v1/audio/speech`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${OPENCLAW_TOKEN}`,
-                },
-                body: JSON.stringify({
-                    model: 'gpt-4o-mini-tts',
-                    input: text,
-                    voice: selectedVoice,
-                    response_format: 'mp3',
-                }),
-                signal: AbortSignal.timeout(15000), // 15s timeout
-            });
-
-            if (!response.ok) {
-                console.warn(`OpenClaw TTS returned ${response.status}`);
-                return null;
-            }
-
-            const audioBuffer = await response.arrayBuffer();
+            const audioBuffer = await openclawClient.generateSpeech(text, selectedVoice);
             return { type: 'buffer', data: audioBuffer };
         } catch (error) {
             console.warn(' OpenClaw TTS request failed:', error);
@@ -176,7 +143,6 @@ export class VoiceService {
      * Check if premium TTS is available (OpenClaw gateway)
      */
     static isPremiumVoiceAvailable(): boolean {
-        const token = readEnv('VITE_OPENCLAW_TOKEN');
-        return !!token;
+        return !!getEnv('VITE_SUPABASE_URL');
     }
 }

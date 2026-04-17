@@ -1,5 +1,5 @@
 -- Migration: Add PDF Content to Ustaz AI Reference
--- Source: CONTENT_DATA extracted PDFs
+-- Source: packages/reference-content extracted PDFs
 -- Date: 2026-01-11
 -- ============================================
 -- TABLE 1: static_social_media_adab

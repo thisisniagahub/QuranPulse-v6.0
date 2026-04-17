@@ -67,7 +67,7 @@
 | `AGENTS.md` | AI agent context |
 | `GEMINI.md` | Project context |
 | `README.md` | Project overview |
-| `DOCS_VAULT/` | All documentation |
+| `docs/vault/` | Archived deep documentation |
 | `.agent/` | Agent framework |
 
 ---

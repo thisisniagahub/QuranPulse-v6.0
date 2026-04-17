@@ -88,10 +88,11 @@ src/
 ├── lib/              # Utility libraries
 └── types/            # TypeScript types
 
-docs/                 # VPS, OpenClaw, architecture docs
-supabase/functions/   # 10 Edge Functions (transitional)
-ADMIN-DASHBOARD/      # Next.js admin app
-DOCS_VAULT/           # Documentation repository
+apps/admin-dashboard/ # Next.js admin app
+packages/            # Content and domain packages
+docs/                # Curated documentation
+docs/vault/          # Archived documentation repository
+supabase/functions/  # 10 Edge Functions (transitional)
 ```
 
 ---
@@ -128,7 +129,7 @@ vercel --prod        # Deploy to production
 
 ### Admin Dashboard
 ```bash
-cd ADMIN-DASHBOARD
+cd apps/admin-dashboard
 npm install
 npm run dev          # http://localhost:3000
 ```
@@ -174,9 +175,9 @@ npm run dev          # http://localhost:3000
 | File | Purpose |
 |------|---------|
 | [AGENTS.md](AGENTS.md) | Agent rules & verification |
-| [docs/VPS_PRD.md](docs/VPS_PRD.md) | Deployment architecture |
-| [docs/VPS_STATUS.md](docs/VPS_STATUS.md) | Infrastructure status |
-| [docs/OPENCLAW_GUIDE.md](docs/OPENCLAW_GUIDE.md) | OpenClaw config |
+| [docs/operations/VPS_PRD.md](docs/operations/VPS_PRD.md) | Deployment architecture |
+| [docs/operations/VPS_STATUS.md](docs/operations/VPS_STATUS.md) | Infrastructure status |
+| [docs/operations/OPENCLAW_GUIDE.md](docs/operations/OPENCLAW_GUIDE.md) | OpenClaw config |
 | `.agent/PROJECT_STATUS.md` | Current phase |
 | [CHANGELOG.md](CHANGELOG.md) | Version history |
 

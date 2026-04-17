@@ -28,13 +28,13 @@ src/
 └── types/            # TypeScript type definitions
 
 docs/
-├── VPS_PRD.md        # Deployment architecture
-├── VPS_STATUS.md     # Infrastructure status
-├── OPENCLAW_GUIDE.md # OpenClaw config
+├── architecture/     # System design docs
+├── operations/       # Deployment and runbooks
+└── vault/            # Archived deep documentation
 
 supabase/functions/   # Edge Functions (8 deployed)
-ADMIN-DASHBOARD/      # Next.js admin app
-DOCS_VAULT/           # Documentation repository
+apps/admin-dashboard/ # Next.js admin app
+packages/             # Content and domain bundles
 ```
 
 ---
@@ -106,7 +106,7 @@ npm run test:watch   # Watch mode
 
 ### Admin Dashboard
 ```bash
-cd ADMIN-DASHBOARD
+cd apps/admin-dashboard
 npm install
 npm run dev          # http://localhost:3000
 ```
@@ -161,9 +161,9 @@ npm run dev          # http://localhost:3000
 | File | Purpose |
 |------|---------|
 | [AGENTS.md](AGENTS.md) | Agent rules & verification |
-| [docs/VPS_PRD.md](docs/VPS_PRD.md) | Deployment architecture |
-| [docs/VPS_STATUS.md](docs/VPS_STATUS.md) | Infrastructure status |
-| [docs/OPENCLAW_GUIDE.md](docs/OPENCLAW_GUIDE.md) | OpenClaw config |
+| [docs/operations/VPS_PRD.md](docs/operations/VPS_PRD.md) | Deployment architecture |
+| [docs/operations/VPS_STATUS.md](docs/operations/VPS_STATUS.md) | Infrastructure status |
+| [docs/operations/OPENCLAW_GUIDE.md](docs/operations/OPENCLAW_GUIDE.md) | OpenClaw config |
 | `.agent/PROJECT_STATUS.md` | Current phase |
 | [CHANGELOG.md](CHANGELOG.md) | Version history |
 

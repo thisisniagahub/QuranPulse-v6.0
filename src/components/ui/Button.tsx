@@ -1,7 +1,5 @@
 import React from 'react';
-
-// Since I don't know if '@/lib/utils' exists yet, I'll define a simple helper inside or just use template literals.
-// For robustness, I'll stick to standard template literals for now if I can't confirm the utils.
+import { cn } from '@/lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'primary' | 'secondary' | 'ghost' | 'glow' | 'outline';
@@ -11,7 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     rightIcon?: React.ReactNode;
 }
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(({
     children,
     className = '',
     variant = 'primary',
@@ -20,39 +18,39 @@ export const Button: React.FC<ButtonProps> = ({
     leftIcon,
     rightIcon,
     ...props
-}) => {
-
-    const baseStyles = "relative inline-flex items-center justify-center font-bold tracking-wide rounded-xl transition-all duration-300 disabled:opacity-50 disabled:pointer-events-none active:scale-95 overflow-hidden group";
+}, ref) => {
+    const baseStyles = 'relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl font-medium tracking-wide transition-[transform,box-shadow,background-color,color,border-color] duration-200 ease-out disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-raudhah-teal/20 focus-visible:ring-offset-2 focus-visible:ring-offset-raudhah-ivory group';
 
     const variants = {
-        primary: "bg-raudhah-teal hover:bg-raudhah-teal text-black shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-raudhah-teal/50",
-        secondary: "bg-slate-800 hover:bg-slate-700 text-raudhah-teal border border-slate-700 hover:border-raudhah-teal/50 shadow-lg",
-        ghost: "bg-transparent hover:bg-white/5 text-slate-400 hover:text-white",
-        glow: "bg-gradient-to-r from-teal-600 to-emerald-700 text-white shadow-[0_0_25px_rgba(8,145,178,0.5)] border border-white/10 hover:shadow-[0_0_40px_rgba(8,145,178,0.7)]",
-        outline: "bg-transparent border border-raudhah-teal/20 text-raudhah-teal hover:bg-teal-950/30 hover:border-raudhah-teal"
+        primary: 'border border-raudhah-teal/10 bg-raudhah-teal text-white shadow-[0_10px_24px_rgba(27,107,90,0.18)] hover:-translate-y-0.5 hover:bg-[#185b4b] hover:shadow-[0_14px_30px_rgba(27,107,90,0.24)]',
+        secondary: 'border border-raudhah-teal/10 bg-raudhah-cream text-raudhah-ink shadow-sm hover:-translate-y-0.5 hover:bg-[#efe6d8] hover:shadow-[0_10px_20px_rgba(27,107,90,0.08)]',
+        ghost: 'bg-transparent text-raudhah-ink/70 hover:bg-raudhah-cream/60 hover:text-raudhah-ink',
+        glow: 'border border-raudhah-teal/10 bg-gradient-to-r from-raudhah-teal to-[#2F7C6B] text-white shadow-[0_12px_28px_rgba(27,107,90,0.2)] hover:-translate-y-0.5 hover:shadow-[0_18px_36px_rgba(27,107,90,0.28)]',
+        outline: 'border border-raudhah-teal/20 bg-transparent text-raudhah-teal hover:-translate-y-0.5 hover:bg-raudhah-teal/5 hover:border-raudhah-teal/35',
     };
 
     const sizes = {
-        sm: "px-4 py-1.5 text-xs",
-        md: "px-6 py-2.5 text-sm",
-        lg: "px-8 py-3.5 text-base",
-        icon: "p-2 aspect-square"
+        sm: 'px-3.5 py-2 text-xs',
+        md: 'px-5 py-2.5 text-sm',
+        lg: 'px-7 py-3.5 text-base',
+        icon: 'p-2 aspect-square',
     };
 
     return (
         <button
-            className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+            ref={ref}
+            aria-busy={isLoading || undefined}
+            className={cn(baseStyles, variants[variant], sizes[size], className)}
             disabled={isLoading || props.disabled}
             {...props}
         >
-            {/* Shimmer Effect for Primary/Glow */}
             {(variant === 'primary' || variant === 'glow') && (
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
+                <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100 motion-safe:group-hover:animate-shimmer" />
             )}
 
             {isLoading ? (
                 <>
-                    <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin mr-2" />
+                    <div className="mr-2 h-5 w-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
                     <span className="sr-only">Loading</span>
                 </>
             ) : leftIcon ? (
@@ -62,8 +60,10 @@ export const Button: React.FC<ButtonProps> = ({
             <span className="relative z-10">{children}</span>
 
             {!isLoading && rightIcon && (
-                <span className="ml-2 group-hover:translate-x-1 transition-transform">{rightIcon}</span>
+                <span className="ml-2 transition-transform duration-200 group-hover:translate-x-1">{rightIcon}</span>
             )}
         </button>
     );
-};
+});
+
+Button.displayName = 'Button';

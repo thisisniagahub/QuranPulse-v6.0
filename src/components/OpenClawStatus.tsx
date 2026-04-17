@@ -3,8 +3,8 @@ import { Wifi, WifiOff } from 'lucide-react';
 import { useOpenClawStatus } from '../hooks/useOpenClawStatus';
 
 /**
- * Minimal gateway status indicator.
- * Shows a small dot in the corner — green if connected, red if not.
+ * Minimal OpenClaw status indicator.
+ * Shows a compact status pill in the corner.
  */
 const OpenClawStatus: React.FC = () => {
   const { status } = useOpenClawStatus(30000); // Check every 30s
@@ -14,7 +14,7 @@ const OpenClawStatus: React.FC = () => {
   return (
     <div
       className="fixed bottom-20 right-4 z-40"
-      title={status === 'connected' ? 'AI Gateway: Aktif' : 'AI Gateway: Tidak Tersambung'}
+      title={status === 'connected' ? 'OpenClaw: Aktif' : 'OpenClaw: Tidak Tersambung'}
     >
       <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider backdrop-blur-sm border transition-all ${
         status === 'connected'
@@ -24,12 +24,12 @@ const OpenClawStatus: React.FC = () => {
         {status === 'connected' ? (
           <>
             <Wifi className="w-3 h-3" />
-            <span>AI Aktif</span>
+            <span>OpenClaw Aktif</span>
           </>
         ) : (
           <>
             <WifiOff className="w-3 h-3" />
-            <span>Offline</span>
+            <span>OpenClaw Offline</span>
           </>
         )}
       </div>

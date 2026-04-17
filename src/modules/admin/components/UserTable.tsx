@@ -47,8 +47,8 @@ const UserTable: React.FC = () => {
     };
 
     const handlePromote = async (id: string) => {
-        if (!confirm("Promote user to ADMIN?")) return;
-        await adminService.updateUser(id, { role: 'ADMIN' });
+        if (!confirm("Promote user to admin?")) return;
+        await adminService.updateUser(id, { role: 'admin' });
         loadUsers();
     };
 
@@ -129,7 +129,7 @@ const UserTable: React.FC = () => {
                                         </div>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase border ${user.tier === 'FAMILY' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
+                                        <span className={`px-2.5 py-1 rounded-md text-[10px] font-bold uppercase border ${user.tier === 'FAMILY' || user.tier === 'FAMILY_OWNER' || user.tier === 'FAMILY_MEMBER' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
                                             user.tier === 'PRO' ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400' :
                                                 'bg-slate-700/30 border-slate-600 text-slate-400'
                                             }`}>
@@ -137,9 +137,9 @@ const UserTable: React.FC = () => {
                                         </span>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <span className={`flex items-center gap-1.5 text-xs font-medium ${user.role === 'ADMIN' ? 'text-amber-400' : 'text-slate-300'}`}>
-                                            {user.role === 'ADMIN' && <Crown className="w-3 h-3" />}
-                                            {user.role || 'USER'}
+                                        <span className={`flex items-center gap-1.5 text-xs font-medium ${user.role === 'admin' ? 'text-amber-400' : 'text-slate-300'}`}>
+                                            {user.role === 'admin' && <Crown className="w-3 h-3" />}
+                                            {(user.role || 'user').toUpperCase()}
                                         </span>
                                     </td>
                                     <td className="px-6 py-4 text-slate-500 text-xs font-mono">

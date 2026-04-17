@@ -1,4 +1,5 @@
 import { supabase } from '../lib/supabase';
+import { openclawClient } from './openclawClient';
 
 export interface IqraProgress {
   volume: number;
@@ -23,9 +24,6 @@ export interface ASRAnalysis {
   };
 }
 
-const OPENCLAW_URL = import.meta.env.VITE_OPENCLAW_URL || 'https://operator.gangniaga.my';
-const OPENCLAW_TOKEN = import.meta.env.VITE_OPENCLAW_TOKEN || '';
-
 function calculateTextSimilarity(transcribed: string, expected: string): number {
   if (!transcribed || !expected) return 0;
 
@@ -47,28 +45,10 @@ export const IqraService = {
   /**
    * Sends audio blob to the ASR Microservice for Tajweed analysis.
    */
-  async analyzeRecitation(audioBlob: Blob, expectedText: string = ""): Promise<ASRAnalysis | null> {
-    try {
-      console.log('🎙️ Sending recitation to OpenClaw ASR...');
-      const formData = new FormData();
-      formData.append('file', audioBlob, 'recitation.wav');
-      formData.append('model', 'gpt-4o-mini-transcribe');
-      formData.append('language', 'ar');
-
-      const response = await fetch(`${OPENCLAW_URL}/v1/audio/transcriptions`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${OPENCLAW_TOKEN}`
-        },
-        body: formData,
-        signal: AbortSignal.timeout(30000),
-      });
-
-      if (!response.ok) {
-        throw new Error(`ASR API Error: ${response.status}`);
-      }
-
-      const data = await response.json();
+    async analyzeRecitation(audioBlob: Blob, expectedText: string = ""): Promise<ASRAnalysis | null> {
+      try {
+      console.log('🎙️ Sending recitation to OpenClaw proxy ASR...');
+      const data = await openclawClient.transcribeAudio(audioBlob, 'ar');
       const transcription = (data.text || '') as string;
       const similarity = calculateTextSimilarity(transcription, expectedText);
       const qwer = Math.max(0, Math.round((1 - similarity) * 100));

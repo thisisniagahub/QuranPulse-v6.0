@@ -1,22 +1,6 @@
 // src/services/openclawClient.ts — Central OpenClaw Gateway Client
 
-function readEnv(key: string): string {
-  try {
-    const importMeta = new Function('return typeof import.meta !== "undefined" ? import.meta : undefined;')() as
-      | { env?: Record<string, string | undefined> }
-      | undefined;
-    const viteValue = importMeta?.env?.[key];
-    if (viteValue) return viteValue;
-  } catch {
-    // Ignore non-ESM environments (e.g. Jest CJS transform).
-  }
-
-  const nodeValue = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env?.[key];
-  return nodeValue || '';
-}
-
-const OPENCLAW_URL = readEnv('VITE_OPENCLAW_URL') || 'https://operator.gangniaga.my';
-const OPENCLAW_TOKEN = readEnv('VITE_OPENCLAW_TOKEN');
+import { blobToBase64, fetchFunction, invokeFunctionJson } from '@/lib/supabaseFunctions';
 
 function normalizeSessionKey(sessionKey: string): string {
   const trimmed = sessionKey.trim();
@@ -64,17 +48,32 @@ interface HooksResponse {
   sessionKey?: string;
 }
 
+interface ProxyHealthResponse {
+  ok: boolean;
+  status: number;
+}
+
+interface ProxyAudioResponse {
+  audio_base64: string;
+  content_type?: string;
+}
+
+function base64ToArrayBuffer(base64: string): ArrayBuffer {
+  const binary = atob(base64);
+  const bytes = new Uint8Array(binary.length);
+
+  for (let i = 0; i < binary.length; i++) {
+    bytes[i] = binary.charCodeAt(i);
+  }
+
+  return bytes.buffer;
+}
+
 /**
  * OpenClaw Gateway Client
- * Routes ALL AI requests through the self-hosted OpenClaw gateway.
- * Uses OpenAI-compatible `/v1/chat/completions` endpoint.
- * ZERO API keys in browser — only bearer token for gateway auth.
+ * Routes all AI requests through the server-side Edge Function proxy.
  */
 export const openclawClient = {
-  /**
-   * Chat Completions (OpenAI-compatible endpoint)
-   * Supports streaming and non-streaming modes.
-   */
   async chatCompletion(
     messages: ChatMessage[],
     options: {
@@ -93,29 +92,30 @@ export const openclawClient = {
       onChunk,
     } = options;
 
-    const res = await fetch(`${OPENCLAW_URL}/v1/chat/completions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENCLAW_TOKEN}`,
-      },
-      body: JSON.stringify({
-        model,
-        messages,
-        stream,
-        temperature,
-        max_tokens,
-      }),
-    });
+    if (stream && onChunk) {
+      const response = await fetchFunction('openclaw-proxy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          intent: 'chat_completion',
+          messages,
+          model,
+          stream: true,
+          temperature,
+          max_tokens,
+        }),
+      });
 
-    if (!res.ok) {
-      const errorText = await res.text().catch(() => 'Unknown error');
-      throw new Error(`OpenClaw error ${res.status}: ${errorText}`);
-    }
+      if (!response.ok) {
+        const errorText = await response.text().catch(() => 'Unknown error');
+        throw new Error(`OpenClaw proxy error ${response.status}: ${errorText}`);
+      }
 
-    // Streaming mode
-    if (stream && onChunk && res.body) {
-      const reader = res.body.getReader();
+      if (!response.body) {
+        throw new Error('OpenClaw proxy streaming response missing body.');
+      }
+
+      const reader = response.body.getReader();
       const decoder = new TextDecoder();
       let fullText = '';
       let buffer = '';
@@ -141,7 +141,7 @@ export const openclawClient = {
               onChunk(content);
             }
           } catch {
-            // Skip malformed chunks
+            // Ignore malformed chunks.
           }
         }
       }
@@ -149,45 +149,31 @@ export const openclawClient = {
       return fullText;
     }
 
-    // Non-streaming mode
-    const data: ChatCompletionResponse = await res.json();
+    const data = await invokeFunctionJson<ChatCompletionResponse>('openclaw-proxy', {
+      intent: 'chat_completion',
+      messages,
+      model,
+      stream: false,
+      temperature,
+      max_tokens,
+    });
+
     return data.choices[0]?.message?.content || '';
   },
 
-  /**
-   * Hooks API — Agent-specific requests
-   * Routes to a specific OpenClaw agent via hooks.
-   */
   async hookRequest(
     hookPath: string,
     payload: Record<string, unknown>,
     options: { sessionKey?: string } = {}
   ): Promise<HooksResponse> {
-    const body: Record<string, unknown> = { ...payload };
-    if (options.sessionKey) {
-      body.sessionKey = options.sessionKey;
-    }
-
-    const res = await fetch(`${OPENCLAW_URL}/hooks/${hookPath}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENCLAW_TOKEN}`,
-      },
-      body: JSON.stringify(body),
+    return invokeFunctionJson<HooksResponse>('openclaw-proxy', {
+      intent: 'hook_request',
+      hookPath,
+      payload,
+      sessionKey: options.sessionKey,
     });
-
-    if (!res.ok) {
-      const errorText = await res.text().catch(() => 'Unknown error');
-      return { ok: false, error: `${res.status}: ${errorText}` };
-    }
-
-    return res.json();
   },
 
-  /**
-   * Ask Ustaz AI — Convenience wrapper for the main AI agent
-   */
   async askUstaz(
     message: string,
     _userId: string,
@@ -197,7 +183,8 @@ export const openclawClient = {
       [
         {
           role: 'system',
-          content: 'Kau adalah Ustaz AI — pembantu ilmu Islam yang mesra, berilmu, dan tegas dalam Mazhab Shafi\'i. Gunakan Bahasa Melayu. Sertakan dalil Al-Quran dan Hadith bila tersedia. Jika tidak pasti, nyatakan "Wallahu a\'lam".',
+          content:
+            'Kau adalah Ustaz AI — pembantu ilmu Islam yang mesra, berilmu, dan tegas dalam Mazhab Shafi\'i. Gunakan Bahasa Melayu. Sertakan dalil Al-Quran dan Hadith bila tersedia. Jika tidak pasti, nyatakan "Wallahu a\'lam".',
         },
         { role: 'user', content: message },
       ],
@@ -208,9 +195,6 @@ export const openclawClient = {
     );
   },
 
-  /**
-   * Session-based chat — maintains conversation history on the server
-   */
   async sessionChat(
     sessionKey: string,
     message: string,
@@ -221,34 +205,30 @@ export const openclawClient = {
   ): Promise<string> {
     const { agentId = 'ustaz', onChunk } = options;
     const normalizedSessionKey = normalizeSessionKey(sessionKey);
-
     const hookPath = agentId === 'ustaz' ? 'ai-query' : agentId;
 
-    const response = await this.hookRequest(hookPath, {
-      message,
-      agentId,
-    }, {
-      sessionKey: normalizedSessionKey,
-    });
+    const response = await this.hookRequest(
+      hookPath,
+      {
+        message,
+        agentId,
+      },
+      {
+        sessionKey: normalizedSessionKey,
+      }
+    );
 
     if (response.ok && response.reply) {
       return response.reply;
     }
 
-    // Fallback to stateless chat completions if hooks fail
     return this.askUstaz(message, normalizedSessionKey, onChunk);
   },
 
-  /**
-   * Create a new session key for a user
-   */
   createSessionKey(userId: string): string {
     return normalizeSessionKey(`${userId}:${Date.now()}`);
   },
 
-  /**
-   * Content Query — Uses content agent for tafsir/hadith
-   */
   async queryContent(query: string, type: 'tafsir' | 'hadith' | 'general' = 'general'): Promise<string> {
     return this.chatCompletion(
       [
@@ -262,15 +242,13 @@ export const openclawClient = {
     );
   },
 
-  /**
-   * Generate Doa Card
-   */
   async generateDoa(topic: string): Promise<string> {
     return this.chatCompletion(
       [
         {
           role: 'system',
-          content: 'Generate a beautiful doa card in Bahasa Melayu with Arabic text, transliteration, and meaning. Include the source (Quran/Hadith reference).',
+          content:
+            'Generate a beautiful doa card in Bahasa Melayu with Arabic text, transliteration, and meaning. Include the source (Quran/Hadith reference).',
         },
         { role: 'user', content: `Generate doa for: ${topic}` },
       ],
@@ -278,23 +256,17 @@ export const openclawClient = {
     );
   },
 
-  /**
-   * Hadith by Topic
-   */
   async getHadithByTopic(topic: string): Promise<string> {
     return this.queryContent(`Cari hadith berkaitan: ${topic}. Sertakan teks Arab, terjemahan, dan sumber/perawi.`, 'hadith');
   },
 
-  /**
-   * Tafsir for Verse
-   */
   async getTafsirForVerse(verseKey: string): Promise<string> {
-    return this.queryContent(`Berikan tafsir ringkas untuk ayat ${verseKey}. Sertakan konteks turunnya ayat (asbab al-nuzul) jika ada.`, 'tafsir');
+    return this.queryContent(
+      `Berikan tafsir ringkas untuk ayat ${verseKey}. Sertakan konteks turunnya ayat (asbab al-nuzul) jika ada.`,
+      'tafsir'
+    );
   },
 
-  /**
-   * Rumi to Jawi conversion
-   */
   async convertToJawi(text: string): Promise<string> {
     return this.chatCompletion(
       [
@@ -308,15 +280,34 @@ export const openclawClient = {
     );
   },
 
-  /**
-   * Health check
-   */
+  async generateSpeech(text: string, voice = 'nova'): Promise<ArrayBuffer> {
+    const response = await invokeFunctionJson<ProxyAudioResponse>('openclaw-proxy', {
+      intent: 'audio_speech',
+      input: text,
+      voice,
+      response_format: 'mp3',
+    });
+
+    return base64ToArrayBuffer(response.audio_base64);
+  },
+
+  async transcribeAudio(audioBlob: Blob, expectedLanguage = 'ar'): Promise<{ text: string }> {
+    return invokeFunctionJson<{ text: string }>('openclaw-proxy', {
+      intent: 'audio_transcription',
+      audio_base64: await blobToBase64(audioBlob),
+      mime_type: audioBlob.type || 'audio/webm',
+      model: 'gpt-4o-mini-transcribe',
+      language: expectedLanguage,
+    });
+  },
+
   async healthCheck(): Promise<boolean> {
     try {
-      const res = await fetch(`${OPENCLAW_URL}/health`, {
-        headers: { 'Authorization': `Bearer ${OPENCLAW_TOKEN}` },
+      const response = await invokeFunctionJson<ProxyHealthResponse>('openclaw-proxy', {
+        intent: 'health_check',
       });
-      return res.ok;
+
+      return response.ok;
     } catch {
       return false;
     }

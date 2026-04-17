@@ -1,25 +1,17 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2022",
     "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ESNext",
-    "skipLibCheck": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
     "types": ["node", "vite/client", "react", "react-dom"],
-    "moduleResolution": "bundler",
-    "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": true,
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     },
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowJs": false
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "vite-env.d.ts", "src/jest.d.ts", "src/test.d.ts", "src/global.d.ts", "src/modules.d.ts", "src/types.d.ts"],
-  "exclude": ["node_modules", "ADMIN-DASHBOARD", "admin-dashboard-new"]
+  "exclude": ["node_modules", "apps/admin-dashboard", "admin-dashboard-new"]
 }

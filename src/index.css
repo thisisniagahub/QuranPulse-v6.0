@@ -42,6 +42,9 @@
   /* Micro-Shadow System (Anti-AI Slop) */
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+  --shadow-focus: 0 0 0 3px rgba(27, 107, 90, 0.16);
+  --motion-fast: 160ms;
+  --motion-base: 220ms;
 
   /* Semantic Colors - Softened */
   --success: #3E5F4F;
@@ -77,6 +80,10 @@
   animation: shimmer-swipe 2s infinite linear;
 }
 
+.animate-shimmer {
+  animation: shimmer-swipe 1.4s linear infinite;
+}
+
 @keyframes shimmer-swipe {
   0% {
     background-position: -200% 0;
@@ -101,7 +108,8 @@
 
 /* ONE CTA ENFORCEMENT: Only one .cta-primary per page viewport */
 .cta-primary {
-  @apply px-8 py-4 bg-[var(--primary-raudhah)] text-[var(--bg-raudhah)] rounded-lg font-medium tracking-wide transition-all duration-300 transform;
+  @apply px-8 py-4 bg-[var(--primary-raudhah)] text-[var(--bg-raudhah)] rounded-lg font-medium tracking-wide transform;
+  transition: transform var(--motion-base) ease, box-shadow var(--motion-base) ease, background-color var(--motion-fast) ease, color var(--motion-fast) ease, border-color var(--motion-fast) ease;
   box-shadow: var(--shadow-sm);
 }
 
@@ -467,7 +475,7 @@ body {
   color: var(--text-primary);
   font-family: 'Poppins', 'Inter', sans-serif;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color var(--motion-base) ease, color var(--motion-base) ease;
   position: relative;
 }
 
@@ -479,7 +487,12 @@ body::before {
   opacity: var(--pattern-opacity, 0);
   pointer-events: none;
   z-index: -1;
-  transition: opacity 0.5s ease;
+  transition: opacity var(--motion-base) ease;
+}
+
+:where(button, [role="button"], input, textarea, select, a, summary, [tabindex]):focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-focus);
 }
 
 /* ─────────────────────────────────────────────────────────────────────────────
@@ -513,7 +526,7 @@ body::before {
     -4px -4px 12px rgba(255, 255, 255, 0.8),
     inset 4px 4px 8px rgba(255, 255, 255, 0.6),
     inset -4px -4px 8px var(--clay-shadow);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform var(--motion-base) cubic-bezier(0.4, 0, 0.2, 1), box-shadow var(--motion-base) cubic-bezier(0.4, 0, 0.2, 1), border-color var(--motion-fast) ease, background-color var(--motion-fast) ease;
   border: 1px solid rgba(255, 255, 255, 0.4);
 }
 
@@ -616,6 +629,7 @@ body::before {
   backdrop-filter: blur(12px);
   border: 1px solid white;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  transition: transform var(--motion-base) ease, box-shadow var(--motion-base) ease, border-color var(--motion-fast) ease, background-color var(--motion-fast) ease;
 }
 
 .glass-input {
