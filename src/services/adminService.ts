@@ -1,3 +1,4 @@
+import type { UserProfile } from '@/types';
 import { invokeFunctionJson } from '@/lib/supabaseFunctions';
 import { isAdminRole, normalizeRole } from '@/lib/authz';
 
@@ -35,7 +36,7 @@ export const adminService = {
     });
   },
 
-  async getUsers<TUser = unknown>(page = 1, limit = 10, search = '', tier = 'ALL') {
+  async getUsers<TUser = UserProfile>(page = 1, limit = 10, search = '', tier = 'ALL') {
     return invokeFunctionJson<AdminUsersResponse<TUser>>('admin-ops', {
       action: 'get_users',
       page,

@@ -30,7 +30,7 @@ const UserTable: React.FC = () => {
     const loadUsers = async () => {
         setLoading(true);
         try {
-            const { users: data, total } = await adminService.getUsers(page, LIMIT, searchQuery);
+            const { users: data, total } = await adminService.getUsers<UserProfile>(page, LIMIT, searchQuery);
             setUsers(data);
             setTotalPages(Math.ceil((total || 0) / LIMIT));
         } catch (error) {
